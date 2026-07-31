@@ -53,29 +53,29 @@ Profil 2 verwendet Git-getrackte Textdateien und sichtbare Git-Aktivitaet. Die W
 
 | Kennzahl / Metric | Wert / Value |
 |---|---:|
-| Textbasis / Text base | 80651 lines |
-| Textdateien / Text files | 265 |
+| Textbasis / Text base | 125733 lines |
+| Textdateien / Text files | 739 |
 | Beobachtbarer Zeitraum / Observable period | 2025-08-03..2026-07-31 |
 | Aktivtage / Active days | 1 |
-| Relevante Commits / Relevant commits | 1 |
-| Zeilen je Aktivtag / Lines per active day | 80651.0 |
-| Peak-Tag im Fenster / Peak day in window | 2026-07-31 / 80651 |
-| Peak-Woche im Fenster / Peak week in window | 2026-07-26 / 80651 |
+| Relevante Commits / Relevant commits | 2 |
+| Zeilen je Aktivtag / Lines per active day | 125733.0 |
+| Peak-Tag im Fenster / Peak day in window | 2026-07-31 / 125925 |
+| Peak-Woche im Fenster / Peak week in window | 2026-07-26 / 125925 |
 | Laengste Serie / Longest streak | 1 days |
-| Speedup vs. 80 lines/day | 1008.1x |
-| Speedup vs. 125 lines/day | 645.2x |
-| Methodik / Methodology | v2; source `3b3825038520` |
+| Speedup vs. 80 lines/day | 1571.7x |
+| Speedup vs. 125 lines/day | 1005.9x |
+| Methodik / Methodology | v2; source `d7f9249b2176` |
 
 ### Artefaktmix / Artifact Mix
 
 ```text
 Produktiv / Production          [....................]   0.0% | 0
-Tests                           [#...................]   6.6% | 5284
-Dokumentation / Documentation   [#########...........]  45.2% | 36492
-Skripte / Scripts               [##########..........]  48.1% | 38753
-Konfiguration / Configuration   [#...................]   0.0% | 19
+Tests                           [#...................]   4.2% | 5284
+Dokumentation / Documentation   [#############.......]  64.8% | 81463
+Skripte / Scripts               [######..............]  30.8% | 38753
+Konfiguration / Configuration   [#...................]   0.1% | 106
 Daten und Medien / Data and media [....................]   0.0% | 0
-Sonstiger Text / Other text     [#...................]   0.1% | 103
+Sonstiger Text / Other text     [#...................]   0.1% | 127
 ```
 
 Die Balken teilen die aktuelle getrackte Textbasis in stabile Kategorien. Prozent und Zeilenwert sind die genaue, textorientierte Aussage.
@@ -119,12 +119,12 @@ Keine Aktivitaet / No activity
 
 ```text
 Wochen / Weeks 27..52 | 2026-02-01..2026-08-01
-  cap 100000 | . . . . . . . . . . . . . . . . . . . . . . . . . .
-       83333 | . . . . . . . . . . . . . . . . . . . . . . . . . .
+  cap 200000 | . . . . . . . . . . . . . . . . . . . . . . . . . .
+      166667 | . . . . . . . . . . . . . . . . . . . . . . . . . .
+      133333 | . . . . . . . . . . . . . . . . . . . . . . . . . .
+      100000 | . . . . . . . . . . . . . . . . . . . . . . . . . #
        66667 | . . . . . . . . . . . . . . . . . . . . . . . . . #
-       50000 | . . . . . . . . . . . . . . . . . . . . . . . . . #
        33333 | . . . . . . . . . . . . . . . . . . . . . . . . . #
-       16667 | . . . . . . . . . . . . . . . . . . . . . . . . . #
            0 +-----------------------------------------------------
 ```
 
@@ -141,12 +141,12 @@ Keine Aktivitaet / No activity
 
 ```text
 Wochen / Weeks 27..52 | 2026-02-01..2026-08-01
-  cap 100000 | . . . . . . . . . . . . . . . . . . . . . . . . . .
-       83333 | . . . . . . . . . . . . . . . . . . . . . . . . . .
+  cap 200000 | . . . . . . . . . . . . . . . . . . . . . . . . . .
+      166667 | . . . . . . . . . . . . . . . . . . . . . . . . . .
+      133333 | . . . . . . . . . . . . . . . . . . . . . . . . . .
+      100000 | . . . . . . . . . . . . . . . . . . . . . . . . . #
        66667 | . . . . . . . . . . . . . . . . . . . . . . . . . #
-       50000 | . . . . . . . . . . . . . . . . . . . . . . . . . #
        33333 | . . . . . . . . . . . . . . . . . . . . . . . . . #
-       16667 | . . . . . . . . . . . . . . . . . . . . . . . . . #
            0 +-----------------------------------------------------
 ```
 
@@ -158,12 +158,12 @@ Die kumulative Kurve summiert nur das Brutto-Aenderungsvolumen im Fenster. Sie d
 
 ```text
 Last 12 calendar months
-  cap 100000 | . . . . . . . . . . . .
-       83333 | . . . . . . . . . . . .
+  cap 200000 | . . . . . . . . . . . .
+      166667 | . . . . . . . . . . . .
+      133333 | . . . . . . . . . . . .
+      100000 | . . . . . . . . . . . #
        66667 | . . . . . . . . . . . #
-       50000 | . . . . . . . . . . . #
        33333 | . . . . . . . . . . . #
-       16667 | . . . . . . . . . . . #
            0 +-------------------------
 ```
 
@@ -186,10 +186,10 @@ Die Faktoren vergleichen sichtbare Lieferdichte mit den dokumentierten manuellen
 ### Durchsatzvergleich / Throughput Comparison
 
 ```text
-Scale: 0..100000 lines/day
+Scale: 0..200000 lines/day
 Experienced manual [#...................] 80
 Thorsten solo      [#...................] 125
-Visible repository [################....] 80651.0
+Visible repository [#############.......] 125733.0
 ```
 
 Die gemeinsame Skala vergleicht Referenzen und sichtbare Lieferdichte. Sie schreibt die Git-Aktivitaet keiner Person oder KI pauschal zu.
@@ -198,9 +198,9 @@ Die gemeinsame Skala vergleicht Referenzen und sichtbare Lieferdichte. Sie schre
 
 ### Textalternative / Text Alternative
 
-DE: Das Fenster beginnt am 2025-08-03 und endet am 2026-07-31. Es enthaelt 1 aktive und 362 inaktive vergangene Tage. Peak-Tag: 2026-07-31 / 80651. Peak-Woche: 2026-07-26 / 80651. Laengste Serie: 1 Tage (2026-07-31..2026-07-31).
+DE: Das Fenster beginnt am 2025-08-03 und endet am 2026-07-31. Es enthaelt 1 aktive und 362 inaktive vergangene Tage. Peak-Tag: 2026-07-31 / 125925. Peak-Woche: 2026-07-26 / 125925. Laengste Serie: 1 Tage (2026-07-31..2026-07-31).
 
-*EN: The window starts on 2025-08-03 and ends on 2026-07-31. It contains 1 active and 362 inactive elapsed days. Peak day: 2026-07-31 / 80651. Peak week: 2026-07-26 / 80651. Longest streak: 1 days (2026-07-31..2026-07-31).*
+*EN: The window starts on 2025-08-03 and ends on 2026-07-31. It contains 1 active and 362 inactive elapsed days. Peak day: 2026-07-31 / 125925. Peak week: 2026-07-26 / 125925. Longest streak: 1 days (2026-07-31..2026-07-31).*
 
 | Monat / Month | Geaenderte Textzeilen / Changed text lines |
 |---|---:|
@@ -215,6 +215,6 @@ DE: Das Fenster beginnt am 2025-08-03 und endet am 2026-07-31. Es enthaelt 1 akt
 | 2026-04 | 0 |
 | 2026-05 | 0 |
 | 2026-06 | 0 |
-| 2026-07 | 80651 |
+| 2026-07 | 125925 |
 
 <!-- project-statistics-v2:end -->
