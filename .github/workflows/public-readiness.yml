@@ -38,14 +38,16 @@ jobs:
           )
           foreach ($pattern in $patterns) {
               $matches = git grep -n -I -E -- $pattern 2>$null
-              if ($LASTEXITCODE -eq 0) {
+              $grepExitCode = $LASTEXITCODE
+              if ($grepExitCode -eq 0) {
                   $matches
                   throw "Personal absolute path pattern found: ${pattern}"
               }
-              if ($LASTEXITCODE -ne 1) {
+              if ($grepExitCode -ne 1) {
                   throw "git grep failed for pattern: ${pattern}"
               }
           }
+          exit 0
 
   dotnet-contract:
     name: .NET contract (${{ matrix.os }})
