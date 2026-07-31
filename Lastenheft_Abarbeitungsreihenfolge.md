@@ -4,6 +4,22 @@ Diese Datei haelt die sichtbare Abarbeitungsreihenfolge der vorhandenen Lastenhe
 
 *This file records the visible processing order of existing requirements documents. It prepares later Spec Kit runs and does not start a run by itself.*
 
+## AOC-Programmreihe / AOC programme series
+
+Für das eigenständige AOC-Lastenheftprogramm ist die kanonische,
+SHA-gebundene Reihenfolge unter
+[`requirements/intakes/series/order.md`](requirements/intakes/series/order.md)
+festgelegt. Der Einstieg und Status aller Meta- und Fachreihen steht in
+[`Pflichtenheft.md`](Pflichtenheft.md). Die unten automatisch ermittelte
+Root-Tabelle betrifft ausschließlich ältere Root-Intakes und besitzt keine
+Authority über die AOC-Series.
+
+*The canonical, hash-bound AOC programme order is defined in
+[`requirements/intakes/series/order.md`](requirements/intakes/series/order.md).
+[`Pflichtenheft.md`](Pflichtenheft.md) is the programme index. The automatically
+generated root table below covers legacy root intakes only and has no authority
+over the AOC series.*
+
 <!-- secure-development-hardening-order:start -->
 ## Automatisch ermittelte Lastenheft-Reihenfolge / Automatically Detected Requirements Order
 

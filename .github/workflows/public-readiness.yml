@@ -15,12 +15,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install ripgrep
+        run: sudo apt-get install -y ripgrep
       - name: Run secret scan
         run: bash scripts/scan-agent-secrets.sh --fail-on-high .
       - name: Reject personal absolute paths and committed preset cache
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
+          # git grep uses exit code 1 for "no match"; inspect that expected result below.
+          $PSNativeCommandUseErrorActionPreference = $false
           $tracked = @(git ls-files)
           if ($tracked -match '^\.specify/presets/\.cache/') {
               throw 'The local Spec Kit preset cache must not be committed.'
@@ -32,14 +38,16 @@ jobs:
           )
           foreach ($pattern in $patterns) {
               $matches = git grep -n -I -E -- $pattern 2>$null
-              if ($LASTEXITCODE -eq 0) {
+              $grepExitCode = $LASTEXITCODE
+              if ($grepExitCode -eq 0) {
                   $matches
                   throw "Personal absolute path pattern found: ${pattern}"
               }
-              if ($LASTEXITCODE -ne 1) {
+              if ($grepExitCode -ne 1) {
                   throw "git grep failed for pattern: ${pattern}"
               }
           }
+          exit 0
 
   dotnet-contract:
     name: .NET contract (${{ matrix.os }})
