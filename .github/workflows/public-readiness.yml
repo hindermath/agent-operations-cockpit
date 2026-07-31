@@ -25,6 +25,8 @@ jobs:
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
+          # git grep uses exit code 1 for "no match"; inspect that expected result below.
+          $PSNativeCommandUseErrorActionPreference = $false
           $tracked = @(git ls-files)
           if ($tracked -match '^\.specify/presets/\.cache/') {
               throw 'The local Spec Kit preset cache must not be committed.'
