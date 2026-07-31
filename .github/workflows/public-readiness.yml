@@ -15,6 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install ripgrep
+        run: sudo apt-get install -y ripgrep
       - name: Run secret scan
         run: bash scripts/scan-agent-secrets.sh --fail-on-high .
       - name: Reject personal absolute paths and committed preset cache
