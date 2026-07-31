@@ -1,5 +1,7 @@
 # Agent Operations Cockpit
 
+## Zweck und Status / Purpose and status
+
 Agent Operations Cockpit (AOC) ist ein öffentliches C#/.NET-Level-2-Projekt zur
 nachvollziehbaren Beobachtung und späteren Steuerung agentischer
 Entwicklungsumgebungen. „Agentisch“ bedeutet hier: KI-Werkzeuge bearbeiten klar
@@ -21,7 +23,7 @@ baseline. No product code exists yet. The exact .NET version, test framework,
 logging, inter-process communication (IPC), Native AOT, and hardware adapters
 are intentionally undecided.*
 
-## Zielgruppe und Qualitätsbaseline / Audience and quality baseline
+## Zielgruppe und Barrierefreiheit / Audience and accessibility
 
 Die Dokumentation richtet sich an Auszubildende der IHK-IT-Berufe ab dem ersten
 Ausbildungsjahr und an erfahrene Fachkräfte. Inhalte werden auf CEFR-B2-Niveau
@@ -62,7 +64,7 @@ deduplicated domain requirements portfolio, and traceable sequencing,
 autonomy, review, and evidence rules. Specify, plan, task, and implementation
 runs, as well as product code, remain out of scope until separately approved.*
 
-## Governance und Spec Kit / Governance and Spec Kit
+## Governance und Spec-kit / Governance and Spec Kit
 
 Das Repository verwendet das Preset-Profil
 `intake-sequencing-eleven-governance-presets`. Es umfasst elf versionierte
@@ -81,6 +83,21 @@ accessibility, cross-platform, agent-parity, intake, and autonomy presets. The
 `.specify/presets/.cache/` directory is a local cache and must not be
 published. The requirements order and repository constitution define the
 binding quality and security boundaries.*
+
+## Für Auszubildende / For Apprentices
+
+Auszubildende benötigen keine Kenntnis der internen Entstehungsgeschichte oder
+früherer Level-0-Issues. Jedes freigegebene Lastenheft muss seine Quellen,
+Begriffe, Grenzen, Entscheidungen, Akzeptanzkriterien und erwartete Evidence
+selbständig erklären. Berufsschule, betriebliche Ausbildung,
+Ausbilderentscheidungen und Prüfungsvorbereitung bleiben eigenständige
+Autoritäten.
+
+*Apprentices do not need knowledge of the project's internal history or earlier
+level-0 issues. Every approved requirement must independently explain its
+sources, terms, boundaries, decisions, acceptance criteria, and expected
+evidence. Vocational school, workplace training, instructor decisions, and
+exam preparation remain separate authorities.*
 
 ## Prüfen und beitragen / Validate and contribute
 
