@@ -1,0 +1,35 @@
+# Review Findings Ledger / Review Findings Ledger
+
+`Covered` bedeutet: Das Finding besitzt Owner, Ziel, messbares Kriterium und
+Evidence. Es bedeutet noch nicht, dass spätere Produktimplementierung erfolgt
+ist. / *`Covered` means that owner, target, measurable criterion, and evidence
+are defined. It does not claim later product implementation.*
+
+| ID | Severity | Präzise Aussage und Quelle / Statement and source | Owner und Ziel / Owner and target | Akzeptanz / Acceptance | Positive / negative Evidence | Status und Restlücke / Status and residual gap |
+|---|---|---|---|---|---|---|
+| RF-01 | blocking | #177 ist Bootstrap-Einstieg, #159 Authoring-Vertrag, #180 Phase-1-Gate. | META-01; Source Pack | Autoritätsrang ist einmalig dokumentiert. | Konsistente Referenzen / konkurrierender Einstieg. | Covered; spätere Änderungen brauchen Decision. |
+| RF-02 | blocking | Autorität darf nicht implizit von Analyse auf Schreiben oder Remote erweitert werden. | META-04; Authority Gates | Jeder Lauf nennt erlaubte Writes, Remotes und Stop-Gate. | Receipt / unerlaubter Scope. | Covered; pro Lauf neu zu prüfen. |
+| RF-03 | important | Kritische Prompts und Handoffs müssen versioniert und supersedierbar sein. | META-03; Authoring Contract | Jeder Intake besitzt gebundene, versionierte nächste Aktion. | Receipt+Hash / Kommentar-only Prompt. | Covered. |
+| RF-04 | blocking Phase 2 | Repository-Identität musste bestätigt werden. | META-01; DEC-001 | Owner, Name, Public, MIT, main, Pfad, Profil vollständig. | Public-Readiness Receipt / Abweichung. | Covered; abgeschlossen durch öffentlichen Basiscommit. |
+| RF-05 | important | Bootstrap darf Runtime, Tests, Logging, IPC oder AOT nicht vorwegnehmen. | RAW-01 + Decisions | Kein Produktmanifest vor Decision. | `product_manifests=0` / implizites Scaffold. | Covered; Decisions offen. |
+| RF-06 | important | Erster Slice war zu breit und muss read-only beginnen. | RAW-01, RAW-03 | Discovery→Snapshot→Authority/Freshness→Projektion; keine Commands. | Read-only Tests / Seiteneffekt. | Covered. |
+| RF-07 | important | Sandbox ist Node, nicht Owner des Working Copy. | RAW-05 | Authority-Provenienz unterscheidet Host und Node. | Mount-Evidence / Sandbox als kanonische Quelle. | Covered. |
+| RF-08 | important | Elgato/MIDI bleiben dünne Adapter ohne Domänenlogik. | RAW-07 | Capability-Vertrag enthält keine Raw-Protokolle. | Adapter-Test / Raw MIDI im Domainmodell. | Covered; Bibliotheksevaluation offen. |
+| RF-09 | blocking portfolio | Redundante Reihen brauchen genau einen Owner je Concern. | META-02 | Ownership-Matrix hat keine Mehrfachowner. | Matrix+DAG / Duplikat. | Covered. |
+| RF-10 | important | Erster Slice benötigt positiven und negativen Evidence-Plan. | RAW-01, RAW-03 | Fixtures für Erkennung, Authority, Freshness, Parität, Fehler. | Evidence Paths / nur Happy Path. | Covered; Durchführung später. |
+| RF-11 | blocking first push | Öffentliches Repo braucht Security-Gate. | META-01; Public Readiness | Scan, Pfade, Lizenz, Security, Contribution, CI, Dependencies, Ruleset, Mensch. | Exact-SHA Receipt / fehlendes Gate. | Covered und beim Basiscommit erfüllt. |
+| RF-12 | important | Issue-Organisation allein ist nicht maschinenlesbar genug. | META-01, META-03 | Quellenrollen, Authority, Supersession, Status strukturiert. | Tabellen+JSON / nur freie Kommentare. | Covered. |
+| RF-13 | blocking Phase 1 | Phase 1 bleibt reine Wissensarbeit. | META-01 Provenienz | Phase-1-Receipt nennt ausdrücklich keine Writes. | Receipt / Phase-1-Änderung. | Covered; Phase 1 abgeschlossen. |
+| RF-14 | blocking coverage | Findings benötigen Trace bis Ziel, Akzeptanz und Evidence. | META-01, META-05 | RF-01..18 ohne `Uncovered`. | Coverage Matrix / fehlende Zeile. | Covered. |
+| RF-15 | blocking Phase 2 | Level-0-Übergabe muss inhaltlich selbständig sein. | META-01 | Agent kann ohne Level-0-Issues Scope und Gates erklären. | Self-containment Review / versteckte Abhängigkeit. | Covered; Provenienzlinks optional. |
+| RF-16 | blocking | Meta-Programm muss Portfolio selbsttragend erzeugen und prüfen. | META-01..05 | Quellen→Portfolio→Authoring→DAG→Wave lückenlos. | Fünf Intakes+Serie / manueller Wissenssprung. | Covered. |
+| RF-17 | blocking quality | Zielgruppe, DE/EN, B2 und WCAG gelten durchgängig. | Alle Reihen; A11Y Gate | Jeder Intake enthält prüfbare Querschnittsanforderung. | Bilingual/A11Y Review / nur einsprachig oder Nur-Farbe. | Covered; semantisches Review je Artefakt. |
+| RF-18 | blocking autonomy | Jeder Intake braucht prüfbare Ausführungsmoduseinstufung. | META-04 | Acht Kriterien, Stop und Recovery pro Intake/Reihe. | Eligibility Matrix / pauschale Parallelfreigabe. | Covered. |
+
+## Zusätzliche Phase-2-Findings / Additional Phase 2 findings
+
+| ID | Severity | Finding | Owner und Kriterium / Owner and criterion | Status |
+|---|---|---|---|---|
+| RF-19 | important | Kontoabhängige GitHub-Workflows können vor Jobstart durch Billing blockiert werden; das ist Provider-, nicht Code-Evidence. / Workflows may be blocked by account billing before job start. | META-04; ProviderFailure wird getrennt von ProductFailure klassifiziert und lokal reproduziert. | Covered; externes Restrisiko offen. |
+| RF-20 | important | Regex-Hooks können absichtliche Secret-Negativfixtures melden. / Regex hooks can flag deliberate secret-negative fixtures. | META-03; enge, dokumentierte Pfadausnahme plus vollständiger Gitleaks-Scan. | Covered; Hook-Parität später verbessern. |
+| RF-21 | important | Bootstrap-Guidance enthält historische Flottenformulierungen, die nicht automatisch AOC-Produktanforderung sind. / Bootstrap guidance contains historical fleet wording. | META-01; Produkt-Source-Pack ist eigenständig und trennt Provenienz von Authority. | Covered; Upstream-Templatepflege außerhalb AOC. |

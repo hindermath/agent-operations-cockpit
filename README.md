@@ -84,6 +84,15 @@ accessibility, cross-platform, agent-parity, intake, and autonomy presets. The
 published. The requirements order and repository constitution define the
 binding quality and security boundaries.*
 
+Der kanonische Einstieg in das neue Anforderungsprogramm ist
+[`Pflichtenheft.md`](Pflichtenheft.md). Dort sind die eigenständige Baseline,
+`META-LH-01` bis `META-LH-05`, die neun fachlichen Owner-Reihen, ihre Status und
+die erlaubte nächste Aktion verlinkt.
+
+*The canonical entry into the new requirements programme is
+[`Pflichtenheft.md`](Pflichtenheft.md), linking the self-contained baseline, five
+meta intakes, nine domain owner series, their status, and the allowed next action.*
+
 ## Für Auszubildende / For Apprentices
 
 Auszubildende benötigen keine Kenntnis der internen Entstehungsgeschichte oder
