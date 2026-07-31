@@ -1,0 +1,24 @@
+# gitleaks-Konfiguration / gitleaks configuration
+#
+# DE: Die sichere-Entwicklung-Lehrdokumentation enthält absichtlich erkennbare
+# Negativbeispiele wie PEM-/OpenSSH-Schlüssel-Kopfzeilen sowie erklärenden Text
+# mit Framework-Namen. Standardregeln melden diese Texte als Falschpositive,
+# obwohl sie keine Geheimnisse enthalten. Die Ausnahme ist deshalb auf
+# Markdown-Lehrmaterial unter docs/secure-development/ begrenzt.
+#
+# EN: The secure-development teaching documentation intentionally contains
+# recognisable negative examples such as PEM/OpenSSH key headers and explanatory
+# prose with framework names. Default rules report these texts as false
+# positives even though they contain no secrets. The exception is therefore
+# limited to Markdown teaching material under docs/secure-development/.
+
+title = "Agent Operations Cockpit gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "False positives in secure-development teaching documentation; code and configuration remain fully scanned"
+paths = [
+  '''docs/secure-development/.*\.md$''',
+]

@@ -22,6 +22,7 @@
 # --- Pflichtdateien: Git-Konfiguration / Required: Git config ---
 !.gitignore
 !.gitconfig
+!.gitleaks.toml
 
 # --- GitHub / GitHub ---
 !.github/
