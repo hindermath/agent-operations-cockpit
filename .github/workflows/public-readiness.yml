@@ -1,0 +1,80 @@
+name: Public Readiness
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  repository-baseline:
+    name: Repository baseline
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run secret scan
+        run: bash scripts/scan-agent-secrets.sh --fail-on-high .
+      - name: Reject personal absolute paths and committed preset cache
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $tracked = @(git ls-files)
+          if ($tracked -match '^\.specify/presets/\.cache/') {
+              throw 'The local Spec Kit preset cache must not be committed.'
+          }
+          $patterns = @(
+              ('/Us' + 'ers/[^/[:space:]]+/'),
+              ('/ho' + 'me/[^/[:space:]]+/'),
+              '[A-Za-z]:\\Users\\[^\\[:space:]]+\\'
+          )
+          foreach ($pattern in $patterns) {
+              $matches = git grep -n -I -E -- $pattern 2>$null
+              if ($LASTEXITCODE -eq 0) {
+                  $matches
+                  throw "Personal absolute path pattern found: ${pattern}"
+              }
+              if ($LASTEXITCODE -ne 1) {
+                  throw "git grep failed for pattern: ${pattern}"
+              }
+          }
+
+  dotnet-contract:
+    name: .NET contract (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Restore, build, and test approved product projects
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $roots = @()
+          if (Test-Path src) { $roots += Get-Item src }
+          if (Test-Path tests) { $roots += Get-Item tests }
+          $manifests = @(
+              Get-ChildItem -Path . -File -Include *.sln,*.slnx,*.csproj
+              foreach ($root in $roots) {
+                  Get-ChildItem -Path $root.FullName -Recurse -File -Include *.sln,*.slnx,*.csproj
+              }
+          ) | Sort-Object FullName -Unique
+          if ($manifests.Count -eq 0) {
+              'NotApplicable: no approved product solution or project exists.'
+              'Restore, build, and test become mandatory with the first product scaffold.'
+              exit 0
+          }
+          $solutions = @($manifests | Where-Object Extension -In '.sln', '.slnx')
+          if ($solutions.Count -ne 1) {
+              throw 'Expected exactly one product solution once product manifests exist.'
+          }
+          dotnet restore $solutions[0].FullName
+          dotnet build $solutions[0].FullName --no-restore --configuration Release
+          dotnet test $solutions[0].FullName --no-build --configuration Release

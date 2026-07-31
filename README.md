@@ -1,99 +1,108 @@
-# AgentOperationsCockpit
+# Agent Operations Cockpit
 
-Dieses Projekt ist Teil des Workspaces **~/RiderProjects**.
+Agent Operations Cockpit (AOC) ist ein öffentliches C#/.NET-Level-2-Projekt zur
+nachvollziehbaren Beobachtung und späteren Steuerung agentischer
+Entwicklungsumgebungen. „Agentisch“ bedeutet hier: KI-Werkzeuge bearbeiten klar
+begrenzte Aufgaben mit dokumentierter Autorität, Evidence (prüfbaren
+Nachweisen) und menschlichen Stop-Gates.
 
-*This project is part of the **~/RiderProjects** workspace.*
+Der aktuelle Stand enthält ausschließlich die Wissens-, Governance- und
+Lastenheftgrundlage. Es gibt noch keinen Produktcode. Eine konkrete
+.NET-Version, ein Testframework, Logging, IPC (Kommunikation zwischen
+Prozessen), Native AOT und Hardwareadapter sind bewusst nicht festgelegt.
 
----
+*Agent Operations Cockpit (AOC) is a public C#/.NET level-2 project for the
+traceable observation and later control of agentic development environments.
+Here, “agentic” means that AI tools work on clearly bounded tasks with
+documented authority, evidence, and human stop gates.*
 
-## Über dieses Projekt / About this project
+*The current state contains only the knowledge, governance, and requirements
+baseline. No product code exists yet. The exact .NET version, test framework,
+logging, inter-process communication (IPC), Native AOT, and hardware adapters
+are intentionally undecided.*
 
-Dieses Projekt ist ein Level-2-Projekt im Workspace **~/RiderProjects**.
+## Zielgruppe und Qualitätsbaseline / Audience and quality baseline
 
-*This project is a level-2 project in the **~/RiderProjects** workspace.*
+Die Dokumentation richtet sich an Auszubildende der IHK-IT-Berufe ab dem ersten
+Ausbildungsjahr und an erfahrene Fachkräfte. Inhalte werden auf CEFR-B2-Niveau
+verfasst: Deutsch zuerst, danach terminologisch konsistentes Englisch.
+Fachbegriffe werden bei ihrem ersten relevanten Auftreten erklärt oder in einem
+zweisprachigen Glossar verankert.
 
----
+Für anwendbare Oberflächen und Dokumentationsmuster gilt WCAG 2.2 AA. Dazu
+gehören semantische Struktur, Tastaturbedienbarkeit, sichtbare Fokusführung,
+ausreichender Kontrast, Textalternativen und keine ausschließlich farbcodierte
+Bedeutung.
 
-## Für Entwickler / For Developers
+*The documentation serves apprentices in German IHK IT occupations from their
+first training year as well as experienced professionals. Content targets CEFR
+B2: German first, followed by terminologically consistent English. Technical
+terms are explained when first relevant or anchored in a bilingual glossary.*
 
-### Lokale Entwicklung / Local Development
+*WCAG 2.2 AA applies to relevant interfaces and documentation patterns. This
+includes semantic structure, keyboard operation, visible focus, sufficient
+contrast, text alternatives, and no meaning conveyed by colour alone.*
 
-#### 1. Abhängigkeiten installieren / Install dependencies
-[Befehl hier einfügen, z. B. `npm install` oder `dotnet restore`]
+## Aktueller Scope / Current scope
 
-#### 2. Projekt starten / Run project
-[Befehl hier einfügen, z. B. `npm start` oder `dotnet run`]
+Phase 2 erstellt zunächst:
 
-#### 3. Tests ausführen / Run tests
-[Befehl hier einfügen, z. B. `npm test` oder `dotnet test`]
+- eine eigenständige Programmquellen- und Constraint-Basis,
+- ein vollständiges Review-Findings-Ledger,
+- die Meta-Lastenhefte `META-LH-01` bis `META-LH-05`,
+- ein de-dupliziertes fachliches Lastenheft-Portfolio,
+- nachvollziehbare Reihenfolge-, Autonomie-, Review- und Evidence-Regeln.
 
----
+Specify-, Plan-, Tasks- und Implementierungsläufe sowie Produktcode sind bis zu
+den jeweiligen späteren Freigaben außerhalb dieses Scopes.
 
-## Spec-Kit Workflow (Specification-Driven Development)
+*Phase 2 first creates a self-contained source and constraint baseline, a full
+review-findings ledger, meta requirements `META-LH-01` through `META-LH-05`, a
+deduplicated domain requirements portfolio, and traceable sequencing,
+autonomy, review, and evidence rules. Specify, plan, task, and implementation
+runs, as well as product code, remain out of scope until separately approved.*
 
-Dieses Projekt nutzt **Spec-Kit** für die strukturierte Entwicklung von Features.
+## Governance und Spec Kit / Governance and Spec Kit
 
-*This project uses **Spec-Kit** for structured feature development.*
+Das Repository verwendet das Preset-Profil
+`intake-sequencing-eleven-governance-presets`. Es umfasst elf versionierte
+Security-, Architecture-, iSAQB-, Accessibility-, Cross-Platform-, Agent-
+Parity-, Intake- und Autonomie-Presets. `.specify/presets/.cache/` ist lokaler
+Cache und darf nicht veröffentlicht werden.
 
-1.  **Feature spezifizieren:** `speckit.specify "Mein neues Feature"`
-2.  **Fragen klären:** `speckit.clarify`
-3.  **Plan erstellen:** `speckit.plan`
-4.  **Tasks generieren:** `speckit.tasks`
-5.  **Implementieren:** `speckit.implement`
+Die Lastenheftreihenfolge steht in
+[`Lastenheft_Abarbeitungsreihenfolge.md`](Lastenheft_Abarbeitungsreihenfolge.md).
+Die Verfassung in [`constitution.md`](constitution.md) und die Agent-Guidance
+definieren die verbindlichen Qualitäts- und Sicherheitsgrenzen.
 
----
+*This repository uses the `intake-sequencing-eleven-governance-presets`
+profile, containing eleven versioned security, architecture, iSAQB,
+accessibility, cross-platform, agent-parity, intake, and autonomy presets. The
+`.specify/presets/.cache/` directory is a local cache and must not be
+published. The requirements order and repository constitution define the
+binding quality and security boundaries.*
 
-## Barrierefreiheit / Accessibility
+## Prüfen und beitragen / Validate and contribute
 
-Alle nutzerseitigen Artefakte werden textorientiert gepflegt und sollen mit Tastatur, Screenreader, Braille-Zeile und Textbrowser nutzbar bleiben. WCAG 2.2 Level AA ist die Basis, soweit die Kriterien auf das jeweilige Artefakt anwendbar sind.
+Vor einem Beitrag sind die Regeln in [`CONTRIBUTING.md`](CONTRIBUTING.md) und
+[`SECURITY.md`](SECURITY.md) zu lesen. Der lokale Homogenitätscheck lautet:
 
-*All user-facing artifacts are maintained in a text-oriented form and should remain usable with keyboard, screen readers, Braille displays, and text browsers. WCAG 2.2 Level AA is the baseline where the criteria apply to the artifact.*
-
----
-
-## Für Auszubildende / For IT Apprentices
-
-Dieses Projekt richtet sich ab dem ersten Ausbildungsjahr an
-Fachinformatiker*innen, IT-System-Elektroniker*innen, Kaufleute für
-IT-System-Management und Kaufleute für Digitalisierungsmanagement. Fachbegriffe
-werden beim ersten Auftreten erklärt; Spec-Kit-Erfahrung wird nicht
-vorausgesetzt. Abhängigkeiten, Zustände und Entscheidungen bleiben auch ohne
-visuelle Darstellung verständlich.
-
-*This project targets IT specialist apprentices, IT systems electronics
-technician apprentices, and both IT management occupations from their first
-training year. Technical terms are explained at first use; no prior Spec Kit
-experience is assumed. Dependencies, states, and decisions remain
-understandable without a visual-only representation.*
-
-In diesem Ordner schreibst du deinen eigentlichen Code. Hier sind ein paar wichtige Regeln für die Arbeit an diesem Projekt:
-
-### Sicherheit / Security
-- Der **pre-push Hook** ist aktiv. Er prüft bei jedem `git push`, ob du versehentlich Geheimnisse (Secrets) hochlädst.
-- Deine Konfiguration für KI-Agenten findest du in `AGENTS.md`, `CLAUDE.md`, `GEMINI.md` und `.github/copilot-instructions.md`.
-
-### Compliance
-Du kannst jederzeit prüfen, ob dein Projekt den Standards entspricht:
 ```bash
-bash scripts/check-homogeneity.sh .
+bash scripts/check-homogeneity.sh --json --fail-fast .
 ```
 
-### Hilfe holen / Get Help
-Nutze deine KI-Agenten direkt im Terminal, wenn du feststeckst:
-- `copilot -p "Erkläre mir diesen Code..."`
-- `claude "Wie schreibe ich einen Test für..."`
+Die CI meldet Restore, Build und Test ausdrücklich als `NotApplicable`, solange
+kein freigegebenes Produktprojekt existiert. Sobald ein Produkt-Scaffold
+hinzukommt, muss derselbe Workflow Restore, Build und Test tatsächlich
+ausführen; ein stilles Überspringen ist dann unzulässig.
 
----
+*Read `CONTRIBUTING.md` and `SECURITY.md` before contributing. CI reports
+restore, build, and test as `NotApplicable` while no approved product project
+exists. Once a product scaffold is added, the same workflow must actually run
+restore, build, and test; silent skipping is then forbidden.*
 
-## Dokumentation / Documentation
-- [CONSTITUTION.md](./constitution.md) — Die Regeln unseres Workspaces.
-- [STATS.md](./STATS.md) — Statistiken über dieses Projekt.
-- [docs/secure-development/](./docs/secure-development/) — Wiederverwendbare sichere-Entwicklung-Basis inkl. mitgeltender Dokumente und Verzahnungsdatei zu Checklisten und Spec-Kit-Presets. Die RL-SE-/Checklist-Selbstpruefung gilt unabhaengig von MSL; MSL-Status bleibt ein Pruefpunkt.
-- [.specify/presets/](./.specify/presets/) — Projektlokal installierte Spec-Kit-Governance-Presets, falls dieses Level-2-Projekt mit der zentralen Preset-Matrix vorbereitet wurde.
-- [docs/security/gsdb-self-assessment.md](./docs/security/gsdb-self-assessment.md) — GSDB-Preflight-Bericht, falls mit `check-gsdb-self-assessment.*` erzeugt.
-- [Lastenheft_GSDB-Spec-Kit-Intensivpruefung.md](./Lastenheft_GSDB-Spec-Kit-Intensivpruefung.md) — Intake fuer einen spaeter manuell gestarteten Spec-Kit-Lauf zur intensiven GSDB-Pruefung, falls vorhanden.
-- [Lastenheft_Abarbeitungsreihenfolge.md](./Lastenheft_Abarbeitungsreihenfolge.md) — Sichtbare Reihenfolge der `Lastenheft*.md`-Dateien fuer spaetere Spec-Kit-Laeufe, falls vorhanden.
+## Lizenz / License
 
----
+Dieses Repository steht unter der [MIT-Lizenz](LICENSE).
 
-<!-- EN: README.md contains bilingual setup and usage guidance for this level-2 project. -->
+*This repository is licensed under the [MIT License](LICENSE).*

@@ -59,7 +59,7 @@ Allows existing local changes in target repositories.
 pwsh scripts/prepare-secure-development-hardening.ps1 -WhatIf
 
 .EXAMPLE
-pwsh scripts/prepare-secure-development-hardening.ps1 -Repo /Users/thorstenhindermann/RiderProjects/TuiVision -WhatIf
+pwsh scripts/prepare-secure-development-hardening.ps1 -Repo /path/to/TuiVision -WhatIf
 
 .EXAMPLE
 pwsh scripts/prepare-secure-development-hardening.ps1 -HomeDir /Users/thorstenhindermann -Commit -Push

@@ -76,7 +76,7 @@ Allows existing local changes in target repositories.
 pwsh scripts/prepare-rl-se-checklist-selbstpruefung.ps1 -WhatIf
 
 .EXAMPLE
-pwsh scripts/prepare-rl-se-checklist-selbstpruefung.ps1 -Repo /Users/thorstenhindermann/RiderProjects/TuiVision -WhatIf
+pwsh scripts/prepare-rl-se-checklist-selbstpruefung.ps1 -Repo /path/to/TuiVision -WhatIf
 
 .EXAMPLE
 pwsh scripts/prepare-rl-se-checklist-selbstpruefung.ps1 -HomeDir /Users/thorstenhindermann -Commit -Push

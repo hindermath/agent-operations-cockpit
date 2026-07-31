@@ -15,6 +15,9 @@
 !STATS.md
 !constitution.md
 !Lastenheft*.md
+!LICENSE
+!SECURITY.md
+!CONTRIBUTING.md
 
 # --- Pflichtdateien: Git-Konfiguration / Required: Git config ---
 !.gitignore
@@ -93,8 +96,8 @@
 # --- OpenCode Spec-Kit Commands ---
 !.opencode/
 .opencode/*
-!.opencode/command/
-!.opencode/command/**
+!.opencode/commands/
+!.opencode/commands/**
 
 # --- Release Please ---
 !release-please-config.json
