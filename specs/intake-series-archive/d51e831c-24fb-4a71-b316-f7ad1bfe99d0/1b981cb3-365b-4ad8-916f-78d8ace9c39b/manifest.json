@@ -9,7 +9,7 @@
     {
       "path": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
       "role": "Primary",
-      "normalizedSha256": "99eab2565a73b3f1fe836feb89b543392360d3a5d56063c13fd28cf2f0a16704",
+      "normalizedSha256": "4429ca8c4c132fac83a840f5c29f8361a01c3c233e5805d4a0c4055931eb9fe7",
       "status": "Eligible"
     },
     {
@@ -51,7 +51,7 @@
     {
       "path": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
       "role": "OrderedMember",
-      "normalizedSha256": "75d6dd94d4e5b97de0ef43c62a0dd2ad7f68826665feca71e48610ae1eef523c",
+      "normalizedSha256": "8710c773207836d181c5e44ebe4e9290a25f8a8e995e21ae56cba7b1006ad2b4",
       "status": "Blocked"
     },
     {

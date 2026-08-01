@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "2.0",
+  "documentType": "IntakeReceipt",
+  "receiptId": "e62b0897-f3cd-4909-9fe2-494ea47bc54a",
+  "intakeId": "10c3fbdc-38f8-4e6c-b6ce-bd762f6cb2ee",
+  "generator": {
+    "preset": "intake-authoring-governance",
+    "version": "0.3.0"
+  },
+  "createdAt": "2026-07-31T19:50:00Z",
+  "operation": {
+    "operationId": "8995c8cc-ea66-4a7b-8cf4-7eaacbec7f8b",
+    "type": "Create",
+    "authorityEvidence": "User approved implementation of the Phase 2 plan and MergeAndSync on 2026-07-31."
+  },
+  "status": "NeedsClarification",
+  "target": {
+    "path": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+    "normalizedSha256": "8710c773207836d181c5e44ebe4e9290a25f8a8e995e21ae56cba7b1006ad2b4"
+  },
+  "sources": [
+    {
+      "sourceId": "SRC001",
+      "order": 1,
+      "kind": "File",
+      "label": "Self-contained AOC programme source pack",
+      "location": "Repository",
+      "path": "requirements/baseline/source-pack.md",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "a1a3907634c0903863d64031e5b6d7e4eb8818eea29bbf1bc2065a81d7a5bb93",
+      "gitBlob": "N/A",
+      "proofBoundary": "RepositoryAtCreation"
+    }
+  ],
+  "profile": "aoc-bilingual-requirements",
+  "languagePolicy": "GermanFirstAuthoritativeEnglishSecondCEFRB2",
+  "decisions": [
+    {
+      "id": "IAD201",
+      "status": "Open",
+      "question": "Resolve the material AOC decision IAD201.",
+      "answer": "N/A",
+      "evidence": "Named as an open decision in requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md."
+    },
+    {
+      "id": "IAD202",
+      "status": "Open",
+      "question": "Resolve the material AOC decision IAD202.",
+      "answer": "N/A",
+      "evidence": "Named as an open decision in requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md."
+    },
+    {
+      "id": "IAD203",
+      "status": "Open",
+      "question": "Resolve the material AOC decision IAD203.",
+      "answer": "N/A",
+      "evidence": "Named as an open decision in requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md."
+    }
+  ],
+  "openDecisionIds": [
+    "IAD201",
+    "IAD202",
+    "IAD203"
+  ],
+  "questionCount": 0,
+  "agentSurface": {
+    "specifyCanonicalId": "speckit.specify",
+    "specifyInvocation": "$speckit-specify",
+    "autonomousCanonicalId": "speckit.autonomous",
+    "autonomousInvocation": "$speckit-autonomous"
+  },
+  "deliveryAuthority": "MergeAndSync",
+  "authorityEvidence": "Explicit user approval for Phase 2 continuation with MergeAndSync and Admin-Bypass on 2026-07-31.",
+  "promptState": "Blocked",
+  "provenanceMode": "New",
+  "supersedes": {
+    "receiptPath": "N/A",
+    "targetNormalizedSha256": "N/A",
+    "archiveTargetPath": "N/A",
+    "archiveReceiptPath": "N/A"
+  },
+  "legacyAdoption": {
+    "evidenceType": "N/A",
+    "priorTargetNormalizedSha256": "N/A",
+    "priorGitBlob": "N/A"
+  },
+  "updateAuthorized": false,
+  "updateAuthorityEvidence": "N/A",
+  "series": {
+    "seriesId": "N/A",
+    "manifestPath": "N/A",
+    "order": "N/A",
+    "role": "N/A",
+    "supersedesIntakeIds": []
+  },
+  "nextAction": "Resolve the named open AOC decision IDs before review."
+}

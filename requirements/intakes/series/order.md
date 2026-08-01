@@ -21,7 +21,7 @@
 | 5 | `Lastenheft_META-LH-05-Erste-Welle.md` | Pending | neun fachliche Intakes |
 | 6 | `Lastenheft_RAW-01-Reference-Agentic-Workspace.md` | Pending | read-only Referenzslice |
 | 7 | `Lastenheft_RAW-03-State-Truthfulness.md` | Pending | Zustandssemantik |
-| 8 | `Lastenheft_RAW-02-Workspace-Orchestrator.md` | Blocked | Orchestration; IAD201–203 |
+| 8 | `Lastenheft_RAW-02-Workspace-Orchestrator.md` | Blocked | Orchestration; IAD201–203 bestätigt, wartet auf RAW-01/03 |
 | 9 | `Lastenheft_RAW-04-Presentation-Fabric.md` | Pending | zugängliche Projektionen |
 | 10 | `Lastenheft_RAW-05-Execution-Nodes.md` | Pending | Host-/Sandbox-Grenzen |
 | 11 | `Lastenheft_RAW-06-CLI-Environment-Orchestration.md` | Blocked | CLI; IAD601–604 |
@@ -55,9 +55,12 @@ is preferred only, so read-only node research may proceed earlier.*
 Aktuell ist META-LH-01 im Manifest ausdrücklich `Eligible`. RAW-05 besitzt keine
 bindende Vorgängerkante und ist strukturell ebenfalls eligible, bleibt aber
 `Pending` und auf read-only Research begrenzt. Das ist eine Auskunft, keine
-Review-, Specify- oder Ausführungsfreigabe. RAW-02, RAW-06, RAW-07 und RAW-09
-bleiben bis zu den im jeweiligen Intake genannten IAD-Decisions blockiert.
+Review-, Specify- oder Ausführungsfreigabe. IAD201–203 sind für RAW-02
+bestätigt; dessen Serien-Lifecycle bleibt bis zum Abschluss von RAW-01 und
+RAW-03 blockiert. RAW-06, RAW-07 und RAW-09 bleiben bis zu den im jeweiligen
+Intake genannten IAD-Decisions blockiert.
 
 *META-LH-01 is explicitly marked eligible. RAW-05 has no binding predecessor
-and is structurally eligible but remains pending and research-only. This is
-information, not authority.*
+and is structurally eligible but remains pending and research-only. IAD201
+through IAD203 are confirmed; RAW-02 remains blocked by the binding RAW-01 and
+RAW-03 sequence. This is information, not authority.*

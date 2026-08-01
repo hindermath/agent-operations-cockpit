@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "3484ab5e-f374-4a57-be11-6ff510277f22",
+  "mode": "Single",
+  "status": "NeedsRemediation",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-07-31T22:49:47Z",
+  "repository": {
+    "root": ".",
+    "head": "d81ca316f6a01599008363461dbf0060b497de29"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/meta-lh-01-programmquellen-2026-08-01.json",
+    "normalizedSha256": "7545da0398031e826179cb5552950adb0204c462a2beb0bd13e2dc2de362060c"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
+      "role": "Primary",
+      "normalizedSha256": "4429ca8c4c132fac83a840f5c29f8361a01c3c233e5805d4a0c4055931eb9fe7",
+      "gitBlob": "e21e94530c36a9cc5347ed1ab89e24bffcadf7b6"
+    }
+  ],
+  "findings": [
+    {
+      "id": "IR101",
+      "severity": "High",
+      "category": "LanguageAndTerminology",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-01",
+      "evidence": "The learner-facing profile requires complete German-first/English-second content and first-use explanations or glossary links. FR-002 through NFR-002, risks, and acceptance criteria are not consistently bilingual, while Spec Kit and programme terms remain unexplained despite the declared no-history audience.",
+      "reevaluationTrigger": "The target provides complete paired DE/EN content and explains technical and workflow terms on first use or links them explicitly to the glossary; the authoring receipt is then refreshed."
+    },
+    {
+      "id": "IR102",
+      "severity": "High",
+      "category": "PromptAlignment",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-01",
+      "evidence": "The normative scope excludes Specify, Plan, Tasks, Code, remote writes, and downstream Spec Kit authority, but the enabled autonomous prompt requests a full MergeAndSync run without equivalent no-implementation and no-remote boundaries.",
+      "reevaluationTrigger": "The autonomous prompt is disabled or constrained so that it cannot exceed the documented requirements-only write scope and separate start authority; prompt and refreshed receipt agree."
+    },
+    {
+      "id": "IR103",
+      "severity": "High",
+      "category": "RequirementsEvidence",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-01",
+      "evidence": "FR-002 requires RF-01 through RF-18 and new findings to carry owner, target, acceptance, positive and negative evidence, status, and residual gap. The additional RF-19 through RF-21 table omits explicit target, positive/negative evidence, and residual-gap fields.",
+      "reevaluationTrigger": "RF-19 through RF-21 satisfy every FR-002 field or FR-002 is explicitly and consistently revised; linked evidence and the target receipt are current."
+    },
+    {
+      "id": "IR104",
+      "severity": "Medium",
+      "category": "Applicability",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-01",
+      "evidence": "Public-content, authority, privacy, and accessibility boundaries are present, but platform and supply-chain applicability are neither declared applicable nor explicitly marked N/A for this documentation-only intake.",
+      "reevaluationTrigger": "Platform and supply-chain applicability are explicitly decided with a short rationale and reflected in acceptance or evidence where applicable."
+    }
+  ],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 3,
+    "medium": 1,
+    "low": 0
+  },
+  "supersedes": "N/A"
+}
