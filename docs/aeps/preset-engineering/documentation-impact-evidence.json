@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "1.0",
+  "feature": "aeps-preset-engineering-deferred-charter",
+  "entries": [
+    {
+      "changeId": "CHG001",
+      "scope": "Register the dormant AEPS Preset Engineering program contract in the level-0 system of record.",
+      "decision": "UpdateRequired",
+      "rationale": "The approved follow-up introduces a durable activation boundary, state contract, source selection, deliverables, and stop rules without activating the program.",
+      "documents": [
+        "docs/aeps/preset-engineering/README.md",
+        "docs/aeps/preset-engineering/activation-contract.json",
+        "docs/aeps/preset-engineering/activation-baselines/2026-08-01.json"
+      ],
+      "owner": "Level-0 AEPS Maintainer",
+      "evidence": "docs/aeps/preset-engineering/activation-baselines/2026-08-01.json",
+      "risk": "N/A",
+      "criticality": "Normal"
+    }
+  ]
+}
