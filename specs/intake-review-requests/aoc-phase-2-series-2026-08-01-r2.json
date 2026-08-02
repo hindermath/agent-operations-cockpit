@@ -1,0 +1,162 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "8d193d13-f8ca-4c5e-a3f9-e3f3da89cdcb",
+  "mode": "Series",
+  "policy": "aoc-bilingual-requirements",
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
+      "role": "Primary"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "role": "OrderedMember"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "role": "OrderedMember"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "role": "OrderedMember"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "role": "OrderedMember"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "role": "OrderedMember"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "role": "OrderedMember"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "role": "OrderedMember"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "role": "OrderedMember"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "role": "OrderedMember"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "role": "OrderedMember"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "role": "OrderedMember"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "role": "OrderedMember"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+      "role": "OrderedMember"
+    }
+  ],
+  "series": {
+    "orderedTargetPaths": [
+      "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
+      "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md"
+    ],
+    "roots": [
+      "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md"
+    ],
+    "dependencies": [
+      {
+        "from": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
+        "to": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+        "kind": "RequirementsGovernanceGate"
+      },
+      {
+        "from": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+        "to": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+        "kind": "RequirementsGovernanceGate"
+      },
+      {
+        "from": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+        "to": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+        "kind": "HardCompletionGate"
+      },
+      {
+        "from": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+        "to": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+        "kind": "HardCompletionGate"
+      },
+      {
+        "from": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+        "to": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+        "kind": "RequirementsGovernanceGate"
+      },
+      {
+        "from": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+        "to": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+        "kind": "HardCompletionGate"
+      },
+      {
+        "from": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+        "to": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+        "kind": "HardCompletionGate"
+      },
+      {
+        "from": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+        "to": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+        "kind": "HardCompletionGate"
+      },
+      {
+        "from": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+        "to": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+        "kind": "PreferredSerialOrder"
+      },
+      {
+        "from": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+        "to": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+        "kind": "HardCompletionGate"
+      },
+      {
+        "from": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+        "to": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+        "kind": "HardCompletionGate"
+      },
+      {
+        "from": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+        "to": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+        "kind": "AssessmentBaseline"
+      },
+      {
+        "from": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+        "to": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+        "kind": "HardCompletionGate"
+      },
+      {
+        "from": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+        "to": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+        "kind": "FinalAuditInput"
+      }
+    ]
+  },
+  "campaign": {
+    "manifestPath": "N/A",
+    "workers": [],
+    "operatorExceptions": []
+  }
+}

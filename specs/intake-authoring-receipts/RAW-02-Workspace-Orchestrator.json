@@ -1,27 +1,90 @@
 {
   "schemaVersion": "2.0",
   "documentType": "IntakeReceipt",
-  "receiptId": "e62b0897-f3cd-4909-9fe2-494ea47bc54a",
+  "receiptId": "56ddb001-112a-4632-a6df-7731f651eeed",
   "intakeId": "10c3fbdc-38f8-4e6c-b6ce-bd762f6cb2ee",
   "generator": {
     "preset": "intake-authoring-governance",
     "version": "0.3.0"
   },
-  "createdAt": "2026-07-31T19:50:00Z",
+  "createdAt": "2026-08-01T12:39:59Z",
   "operation": {
-    "operationId": "8995c8cc-ea66-4a7b-8cf4-7eaacbec7f8b",
-    "type": "Create",
-    "authorityEvidence": "User approved implementation of the Phase 2 plan and MergeAndSync on 2026-07-31."
+    "operationId": "b9f65ae1-0992-4224-a318-0564c3d0fd3c",
+    "type": "Update",
+    "authorityEvidence": "User explicitly authorised repair of only IR201 and IR202 for RAW-02 on 2026-08-01, required a complete re-review, preserved IAD201-IAD203, scope, dependencies, and delivery authority, and excluded Specify, implementation, remote, merge, and bypass actions."
   },
-  "status": "NeedsClarification",
+  "status": "ReadyForReview",
   "target": {
     "path": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
-    "normalizedSha256": "8710c773207836d181c5e44ebe4e9290a25f8a8e995e21ae56cba7b1006ad2b4"
+    "normalizedSha256": "7b2f4241e92c9dba5eb6b420d98d587b34ffe6a6ee5e607762125687a334c4e6"
   },
   "sources": [
     {
       "sourceId": "SRC001",
       "order": 1,
+      "kind": "File",
+      "label": "Superseded RAW-02 intake as first binding repair source",
+      "location": "Repository",
+      "path": "specs/intake-authoring-archive/10c3fbdc-38f8-4e6c-b6ce-bd762f6cb2ee/b9f65ae1-0992-4224-a318-0564c3d0fd3c/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "75d6dd94d4e5b97de0ef43c62a0dd2ad7f68826665feca71e48610ae1eef523c",
+      "gitBlob": "N/A",
+      "proofBoundary": "RepositoryArchiveAtRepair"
+    },
+    {
+      "sourceId": "SRC002",
+      "order": 2,
+      "kind": "File",
+      "label": "Current Single review authorising bounded IR201 and IR202 repair",
+      "location": "Repository",
+      "path": "specs/intake-review-results/raw-02-workspace-orchestrator-2026-08-01.json",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "99707cff4c4921827befdc934dd8e74bf4054bc772769202954d44e0793c4f35",
+      "gitBlob": "N/A",
+      "proofBoundary": "RepositoryAtRepairAuthorization"
+    },
+    {
+      "sourceId": "SRC003",
+      "order": 3,
+      "kind": "File",
+      "label": "Readable RAW-02 review evidence for IR201 and IR202",
+      "location": "Repository",
+      "path": "docs/reviews/raw-02-workspace-orchestrator-intake-review-2026-08-01.md",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "3385248e88a26652962aaa761342b79099fc32f6019c7944ec0a698512c55cb1",
+      "gitBlob": "N/A",
+      "proofBoundary": "RepositoryAtRepairAuthorization"
+    },
+    {
+      "sourceId": "SRC004",
+      "order": 4,
       "kind": "File",
       "label": "Self-contained AOC programme source pack",
       "location": "Repository",
@@ -38,7 +101,7 @@
       "rawSha256": "N/A",
       "normalizedSha256": "a1a3907634c0903863d64031e5b6d7e4eb8818eea29bbf1bc2065a81d7a5bb93",
       "gitBlob": "N/A",
-      "proofBoundary": "RepositoryAtCreation"
+      "proofBoundary": "RepositoryAtRepair"
     }
   ],
   "profile": "aoc-bilingual-requirements",
@@ -46,61 +109,57 @@
   "decisions": [
     {
       "id": "IAD201",
-      "status": "Open",
-      "question": "Resolve the material AOC decision IAD201.",
-      "answer": "N/A",
-      "evidence": "Named as an open decision in requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md."
+      "status": "Answered",
+      "question": "Which IPC and process contract belongs to RAW-02?",
+      "answer": "Option A: RAW-02 owns the transport-neutral invocation, response, event, cancellation, and lifecycle contract; RAW-06 owns the concrete process API and transport choice.",
+      "evidence": "Thorsten selected option A in the current task; review 8d193d13-f8ca-4c5e-a3f9-e3f3da89cdcb records the bounded repository remediation."
     },
     {
       "id": "IAD202",
-      "status": "Open",
-      "question": "Resolve the material AOC decision IAD202.",
-      "answer": "N/A",
-      "evidence": "Named as an open decision in requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md."
+      "status": "Answered",
+      "question": "Which Session Context data is volatile or persistent, and how are versioning, recovery, and invalidation handled?",
+      "answer": "Option A: only explicit focus and routing choices with schema version may persist; in-flight commands, cancellation handles, and derived projections remain volatile; unknown versions or invalid dependencies discard context fail-closed, while RAW-03 retains state semantics.",
+      "evidence": "Thorsten selected option A in the current task; review 8d193d13-f8ca-4c5e-a3f9-e3f3da89cdcb records the bounded repository remediation."
     },
     {
       "id": "IAD203",
-      "status": "Open",
-      "question": "Resolve the material AOC decision IAD203.",
-      "answer": "N/A",
-      "evidence": "Named as an open decision in requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md."
+      "status": "Answered",
+      "question": "How do command ordering, deduplication, retry, cancellation, and non-idempotent actions behave?",
+      "answer": "Option A: commands are ordered per session and bind correlation and idempotency keys; deduplication and automatic retry apply only to explicit idempotent actions; cancellation is terminal and visible; non-idempotent actions are never replayed automatically; mutating commands wait for the completed read-only slice.",
+      "evidence": "Thorsten selected option A in the current task; review 8d193d13-f8ca-4c5e-a3f9-e3f3da89cdcb records the bounded repository remediation."
     }
   ],
-  "openDecisionIds": [
-    "IAD201",
-    "IAD202",
-    "IAD203"
-  ],
+  "openDecisionIds": [],
   "questionCount": 0,
   "agentSurface": {
     "specifyCanonicalId": "speckit.specify",
-    "specifyInvocation": "$speckit-specify",
+    "specifyInvocation": "$speckit-specify requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md --bind-exact-intake --no-implementation --no-remote-writes",
     "autonomousCanonicalId": "speckit.autonomous",
-    "autonomousInvocation": "$speckit-autonomous"
+    "autonomousInvocation": "$speckit-autonomous requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md --delivery-mode LocalImplementation --require-current-review"
   },
-  "deliveryAuthority": "MergeAndSync",
-  "authorityEvidence": "Explicit user approval for Phase 2 continuation with MergeAndSync and Admin-Bypass on 2026-07-31.",
-  "promptState": "Blocked",
-  "provenanceMode": "New",
+  "deliveryAuthority": "LocalImplementation",
+  "authorityEvidence": "This repair is local documentation work only. The user explicitly excluded Specify, implementation, remote writes, merge, and bypass; LocalImplementation remains the unchanged non-remote handoff ceiling and grants no current downstream start authority.",
+  "promptState": "Enabled",
+  "provenanceMode": "Supersession",
   "supersedes": {
-    "receiptPath": "N/A",
-    "targetNormalizedSha256": "N/A",
-    "archiveTargetPath": "N/A",
-    "archiveReceiptPath": "N/A"
+    "receiptPath": "specs/intake-authoring-archive/10c3fbdc-38f8-4e6c-b6ce-bd762f6cb2ee/b9f65ae1-0992-4224-a318-0564c3d0fd3c/RAW-02-Workspace-Orchestrator.json",
+    "targetNormalizedSha256": "75d6dd94d4e5b97de0ef43c62a0dd2ad7f68826665feca71e48610ae1eef523c",
+    "archiveTargetPath": "specs/intake-authoring-archive/10c3fbdc-38f8-4e6c-b6ce-bd762f6cb2ee/b9f65ae1-0992-4224-a318-0564c3d0fd3c/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+    "archiveReceiptPath": "specs/intake-authoring-archive/10c3fbdc-38f8-4e6c-b6ce-bd762f6cb2ee/b9f65ae1-0992-4224-a318-0564c3d0fd3c/RAW-02-Workspace-Orchestrator.json"
   },
   "legacyAdoption": {
     "evidenceType": "N/A",
     "priorTargetNormalizedSha256": "N/A",
     "priorGitBlob": "N/A"
   },
-  "updateAuthorized": false,
-  "updateAuthorityEvidence": "N/A",
+  "updateAuthorized": true,
+  "updateAuthorityEvidence": "User explicitly requested repair of only IR201 and IR202, preservation of IAD201-IAD203, scope, dependencies, and delivery authority, and a complete RAW-02 re-review on 2026-08-01.",
   "series": {
-    "seriesId": "N/A",
-    "manifestPath": "N/A",
-    "order": "N/A",
-    "role": "N/A",
+    "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+    "manifestPath": "specs/intake-series/aoc-phase-2/manifest.json",
+    "order": 8,
+    "role": "OrderedMember",
     "supersedesIntakeIds": []
   },
-  "nextAction": "Resolve the named open AOC decision IDs before review."
+  "nextAction": "$speckit-intake-review requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md"
 }

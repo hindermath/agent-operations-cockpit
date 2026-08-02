@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "1207c518-c097-44b9-92e8-33786181be2b",
+  "mode": "Single",
+  "status": "NeedsRemediation",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-07-31T23:53:59Z",
+  "repository": {
+    "root": ".",
+    "head": "d81ca316f6a01599008363461dbf0060b497de29"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-02-workspace-orchestrator-2026-08-01.json",
+    "normalizedSha256": "dbe4067361c3ebc47efa02282d88d00ab835ec30f21014a19e6759ce7c659377"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "role": "Primary",
+      "normalizedSha256": "75d6dd94d4e5b97de0ef43c62a0dd2ad7f68826665feca71e48610ae1eef523c",
+      "gitBlob": "N/A"
+    }
+  ],
+  "findings": [
+    {
+      "id": "IR201",
+      "severity": "High",
+      "category": "LanguageAndTerminology",
+      "target": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-02",
+      "evidence": "The learner-facing intake declares German-first English-second CEFR B2, but scope, sources, several requirements, acceptance criteria, and revision text lack complete English counterparts. IPC, Correlation ID, Idempotency Key, fail-closed, Session Context, Capability, and Cancellation Handle are not explained on first use or linked to the glossary.",
+      "reevaluationTrigger": "Every normative section has a complete German/English pair and first-use explanations or a precise bilingual glossary link, followed by a complete Single re-review."
+    },
+    {
+      "id": "IR202",
+      "severity": "High",
+      "category": "CrossCuttingApplicability",
+      "target": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-02",
+      "evidence": "The intake mentions Security and text status parity but does not explicitly decide privacy, WCAG 2.2 AA, platform and cross-platform behaviour, or software supply-chain applicability. The process, persistence, routing, and command scope makes these applicability decisions material, and no measurable acceptance or evidence covers them.",
+      "reevaluationTrigger": "Security, privacy, accessibility, platform, and supply-chain applicability plus measurable positive and negative evidence are stated without changing IAD201-IAD203 or delivery authority, followed by a complete Single re-review."
+    }
+  ],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 2,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "N/A"
+}

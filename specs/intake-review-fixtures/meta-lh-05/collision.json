@@ -1,0 +1,17 @@
+{
+  "fixtureId": "META05-FX-COLLISION",
+  "presenceState": "Collision",
+  "currentAuthority": true,
+  "criteria": {
+    "authority": "does-not-authorize-overwrite",
+    "sideEffects": "would-overwrite-active-target",
+    "reversibility": "not-proven",
+    "writeScope": "collides-with-existing-wave",
+    "decisions": "identity-or-hash-conflict",
+    "integration": "forbidden",
+    "review": "drift-detected",
+    "abort": "required",
+    "recovery": "separate-repair-or-update-authority"
+  },
+  "expectedOutcome": "Blocked"
+}

@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "2.0",
+  "documentType": "IntakeReceipt",
+  "receiptId": "8776054c-e122-462f-ba7e-967fa89fc2b8",
+  "intakeId": "00365f2e-65e7-462e-8a8e-cdc74040f729",
+  "generator": {
+    "preset": "intake-authoring-governance",
+    "version": "0.3.0"
+  },
+  "createdAt": "2026-07-31T19:50:00Z",
+  "operation": {
+    "operationId": "41ee514e-c58c-4386-99cc-7d9aaf1773f6",
+    "type": "Create",
+    "authorityEvidence": "User approved implementation of the Phase 2 plan and MergeAndSync on 2026-07-31."
+  },
+  "status": "ReadyForReview",
+  "target": {
+    "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+    "normalizedSha256": "1a1ece08c4be3204d5e4a63b2af4c639d54b3ed424427d5fef010db43a048dce"
+  },
+  "sources": [
+    {
+      "sourceId": "SRC001",
+      "order": 1,
+      "kind": "File",
+      "label": "Self-contained AOC programme source pack",
+      "location": "Repository",
+      "path": "requirements/baseline/source-pack.md",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "a1a3907634c0903863d64031e5b6d7e4eb8818eea29bbf1bc2065a81d7a5bb93",
+      "gitBlob": "N/A",
+      "proofBoundary": "RepositoryAtCreation"
+    }
+  ],
+  "profile": "aoc-bilingual-requirements",
+  "languagePolicy": "GermanFirstAuthoritativeEnglishSecondCEFRB2",
+  "decisions": [],
+  "openDecisionIds": [],
+  "questionCount": 0,
+  "agentSurface": {
+    "specifyCanonicalId": "speckit.specify",
+    "specifyInvocation": "$speckit-specify requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md --bind-exact-intake --no-implementation --no-remote-writes",
+    "autonomousCanonicalId": "speckit.autonomous",
+    "autonomousInvocation": "$speckit-autonomous requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md --delivery-mode MergeAndSync --require-current-review"
+  },
+  "deliveryAuthority": "MergeAndSync",
+  "authorityEvidence": "Explicit user approval for Phase 2 continuation with MergeAndSync and Admin-Bypass on 2026-07-31.",
+  "promptState": "Enabled",
+  "provenanceMode": "New",
+  "supersedes": {
+    "receiptPath": "N/A",
+    "targetNormalizedSha256": "N/A",
+    "archiveTargetPath": "N/A",
+    "archiveReceiptPath": "N/A"
+  },
+  "legacyAdoption": {
+    "evidenceType": "N/A",
+    "priorTargetNormalizedSha256": "N/A",
+    "priorGitBlob": "N/A"
+  },
+  "updateAuthorized": false,
+  "updateAuthorityEvidence": "N/A",
+  "series": {
+    "seriesId": "N/A",
+    "manifestPath": "N/A",
+    "order": "N/A",
+    "role": "N/A",
+    "supersedesIntakeIds": []
+  },
+  "nextAction": "$speckit-intake-review requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md"
+}

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesOperation",
+  "operationId": "8eac403f-089c-4934-b185-c34c832b83fe",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "type": "Update",
+  "status": "Published",
+  "authorityEvidence": "Thorsten explicitly authorised this bounded Series update on 2026-08-01: set META-LH-02 to Completed only while its Ready Single review remains current, declare META-LH-03 as the sole Eligible target, keep RAW-05 Pending and research-only, preserve order, roots, dependencies, every other lifecycle value and all intake content, archive the predecessor, and refresh Receipt and hash bindings. Review, Specify, implementation, remote writes, merge, and bypass remain excluded.",
+  "proposalNormalizedSha256": "6040348d35619650b8aab2bddd0908971bf93ae48756a375bf5093798e6898bd",
+  "preparedPaths": [
+    "specs/intake-series/aoc-phase-2/manifest.json",
+    "specs/intake-series-receipts/aoc-phase-2.json",
+    "requirements/intakes/series/order.md"
+  ],
+  "documentationImpact": {
+    "decision": "UpdateRequired",
+    "source": "Thorsten's bounded META-LH-02 completion and META-LH-03 eligibility authority from 2026-08-01",
+    "owner": "AOC Phase 2 intake series",
+    "documents": [
+      "specs/intake-series/aoc-phase-2/manifest.json",
+      "specs/intake-series-receipts/aoc-phase-2.json",
+      "requirements/intakes/series/order.md"
+    ],
+    "evidence": [
+      "specs/intake-review-results/meta-lh-02-portfolio-ownership-2026-08-01-r2.json",
+      "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/8eac403f-089c-4934-b185-c34c832b83fe/"
+    ]
+  },
+  "reviewInvalidation": {
+    "status": "Superseded",
+    "results": [
+      "specs/intake-review-results/aoc-phase-2-series.json",
+      "specs/intake-review-results/aoc-phase-2-series-2026-08-01-r2.json"
+    ],
+    "reason": "The lifecycle progression changes the Series-manifest hash. Historic Series results remain immutable evidence and are not current for this successor manifest; the current META-LH-02 Ready Single result remains valid because no intake target changed."
+  },
+  "validation": {
+    "bash": "Passed",
+    "powerShell": "Passed"
+  },
+  "publication": {
+    "status": "Published",
+    "publishedPaths": [
+      "specs/intake-series/aoc-phase-2/manifest.json"
+    ]
+  }
+}

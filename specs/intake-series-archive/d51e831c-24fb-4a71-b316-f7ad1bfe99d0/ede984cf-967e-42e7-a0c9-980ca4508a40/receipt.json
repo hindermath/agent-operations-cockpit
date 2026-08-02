@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "4716c863-e37d-470b-9487-c429ffd57d0c",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.2"
+  },
+  "createdAt": "2026-08-01T21:08:35Z",
+  "operation": {
+    "operationId": "79ccec01-e805-4849-852b-d944c0e051f1",
+    "type": "Update",
+    "authorityEvidence": "Thorsten authorised on 2026-08-01 repair of IR501 through IR505 for META-LH-05, renewal of its Authoring Receipt and Series hash binding, and a complete re-review. Purpose, nine-domain wave intent, scope, non-goals, dependencies, order, roots, lifecycle values, and Delivery Authority remain unchanged. Specify, implementation, remote writes, merge, and bypass are excluded."
+  },
+  "status": "NeedsClarification",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "d56e49fbad6a7a6444ad5964a1f7a78058b15b11c1044acea21c65aeb1307046"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/79ccec01-e805-4849-852b-d944c0e051f1/receipt.json",
+    "receiptNormalizedSha256": "440dacf5a98546b4a5aa701ca99c3fc385b9f5271cd811d1004446b8dc4d9b95",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/79ccec01-e805-4849-852b-d944c0e051f1/manifest.json",
+    "manifestArchiveSha256": "f1b61ef86f473c2f8f21bb6522ffd250b35dd7d0d31781a0dced0f267f6db000"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-review requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md"
+}

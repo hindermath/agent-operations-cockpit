@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "FirstWaveAuthoringContract",
+  "requiredSeries": [
+    "RAW-01",
+    "RAW-02",
+    "RAW-03",
+    "RAW-04",
+    "RAW-05",
+    "RAW-06",
+    "RAW-07",
+    "RAW-08",
+    "RAW-09"
+  ],
+  "concernOwnership": {
+    "requiredConcernOwnersPerConcern": 1,
+    "allowsMetaGovernanceOwners": true,
+    "forbidsDuplicateConcernOwners": true
+  },
+  "reentryPolicy": {
+    "AllAbsentWithCurrentAuthority": "CreateAtomic",
+    "AllAbsentWithoutCurrentAuthority": "Blocked",
+    "AllMatching": "VerifyOnly",
+    "Partial": "Blocked",
+    "Collision": "Blocked"
+  },
+  "eligibilityContract": "requirements/baseline/series-eligibility-contract.json",
+  "eligibilityCriteria": [
+    "authority",
+    "sideEffects",
+    "reversibility",
+    "writeScope",
+    "decisions",
+    "integration",
+    "review",
+    "abort",
+    "recovery"
+  ],
+  "evidence": {
+    "ownershipContract": "requirements/baseline/portfolio-ownership.json",
+    "ownershipView": "requirements/baseline/portfolio-ownership.md",
+    "coverageMatrix": "requirements/baseline/coverage-matrix.md",
+    "seriesManifest": "specs/intake-series/aoc-phase-2/manifest.json",
+    "receiptDirectory": "specs/intake-authoring-receipts"
+  }
+}

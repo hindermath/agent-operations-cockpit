@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "5c74dd0e-ae09-41b1-affd-cc52ff449899",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.2"
+  },
+  "createdAt": "2026-08-01T13:22:33Z",
+  "operation": {
+    "operationId": "851b053d-2ff3-4045-a539-2f1b65de8fca",
+    "type": "Update",
+    "authorityEvidence": "Thorsten explicitly authorised only the bounded RAW-01 Package A update for IAD101 through IAD103; only the mechanically required RAW-01 target hash binding changes, while scope, non-goals, order, roots, dependencies, lifecycle, and delivery authority remain unchanged."
+  },
+  "status": "NeedsClarification",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "b45fffe0e800323b767b8adab442933c67a888bdf885c10b4a53479825a38418"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/851b053d-2ff3-4045-a539-2f1b65de8fca/receipt.json",
+    "receiptNormalizedSha256": "26809c3628b92b9d977626e2a61e7324d45ba97fafe208f5faf16d06669d7353",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/851b053d-2ff3-4045-a539-2f1b65de8fca/manifest.json",
+    "manifestArchiveSha256": "a5009601cf855311f1882b65c5e5450e10b122173f7a3be3c8491df9b72ef29f"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-review requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md"
+}

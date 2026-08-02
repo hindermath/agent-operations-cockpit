@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "f770d461-f4bc-4620-972f-44f409d5c3e9",
+  "mode": "Single",
+  "status": "NeedsRemediation",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-01T15:33:56Z",
+  "repository": {
+    "root": ".",
+    "head": "ddba7482163c7e61161ad0b90f4e019844335898"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/meta-lh-02-portfolio-ownership-2026-08-01.json",
+    "normalizedSha256": "1303bb979f65bb38ce8bcd506151f46740572016dd6c852e2456d48c3cfdb00a"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "role": "Primary",
+      "normalizedSha256": "87881c25c98a26c63eabd550731862beea5d494b41def5b7622e1c535d36841f",
+      "gitBlob": "b9b870dc6f08b83910c66ab13a0f71d5cebcf2af"
+    }
+  ],
+  "findings": [
+    {
+      "id": "IR201",
+      "severity": "High",
+      "category": "LanguageAndTerminology",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-02",
+      "evidence": "The learner-facing profile requires complete German-first/English-second pairs, first-use explanations or an explicit glossary link, and text-first status, decisions, dependencies, and next action. Sources, scope, requirements, acceptance, evidence, and revision content are not consistently bilingual; Concern, Owner series, Handoff, Non-Ownership, Decision Intake, DAG, and manual-assisted remain unexplained; the current decision state and review-only next action are not stated as ordered text.",
+      "reevaluationTrigger": "The target provides complete paired DE/EN content, explains or links every required first-use term, and states authoring status, series lifecycle, decision state, dependency, and review-only next action explicitly; the authoring receipt is refreshed."
+    },
+    {
+      "id": "IR202",
+      "severity": "High",
+      "category": "PromptAlignment",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-02",
+      "evidence": "The normative boundary grants no implementation, scheduling, parallelism, or downstream execution authority, but the enabled Autonomous prompt requests MergeAndSync without an equivalent no-implementation/no-remote boundary or a fail-closed requirement for separate current start, scope, remote, merge, and bypass authority. The receipt's historic delivery authority is not current execution authority.",
+      "reevaluationTrigger": "The Autonomous prompt is disabled or scope-equivalent and explicitly requires separate current downstream authority; prompt, non-authority text, and refreshed receipt agree."
+    },
+    {
+      "id": "IR203",
+      "severity": "High",
+      "category": "RequirementsEvidence",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-02",
+      "evidence": "FR-002 and FR-003 require per-series system boundaries, child intakes, inputs/outputs, gates, modes, and handoffs with producer, consumer, version, and failure behavior. The portfolio matrix does not expose these fields completely. AC-002 promises an automatic DAG check and the Evidence section promises duplicate-owner and cycle fixtures, but no bound validator, fixture paths, commands, or results exist for this portfolio graph.",
+      "reevaluationTrigger": "The portfolio artifacts satisfy every FR-002/FR-003 field and bind executable positive and negative DAG/ownership validation with named fixture paths, commands, and current results."
+    },
+    {
+      "id": "IR204",
+      "severity": "High",
+      "category": "OwnershipAndDecisionConsistency",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-02",
+      "evidence": "The target claims ownership of RF-06 through RF-09, while the findings ledger assigns domain owners for RF-06 through RF-08 and only RF-09 to META-LH-02. The portfolio and open-decision map still describe RAW-01 TFM/snapshot and RAW-02 IAD201-IAD203 topics as open although current reviewed RAW-01/RAW-02 targets and the readable series order record confirmed choices. The portfolio graph also does not distinguish binding from preferred edges as FR-004 requires.",
+      "reevaluationTrigger": "Ownership statements, portfolio rows, decision map, reviewed RAW targets, and typed graph edges are reconciled to one current, non-contradictory source of truth with explicit supersession where identifiers changed."
+    },
+    {
+      "id": "IR205",
+      "severity": "Medium",
+      "category": "Applicability",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-02",
+      "evidence": "Accessibility and B2 requirements are present, but security, privacy, public-content boundaries, platform applicability, and supply-chain applicability are neither required nor explicitly marked N/A with a rationale and re-evaluation trigger for this documentation-only intake.",
+      "reevaluationTrigger": "Security, privacy, public-content, platform, and supply-chain applicability are explicitly decided, justified, and connected to evidence or a re-evaluation trigger."
+    }
+  ],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 4,
+    "medium": 1,
+    "low": 0
+  },
+  "supersedes": "N/A"
+}

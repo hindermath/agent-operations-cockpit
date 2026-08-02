@@ -1,32 +1,32 @@
 {
   "schemaVersion": "1.0",
   "documentType": "IntakeSeriesReceipt",
-  "receiptId": "76eb134d-21e3-4919-bcbe-3d741cfefb2f",
+  "receiptId": "f5cfab35-8e1f-4a87-b593-18e074cdcc44",
   "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
   "generator": {
     "preset": "intake-sequencing-governance",
     "version": "0.2.2"
   },
-  "createdAt": "2026-07-31T19:55:00Z",
+  "createdAt": "2026-08-02T09:47:31Z",
   "operation": {
-    "operationId": "7630652b-b7cd-4815-8f8d-c64b3e9ff5e1",
-    "type": "Create",
-    "authorityEvidence": "Explicit user approval for Phase 2 implementation and MergeAndSync on 2026-07-31."
+    "operationId": "a76dccaf-8917-4a20-860b-21588e751841",
+    "type": "Update",
+    "authorityEvidence": "Thorsten explicitly approved the recommended formal supersession on 2026-08-02. This Series update renews only the META-LH-04 target hash after correction of its stale current-context paragraph and Authoring Receipt provenance. Fourteen targets, one root, fourteen dependencies, exact order, every lifecycle value, RAW-05 research-only scope, Delivery Authority, and all other intake contents remain unchanged. Specify, implementation, presets, promotion, remote writes, merge, bypass, and provider administration are excluded."
   },
   "status": "NeedsClarification",
   "manifest": {
     "path": "specs/intake-series/aoc-phase-2/manifest.json",
-    "normalizedSha256": "a9c55c7f7a2a087950695347360c8440c65aab58d2dabd3ef9d7faa8aed53779"
+    "normalizedSha256": "15ac795d2c9737896f41cd183fe9c21d39b5374f1661b9ecda0eea5ffc344f85"
   },
   "supersedes": {
-    "receiptPath": "N/A",
-    "receiptNormalizedSha256": "N/A",
-    "manifestArchivePath": "N/A",
-    "manifestArchiveSha256": "N/A"
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/a76dccaf-8917-4a20-860b-21588e751841/receipt.json",
+    "receiptNormalizedSha256": "dfff1c8b2b3c3f3eef3e508f2bb70214e2dc625e8db227bb578d6f6fe41c6aad",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/a76dccaf-8917-4a20-860b-21588e751841/manifest.json",
+    "manifestArchiveSha256": "d408a26f5141bf4011ffdd2e02f32f122286217293d285530c38e742c04b120f"
   },
   "tombstone": {
     "path": "N/A",
     "normalizedSha256": "N/A"
   },
-  "nextAction": "Resolve blocked IAD decisions, then run speckit-intake-series-status."
+  "nextAction": "$speckit-intake-series-status"
 }

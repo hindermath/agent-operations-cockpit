@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "164cbc84-46e3-466e-a3ac-f53c45cf2d48",
+  "mode": "Single",
+  "status": "NeedsRemediation",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-01T17:33:02Z",
+  "repository": {
+    "root": ".",
+    "head": "ddba7482163c7e61161ad0b90f4e019844335898"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/meta-lh-03-authoring-contract-2026-08-01.json",
+    "normalizedSha256": "fe9a1ea8a390e16984e1d1d16bc6710a32f0fbd4d2be21db918717fd60f3cae8"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "role": "Primary",
+      "normalizedSha256": "456a1ca78c2d45e2f2447fc2e2cf44852f583bf62a6b2beab788c403e088bc93",
+      "gitBlob": "dca814fa434cb86de93edba0994b88066ed653e0"
+    }
+  ],
+  "findings": [
+    {
+      "id": "IR301",
+      "severity": "High",
+      "category": "LanguageAndTerminology",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-03",
+      "evidence": "The learner-facing profile requires complete German-first/English-second pairs, first-use explanations or a precise glossary link, and text-first status, dependencies, decisions, and next action. Sources, scope, requirements, dependencies, acceptance, evidence, and revision are not consistently paired. Receipt, provenance, review handoff, prompt binding, normalized hash, material decision, Blocked marker, serial-autonomous, manual-assisted, operation receipt, and clean tree remain unexplained. The target does not state that META-LH-01 and META-LH-02 are Completed, META-LH-03 is Eligible, no material decision is open, and Single review is the only next action.",
+      "reevaluationTrigger": "Every normative section is fully paired DE/EN, required first-use terms are explained locally or linked precisely, and current status, predecessor state, decision state, and review-only next action are stated as ordered text; the Authoring Receipt is refreshed."
+    },
+    {
+      "id": "IR302",
+      "severity": "High",
+      "category": "PromptAlignment",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-03",
+      "evidence": "The enabled Autonomous prompt requests MergeAndSync while the target's non-authority text does not exclude remote writes, merge, bypass, provider administration, or implicit downstream start. The Receipt records historic MergeAndSync and Admin-Bypass authority from 2026-07-31, but neither that stored ceiling nor Eligibility is current execution authority. No fail-closed precondition requires a separate current scope, implementation, remote, merge, and bypass decision.",
+      "reevaluationTrigger": "The Autonomous prompt is disabled or scope-equivalent to the normative boundary and explicitly fails closed without separate current downstream authority; target and refreshed Receipt agree that historic delivery data grants no current execution authority."
+    },
+    {
+      "id": "IR303",
+      "severity": "High",
+      "category": "RequirementsEvidence",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-03",
+      "evidence": "FR-001 through FR-005 and AC-001 through AC-003 claim a canonical field contract, Receipt contract, prompt states, Bash/PowerShell parity, and positive and negative validation. The target binds no canonical template, schema, profile, validator, fixture, command, or result paths. '14 Intake-Receipts and validator logs' is a count, not reproducible evidence; the missing-hash, existing-target, blocked-prompt, secret-fixture, broad-exception, and partial-publication cases have no named inputs or expected codes. Source and RF IDs are not mapped to requirements, acceptance, and evidence, so RF-03, RF-14, RF-17, and RF-20 coverage cannot be reproduced from this intake alone.",
+      "reevaluationTrigger": "A versioned machine- and human-readable Authoring contract names the canonical template/schema/profile and exact artifacts; each requirement and RF maps to measurable acceptance; bound Bash and PowerShell commands plus named positive and negative fixtures produce current deterministic evidence."
+    },
+    {
+      "id": "IR304",
+      "severity": "Medium",
+      "category": "Applicability",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-03",
+      "evidence": "The target mentions WCAG text structure and narrowly scoped secret-fixture exceptions, but it does not explicitly decide security, privacy, unnecessary personal data, public-content boundaries, macOS/Linux/Windows applicability, or software-supply-chain applicability. WCAG 2.2 AA, colour-independent status, semantic heading order, and validator parity lack measurable acceptance and re-evaluation triggers. The referenced RF-20 contract additionally requires the named fixture exception and a complete secret scan, neither of which is bound.",
+      "reevaluationTrigger": "Security, privacy, public content, accessibility, platform, and supply-chain applicability are explicit, justified, measurable, and connected to named evidence and re-evaluation triggers, including a narrow RF-20 exception and full secret scan when applicable."
+    }
+  ],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 3,
+    "medium": 1,
+    "low": 0
+  },
+  "supersedes": "N/A"
+}

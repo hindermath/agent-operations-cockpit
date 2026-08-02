@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesOperation",
+  "operationId": "1b981cb3-365b-4ad8-916f-78d8ace9c39b",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "type": "Update",
+  "status": "Published",
+  "authorityEvidence": "User explicitly authorized the bounded META-LH-01 repair and its mechanically required series hash update on 2026-08-01.",
+  "proposalNormalizedSha256": "eda9d44f8b3a24135c4989e5529ee5809aa2f5c63113e7ab3bd6e0b4eb44e3c8",
+  "preparedPaths": [
+    "specs/intake-series/aoc-phase-2/manifest.json",
+    "requirements/intakes/series/order.md",
+    "specs/intake-series-receipts/aoc-phase-2.json"
+  ],
+  "validation": {
+    "bash": "Passed",
+    "powerShell": "Passed"
+  },
+  "publication": {
+    "status": "Published",
+    "publishedPaths": [
+      "specs/intake-series/aoc-phase-2/manifest.json",
+      "requirements/intakes/series/order.md"
+    ]
+  }
+}

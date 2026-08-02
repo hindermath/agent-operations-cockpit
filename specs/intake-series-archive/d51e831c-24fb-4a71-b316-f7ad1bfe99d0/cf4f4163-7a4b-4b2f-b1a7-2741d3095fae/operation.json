@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesOperation",
+  "operationId": "2841a292-5c2c-48a5-a72f-6a5919acd492",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "type": "Update",
+  "status": "Published",
+  "authorityEvidence": "Thorsten explicitly authorised the proposed bounded lifecycle update on 2026-08-01 after requesting verification that META-LH-01 was actually completed; the baseline output, acceptance evidence, and current Ready Single review support META-LH-01 Completed and META-LH-02 as the sole declared Eligible target.",
+  "proposalNormalizedSha256": "36e03c2574688bc539d1e1072a431a1c6010f9c42fc238845fff7c70092e81b6",
+  "preparedPaths": [
+    "specs/intake-series/aoc-phase-2/manifest.json",
+    "requirements/intakes/series/order.md",
+    "specs/intake-series-receipts/aoc-phase-2.json"
+  ],
+  "documentationImpact": {
+    "decision": "UpdateRequired",
+    "source": "Thorsten's bounded META-LH-01 completion and META-LH-02 eligibility authority from 2026-08-01",
+    "owner": "AOC Phase-2 intake sequencing",
+    "documents": [
+      "specs/intake-series/aoc-phase-2/manifest.json",
+      "requirements/intakes/series/order.md",
+      "specs/intake-series-receipts/aoc-phase-2.json"
+    ],
+    "evidence": [
+      "docs/evidence/phase-2-completion-receipt.md",
+      "specs/intake-review-results/meta-lh-01-programmquellen-2026-08-01-r2.json",
+      "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/2841a292-5c2c-48a5-a72f-6a5919acd492/"
+    ]
+  },
+  "reviewInvalidation": {
+    "status": "Superseded",
+    "results": [
+      "specs/intake-review-results/aoc-phase-2-series.json",
+      "specs/intake-review-results/aoc-phase-2-series-2026-08-01-r2.json"
+    ],
+    "reason": "The lifecycle transition changed the series-manifest hash. Historic Series results remain immutable evidence and are not current for the successor manifest. The META-LH-01 Single result remains current because the intake target and its hash did not change."
+  },
+  "validation": {
+    "bash": "Passed",
+    "powerShell": "Passed"
+  },
+  "publication": {
+    "status": "Published",
+    "publishedPaths": [
+      "specs/intake-series/aoc-phase-2/manifest.json",
+      "requirements/intakes/series/order.md"
+    ]
+  }
+}
