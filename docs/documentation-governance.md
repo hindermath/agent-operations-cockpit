@@ -51,6 +51,7 @@ or are generated deterministically.*
 | Produktdokumentation | Level-2-Code und validiertes Verhalten | Produktteam | Runtime, API, Command oder UX ändert sich | README, Guides, API-Doku | Produkt-, Link- und A11Y-Gates | Vor Merge und Release |
 | Lernmaterial | Blueprint, Register und Rahmenlehrplan-Mapping | Lehrende und Maintainer | Lernziel oder Referenz ändert sich | Unit- und ZIP-Pakete | Lernpaket- und A11Y-Gates | Vor Veröffentlichung |
 | Security Evidence | `docs/security/` und reale Gates | Security Owner | Trust-, Release-, Cloud- oder Risikogrenze ändert sich | Checklists, ADR, PR-Evidence | Security Review | Nach Trigger oder Frist |
+| AEPS Evidence | `docs/aeps/findings-ledger.md` und `hindermath/home-baseline#196` | AOC-AEPS-Evidence-Workstream | Formales Ready, wesentliches Review/Receipt oder relevanter Fehl-/Abbruchlauf | Candidate-Matrix, Gap-Analyse, Handoff und AEPS-Receipt | Ready-/Receipt-Validatoren, semantisches Review, Links und A11Y | Nach jedem AEPS-Trigger |
 
 ## Durchführung / Procedure
 
