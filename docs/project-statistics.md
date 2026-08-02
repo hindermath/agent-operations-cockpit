@@ -15,7 +15,7 @@
 | Datum / Date | Phase / Branch | Aktivtage ges. | Zeilen ges. | Commits ges. | Hauptarbeitspakete / Main Work Packages |
 |---|---|---:|---:|---:|---|
 | 2026-07-31 | 0 — Bootstrap | 1 | — | 1 | Initialer Projekt-Bootstrap via bootstrap-project |
-| 2026-08-02 | CI-Runnerprofil | — | — | — | Documentation Impact `GeneratedUpdate`: Die generischen Maintenance-TUI- und PowerShell-Analyse-Workflows verwenden die Fleet-Policy; AOC bleibt als öffentliches Referenz-Repository vollständiger Linux-/macOS-/Windows-Canary. Produktcode, API und Bedienung bleiben unverändert. |
+| 2026-08-02 | 1 — CI-Runnerprofil | — | — | — | Documentation Impact `GeneratedUpdate`: Die generischen Maintenance-TUI- und PowerShell-Analyse-Workflows verwenden die Fleet-Policy; AOC bleibt als öffentliches Referenz-Repository vollständiger Linux-/macOS-/Windows-Canary. Produktcode, API und Bedienung bleiben unverändert. |
 
 ---
 

@@ -14,5 +14,9 @@ if ($PSCmdlet.ParameterSetName -eq 'Fixture') {
 else {
     $arguments += @('--repo', $Repo)
 }
-& python3 @arguments
+$python = Get-Command python3 -ErrorAction SilentlyContinue
+if ($null -eq $python) {
+    $python = Get-Command python -ErrorAction Stop
+}
+& $python.Source @arguments
 exit $LASTEXITCODE

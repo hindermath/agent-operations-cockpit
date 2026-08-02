@@ -56,7 +56,7 @@
       "purpose": "Own truthful state, authority, freshness, confidence, and reason-code semantics.",
       "systemBoundary": "Consumes workspace snapshots and emits state envelopes; owns no discovery, UI, or commands.",
       "expectedChildIntakes": ["State Envelope", "Freshness Policy", "Authority Projection", "Projection Parity"],
-      "decisionIntakes": ["DEC-T03"],
+      "decisionIntakes": ["IAD301", "IAD302", "IAD303"],
       "inputs": ["Workspace Snapshot Contract"],
       "outputs": ["State Envelope Contract"],
       "dependencies": ["RAW-01"],

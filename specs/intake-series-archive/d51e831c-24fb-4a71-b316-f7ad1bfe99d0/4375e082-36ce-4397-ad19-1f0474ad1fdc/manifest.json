@@ -46,13 +46,13 @@
       "path": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
       "role": "OrderedMember",
       "normalizedSha256": "7c6248efe4bb77bc8767d0b0302dcd968c3da95c5fa3c428681f1e2968c9fb22",
-      "status": "Completed"
+      "status": "Eligible"
     },
     {
       "path": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
       "role": "OrderedMember",
       "normalizedSha256": "7b2f4241e92c9dba5eb6b420d98d587b34ffe6a6ee5e607762125687a334c4e6",
-      "status": "Eligible"
+      "status": "Blocked"
     },
     {
       "path": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",

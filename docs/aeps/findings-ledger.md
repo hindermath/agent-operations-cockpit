@@ -20,6 +20,7 @@ Die geprüfte Ready-Menge umfasst: / *The assessed Ready set contains:*
 | RAW-02 | `b1ffb007-f963-4f0f-b787-492f1b4b6717` | `7b2f4241e92c9dba5eb6b420d98d587b34ffe6a6ee5e607762125687a334c4e6` | `PendingPublication`; Base-HEAD `ddba7482163c7e61161ad0b90f4e019844335898` |
 | META-LH-04 | `d7451834-8b5d-446c-a88e-658cae7a8c5f` | `f16026d37b04bdf7fa492e41e0a83a8f67b3719497dba5f185bfb35d0b068ea6` | `PendingPublication`; Base-HEAD `ddba7482163c7e61161ad0b90f4e019844335898` |
 | META-LH-05 | `a37b14c0-2eaf-4ce8-b8e2-ac4e7280652f` | `533ecf072fc81a08c43c7c9a794d30e3ea9237e0e8d75602251373881dfc6ec0` | `PendingPublication`; Base-HEAD `ddba7482163c7e61161ad0b90f4e019844335898` |
+| RAW-03 | `d868f04f-cfe3-4393-98ab-6f4451526d0d` | `7c6248efe4bb77bc8767d0b0302dcd968c3da95c5fa3c428681f1e2968c9fb22` | `PendingPublication`; Base-HEAD `60706c5dc6d96996fd7b4b4780c0b736a643dbb0` |
 
 `PendingPublication` ist kein fehlender Nachweis: Review-ID, Base-HEAD und
 normalisierter Zielhash binden den lokalen Zustand, aber ein Upstream-Handoff
@@ -210,9 +211,13 @@ duplicate these candidates. They refine evidence, limits, or possible gaps.*
 - **Kontext:** Alle fünf Reviews verlangten explizite Anwendbarkeit, positive
   und negative Evidence sowie Re-Evaluation bei Drift.
 - **Positive Evidence:** WCAG 2.2 AA, Datenminimierung, Plattformparität und
-  begründete Supply-Chain-Einstufungen sind jetzt prüfbar.
+  begründete Supply-Chain-Einstufungen sind jetzt prüfbar. Das Copilot-
+  Follow-up zu AOC-PR #9 führte zusätzlich zu portablen PowerShell-
+  Entrypoints mit geprüftem `python3`-zu-`python`-Fallback.
 - **Negative Evidence:** Die Vorgängerreviews bewerteten unvollständige oder
-  unbegründete Einstufungen als High beziehungsweise Medium.
+  unbegründete Einstufungen als High beziehungsweise Medium. Die in PR #9
+  gemergten Wrapper setzten `python3` direkt voraus und waren damit auf
+  Windows-Umgebungen mit ausschließlich `python` nicht reproduzierbar.
 - **Grenzen:** Review beweist Vertragsvollständigkeit, nicht spätere
   Produktwirksamkeit.
 - **AOC-spezifisch / generisch:** Konkrete .NET-/IPC-Details sind spezifisch;
@@ -321,9 +326,14 @@ duplicate these candidates. They refine evidence, limits, or possible gaps.*
   Erstbegriffserklärungen, CEFR B2, semantische Überschriften und text-first
   Status.
 - **Positive Evidence:** alle Ready-Re-Reviews bestehen die zehn semantischen
-  Prüffelder.
+  Prüffelder. Das unabhängige Copilot-Follow-up erkannte zusätzlich ein nicht
+  nummeriertes Statistik-Phasenlabel und eine nicht DE-first formulierte
+  historische Receipt-Überschrift.
 - **Negative Evidence:** die Vorgängerreviews enthielten wiederholt High-
-  Findings trotz strukturell vorhandener Abschnitte.
+  Findings trotz strukturell vorhandener Abschnitte. Das Phasenlabel wurde
+  korrigiert; das historische Receipt bleibt gemäß seinem späteren
+  Provenienz-Supersession-Receipt byte-identisch und wird nicht nachträglich
+  umgeschrieben.
 - **Grenzen:** Menschliches Review bleibt teilweise urteilsabhängig.
 - **AOC-spezifisch / generisch:** Sprachpolicy ist Flottenkontext; die Grenze
   deterministischer Validatoren ist generisch.
@@ -392,27 +402,33 @@ duplicate these candidates. They refine evidence, limits, or possible gaps.*
 ## AEPS-FIND-AOC-013 – Parallele Eligibility braucht eine vollständige Prüfachse und Negativ-Evidence
 
 - **Quelle und Lastenheft / Source and intake:** META-LH-04-Re-Review
-  `d7451834-8b5d-446c-a88e-658cae7a8c5f`; Eligibility-Vertrag und drei
-  Fixtures.
+  `d7451834-8b5d-446c-a88e-658cae7a8c5f`; Eligibility-Vertrag, drei Fixtures
+  und Copilot-Follow-up zu AOC-PR #9.
 - **Datum und Commit / Date and commit:** `2026-08-01`;
   `PendingPublication`, Base-HEAD `ddba7482163c7e61161ad0b90f4e019844335898`.
 - **Problem / Problem:** Eine Modusbezeichnung wie `parallel-autonomous`
   beweist nicht, dass Authority, Side Effects, Reversibilität, Write Scope,
   Decisions, Integration, Review, Abort und Recovery vollständig geprüft
-  wurden. / *A mode label such as `parallel-autonomous` does not prove that
-  authority, side effects, reversibility, write scope, decisions,
-  integration, review, abort, and recovery were fully assessed.*
+  wurden. Ein Validator, der diese Regeln nochmals fest eincodiert, kann trotz
+  maschinenlesbarem Vertrag unbemerkt davon abweichen. / *A mode label does
+  not prove complete assessment. A validator that hard-codes the rules again
+  can silently drift even when a machine-readable contract exists.*
 - **Kontext / Context:** META-LH-04 bindet genau neun Kriterien in einem
   maschinenlesbaren Vertrag und trennt Eligibility, Review, historischen
   Delivery-Modus und aktuelle Authority. / *META-LH-04 binds exactly nine
   criteria in a machine-readable contract and separates eligibility, review,
   historic delivery mode, and current authority.*
 - **Positive Evidence:** Die gültige Parallel-Fixture ergibt auf Bash und
-  PowerShell `Eligible`; beide Oberflächen enden mit Exitcode 0.
+  PowerShell `Eligible`; beide Oberflächen enden mit Exitcode 0. Der lokale
+  Follow-up-Validator wertet nun alle `requires*`- und `allows*`-Regeln aus dem
+  Vertrag aus; Tests für geänderte Allowance und ein neues Required Gate
+  bestehen.
 - **Negative Evidence:** Gemeinsamer Write Scope und eine gemeinsame offene
-  Decision ergeben jeweils reproduzierbar `Blocked`, ebenfalls mit Exitcode 0
-  für den erwarteten Negativnachweis. / *Shared write scope and a shared open
-  decision reproducibly produce `Blocked`.*
+  Decision ergeben jeweils reproduzierbar `Blocked`. Die gemergte
+  Vorgängerversion prüfte dieselben Flags jedoch als duplizierte feste
+  Bedingung und hätte bei Vertragsänderungen driften können. / *Shared write
+  scope and a shared open decision reproducibly block. The merged predecessor
+  duplicated the flags in code and could drift when the contract changed.*
 - **Grenzen / Limits:** Die Evidence prüft Requirements- und Fixture-Semantik,
   nicht den tatsächlichen Start, Worker-Isolation oder Provider-Abbruch.
 - **AOC-spezifisch / generisch:** Pfade und Lifecycle-Werte sind AOC-spezifisch;
@@ -424,9 +440,10 @@ duplicate these candidates. They refine evidence, limits, or possible gaps.*
   and Execution; `pilot-pattern`.
 - **Preset-Bezug / Related presets:** Intake Sequencing, Parallel Autonomous
   Run und Intake Review; `CAND-AEPS-05`, `CAND-AEPS-07`.
-- **Nächste Validierung / Next validation:** Den Vertrag in einem zweiten
-  Projekt anwenden und einen Runtime-Preflight nachweisen, der Shared Write,
-  Shared Decision und veraltete Authority technisch verweigert.
+- **Nächste Validierung / Next validation:** Den vertragsgetriebenen Validator
+  in einem zweiten Projekt sowie mit Contract-Mutation-Fixtures anwenden und
+  einen Runtime-Preflight nachweisen, der Shared Write, Shared Decision und
+  veraltete Authority technisch verweigert.
 - **Promotion-Blocker:** keine Cross-Project- oder Runtime-Evidence; keine
   projektneutrale Rollen- und Pfadabstraktion.
 - **Status:** `PotentialCandidate`; Upstream `PendingPublication`.
@@ -473,4 +490,70 @@ duplicate these candidates. They refine evidence, limits, or possible gaps.*
   einem zweiten Intake-Programm sowie mit atomarer Runtime-Recovery ausführen.
 - **Promotion-Blocker:** keine Cross-Project- oder schreibende Runtime-Evidence
   und keine bestätigte Preset-Zuordnung.
+- **Status:** `PotentialCandidate`; Upstream `PendingPublication`.
+
+## AEPS-FIND-AOC-015 – Receipt-Decision-State muss der Target-Semantik entsprechen
+
+- **Quelle und Lastenheft / Source and intake:** RAW-03-Single-Review
+  `1159da03-43fd-41ae-9876-f3df2633af12`, Finding IR301; vollständiges
+  Ready-Re-Review `d868f04f-cfe3-4393-98ab-6f4451526d0d`; erneuertes Authoring
+  Receipt `ad3b1035-4206-414b-bf06-f852cae916da`. / *Initial Single review,
+  finding IR301, complete Ready re-review, and renewed Authoring Receipt.*
+- **Datum und Commit / Date and commit:** `2026-08-02`;
+  `PendingPublication`, Base-HEAD
+  `60706c5dc6d96996fd7b4b4780c0b736a643dbb0`, Ergebnis-Hash
+  `10c1b13052d919f6d3d612135dbba359e0296f85a0985636df41d7c65aaf4931`,
+  Ready-Ergebnis-Hash
+  `d95f10682ee1ea21b505ed53f74e800ec4e8b468a4bb26d7435afdf67bed31e6`.
+- **Problem / Problem:** Ein schema- und hashgültiges Authoring Receipt kann
+  `decisions=[]`, `openDecisionIds=[]` und `questionCount=0` ausweisen, obwohl
+  das gebundene Target eine materielle offene Entscheidung nennt. Automatisierung
+  könnte dadurch fachliche Klärungsbedarfe übersehen. / *A schema-valid and
+  hash-current authoring Receipt can claim no decisions or questions while its
+  bound target declares a material open decision. Automation may therefore
+  overlook required domain clarification.*
+- **Kontext / Context:** Das Vorgänger-RAW-03 nannte Zeitquelle,
+  Freshness-Schwellen und Confidence-Modell als offen; Portfoliovertrag und
+  Decision Register banden sie an `DEC-T03`. Das damalige Receipt führte keine
+  offene Decision und bestand trotzdem beide Validatoren. Das begrenzte Update
+  brachte Target, Decision Register und Receipt manuell wieder in semantische
+  Parität. / *The predecessor target bound three open questions to DEC-T03
+  while its Receipt recorded none and still passed both validators. The bounded
+  update manually restored semantic parity across target, decision register,
+  and Receipt.*
+- **Positive Evidence:** Das erste Single Review erkannte den Widerspruch und
+  endete korrekt `NeedsClarification`. Nach den ausdrücklichen Entscheidungen
+  IAD301 bis IAD303 bestehen erneuertes Receipt und vollständiges Re-Review auf
+  Bash und PowerShell; das Re-Review ist `Ready` mit null Findings und null
+  offenen Fragen. / *The initial review detected the conflict. After explicit
+  IAD301 through IAD303, the renewed Receipt and complete re-review pass on both
+  surfaces, and the re-review is Ready with no findings or questions.*
+- **Negative Evidence:** Bash und PowerShell akzeptieren das widersprüchliche
+  Authoring Receipt, weil die aktuelle Prüfung Hash, Schema und Feldform, aber
+  nicht die semantische Decision-Parität zum Target nachweist. / *Both
+  authoring validators accept the contradictory Receipt because current checks
+  prove hashes, schema, and field shape but not semantic decision parity with
+  the target.*
+- **Grenzen / Limits:** Die positive Evidence belegt eine manuelle, reviewte
+  Reparatur, aber keine automatische semantische Validatorprüfung. Sie betrifft
+  dokumentbasierte Decision-Metadaten und beweist weder einen portablen Parser
+  für beliebige natürlichsprachliche Decision-Abschnitte noch Cross-Project-
+  Wirkung. / *The positive evidence proves a manually reviewed repair, not an
+  automated semantic validator or cross-project effect.*
+- **AOC-spezifisch / generisch:** `DEC-T03` und die State-Fragen sind
+  AOC-spezifisch; die semantische Übereinstimmung von Target und Receipt ist
+  projektübergreifend wahrscheinlich relevant. / *The State decision is
+  AOC-specific; semantic agreement between target and Receipt is likely
+  cross-project relevant.*
+- **Domäne, Reifegrad / Domain, maturity:** Review and Evidence / Requirements
+  Engineering; `observation`.
+- **Preset-Bezug / Related presets:** Intake Authoring und Intake Review;
+  `CAND-AEPS-06`, `CAND-AEPS-08`.
+- **Nächste Validierung / Next validation:** Positive und negative Fixtures
+  für konsistent offene, konsistent geschlossene sowie widersprüchliche
+  Decision-Felder in einem zweiten Intake-Programm prüfen. / *Validate
+  consistent-open, consistent-resolved, and contradictory decision metadata in
+  a second intake programme.*
+- **Promotion-Blocker:** keine allgemeine Decision-Extraktion, keine
+  Cross-Project-Fixture und keine Level-0-Authority für Validatoränderungen.
 - **Status:** `PotentialCandidate`; Upstream `PendingPublication`.
