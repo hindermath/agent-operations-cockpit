@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "48245818-f6d3-4612-8b2b-ebc2f99b155f",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.2"
+  },
+  "createdAt": "2026-07-31T23:44:48Z",
+  "operation": {
+    "operationId": "9bcf1f0d-1cee-4aa2-9591-9fc773b7e7b6",
+    "type": "Update",
+    "authorityEvidence": "User explicitly authorised the bounded RAW-02 IAD201-IAD203 update and its mechanically required Series hash and readable-order update on 2026-08-01."
+  },
+  "status": "NeedsClarification",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "0b308ff3f2d3b858cfef31138711cf9b97fa0b2424d21e317c7374452d6e947a"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/9bcf1f0d-1cee-4aa2-9591-9fc773b7e7b6/receipt.json",
+    "receiptNormalizedSha256": "d4090d8d0634e76c8cf9d96fc0d79029e9df1b64fbfbfa4ea99ed690e91d974e",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/9bcf1f0d-1cee-4aa2-9591-9fc773b7e7b6/manifest.json",
+    "manifestArchiveSha256": "eda9d44f8b3a24135c4989e5529ee5809aa2f5c63113e7ab3bd6e0b4eb44e3c8"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-review requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md"
+}

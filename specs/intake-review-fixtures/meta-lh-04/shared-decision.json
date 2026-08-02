@@ -1,0 +1,22 @@
+{
+  "fixtureId": "META04-FX-SHARED-DECISION",
+  "mode": "parallel-autonomous",
+  "criteria": {
+    "authority": "current-and-explicit",
+    "sideEffects": "bounded",
+    "reversibility": "recoverable",
+    "writeScope": "disjoint",
+    "decisions": "shared-open-decision",
+    "integration": "planned",
+    "review": "consolidation-review-planned",
+    "abort": "defined",
+    "recovery": "defined"
+  },
+  "currentAuthority": true,
+  "disjointWrites": true,
+  "sharedOpenDecisions": true,
+  "consolidationReview": true,
+  "abortRule": true,
+  "recoveryRule": true,
+  "expectedOutcome": "Blocked"
+}

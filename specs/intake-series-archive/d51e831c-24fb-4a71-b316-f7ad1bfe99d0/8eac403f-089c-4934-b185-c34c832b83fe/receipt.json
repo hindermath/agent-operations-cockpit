@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "06a812e3-8fad-4197-ae00-4cc3ce641e0c",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.2"
+  },
+  "createdAt": "2026-08-01T15:41:54Z",
+  "operation": {
+    "operationId": "cf4f4163-7a4b-4b2f-b1a7-2741d3095fae",
+    "type": "Update",
+    "authorityEvidence": "Thorsten explicitly authorised repair of only META-LH-02 IR201-IR205, refreshed baseline/decision evidence, Authoring Receipt and Series hash binding, and complete re-review; only the mechanically required META-LH-02 target hash changes while target count, order, roots, dependencies, lifecycle, evidence paths, and delivery authority remain unchanged."
+  },
+  "status": "NeedsClarification",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "22ccba5c654464e74fe011b5df43850f7b145876628c77b11bb77f153c87324c"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/cf4f4163-7a4b-4b2f-b1a7-2741d3095fae/receipt.json",
+    "receiptNormalizedSha256": "dc46d65e53a3a1d4855bcff72b8bbd03465bb5749ea6082ae9ec238bcd3ad6be",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/cf4f4163-7a4b-4b2f-b1a7-2741d3095fae/manifest.json",
+    "manifestArchiveSha256": "36e03c2574688bc539d1e1072a431a1c6010f9c42fc238845fff7c70092e81b6"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-review requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md"
+}

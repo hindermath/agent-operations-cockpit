@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesOperation",
+  "operationId": "17ec1159-b856-4e2f-918e-10a48f0e3368",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "type": "Update",
+  "status": "Published",
+  "authorityEvidence": "User explicitly authorised the bounded RAW-02 IR201 and IR202 repair; only the mechanically required RAW-02 target hash binding changes, while order, roots, dependencies, lifecycle, and delivery authority remain unchanged.",
+  "proposalNormalizedSha256": "a5009601cf855311f1882b65c5e5450e10b122173f7a3be3c8491df9b72ef29f",
+  "preparedPaths": [
+    "specs/intake-series/aoc-phase-2/manifest.json",
+    "specs/intake-series-receipts/aoc-phase-2.json"
+  ],
+  "validation": {
+    "bash": "Passed",
+    "powerShell": "Passed"
+  },
+  "publication": {
+    "status": "Published",
+    "publishedPaths": [
+      "specs/intake-series/aoc-phase-2/manifest.json"
+    ]
+  }
+}

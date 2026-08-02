@@ -1,32 +1,32 @@
 {
   "schemaVersion": "1.0",
   "documentType": "IntakeSeriesReceipt",
-  "receiptId": "48245818-f6d3-4612-8b2b-ebc2f99b155f",
+  "receiptId": "d8f14473-cd9c-49aa-b7ef-e6a2415c7381",
   "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
   "generator": {
     "preset": "intake-sequencing-governance",
     "version": "0.2.2"
   },
-  "createdAt": "2026-07-31T23:44:48Z",
+  "createdAt": "2026-08-01T22:25:14Z",
   "operation": {
-    "operationId": "9bcf1f0d-1cee-4aa2-9591-9fc773b7e7b6",
+    "operationId": "ede984cf-967e-42e7-a0c9-980ca4508a40",
     "type": "Update",
-    "authorityEvidence": "User explicitly authorised the bounded RAW-02 IAD201-IAD203 update and its mechanically required Series hash and readable-order update on 2026-08-01."
+    "authorityEvidence": "Thorsten explicitly authorised on 2026-08-02 only the lifecycle transition of META-LH-05 from Eligible to Completed while its current Single review remains Ready, and RAW-01 from Pending to the sole declared Eligible target. RAW-05 remains Pending and research-only; order, roots, dependencies, all other lifecycle values, intake contents, and Delivery Authority remain unchanged. Review, Specify, implementation, remote writes, merge, and bypass are excluded."
   },
   "status": "NeedsClarification",
   "manifest": {
     "path": "specs/intake-series/aoc-phase-2/manifest.json",
-    "normalizedSha256": "0b308ff3f2d3b858cfef31138711cf9b97fa0b2424d21e317c7374452d6e947a"
+    "normalizedSha256": "d408a26f5141bf4011ffdd2e02f32f122286217293d285530c38e742c04b120f"
   },
   "supersedes": {
-    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/9bcf1f0d-1cee-4aa2-9591-9fc773b7e7b6/receipt.json",
-    "receiptNormalizedSha256": "d4090d8d0634e76c8cf9d96fc0d79029e9df1b64fbfbfa4ea99ed690e91d974e",
-    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/9bcf1f0d-1cee-4aa2-9591-9fc773b7e7b6/manifest.json",
-    "manifestArchiveSha256": "eda9d44f8b3a24135c4989e5529ee5809aa2f5c63113e7ab3bd6e0b4eb44e3c8"
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/ede984cf-967e-42e7-a0c9-980ca4508a40/receipt.json",
+    "receiptNormalizedSha256": "2a5d554e73a9f7afdac13de1393bdf82965dbcc1fff43b661bb1aa4d48e0441b",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/ede984cf-967e-42e7-a0c9-980ca4508a40/manifest.json",
+    "manifestArchiveSha256": "d56e49fbad6a7a6444ad5964a1f7a78058b15b11c1044acea21c65aeb1307046"
   },
   "tombstone": {
     "path": "N/A",
     "normalizedSha256": "N/A"
   },
-  "nextAction": "$speckit-intake-review requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md"
+  "nextAction": "$speckit-intake-series-status"
 }

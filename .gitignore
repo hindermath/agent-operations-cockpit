@@ -1,6 +1,9 @@
 # .gitignore für Level-2-Projekte / For Level-2 Projects
 # Whitelist-Modell: alles ignorieren, nur explizit erlaubtes tracken
 
+# --- macOS-Metadaten / macOS metadata ---
+**/.DS_Store
+
 # --- Alles ignorieren ---
 /*
 /.*

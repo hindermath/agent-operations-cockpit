@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "4ab724bc-61ce-4ed9-a602-225218870d29",
+  "mode": "Single",
+  "status": "NeedsRemediation",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-01T13:39:53Z",
+  "repository": {
+    "root": ".",
+    "head": "ddba7482163c7e61161ad0b90f4e019844335898"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-01-reference-agentic-workspace-2026-08-01.json",
+    "normalizedSha256": "22e7114efb49cc2fef1a0153da92feb81bc3aad0e4356f58ecc5a0bbfe569b83"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "role": "Primary",
+      "normalizedSha256": "b0d217e8c440bd2a01106e827564a5354a9bef040d28910633171cb092ff1453",
+      "gitBlob": "b68008cad854963e583f9002c28915ec7f0003be"
+    }
+  ],
+  "findings": [
+    {
+      "id": "IR101",
+      "severity": "High",
+      "category": "LanguageAndTerminology",
+      "target": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-01",
+      "evidence": "The learner-facing intake declares German-first, English-second CEFR B2, but the boundary, sources, requirements, child-intake mode, AC-001 through AC-003, and revision text lack complete English counterparts. Read-only, Discovery, WorkspaceSnapshot, TFM, Target Framework, JSON Schema, xUnit.net, Microsoft Testing Platform, Spec Kit, and CEFR B2 are not consistently explained on first use or linked to the bilingual glossary.",
+      "reevaluationTrigger": "Every normative section has a complete German/English pair and central technical and workflow terms have first-use explanations or a precise bilingual glossary link, followed by a complete RAW-01 Single re-review."
+    },
+    {
+      "id": "IR102",
+      "severity": "High",
+      "category": "CrossCuttingApplicability",
+      "target": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-01",
+      "evidence": "RAW-01 processes host identity, repository metadata, tool output, and error details and selects external test packages, but it does not explicitly decide privacy/data minimisation or software-supply-chain applicability. Security and WCAG 2.2 AA are named without measurable positive and negative evidence, while cross-platform behaviour is only partially covered by the TFM and test invocation.",
+      "reevaluationTrigger": "Security, privacy, WCAG 2.2 AA, macOS/Linux/Windows parity, and supply-chain applicability are explicitly classified with measurable positive and negative evidence and re-evaluation triggers, without changing IAD101-IAD103, followed by a complete RAW-01 Single re-review."
+    },
+    {
+      "id": "IR103",
+      "severity": "High",
+      "category": "PromptAndDeliveryAuthority",
+      "target": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-01",
+      "evidence": "The normative intake grants no command, scaffold, or implementation authority, and the current receipt states that MergeAndSync is only a historical ceiling without current downstream authority. The embedded autonomous prompt nevertheless requests MergeAndSync and requires only a current review; it lacks a fail-closed precondition for separate current scope, start, implementation, remote-write, merge, and bypass authority.",
+      "reevaluationTrigger": "The autonomous prompt explicitly requires a separate current user decision for every downstream scope and delivery capability while retaining the stored MergeAndSync ceiling, followed by a complete RAW-01 Single re-review."
+    }
+  ],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 3,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "N/A"
+}

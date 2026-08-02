@@ -1,31 +1,31 @@
 {
   "schemaVersion": "2.0",
   "documentType": "IntakeReceipt",
-  "receiptId": "5f16f57f-a710-49ed-bba7-fdf190d0655a",
+  "receiptId": "56ddb001-112a-4632-a6df-7731f651eeed",
   "intakeId": "10c3fbdc-38f8-4e6c-b6ce-bd762f6cb2ee",
   "generator": {
     "preset": "intake-authoring-governance",
     "version": "0.3.0"
   },
-  "createdAt": "2026-07-31T23:44:48Z",
+  "createdAt": "2026-08-01T12:39:59Z",
   "operation": {
-    "operationId": "37887e13-cb91-4ade-954a-d9eb5fb33455",
+    "operationId": "b9f65ae1-0992-4224-a318-0564c3d0fd3c",
     "type": "Update",
-    "authorityEvidence": "User explicitly authorised the bounded RAW-02 update for confirmed options A of IAD201-IAD203 on 2026-08-01 and excluded Specify, implementation, remote, merge, and bypass actions."
+    "authorityEvidence": "User explicitly authorised repair of only IR201 and IR202 for RAW-02 on 2026-08-01, required a complete re-review, preserved IAD201-IAD203, scope, dependencies, and delivery authority, and excluded Specify, implementation, remote, merge, and bypass actions."
   },
   "status": "ReadyForReview",
   "target": {
     "path": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
-    "normalizedSha256": "75d6dd94d4e5b97de0ef43c62a0dd2ad7f68826665feca71e48610ae1eef523c"
+    "normalizedSha256": "7b2f4241e92c9dba5eb6b420d98d587b34ffe6a6ee5e607762125687a334c4e6"
   },
   "sources": [
     {
       "sourceId": "SRC001",
       "order": 1,
       "kind": "File",
-      "label": "Superseded RAW-02 intake as first binding update source",
+      "label": "Superseded RAW-02 intake as first binding repair source",
       "location": "Repository",
-      "path": "specs/intake-authoring-archive/10c3fbdc-38f8-4e6c-b6ce-bd762f6cb2ee/37887e13-cb91-4ade-954a-d9eb5fb33455/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "path": "specs/intake-authoring-archive/10c3fbdc-38f8-4e6c-b6ce-bd762f6cb2ee/b9f65ae1-0992-4224-a318-0564c3d0fd3c/Lastenheft_RAW-02-Workspace-Orchestrator.md",
       "requestedUrl": "N/A",
       "finalUrl": "N/A",
       "retrievedAt": "N/A",
@@ -36,17 +36,17 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "8710c773207836d181c5e44ebe4e9290a25f8a8e995e21ae56cba7b1006ad2b4",
+      "normalizedSha256": "75d6dd94d4e5b97de0ef43c62a0dd2ad7f68826665feca71e48610ae1eef523c",
       "gitBlob": "N/A",
-      "proofBoundary": "RepositoryArchiveAtUpdate"
+      "proofBoundary": "RepositoryArchiveAtRepair"
     },
     {
       "sourceId": "SRC002",
       "order": 2,
       "kind": "File",
-      "label": "Current Series review identifying the bounded RAW-02 remediation",
+      "label": "Current Single review authorising bounded IR201 and IR202 repair",
       "location": "Repository",
-      "path": "specs/intake-review-results/aoc-phase-2-series-2026-08-01-r2.json",
+      "path": "specs/intake-review-results/raw-02-workspace-orchestrator-2026-08-01.json",
       "requestedUrl": "N/A",
       "finalUrl": "N/A",
       "retrievedAt": "N/A",
@@ -57,17 +57,17 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "c74544dff3cd65c61f9d529de03ac8eddf1e6a3279513fcd003dc60927dacc19",
+      "normalizedSha256": "99707cff4c4921827befdc934dd8e74bf4054bc772769202954d44e0793c4f35",
       "gitBlob": "N/A",
-      "proofBoundary": "RepositoryAtUpdateAuthorization"
+      "proofBoundary": "RepositoryAtRepairAuthorization"
     },
     {
       "sourceId": "SRC003",
       "order": 3,
       "kind": "File",
-      "label": "Readable review evidence for confirmed RAW-02 options A",
+      "label": "Readable RAW-02 review evidence for IR201 and IR202",
       "location": "Repository",
-      "path": "docs/reviews/aoc-phase-2-intake-review-2026-08-01-r2.md",
+      "path": "docs/reviews/raw-02-workspace-orchestrator-intake-review-2026-08-01.md",
       "requestedUrl": "N/A",
       "finalUrl": "N/A",
       "retrievedAt": "N/A",
@@ -78,9 +78,9 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "2a91b64723fe95a378eb56996ef4aa811e4425e5533c9225277ebd7f04676483",
+      "normalizedSha256": "3385248e88a26652962aaa761342b79099fc32f6019c7944ec0a698512c55cb1",
       "gitBlob": "N/A",
-      "proofBoundary": "RepositoryAtUpdateAuthorization"
+      "proofBoundary": "RepositoryAtRepairAuthorization"
     },
     {
       "sourceId": "SRC004",
@@ -101,7 +101,7 @@
       "rawSha256": "N/A",
       "normalizedSha256": "a1a3907634c0903863d64031e5b6d7e4eb8818eea29bbf1bc2065a81d7a5bb93",
       "gitBlob": "N/A",
-      "proofBoundary": "RepositoryAtUpdate"
+      "proofBoundary": "RepositoryAtRepair"
     }
   ],
   "profile": "aoc-bilingual-requirements",
@@ -138,14 +138,14 @@
     "autonomousInvocation": "$speckit-autonomous requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md --delivery-mode LocalImplementation --require-current-review"
   },
   "deliveryAuthority": "LocalImplementation",
-  "authorityEvidence": "This update is local documentation work only. The user explicitly excluded Specify, implementation, remote writes, merge, and bypass; LocalImplementation is the non-remote handoff ceiling and grants no current downstream start authority.",
+  "authorityEvidence": "This repair is local documentation work only. The user explicitly excluded Specify, implementation, remote writes, merge, and bypass; LocalImplementation remains the unchanged non-remote handoff ceiling and grants no current downstream start authority.",
   "promptState": "Enabled",
   "provenanceMode": "Supersession",
   "supersedes": {
-    "receiptPath": "specs/intake-authoring-archive/10c3fbdc-38f8-4e6c-b6ce-bd762f6cb2ee/37887e13-cb91-4ade-954a-d9eb5fb33455/RAW-02-Workspace-Orchestrator.json",
-    "targetNormalizedSha256": "8710c773207836d181c5e44ebe4e9290a25f8a8e995e21ae56cba7b1006ad2b4",
-    "archiveTargetPath": "specs/intake-authoring-archive/10c3fbdc-38f8-4e6c-b6ce-bd762f6cb2ee/37887e13-cb91-4ade-954a-d9eb5fb33455/Lastenheft_RAW-02-Workspace-Orchestrator.md",
-    "archiveReceiptPath": "specs/intake-authoring-archive/10c3fbdc-38f8-4e6c-b6ce-bd762f6cb2ee/37887e13-cb91-4ade-954a-d9eb5fb33455/RAW-02-Workspace-Orchestrator.json"
+    "receiptPath": "specs/intake-authoring-archive/10c3fbdc-38f8-4e6c-b6ce-bd762f6cb2ee/b9f65ae1-0992-4224-a318-0564c3d0fd3c/RAW-02-Workspace-Orchestrator.json",
+    "targetNormalizedSha256": "75d6dd94d4e5b97de0ef43c62a0dd2ad7f68826665feca71e48610ae1eef523c",
+    "archiveTargetPath": "specs/intake-authoring-archive/10c3fbdc-38f8-4e6c-b6ce-bd762f6cb2ee/b9f65ae1-0992-4224-a318-0564c3d0fd3c/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+    "archiveReceiptPath": "specs/intake-authoring-archive/10c3fbdc-38f8-4e6c-b6ce-bd762f6cb2ee/b9f65ae1-0992-4224-a318-0564c3d0fd3c/RAW-02-Workspace-Orchestrator.json"
   },
   "legacyAdoption": {
     "evidenceType": "N/A",
@@ -153,7 +153,7 @@
     "priorGitBlob": "N/A"
   },
   "updateAuthorized": true,
-  "updateAuthorityEvidence": "User explicitly requested the bounded RAW-02 update for confirmed options A of IAD201-IAD203, renewed receipts and Series hash binding, and a complete RAW-02 re-review on 2026-08-01.",
+  "updateAuthorityEvidence": "User explicitly requested repair of only IR201 and IR202, preservation of IAD201-IAD203, scope, dependencies, and delivery authority, and a complete RAW-02 re-review on 2026-08-01.",
   "series": {
     "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
     "manifestPath": "specs/intake-series/aoc-phase-2/manifest.json",
