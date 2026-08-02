@@ -83,18 +83,16 @@ fail-closed outcome is `Blocked`.*
 
 ## Aktueller Serienkontext / Current series context
 
-Im aktuellen gebundenen Manifest sind META-LH-01 bis META-LH-05 `Completed`
-und RAW-01 ist der einzige deklarierte `Eligible`-Kandidat. RAW-05 bleibt
-`Pending`, ist strukturell ebenfalls startfähig und weiterhin auf read-only
-Research beschränkt. Für META-LH-04 ist keine materielle Decision offen. Die
-formale Receipt-Supersession erfordert ein vollständiges neues Single Review,
-öffnet den abgeschlossenen Series-Lifecycle aber nicht erneut und startet keine
-Folgearbeit. / *In the current bound manifest, META-LH-01 through META-LH-05
-are `Completed`, and RAW-01 is the sole declared `Eligible` candidate. RAW-05
-remains `Pending`, is also structurally startable, and stays limited to
-read-only research. No material decision is open for META-LH-04. The formal
-Receipt supersession requires a complete new Single review, but it does not
-reopen the completed Series lifecycle or start downstream work.*
+Im gebundenen Manifest sind META-LH-01 bis META-LH-03 `Completed` und
+META-LH-04 ist der einzige deklarierte `Eligible`-Kandidat. RAW-05 bleibt
+`Pending` und auf read-only Research beschränkt. Für META-LH-04 ist keine
+materielle Decision offen. Die einzige nächste zulässige Aktion dieses
+Authoring-Schritts ist ein vollständiges Single Review; es startet keine
+Folgearbeit. / *In the bound manifest, META-LH-01 through META-LH-03 are
+`Completed`, and META-LH-04 is the sole declared `Eligible` candidate. RAW-05
+remains `Pending` and limited to read-only research. No material decision is
+open for META-LH-04. The only next action permitted by this authoring step is
+a complete Single review; it starts no downstream work.*
 
 ## Anforderungen / Requirements
 
