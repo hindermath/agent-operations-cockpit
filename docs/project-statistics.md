@@ -58,11 +58,11 @@ Profil 2 verwendet Git-getrackte Textdateien und sichtbare Git-Aktivitaet. Die W
 | Textdateien / Text files | 804 |
 | Beobachtbarer Zeitraum / Observable period | 2025-08-10..2026-08-02 |
 | Aktivtage / Active days | 2 |
-| Relevante Commits / Relevant commits | 2 |
+| Relevante Commits / Relevant commits | 11 |
 | Zeilen je Aktivtag / Lines per active day | 66215.0 |
-| Peak-Tag im Fenster / Peak day in window | 2026-08-01 / 132426 |
-| Peak-Woche im Fenster / Peak week in window | 2026-07-26 / 132426 |
-| Laengste Serie / Longest streak | 2 days |
+| Peak-Tag im Fenster / Peak day in window | 2026-07-31 / 132656 |
+| Peak-Woche im Fenster / Peak week in window | 2026-07-26 / 132656 |
+| Laengste Serie / Longest streak | 1 days |
 | Speedup vs. 80 lines/day | 827.7x |
 | Speedup vs. 125 lines/day | 529.7x |
 | Methodik / Methodology | v2; source `9f4a0b297859` |
@@ -103,8 +103,8 @@ Mo/Mo  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -
 Di/Tu  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -
 Mi/We  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -
 Do/Th  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -
-Fr/Fr  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -
-Sa/Sa  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 -
+Fr/Fr  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 -
+Sa/Sa  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -
 ```
 
 DE: 0 = keine Aenderung; 1 = 1..79; 2 = 80..399; 3 = 400..1599; 4 = 1600+ geaenderte Textzeilen; - = noch nicht abgelaufen.
@@ -162,9 +162,9 @@ Last 12 calendar months
   cap 200000 | . . . . . . . . . . . .
       166667 | . . . . . . . . . . . .
       133333 | . . . . . . . . . . . .
-      100000 | . . . . . . . . . . . #
-       66667 | . . . . . . . . . . . #
-       33333 | . . . . . . . . . . . #
+      100000 | . . . . . . . . . . # .
+       66667 | . . . . . . . . . . # .
+       33333 | . . . . . . . . . . # .
            0 +-------------------------
 ```
 
@@ -199,9 +199,9 @@ Die gemeinsame Skala vergleicht Referenzen und sichtbare Lieferdichte. Sie schre
 
 ### Textalternative / Text Alternative
 
-DE: Das Fenster beginnt am 2025-08-10 und endet am 2026-08-02. Es enthaelt 2 aktive und 356 inaktive vergangene Tage. Peak-Tag: 2026-08-01 / 132426. Peak-Woche: 2026-07-26 / 132426. Laengste Serie: 2 Tage (2026-08-01..2026-08-02).
+DE: Das Fenster beginnt am 2025-08-10 und endet am 2026-08-02. Es enthaelt 2 aktive und 356 inaktive vergangene Tage. Peak-Tag: 2026-07-31 / 132656. Peak-Woche: 2026-07-26 / 132656. Laengste Serie: 1 Tage (2026-07-31..2026-07-31).
 
-*EN: The window starts on 2025-08-10 and ends on 2026-08-02. It contains 2 active and 356 inactive elapsed days. Peak day: 2026-08-01 / 132426. Peak week: 2026-07-26 / 132426. Longest streak: 2 days (2026-08-01..2026-08-02).*
+*EN: The window starts on 2025-08-10 and ends on 2026-08-02. It contains 2 active and 356 inactive elapsed days. Peak day: 2026-07-31 / 132656. Peak week: 2026-07-26 / 132656. Longest streak: 1 days (2026-07-31..2026-07-31).*
 
 | Monat / Month | Geaenderte Textzeilen / Changed text lines |
 |---|---:|
@@ -215,7 +215,7 @@ DE: Das Fenster beginnt am 2025-08-10 und endet am 2026-08-02. Es enthaelt 2 akt
 | 2026-04 | 0 |
 | 2026-05 | 0 |
 | 2026-06 | 0 |
-| 2026-07 | 0 |
-| 2026-08 | 132434 |
+| 2026-07 | 132656 |
+| 2026-08 | 8 |
 
 <!-- project-statistics-v2:end -->
