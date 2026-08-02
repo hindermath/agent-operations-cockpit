@@ -44,12 +44,18 @@ English-second while the historical defect stays visible.*
 | `specs/intake-review-fixtures/meta-lh-05/validate-first-wave.ps1` | `17087c38a44f143add962bbc301cb2ed539301c6735f74d98f2927ab9a7f7d70` |
 | `specs/intake-review-fixtures/meta-lh-02/validate-portfolio.ps1` | `cdb6d94ddb9cf282e377f449348b7a78aa15b2eb6eb0a54b9cc57343927320e8` |
 | `specs/intake-review-fixtures/raw-03/validate-state-truthfulness.ps1` | `d05501706b758fc0b3b9aaf630df41d815b8f07136b293fbe55b47a7f1751b60` |
-| `docs/project-statistics.md` | `d5420352b2cadc94798d9958bf2cada96fa384494a9f81428e78df6cb5278d07` |
 | `docs/aeps/receipts/2026-08-01-initial-inventory.md` | `76a362ff2f84aba349436ffd6fe264cd17b29d74b2bb6b18139b1c737123da71` |
 | `docs/aeps/findings-ledger.md` | `d541f994d3c2647664a48521c1c72b2f80d3624bc06a4439497bc209aac4907a` |
 | `docs/aeps/finding-to-preset-candidate-matrix.md` | `4ff2cbe16d24b81e780160d5f937132504ea43730f4be8f7c6d747f97d64df1d` |
 | `docs/aeps/preset-gap-analysis.md` | `1143a93ad04ca676e3cbb745165f957901f0103d7d73285fca272008ba2f20ef` |
 | `docs/aeps/upstream-handoff.md` | `8a91594946327095b648f3df0113db58b038b094c1353ed6d1bdc6deafd00eb6` |
+
+Die generierte Projektstatistik wird separat per `--check-only` validiert und
+nicht in diesem Receipt hashgebunden. Der abschließende Statistikcommit folgt
+dem Evidence-Commit und wäre als eigene Hashquelle ein zirkulärer
+Liefernachweis. / *Generated project statistics are validated separately and
+are not hash-bound here. Their final statistics-only commit follows the
+evidence commit and would otherwise create a circular delivery proof.*
 
 ## Deduplizierung, Reifegrad und Grenzen / Deduplication, maturity, and limits
 
