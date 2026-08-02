@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "AepsPresetEngineeringDormantBaseline",
+  "programId": "aeps-preset-engineering",
+  "observedAt": "2026-08-01T19:21:58Z",
+  "activationAttempt": false,
+  "programState": "Dormant",
+  "observationOutcome": "DormantPreconditionsUnmet",
+  "source": {
+    "repository": "hindermath/AgentOperationsCockpit",
+    "baseCommit": "ddba7482163c7e61161ad0b90f4e019844335898",
+    "workingTree": "DirtyPendingPublication",
+    "dirtyPathCount": 57,
+    "seriesManifest": "specs/intake-series/aoc-phase-2/manifest.json",
+    "seriesManifestSha256": "af8de99b93f959964c0961b511ffd8cb3bb31508c62e6e29e8a5508f9224fd54"
+  },
+  "summary": {
+    "rawIntakeCount": 9,
+    "currentReadyReviewCount": 2,
+    "seriesCompletedCount": 0,
+    "authoringReceiptPresenceCount": 9,
+    "authoringReceiptValidation": "NotRevalidatedForThisBaseline",
+    "perRawCompletionReceiptCount": 0,
+    "rawSeriesCompletionReceiptPresent": false,
+    "findingCoverage": "NotAssessedBecauseEarlierGatesFailed",
+    "blockingFindings": "NotAssessedBecauseEarlierGatesFailed"
+  },
+  "rawIntakes": [
+    {
+      "id": "RAW-01",
+      "seriesLifecycle": "Pending",
+      "currentReviewStatus": "Ready",
+      "reviewId": "f9f08f54-95eb-4abd-8ce1-bac180a6f742",
+      "reviewArtifactSha256": "a4d9c116cbf65ff6586aeefc093bb3573e1f12e7d8a0a4f3683b845ab314b8b6",
+      "completionReceipt": "Missing",
+      "activationEligible": false
+    },
+    {
+      "id": "RAW-02",
+      "seriesLifecycle": "Blocked",
+      "currentReviewStatus": "Ready",
+      "reviewId": "b1ffb007-f963-4f0f-b787-492f1b4b6717",
+      "reviewArtifactSha256": "31c9e5269c9590ff3fd27d838fe0b065fc7b211b29df1eb7543c07602e10a1ee",
+      "completionReceipt": "Missing",
+      "activationEligible": false
+    },
+    {
+      "id": "RAW-03",
+      "seriesLifecycle": "Pending",
+      "currentReviewStatus": "Missing",
+      "completionReceipt": "Missing",
+      "activationEligible": false
+    },
+    {
+      "id": "RAW-04",
+      "seriesLifecycle": "Pending",
+      "currentReviewStatus": "Missing",
+      "completionReceipt": "Missing",
+      "activationEligible": false
+    },
+    {
+      "id": "RAW-05",
+      "seriesLifecycle": "Pending",
+      "currentReviewStatus": "Missing",
+      "completionReceipt": "Missing",
+      "activationEligible": false
+    },
+    {
+      "id": "RAW-06",
+      "seriesLifecycle": "Blocked",
+      "currentReviewStatus": "Missing",
+      "completionReceipt": "Missing",
+      "activationEligible": false
+    },
+    {
+      "id": "RAW-07",
+      "seriesLifecycle": "Blocked",
+      "currentReviewStatus": "Missing",
+      "completionReceipt": "Missing",
+      "activationEligible": false
+    },
+    {
+      "id": "RAW-08",
+      "seriesLifecycle": "Pending",
+      "currentReviewStatus": "Missing",
+      "completionReceipt": "Missing",
+      "activationEligible": false
+    },
+    {
+      "id": "RAW-09",
+      "seriesLifecycle": "Blocked",
+      "currentReviewStatus": "Missing",
+      "completionReceipt": "Missing",
+      "activationEligible": false
+    }
+  ],
+  "requiredHumanDecision": {
+    "neededNow": false,
+    "reason": "This record is a dormant baseline, not an activation attempt.",
+    "nextRequiredAction": "Complete and evidence the RAW intake series before explicitly requesting AEPS activation."
+  },
+  "prohibitedNextAction": "DoNotStartAepsAnalysis"
+}

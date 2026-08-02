@@ -155,6 +155,37 @@ Dokumente und Evidence richten sich nach `docs/documentation-governance.md`.
 source, ownership, generated-output, and evidence contract in
 `docs/documentation-governance.md`.*
 
+## AEPS-Evidence-Rückführung / AEPS Evidence Feedback
+
+Das AOC ist Level-2-Referenzprojekt und Evidence-Quelle für das Agentic
+Engineering Preset System (AEPS). Der verbindliche Erfassungs-, Reifegrad-,
+Deduplizierungs- und Upstream-Handoff-Vertrag steht in
+`docs/aeps/README.md`; das aktuelle Ledger steht in
+`docs/aeps/findings-ledger.md`.
+
+Nach jedem formal validierten `Ready`-Single-Review, nach wesentlichen Reviews,
+Retrospektiven oder Completion Receipts sowie nach relevanten Fehl- oder
+Abbruchläufen MUSS geprüft werden, ob neue Findings, Learnings, Patterns,
+Anti-Patterns oder Evidence vorliegen. Das Ergebnis wird im Ledger und in einem
+AEPS-Receipt festgehalten; auch `Keine neue AEPS-Evidence` benötigt eine kurze
+Begründung. Review-`Ready`, Series-Lifecycle und Ausführungsautorität bleiben
+getrennte Achsen.
+
+Level 2 entdeckt, testet und härtet. Level 0 konsolidiert, versioniert und
+promotet. AOC-spezifische Details dürfen nicht ungeprüft generalisiert werden;
+ein einzelner Lauf erreicht höchstens `pilot-pattern` oder `candidate`.
+Upstream-Handoff benötigt stabile veröffentlichte Evidence und aktuelle
+GitHub-Schreibautorität. Dieser Vertrag erteilt weder Preset-Promotion noch
+Level-0-, Remote-, Merge- oder Bypass-Autorität.
+
+*The AOC is a level-2 AEPS reference and evidence source. Follow the canonical
+capture and handoff contract in `docs/aeps/README.md` after every formally
+validated Ready review and every material review, retrospective, completion,
+failure, or abort trigger. Record either new evidence or a justified no-change
+receipt. Ready, lifecycle, and execution authority remain separate. Level 2
+discovers and hardens; level 0 consolidates and promotes. Upstream work requires
+stable published evidence and current write authority.*
+
 ## Lernreihen-Governance / Learning Series Governance
 
 Neue Lernreihen fuer Fachinformatiker*innen und weitere IT-Ausbildungsberufe werden zuerst in `docs/learning-units/` als Level-0-Quelle vorbereitet. Der `Lernreihen-Blueprint`, das `Lernreihen-Register`, das IT-Berufe-Mapping und die Vorlagen unter `docs/learning-units/templates/` sind verbindlich, bevor eine konkrete Level-1-/Level-2-Struktur gespiegelt wird. KI-Agenten duerfen Lernreihen, Lastenhefte, Berufsbild-Mappings, Reihenfolgen und ZIP-Paketierung vorbereiten, starten aber keine Spec-Kit-Laeufe fuer Lernende ohne ausdruecklichen Auftrag. Spec-Kit-Laeufe sind begleitende SDD-Aufgaben und ersetzen nicht Berufsschule, betriebliche Ausbildung, Rahmenlehrplan, Ausbilderentscheidung oder Pruefungsvorbereitung.

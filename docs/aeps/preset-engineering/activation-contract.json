@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "AepsPresetEngineeringActivationContract",
+  "programId": "aeps-preset-engineering",
+  "title": "AEPS - Agentic Engineering Preset Engineering Program",
+  "systemOfRecord": "hindermath/home-baseline",
+  "strategicAnchor": "https://github.com/hindermath/home-baseline/issues/196",
+  "initialState": "Dormant",
+  "states": [
+    "Dormant",
+    "BlockedPreconditions",
+    "ActiveAnalysis",
+    "AwaitingAuthoringApproval",
+    "Completed"
+  ],
+  "activation": {
+    "mode": "ExplicitHumanInvocation",
+    "automaticActivationAllowed": false,
+    "primaryEvidenceRepository": "hindermath/AgentOperationsCockpit",
+    "requiredRawIntakes": [
+      "RAW-01",
+      "RAW-02",
+      "RAW-03",
+      "RAW-04",
+      "RAW-05",
+      "RAW-06",
+      "RAW-07",
+      "RAW-08",
+      "RAW-09"
+    ],
+    "perIntakeGates": [
+      "CurrentAuthoringReceiptValidOnBashAndPowerShell",
+      "CurrentSingleReviewReadyAndHashBound",
+      "CurrentSingleReviewValidOnBashAndPowerShell",
+      "SeriesLifecycleCompleted",
+      "CurrentCompletionReceiptValid",
+      "AllReviewFindingsDocumented",
+      "EveryFindingHasCoverageStatus",
+      "NoBlockingFindingOpen"
+    ],
+    "seriesGates": [
+      "CurrentRawSeriesCompletionReceiptValid",
+      "SeriesReceiptBindsManifestOrderReviewsFindingsCoverageAndReceipts"
+    ],
+    "failureState": "BlockedPreconditions",
+    "failureAction": "WriteActivationAuditStopAndRequestTargetedHumanDecision",
+    "successState": "ActiveAnalysis"
+  },
+  "evidenceBasis": {
+    "primary": "hindermath/AgentOperationsCockpit",
+    "comparisonRepositories": [
+      "hindermath/TuiVision",
+      "hindermath/TinyCalc",
+      "hindermath/TinyPl0"
+    ],
+    "crossProjectEvidenceRequiredForGeneralisation": true,
+    "singleProjectCanonicalPromotionAllowed": false
+  },
+  "phases": [
+    {
+      "id": "Phase1",
+      "name": "Analysis",
+      "presetMutationAllowed": false,
+      "promotionAllowed": false
+    },
+    {
+      "id": "Phase2",
+      "name": "DecisionCompleteSeriesDraft",
+      "activeIntakeAuthoringAllowed": false,
+      "completionState": "AwaitingAuthoringApproval"
+    }
+  ],
+  "candidateMaturity": [
+    "observation",
+    "pilot-pattern",
+    "candidate",
+    "stable",
+    "canonical"
+  ],
+  "deliverables": [
+    "Preset Inventory",
+    "Existing Preset Map",
+    "Finding-to-Preset Matrix",
+    "Preset Gap Analysis",
+    "Candidate Preset Register",
+    "Existing Preset Extension Plan",
+    "New Preset Candidate Register",
+    "AEPS Domain Map",
+    "Promotion Readiness Matrix",
+    "AEPS Lastenheft-Landkarte",
+    "AEPS Series Map",
+    "AEPS Ownership Matrix",
+    "AEPS Decision Map",
+    "AEPS Roadmap",
+    "Completion Receipt"
+  ],
+  "draftTopics": [
+    "Preset Inventory",
+    "Preset Registry",
+    "Preset Lifecycle",
+    "Preset Candidate Intake",
+    "Preset Coverage",
+    "Preset Promotion",
+    "Preset Versioning",
+    "Preset Compatibility",
+    "Preset Migration",
+    "Preset Deprecation",
+    "Cross-Project Validation",
+    "Preset Quality Assurance",
+    "Preset Documentation",
+    "Preset Review",
+    "Preset Evidence",
+    "Preset Completion"
+  ],
+  "draftQualityGates": [
+    "SpecKitCompatible",
+    "IndependentlyReviewable",
+    "ReceiptCapable",
+    "EvidenceBased",
+    "CrossProjectUsable",
+    "GermanFirstEnglishSecond",
+    "CEFR-B2",
+    "WCAG-2.2-AA",
+    "SingleOwnerPerIntake",
+    "ExplicitRoots",
+    "AcyclicDependencyGraph"
+  ],
+  "prohibitedActions": [
+    "CreatePreset",
+    "ModifyPreset",
+    "PromotePreset",
+    "StartProductImplementation",
+    "CreateActiveIntake",
+    "StartSpecifyPlanTasksOrImplement",
+    "ModifyEvidenceSourceRepository",
+    "WriteGitHubIssue",
+    "Push",
+    "Merge",
+    "Bypass"
+  ]
+}

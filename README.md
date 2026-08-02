@@ -93,6 +93,25 @@ die erlaubte nächste Aktion verlinkt.
 [`Pflichtenheft.md`](Pflichtenheft.md), linking the self-contained baseline, five
 meta intakes, nine domain owner series, their status, and the allowed next action.*
 
+## AEPS-Evidence und Learnings / AEPS evidence and learnings
+
+Das AOC ist ein Level-2-Referenzprojekt für das **Agentic Engineering Preset
+System (AEPS)**. Findings, Learnings, Patterns, Anti-Patterns sowie positive und
+negative Evidence werden unter [`docs/aeps/`](docs/aeps/) gesammelt und gegen
+das strategische Level-0-Anchor-Issue
+[`hindermath/home-baseline#196`](https://github.com/hindermath/home-baseline/issues/196)
+eingeordnet. Der [AEPS-Evidence-Vertrag](docs/aeps/README.md) definiert
+Erfassungszeitpunkte, Pflichtfelder, Reifegrade, Deduplizierung und den späteren
+Upstream-Handoff.
+
+AOC entdeckt, testet und härtet projektbezogene Evidence. Preset-
+Konsolidierung, Versionierung und Promotion bleiben Aufgabe des Level-0-
+System-of-Record. Ein formales `Ready`-Review ist weder Series-Eligibility noch
+Ausführungs- oder Promotion-Authority. / *The AOC is a level-2 AEPS reference.
+It discovers, tests, and hardens project evidence under `docs/aeps/`; level 0
+retains consolidation, versioning, and promotion. A formal Ready review is
+neither Series eligibility nor execution or promotion authority.*
+
 ## Für Auszubildende / For Apprentices
 
 Auszubildende benötigen keine Kenntnis der internen Entstehungsgeschichte oder
