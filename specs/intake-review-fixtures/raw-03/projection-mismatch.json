@@ -1,0 +1,32 @@
+{
+  "fixtureId": "RAW03-PROJECTION-MISMATCH",
+  "fixtureKind": "ProjectionParity",
+  "expectedOutcome": "Rejected",
+  "expectedError": "ST007",
+  "jsonProjection": {
+    "schemaVersion": "requirements-v1",
+    "stateId": "workspace-state",
+    "valueOrAbsence": "Present",
+    "sources": ["workspace-snapshot"],
+    "observedAt": "2026-08-02T12:00:00Z",
+    "freshnessAsOf": "2026-08-02T12:00:30Z",
+    "freshness": "Fresh",
+    "status": "Known",
+    "authority": "Valid",
+    "confidence": "High",
+    "reasonCodes": ["STATE_FRESH"]
+  },
+  "textProjection": {
+    "schemaVersion": "requirements-v1",
+    "stateId": "workspace-state",
+    "valueOrAbsence": "Present",
+    "sources": ["workspace-snapshot"],
+    "observedAt": "2026-08-02T12:00:00Z",
+    "freshnessAsOf": "2026-08-02T12:00:30Z",
+    "freshness": "Aging",
+    "status": "Known",
+    "authority": "Valid",
+    "confidence": "Medium",
+    "reasonCodes": ["STATE_AGING"]
+  }
+}

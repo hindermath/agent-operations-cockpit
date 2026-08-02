@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "1159da03-43fd-41ae-9876-f3df2633af12",
+  "mode": "Single",
+  "status": "NeedsClarification",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-02T13:17:50Z",
+  "repository": {
+    "root": ".",
+    "head": "60706c5dc6d96996fd7b4b4780c0b736a643dbb0"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-03-state-truthfulness-2026-08-02.json",
+    "normalizedSha256": "fc0e3b840343891dd9d52245f1209a9c5bc7c68528c586a5442982f715714d96"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "role": "Primary",
+      "normalizedSha256": "6886c5cc5243f033620e82895c601d78d4309108c8f364b81900598a2f563eae",
+      "gitBlob": "6eb50189630abf62a5550b088e6acaac45f2008a"
+    }
+  ],
+  "findings": [
+    {
+      "id": "IR301",
+      "severity": "High",
+      "category": "OpenDecisionAndProvenance",
+      "target": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "disposition": "NeedsClarification",
+      "owner": "RAW-03",
+      "evidence": "The target explicitly leaves time source, freshness thresholds, and the confidence model open. The canonical portfolio contract binds these topics to open decision DEC-T03, and the open-decisions register states that DEC-T03 blocks State implementation before the State plan. The current Authoring Receipt nevertheless records decisions=[], openDecisionIds=[], and questionCount=0, so decision state and provenance contradict the reviewed target.",
+      "reevaluationTrigger": "A human resolves IRQ301 through IRQ303, the three decisions are recorded under DEC-T03 without guessing, the Authoring Receipt and Series target hash are renewed, and RAW-03 receives a complete Single re-review."
+    },
+    {
+      "id": "IR302",
+      "severity": "High",
+      "category": "DependencyAndHandoffContract",
+      "target": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-03",
+      "evidence": "RAW-03 names RAW-01 Snapshot and Node Evidence as inputs, but the canonical portfolio contract declares only the Workspace Snapshot Contract as its input and only RAW-01 as its dependency. RAW-05 owns node evidence, remains Pending and research-only, and follows RAW-03. The target binds no producer, version, authority, failure behavior, or non-binding classification for Node Evidence.",
+      "reevaluationTrigger": "The input and handoff text is reconciled with the current ownership contract and DAG, preserving RAW-01 as the sole binding predecessor unless a separately authorised Series change proves another dependency; then RAW-03 is fully re-reviewed."
+    },
+    {
+      "id": "IR303",
+      "severity": "High",
+      "category": "LanguageAndTerminology",
+      "target": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-03",
+      "evidence": "The learner-facing profile requires complete German-first/English-second CEFR-B2 content, first-use explanations or a precise bilingual glossary link, and text-first lifecycle facts. Sources, inputs and outputs, FR-001 through NFR-002, decisions, child intakes, acceptance, evidence, revision, and authority are not fully paired. StateEnvelope, observed-at, freshness-as-of, Reason Code, Last-Writer-Wins, Confidence, Clock Skew, fixture, serial-autonomous, Spec Kit, and MergeAndSync are not explained for the declared first-year audience. The target does not state the current Completed predecessor, Eligible lifecycle, decision ID, review-only next action, or the distinction between review, lifecycle, and execution authority.",
+      "reevaluationTrigger": "Every normative section has a complete DE/EN pair, central terms have first-use explanations or a precise glossary link, and current status, predecessor, DEC-T03 state, next action, and non-authority are explicit ordered text, followed by a complete Single re-review."
+    },
+    {
+      "id": "IR304",
+      "severity": "High",
+      "category": "RequirementsEvidence",
+      "target": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-03",
+      "evidence": "The StateEnvelope lacks a versioned field contract, status derivation and transition rules, a reason-code catalogue, absence and conflict representation, and explicit mapping from SRC-172/SRC-180/SRC-181 and RF-06/RF-10 to requirements and acceptance criteria. The evidence section names fixture classes but no canonical paths, schemas, validator commands, expected results, exit codes, platform matrix, or reproducible JSON/text parity comparison. AC-001 cannot be evaluated because the expected reason codes are undefined.",
+      "reevaluationTrigger": "A versioned and owner-bounded StateEnvelope contract plus source-to-requirement-to-acceptance traceability names deterministic positive and negative fixtures, validators, commands, expected outputs and exit codes without implementing the product; then RAW-03 is fully re-reviewed."
+    },
+    {
+      "id": "IR305",
+      "severity": "High",
+      "category": "CrossCuttingApplicability",
+      "target": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-03",
+      "evidence": "RAW-03 handles source provenance, authority, timestamps, repository or host-derived state, and user-facing status. It requires screen-reader and colour-independent meaning but does not explicitly decide security, privacy and data minimisation, unnecessary personal data, secret-safe reason details, full WCAG 2.2 AA applicability, macOS/Linux/Windows parity, or software-supply-chain applicability. Positive and negative cross-cutting evidence plus re-evaluation triggers are missing.",
+      "reevaluationTrigger": "Security, privacy, accessibility, platform and supply-chain applicability are explicitly classified with measurable positive and negative evidence and re-evaluation triggers while presentation ownership remains with RAW-04; then RAW-03 is fully re-reviewed."
+    },
+    {
+      "id": "IR306",
+      "severity": "High",
+      "category": "PromptAndDeliveryAuthority",
+      "target": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-03",
+      "evidence": "The normative text grants no current Specify, implementation, remote-write, merge, or bypass authority and leaves DEC-T03 open. The enabled autonomous prompt nevertheless requests MergeAndSync and requires only a current review. The Authoring Receipt stores historical MergeAndSync and Admin-Bypass data, but historical delivery data, Eligible lifecycle, and a future current review do not grant current scope, start, implementation, remote, merge, bypass, or provider authority.",
+      "reevaluationTrigger": "Both prompts and the renewed Receipt fail closed on unresolved DEC-T03 and require separate current scope, start, implementation, remote-write, merge, bypass, and provider authority; historic authority and Eligibility remain explicitly insufficient, followed by a complete Single re-review."
+    }
+  ],
+  "questions": [
+    {
+      "id": "IRQ301",
+      "status": "Open",
+      "owner": "RAW-03",
+      "question": "Which authoritative time source or sources define observed-at and freshness-as-of, including deterministic tests and handling of wall-clock changes?"
+    },
+    {
+      "id": "IRQ302",
+      "status": "Open",
+      "owner": "RAW-03",
+      "question": "Which freshness classes and thresholds map observations to Known, Stale, Unavailable, or Degraded, and where may the thresholds be configured?"
+    },
+    {
+      "id": "IRQ303",
+      "status": "Open",
+      "owner": "RAW-03",
+      "question": "Does the StateEnvelope need a confidence field; if yes, what values and derivation rules apply, and if no, how do status, authority, freshness, and reason codes fully represent uncertainty?"
+    }
+  ],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 6,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "N/A"
+}

@@ -5,11 +5,12 @@
 Kanonischer Anker ist
 [`hindermath/home-baseline#196`](https://github.com/hindermath/home-baseline/issues/196).
 Diese Bestandsaufnahme führt keine GitHub- oder Level-0-Schreibaktion aus.
-Vier der fünf aktuellen Ready-Re-Reviews sind noch `PendingPublication`;
-deshalb bleibt der gesamte neue Handoff bis zu stabiler Commit- oder PR-
-Evidence gesperrt. / *This baseline performs no GitHub or level-0 write. Four
-of five current Ready re-reviews remain unpublished, so new upstream handoff is
-blocked until stable commit or PR evidence exists.*
+Die neu erfassten Ready-Re-Reviews einschließlich RAW-03 sind noch
+`PendingPublication`; deshalb bleibt der gesamte neue Handoff bis zu stabiler
+Commit- oder PR-Evidence gesperrt. / *This baseline performs no GitHub or
+level-0 write. The newly captured Ready re-reviews, including RAW-03, remain
+unpublished, so new upstream handoff is blocked until stable commit or PR
+evidence exists.*
 
 ## Direkt für #196 geeignete Ergänzungen / Suitable direct additions to #196
 
@@ -27,8 +28,9 @@ duplicating them:*
 | `AEPS-FIND-AOC-006` und `010` | `CAND-AEPS-10`, `11` | Applicability plus Re-Evaluation und semantisches Review als Ergänzung zu Schema-Validation. |
 | `AEPS-FIND-AOC-008` | `CAND-AEPS-05` | Neue negative Evidence: Doppelowner `PO002`, Zyklus `PO007`. |
 | `AEPS-FIND-AOC-009` | `CAND-AEPS-02`, `08` | Evidence-Zahlen reichen nicht; Artefakte, Commands, Exitcodes und Traceability müssen gebunden sein. |
-| `AEPS-FIND-AOC-013` | `CAND-AEPS-05`, `07` | Neun Eligibility-Achsen sowie Shared-Write-/Shared-Decision-Negativfixtures; Runtime- und Cross-Project-Evidence fehlen. |
+| `AEPS-FIND-AOC-013` | `CAND-AEPS-05`, `07` | Neun Eligibility-Achsen, Shared-Write-/Shared-Decision-Negativfixtures und lokaler vertragsgetriebener Validator; Runtime- und Cross-Project-Evidence fehlen. |
 | `AEPS-FIND-AOC-014` | möglicher Ausbau `CAND-AEPS-04`, `08` | Lokale Create-/Verify-/Partial-/Collision-Fixtures bestehen; Cross-Project- und Runtime-Recovery-Evidence fehlen. |
+| `AEPS-FIND-AOC-015` | `CAND-AEPS-06`, `08` | Negativ-Evidence: Ein hash- und schemagültiges Receipt kann offene Target-Decisions fälschlich als leer ausweisen. Die manuelle Reparatur mit Ready-Re-Review liefert positive lokale Paritäts-Evidence; automatische Validator- und Cross-Project-Evidence fehlen. |
 
 Der Kommentar bindet mindestens AOC-Commit oder PR, Ledgerpfad, Ready-Review-
 IDs, positive und negative Evidence, Grenzen und weiterhin offene Promotion-
@@ -48,15 +50,16 @@ IDs, positive and negative evidence, limits, and remaining promotion blockers.*
 - **Verlinkung / Linking:** Issue-Body verweist auf #196; #196 erhält bei
   aktueller Authority einen Rückverweis.
 
-### 2. Intake Evidence Roles and Safe Negative Fixtures
+### 2. Intake Receipt Semantics, Evidence Roles and Safe Negative Fixtures
 
-- **Enthält:** `AEPS-FIND-AOC-004`, `005`, `009` sowie
-  `AEPS-GAP-AOC-002`, `003`, `005`.
+- **Enthält:** `AEPS-FIND-AOC-004`, `005`, `009`, `015` sowie
+  `AEPS-GAP-AOC-002`, `003`, `005`, `010`.
 - **Geeignetes Repository:** zunächst `hindermath/home-baseline`, falls die
   Preset-Inventur bestätigt, dass Intake Authoring und Security Governance
   gemeinsam betroffen sind; andernfalls AOC-Issue für weitere Pilot-Evidence.
-- **Eröffnungskriterium:** veröffentlichte AOC-Evidence und geklärte
-  Rollen-Taxonomie für Provenienz versus synthetische Testdaten.
+- **Eröffnungskriterium:** veröffentlichte AOC-Evidence, geklärte
+  Rollen-Taxonomie für Provenienz versus synthetische Testdaten sowie positive
+  und negative Decision-Paritätsfixtures in einem zweiten Intake-Programm.
 - **Verlinkung:** wechselseitig mit #196, keine Preset-Promotion im Issue.
 
 ### 3. Review-Lineage Impact Graph

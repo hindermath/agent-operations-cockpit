@@ -19,9 +19,9 @@
 | 3 | `Lastenheft_META-LH-03-Authoring-Contract.md` | Completed | Authoring-/Receipt-Vertrag |
 | 4 | `Lastenheft_META-LH-04-Series-Eligibility.md` | Completed | DAG und Autonomie |
 | 5 | `Lastenheft_META-LH-05-Erste-Welle.md` | Completed | neun fachliche Intakes |
-| 6 | `Lastenheft_RAW-01-Reference-Agentic-Workspace.md` | Eligible | read-only Referenzslice |
-| 7 | `Lastenheft_RAW-03-State-Truthfulness.md` | Pending | Zustandssemantik |
-| 8 | `Lastenheft_RAW-02-Workspace-Orchestrator.md` | Blocked | Orchestration; IAD201–203 bestätigt, wartet auf RAW-01/03 |
+| 6 | `Lastenheft_RAW-01-Reference-Agentic-Workspace.md` | Completed | read-only Referenzslice |
+| 7 | `Lastenheft_RAW-03-State-Truthfulness.md` | Completed | Zustandssemantik |
+| 8 | `Lastenheft_RAW-02-Workspace-Orchestrator.md` | Eligible | Orchestration; IAD201–203 bestätigt |
 | 9 | `Lastenheft_RAW-04-Presentation-Fabric.md` | Pending | zugängliche Projektionen |
 | 10 | `Lastenheft_RAW-05-Execution-Nodes.md` | Pending | Host-/Sandbox-Grenzen |
 | 11 | `Lastenheft_RAW-06-CLI-Environment-Orchestration.md` | Blocked | CLI; IAD601–604 |
@@ -52,20 +52,19 @@ is preferred only, so read-only node research may proceed earlier.*
 
 ## Nächster Kandidat und Blocker / Next candidate and blockers
 
-META-LH-01 bis META-LH-05 sind nach aktueller `Ready`-Single-Review-Evidence im
-Manifest `Completed`. RAW-01 ist der einzige ausdrücklich als `Eligible`
-markierte Kandidat. RAW-05 besitzt keine bindende Vorgängerkante und ist
-strukturell ebenfalls eligible, bleibt aber `Pending` und auf read-only
-Research begrenzt. Das ist eine Auskunft, keine Review-, Specify- oder
-Ausführungsfreigabe. IAD201–203 sind für RAW-02 bestätigt; dessen
-Serien-Lifecycle bleibt bis zum Abschluss von RAW-01 und RAW-03 blockiert.
-RAW-06, RAW-07 und RAW-09 bleiben bis zu den im jeweiligen Intake genannten
-IAD-Decisions blockiert.
+META-LH-01 bis META-LH-05, RAW-01 und RAW-03 sind nach aktueller
+`Ready`-Single-Review-Evidence im Manifest `Completed`. RAW-02 ist der einzige
+ausdrücklich als `Eligible` markierte Kandidat; IAD201–203 sind bestätigt und
+sein bindender Vorgänger RAW-03 ist abgeschlossen. RAW-04 und RAW-05 bleiben
+`Pending`. RAW-05 besitzt keine bindende Vorgängerkante und ist strukturell
+ebenfalls eligible, bleibt aber auf read-only Research begrenzt. Das ist eine
+Auskunft, keine Review-, Specify- oder Ausführungsfreigabe. RAW-06, RAW-07 und
+RAW-09 bleiben bis zu den im jeweiligen Intake genannten IAD-Decisions
+blockiert.
 
-*META-LH-01 through META-LH-05 are `Completed` after current `Ready`
-Single-review evidence. RAW-01 is the only explicitly declared `Eligible`
-candidate.
-RAW-05 has no binding predecessor and is structurally eligible but remains
-pending and research-only. IAD201 through IAD203 are confirmed; RAW-02 remains
-blocked by the binding RAW-01 and RAW-03 sequence. This is information, not
-authority.*
+*META-LH-01 through META-LH-05, RAW-01, and RAW-03 are `Completed` after
+current `Ready` Single-review evidence. RAW-02 is the sole explicitly declared
+`Eligible` candidate; IAD201 through IAD203 are confirmed and its binding
+RAW-03 predecessor is complete. RAW-04 and RAW-05 remain Pending. RAW-05 has no
+binding predecessor and is structurally eligible but remains research-only.
+This is information, not authority.*

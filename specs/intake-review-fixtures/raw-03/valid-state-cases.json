@@ -1,0 +1,140 @@
+{
+  "fixtureId": "RAW03-VALID-STATE-CASES",
+  "fixtureKind": "StateCases",
+  "expectedOutcome": "Valid",
+  "cases": [
+    {
+      "id": "fresh-high-known",
+      "sourceId": "workspace-snapshot",
+      "capabilityId": "workspace-state",
+      "observedAt": "2026-08-02T12:00:00Z",
+      "freshnessAsOf": "2026-08-02T12:00:30Z",
+      "baseThresholdSeconds": 120,
+      "maxClockSkewSeconds": 10,
+      "sourceState": "Present",
+      "authorityState": "Valid",
+      "conflictState": "None",
+      "valueState": "Value",
+      "expected": {
+        "freshness": "Fresh",
+        "status": "Known",
+        "confidence": "High",
+        "reasonCode": "STATE_FRESH"
+      }
+    },
+    {
+      "id": "fresh-boundary",
+      "sourceId": "workspace-snapshot",
+      "capabilityId": "workspace-state",
+      "observedAt": "2026-08-02T12:00:00Z",
+      "freshnessAsOf": "2026-08-02T12:01:00Z",
+      "baseThresholdSeconds": 120,
+      "maxClockSkewSeconds": 10,
+      "sourceState": "Present",
+      "authorityState": "Valid",
+      "conflictState": "None",
+      "valueState": "AbsenceDeclared",
+      "expected": {
+        "freshness": "Fresh",
+        "status": "Known",
+        "confidence": "High",
+        "reasonCode": "STATE_FRESH"
+      }
+    },
+    {
+      "id": "aging-medium-known",
+      "sourceId": "workspace-snapshot",
+      "capabilityId": "workspace-state",
+      "observedAt": "2026-08-02T12:00:00Z",
+      "freshnessAsOf": "2026-08-02T12:01:30Z",
+      "baseThresholdSeconds": 120,
+      "maxClockSkewSeconds": 10,
+      "sourceState": "Present",
+      "authorityState": "Valid",
+      "conflictState": "None",
+      "valueState": "Value",
+      "expected": {
+        "freshness": "Aging",
+        "status": "Known",
+        "confidence": "Medium",
+        "reasonCode": "STATE_AGING"
+      }
+    },
+    {
+      "id": "aging-upper-boundary",
+      "sourceId": "workspace-snapshot",
+      "capabilityId": "workspace-state",
+      "observedAt": "2026-08-02T12:00:00Z",
+      "freshnessAsOf": "2026-08-02T12:02:00Z",
+      "baseThresholdSeconds": 120,
+      "maxClockSkewSeconds": 10,
+      "sourceState": "Present",
+      "authorityState": "Valid",
+      "conflictState": "None",
+      "valueState": "Value",
+      "expected": {
+        "freshness": "Aging",
+        "status": "Known",
+        "confidence": "Medium",
+        "reasonCode": "STATE_AGING"
+      }
+    },
+    {
+      "id": "stale-low-stale",
+      "sourceId": "workspace-snapshot",
+      "capabilityId": "workspace-state",
+      "observedAt": "2026-08-02T12:00:00Z",
+      "freshnessAsOf": "2026-08-02T12:03:00Z",
+      "baseThresholdSeconds": 120,
+      "maxClockSkewSeconds": 10,
+      "sourceState": "Present",
+      "authorityState": "Valid",
+      "conflictState": "None",
+      "valueState": "Value",
+      "expected": {
+        "freshness": "Stale",
+        "status": "Stale",
+        "confidence": "Low",
+        "reasonCode": "STALE_THRESHOLD_EXCEEDED"
+      }
+    },
+    {
+      "id": "expired-unknown-unavailable",
+      "sourceId": "workspace-snapshot",
+      "capabilityId": "workspace-state",
+      "observedAt": "2026-08-02T12:00:00Z",
+      "freshnessAsOf": "2026-08-02T12:04:01Z",
+      "baseThresholdSeconds": 120,
+      "maxClockSkewSeconds": 10,
+      "sourceState": "Present",
+      "authorityState": "Valid",
+      "conflictState": "None",
+      "valueState": "Value",
+      "expected": {
+        "freshness": "Expired",
+        "status": "Unavailable",
+        "confidence": "Unknown",
+        "reasonCode": "EXPIRED_THRESHOLD_EXCEEDED"
+      }
+    },
+    {
+      "id": "stale-upper-boundary",
+      "sourceId": "workspace-snapshot",
+      "capabilityId": "workspace-state",
+      "observedAt": "2026-08-02T12:00:00Z",
+      "freshnessAsOf": "2026-08-02T12:04:00Z",
+      "baseThresholdSeconds": 120,
+      "maxClockSkewSeconds": 10,
+      "sourceState": "Present",
+      "authorityState": "Valid",
+      "conflictState": "None",
+      "valueState": "Value",
+      "expected": {
+        "freshness": "Stale",
+        "status": "Stale",
+        "confidence": "Low",
+        "reasonCode": "STALE_THRESHOLD_EXCEEDED"
+      }
+    }
+  ]
+}

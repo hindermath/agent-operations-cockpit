@@ -1,0 +1,187 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "AocStateTruthfulnessContract",
+  "contractId": "RAW-03-State-Truthfulness-requirements-v1",
+  "owner": "RAW-03",
+  "decision": {
+    "id": "DEC-T03",
+    "status": "Superseded",
+    "supersededBy": [
+      "IAD301",
+      "IAD302",
+      "IAD303"
+    ],
+    "confirmedAt": "2026-08-02",
+    "evidence": "Thorsten explicitly confirmed the refined package A for time, freshness, and confidence in the current task."
+  },
+  "boundary": {
+    "input": "Workspace Snapshot Contract",
+    "output": "State Envelope Contract",
+    "nonOwnership": [
+      "Workspace discovery",
+      "Node discovery",
+      "Presentation",
+      "Commands"
+    ]
+  },
+  "stateStatuses": [
+    "Known",
+    "Unknown",
+    "Stale",
+    "Unavailable",
+    "Degraded"
+  ],
+  "freshnessPolicy": {
+    "version": "requirements-v1",
+    "profileKeyFields": [
+      "sourceId",
+      "capabilityId"
+    ],
+    "requiredParameters": [
+      "baseThresholdSeconds",
+      "maxClockSkewSeconds"
+    ],
+    "unreviewedRuntimeOverridesAllowed": false,
+    "time": {
+      "observedAt": "UTC RFC3339 timestamp from the observing execution node",
+      "freshnessAsOf": "UTC RFC3339 timestamp from the evaluating AOC process",
+      "inProcessElapsedTime": "Monotonic clock",
+      "serializedOrRestartedElapsedTime": "freshnessAsOf minus observedAt",
+      "futureTimestampRule": "A future observedAt beyond maxClockSkewSeconds yields Unknown freshness and blocks Known state",
+      "toleratedSkewRule": "A future observedAt within maxClockSkewSeconds is clamped to age zero, emits CLOCK_SKEW_TOLERATED, and caps confidence at Medium"
+    },
+    "bands": [
+      {
+        "name": "Fresh",
+        "lowerExclusiveFactor": null,
+        "upperInclusiveFactor": 0.5
+      },
+      {
+        "name": "Aging",
+        "lowerExclusiveFactor": 0.5,
+        "upperInclusiveFactor": 1.0
+      },
+      {
+        "name": "Stale",
+        "lowerExclusiveFactor": 1.0,
+        "upperInclusiveFactor": 2.0
+      },
+      {
+        "name": "Expired",
+        "lowerExclusiveFactor": 2.0,
+        "upperInclusiveFactor": null
+      },
+      {
+        "name": "Unknown",
+        "lowerExclusiveFactor": null,
+        "upperInclusiveFactor": null
+      }
+    ],
+    "unknownConditions": [
+      "Missing or invalid observedAt",
+      "Missing or invalid freshnessAsOf",
+      "Missing source identity",
+      "Future observedAt beyond the profile clock-skew allowance",
+      "Missing or non-positive base threshold"
+    ]
+  },
+  "confidencePolicy": {
+    "version": "requirements-v1",
+    "values": [
+      "High",
+      "Medium",
+      "Low",
+      "Unknown"
+    ],
+    "numericOrPercentageValuesAllowed": false,
+    "machineReadableReasonRequired": true,
+    "rules": [
+      {
+        "confidence": "High",
+        "when": "Fresh, valid source, valid authority, no conflict, and no tolerated clock skew"
+      },
+      {
+        "confidence": "Medium",
+        "when": "Aging with valid source and authority and no conflict, or Fresh with tolerated clock skew"
+      },
+      {
+        "confidence": "Low",
+        "when": "Stale but still usable, or Degraded with explicitly usable partial or conflicting evidence"
+      },
+      {
+        "confidence": "Unknown",
+        "when": "Freshness is Expired or Unknown, or source, authority, time, or usable evidence is missing"
+      }
+    ]
+  },
+  "stateDerivationOrder": [
+    "Invalid or missing time, source, authority, or value-or-absence evidence yields Unknown",
+    "Explicitly unavailable source or Expired freshness yields Unavailable",
+    "Authority or source conflict with usable evidence yields Degraded",
+    "Stale freshness yields Stale",
+    "Fresh or Aging freshness with valid source and authority and no conflict yields Known"
+  ],
+  "envelope": {
+    "schemaVersion": "requirements-v1",
+    "requiredFields": [
+      "schemaVersion",
+      "stateId",
+      "valueOrAbsence",
+      "sources",
+      "observedAt",
+      "freshnessAsOf",
+      "freshness",
+      "status",
+      "authority",
+      "confidence",
+      "reasonCodes"
+    ],
+    "sourceConflictPolicy": "Preserve every contributing source and conflict; never use silent last-writer-wins",
+    "projectionPolicy": "JSON and text expose the same field values and ordering semantics; later presentation may change layout but not meaning"
+  },
+  "reasonCodes": [
+    "STATE_FRESH",
+    "STATE_AGING",
+    "STALE_THRESHOLD_EXCEEDED",
+    "EXPIRED_THRESHOLD_EXCEEDED",
+    "FRESHNESS_UNKNOWN",
+    "CLOCK_SKEW_TOLERATED",
+    "OBSERVED_AT_MISSING",
+    "OBSERVED_AT_INVALID",
+    "OBSERVED_AT_IN_FUTURE",
+    "FRESHNESS_AS_OF_MISSING",
+    "FRESHNESS_AS_OF_INVALID",
+    "SOURCE_MISSING",
+    "SOURCE_UNAVAILABLE",
+    "AUTHORITY_MISSING",
+    "AUTHORITY_CONFLICT",
+    "SOURCE_CONFLICT",
+    "VALUE_OR_ABSENCE_MISSING"
+  ],
+  "crossCutting": {
+    "security": "Reason details must not expose secrets, credentials, or unneeded host internals; missing or conflicting authority fails closed",
+    "privacy": "The envelope contains no unnecessary personal data and minimises host, repository, and user identifiers",
+    "accessibility": "Text status is German-first and English-second, compatible with WCAG 2.2 AA, screen readers, and colour-independent meaning",
+    "platforms": [
+      "macOS",
+      "Linux",
+      "Windows"
+    ],
+    "platformRule": "Identical inputs and policy profiles yield identical status, freshness, confidence, and reason codes on every supported platform",
+    "supplyChain": "N/A for the requirements-only contract and fixtures; introducing implementation dependencies requires SBOM and vulnerability evidence"
+  },
+  "evidence": {
+    "validator": "specs/intake-review-fixtures/raw-03/validate-state-truthfulness.py",
+    "bashSurface": "specs/intake-review-fixtures/raw-03/validate-state-truthfulness.sh",
+    "powerShellSurface": "specs/intake-review-fixtures/raw-03/validate-state-truthfulness.ps1",
+    "positiveFixtures": [
+      "specs/intake-review-fixtures/raw-03/valid-state-cases.json",
+      "specs/intake-review-fixtures/raw-03/projection-parity.json"
+    ],
+    "negativeFixtures": [
+      "specs/intake-review-fixtures/raw-03/negative-state-cases.json",
+      "specs/intake-review-fixtures/raw-03/projection-mismatch.json"
+    ],
+    "successExitCode": 0
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "fixtureId": "RAW03-NEGATIVE-STATE-CASES",
+  "fixtureKind": "StateCases",
+  "expectedOutcome": "Valid",
+  "cases": [
+    {
+      "id": "future-observation",
+      "sourceId": "workspace-snapshot",
+      "capabilityId": "workspace-state",
+      "observedAt": "2026-08-02T12:01:00Z",
+      "freshnessAsOf": "2026-08-02T12:00:00Z",
+      "baseThresholdSeconds": 120,
+      "maxClockSkewSeconds": 10,
+      "sourceState": "Present",
+      "authorityState": "Valid",
+      "conflictState": "None",
+      "valueState": "Value",
+      "expected": {
+        "freshness": "Unknown",
+        "status": "Unknown",
+        "confidence": "Unknown",
+        "reasonCode": "OBSERVED_AT_IN_FUTURE"
+      }
+    },
+    {
+      "id": "tolerated-clock-skew",
+      "sourceId": "workspace-snapshot",
+      "capabilityId": "workspace-state",
+      "observedAt": "2026-08-02T12:00:05Z",
+      "freshnessAsOf": "2026-08-02T12:00:00Z",
+      "baseThresholdSeconds": 120,
+      "maxClockSkewSeconds": 10,
+      "sourceState": "Present",
+      "authorityState": "Valid",
+      "conflictState": "None",
+      "valueState": "Value",
+      "expected": {
+        "freshness": "Fresh",
+        "status": "Known",
+        "confidence": "Medium",
+        "reasonCode": "CLOCK_SKEW_TOLERATED"
+      }
+    },
+    {
+      "id": "missing-source",
+      "sourceId": "",
+      "capabilityId": "workspace-state",
+      "observedAt": "2026-08-02T12:00:00Z",
+      "freshnessAsOf": "2026-08-02T12:00:30Z",
+      "baseThresholdSeconds": 120,
+      "maxClockSkewSeconds": 10,
+      "sourceState": "Missing",
+      "authorityState": "Valid",
+      "conflictState": "None",
+      "valueState": "Value",
+      "expected": {
+        "freshness": "Unknown",
+        "status": "Unknown",
+        "confidence": "Unknown",
+        "reasonCode": "SOURCE_MISSING"
+      }
+    },
+    {
+      "id": "authority-conflict",
+      "sourceId": "workspace-snapshot",
+      "capabilityId": "workspace-state",
+      "observedAt": "2026-08-02T12:00:00Z",
+      "freshnessAsOf": "2026-08-02T12:00:30Z",
+      "baseThresholdSeconds": 120,
+      "maxClockSkewSeconds": 10,
+      "sourceState": "Present",
+      "authorityState": "Conflict",
+      "conflictState": "AuthorityConflict",
+      "valueState": "Value",
+      "expected": {
+        "freshness": "Fresh",
+        "status": "Degraded",
+        "confidence": "Low",
+        "reasonCode": "AUTHORITY_CONFLICT"
+      }
+    },
+    {
+      "id": "source-unavailable",
+      "sourceId": "workspace-snapshot",
+      "capabilityId": "workspace-state",
+      "observedAt": "2026-08-02T12:00:00Z",
+      "freshnessAsOf": "2026-08-02T12:00:30Z",
+      "baseThresholdSeconds": 120,
+      "maxClockSkewSeconds": 10,
+      "sourceState": "Unavailable",
+      "authorityState": "Valid",
+      "conflictState": "None",
+      "valueState": "AbsenceDeclared",
+      "expected": {
+        "freshness": "Fresh",
+        "status": "Unavailable",
+        "confidence": "Unknown",
+        "reasonCode": "SOURCE_UNAVAILABLE"
+      }
+    }
+  ]
+}

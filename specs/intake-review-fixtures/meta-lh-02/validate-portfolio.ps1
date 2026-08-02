@@ -18,5 +18,9 @@ $ValidatorArguments = if ($PSCmdlet.ParameterSetName -eq 'Fixture') {
 else {
     @('--contract', $Contract, '--markdown', $Markdown)
 }
-& python3 $Validator @ValidatorArguments
+$Python = Get-Command python3 -ErrorAction SilentlyContinue
+if ($null -eq $Python) {
+    $Python = Get-Command python -ErrorAction Stop
+}
+& $Python.Source $Validator @ValidatorArguments
 exit $LASTEXITCODE
