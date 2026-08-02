@@ -1,0 +1,17 @@
+{
+  "fixtureId": "META05-FX-ALL-MATCHING",
+  "presenceState": "AllMatching",
+  "currentAuthority": false,
+  "criteria": {
+    "authority": "read-only-verification",
+    "sideEffects": "none",
+    "reversibility": "not-applicable",
+    "writeScope": "none",
+    "decisions": "preserved",
+    "integration": "already-published",
+    "review": "current-hashes-required",
+    "abort": "stop-on-drift",
+    "recovery": "separate-repair-or-update-authority"
+  },
+  "expectedOutcome": "VerifyOnly"
+}

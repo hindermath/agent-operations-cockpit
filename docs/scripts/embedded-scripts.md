@@ -60,3 +60,12 @@ Change their respective canonical source first, then propagate the result.*
 | `.specify/scripts/bash/create-new-feature.sh` | `.specify` |
 | `.specify/scripts/bash/setup-plan.sh` | `.specify` |
 | `.specify/scripts/bash/setup-tasks.sh` | `.specify` |
+| `specs/intake-review-fixtures/meta-lh-02/validate-portfolio.ps1` | `specs` |
+| `specs/intake-review-fixtures/meta-lh-02/validate-portfolio.py` | `specs` |
+| `specs/intake-review-fixtures/meta-lh-02/validate-portfolio.sh` | `specs` |
+| `specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1` | `specs` |
+| `specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.py` | `specs` |
+| `specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh` | `specs` |
+| `specs/intake-review-fixtures/meta-lh-05/validate-first-wave.ps1` | `specs` |
+| `specs/intake-review-fixtures/meta-lh-05/validate-first-wave.py` | `specs` |
+| `specs/intake-review-fixtures/meta-lh-05/validate-first-wave.sh` | `specs` |

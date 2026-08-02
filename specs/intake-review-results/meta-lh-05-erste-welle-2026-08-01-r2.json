@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "a37b14c0-2eaf-4ce8-b8e2-ac4e7280652f",
+  "mode": "Single",
+  "status": "Ready",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-01T21:15:17Z",
+  "repository": {
+    "root": ".",
+    "head": "ddba7482163c7e61161ad0b90f4e019844335898"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/meta-lh-05-erste-welle-2026-08-01-r2.json",
+    "normalizedSha256": "b3370160f3a7220488186827ffd026d8b7e3bcb1b83907a0ef6a44159319765c"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "role": "Primary",
+      "normalizedSha256": "533ecf072fc81a08c43c7c9a794d30e3ea9237e0e8d75602251373881dfc6ec0",
+      "gitBlob": "N/A"
+    }
+  ],
+  "findings": [],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "specs/intake-review-results/meta-lh-05-erste-welle-2026-08-01.json"
+}

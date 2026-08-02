@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesOperation",
+  "operationId": "09997f54-51f6-45d8-a305-2c8314722528",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "type": "Update",
+  "status": "Published",
+  "authorityEvidence": "Thorsten authorised on 2026-08-01 only the repair of IR401 through IR405 for META-LH-04, renewal of its Authoring Receipt and Series hash binding, and a complete re-review. Purpose, scope, non-goals, dependencies, functional Series intent, order, roots, lifecycle values, and Delivery Authority remain unchanged. Specify, implementation, remote writes, merge, and bypass are excluded.",
+  "proposalNormalizedSha256": "25f1f6d7e25070b84fba762f5565980b43676e0e78cbef0a01de3a1c6cc4d636",
+  "preparedPaths": [
+    "specs/intake-series/aoc-phase-2/manifest.json",
+    "specs/intake-series-receipts/aoc-phase-2.json"
+  ],
+  "documentationImpact": {
+    "decision": "UpdateRequired",
+    "source": "Thorsten's bounded META-LH-04 IR401-IR405 repair authority from 2026-08-01",
+    "owner": "AOC Phase 2 intake series",
+    "documents": [
+      "specs/intake-series/aoc-phase-2/manifest.json",
+      "specs/intake-series-receipts/aoc-phase-2.json"
+    ],
+    "evidence": [
+      "specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json",
+      "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/09997f54-51f6-45d8-a305-2c8314722528/"
+    ]
+  },
+  "reviewInvalidation": {
+    "status": "Superseded",
+    "results": [
+      "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-01.json",
+      "specs/intake-review-results/aoc-phase-2-series.json",
+      "specs/intake-review-results/aoc-phase-2-series-2026-08-01-r2.json"
+    ],
+    "reason": "The bounded repair changes the META-LH-04 target hash and therefore the Series-manifest hash. Historic reviews remain immutable evidence but are not current for the successor target or manifest. A complete new Single review of META-LH-04 is required."
+  },
+  "validation": {
+    "bash": "Passed",
+    "powerShell": "Passed"
+  },
+  "publication": {
+    "status": "Published",
+    "publishedPaths": [
+      "specs/intake-series/aoc-phase-2/manifest.json",
+      "specs/intake-series-receipts/aoc-phase-2.json"
+    ]
+  }
+}

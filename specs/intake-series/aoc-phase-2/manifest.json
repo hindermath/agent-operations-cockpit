@@ -9,38 +9,38 @@
     {
       "path": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
       "role": "Primary",
-      "normalizedSha256": "4429ca8c4c132fac83a840f5c29f8361a01c3c233e5805d4a0c4055931eb9fe7",
-      "status": "Eligible"
+      "normalizedSha256": "99eab2565a73b3f1fe836feb89b543392360d3a5d56063c13fd28cf2f0a16704",
+      "status": "Completed"
     },
     {
       "path": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
       "role": "OrderedMember",
-      "normalizedSha256": "87881c25c98a26c63eabd550731862beea5d494b41def5b7622e1c535d36841f",
-      "status": "Pending"
+      "normalizedSha256": "7965323e2981472fd061bfb9ca20fd10d6a6217df53fd0300127de74b0b9c14b",
+      "status": "Completed"
     },
     {
       "path": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
       "role": "OrderedMember",
-      "normalizedSha256": "456a1ca78c2d45e2f2447fc2e2cf44852f583bf62a6b2beab788c403e088bc93",
-      "status": "Pending"
+      "normalizedSha256": "8b1a0b37c7938d8ff5577bfb9daaedc710990e95e5470edf65b0761724c668c4",
+      "status": "Completed"
     },
     {
       "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
       "role": "OrderedMember",
-      "normalizedSha256": "1a1ece08c4be3204d5e4a63b2af4c639d54b3ed424427d5fef010db43a048dce",
-      "status": "Pending"
+      "normalizedSha256": "f16026d37b04bdf7fa492e41e0a83a8f67b3719497dba5f185bfb35d0b068ea6",
+      "status": "Completed"
     },
     {
       "path": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
       "role": "OrderedMember",
-      "normalizedSha256": "fb8e09bacd0024ddf9ed5ecfc78df0ee472e9d90fc4ab62c8d0d5c9118b67762",
-      "status": "Pending"
+      "normalizedSha256": "533ecf072fc81a08c43c7c9a794d30e3ea9237e0e8d75602251373881dfc6ec0",
+      "status": "Completed"
     },
     {
       "path": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
       "role": "OrderedMember",
-      "normalizedSha256": "55a7e6b7dee957e9b780cd6e23acf8c8bffe9d1c4e99d1411906ee23e7a52eaa",
-      "status": "Pending"
+      "normalizedSha256": "c61d9786b27ea09e0e954363a1b4335d3255ea55b0f8a5167ee52c25c583f9b6",
+      "status": "Eligible"
     },
     {
       "path": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
@@ -51,7 +51,7 @@
     {
       "path": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
       "role": "OrderedMember",
-      "normalizedSha256": "8710c773207836d181c5e44ebe4e9290a25f8a8e995e21ae56cba7b1006ad2b4",
+      "normalizedSha256": "7b2f4241e92c9dba5eb6b420d98d587b34ffe6a6ee5e607762125687a334c4e6",
       "status": "Blocked"
     },
     {

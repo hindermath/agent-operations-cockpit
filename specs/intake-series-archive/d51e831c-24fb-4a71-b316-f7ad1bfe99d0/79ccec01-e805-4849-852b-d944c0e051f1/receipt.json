@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "49cd40e6-35ea-4404-866f-553b6de973d9",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.2"
+  },
+  "createdAt": "2026-08-01T20:53:38Z",
+  "operation": {
+    "operationId": "56dceb0b-0f3f-441b-9645-1bd952b8ccbb",
+    "type": "Update",
+    "authorityEvidence": "Thorsten explicitly authorised on 2026-08-01 only the lifecycle transition of META-LH-04 from Eligible to Completed when its current Single review remains Ready, and META-LH-05 from Pending to the sole declared Eligible target. RAW-05 remains Pending and research-only; order, roots, dependencies, all other lifecycle values, intake contents, and Delivery Authority remain unchanged. Review, Specify, implementation, remote writes, merge, and bypass are excluded."
+  },
+  "status": "NeedsClarification",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "f1b61ef86f473c2f8f21bb6522ffd250b35dd7d0d31781a0dced0f267f6db000"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/56dceb0b-0f3f-441b-9645-1bd952b8ccbb/receipt.json",
+    "receiptNormalizedSha256": "0838ffb1176ee641a9a5bfb774097754b4afec87847a3e69e31477493999aaa8",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/56dceb0b-0f3f-441b-9645-1bd952b8ccbb/manifest.json",
+    "manifestArchiveSha256": "25f1f6d7e25070b84fba762f5565980b43676e0e78cbef0a01de3a1c6cc4d636"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-series-status"
+}

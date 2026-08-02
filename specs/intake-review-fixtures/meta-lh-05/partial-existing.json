@@ -1,0 +1,17 @@
+{
+  "fixtureId": "META05-FX-PARTIAL-EXISTING",
+  "presenceState": "Partial",
+  "currentAuthority": true,
+  "criteria": {
+    "authority": "insufficient-for-existing-targets",
+    "sideEffects": "mixed-create-and-update",
+    "reversibility": "not-proven",
+    "writeScope": "overlaps-existing-wave",
+    "decisions": "existing-state-not-adopted",
+    "integration": "incomplete",
+    "review": "cannot-prove-complete-wave",
+    "abort": "required",
+    "recovery": "separate-repair-or-update-authority"
+  },
+  "expectedOutcome": "Blocked"
+}

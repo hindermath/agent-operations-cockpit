@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "eefd674c-8112-46b2-b2d7-0d8f2548325e",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.2"
+  },
+  "createdAt": "2026-08-01T17:40:28Z",
+  "operation": {
+    "operationId": "b8eb30de-c314-4e2e-b55b-c622c2d6dabf",
+    "type": "Update",
+    "authorityEvidence": "Thorsten invoked the current META-LH-03 review result for bounded repair on 2026-08-01. The Series update refreshes only the META-LH-03 target hash after repair; order, roots, dependencies, lifecycle values, and all other target bindings remain unchanged. The required complete Single re-review follows, while Specify, implementation, remote writes, merge, bypass, and provider administration remain excluded."
+  },
+  "status": "NeedsClarification",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "af8de99b93f959964c0961b511ffd8cb3bb31508c62e6e29e8a5508f9224fd54"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/b8eb30de-c314-4e2e-b55b-c622c2d6dabf/receipt.json",
+    "receiptNormalizedSha256": "1c67a4759c5196d2d96835c47b3d271b9368d5f31c6175cc17d8cfe7ebe92662",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/b8eb30de-c314-4e2e-b55b-c622c2d6dabf/manifest.json",
+    "manifestArchiveSha256": "6040348d35619650b8aab2bddd0908971bf93ae48756a375bf5093798e6898bd"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-review requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md"
+}

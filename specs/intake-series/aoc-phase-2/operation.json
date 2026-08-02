@@ -1,17 +1,40 @@
 {
   "schemaVersion": "1.0",
   "documentType": "IntakeSeriesOperation",
-  "operationId": "7630652b-b7cd-4815-8f8d-c64b3e9ff5e1",
+  "operationId": "ede984cf-967e-42e7-a0c9-980ca4508a40",
   "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
-  "type": "Create",
+  "type": "Update",
   "status": "Published",
-  "authorityEvidence": "Explicit user approval for Phase 2 implementation and MergeAndSync on 2026-07-31.",
-  "proposalNormalizedSha256": "a9c55c7f7a2a087950695347360c8440c65aab58d2dabd3ef9d7faa8aed53779",
+  "authorityEvidence": "Thorsten explicitly authorised on 2026-08-02 only the lifecycle transition of META-LH-05 from Eligible to Completed while its current Single review remains Ready, and RAW-01 from Pending to the sole declared Eligible target. RAW-05 remains Pending and research-only; order, roots, dependencies, all other lifecycle values, intake contents, and Delivery Authority remain unchanged. Review, Specify, implementation, remote writes, merge, and bypass are excluded.",
+  "proposalNormalizedSha256": "d408a26f5141bf4011ffdd2e02f32f122286217293d285530c38e742c04b120f",
   "preparedPaths": [
     "specs/intake-series/aoc-phase-2/manifest.json",
-    "requirements/intakes/series/order.md",
-    "specs/intake-series-receipts/aoc-phase-2.json"
+    "specs/intake-series-receipts/aoc-phase-2.json",
+    "requirements/intakes/series/order.md"
   ],
+  "documentationImpact": {
+    "decision": "UpdateRequired",
+    "source": "Thorsten's bounded META-LH-05 to Completed and RAW-01 to Eligible lifecycle authority from 2026-08-02",
+    "owner": "AOC Phase 2 intake series",
+    "documents": [
+      "specs/intake-series/aoc-phase-2/manifest.json",
+      "specs/intake-series-receipts/aoc-phase-2.json",
+      "requirements/intakes/series/order.md"
+    ],
+    "evidence": [
+      "specs/intake-review-results/meta-lh-05-erste-welle-2026-08-01-r2.json",
+      "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/ede984cf-967e-42e7-a0c9-980ca4508a40/"
+    ]
+  },
+  "reviewInvalidation": {
+    "status": "Superseded",
+    "results": [
+      "specs/intake-review-results/meta-lh-05-erste-welle-2026-08-01.json",
+      "specs/intake-review-results/aoc-phase-2-series.json",
+      "specs/intake-review-results/aoc-phase-2-series-2026-08-01-r2.json"
+    ],
+    "reason": "The lifecycle-only update changes the Series-manifest hash and supersedes historic Series reviews. The current Ready Single review of unchanged META-LH-05 remains valid evidence for its Completed transition. No review is started."
+  },
   "validation": {
     "bash": "Passed",
     "powerShell": "Passed"
@@ -20,6 +43,7 @@
     "status": "Published",
     "publishedPaths": [
       "specs/intake-series/aoc-phase-2/manifest.json",
+      "specs/intake-series-receipts/aoc-phase-2.json",
       "requirements/intakes/series/order.md"
     ]
   }

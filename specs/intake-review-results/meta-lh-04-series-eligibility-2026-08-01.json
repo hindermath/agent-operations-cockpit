@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "558d7c60-eed3-4e63-906d-0007c9e01d18",
+  "mode": "Single",
+  "status": "NeedsRemediation",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-01T20:05:12Z",
+  "repository": {
+    "root": ".",
+    "head": "ddba7482163c7e61161ad0b90f4e019844335898"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/meta-lh-04-series-eligibility-2026-08-01.json",
+    "normalizedSha256": "8872c6202c48b4f70c31d4a49fd49ab11545bfe352987fa968a4e2c2d064ca9c"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "role": "Primary",
+      "normalizedSha256": "1a1ece08c4be3204d5e4a63b2af4c639d54b3ed424427d5fef010db43a048dce",
+      "gitBlob": "bab3c22e082fcd43a6a783eeb74f79c6c8cb61e0"
+    }
+  ],
+  "findings": [
+    {
+      "id": "IR401",
+      "severity": "High",
+      "category": "RequirementsConsistency",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-04",
+      "evidence": "FR-002 requires Authority, Side Effects, Reversibility, write scope, Decisions, Integration, Review, Abort, and Recovery, which is a nine-axis classification. AC-003 instead requires a complete eight-criteria classification for every intake. The target does not identify an excluded axis or a canonical matrix that resolves the contradiction, so two conforming implementations can produce different acceptance results.",
+      "reevaluationTrigger": "FR-002 and AC-003 use one exact, enumerated cardinality and bind the canonical eligibility matrix or schema that validators consume."
+    },
+    {
+      "id": "IR402",
+      "severity": "High",
+      "category": "PromptAlignment",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-04",
+      "evidence": "The normative intake classifies this work as manual-assisted and states that it grants no worker, worktree, merge, remote, or implementation authority. The enabled Autonomous prompt nevertheless requests MergeAndSync and requires only a current review. The Authoring Receipt records historic MergeAndSync and Admin-Bypass authority, but review freshness and stored delivery data are not current scope, start, remote, merge, or bypass authority. The prompt has no fail-closed current-authority precondition and therefore exceeds the normative boundary.",
+      "reevaluationTrigger": "The Autonomous prompt is blocked or rewritten to require separate current scope, start, implementation, remote, merge, and bypass authority; the intake and refreshed Receipt explicitly state that Eligibility, Ready, and historic delivery data grant no current execution authority."
+    },
+    {
+      "id": "IR403",
+      "severity": "High",
+      "category": "LanguageAndTerminology",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-04",
+      "evidence": "The learner-facing profile requires complete German-first/English-second content, CEFR-B2 first-use explanations or precise glossary links, and text-first status, dependencies, decisions, and next action. Sources, scope, FR-001 through NFR-001, dependencies, acceptance, evidence, revision, and non-authority are not fully paired. SHA binding, lifecycle, side effects, reversibility, write scope, consolidation review, fail-closed, fixtures, shared decisions, ProviderFailure, ProductFailure, and Spec Kit remain unexplained. The target does not state that META-LH-01 through META-LH-03 are Completed, META-LH-04 is Eligible, no META-LH-04 material decision is open, and Single review is the only current next action.",
+      "reevaluationTrigger": "Every normative section is fully paired DE/EN, first-use terms are explained locally or through precise glossary links, and current lifecycle, predecessor, decision, and review-only next-action facts are stated as ordered text; the Authoring Receipt is refreshed."
+    },
+    {
+      "id": "IR404",
+      "severity": "High",
+      "category": "RequirementsEvidence",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-04",
+      "evidence": "AC-001 through AC-004 claim Bash/PowerShell DAG validation, Cycle, Shared-Write, Shared-Decision, classification, and no-start evidence, but the intake binds no manifest schema, eligibility matrix, validator paths, commands, fixture paths, expected exit codes, or current result artifacts. The Evidence section names stale hash and missing root but does not map the Shared-Write and Shared-Decision cases required by AC-002. Source and RF identifiers are not traced to individual requirements, acceptance criteria, or evidence, so RF-02, RF-09, RF-18, and RF-19 coverage is not reproducible from the intake.",
+      "reevaluationTrigger": "A versioned manifest and eligibility contract names exact schemas, matrices, validator commands, positive and negative fixtures, expected outcomes, and current evidence; every source and RF maps to measurable requirements and acceptance criteria."
+    },
+    {
+      "id": "IR405",
+      "severity": "Medium",
+      "category": "Applicability",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-04",
+      "evidence": "The target mentions text availability and Bash/PowerShell parity but does not explicitly decide security, privacy, unnecessary personal data, public-content boundaries, WCAG 2.2 AA, colour-independent status, keyboard or text-first use, macOS/Linux/Windows applicability, or software-supply-chain applicability. These cross-cutting decisions lack measurable evidence and re-evaluation triggers even though the profile targets first-year learners and the output controls authority-relevant status.",
+      "reevaluationTrigger": "Security, privacy, personal-data, public-content, accessibility, platform, and supply-chain applicability are explicit, justified, measurable, and connected to named evidence and re-evaluation triggers."
+    }
+  ],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 4,
+    "medium": 1,
+    "low": 0
+  },
+  "supersedes": "N/A"
+}

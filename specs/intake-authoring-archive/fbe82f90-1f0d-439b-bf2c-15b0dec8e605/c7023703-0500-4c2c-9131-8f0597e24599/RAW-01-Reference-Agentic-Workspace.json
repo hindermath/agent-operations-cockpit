@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "2.0",
+  "documentType": "IntakeReceipt",
+  "receiptId": "846d09a6-21bf-4666-94f2-2a4ee9121a6e",
+  "intakeId": "fbe82f90-1f0d-439b-bf2c-15b0dec8e605",
+  "generator": {
+    "preset": "intake-authoring-governance",
+    "version": "0.3.0"
+  },
+  "createdAt": "2026-07-31T19:50:00Z",
+  "operation": {
+    "operationId": "5702ce92-f1c8-4e6e-a5cf-a8a1c4e79a10",
+    "type": "Create",
+    "authorityEvidence": "User approved implementation of the Phase 2 plan and MergeAndSync on 2026-07-31."
+  },
+  "status": "ReadyForReview",
+  "target": {
+    "path": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+    "normalizedSha256": "55a7e6b7dee957e9b780cd6e23acf8c8bffe9d1c4e99d1411906ee23e7a52eaa"
+  },
+  "sources": [
+    {
+      "sourceId": "SRC001",
+      "order": 1,
+      "kind": "File",
+      "label": "Self-contained AOC programme source pack",
+      "location": "Repository",
+      "path": "requirements/baseline/source-pack.md",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "a1a3907634c0903863d64031e5b6d7e4eb8818eea29bbf1bc2065a81d7a5bb93",
+      "gitBlob": "N/A",
+      "proofBoundary": "RepositoryAtCreation"
+    }
+  ],
+  "profile": "aoc-bilingual-requirements",
+  "languagePolicy": "GermanFirstAuthoritativeEnglishSecondCEFRB2",
+  "decisions": [],
+  "openDecisionIds": [],
+  "questionCount": 0,
+  "agentSurface": {
+    "specifyCanonicalId": "speckit.specify",
+    "specifyInvocation": "$speckit-specify requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md --bind-exact-intake --no-implementation --no-remote-writes",
+    "autonomousCanonicalId": "speckit.autonomous",
+    "autonomousInvocation": "$speckit-autonomous requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md --delivery-mode MergeAndSync --require-current-review"
+  },
+  "deliveryAuthority": "MergeAndSync",
+  "authorityEvidence": "Explicit user approval for Phase 2 continuation with MergeAndSync and Admin-Bypass on 2026-07-31.",
+  "promptState": "Enabled",
+  "provenanceMode": "New",
+  "supersedes": {
+    "receiptPath": "N/A",
+    "targetNormalizedSha256": "N/A",
+    "archiveTargetPath": "N/A",
+    "archiveReceiptPath": "N/A"
+  },
+  "legacyAdoption": {
+    "evidenceType": "N/A",
+    "priorTargetNormalizedSha256": "N/A",
+    "priorGitBlob": "N/A"
+  },
+  "updateAuthorized": false,
+  "updateAuthorityEvidence": "N/A",
+  "series": {
+    "seriesId": "N/A",
+    "manifestPath": "N/A",
+    "order": "N/A",
+    "role": "N/A",
+    "supersedesIntakeIds": []
+  },
+  "nextAction": "$speckit-intake-review requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md"
+}

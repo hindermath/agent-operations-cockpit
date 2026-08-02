@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "PortfolioOwnershipNegativeFixture",
+  "base": "requirements/baseline/portfolio-ownership.json",
+  "mutation": {
+    "type": "DuplicateConcernOwner",
+    "concernId": "C-01",
+    "secondOwner": "RAW-02"
+  },
+  "expectedError": "PO002"
+}

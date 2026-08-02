@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesOperation",
+  "operationId": "b8eb30de-c314-4e2e-b55b-c622c2d6dabf",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "type": "Update",
+  "status": "Published",
+  "authorityEvidence": "Thorsten invoked the current META-LH-03 review result for bounded repair on 2026-08-01. The Series update refreshes only the META-LH-03 target hash after repair; order, roots, dependencies, lifecycle values, and all other target bindings remain unchanged. The required complete Single re-review follows, while Specify, implementation, remote writes, merge, bypass, and provider administration remain excluded.",
+  "proposalNormalizedSha256": "af8de99b93f959964c0961b511ffd8cb3bb31508c62e6e29e8a5508f9224fd54",
+  "preparedPaths": [
+    "specs/intake-series/aoc-phase-2/manifest.json",
+    "specs/intake-series-receipts/aoc-phase-2.json",
+    "requirements/intakes/series/order.md"
+  ],
+  "documentationImpact": {
+    "decision": "UpdateRequired",
+    "source": "Thorsten's bounded META-LH-03 IR301 through IR304 repair authority from 2026-08-01",
+    "owner": "AOC Phase 2 intake series",
+    "documents": [
+      "specs/intake-series/aoc-phase-2/manifest.json",
+      "specs/intake-series-receipts/aoc-phase-2.json",
+      "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json"
+    ],
+    "evidence": [
+      "specs/intake-review-results/meta-lh-03-authoring-contract-2026-08-01.json",
+      "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/d8591dbd-5687-4934-a56e-05add2f4e1bc/",
+      "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/b8eb30de-c314-4e2e-b55b-c622c2d6dabf/"
+    ]
+  },
+  "reviewInvalidation": {
+    "status": "Superseded",
+    "results": [
+      "specs/intake-review-results/aoc-phase-2-series.json",
+      "specs/intake-review-results/aoc-phase-2-series-2026-08-01-r2.json",
+      "specs/intake-review-results/meta-lh-03-authoring-contract-2026-08-01.json"
+    ],
+    "reason": "The bounded repair changes the META-LH-03 target hash and therefore the Series-manifest hash. Historic META-LH-03 and Series results remain immutable evidence but are not current for the successor target and manifest; a complete META-LH-03 Single re-review is required."
+  },
+  "validation": {
+    "bash": "Passed",
+    "powerShell": "Passed"
+  },
+  "publication": {
+    "status": "Published",
+    "publishedPaths": [
+      "specs/intake-series/aoc-phase-2/manifest.json"
+    ]
+  }
+}

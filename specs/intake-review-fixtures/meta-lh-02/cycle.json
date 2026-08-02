@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "PortfolioOwnershipNegativeFixture",
+  "base": "requirements/baseline/portfolio-ownership.json",
+  "mutation": {
+    "type": "AddHandoff",
+    "handoff": {
+      "id": "H-CYCLE",
+      "producer": "RAW-09",
+      "consumer": "RAW-01",
+      "contract": "Deliberate cycle fixture",
+      "version": "fixture-v1",
+      "kind": "BindingContract",
+      "binding": true,
+      "failureBehavior": "The validator must reject this edge before publication."
+    }
+  },
+  "expectedError": "PO007"
+}

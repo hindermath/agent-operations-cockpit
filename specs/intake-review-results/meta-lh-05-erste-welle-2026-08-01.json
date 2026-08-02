@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "23ebacb2-5e80-4928-b654-673d33693f31",
+  "mode": "Single",
+  "status": "NeedsRemediation",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-01T21:01:58Z",
+  "repository": {
+    "root": ".",
+    "head": "ddba7482163c7e61161ad0b90f4e019844335898"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/meta-lh-05-erste-welle-2026-08-01.json",
+    "normalizedSha256": "fee134d7b66af6e763a049548e6f5ef254e8ece3199329c799fc51040cce504a"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "role": "Primary",
+      "normalizedSha256": "fb8e09bacd0024ddf9ed5ecfc78df0ee472e9d90fc4ab62c8d0d5c9118b67762",
+      "gitBlob": "e15c0d01f318b23c5c7b78a6fc1bb729b5c4ec9d"
+    }
+  ],
+  "findings": [
+    {
+      "id": "IR501",
+      "severity": "High",
+      "category": "RequirementsConsistency",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-05",
+      "evidence": "FR-001 and the Scope define creation of exactly nine new active RAW targets, while all RAW-01 through RAW-09 targets and Receipts already exist. The boundary permits only new-target writes but defines no fail-closed behavior for re-entry, target collisions, partial pre-existence, adoption, supersession, or idempotent verification. FR-003 requires every RF row to have a meta and domain owner or be meta-governed, while AC-002 forbids gaps or multiple owners without distinguishing required governance roles from duplicate concern ownership. The serial-autonomous classification and optional parallel authoring also omit the nine-axis eligibility classification required by completed predecessor META-LH-04.",
+      "reevaluationTrigger": "The intake defines one deterministic existing-wave and partial-collision policy, distinguishes governance roles from unique concern ownership, and binds every serial or parallel mode to the canonical nine-axis eligibility contract without changing the nine-domain intent."
+    },
+    {
+      "id": "IR502",
+      "severity": "High",
+      "category": "PromptAlignment",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-05",
+      "evidence": "The normative intake grants no review approval, Specify, implementation, hardware, or preset-promotion authority and permits parallel authoring only after explicit wave approval. The enabled Autonomous prompt nevertheless requests MergeAndSync and requires only a current review. The Authoring Receipt stores historic MergeAndSync and Admin-Bypass authority from 2026-07-31, but historic delivery data, Eligibility, and review freshness do not grant current target-write, remote, merge, bypass, or provider authority. The prompt lacks a fail-closed current-authority precondition.",
+      "reevaluationTrigger": "The prompt and refreshed Receipt explicitly require separate current scope, target-write, implementation, remote, merge, and bypass authority and state that historic authority, Eligibility, and Ready are insufficient."
+    },
+    {
+      "id": "IR503",
+      "severity": "High",
+      "category": "LanguageAndTerminology",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-05",
+      "evidence": "The learner-facing profile requires complete German-first/English-second normative content, CEFR-B2 first-use explanations or precise glossary links, and text-first status, dependencies, decisions, and next actions. Sources, scope, FR-001 through NFR-001, dependencies, acceptance, evidence, and revision are not fully paired. Wave, Owner-Reihe, Concern Owner, RF row, Receipt, Coverage, active target, atomic publication, fail-closed, scaffold, serial-autonomous, and Spec Kit are not explained. The target does not state that META-LH-01 through META-LH-04 are Completed, META-LH-05 is Eligible and ReadyForReview, no material META-LH-05 decision is open, and Single review is the only current next action.",
+      "reevaluationTrigger": "Every normative section is fully paired DE/EN, terms are explained at first use, and current lifecycle, predecessors, decision state, and review-only next action are explicit ordered text; the Receipt is refreshed."
+    },
+    {
+      "id": "IR504",
+      "severity": "High",
+      "category": "RequirementsEvidence",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-05",
+      "evidence": "AC-001 through AC-004 and the Evidence section claim nine unique intakes, dual-validator success, gap-free ownership and coverage, no executed prompts or product scaffold, and positive and negative evidence, but bind no canonical inventory, portfolio or coverage schema, validator paths, commands, fixture paths, expected outcomes, exit codes, or current result artifacts. All nine RAW Receipts currently pass both Authoring validators, but the intake's unsupported '100-%-Validatorlauf' cannot be reproduced from its single Source-Pack Receipt source. Source IDs, RF-01 through RF-21, requirements, acceptance criteria, and evidence are not mapped.",
+      "reevaluationTrigger": "Versioned inventory, ownership, coverage, series, and receipt contracts name exact schemas, validators, commands, positive and negative fixtures, expected outcomes and exit codes, and trace every relevant source and RF to measurable requirements and acceptance evidence."
+    },
+    {
+      "id": "IR505",
+      "severity": "Medium",
+      "category": "Applicability",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-05",
+      "evidence": "NFR-001 mentions DE/EN, B2, first-use terms, and WCAG text rules, but the target does not explicitly decide security, privacy, unnecessary personal data, public-content boundaries, WCAG 2.2 AA applicability, colour-independent status, keyboard or text-first operation, macOS/Linux/Windows parity, or software-supply-chain applicability. The wave writes authority-relevant requirements artifacts, yet cross-cutting evidence and re-evaluation triggers are absent.",
+      "reevaluationTrigger": "Security, privacy, personal-data, public-content, accessibility, platform, and supply-chain applicability are explicit, justified, measurable, linked to named evidence, and carry re-evaluation triggers."
+    }
+  ],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 4,
+    "medium": 1,
+    "low": 0
+  },
+  "supersedes": "N/A"
+}

@@ -1,0 +1,17 @@
+{
+  "fixtureId": "META05-FX-ALL-ABSENT-AUTHORIZED",
+  "presenceState": "AllAbsent",
+  "currentAuthority": true,
+  "criteria": {
+    "authority": "current-and-explicit",
+    "sideEffects": "nine-new-targets-and-receipts",
+    "reversibility": "atomic-publication",
+    "writeScope": "new-wave-paths-only",
+    "decisions": "no-open-shared-decisions",
+    "integration": "series-publication-after-validation",
+    "review": "single-review-required-after-authoring",
+    "abort": "stop-before-publication",
+    "recovery": "repair-or-update-authority-required"
+  },
+  "expectedOutcome": "CreateAtomic"
+}

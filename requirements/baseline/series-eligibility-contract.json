@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "SeriesEligibilityContract",
+  "criteria": [
+    "authority",
+    "sideEffects",
+    "reversibility",
+    "writeScope",
+    "decisions",
+    "integration",
+    "review",
+    "abort",
+    "recovery"
+  ],
+  "modes": [
+    "manual-assisted",
+    "single-autonomous",
+    "serial-autonomous",
+    "parallel-autonomous",
+    "research-only",
+    "blocked"
+  ],
+  "parallelEligibility": {
+    "requiresCurrentAuthority": true,
+    "requiresDisjointWrites": true,
+    "allowsSharedOpenDecisions": false,
+    "requiresConsolidationReview": true,
+    "requiresAbortRule": true,
+    "requiresRecoveryRule": true
+  },
+  "failureTaxonomy": [
+    "ProviderFailure",
+    "ProductFailure"
+  ]
+}

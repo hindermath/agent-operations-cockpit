@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesOperation",
+  "operationId": "7630652b-b7cd-4815-8f8d-c64b3e9ff5e1",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "type": "Create",
+  "status": "Published",
+  "authorityEvidence": "Explicit user approval for Phase 2 implementation and MergeAndSync on 2026-07-31.",
+  "proposalNormalizedSha256": "a9c55c7f7a2a087950695347360c8440c65aab58d2dabd3ef9d7faa8aed53779",
+  "preparedPaths": [
+    "specs/intake-series/aoc-phase-2/manifest.json",
+    "requirements/intakes/series/order.md",
+    "specs/intake-series-receipts/aoc-phase-2.json"
+  ],
+  "validation": {
+    "bash": "Passed",
+    "powerShell": "Passed"
+  },
+  "publication": {
+    "status": "Published",
+    "publishedPaths": [
+      "specs/intake-series/aoc-phase-2/manifest.json",
+      "requirements/intakes/series/order.md"
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesOperation",
+  "operationId": "9bcf1f0d-1cee-4aa2-9591-9fc773b7e7b6",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "type": "Update",
+  "status": "Published",
+  "authorityEvidence": "User explicitly authorised the bounded RAW-02 IAD201-IAD203 update and its mechanically required Series hash and readable-order update on 2026-08-01.",
+  "proposalNormalizedSha256": "0b308ff3f2d3b858cfef31138711cf9b97fa0b2424d21e317c7374452d6e947a",
+  "preparedPaths": [
+    "specs/intake-series/aoc-phase-2/manifest.json",
+    "requirements/intakes/series/order.md",
+    "specs/intake-series-receipts/aoc-phase-2.json"
+  ],
+  "validation": {
+    "bash": "Passed",
+    "powerShell": "Passed"
+  },
+  "publication": {
+    "status": "Published",
+    "publishedPaths": [
+      "specs/intake-series/aoc-phase-2/manifest.json",
+      "requirements/intakes/series/order.md"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "76eb134d-21e3-4919-bcbe-3d741cfefb2f",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.2"
+  },
+  "createdAt": "2026-07-31T19:55:00Z",
+  "operation": {
+    "operationId": "7630652b-b7cd-4815-8f8d-c64b3e9ff5e1",
+    "type": "Create",
+    "authorityEvidence": "Explicit user approval for Phase 2 implementation and MergeAndSync on 2026-07-31."
+  },
+  "status": "NeedsClarification",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "a9c55c7f7a2a087950695347360c8440c65aab58d2dabd3ef9d7faa8aed53779"
+  },
+  "supersedes": {
+    "receiptPath": "N/A",
+    "receiptNormalizedSha256": "N/A",
+    "manifestArchivePath": "N/A",
+    "manifestArchiveSha256": "N/A"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "Resolve blocked IAD decisions, then run speckit-intake-series-status."
+}

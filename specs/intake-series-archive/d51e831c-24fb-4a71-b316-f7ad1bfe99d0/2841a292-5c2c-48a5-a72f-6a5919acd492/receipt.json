@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "b955daf2-3bb6-4b9c-987e-22347da59bdc",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.2"
+  },
+  "createdAt": "2026-08-01T14:10:05Z",
+  "operation": {
+    "operationId": "5f59d351-54e2-4c01-90ef-2a5f104d0ee0",
+    "type": "Update",
+    "authorityEvidence": "Thorsten explicitly authorised only the bounded RAW-01 repair of IR101, IR102, and IR103 plus complete re-review; only the mechanically required RAW-01 target hash binding changes, while IAD101-IAD103, scope, non-goals, order, roots, dependencies, lifecycle, and delivery authority remain unchanged."
+  },
+  "status": "NeedsClarification",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "03a9e3523e735ef7844a17ffe0399aa47ccadad7e764a63643228262c3d5682b"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/5f59d351-54e2-4c01-90ef-2a5f104d0ee0/receipt.json",
+    "receiptNormalizedSha256": "04f7c0b4168c54d266d877f3abb9898405653797876f7b15901b6dd12c11695a",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/5f59d351-54e2-4c01-90ef-2a5f104d0ee0/manifest.json",
+    "manifestArchiveSha256": "b45fffe0e800323b767b8adab442933c67a888bdf885c10b4a53479825a38418"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-review requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md"
+}
