@@ -54,25 +54,25 @@ Profil 2 verwendet Git-getrackte Textdateien und sichtbare Git-Aktivitaet. Die W
 
 | Kennzahl / Metric | Wert / Value |
 |---|---:|
-| Textbasis / Text base | 144530 lines |
+| Textbasis / Text base | 144539 lines |
 | Textdateien / Text files | 929 |
 | Beobachtbarer Zeitraum / Observable period | 2025-08-10..2026-08-02 |
 | Aktivtage / Active days | 3 |
-| Relevante Commits / Relevant commits | 13 |
-| Zeilen je Aktivtag / Lines per active day | 48176.7 |
+| Relevante Commits / Relevant commits | 14 |
+| Zeilen je Aktivtag / Lines per active day | 48179.7 |
 | Peak-Tag im Fenster / Peak day in window | 2026-07-31 / 132656 |
 | Peak-Woche im Fenster / Peak week in window | 2026-07-26 / 135060 |
 | Laengste Serie / Longest streak | 3 days |
 | Speedup vs. 80 lines/day | 602.2x |
 | Speedup vs. 125 lines/day | 385.4x |
-| Methodik / Methodology | v2; source `b96e02bdbe8c` |
+| Methodik / Methodology | v2; source `5a4a6e0a693e` |
 
 ### Artefaktmix / Artifact Mix
 
 ```text
 Produktiv / Production          [#...................]   0.3% | 395
 Tests                           [#...................]   3.7% | 5284
-Dokumentation / Documentation   [############........]  62.3% | 90031
+Dokumentation / Documentation   [############........]  62.3% | 90040
 Skripte / Scripts               [#####...............]  26.9% | 38830
 Konfiguration / Configuration   [#...................]   6.8% | 9857
 Daten und Medien / Data and media [....................]   0.0% | 0
@@ -190,7 +190,7 @@ Die Faktoren vergleichen sichtbare Lieferdichte mit den dokumentierten manuellen
 Scale: 0..50000 lines/day
 Experienced manual [#...................] 80
 Thorsten solo      [#...................] 125
-Visible repository [###################.] 48176.7
+Visible repository [###################.] 48179.7
 ```
 
 Die gemeinsame Skala vergleicht Referenzen und sichtbare Lieferdichte. Sie schreibt die Git-Aktivitaet keiner Person oder KI pauschal zu.
@@ -216,6 +216,6 @@ DE: Das Fenster beginnt am 2025-08-10 und endet am 2026-08-02. Es enthaelt 3 akt
 | 2026-05 | 0 |
 | 2026-06 | 0 |
 | 2026-07 | 132656 |
-| 2026-08 | 13200 |
+| 2026-08 | 13209 |
 
 <!-- project-statistics-v2:end -->
