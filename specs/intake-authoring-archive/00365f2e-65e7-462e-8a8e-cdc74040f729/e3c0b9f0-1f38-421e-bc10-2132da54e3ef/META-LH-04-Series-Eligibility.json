@@ -1,17 +1,17 @@
 {
   "schemaVersion": "2.0",
   "documentType": "IntakeReceipt",
-  "receiptId": "9c6ae5e6-62ad-4e4c-8f3a-2a2be238f36f",
+  "receiptId": "70ac6611-cae1-4809-8c5b-d7866d960f26",
   "intakeId": "00365f2e-65e7-462e-8a8e-cdc74040f729",
   "generator": {
     "preset": "intake-authoring-governance",
     "version": "0.3.0"
   },
-  "createdAt": "2026-08-05T19:01:48Z",
+  "createdAt": "2026-08-02T09:42:08Z",
   "operation": {
-    "operationId": "e3c0b9f0-1f38-421e-bc10-2132da54e3ef",
+    "operationId": "4fe4aba3-7c92-431f-8800-96f138a4c047",
     "type": "Update",
-    "authorityEvidence": "Thorsten explicitly authorised on 2026-08-05 receipt-only provenance supersession for META-LH-04: refresh mutable source hashes, preserve the target byte-for-byte, archive the prior target and receipt, and perform a complete new Single review. Purpose, scope, non-goals, dependencies, Series intent, Delivery Authority, Specify, implementation, remote writes, merge, bypass, presets, promotion, and Level-0 actions remain excluded."
+    "authorityEvidence": "Thorsten explicitly approved the recommended formal supersession on 2026-08-02. The update repairs only the non-reproducible mutable source binding in the current META-LH-04 Authoring Receipt, preserves the target byte-for-byte, archives the prior target and receipt, and requires a complete new Single review. Purpose, scope, non-goals, dependencies, Series intent, Delivery Authority, and product scope remain unchanged; Specify, implementation, preset, promotion, merge, bypass, and provider administration remain excluded."
   },
   "status": "ReadyForReview",
   "target": {
@@ -23,9 +23,9 @@
       "sourceId": "SRC001",
       "order": 1,
       "kind": "File",
-      "label": "Immediately superseded byte-identical META-LH-04-Series-Eligibility intake as first binding source",
+      "label": "Immediately superseded byte-identical META-LH-04 intake as first binding source",
       "location": "Repository",
-      "path": "specs/intake-authoring-archive/00365f2e-65e7-462e-8a8e-cdc74040f729/e3c0b9f0-1f38-421e-bc10-2132da54e3ef/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "path": "specs/intake-authoring-archive/00365f2e-65e7-462e-8a8e-cdc74040f729/4fe4aba3-7c92-431f-8800-96f138a4c047/Lastenheft_META-LH-04-Series-Eligibility.md",
       "requestedUrl": "N/A",
       "finalUrl": "N/A",
       "retrievedAt": "N/A",
@@ -36,7 +36,7 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "87b454f82e40288625d5613099795a39fc236d514f8868fd17d3907930ccd8bc",
+      "normalizedSha256": "f16026d37b04bdf7fa492e41e0a83a8f67b3719497dba5f185bfb35d0b068ea6",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryArchiveAtRepair"
     },
@@ -46,7 +46,7 @@
       "kind": "File",
       "label": "Current Ready Single review before receipt-provenance supersession",
       "location": "Repository",
-      "path": "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-02-r3.json",
+      "path": "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-01-r2.json",
       "requestedUrl": "N/A",
       "finalUrl": "N/A",
       "retrievedAt": "N/A",
@@ -57,7 +57,7 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "27a5313932aac67099851769a05fd0fa08943797b815f80e2342555ed3ec95e7",
+      "normalizedSha256": "9501a55473a041c783d59522ac1701c6b92997c74d285509b9e50d9baf08d7d2",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryAtRepairAuthorization"
     },
@@ -65,9 +65,9 @@
       "sourceId": "SRC003",
       "order": 3,
       "kind": "File",
-      "label": "Readable current Ready Single-review evidence before receipt-provenance supersession",
+      "label": "Readable current Ready Single-review evidence before supersession",
       "location": "Repository",
-      "path": "docs/reviews/meta-lh-04-series-eligibility-intake-review-2026-08-02-r3.md",
+      "path": "docs/reviews/meta-lh-04-series-eligibility-intake-review-2026-08-01-r2.md",
       "requestedUrl": "N/A",
       "finalUrl": "N/A",
       "retrievedAt": "N/A",
@@ -78,7 +78,7 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "08cb8088fd8ff0c67e50959fd3195531517c7e109a9661dfdf7fda22d85c58d6",
+      "normalizedSha256": "f4d16303ad49e8ae7405fe19e3263844c5799052d97660d9c622069d8671d32d",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryAtRepairAuthorization"
     },
@@ -183,7 +183,7 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "87db0af54e799e7d7fa01793394fcacc8b97e58e4fc7802674c5e62253b83c0c",
+      "normalizedSha256": "9edc649fd69920c73a39b64288e519dfecba390121b8a32cb5758f6348e6bdbb",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryAtRepair"
     },
@@ -263,14 +263,14 @@
     "autonomousInvocation": "$speckit-autonomous requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md --delivery-mode MergeAndSync --require-current-review"
   },
   "deliveryAuthority": "MergeAndSync",
-  "authorityEvidence": "MergeAndSync remains the unchanged historical delivery ceiling. Any stored Admin-Bypass evidence is historical and grants no current authority. The current 2026-08-05 authority covers only receipt-provenance supersession and a complete new Single review; it grants no Specify, implementation, remote-write, merge, bypass, preset, promotion, or provider-administration authority.",
+  "authorityEvidence": "MergeAndSync remains the unchanged historical delivery ceiling from 2026-07-31. Stored Admin-Bypass evidence is historical and grants no current authority. The current 2026-08-02 authority covers only formal receipt-provenance supersession and a complete new Single review and grants no Specify, implementation, remote-write, merge, bypass, preset, promotion, or provider-administration authority.",
   "promptState": "Enabled",
   "provenanceMode": "Supersession",
   "supersedes": {
-    "receiptPath": "specs/intake-authoring-archive/00365f2e-65e7-462e-8a8e-cdc74040f729/e3c0b9f0-1f38-421e-bc10-2132da54e3ef/META-LH-04-Series-Eligibility.json",
-    "targetNormalizedSha256": "87b454f82e40288625d5613099795a39fc236d514f8868fd17d3907930ccd8bc",
-    "archiveTargetPath": "specs/intake-authoring-archive/00365f2e-65e7-462e-8a8e-cdc74040f729/e3c0b9f0-1f38-421e-bc10-2132da54e3ef/Lastenheft_META-LH-04-Series-Eligibility.md",
-    "archiveReceiptPath": "specs/intake-authoring-archive/00365f2e-65e7-462e-8a8e-cdc74040f729/e3c0b9f0-1f38-421e-bc10-2132da54e3ef/META-LH-04-Series-Eligibility.json"
+    "receiptPath": "specs/intake-authoring-archive/00365f2e-65e7-462e-8a8e-cdc74040f729/4fe4aba3-7c92-431f-8800-96f138a4c047/META-LH-04-Series-Eligibility.json",
+    "targetNormalizedSha256": "f16026d37b04bdf7fa492e41e0a83a8f67b3719497dba5f185bfb35d0b068ea6",
+    "archiveTargetPath": "specs/intake-authoring-archive/00365f2e-65e7-462e-8a8e-cdc74040f729/4fe4aba3-7c92-431f-8800-96f138a4c047/Lastenheft_META-LH-04-Series-Eligibility.md",
+    "archiveReceiptPath": "specs/intake-authoring-archive/00365f2e-65e7-462e-8a8e-cdc74040f729/4fe4aba3-7c92-431f-8800-96f138a4c047/META-LH-04-Series-Eligibility.json"
   },
   "legacyAdoption": {
     "evidenceType": "N/A",
@@ -278,7 +278,7 @@
     "priorGitBlob": "N/A"
   },
   "updateAuthorized": true,
-  "updateAuthorityEvidence": "Thorsten explicitly approved receipt-only provenance supersession for META-LH-04 on 2026-08-05. This authorises only current source-hash binding, immutable archival of the prior target and receipt, and a complete new Single review; the target remains byte-identical and all product and downstream actions remain excluded.",
+  "updateAuthorityEvidence": "Thorsten explicitly approved the recommended formal supersession on 2026-08-02. This authorises only replacement of the non-reproducible mutable source binding, byte-identical target preservation, immutable archival of the prior target and receipt, and the required complete new Single review while preserving purpose, scope, non-goals, dependencies, functional Series intent, and Delivery Authority.",
   "series": {
     "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
     "manifestPath": "specs/intake-series/aoc-phase-2/manifest.json",

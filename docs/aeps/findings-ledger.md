@@ -15,12 +15,12 @@ Die Menge der aktuell zielhashgültigen `Ready`-Review-Ergebnisse umfasst: /
 | Lastenheft / Intake | Review-ID | Zielhash / target hash | Evidence-Commit |
 |---|---|---|---|
 | META-LH-01 | `7715d4e3-c116-43ba-a029-a2197dca2233` | `99eab2565a73b3f1fe836feb89b543392360d3a5d56063c13fd28cf2f0a16704` | `ddba7482163c7e61161ad0b90f4e019844335898` |
-| META-LH-02 | `d61e9502-00e7-4cb5-8ecd-deca90ee1a97` | `7965323e2981472fd061bfb9ca20fd10d6a6217df53fd0300127de74b0b9c14b` | `PendingPublication`; Base-HEAD `ddba7482163c7e61161ad0b90f4e019844335898` |
+| META-LH-02 | `719a5aa0-6a0b-4eda-88dd-634824530251` | `7965323e2981472fd061bfb9ca20fd10d6a6217df53fd0300127de74b0b9c14b` | `PendingPublication`; Base-HEAD `25b7081d2563a275675a45112e3048bfdd060df7` |
 | META-LH-03 | `cd2c3f92-2db3-4a34-b16a-5c34c304221c` | `8b1a0b37c7938d8ff5577bfb9daaedc710990e95e5470edf65b0761724c668c4` | `PendingPublication`; Base-HEAD `ddba7482163c7e61161ad0b90f4e019844335898` |
 | RAW-01 | `f9f08f54-95eb-4abd-8ce1-bac180a6f742` | `c61d9786b27ea09e0e954363a1b4335d3255ea55b0f8a5167ee52c25c583f9b6` | `PendingPublication`; Base-HEAD `ddba7482163c7e61161ad0b90f4e019844335898` |
 | RAW-02 | `b1ffb007-f963-4f0f-b787-492f1b4b6717` | `7b2f4241e92c9dba5eb6b420d98d587b34ffe6a6ee5e607762125687a334c4e6` | `PendingPublication`; Base-HEAD `ddba7482163c7e61161ad0b90f4e019844335898` |
-| META-LH-04 | `99596682-ccd8-4f7d-954b-878d9ae40929` | `87b454f82e40288625d5613099795a39fc236d514f8868fd17d3907930ccd8bc` | `PendingPublication`; Base-HEAD `6d12371ff936210c9d776e439c35b02736391318` |
-| META-LH-05 | `a37b14c0-2eaf-4ce8-b8e2-ac4e7280652f` | `533ecf072fc81a08c43c7c9a794d30e3ea9237e0e8d75602251373881dfc6ec0` | `PendingPublication`; Base-HEAD `ddba7482163c7e61161ad0b90f4e019844335898` |
+| META-LH-04 | `6e2581c9-5f60-4f90-b990-3f00fe5883f5` | `87b454f82e40288625d5613099795a39fc236d514f8868fd17d3907930ccd8bc` | `PendingPublication`; Base-HEAD `25b7081d2563a275675a45112e3048bfdd060df7` |
+| META-LH-05 | `b6f48a52-cf43-4377-9ea4-4e3f505945f2` | `533ecf072fc81a08c43c7c9a794d30e3ea9237e0e8d75602251373881dfc6ec0` | `PendingPublication`; Base-HEAD `25b7081d2563a275675a45112e3048bfdd060df7` |
 | RAW-03 | `d868f04f-cfe3-4393-98ab-6f4451526d0d` | `7c6248efe4bb77bc8767d0b0302dcd968c3da95c5fa3c428681f1e2968c9fb22` | `PendingPublication`; Base-HEAD `60706c5dc6d96996fd7b4b4780c0b736a643dbb0` |
 
 `PendingPublication` ist kein fehlender Nachweis: Review-ID, Base-HEAD und
@@ -31,17 +31,16 @@ artifact.*
 
 Die strengere formale Ready-Grenze und die globale Review-Sperre verlangen
 zusätzlich ein aktuell validierbares Authoring Receipt. Der Abgleich vom
-`2026-08-05` ergibt deshalb nur fünf vollständig gate-konforme Ziele:
-`META-LH-01`, `META-LH-03` sowie `RAW-01` bis `RAW-03`. Die acht oben genannten
-Review-Ergebnisse bestehen weiterhin beide Review-Validatoren, aber die
-Authoring Receipts von `META-LH-02`, `META-LH-04` und `META-LH-05` scheitern auf
-Bash und PowerShell an Source-Hash-Drift. `RAW-04` bis `RAW-09` besitzen noch
-kein formales Ready-Review. Das globale Gate ist daher `Closed`. / *The stricter
-Ready boundary also requires a currently valid Authoring Receipt. Only five
-targets are fully gate-compliant: META-LH-01, META-LH-03, and RAW-01 through
-RAW-03. META-LH-02, META-LH-04, and META-LH-05 have target-current Ready review
-results but stale receipt sources; RAW-04 through RAW-09 lack formal Ready
-reviews. The global gate is Closed.*
+`2026-08-05` ergibt nun acht vollständig gate-konforme Ziele:
+`META-LH-01` bis `META-LH-05` sowie `RAW-01` bis `RAW-03`. Die drei zuvor
+driftenden META-Receipts bestehen nach der Provenienz-Supersession auf Bash und
+PowerShell; `RAW-04` bis `RAW-09` besitzen noch kein formales Ready-Review. Das
+globale Gate ist daher weiterhin `Closed`. / *The stricter Ready boundary also
+requires a currently valid Authoring Receipt. The 2026-08-05 comparison now
+has eight fully gate-compliant targets: META-LH-01 through META-LH-05 and
+RAW-01 through RAW-03. The three previously drifting META receipts pass both
+Bash and PowerShell surfaces after provenance supersession; RAW-04 through
+RAW-09 still lack formal Ready reviews. The global gate remains Closed.*
 
 ## Bereits in #196 verankerte Kandidaten / Candidates already anchored in #196
 
