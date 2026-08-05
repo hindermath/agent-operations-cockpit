@@ -13,6 +13,17 @@
 *A mode is eligibility, not execution authority. Every run still needs an exact
 scope and current approval.*
 
+Für die AOC-Programmreihe reicht auch eine individuelle Modus- oder
+Eligibility-Einstufung nicht aus: Alle 14 Meta- und Fachlastenhefte benötigen
+zuerst gleichzeitig aktuelle, formal validierte `Ready`-Single-Reviews. Bis
+dahin sind Specify, Autonomous, Parallel Autonomous und Implementierung global
+gesperrt. Nach Öffnung des Gates bleibt `META-LH-01` das erste Ziel und benötigt
+einen separaten aktuellen Startauftrag; Drift schließt das Gate erneut. /
+*For the AOC programme, individual mode or eligibility is insufficient. All 14
+intakes first need current, formally validated Ready Single reviews. The global
+gate blocks downstream work until then; afterwards `META-LH-01` is first and
+still needs separate current authority. Drift closes the gate again.*
+
 ## Prüfkriterien / Assessment criteria
 
 Jede Einstufung bewertet: Authority, Side Effects, Reversibilität, Schreibscope,

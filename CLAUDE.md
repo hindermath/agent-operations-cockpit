@@ -176,6 +176,32 @@ receipt. Ready, lifecycle, and execution authority remain separate. Level 2
 discovers and hardens; level 0 consolidates and promotes. Upstream work requires
 stable published evidence and current write authority.*
 
+## AOC-weite globale Review-Sperre / AOC-Wide Global Review Gate
+
+Für die kanonische AOC-Programmreihe sind alle nachgelagerten Spec-Kit-Läufe
+global und fail-closed gesperrt, bis alle 14 aktiven Lastenhefte `META-LH-01`
+bis `META-LH-05` und `RAW-01` bis `RAW-09` jeweils ein aktuelles, formal
+validiertes `Ready`-Single-Review besitzen. Zielpfad, normalisierter Zielhash,
+Authoring Receipt sowie Bash- und PowerShell-Validierung müssen aktuell sein;
+`ReadyWithAcceptedRisks`, supersedierte Ergebnisse und Series-Lifecycle-Werte
+genügen nicht. Bis dahin dürfen weder `speckit specify` noch Autonomous,
+Parallel Autonomous oder Implementierung gestartet werden.
+
+Nach vollständiger Review-Coverage ist `META-LH-01` zwingend das erste Ziel und
+benötigt weiterhin einen neuen ausdrücklichen Startauftrag. Jede Ziel- oder
+Evidence-Drift schließt die Sperre erneut. Die zwei älteren Root-Lastenhefte
+gehören nicht zu dieser 14er-Programmmenge. Die kanonischen Details stehen in
+`requirements/baseline/authority-and-stop-gates.md`.
+
+*All downstream Spec Kit work for the canonical AOC programme is globally and
+fail-closed blocked until all 14 active META and RAW intakes have current,
+formally validated `Ready` Single reviews with matching target, hash, Authoring
+Receipt, and Bash and PowerShell validation. Accepted-risk or superseded
+results and lifecycle values do not pass. Once full coverage is current,
+`META-LH-01` is the mandatory first target and still requires a new explicit
+start instruction. Any drift closes the gate again. The two legacy root
+intakes are outside this programme set.*
+
 ## Lernreihen-Governance / Learning Series Governance
 
 Neue Lernreihen fuer Fachinformatiker*innen und weitere IT-Ausbildungsberufe werden zuerst in `docs/learning-units/` als Level-0-Quelle vorbereitet. Der `Lernreihen-Blueprint`, das `Lernreihen-Register`, das IT-Berufe-Mapping und die Vorlagen unter `docs/learning-units/templates/` sind verbindlich, bevor eine konkrete Level-1-/Level-2-Struktur gespiegelt wird. KI-Agenten duerfen Lernreihen, Lastenhefte, Berufsbild-Mappings, Reihenfolgen und ZIP-Paketierung vorbereiten, starten aber keine Spec-Kit-Laeufe fuer Lernende ohne ausdruecklichen Auftrag. Spec-Kit-Laeufe sind begleitende SDD-Aufgaben und ersetzen nicht Berufsschule, betriebliche Ausbildung, Rahmenlehrplan, Ausbilderentscheidung oder Pruefungsvorbereitung.

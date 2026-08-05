@@ -10,6 +10,32 @@
 
 *The ordered text and dependency list are normative. Eligibility never starts work.*
 
+## Globale Review-Sperre / Global review gate
+
+Für die gesamte AOC-Programmreihe gilt vor jeder nachgelagerten Ausführung eine
+zusätzliche fail-closed Sperre. Alle 14 `orderedTargets` müssen jeweils ein
+aktuelles, formal validiertes `Ready`-Single-Review besitzen. Zielpfad,
+normalisierter Zielhash, Authoring Receipt sowie Bash- und
+PowerShell-Validierung müssen aktuell sein. `ReadyWithAcceptedRisks`,
+supersedierte Ergebnisse und die Lifecycle-Werte `Pending`, `Eligible`,
+`Blocked` oder `Completed` ersetzen diese Gesamtprüfung nicht.
+
+Solange auch nur ein Ziel diese Bedingungen nicht erfüllt, bleiben
+`speckit specify`, Autonomous, Parallel Autonomous und Implementierung für alle
+14 Ziele gesperrt. Nach vollständiger Review-Coverage ist `META-LH-01` das erste
+erlaubte Ziel und benötigt weiterhin einen neuen ausdrücklichen Startauftrag.
+Jede spätere Ziel- oder Evidence-Drift schließt die Sperre erneut. Die älteren
+Root-Lastenhefte gehören nicht zu dieser AOC-Programmreihe.
+
+*Before any downstream execution, every one of the 14 ordered targets requires
+a current, formally validated `Ready` Single review with matching target,
+normalised hash, Authoring Receipt, and Bash and PowerShell validation.
+Accepted-risk or superseded results and lifecycle values do not pass. One
+missing or stale result blocks Specify, autonomous, parallel-autonomous, and
+implementation work for the whole programme. Once all 14 pass, `META-LH-01` is
+the first target and still needs a new explicit start instruction. Any later
+drift closes the gate again. Legacy root intakes are out of scope.*
+
 ## Reihenfolge / Order
 
 | Position | Intake | Status | Zweck / Purpose |
@@ -58,7 +84,9 @@ ausdrücklich als `Eligible` markierte Kandidat; IAD201–203 sind bestätigt un
 sein bindender Vorgänger RAW-03 ist abgeschlossen. RAW-04 und RAW-05 bleiben
 `Pending`. RAW-05 besitzt keine bindende Vorgängerkante und ist strukturell
 ebenfalls eligible, bleibt aber auf read-only Research begrenzt. Das ist eine
-Auskunft, keine Review-, Specify- oder Ausführungsfreigabe. RAW-06, RAW-07 und
+Auskunft, keine Review-, Specify- oder Ausführungsfreigabe. Zusätzlich hält die
+globale Review-Sperre alle nachgelagerten Läufe geschlossen, bis alle 14 Ziele
+die oben definierte aktuelle `Ready`-Evidence besitzen. RAW-06, RAW-07 und
 RAW-09 bleiben bis zu den im jeweiligen Intake genannten IAD-Decisions
 blockiert.
 
@@ -67,4 +95,5 @@ current `Ready` Single-review evidence. RAW-02 is the sole explicitly declared
 `Eligible` candidate; IAD201 through IAD203 are confirmed and its binding
 RAW-03 predecessor is complete. RAW-04 and RAW-05 remain Pending. RAW-05 has no
 binding predecessor and is structurally eligible but remains research-only.
-This is information, not authority.*
+This is information, not authority; the global review gate still blocks all
+downstream runs until all 14 targets have current Ready evidence.*

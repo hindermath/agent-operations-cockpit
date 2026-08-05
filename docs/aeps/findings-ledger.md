@@ -9,7 +9,8 @@ Die Erfassungs- und Reifezustände folgen dem
 [AEPS-Evidence-Vertrag](README.md). / *This ledger contains the initial AOC
 baseline. Capture and maturity states follow the AEPS Evidence Contract.*
 
-Die geprüfte Ready-Menge umfasst: / *The assessed Ready set contains:*
+Die Menge der aktuell zielhashgültigen `Ready`-Review-Ergebnisse umfasst: /
+*The set of target-hash-current Ready review results contains:*
 
 | Lastenheft / Intake | Review-ID | Zielhash / target hash | Evidence-Commit |
 |---|---|---|---|
@@ -18,7 +19,7 @@ Die geprüfte Ready-Menge umfasst: / *The assessed Ready set contains:*
 | META-LH-03 | `cd2c3f92-2db3-4a34-b16a-5c34c304221c` | `8b1a0b37c7938d8ff5577bfb9daaedc710990e95e5470edf65b0761724c668c4` | `PendingPublication`; Base-HEAD `ddba7482163c7e61161ad0b90f4e019844335898` |
 | RAW-01 | `f9f08f54-95eb-4abd-8ce1-bac180a6f742` | `c61d9786b27ea09e0e954363a1b4335d3255ea55b0f8a5167ee52c25c583f9b6` | `PendingPublication`; Base-HEAD `ddba7482163c7e61161ad0b90f4e019844335898` |
 | RAW-02 | `b1ffb007-f963-4f0f-b787-492f1b4b6717` | `7b2f4241e92c9dba5eb6b420d98d587b34ffe6a6ee5e607762125687a334c4e6` | `PendingPublication`; Base-HEAD `ddba7482163c7e61161ad0b90f4e019844335898` |
-| META-LH-04 | `d7451834-8b5d-446c-a88e-658cae7a8c5f` | `f16026d37b04bdf7fa492e41e0a83a8f67b3719497dba5f185bfb35d0b068ea6` | `PendingPublication`; Base-HEAD `ddba7482163c7e61161ad0b90f4e019844335898` |
+| META-LH-04 | `99596682-ccd8-4f7d-954b-878d9ae40929` | `87b454f82e40288625d5613099795a39fc236d514f8868fd17d3907930ccd8bc` | `PendingPublication`; Base-HEAD `6d12371ff936210c9d776e439c35b02736391318` |
 | META-LH-05 | `a37b14c0-2eaf-4ce8-b8e2-ac4e7280652f` | `533ecf072fc81a08c43c7c9a794d30e3ea9237e0e8d75602251373881dfc6ec0` | `PendingPublication`; Base-HEAD `ddba7482163c7e61161ad0b90f4e019844335898` |
 | RAW-03 | `d868f04f-cfe3-4393-98ab-6f4451526d0d` | `7c6248efe4bb77bc8767d0b0302dcd968c3da95c5fa3c428681f1e2968c9fb22` | `PendingPublication`; Base-HEAD `60706c5dc6d96996fd7b4b4780c0b736a643dbb0` |
 
@@ -27,6 +28,20 @@ normalisierter Zielhash binden den lokalen Zustand, aber ein Upstream-Handoff
 bleibt bis zum stabilen Commit gesperrt. / *PendingPublication binds the local
 state without pretending that unpublished evidence is a stable upstream
 artifact.*
+
+Die strengere formale Ready-Grenze und die globale Review-Sperre verlangen
+zusätzlich ein aktuell validierbares Authoring Receipt. Der Abgleich vom
+`2026-08-05` ergibt deshalb nur fünf vollständig gate-konforme Ziele:
+`META-LH-01`, `META-LH-03` sowie `RAW-01` bis `RAW-03`. Die acht oben genannten
+Review-Ergebnisse bestehen weiterhin beide Review-Validatoren, aber die
+Authoring Receipts von `META-LH-02`, `META-LH-04` und `META-LH-05` scheitern auf
+Bash und PowerShell an Source-Hash-Drift. `RAW-04` bis `RAW-09` besitzen noch
+kein formales Ready-Review. Das globale Gate ist daher `Closed`. / *The stricter
+Ready boundary also requires a currently valid Authoring Receipt. Only five
+targets are fully gate-compliant: META-LH-01, META-LH-03, and RAW-01 through
+RAW-03. META-LH-02, META-LH-04, and META-LH-05 have target-current Ready review
+results but stale receipt sources; RAW-04 through RAW-09 lack formal Ready
+reviews. The global gate is Closed.*
 
 ## Bereits in #196 verankerte Kandidaten / Candidates already anchored in #196
 
@@ -232,31 +247,38 @@ duplicate these candidates. They refine evidence, limits, or possible gaps.*
   Produkt- oder Cross-Project-Evidence.
 - **Status:** `PartiallyRecorded`; Upstream `PendingPublication`.
 
-## AEPS-FIND-AOC-007 – Reparatur eines Targets invalidiert abhängige Review-Evidence
+## AEPS-FIND-AOC-007 – Target- oder Source-Drift invalidiert abhängige Evidence
 
-- **Quelle und Lastenheft:** alle fünf Ready-Re-Reviews; Series-Archive und
-  -Receipts.
-- **Datum und Commit:** `2026-08-01`; gemischter Publikationsstand.
-- **Problem:** Ein fachlich begrenzter Target-Edit ändert Hashbindungen und
-  macht ältere Single- und Series-Reviews historisch, auch wenn Reihenfolge und
-  Lifecycle unverändert bleiben. / *A bounded target edit changes hash bindings
-  and makes older Single and Series reviews historical even when order and
-  lifecycle stay unchanged.*
+- **Quelle und Lastenheft:** alle fünf Meta-Ready-Re-Reviews, Series-Archive und
+  -Receipts sowie die Receipt-Revalidierung vom `2026-08-05`.
+- **Datum und Commit:** `2026-08-01` bis `2026-08-05`; neue
+  Validierungsevidence `PendingPublication` auf Base-HEAD
+  `b69079623e41918dd8ad6db4572c070534cbad88`.
+- **Problem:** Ein fachlich begrenzter Target-Edit oder spätere Drift einer
+  gebundenen Quelle ändert Hashbindungen und macht abhängige Evidence
+  unvollständig oder historisch, auch wenn Zielhash, Reihenfolge und Lifecycle
+  unverändert bleiben. / *A bounded target edit or later drift in a bound source
+  can invalidate dependent evidence even while target hash, order, and
+  lifecycle remain unchanged.*
 - **Kontext:** Vorgänger wurden bytegleich archiviert, Receipts erneuert und
   vollständige Single-Re-Reviews ausgeführt.
 - **Positive Evidence:** Manifestdiffs änderten jeweils nur den Zielhash;
-  aktuelle Validatoren bestehen.
-- **Negative Evidence:** Ein älteres grünes Review gegen den Vorgängerhash ist
-  für das Nachfolgeziel nicht aktuell.
-- **Grenzen:** Ein Single Review ersetzt kein neues Series Review.
+  alle acht aktuellen Ready-Review-Ergebnisse bestehen weiterhin Bash und
+  PowerShell. Fünf zugehörige Authoring Receipts sind vollständig aktuell.
+- **Negative Evidence:** Die Authoring Receipts von `META-LH-02`, `META-LH-04`
+  und `META-LH-05` scheitern auf beiden Oberflächen an gebundener
+  Source-Hash-Drift, obwohl ihre Target-Hashes und Ready-Ergebnisse aktuell sind.
+- **Grenzen:** Ein Single Review ersetzt weder ein neues Series Review noch die
+  aktuelle Revalidierung aller gebundenen Authoring-Quellen.
 - **AOC-spezifisch / generisch:** Pfade und Manifest sind AOC-spezifisch;
   transitive Evidence-Invalidierung ist generisch.
 - **Domäne, Reifegrad:** Review and Evidence / Requirements Engineering;
   `pilot-pattern`.
 - **Preset-Bezug:** Intake Update, Repair, Review und Sequencing;
   `CAND-AEPS-05`, `CAND-AEPS-08`.
-- **Nächste Validierung:** maschinenlesbare Impact-Berechnung über Single- und
-  Series-Review-Lineage als Fixture erproben.
+- **Nächste Validierung:** maschinenlesbare Impact-Berechnung über
+  Authoring-Quellen, Single- und Series-Review-Lineage als Fixture erproben und
+  die drei driftenden Receipts nur nach ausdrücklicher Repair-Autorität erneuern.
 - **Promotion-Blocker:** kein gemeinsamer Evidence-Abhängigkeitsgraph über
   Preset-Grenzen.
 - **Status:** `PotentialCandidate`; Upstream `PendingPublication`.
@@ -347,30 +369,43 @@ duplicate these candidates. They refine evidence, limits, or possible gaps.*
 
 ## AEPS-FIND-AOC-011 – Ready ist keine nachgelagerte Startfreigabe
 
-- **Quelle und Lastenheft:** META-LH-01 bis META-LH-03, RAW-01 und RAW-02;
-  exakte nächste Aktionen der Ready-Re-Reviews.
-- **Datum und Commit:** `2026-08-01`; gemischter Publikationsstand.
+- **Quelle und Lastenheft:** META-LH-01 bis META-LH-05 und RAW-01 bis RAW-09;
+  exakte nächste Aktionen der Ready-Re-Reviews sowie die am `2026-08-05`
+  ausdrücklich autorisierte AOC-weite Review-Sperre.
+- **Datum und Commit:** `2026-08-01` bis `2026-08-05`; neue Gate-Evidence
+  `PendingPublication` auf Base-HEAD
+  `b69079623e41918dd8ad6db4572c070534cbad88`.
 - **Problem:** Ein formal erfolgreiches Intake Review kann als impliziter
   Auftrag für Specify, Autonomous oder Implementierung fehlgedeutet werden. /
   *A successful Intake review can be misread as an implicit downstream start
   instruction.*
 - **Kontext:** Jedes Review benennt ausschließlich den read-only Series-Status
-  als nächste Aktion und schließt nachgelagerte Aktionen aus.
+  als nächste Aktion und schließt nachgelagerte Aktionen aus. Zusätzlich
+  blockiert die neue globale Regel alle 14 Ziele, bis alle gleichzeitig aktuelle
+  formal validierte `Ready`-Evidence besitzen; danach bleibt `META-LH-01` das
+  erste Ziel mit separatem Startauftrag.
 - **Positive Evidence:** Review-Ergebnisse und Reports enthalten explizite
-  Nicht-Autorität.
-- **Negative Evidence:** Enabled Copy-ready Prompts bleiben ohne separate
-  aktuelle Authority nicht ausführbar.
-- **Grenzen:** Belegt Governance-Texte; Runtime muss Authority zusätzlich
-  technisch erzwingen.
-- **AOC-spezifisch / generisch:** Befehlsnamen sind spezifisch;
-  phasenbezogene Authority ist generisch.
+  Nicht-Autorität. Kanonische Authority-Gates, Programmindex, Reihenfolge,
+  Autonomiemodell, README, AEPS-Vertrag und alle fünf Agentenflächen spiegeln
+  dieselbe fail-closed Gesamtregel.
+- **Negative Evidence:** Aktuell bestehen acht Review-Ergebnisse, aber nur fünf
+  Ziele den vollständigen Review-plus-Receipt-Vertrag. Die Source-Hash-Drift in
+  drei Receipts und sechs noch fehlende Ready-Reviews halten das Gate konkret
+  geschlossen. Eine ausführbare Ende-zu-Ende-Preflight-Fixture fehlt noch.
+- **Grenzen:** Belegt Governance-Texte und bewusste menschliche
+  Portfolio-Authority; Runtime muss die Sperre zusätzlich technisch erzwingen.
+- **AOC-spezifisch / generisch:** Die vollständige 14er-Sperre und
+  `META-LH-01` als erstes Ziel sind AOC-spezifisch. Die Trennung von Review,
+  Portfolio-Gate und aktueller Startautorität ist generisch.
 - **Domäne, Reifegrad:** Program Governance / Agent Authority;
   `pilot-pattern`.
 - **Preset-Bezug:** Intake Review, Autonomous Run; `CAND-AEPS-01`,
   `CAND-AEPS-06`, `CAND-AEPS-07`.
-- **Nächste Validierung:** automatisierte Stop-Fixture vom Ready-Ergebnis bis
-  zum Ausführungs-Preflight.
-- **Promotion-Blocker:** keine Ende-zu-Ende-Authority-Evidence.
+- **Nächste Validierung:** automatisierte Stop-Fixture vom Portfoliozustand
+  `13/14 Ready`, von Drift und von vollständiger Coverage bis zum
+  Ausführungs-Preflight.
+- **Promotion-Blocker:** keine Ende-zu-Ende-Authority- oder
+  Cross-Project-Evidence; AOC-spezifische Zielmenge.
 - **Status:** `PartiallyRecorded`; Upstream `PendingPublication`.
 
 ## AEPS-FIND-AOC-012 – Fachliche Technologieentscheidungen bleiben beim Produkt

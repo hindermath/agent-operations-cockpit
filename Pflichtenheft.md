@@ -48,8 +48,23 @@ AOC requirements programme. It does not yet contain a product specification.*
 - Maschinenlesbares Manifest: `specs/intake-series/aoc-phase-2/manifest.json`
 - Series-ID: `d51e831c-24fb-4a71-b316-f7ad1bfe99d0`
 
-Der nächste erlaubte Schritt ist ein unabhängiges Intake Review von
-META-LH-01. Dieser Index startet keinen Review- oder Spec-Kit-Lauf.
+Vor dem ersten nachgelagerten Spec-Kit-Lauf müssen alle 14 AOC-Lastenhefte ein
+aktuelles, formal validiertes `Ready`-Single-Review besitzen. Bis dahin sind nur
+die noch erforderlichen Intake-Reviews, ausdrücklich autorisierte Reparaturen,
+Series-Statusprüfungen und die vorgeschriebene AEPS-Evidence-Rückführung
+zulässig. `Eligible`, `Completed` oder ein einzelnes `Ready` heben diese globale
+Sperre nicht auf.
 
-*The next allowed step is an independent intake review of META-LH-01. This index
-does not start review or any Spec Kit workflow.*
+Nach vollständiger Review-Coverage ist `META-LH-01` das erste erlaubte Ziel;
+auch dann beginnt kein `speckit specify`-, Autonomous-,
+Parallel-Autonomous- oder Implementierungslauf ohne einen neuen ausdrücklichen
+Startauftrag. Drift schließt die Sperre erneut. Dieser Index startet selbst
+keinen Review- oder Spec-Kit-Lauf.
+
+*All 14 AOC intakes require current, formally validated `Ready` Single reviews
+before the first downstream Spec Kit run. Until then, work is limited to the
+remaining reviews, explicitly authorised repairs, read-only series status, and
+required AEPS evidence capture. Lifecycle status or one Ready result does not
+open the global gate. Once full coverage is current, `META-LH-01` is the first
+allowed target and still needs a new explicit start instruction. Drift closes
+the gate again. This index starts no workflow.*

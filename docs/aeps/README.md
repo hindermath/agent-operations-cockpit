@@ -76,6 +76,19 @@ Implementierungs-, Remote-, Merge-, Bypass- noch Promotion-Authority. / *The
 review status is separate from the Series lifecycle. Ready grants no start,
 delivery, or promotion authority.*
 
+Zusätzlich gilt für das AOC eine projektlokale globale Review-Sperre: Erst wenn
+alle 14 aktiven Lastenhefte der kanonischen Programmreihe gleichzeitig die oben
+definierte aktuelle `Ready`-Grenze erfüllen, darf ein nachgelagerter Spec-Kit-
+Lauf überhaupt separat autorisiert werden. `META-LH-01` ist danach zwingend das
+erste Ziel; Drift schließt die Sperre erneut. Diese konservative
+Portfolioentscheidung ist AOC-spezifische Evidence und darf ohne
+Cross-Project-Validierung nicht als allgemeine AEPS- oder Preset-Regel
+promotet werden. / *A project-local global review gate additionally requires
+all 14 active AOC programme intakes to meet the current Ready boundary before
+any downstream run can be authorised separately. `META-LH-01` is then the
+mandatory first target, and drift closes the gate again. This conservative
+portfolio decision is AOC-specific evidence, not a general AEPS or preset rule.*
+
 ## Identität und Deduplizierung / Identity and deduplication
 
 - Jedes projektbezogene Finding erhält eine stabile ID im Format
