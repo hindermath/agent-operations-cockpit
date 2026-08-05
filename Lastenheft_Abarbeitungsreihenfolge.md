@@ -20,6 +20,20 @@ Authority über die AOC-Series.
 generated root table below covers legacy root intakes only and has no authority
 over the AOC series.*
 
+Für diese AOC-Programmreihe gilt eine globale Review-Sperre: Alle 14 Meta- und
+Fachlastenhefte müssen aktuelle, formal validierte `Ready`-Single-Reviews
+besitzen, bevor ein `speckit specify`-, Autonomous-, Parallel-Autonomous- oder
+Implementierungslauf starten darf. Danach bleibt `META-LH-01` das erste Ziel und
+benötigt einen neuen ausdrücklichen Startauftrag. Drift schließt die Sperre
+erneut. Die zwei älteren Root-Intakes in der generierten Tabelle sind nicht Teil
+dieser 14er-Gesamtmenge.
+
+*The AOC programme has a global review gate: all 14 META and RAW intakes require
+current formally validated Ready Single reviews before downstream Spec Kit work
+may start. `META-LH-01` remains the first target and needs a new explicit start
+instruction. Drift closes the gate again. The two generated legacy root intakes
+are outside this fourteen-intake set.*
+
 <!-- secure-development-hardening-order:start -->
 ## Automatisch ermittelte Lastenheft-Reihenfolge / Automatically Detected Requirements Order
 

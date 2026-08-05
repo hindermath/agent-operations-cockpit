@@ -23,7 +23,7 @@ duplicating them:*
 |---|---|---|
 | `AEPS-FIND-AOC-001` | `CAND-AEPS-07` | `Ready` und Series-Eligibility als getrennte Achsen; RAW-02 liefert `Ready`+`Blocked`-Evidence. |
 | `AEPS-FIND-AOC-002` | `CAND-AEPS-06`, `CAND-AEPS-08` | Bounded Repair bewahrt IADs, Scope und Authority und verlangt vollständiges Re-Review. |
-| `AEPS-FIND-AOC-003` und `011` | `CAND-AEPS-01`, `06`, `07` | Historische Delivery-Obergrenze und Ready-Status sind keine aktuelle Startautorität. |
+| `AEPS-FIND-AOC-003` und `011` | `CAND-AEPS-01`, `06`, `07` | Historische Delivery-Obergrenze, einzelnes Ready und Series-Lifecycle sind keine aktuelle Startautorität. Das AOC-weite 14er-Gate stärkt lokale Evidence, bleibt aber bis zu Runtime- und Cross-Project-Validation projektspezifisch. |
 | `AEPS-FIND-AOC-005` | `CAND-AEPS-08`, RF-20 | Secret-Negativfixture als Test-Evidence, nicht als Receipt-Provenienzquelle. |
 | `AEPS-FIND-AOC-006` und `010` | `CAND-AEPS-10`, `11` | Applicability plus Re-Evaluation und semantisches Review als Ergänzung zu Schema-Validation. |
 | `AEPS-FIND-AOC-008` | `CAND-AEPS-05` | Neue negative Evidence: Doppelowner `PO002`, Zyklus `PO007`. |

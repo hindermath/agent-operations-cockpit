@@ -52,6 +52,7 @@ or are generated deterministically.*
 | Lernmaterial | Blueprint, Register und Rahmenlehrplan-Mapping | Lehrende und Maintainer | Lernziel oder Referenz ändert sich | Unit- und ZIP-Pakete | Lernpaket- und A11Y-Gates | Vor Veröffentlichung |
 | Security Evidence | `docs/security/` und reale Gates | Security Owner | Trust-, Release-, Cloud- oder Risikogrenze ändert sich | Checklists, ADR, PR-Evidence | Security Review | Nach Trigger oder Frist |
 | AEPS Evidence | `docs/aeps/findings-ledger.md` und `hindermath/home-baseline#196` | AOC-AEPS-Evidence-Workstream | Formales Ready, wesentliches Review/Receipt oder relevanter Fehl-/Abbruchlauf | Candidate-Matrix, Gap-Analyse, Handoff und AEPS-Receipt | Ready-/Receipt-Validatoren, semantisches Review, Links und A11Y | Nach jedem AEPS-Trigger |
+| AOC Global Review Gate | `requirements/baseline/authority-and-stop-gates.md` | AOC-Anforderungsprogramm | Änderung der 14er-Zielmenge, Ready-Anforderung, Driftregel oder des ersten Laufziels | README, Pflichtenheft, Series-Reihenfolge, Autonomiemodell, fünf Agentenflächen und AEPS-Evidence | Exakte Zielmenge, aktuelle Ready-/Receipt-Evidence, DE/EN-Parität, Homogeneity und Diff-Check | Vor jedem ersten oder wiederaufgenommenen nachgelagerten Spec-Kit-Lauf |
 
 ## Durchführung / Procedure
 
