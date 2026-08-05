@@ -1,17 +1,17 @@
 {
   "schemaVersion": "2.0",
   "documentType": "IntakeReceipt",
-  "receiptId": "40d3be70-b92f-4a76-8c19-c04f03effafd",
+  "receiptId": "8b1f5d8b-91ef-4f98-8e6b-82c5ab1e3f70",
   "intakeId": "d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b",
   "generator": {
     "preset": "intake-authoring-governance",
     "version": "0.3.0"
   },
-  "createdAt": "2026-08-01T15:41:54Z",
+  "createdAt": "2026-08-05T19:01:48Z",
   "operation": {
-    "operationId": "0a35cf5b-4467-476e-bc1c-cac8d1b44dbb",
+    "operationId": "bdb84f16-71b4-46d1-8400-15dcfc017d10",
     "type": "Update",
-    "authorityEvidence": "Thorsten explicitly authorised repair of only IR201 through IR205 for META-LH-02 on 2026-08-01, preserved the ownership intent, nine series, scope, non-goals, order, dependencies, and delivery authority, required refreshed baseline/decision evidence, receipt and Series bindings, and excluded Specify, implementation, remote, merge, and bypass actions."
+    "authorityEvidence": "Thorsten explicitly authorised on 2026-08-05 receipt-only provenance supersession for META-LH-02: refresh mutable source hashes, preserve the target byte-for-byte, archive the prior target and receipt, and perform a complete new Single review. Scope, ownership intent, nine series, non-goals, dependencies, Delivery Authority, Specify, implementation, remote writes, merge, bypass, presets, promotion, and Level-0 actions remain excluded."
   },
   "status": "ReadyForReview",
   "target": {
@@ -23,9 +23,9 @@
       "sourceId": "SRC001",
       "order": 1,
       "kind": "File",
-      "label": "Superseded META-LH-02 intake as first binding repair source",
+      "label": "Immediately superseded byte-identical META-LH-02-Portfolio-Ownership intake as first binding source",
       "location": "Repository",
-      "path": "specs/intake-authoring-archive/d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b/0a35cf5b-4467-476e-bc1c-cac8d1b44dbb/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "path": "specs/intake-authoring-archive/d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b/bdb84f16-71b4-46d1-8400-15dcfc017d10/Lastenheft_META-LH-02-Portfolio-Ownership.md",
       "requestedUrl": "N/A",
       "finalUrl": "N/A",
       "retrievedAt": "N/A",
@@ -36,7 +36,7 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "87881c25c98a26c63eabd550731862beea5d494b41def5b7622e1c535d36841f",
+      "normalizedSha256": "7965323e2981472fd061bfb9ca20fd10d6a6217df53fd0300127de74b0b9c14b",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryArchiveAtRepair"
     },
@@ -44,9 +44,9 @@
       "sourceId": "SRC002",
       "order": 2,
       "kind": "File",
-      "label": "Current Single review authorising bounded IR201-IR205 repair",
+      "label": "Current Ready Single review before receipt-provenance supersession",
       "location": "Repository",
-      "path": "specs/intake-review-results/meta-lh-02-portfolio-ownership-2026-08-01.json",
+      "path": "specs/intake-review-results/meta-lh-02-portfolio-ownership-2026-08-01-r2.json",
       "requestedUrl": "N/A",
       "finalUrl": "N/A",
       "retrievedAt": "N/A",
@@ -57,7 +57,7 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "2c8b1194faafba27494cdf4a6bdad97a4de26db6cec624b3e94f050f3cf2df1b",
+      "normalizedSha256": "2c102ada7dddcfa91430a131b50bbce7d01c1a91c7fca39f7e9cca585c0489e2",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryAtRepairAuthorization"
     },
@@ -65,9 +65,9 @@
       "sourceId": "SRC003",
       "order": 3,
       "kind": "File",
-      "label": "Readable META-LH-02 review evidence for IR201-IR205",
+      "label": "Readable current Ready Single-review evidence before receipt-provenance supersession",
       "location": "Repository",
-      "path": "docs/reviews/meta-lh-02-portfolio-ownership-intake-review-2026-08-01.md",
+      "path": "docs/reviews/meta-lh-02-portfolio-ownership-intake-review-2026-08-01-r2.md",
       "requestedUrl": "N/A",
       "finalUrl": "N/A",
       "retrievedAt": "N/A",
@@ -78,7 +78,7 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "41c20c088c0bfc8cb40bdc9cc774c319e5ea9abe1b993fcef7533477cde0dca0",
+      "normalizedSha256": "794a9a646201e59017d34aca733f6e28a7907d0111705642c14328f3340946e8",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryAtRepairAuthorization"
     },
@@ -120,7 +120,7 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "1c3fb1642698a8a32258af20457183f2c8253057e1788c068ce0d893e6060a6c",
+      "normalizedSha256": "10cb40e62c4e4b44bc25942c2bdff8cd2c1cda80124f6a3bfd1dc97ac5927c9d",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryAtRepair"
     },
@@ -141,7 +141,7 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "d2240c906177f1cac265576041d3ed92d8ee69c773732892552223c1f43d8280",
+      "normalizedSha256": "7abb4ce4b2ca45613bd9e09d19dbeef96f82b37ea5277de7bcc15edfbbf1a62a",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryAtRepair"
     },
@@ -162,7 +162,7 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "bb366ff6105fb234d12290d5f9bc3b6fcf813ac11226d91b047df2e804c7bfee",
+      "normalizedSha256": "c3467c421fe72538a1af1b2dfcba620f11589fbe475fae5cf8956cb5d5739e6b",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryAtRepair"
     },
@@ -267,7 +267,7 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "712ceef8d359c0c4ad602744b38d929abb9d9afd5c1db1fc4fc9ef9bf2f88a4e",
+      "normalizedSha256": "cdb6d94ddb9cf282e377f449348b7a78aa15b2eb6eb0a54b9cc57343927320e8",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryAtRepair"
     }
@@ -284,14 +284,14 @@
     "autonomousInvocation": "$speckit-autonomous requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md --delivery-mode MergeAndSync --require-current-review"
   },
   "deliveryAuthority": "MergeAndSync",
-  "authorityEvidence": "MergeAndSync remains the unchanged historic delivery ceiling. The current repair authority is local documentation work only and explicitly excludes Specify, implementation, remote writes, merge, and bypass; the stored mode grants no current downstream start authority.",
+  "authorityEvidence": "MergeAndSync remains the unchanged historical delivery ceiling. Any stored Admin-Bypass evidence is historical and grants no current authority. The current 2026-08-05 authority covers only receipt-provenance supersession and a complete new Single review; it grants no Specify, implementation, remote-write, merge, bypass, preset, promotion, or provider-administration authority.",
   "promptState": "Enabled",
   "provenanceMode": "Supersession",
   "supersedes": {
-    "receiptPath": "specs/intake-authoring-archive/d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b/0a35cf5b-4467-476e-bc1c-cac8d1b44dbb/META-LH-02-Portfolio-Ownership.json",
-    "targetNormalizedSha256": "87881c25c98a26c63eabd550731862beea5d494b41def5b7622e1c535d36841f",
-    "archiveTargetPath": "specs/intake-authoring-archive/d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b/0a35cf5b-4467-476e-bc1c-cac8d1b44dbb/Lastenheft_META-LH-02-Portfolio-Ownership.md",
-    "archiveReceiptPath": "specs/intake-authoring-archive/d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b/0a35cf5b-4467-476e-bc1c-cac8d1b44dbb/META-LH-02-Portfolio-Ownership.json"
+    "receiptPath": "specs/intake-authoring-archive/d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b/bdb84f16-71b4-46d1-8400-15dcfc017d10/META-LH-02-Portfolio-Ownership.json",
+    "targetNormalizedSha256": "7965323e2981472fd061bfb9ca20fd10d6a6217df53fd0300127de74b0b9c14b",
+    "archiveTargetPath": "specs/intake-authoring-archive/d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b/bdb84f16-71b4-46d1-8400-15dcfc017d10/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+    "archiveReceiptPath": "specs/intake-authoring-archive/d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b/bdb84f16-71b4-46d1-8400-15dcfc017d10/META-LH-02-Portfolio-Ownership.json"
   },
   "legacyAdoption": {
     "evidenceType": "N/A",
@@ -299,7 +299,7 @@
     "priorGitBlob": "N/A"
   },
   "updateAuthorized": true,
-  "updateAuthorityEvidence": "Thorsten explicitly requested repair limited to IR201-IR205, preserved ownership intent, nine series, scope, non-goals, order, dependencies, and delivery authority, required refreshed baseline/decision evidence, receipt and Series bindings, and a complete META-LH-02 re-review on 2026-08-01.",
+  "updateAuthorityEvidence": "Thorsten explicitly approved receipt-only provenance supersession for META-LH-02 on 2026-08-05. This authorises only current source-hash binding, immutable archival of the prior target and receipt, and a complete new Single review; the target remains byte-identical and all product and downstream actions remain excluded.",
   "series": {
     "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
     "manifestPath": "specs/intake-series/aoc-phase-2/manifest.json",

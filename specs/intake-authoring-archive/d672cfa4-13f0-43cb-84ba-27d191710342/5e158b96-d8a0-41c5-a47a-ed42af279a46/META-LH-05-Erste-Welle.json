@@ -1,17 +1,17 @@
 {
   "schemaVersion": "2.0",
   "documentType": "IntakeReceipt",
-  "receiptId": "f7a9a1a8-8e05-4c23-8d6a-13c7dc7bb7c2",
+  "receiptId": "50fb5517-6dcf-407d-b39e-7da00298b227",
   "intakeId": "d672cfa4-13f0-43cb-84ba-27d191710342",
   "generator": {
     "preset": "intake-authoring-governance",
     "version": "0.3.0"
   },
-  "createdAt": "2026-08-05T19:01:48Z",
+  "createdAt": "2026-08-01T21:08:35Z",
   "operation": {
-    "operationId": "5e158b96-d8a0-41c5-a47a-ed42af279a46",
+    "operationId": "3eb11624-2679-4b04-a170-7351193d01b0",
     "type": "Update",
-    "authorityEvidence": "Thorsten explicitly authorised on 2026-08-05 receipt-only provenance supersession for META-LH-05: refresh mutable source hashes, preserve the target byte-for-byte, archive the prior target and receipt, and perform a complete new Single review. Purpose, nine-domain wave intent, scope, non-goals, dependencies, Delivery Authority, Specify, implementation, remote writes, merge, bypass, presets, promotion, and Level-0 actions remain excluded."
+    "authorityEvidence": "Thorsten invoked repair of the current META-LH-05 review on 2026-08-01, authorising IR501 through IR505 and the required complete re-review. Purpose, the nine-domain wave, scope, non-goals, dependencies, and historic delivery ceiling remain unchanged; Specify, implementation, remote writes, merge, bypass, and provider administration remain excluded."
   },
   "status": "ReadyForReview",
   "target": {
@@ -23,9 +23,9 @@
       "sourceId": "SRC001",
       "order": 1,
       "kind": "File",
-      "label": "Immediately superseded byte-identical META-LH-05-Erste-Welle intake as first binding source",
+      "label": "Superseded META-LH-05 intake as first binding repair source",
       "location": "Repository",
-      "path": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/5e158b96-d8a0-41c5-a47a-ed42af279a46/Lastenheft_META-LH-05-Erste-Welle.md",
+      "path": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/3eb11624-2679-4b04-a170-7351193d01b0/Lastenheft_META-LH-05-Erste-Welle.md",
       "requestedUrl": "N/A",
       "finalUrl": "N/A",
       "retrievedAt": "N/A",
@@ -36,7 +36,7 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "533ecf072fc81a08c43c7c9a794d30e3ea9237e0e8d75602251373881dfc6ec0",
+      "normalizedSha256": "fb8e09bacd0024ddf9ed5ecfc78df0ee472e9d90fc4ab62c8d0d5c9118b67762",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryArchiveAtRepair"
     },
@@ -44,9 +44,9 @@
       "sourceId": "SRC002",
       "order": 2,
       "kind": "File",
-      "label": "Current Ready Single review before receipt-provenance supersession",
+      "label": "Current Single review authorising bounded IR501 through IR505 repair",
       "location": "Repository",
-      "path": "specs/intake-review-results/meta-lh-05-erste-welle-2026-08-01-r2.json",
+      "path": "specs/intake-review-results/meta-lh-05-erste-welle-2026-08-01.json",
       "requestedUrl": "N/A",
       "finalUrl": "N/A",
       "retrievedAt": "N/A",
@@ -57,7 +57,7 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "06f79b060845f2410f72467bbcbcbe89a42c6014dec36b38fd733c3a7387b2d3",
+      "normalizedSha256": "5df9aba0b3d4b25feabbc85d19c8a3cb9eafcae7e4d7cede38e9807fe8dc2df3",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryAtRepairAuthorization"
     },
@@ -65,9 +65,9 @@
       "sourceId": "SRC003",
       "order": 3,
       "kind": "File",
-      "label": "Readable current Ready Single-review evidence before receipt-provenance supersession",
+      "label": "Readable META-LH-05 review evidence",
       "location": "Repository",
-      "path": "docs/reviews/meta-lh-05-erste-welle-intake-review-2026-08-01-r2.md",
+      "path": "docs/reviews/meta-lh-05-erste-welle-intake-review-2026-08-01.md",
       "requestedUrl": "N/A",
       "finalUrl": "N/A",
       "retrievedAt": "N/A",
@@ -78,7 +78,7 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "5cfc37a507d8d020332e32b7985dece1a8d54c0aebe72192b05655bc430a52dd",
+      "normalizedSha256": "5867206c018fa0be4f69cb719c0947a3702d2b7609977931edfd9b470c10e7fc",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryAtRepairAuthorization"
     },
@@ -162,7 +162,7 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "7abb4ce4b2ca45613bd9e09d19dbeef96f82b37ea5277de7bcc15edfbbf1a62a",
+      "normalizedSha256": "d2240c906177f1cac265576041d3ed92d8ee69c773732892552223c1f43d8280",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryAtRepair"
     },
@@ -183,7 +183,7 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "10cb40e62c4e4b44bc25942c2bdff8cd2c1cda80124f6a3bfd1dc97ac5927c9d",
+      "normalizedSha256": "1c3fb1642698a8a32258af20457183f2c8253057e1788c068ce0d893e6060a6c",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryAtRepair"
     },
@@ -368,14 +368,14 @@
     "autonomousInvocation": "$speckit-autonomous requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md --delivery-mode MergeAndSync --require-current-review"
   },
   "deliveryAuthority": "MergeAndSync",
-  "authorityEvidence": "MergeAndSync remains the unchanged historical delivery ceiling. Any stored Admin-Bypass evidence is historical and grants no current authority. The current 2026-08-05 authority covers only receipt-provenance supersession and a complete new Single review; it grants no Specify, implementation, remote-write, merge, bypass, preset, promotion, or provider-administration authority.",
+  "authorityEvidence": "MergeAndSync remains the unchanged historical delivery ceiling from 2026-07-31. Stored Admin-Bypass evidence is historical and grants no current authority. The current 2026-08-01 authority covers only IR501-IR505 repair and a complete re-review and grants no create-wave, Specify, implementation, remote-write, merge, bypass, or provider-administration authority.",
   "promptState": "Enabled",
   "provenanceMode": "Supersession",
   "supersedes": {
-    "receiptPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/5e158b96-d8a0-41c5-a47a-ed42af279a46/META-LH-05-Erste-Welle.json",
-    "targetNormalizedSha256": "533ecf072fc81a08c43c7c9a794d30e3ea9237e0e8d75602251373881dfc6ec0",
-    "archiveTargetPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/5e158b96-d8a0-41c5-a47a-ed42af279a46/Lastenheft_META-LH-05-Erste-Welle.md",
-    "archiveReceiptPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/5e158b96-d8a0-41c5-a47a-ed42af279a46/META-LH-05-Erste-Welle.json"
+    "receiptPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/3eb11624-2679-4b04-a170-7351193d01b0/META-LH-05-Erste-Welle.json",
+    "targetNormalizedSha256": "fb8e09bacd0024ddf9ed5ecfc78df0ee472e9d90fc4ab62c8d0d5c9118b67762",
+    "archiveTargetPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/3eb11624-2679-4b04-a170-7351193d01b0/Lastenheft_META-LH-05-Erste-Welle.md",
+    "archiveReceiptPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/3eb11624-2679-4b04-a170-7351193d01b0/META-LH-05-Erste-Welle.json"
   },
   "legacyAdoption": {
     "evidenceType": "N/A",
@@ -383,7 +383,7 @@
     "priorGitBlob": "N/A"
   },
   "updateAuthorized": true,
-  "updateAuthorityEvidence": "Thorsten explicitly approved receipt-only provenance supersession for META-LH-05 on 2026-08-05. This authorises only current source-hash binding, immutable archival of the prior target and receipt, and a complete new Single review; the target remains byte-identical and all product and downstream actions remain excluded.",
+  "updateAuthorityEvidence": "Thorsten invoked the current META-LH-05 review result for repair on 2026-08-01. This authorises only IR501 through IR505 and the required complete re-review while preserving purpose, nine-domain wave intent, scope, non-goals, dependencies, and historic delivery authority.",
   "series": {
     "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
     "manifestPath": "specs/intake-series/aoc-phase-2/manifest.json",
