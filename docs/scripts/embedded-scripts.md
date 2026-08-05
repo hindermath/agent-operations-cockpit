@@ -69,3 +69,6 @@ Change their respective canonical source first, then propagate the result.*
 | `specs/intake-review-fixtures/meta-lh-05/validate-first-wave.ps1` | `specs` |
 | `specs/intake-review-fixtures/meta-lh-05/validate-first-wave.py` | `specs` |
 | `specs/intake-review-fixtures/meta-lh-05/validate-first-wave.sh` | `specs` |
+| `specs/intake-review-fixtures/raw-03/validate-state-truthfulness.ps1` | `specs` |
+| `specs/intake-review-fixtures/raw-03/validate-state-truthfulness.py` | `specs` |
+| `specs/intake-review-fixtures/raw-03/validate-state-truthfulness.sh` | `specs` |
