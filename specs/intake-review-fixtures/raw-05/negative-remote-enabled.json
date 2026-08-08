@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "1.0",
+  "fixtureKind": "ExecutionNodeCases",
+  "fixtureId": "RAW05-NEGATIVE-REMOTE-ENABLED",
+  "expectedOutcome": "Rejected",
+  "expectedError": "EN007",
+  "cases": [
+    {
+      "id": "remote-transport-enabled-without-iad604",
+      "nodeType": "Remote",
+      "platform": "Linux",
+      "endpointKind": "Ssh",
+      "remoteEnabled": true,
+      "profile": {
+        "probeTimeoutSeconds": 5,
+        "freshnessTSeconds": 60
+      },
+      "expected": {}
+    }
+  ]
+}

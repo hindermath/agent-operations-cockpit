@@ -1,32 +1,32 @@
 {
   "schemaVersion": "1.0",
   "documentType": "IntakeSeriesReceipt",
-  "receiptId": "59c18146-2069-4337-9f41-f4167dcb066a",
+  "receiptId": "cd3bee37-093f-46ec-b55f-aa2159f0cb01",
   "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
   "generator": {
     "preset": "intake-sequencing-governance",
     "version": "0.2.2"
   },
-  "createdAt": "2026-08-02T15:11:23Z",
+  "createdAt": "2026-08-08T22:12:46Z",
   "operation": {
-    "operationId": "4375e082-36ce-4397-ad19-1f0474ad1fdc",
+    "operationId": "072608d5-c4a6-4981-b2d4-0718204ff252",
     "type": "Update",
-    "authorityEvidence": "Thorsten explicitly authorised this bounded Series update on 2026-08-02. RAW-03 changes only from Eligible to Completed while its current Single review remains Ready; RAW-02 changes only from Blocked to the sole declared Eligible target. RAW-04 and RAW-05 remain Pending, and RAW-05 remains research-only. Fourteen targets, one root, fourteen dependencies, exact order, every target hash, all other lifecycle values, intake contents, evidence paths, and Delivery Authority remain unchanged. Review, Specify, implementation, remote writes, merge, bypass, presets, and Level-0 actions are excluded."
+    "authorityEvidence": "Thorsten explicitly authorised on 2026-08-09 that the declared AOC Phase 2 Series status may change only from NeedsClarification to Completed while complete Series review 86763944-9aab-4178-81b7-40dff7c1af51 remains current and Ready. Both review validators pass. All fourteen target lifecycle values, target hashes, exact order, single root, fourteen dependencies, intake content, purpose, scope, non-goals, decisions, owners, handoffs, and Delivery Authority remain unchanged. Only predecessor archive, successor lineage, the canonical order explanation, and the declared Series status are renewed. Review, Specify, implementation, preset, promotion, remote, GitHub content, and Level-0 actions are excluded from this Series update. After the required status audit exposed RIG017, Thorsten separately authorised on 2026-08-09 the bounded local terminal-state repair: a Completed series may have zero Eligible targets only when every target is Completed. Mixed terminal states remain fail-closed. This adds no target, lifecycle, intake, delivery, or Level-0 change."
   },
-  "status": "NeedsClarification",
+  "status": "Ready",
   "manifest": {
     "path": "specs/intake-series/aoc-phase-2/manifest.json",
-    "normalizedSha256": "bb4382e35977696aa8d31126963daa9129afa5d1e7088d49f6cb8d893bcce9be"
+    "normalizedSha256": "6e928925d0a8133be83ddbfe75b379ed70fe82c7aeb7e34cc5c3ef10138eefec"
   },
   "supersedes": {
-    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/4375e082-36ce-4397-ad19-1f0474ad1fdc/receipt.json",
-    "receiptNormalizedSha256": "32b59efe1854bf2ae790ff710bd9b586e59a48f45c77f520c2550a0b8a50920c",
-    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/4375e082-36ce-4397-ad19-1f0474ad1fdc/manifest.json",
-    "manifestArchiveSha256": "c4b9484bdf58936fd4de92f385ce1ce04acb70346121569b464ad52076200675"
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/072608d5-c4a6-4981-b2d4-0718204ff252/receipt.json",
+    "receiptNormalizedSha256": "cbe6e196784b397404d819beb381e2e4c93823994f1d36f1dbda6fc42a881397",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/072608d5-c4a6-4981-b2d4-0718204ff252/manifest.json",
+    "manifestArchiveSha256": "d05c8c5c6e860b20c1c9419360dba188f713be39a6f34c21a785d28d8da65c00"
   },
   "tombstone": {
     "path": "N/A",
     "normalizedSha256": "N/A"
   },
-  "nextAction": "$speckit-intake-series-status"
+  "nextAction": "$speckit-intake-series-status specs/intake-series/aoc-phase-2/manifest.json"
 }

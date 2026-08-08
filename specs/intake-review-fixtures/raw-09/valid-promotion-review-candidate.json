@@ -1,0 +1,27 @@
+{
+  "fixtureId": "RAW09-VALID-PROMOTION-REVIEW-CANDIDATE",
+  "case": "ValidPromotionReviewCandidate",
+  "reviewedFindings": 3,
+  "independentProjects": 2,
+  "positiveEvidence": true,
+  "negativeEvidence": true,
+  "retrospective": true,
+  "crossProjectAssessment": true,
+  "crossCuttingComplete": true,
+  "blockingFindings": 0,
+  "repository": "hindermath/home-baseline",
+  "currentAuthorities": [
+    "ScopeAuthority",
+    "StartAuthority",
+    "ImplementationAuthority",
+    "GovernanceWriteAuthority",
+    "RemoteWriteAuthority",
+    "MergeAuthority",
+    "BypassAuthority",
+    "ProviderAuthority",
+    "PresetWriteAuthority",
+    "PromotionAuthority"
+  ],
+  "actualPromotionClaimed": false,
+  "expectedReasonCode": "PEV001_VALID_PROPOSAL"
+}

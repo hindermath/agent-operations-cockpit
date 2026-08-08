@@ -1,0 +1,32 @@
+{
+  "fixtureId": "RAW04-NEGATIVE-PROJECTION-MISMATCH",
+  "fixtureKind": "PresentationCases",
+  "expectedOutcome": "Rejected",
+  "expectedError": "PR009",
+  "cases": [
+    {
+      "id": "console-json-state-mismatch",
+      "width": 120,
+      "terminalInteractive": true,
+      "tuiAdapterAvailable": true,
+      "expectedLayout": "Enhanced",
+      "surfaceAvailable": true,
+      "stateStatus": "Degraded",
+      "statusLabel": "Eingeschränkt / Degraded",
+      "messageId": "presentation.state.degraded",
+      "translations": {
+        "de": "Zustand eingeschränkt",
+        "en": "State degraded"
+      },
+      "focusOrder": [1, 2, 3],
+      "consoleSemantics": {
+        "stateStatus": "Degraded",
+        "reasonCodes": ["AUTHORITY_CONFLICT"]
+      },
+      "jsonSemantics": {
+        "stateStatus": "Known",
+        "reasonCodes": ["STATE_FRESH"]
+      }
+    }
+  ]
+}

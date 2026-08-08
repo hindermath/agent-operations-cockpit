@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0",
+  "fixtureKind": "ExecutionNodeCases",
+  "fixtureId": "RAW05-NEGATIVE-UNSAFE-MOUNT",
+  "expectedOutcome": "Rejected",
+  "expectedError": "EN008",
+  "cases": [
+    {
+      "id": "research-mount-claims-write",
+      "nodeType": "Host",
+      "platform": "macOS",
+      "endpointKind": "LocalAdapter",
+      "remoteEnabled": false,
+      "identity": {
+        "nodeId": "node-host-unsafe-mount",
+        "stable": true
+      },
+      "observedAt": "2026-08-06T19:00:00Z",
+      "freshnessAsOf": "2026-08-06T19:00:10Z",
+      "profile": {
+        "probeTimeoutSeconds": 5,
+        "freshnessTSeconds": 60
+      },
+      "probe": {
+        "outcome": "Success",
+        "elapsedSeconds": 1
+      },
+      "attestationEvidence": {
+        "complete": true,
+        "consistent": true,
+        "expectedResult": "Verified"
+      },
+      "mounts": [
+        {
+          "mountId": "mount-unsafe",
+          "sourceRef": "workspace-source",
+          "targetRef": "workspace-root",
+          "mode": "ReadWrite",
+          "writeAuthority": "WorkspaceWrite",
+          "declaredMatchesObserved": true
+        }
+      ],
+      "sideEffects": [],
+      "expected": {}
+    }
+  ]
+}

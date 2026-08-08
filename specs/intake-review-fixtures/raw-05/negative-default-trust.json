@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0",
+  "fixtureKind": "ExecutionNodeCases",
+  "fixtureId": "RAW05-NEGATIVE-DEFAULT-TRUST",
+  "expectedOutcome": "Rejected",
+  "expectedError": "EN009",
+  "cases": [
+    {
+      "id": "missing-evidence-promoted-to-verified",
+      "nodeType": "ABS-DD",
+      "platform": "Linux",
+      "endpointKind": "LocalAdapter",
+      "remoteEnabled": false,
+      "identity": {
+        "nodeId": "node-abs-dd-default-trust",
+        "stable": true
+      },
+      "observedAt": null,
+      "freshnessAsOf": "2026-08-06T19:00:10Z",
+      "profile": {
+        "probeTimeoutSeconds": 5,
+        "freshnessTSeconds": 60
+      },
+      "probe": {
+        "outcome": "Success",
+        "elapsedSeconds": 1
+      },
+      "attestationEvidence": {
+        "complete": false,
+        "consistent": true,
+        "expectedResult": "Verified"
+      },
+      "mounts": [],
+      "sideEffects": [],
+      "expected": {}
+    }
+  ]
+}

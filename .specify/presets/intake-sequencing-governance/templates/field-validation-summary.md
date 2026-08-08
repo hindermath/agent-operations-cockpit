@@ -9,6 +9,11 @@ Record an explicit zero-target `Idle` fixture and negative cases for an idle
 series with content and a non-idle series without targets. This proves that an
 aggregator repository does not need a fabricated intake.
 
+Record a terminal `Completed` fixture with all targets `Completed`, no
+eligible candidate, and a negative mixed-state fixture. This proves that a
+finished series does not need a fabricated next target and still fails closed
+when any target is incomplete.
+
 Record a nested Git-repository fixture and an ordinary nested-directory
 duplicate. The first must preserve parent/child ownership; the second must
 remain blocked as a duplicate canonical index.

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "97d2c9fc-2c5e-4852-8ee5-5ccbb3cee8e0",
+  "mode": "Single",
+  "status": "Ready",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-08T21:52:17Z",
+  "repository": {
+    "root": ".",
+    "head": "a3629bd20c3596579dfa7f333e6cc8e24ca5963a"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-08-workflow-engine-2026-08-08-r3.json",
+    "normalizedSha256": "b25102bc1ad7b026431fd551f5981af7fa32446627edad38af30aa2bbcbaf9c2"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "role": "Primary",
+      "normalizedSha256": "623451757149794556a9f4efef73c13c6894244476b7fd484f0eaaa9fdba7f1a",
+      "gitBlob": "N/A"
+    }
+  ],
+  "findings": [],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "specs/intake-review-results/raw-08-workflow-engine-2026-08-08-r2.json"
+}

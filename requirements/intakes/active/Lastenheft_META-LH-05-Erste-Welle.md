@@ -59,20 +59,21 @@ or test structure; this authoring contract creates none.*
 
 ## Aktueller Status und nächste Aktion / Current status and next action
 
-META-LH-01 bis META-LH-04 sind im Series-Manifest `Completed`; META-LH-05 ist
-der einzige deklarierte `Eligible`-Kandidat und sein Authoring-Status ist
-`ReadyForReview`. RAW-01 bis RAW-09 und ihre neun Receipts existieren bereits.
-Damit lautet der aktuelle Re-Entry-Zustand `AllMatching` und die einzige
-zulässige Operation `VerifyOnly`: read-only prüfen, nichts neu erzeugen oder
-überschreiben. Für META-LH-05 ist keine materielle Decision offen. Die einzige
-nächste Aktion dieses Schritts ist ein vollständiges Single Review. / *In the
-series manifest, META-LH-01 through META-LH-04 are `Completed`; META-LH-05 is
-the sole declared `Eligible` candidate and has Authoring status
-`ReadyForReview`. RAW-01 through RAW-09 and all nine Receipts already exist.
-The current re-entry state is therefore `AllMatching`, and the only permitted
-operation is `VerifyOnly`: inspect read-only, create or overwrite nothing. No
-material META-LH-05 decision is open. The only next action from this step is a
-complete Single review.*
+Beim damaligen Authoring galt als historischer Snapshot: META-LH-01 bis
+META-LH-04 waren `Completed`, META-LH-05 war der einzige deklarierte
+`Eligible`-Kandidat und alle RAW-Ziele samt Receipts existierten. Dieser
+Snapshot ist keine aktuelle Lifecycle-Quelle. Der aktuelle kanonische Zustand
+steht ausschließlich im
+[`manifest.json`](../../../specs/intake-series/aoc-phase-2/manifest.json) und
+in der [`order.md`](../series/order.md). Für META-LH-05 ist keine materielle
+Decision offen. Re-Entry wird bei jedem Aufruf neu aus dem gebundenen Bestand
+ermittelt; ein Intake-lokaler Snapshot erteilt keine Operation. / *At authoring
+time, the historical snapshot recorded META-LH-01 through META-LH-04 as
+Completed, META-LH-05 as the sole Eligible candidate, and all RAW targets and
+receipts as present. This snapshot is not a current lifecycle source. Only the
+linked manifest and order document define the current canonical state. No
+material META-LH-05 decision is open. Re-entry is recalculated from the bound
+inventory on every invocation; an intake-local snapshot grants no operation.*
 
 ## Re-Entry, Kollision und Ownership / Re-entry, collision, and ownership
 

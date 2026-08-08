@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "0ca14a57-ce54-4005-b778-4ca8226ad4de",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.2"
+  },
+  "createdAt": "2026-08-08T16:05:15Z",
+  "operation": {
+    "operationId": "3d038dc1-f1ec-4367-abda-98b5a2cc3d55",
+    "type": "Update",
+    "authorityEvidence": "Thorsten explicitly authorised the complete RAW-09 correction sequence on 2026-08-08. This intermediate successor renews only the RAW-09 target hash after the bounded intake update. RAW-08 remains the sole Eligible target, RAW-09 remains Blocked, and order, root, dependencies, every lifecycle value, and all other target hashes remain unchanged. No Specify, product, preset, remote, merge, bypass, GitHub, or Level-0 action is performed."
+  },
+  "status": "NeedsClarification",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "98cb8acf14cedd9a2bba86f8096ea1c3a8daea02b8f7cd36e714862b2da1ad06"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/3d038dc1-f1ec-4367-abda-98b5a2cc3d55/receipt.json",
+    "receiptNormalizedSha256": "caadee2441d28c57a21b24f7c87f37d7cdc51c780f912980e6752796a96da942",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/3d038dc1-f1ec-4367-abda-98b5a2cc3d55/manifest.json",
+    "manifestArchiveSha256": "88602b7914a37b6531160ed2f3ca68fa2676a426a24895f5cd3aa9729fae331c"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-review requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md"
+}

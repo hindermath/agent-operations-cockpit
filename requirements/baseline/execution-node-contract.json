@@ -1,0 +1,251 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "AocExecutionNodeContract",
+  "contractId": "RAW-05-Execution-Node-Contract-requirements-v1",
+  "owner": "RAW-05",
+  "decisions": {
+    "transportBoundary": {
+      "id": "IAD501",
+      "status": "Answered",
+      "localContract": "Transport-neutral Node Endpoint plus read-only probe",
+      "localAdapters": [
+        "Host",
+        "WSL",
+        "Container",
+        "ABS-DD"
+      ],
+      "remoteNodesEnabled": false,
+      "remoteTransportOwner": "RAW-06/IAD604",
+      "forbiddenAuthority": [
+        "RemoteWrite",
+        "ProcessStart",
+        "ProcessStop",
+        "CredentialRead",
+        "CredentialWrite"
+      ]
+    },
+    "legacyDecision": {
+      "id": "DEC-T06",
+      "status": "Superseded",
+      "supersededBy": [
+        "IAD502",
+        "IAD503"
+      ]
+    },
+    "attestation": {
+      "id": "IAD502",
+      "status": "Answered",
+      "model": "MultiSourceFailClosed",
+      "requiredEvidence": [
+        "nodeType",
+        "platform",
+        "trustZone",
+        "runtimeIdentity",
+        "declaredMounts",
+        "observedMounts",
+        "capabilityProbe",
+        "policyVersion",
+        "observedAt"
+      ],
+      "results": [
+        "Verified",
+        "Limited",
+        "Untrusted",
+        "Unknown"
+      ],
+      "missingEvidenceResult": "Unknown",
+      "contradictoryEvidenceResult": "Untrusted",
+      "maximumAuthority": "ReadOnlyResearch"
+    },
+    "timeoutFreshnessRecovery": {
+      "id": "IAD503",
+      "status": "Answered",
+      "profileScope": "NodeTypeAndCapability",
+      "profileVersion": "requirements-v1",
+      "requiredPositiveFields": [
+        "probeTimeoutSeconds",
+        "freshnessTSeconds"
+      ],
+      "freshnessModel": {
+        "Fresh": "age <= 0.5T",
+        "Aging": "0.5T < age <= T",
+        "Stale": "T < age <= 2T",
+        "Expired": "age > 2T",
+        "Unknown": "no valid age"
+      },
+      "stateRules": {
+        "probeTimeout": "Unavailable",
+        "expired": "Unavailable",
+        "stale": "Stale",
+        "mountOrAuthorityConflict": "Degraded",
+        "missingOrInvalidEvidence": "Unknown",
+        "freshOrAgingVerifiedEvidence": "Known"
+      },
+      "recovery": "A new read-only probe is the only recovery action"
+    }
+  },
+  "descriptor": {
+    "version": "requirements-v1",
+    "requiredFields": [
+      "schemaVersion",
+      "nodeId",
+      "nodeType",
+      "platform",
+      "trustZone",
+      "runtimeIdentity",
+      "capabilities",
+      "mounts",
+      "authority",
+      "observedAt",
+      "freshnessAsOf",
+      "freshness",
+      "nodeState",
+      "health",
+      "attestation",
+      "reasonCodes",
+      "policyVersion"
+    ],
+    "nodeTypes": [
+      "Host",
+      "WSL",
+      "Container",
+      "ABS-DD",
+      "Remote"
+    ],
+    "localNodeTypes": [
+      "Host",
+      "WSL",
+      "Container",
+      "ABS-DD"
+    ],
+    "nodeStates": [
+      "Known",
+      "Stale",
+      "Degraded",
+      "Unavailable",
+      "Unknown"
+    ],
+    "healthValues": [
+      "Healthy",
+      "Degraded",
+      "Unavailable",
+      "Unknown"
+    ],
+    "freshnessValues": [
+      "Fresh",
+      "Aging",
+      "Stale",
+      "Expired",
+      "Unknown"
+    ],
+    "stableIdentityRequired": true,
+    "hostAndSandboxIdentityMustDiffer": true
+  },
+  "mountPolicy": {
+    "version": "requirements-v1",
+    "requiredFields": [
+      "mountId",
+      "sourceRef",
+      "targetRef",
+      "mode",
+      "writeAuthority",
+      "declaredMatchesObserved"
+    ],
+    "researchMode": "ReadOnly",
+    "researchWriteAuthority": "None",
+    "absolutePersonalHostPathsAllowed": false,
+    "mountDriftResult": "Degraded",
+    "automaticMountMutationAllowed": false
+  },
+  "forbiddenSideEffects": [
+    "Mount",
+    "Unmount",
+    "Remount",
+    "ProcessStart",
+    "ProcessStop",
+    "CredentialRead",
+    "CredentialWrite",
+    "NetworkMutation",
+    "RemoteWrite",
+    "CheckoutMutation"
+  ],
+  "reasonCodes": [
+    "NODE_VERIFIED",
+    "NODE_EVIDENCE_MISSING",
+    "REMOTE_DISABLED",
+    "PROBE_TIMEOUT",
+    "NODE_NOT_FOUND",
+    "ACCESS_REFUSED",
+    "MOUNT_DRIFT",
+    "EVIDENCE_STALE",
+    "EVIDENCE_EXPIRED"
+  ],
+  "handoffs": [
+    {
+      "id": "H-RAW05-RAW02",
+      "producer": "RAW-05",
+      "consumer": "RAW-02",
+      "contract": "Node Descriptor",
+      "version": "requirements-v1",
+      "authority": "Non-binding read-only orchestration context",
+      "failureBehavior": "Missing or invalid descriptors remain Unknown and never authorize a command.",
+      "seriesRelation": "PreferredSerialOrderNonBinding"
+    },
+    {
+      "id": "H-RAW05-RAW06",
+      "producer": "RAW-05",
+      "consumer": "RAW-06",
+      "contract": "Node Capability and Authority Contract",
+      "version": "requirements-v1",
+      "authority": "Read-only node, capability, mount, and attestation evidence",
+      "failureBehavior": "Unknown, Untrusted, Stale, or Unavailable evidence cannot authorize CLI execution.",
+      "seriesRelation": "HardCompletionGateBinding"
+    },
+    {
+      "id": "H-RAW05-RAW08",
+      "producer": "RAW-05",
+      "consumer": "RAW-08",
+      "contract": "Node Health and Freshness Assessment",
+      "version": "requirements-v1",
+      "authority": "Read-only workflow assessment input",
+      "failureBehavior": "A workflow remains blocked or visibly degraded when required node evidence is not Known.",
+      "seriesRelation": "AssessmentBaselineBinding"
+    }
+  ],
+  "crossCutting": {
+    "security": "Attestation and authority fail closed; no missing or contradictory evidence is promoted and no secret or credential is collected.",
+    "privacy": "Node and mount evidence uses stable pseudonymous identifiers and logical references; personal absolute host paths and unnecessary user data are prohibited.",
+    "publicContent": "Public evidence contains only reviewed reason codes, redacted logical references, and non-secret capability metadata.",
+    "accessibility": "Text evidence uses stable codes plus German-first and English-second explanations; meaning does not depend on colour, position, animation, or sound.",
+    "platforms": [
+      "macOS",
+      "Linux",
+      "Windows"
+    ],
+    "containerAndWsl": "Container, WSL, and ABS-DD boundaries remain distinct execution nodes with their own stable identity and mount evidence.",
+    "supplyChain": "N/A for this requirements contract and dependency-free fixtures; a later adapter or transport dependency requires SBOM and vulnerability evidence.",
+    "reevaluationTriggers": [
+      "Remote Nodes become enabled",
+      "IAD604 selects a remote transport",
+      "A new node type or trust zone is introduced",
+      "Write authority or automatic recovery is proposed",
+      "A new data category or absolute host path is collected",
+      "An implementation dependency is introduced"
+    ]
+  },
+  "evidence": {
+    "validator": "specs/intake-review-fixtures/raw-05/validate-execution-node-contract.py",
+    "bashSurface": "specs/intake-review-fixtures/raw-05/validate-execution-node-contract.sh",
+    "powerShellSurface": "specs/intake-review-fixtures/raw-05/validate-execution-node-contract.ps1",
+    "positiveFixtures": [
+      "specs/intake-review-fixtures/raw-05/valid-execution-node-cases.json"
+    ],
+    "negativeFixtures": [
+      "specs/intake-review-fixtures/raw-05/negative-remote-enabled.json",
+      "specs/intake-review-fixtures/raw-05/negative-unsafe-mount.json",
+      "specs/intake-review-fixtures/raw-05/negative-default-trust.json",
+      "specs/intake-review-fixtures/raw-05/negative-timeout-side-effect.json"
+    ],
+    "successExitCode": 0
+  }
+}

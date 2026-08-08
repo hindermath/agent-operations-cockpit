@@ -1,0 +1,9 @@
+{
+  "fixtureId": "RAW06-NEGATIVE-ENVIRONMENT-INJECTION",
+  "fixtureKind": "EnvironmentInjection",
+  "expectedOutcome": "Rejected",
+  "expectedReasonCode": "CLI008_ENVIRONMENT_REJECTED",
+  "variableName": "DYNAMIC_LOADER_OVERRIDE",
+  "declaredInAllowlist": false,
+  "purposeDeclared": false
+}

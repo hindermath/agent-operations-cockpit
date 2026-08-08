@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "b904684a-1e7c-4e59-a0a9-e29e32c9836d",
+  "mode": "Single",
+  "status": "NeedsClarification",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-07T21:34:19Z",
+  "repository": {
+    "root": ".",
+    "head": "a3629bd20c3596579dfa7f333e6cc8e24ca5963a"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-08-workflow-engine-2026-08-07.json",
+    "normalizedSha256": "602c416705d2734dc1a69975139e5d262ffe3fbc07741562e7e5dddcd56d519b"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "role": "Primary",
+      "normalizedSha256": "54cdd411d01d6a94a932b67cb2d71f8bd6931b19b86521bf47fa4614d678daa2",
+      "gitBlob": "b65b950fbfc9979a31b7a95d68d692fd814003ec"
+    }
+  ],
+  "findings": [
+    {
+      "id": "IR801",
+      "severity": "High",
+      "category": "OpenDecisionAndProvenance",
+      "target": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "disposition": "NeedsClarification",
+      "owner": "RAW-08",
+      "evidence": "The target explicitly leaves persistence format, signature or attestation, and retention open. The Decision Register binds these topics as DEC-T05, while the Authoring Receipt records decisions=[], openDecisionIds=[], and questionCount=0. The target is already the sole Eligible series candidate, so decision state and provenance are materially inconsistent.",
+      "reevaluationTrigger": "IRQ801 through IRQ803 are answered explicitly, the selected persistence, attestation, and retention contracts are written into RAW-08, the Authoring Receipt records DEC-T05 and no unresolved decision IDs remain, the Series target hash is renewed, and RAW-08 receives a complete Single re-review."
+    },
+    {
+      "id": "IR802",
+      "severity": "High",
+      "category": "RequirementsEvidence",
+      "target": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-08",
+      "evidence": "FR-001 through FR-004 and AC-001 through AC-002 name artifact identity, transitions, evidence classes, retrospective boundaries, end-to-end traceability, authority, hash drift, and ProviderFailure, but bind no versioned Workflow or Knowledge Package contract, state-transition table, schemas, positive and negative fixtures, validator commands, expected outputs, exit codes, or reproducible failure evidence.",
+      "reevaluationTrigger": "A versioned Workflow and Knowledge Package contract binds deterministic lifecycle transitions, positive, negative, and provider-failure fixtures, validation commands, expected outputs and exit codes, and an end-to-end Source-to-Retrospective trace before a complete re-review."
+    },
+    {
+      "id": "IR803",
+      "severity": "High",
+      "category": "LanguageAndTerminology",
+      "target": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-08",
+      "evidence": "The learner-facing profile requires German-first and English-second CEFR-B2 content, but requirements, decisions, recovery, child-intakes, acceptance criteria, evidence, and revision rules are not complete bilingual pairs. Charter, Source, Decision, Intake, Spec, Receipt, Evidence class, ProviderFailure, Knowledge Package, Retrospective Handoff, Stop-Gate, serial-autonomous, Spec Kit, and MergeAndSync are not explained locally or linked precisely. Current lifecycle, DEC-T05, dependencies, and the review-only next action are not complete ordered text.",
+      "reevaluationTrigger": "Normative sections receive complete DE/EN pairs, first-use terminology is explained locally or linked precisely, and lifecycle, dependencies, decision state, next action, and non-authority are explicit in ordered text before a complete re-review."
+    },
+    {
+      "id": "IR804",
+      "severity": "High",
+      "category": "CrossCuttingApplicability",
+      "target": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-08",
+      "evidence": "The target says JSON and text evidence must be secret-free, but does not explicitly classify security, privacy and data minimisation, public-content limits, WCAG 2.2 AA, macOS/Linux/Windows applicability, container and remote-node evidence, or software-supply-chain applicability. Positive and negative evidence, retention deletion behavior, signature failure behavior, and re-evaluation triggers are absent.",
+      "reevaluationTrigger": "Security, privacy, public-content, accessibility, platform, node, and supply-chain applicability receive measurable boundaries, positive and negative evidence, retention and signature failure behavior, and explicit re-evaluation triggers without adding product-state ownership."
+    },
+    {
+      "id": "IR805",
+      "severity": "High",
+      "category": "HandoffAndDependencyContract",
+      "target": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-08",
+      "evidence": "RAW-05 and RAW-06 are named as input evidence and RAW-09 as the Knowledge Package consumer, but producer, consumer, version, authority, compatibility, failure behavior, and required evidence fields are not bound. Artifact Lifecycle, Traceability Graph, Evidence or Receipt Contract, and Retrospective Handoff are labels rather than independently reviewable typed contracts.",
+      "reevaluationTrigger": "Typed and versioned input and output handoffs bind producer, consumer, authority, compatibility, failure behavior, and required evidence fields for RAW-05, RAW-06, RAW-09, and each child-intake boundary before a complete re-review."
+    },
+    {
+      "id": "IR806",
+      "severity": "High",
+      "category": "PromptAndDeliveryAuthority",
+      "target": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-08",
+      "evidence": "The target grants no product, delivery, or preset-promotion authority, but the enabled Autonomous prompt requests MergeAndSync and requires only a current review. The Authoring Receipt stores historical MergeAndSync and Admin-Bypass authority. Historic delivery data, Eligible lifecycle, and a future Ready review do not grant current scope, start, implementation, governance-write, remote-write, merge, bypass, or provider authority, yet the prompts do not fail closed on all of these current authorities.",
+      "reevaluationTrigger": "Both prompts and the renewed Receipt fail closed unless separate current scope, start, implementation, governance-write, remote-write, merge, bypass, and provider authority exists; historic authority and Eligibility remain explicitly insufficient, followed by a complete Single re-review."
+    }
+  ],
+  "questions": [
+    {
+      "id": "IRQ801",
+      "status": "Open",
+      "owner": "RAW-08",
+      "question": "Welches versionierte Persistenzformat, welcher Speicherort und welche atomare Schreib- und Wiederherstellungsgrenze gelten für Workflow-, Evidence- und Knowledge-Package-Artefakte? / Which versioned persistence format, storage location, and atomic write and recovery boundary apply to workflow, evidence, and knowledge-package artifacts?"
+    },
+    {
+      "id": "IRQ802",
+      "status": "Open",
+      "owner": "RAW-08",
+      "question": "Welche Signatur- oder Attestation-Methode, Schlüssel- beziehungsweise Trust-Root-Grenze und fail-closed Validierung gelten für Receipts und Knowledge Packages? / Which signature or attestation method, key or trust-root boundary, and fail-closed validation apply to receipts and knowledge packages?"
+    },
+    {
+      "id": "IRQ803",
+      "status": "Open",
+      "owner": "RAW-08",
+      "question": "Welche Retention-, Archivierungs-, Lösch- und Legal-Hold-Regeln gelten je Evidence-Klasse, einschließlich nachvollziehbarer Ablauf- und Ausnahmeevidence? / Which retention, archival, deletion, and legal-hold rules apply to each evidence class, including traceable expiry and exception evidence?"
+    }
+  ],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 6,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "N/A"
+}

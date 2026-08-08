@@ -124,26 +124,28 @@ runtime handoff appears.*
 
 ## Abhängigkeiten, Decisions, Status und Modus / Dependencies, decisions, status, and mode
 
-META-LH-01 ist der bindende Vorgänger und im Serienmanifest `Completed`.
-Der Authoring-Status von META-LH-02 ist `ReadyForReview`; der Serien-Lifecycle
-ist `Eligible`. META-LH-02 besitzt keine offene materielle Portfolio-Decision.
-Offene Domain-Decisions bleiben in der Decision Map bei ihren RAW-Ownern und
-blockieren nur die dort benannte Ausführung. / *META-LH-01 is the binding
-predecessor and is `Completed` in the Series manifest. META-LH-02 has authoring
-status `ReadyForReview` and Series lifecycle `Eligible`. It has no open
-material portfolio decision. Open domain decisions remain assigned to their
-RAW owners and block only the named downstream work.*
+Beim damaligen Authoring galt als historischer Snapshot: META-LH-01 war der
+abgeschlossene bindende Vorgänger, META-LH-02 war `Eligible` und besaß keine
+offene materielle Portfolio-Decision. Dieser Snapshot ist keine aktuelle
+Lifecycle-Quelle. Der aktuelle kanonische Zustand steht ausschließlich im
+[`manifest.json`](../../../specs/intake-series/aoc-phase-2/manifest.json) und
+in der [`order.md`](../series/order.md). Offene Domain-Decisions bleiben in
+der Decision Map bei ihren RAW-Ownern und blockieren nur die dort benannte
+Ausführung. / *At authoring time, the historical snapshot recorded META-LH-01
+as the completed binding predecessor and META-LH-02 as Eligible with no open
+material portfolio decision. This snapshot is not a current lifecycle source.
+Only the linked manifest and order document define the current canonical
+state. Open domain decisions remain assigned to their RAW owners and block
+only the named downstream work.*
 
 Der Modus bleibt `manual-assisted`, weil Mehrfachowner, Decision-
 Supersession oder neue Handoffs materielle menschliche Bestätigung benötigen.
-`Eligible`, ein historischer Delivery-Modus und ein erfolgreiches Review
-erteilen keine Implementierungs-, Remote-, Merge- oder Bypass-Autorität. Die
-einzige nächste Aktion ist das unabhängige Single-Intake-Review. / *The mode
-remains `manual-assisted` because duplicate ownership, decision supersession,
-or new handoffs require material human confirmation. Eligibility, a historic
-delivery mode, and a successful review grant no implementation, remote, merge,
-or bypass authority. The only next action is the independent single-intake
-review.*
+Lifecycle, ein historischer Delivery-Modus und ein erfolgreiches Review
+erteilen keine Implementierungs-, Remote-, Merge- oder Bypass-Autorität. / *The
+mode remains `manual-assisted` because duplicate ownership, decision
+supersession, or new handoffs require material human confirmation. Lifecycle,
+a historic delivery mode, and a successful review grant no implementation,
+remote, merge, or bypass authority.*
 
 ## Risiken und Annahmen / Risks and assumptions
 

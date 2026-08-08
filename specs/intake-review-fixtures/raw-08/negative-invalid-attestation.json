@@ -1,0 +1,12 @@
+{
+  "fixtureId": "RAW08-NEGATIVE-INVALID-ATTESTATION",
+  "fixtureKind": "InvalidAttestation",
+  "expectedOutcome": "Blocked",
+  "expectedReasonCode": "WFE006_SIGNATURE_INVALID",
+  "signaturePresent": true,
+  "signatureValid": false,
+  "keyAllowed": false,
+  "trustRootAllowed": false,
+  "policyCurrent": false,
+  "completionClaimed": true
+}

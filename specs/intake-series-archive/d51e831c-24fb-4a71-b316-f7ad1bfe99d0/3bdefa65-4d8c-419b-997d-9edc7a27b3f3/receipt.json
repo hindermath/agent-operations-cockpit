@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "6aefc13b-509a-49f9-8963-e4cdb0872788",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.2"
+  },
+  "createdAt": "2026-08-08T16:31:50Z",
+  "operation": {
+    "operationId": "2174b6fa-e54e-487b-9e23-1fa3d5ec985b",
+    "type": "Update",
+    "authorityEvidence": "Thorsten explicitly authorised the complete RAW-09 review and correction sequence on 2026-08-08, including the annotated Series progression after a successful Ready re-review. RAW-09 review fdf2a68c-ab87-462c-9622-3e7cd39bd164 is current and Ready. This successor changes only RAW-08 from Eligible to Completed and RAW-09 from Blocked to Eligible. Order, root, dependencies, every other lifecycle value, all target hashes, and intake content remain unchanged. No Specify, implementation, preset, promotion, remote, merge, bypass, GitHub, or Level-0 action is performed."
+  },
+  "status": "NeedsClarification",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "fa91cc649a5d8cff8ef265076c1f637b6c84e0d3e23a50aefee73793843117f0"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/2174b6fa-e54e-487b-9e23-1fa3d5ec985b/receipt.json",
+    "receiptNormalizedSha256": "cdaa8ec24362bc9ac7087884b77b71a7fb3e9f6892c7dbd143f58a44249f88e8",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/2174b6fa-e54e-487b-9e23-1fa3d5ec985b/manifest.json",
+    "manifestArchiveSha256": "98cb8acf14cedd9a2bba86f8096ea1c3a8daea02b8f7cd36e714862b2da1ad06"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-series-status specs/intake-series/aoc-phase-2/manifest.json"
+}

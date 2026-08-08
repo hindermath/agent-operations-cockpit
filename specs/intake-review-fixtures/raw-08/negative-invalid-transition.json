@@ -1,0 +1,10 @@
+{
+  "fixtureId": "RAW08-NEGATIVE-INVALID-TRANSITION",
+  "fixtureKind": "InvalidTransition",
+  "expectedOutcome": "Rejected",
+  "expectedReasonCode": "WFE002_INVALID_TRANSITION",
+  "from": "Draft",
+  "to": "Completed",
+  "preconditionsComplete": false,
+  "completionClaimed": true
+}

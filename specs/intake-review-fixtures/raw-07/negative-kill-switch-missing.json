@@ -1,0 +1,9 @@
+{
+  "fixtureId": "RAW07-NEGATIVE-KILL-SWITCH-MISSING",
+  "fixtureKind": "MissingKillSwitch",
+  "expectedOutcome": "Rejected",
+  "expectedReasonCode": "HWC011_KILL_SWITCH_REQUIRED",
+  "fieldTestRequested": true,
+  "labApproval": "Approved",
+  "killSwitchVerified": false
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "a32e2056-1ca5-47b4-9ac8-deadd97d4f78",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.2"
+  },
+  "createdAt": "2026-08-07T21:54:22Z",
+  "operation": {
+    "operationId": "9e4d68c0-c05e-4713-acb7-cf243187b2c3",
+    "type": "Update",
+    "authorityEvidence": "Thorsten explicitly authorised on 2026-08-07 that the three confirmed RAW-08 answers be permanently incorporated. This successor receipt renews only the RAW-08 target hash binding required by that intake update. RAW-08 remains the sole Eligible target; order, root, dependencies, all lifecycle values, all other intake hashes, and Delivery Authority remain unchanged. No review, Specify, implementation, remote, merge, bypass, preset, Level-0, provider, or GitHub action is performed."
+  },
+  "status": "NeedsClarification",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "14ee3c13d18d8cf60aafea1d61b4fa0b7b552c5d8df504bcbd019cd1840cc85d"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/9e4d68c0-c05e-4713-acb7-cf243187b2c3/receipt.json",
+    "receiptNormalizedSha256": "d1085903c12eed958c4449878e8b0c7fc8701f5bc7afa8eb6610980dda6a9fc4",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/9e4d68c0-c05e-4713-acb7-cf243187b2c3/manifest.json",
+    "manifestArchiveSha256": "7c828c07e420e3839d7d9a3b5c6ec8f5af9eb7a4f4f5b3726622eb874cdad35f"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-review requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md"
+}

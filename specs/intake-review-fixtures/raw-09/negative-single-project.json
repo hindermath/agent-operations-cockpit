@@ -1,0 +1,7 @@
+{
+  "fixtureId": "RAW09-NEGATIVE-SINGLE-PROJECT",
+  "case": "SingleProject",
+  "independentProjects": 1,
+  "canonicalClaimed": true,
+  "expectedReasonCode": "PEV002_INSUFFICIENT_PROJECTS"
+}

@@ -97,8 +97,11 @@ requirements migration must finish before existing roots are released. Under
 schema 2.0, target paths are resolved from portable roles and collection paths.
 At most one target may explicitly declare `Eligible`; that state selects order
 only and grants no implementation or remote authority. A valid `Idle` series
-has no eligible target.
+has no eligible target. A terminal `Completed` series also has no eligible
+target and is valid only when every declared target is `Completed`.
 
 *`RequirementsGovernanceGate` sperrt bestehende Roots bis zum gemeinsamen
 Requirements-Abschluss. Schema 2.0 löst Pfade über Rollen auf. Höchstens ein
-Ziel darf `Eligible` sein; daraus entstehen keine Lieferrechte.*
+Ziel darf `Eligible` sein; daraus entstehen keine Lieferrechte. Eine
+terminale `Completed`-Serie besitzt ebenfalls keinen Kandidaten und ist nur
+gültig, wenn alle Ziele `Completed` sind.*

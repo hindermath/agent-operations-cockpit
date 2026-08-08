@@ -1,0 +1,176 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "35f4d174-cef2-4293-8994-a0263bc10b3f",
+  "mode": "Series",
+  "status": "NeedsRemediation",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-08T18:00:07Z",
+  "repository": {
+    "root": ".",
+    "head": "a3629bd20c3596579dfa7f333e6cc8e24ca5963a"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/aoc-phase-2-series-2026-08-08-r3.json",
+    "normalizedSha256": "54fb7be4291608df52c5bc49159f94076282698a667c5bce3f6d43db9c29fccf"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
+      "role": "Primary",
+      "normalizedSha256": "99eab2565a73b3f1fe836feb89b543392360d3a5d56063c13fd28cf2f0a16704",
+      "gitBlob": "862604468ec20228f6750d7d9c350706d7e292ce"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "7965323e2981472fd061bfb9ca20fd10d6a6217df53fd0300127de74b0b9c14b",
+      "gitBlob": "3200b9dda5d4c555e73638be844c4e7ba29994e6"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "8b1a0b37c7938d8ff5577bfb9daaedc710990e95e5470edf65b0761724c668c4",
+      "gitBlob": "f72740179ec505565383e6882285fec11bce3cc4"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "87b454f82e40288625d5613099795a39fc236d514f8868fd17d3907930ccd8bc",
+      "gitBlob": "9f77ea80d1171291854912e1c853c456c4d56f10"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "533ecf072fc81a08c43c7c9a794d30e3ea9237e0e8d75602251373881dfc6ec0",
+      "gitBlob": "dc4522ef90653281377fe9539f2c773e5e3a8ed8"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "c61d9786b27ea09e0e954363a1b4335d3255ea55b0f8a5167ee52c25c583f9b6",
+      "gitBlob": "9f50a21ec52a6cf0ddcf0ee825953ede89591c6a"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "7c6248efe4bb77bc8767d0b0302dcd968c3da95c5fa3c428681f1e2968c9fb22",
+      "gitBlob": "790029e6cacf86bea3b95ffd1d8e85ddbbf29c87"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "7b2f4241e92c9dba5eb6b420d98d587b34ffe6a6ee5e607762125687a334c4e6",
+      "gitBlob": "c541636d28dd9ca6443603aca6b4fd941d27401d"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "d3b4240276767a2cd67e86292ccc3b00f7d1aae32b583e081c0fc02751dcbc10",
+      "gitBlob": "e9928487c983e7cd65b4460395df245c10a2cc6a"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "69eb3cc6c4aa43c3472f2c7f976d19de935ee28562b4eb4cb15a1bc205248659",
+      "gitBlob": "85877296f6eb6bcd0264bb54bdf9de1d6a5ef9ce"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "957e8c5a6607f900d88d4e854eee3373410142735e4b8b8eb893c9e0a65bf3fb",
+      "gitBlob": "a350d613b987c2dbbe1b5b068468263b39961137"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "319a704fcb875f3996ce5aba182c0878718a21d011b38c5af09e81998ca6a7ed",
+      "gitBlob": "e90a06fcc78335b4665dd0160a516cc02dfcc814"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "e9c39efd55e9ca5646eaf0c6e52b4bcf8d50b3ead10ea494b0499594251d1f55",
+      "gitBlob": "8846e23fc8473c3e104a26a8880e8c3edc3582ca"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "640af2a4eb49b0c0dbb966e82f7bd06e1006dea4aa46fba66b368d59b577ce56",
+      "gitBlob": "212e2e1b2a2c38b4b403abfa0c56d74a53db9fac"
+    }
+  ],
+  "findings": [
+    {
+      "id": "IR005",
+      "severity": "High",
+      "category": "DecisionRegistryConsistency",
+      "target": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-06 / Requirements Governance",
+      "evidence": "RAW-06, Authoring Receipt fb513853-040c-4821-928f-4d154f11a4f1, and Ready Single review bcf426d0-4b2b-4add-86e6-ff6bf3f1dfbe bind IAD601-IAD604 as Answered. docs/decisions/open-decisions.md still lists all four under Open decisions. This contradicts the Series decision invariant and can make downstream CLI, environment, and remote work fail closed for the wrong reason.",
+      "reevaluationTrigger": "Move IAD601-IAD604 from the open table to confirmed Answered evidence without changing their selected options, renew every receipt and Series hash binding affected by the decision-register source hash, and fully re-review every affected target plus the Series."
+    },
+    {
+      "id": "IR006",
+      "severity": "High",
+      "category": "SeriesLifecycleTruthfulness",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-04 / Series Governance",
+      "evidence": "The current manifest and order view bind all 14 targets as Completed with zero Eligible or Blocked targets. META-LH-02, META-LH-03, META-LH-04, META-LH-05, RAW-02, RAW-03, RAW-04, RAW-05, RAW-06, RAW-07, RAW-08, and RAW-09 still describe earlier Eligible or Blocked lifecycle snapshots in present-tense current-status and next-action text. The reviewed Series therefore has two conflicting human-readable lifecycle truths even though its machine-readable graph is valid.",
+      "reevaluationTrigger": "Normalize the twelve lifecycle statements as explicitly dated historical snapshots or replace them with stable references to the canonical manifest and order view; preserve domain scope and decisions, renew affected receipts and target hashes, fully re-review every changed target, renew the Series binding, and repeat the complete Series review."
+    }
+  ],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
+      "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md"
+    ],
+    "series": [
+      "identity",
+      "audience",
+      "scope",
+      "non-goals",
+      "requirements",
+      "acceptance",
+      "dependencies",
+      "dag",
+      "security",
+      "privacy",
+      "a11y",
+      "platform",
+      "evidence",
+      "authority",
+      "prompts",
+      "terminology",
+      "handoffs",
+      "future-scope",
+      "requirements-governance",
+      "decision-registry",
+      "lifecycle-truthfulness"
+    ],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 2,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "specs/intake-review-results/aoc-phase-2-series-2026-08-01-r2.json"
+}

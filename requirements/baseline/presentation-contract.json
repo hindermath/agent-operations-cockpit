@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "AocPresentationContract",
+  "contractId": "RAW-04-Presentation-Contract-requirements-v1",
+  "owner": "RAW-04",
+  "decision": {
+    "id": "DEC-T04",
+    "status": "Superseded",
+    "supersededBy": [
+      "IAD401",
+      "IAD402",
+      "IAD403"
+    ],
+    "confirmedAt": "2026-08-06",
+    "evidence": "Thorsten explicitly selected option A for the framework boundary, responsive layout, and localization contract."
+  },
+  "boundary": {
+    "frameworkNeutral": true,
+    "referenceTuiAdapter": "Spectre.Console",
+    "frameworkTypesAllowedInContract": false,
+    "canonicalProjections": [
+      "Console",
+      "JSON"
+    ],
+    "additionalProjections": [
+      "TUI",
+      "LaterCapabilityAdapter"
+    ],
+    "nonOwnership": [
+      "Workspace discovery",
+      "State semantics",
+      "Command execution",
+      "Hardware protocols",
+      "Product domain logic"
+    ]
+  },
+  "handoffs": [
+    {
+      "id": "H-RAW03-RAW04",
+      "producer": "RAW-03",
+      "consumer": "RAW-04",
+      "contract": "State Envelope Contract",
+      "version": "requirements-v1",
+      "authority": "Read-only presentation input",
+      "failureBehavior": "Invalid or incomplete state is projected as visible Degraded or Unknown text and is never promoted to a stronger state."
+    },
+    {
+      "id": "H-RAW02-RAW04",
+      "producer": "RAW-02",
+      "consumer": "RAW-04",
+      "contract": "Orchestration Context Contract",
+      "version": "requirements-v1",
+      "authority": "Read-only focus and routing context",
+      "failureBehavior": "Missing or invalid context selects a deterministic default focus and exposes a visible degraded reason."
+    },
+    {
+      "id": "H-RAW04-RAW07",
+      "producer": "RAW-04",
+      "consumer": "RAW-07",
+      "contract": "Presentation Contract",
+      "version": "requirements-v1",
+      "authority": "Presentation capability only",
+      "failureBehavior": "An incompatible adapter is disabled visibly and the canonical Console and JSON projections remain available."
+    }
+  ],
+  "layoutPolicy": {
+    "version": "requirements-v1",
+    "profiles": [
+      {
+        "name": "Linear",
+        "minimumWidthInclusive": null,
+        "maximumWidthInclusive": 39
+      },
+      {
+        "name": "Compact",
+        "minimumWidthInclusive": 40,
+        "maximumWidthInclusive": 99
+      },
+      {
+        "name": "Enhanced",
+        "minimumWidthInclusive": 100,
+        "maximumWidthInclusive": null
+      }
+    ],
+    "forcedLinearConditions": [
+      "TERM=dumb",
+      "Redirected input",
+      "Redirected output",
+      "Missing interactive terminal capability",
+      "Unavailable TUI adapter"
+    ],
+    "semanticRule": "Layout may change grouping and decoration but never labels, status meaning, focus order, available actions, or canonical data.",
+    "referenceWidths": [
+      39,
+      79,
+      120
+    ]
+  },
+  "localizationPolicy": {
+    "schemaVersion": 1,
+    "catalogFormat": "JSON",
+    "messageIdRequired": true,
+    "requiredBcp47Languages": [
+      "de",
+      "en"
+    ],
+    "displayOrder": [
+      "de",
+      "en"
+    ],
+    "unsupportedLanguageFallback": "de",
+    "missingRequiredTranslation": "ValidationError",
+    "unknownMessageId": "Show the stable messageId plus a safe German-first and English-second generic error",
+    "sharedBy": [
+      "Console",
+      "JSON",
+      "TUI",
+      "LaterCapabilityAdapter"
+    ]
+  },
+  "presentationRecord": {
+    "schemaVersion": "requirements-v1",
+    "requiredFields": [
+      "schemaVersion",
+      "presentationId",
+      "stateStatus",
+      "statusLabel",
+      "reasonCodes",
+      "messageId",
+      "translations",
+      "focusOrder",
+      "capabilities",
+      "degraded"
+    ],
+    "visibleStateStatuses": [
+      "Known",
+      "Unknown",
+      "Stale",
+      "Unavailable",
+      "Degraded"
+    ],
+    "colourOnlyMeaningAllowed": false,
+    "mouseRequired": false,
+    "canonicalStateMutationAllowed": false
+  },
+  "crossCutting": {
+    "security": "Untrusted labels and messages are escaped; missing authority or invalid routing fails closed and no secret or credential is rendered.",
+    "privacy": "Presentation records contain no unnecessary personal data and minimise host, repository, and user identifiers.",
+    "publicContent": "Public output contains only reviewed labels, reason codes, paths intended for display, and redacted operational details.",
+    "accessibility": "WCAG 2.2 AA applies where meaningful; keyboard-only use, visible focus, linear reading order, screen-reader text, and colour-independent status are required.",
+    "platforms": [
+      "macOS",
+      "Linux",
+      "Windows"
+    ],
+    "platformRule": "Identical inputs and capabilities yield identical semantic records and language ordering on every platform.",
+    "supplyChain": "N/A for the requirements contract and dependency-free fixtures; a later adapter or package requires SBOM and vulnerability evidence.",
+    "reevaluationTriggers": [
+      "New data category",
+      "New platform",
+      "New framework adapter",
+      "New input method",
+      "New implementation dependency",
+      "Graphical or pointer-based surface"
+    ]
+  },
+  "evidence": {
+    "validator": "specs/intake-review-fixtures/raw-04/validate-presentation-contract.py",
+    "bashSurface": "specs/intake-review-fixtures/raw-04/validate-presentation-contract.sh",
+    "powerShellSurface": "specs/intake-review-fixtures/raw-04/validate-presentation-contract.ps1",
+    "positiveFixtures": [
+      "specs/intake-review-fixtures/raw-04/valid-presentation-cases.json"
+    ],
+    "negativeFixtures": [
+      "specs/intake-review-fixtures/raw-04/negative-missing-label.json",
+      "specs/intake-review-fixtures/raw-04/negative-missing-translation.json",
+      "specs/intake-review-fixtures/raw-04/negative-focus-order.json",
+      "specs/intake-review-fixtures/raw-04/negative-projection-mismatch.json"
+    ],
+    "successExitCode": 0
+  }
+}

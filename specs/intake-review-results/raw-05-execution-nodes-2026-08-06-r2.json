@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "e81d7013-defc-4649-9f08-ff839f48301b",
+  "mode": "Single",
+  "status": "Ready",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-06T19:55:25Z",
+  "repository": {
+    "root": ".",
+    "head": "a3629bd20c3596579dfa7f333e6cc8e24ca5963a"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-05-execution-nodes-2026-08-06-r2.json",
+    "normalizedSha256": "bed9fb9cd5f74bc8c55caa1993609289bbab90f7a01febd732201a989efb281b"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "role": "Primary",
+      "normalizedSha256": "69eb3cc6c4aa43c3472f2c7f976d19de935ee28562b4eb4cb15a1bc205248659",
+      "gitBlob": "N/A"
+    }
+  ],
+  "findings": [],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "specs/intake-review-results/raw-05-execution-nodes-2026-08-06.json"
+}

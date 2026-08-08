@@ -1,0 +1,112 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "8715f818-7fd0-4387-92e5-fdb4ae6f832e",
+  "mode": "Single",
+  "status": "NeedsClarification",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-06T18:25:55Z",
+  "repository": {
+    "root": ".",
+    "head": "a3629bd20c3596579dfa7f333e6cc8e24ca5963a"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-04-presentation-fabric-2026-08-06.json",
+    "normalizedSha256": "0df596478414f4872cbbc229bbea2734973147995bbf7c7176723e069a882129"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "role": "Primary",
+      "normalizedSha256": "b796736d154deb4ff244cf301f3d07fe462f135d888a30906b2cdbf33da2035b",
+      "gitBlob": "32fa3381693f70abde9165340b5661e94e75067f"
+    }
+  ],
+  "findings": [
+    {
+      "id": "IR401",
+      "severity": "High",
+      "category": "OpenDecisionAndProvenance",
+      "target": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "disposition": "NeedsClarification",
+      "owner": "RAW-04",
+      "evidence": "The target explicitly leaves the TUI/UI framework, responsiveness, and localization format open. These are material contract decisions for the declared Presentation Contract, yet the Authoring Receipt records decisions=[], openDecisionIds=[], and questionCount=0. The series already marks RAW-04 Eligible, so the decision state and provenance are not complete enough for a deterministic review or downstream work.",
+      "reevaluationTrigger": "IRQ401 through IRQ403 are answered without guessing, the chosen framework boundary, responsiveness contract, and localization format are written into the intake, the Authoring Receipt and Series target hash are renewed, and RAW-04 receives a complete Single re-review."
+    },
+    {
+      "id": "IR402",
+      "severity": "High",
+      "category": "RequirementsEvidence",
+      "target": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-04",
+      "evidence": "AC-001 and AC-002 state semantic Console/JSON parity and no-mouse/no-colour understanding, but no versioned Presentation Contract, fixture paths, schemas, validator commands, expected outputs, exit codes, platform matrix, or reproducible parity comparison is bound. The RAW-03 and RAW-02 handoffs name inputs but omit producer, consumer, version, authority, and failure behavior; the negative Degraded evidence is not tied to a concrete fixture.",
+      "reevaluationTrigger": "A versioned presentation contract binds deterministic positive and negative fixtures, validator commands, expected outputs and exit codes, explicit RAW-03/RAW-02 handoffs, and surface-failure behavior; then RAW-04 is fully re-reviewed."
+    },
+    {
+      "id": "IR403",
+      "severity": "High",
+      "category": "LanguageAndTerminology",
+      "target": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-04",
+      "evidence": "The learner-facing profile requires German-first/English-second CEFR-B2 content, but the requirements, decisions, acceptance criteria, and evidence are not complete DE/EN pairs. Presentation Fabric, State Envelope, TUI, Capability Routing, Degraded/Unknown/Stale, serial-autonomous, Spec Kit, and MergeAndSync are not explained locally or linked precisely for first-year readers. Status, open decisions, lifecycle, and the review-only next action are not stated as ordered text.",
+      "reevaluationTrigger": "Every normative section is paired DE/EN, first-use terms have local explanations or precise glossary links, and current status, open decisions, lifecycle, dependencies, and review-only next action are explicit text; then RAW-04 is fully re-reviewed."
+    },
+    {
+      "id": "IR404",
+      "severity": "High",
+      "category": "CrossCuttingApplicability",
+      "target": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-04",
+      "evidence": "WCAG 2.2 AA is named, but security, privacy and data minimisation, secret-safe status text, public-content boundaries, macOS/Linux/Windows applicability, and software-supply-chain applicability are not explicitly classified. Positive and negative keyboard, screen-reader, colour-independent, degraded-state, and platform-parity evidence plus re-evaluation triggers are absent.",
+      "reevaluationTrigger": "Security, privacy, personal-data, public-content, accessibility, platform, and supply-chain applicability are explicitly classified with measurable positive and negative evidence and re-evaluation triggers while product state ownership remains outside RAW-04; then RAW-04 is fully re-reviewed."
+    },
+    {
+      "id": "IR405",
+      "severity": "High",
+      "category": "PromptAndDeliveryAuthority",
+      "target": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-04",
+      "evidence": "The normative intake grants no Command, State, or hardware protocol authority, while the enabled Autonomous prompt requests MergeAndSync and requires only a current review. The Authoring Receipt stores historical MergeAndSync and Admin-Bypass authority. Historic delivery data, Eligible lifecycle, and Ready review do not grant current scope, start, implementation, remote, merge, bypass, or provider authority, but the prompt has no explicit fail-closed current-authority precondition.",
+      "reevaluationTrigger": "The enabled prompt and renewed Receipt fail closed unless separate current scope, start, implementation, remote-write, merge, bypass, and provider authority is present; historic authority and Eligibility remain explicitly insufficient, followed by a complete Single re-review."
+    }
+  ],
+  "questions": [
+    {
+      "id": "IRQ401",
+      "status": "Open",
+      "owner": "RAW-04",
+      "question": "Welches TUI/UI-Framework und welche frameworkneutrale Boundary gelten für den Presentation Contract? / Which TUI/UI framework and framework-neutral boundary apply to the Presentation Contract?"
+    },
+    {
+      "id": "IRQ402",
+      "status": "Open",
+      "owner": "RAW-04",
+      "question": "Welche Responsiveness- und Layout-Schwellen gelten für Console, JSON, TUI und spätere Surface-Adapter? / Which responsiveness and layout thresholds apply to Console, JSON, TUI, and later surface adapters?"
+    },
+    {
+      "id": "IRQ403",
+      "status": "Open",
+      "owner": "RAW-04",
+      "question": "Welches versionierte Lokalisierungsformat und welcher DE-first/EN-second-Fallback gelten? / Which versioned localization format and DE-first/EN-second fallback apply?"
+    }
+  ],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 5,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "N/A"
+}

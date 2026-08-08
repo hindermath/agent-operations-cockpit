@@ -1,31 +1,31 @@
 {
   "schemaVersion": "2.0",
   "documentType": "IntakeReceipt",
-  "receiptId": "530663ad-18b7-444b-a751-80b8638619d6",
+  "receiptId": "d47df4d2-96b9-4747-bc28-92919413c3cd",
   "intakeId": "83b9481e-bc4c-4e3d-b67a-1c6c8d05a681",
   "generator": {
     "preset": "intake-authoring-governance",
     "version": "0.3.0"
   },
-  "createdAt": "2026-08-01T17:40:28Z",
+  "createdAt": "2026-08-08T21:44:31Z",
   "operation": {
-    "operationId": "d8591dbd-5687-4934-a56e-05add2f4e1bc",
+    "operationId": "74489e95-4e8a-46bc-9ed6-c298ed838929",
     "type": "Update",
-    "authorityEvidence": "Thorsten invoked the repair of the current META-LH-03 review on 2026-08-01, authorising only IR301 through IR304 and the required complete re-review. The Authoring purpose, scope, non-goals, order, dependencies, and historic delivery authority remain unchanged; Specify, implementation, remote writes, merge, bypass, and provider administration remain excluded."
+    "authorityEvidence": "Thorsten explicitly authorised on 2026-08-08 the bounded repair of only IR005 and IR006 from Series review 35f4d174-cef2-4293-8994-a0263bc10b3f. IAD601-IAD604 move without semantic change from the open to the confirmed decision table; stale lifecycle statements become historical snapshots with stable references to the canonical manifest and order. Purpose, scope, non-goals, decisions, owners, handoffs, dependencies, and Delivery Authority remain unchanged. Only predecessor archive, receipt and Series hash renewal, complete re-reviews, and AEPS evidence capture are authorised. Specify, implementation, remote, merge, bypass, preset, promotion, GitHub, and Level-0 actions are excluded."
   },
   "status": "ReadyForReview",
   "target": {
     "path": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
-    "normalizedSha256": "8b1a0b37c7938d8ff5577bfb9daaedc710990e95e5470edf65b0761724c668c4"
+    "normalizedSha256": "f6d57cacc954b4899fc5bd8ddcc235570ec20470094feec506e1b8e9ea07e3e9"
   },
   "sources": [
     {
       "sourceId": "SRC001",
       "order": 1,
       "kind": "File",
-      "label": "Superseded META-LH-03 intake as first binding repair source",
+      "label": "Superseded META-LH-03-Authoring-Contract intake as first binding repair source",
       "location": "Repository",
-      "path": "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/d8591dbd-5687-4934-a56e-05add2f4e1bc/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "path": "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/74489e95-4e8a-46bc-9ed6-c298ed838929/Lastenheft_META-LH-03-Authoring-Contract.md",
       "requestedUrl": "N/A",
       "finalUrl": "N/A",
       "retrievedAt": "N/A",
@@ -36,9 +36,9 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "456a1ca78c2d45e2f2447fc2e2cf44852f583bf62a6b2beab788c403e088bc93",
+      "normalizedSha256": "8b1a0b37c7938d8ff5577bfb9daaedc710990e95e5470edf65b0761724c668c4",
       "gitBlob": "N/A",
-      "proofBoundary": "RepositoryArchiveAtRepair"
+      "proofBoundary": "RepositoryArchiveAtBoundedSeriesRepair"
     },
     {
       "sourceId": "SRC002",
@@ -270,6 +270,27 @@
       "normalizedSha256": "bb79b30b3c958435a8537b19729bd071bef94a6de2b6c3ba28b6e5414fff6fb8",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryAtRepair"
+    },
+    {
+      "sourceId": "SRC013",
+      "order": 13,
+      "kind": "File",
+      "label": "Series review that authorises bounded IR005 and IR006 repair",
+      "location": "Repository",
+      "path": "specs/intake-review-results/aoc-phase-2-series-2026-08-08-r3.json",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "11a42bd28136bf82c4dc0f36ac6e4d69b5ad8bfed6422d98d9cdb9be7c603345",
+      "gitBlob": "N/A",
+      "proofBoundary": "RepositoryAtRepairAuthorization"
     }
   ],
   "profile": "aoc-bilingual-requirements",
@@ -288,10 +309,10 @@
   "promptState": "Enabled",
   "provenanceMode": "Supersession",
   "supersedes": {
-    "receiptPath": "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/d8591dbd-5687-4934-a56e-05add2f4e1bc/META-LH-03-Authoring-Contract.json",
-    "targetNormalizedSha256": "456a1ca78c2d45e2f2447fc2e2cf44852f583bf62a6b2beab788c403e088bc93",
-    "archiveTargetPath": "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/d8591dbd-5687-4934-a56e-05add2f4e1bc/Lastenheft_META-LH-03-Authoring-Contract.md",
-    "archiveReceiptPath": "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/d8591dbd-5687-4934-a56e-05add2f4e1bc/META-LH-03-Authoring-Contract.json"
+    "receiptPath": "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/74489e95-4e8a-46bc-9ed6-c298ed838929/META-LH-03-Authoring-Contract.json",
+    "targetNormalizedSha256": "8b1a0b37c7938d8ff5577bfb9daaedc710990e95e5470edf65b0761724c668c4",
+    "archiveTargetPath": "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/74489e95-4e8a-46bc-9ed6-c298ed838929/Lastenheft_META-LH-03-Authoring-Contract.md",
+    "archiveReceiptPath": "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/74489e95-4e8a-46bc-9ed6-c298ed838929/META-LH-03-Authoring-Contract.json"
   },
   "legacyAdoption": {
     "evidenceType": "N/A",
@@ -299,7 +320,7 @@
     "priorGitBlob": "N/A"
   },
   "updateAuthorized": true,
-  "updateAuthorityEvidence": "Thorsten invoked the current META-LH-03 review result for bounded repair on 2026-08-01. This authorises only IR301 through IR304 and the required complete re-review while preserving the Authoring purpose, scope, non-goals, order, dependencies, and historic delivery authority.",
+  "updateAuthorityEvidence": "Thorsten explicitly authorised this bounded IR005 and IR006 repair, predecessor archive, Authoring Receipt and Series hash renewal, and complete re-review on 2026-08-08.",
   "series": {
     "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
     "manifestPath": "specs/intake-series/aoc-phase-2/manifest.json",

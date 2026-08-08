@@ -1,0 +1,32 @@
+{
+  "fixtureId": "RAW04-NEGATIVE-MISSING-LABEL",
+  "fixtureKind": "PresentationCases",
+  "expectedOutcome": "Rejected",
+  "expectedError": "PR007",
+  "cases": [
+    {
+      "id": "missing-visible-status-label",
+      "width": 79,
+      "terminalInteractive": true,
+      "tuiAdapterAvailable": true,
+      "expectedLayout": "Compact",
+      "surfaceAvailable": true,
+      "stateStatus": "Stale",
+      "statusLabel": "",
+      "messageId": "presentation.state.stale",
+      "translations": {
+        "de": "Zustand veraltet",
+        "en": "State stale"
+      },
+      "focusOrder": [1, 2, 3],
+      "consoleSemantics": {
+        "stateStatus": "Stale",
+        "reasonCodes": ["STALE_THRESHOLD_EXCEEDED"]
+      },
+      "jsonSemantics": {
+        "stateStatus": "Stale",
+        "reasonCodes": ["STALE_THRESHOLD_EXCEEDED"]
+      }
+    }
+  ]
+}

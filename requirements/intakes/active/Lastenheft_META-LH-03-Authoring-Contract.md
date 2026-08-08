@@ -209,13 +209,16 @@ Diese Pfade und die Preset-Version sind bindend; Drift erzwingt Re-Review. /
 
 ## Abhängigkeiten, Decisions, Status und Modus / Dependencies, decisions, status, and mode
 
-META-LH-01 und META-LH-02 sind die Vorgänger und im Serienmanifest
-`Completed`. META-LH-03 ist als `Eligible` markiert und besitzt keine offene
-Materialentscheidung; sein Authoring-Status bleibt `ReadyForReview`. Die
-einzige nächste Aktion ist das unabhängige Single-Intake-Review. /
-*META-LH-01 and META-LH-02 are Completed predecessors. META-LH-03 is Eligible,
-has no open material decision, and remains ReadyForReview. The only next action
-is independent Single-intake review.*
+Beim damaligen Authoring galt als historischer Snapshot: META-LH-01 und
+META-LH-02 waren abgeschlossene Vorgänger, META-LH-03 war `Eligible` und besaß
+keine offene Materialentscheidung. Dieser Snapshot ist keine aktuelle
+Lifecycle-Quelle. Der aktuelle kanonische Zustand steht ausschließlich im
+[`manifest.json`](../../../specs/intake-series/aoc-phase-2/manifest.json) und
+in der [`order.md`](../series/order.md). / *At authoring time, the historical
+snapshot recorded META-LH-01 and META-LH-02 as completed predecessors and
+META-LH-03 as Eligible with no open material decision. This snapshot is not a
+current lifecycle source. Only the linked manifest and order document define
+the current canonical state.*
 
 `serial-autonomous` bleibt der geeignete Modus für später ausdrücklich
 freigegebene disjunkte Ziele; bei Konflikten gilt `manual-assisted`. Eligibility

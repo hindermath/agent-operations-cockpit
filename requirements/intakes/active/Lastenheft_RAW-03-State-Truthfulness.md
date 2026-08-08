@@ -238,26 +238,28 @@ confirmed individual decisions:*
    with a machine-readable reason. Percentages are excluded. This refined
    confirmed decision supersedes the earlier conversational no-field option.*
 
-RAW-01 ist im Series-Lifecycle `Completed`; RAW-03 ist der einzige deklarierte
-`Eligible`-Kandidat. Der einzige bindende Vorgänger bleibt RAW-01. RAW-02 und
-RAW-04 benötigen den gültigen RAW-03-Handoff. `serial-autonomous` bezeichnet
-nur einen späteren, einzeln ausgeführten und separat autorisierten Lauf; keine
-parallele Änderung des State-Schemas ist zulässig. / *RAW-01 is Completed and
-RAW-03 is the sole declared Eligible candidate. RAW-01 remains its only binding
-predecessor; RAW-02 and RAW-04 require its valid handoff. Serial-autonomous
-means a later, individually executed and separately authorised run; parallel
-State-schema changes are not allowed.*
+Beim damaligen Authoring galt als historischer Snapshot: RAW-01 war
+`Completed` und RAW-03 der einzige deklarierte `Eligible`-Kandidat. Dieser
+Snapshot ist keine aktuelle Lifecycle-Quelle. Der aktuelle kanonische Zustand
+steht ausschließlich im
+[`manifest.json`](../../../specs/intake-series/aoc-phase-2/manifest.json) und
+in der [`order.md`](../series/order.md). RAW-01 bleibt der bindende Vorgänger;
+RAW-02 und RAW-04 benötigen den gültigen RAW-03-Handoff. `serial-autonomous`
+bezeichnet nur einen späteren, einzeln ausgeführten und separat autorisierten
+Lauf; parallele State-Schema-Änderungen sind unzulässig. / *At authoring time,
+the historical snapshot recorded RAW-01 as Completed and RAW-03 as the sole
+Eligible candidate. This snapshot is not a current lifecycle source. Only the
+linked manifest and order document define the current canonical state. RAW-01
+remains the binding predecessor; RAW-02 and RAW-04 require the valid RAW-03
+handoff. Serial-autonomous only describes a later, separately authorised run;
+parallel State-schema changes are prohibited.*
 
-Der Authoring-Status ist `ReadyForReview`. `IAD301` bis `IAD303` sind
-bestätigt; `DEC-T03` besitzt keine offene
-Teilfrage. Die einzige aktuelle nächste Aktion ist das vollständige
-RAW-03-Single-Review. `ReadyForReview`, `Eligible`, ein späteres `Ready` und der
-gespeicherte Delivery-Modus sind getrennte Informationen und erteilen keine
-Start- oder Delivery Authority. / *The authoring status is ReadyForReview and
-DEC-T03 has no open sub-question. The only current next action is the complete
-RAW-03 Single review. ReadyForReview, Eligible, a later Ready result, and the
-stored delivery mode are separate facts and grant no start or delivery
-authority.*
+`IAD301` bis `IAD303` sind bestätigt; `DEC-T03` besitzt keine offene
+Teilfrage. Authoring-, Review- und Lifecycle-Zustand sowie der gespeicherte
+Delivery-Modus sind getrennte Informationen und erteilen keine Start- oder
+Delivery Authority. / *IAD301 through IAD303 are confirmed and DEC-T03 has no
+open sub-question. Authoring, review, lifecycle, and stored delivery state are
+separate facts and grant no start or delivery authority.*
 
 ## Child-Intakes, Akzeptanz und Evidence / Child intakes, acceptance, and evidence
 

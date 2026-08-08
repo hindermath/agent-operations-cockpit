@@ -1,0 +1,7 @@
+{
+  "fixtureId": "RAW09-NEGATIVE-MISSING-NEGATIVE-EVIDENCE",
+  "case": "NegativeEvidenceMissing",
+  "negativeEvidence": false,
+  "promotionReviewEligibleClaimed": true,
+  "expectedReasonCode": "PEV004_NEGATIVE_EVIDENCE_MISSING"
+}

@@ -1,0 +1,9 @@
+{
+  "fixtureId": "RAW07-NEGATIVE-UNAPPROVED-DEVICE",
+  "fixtureKind": "UnapprovedDevice",
+  "expectedOutcome": "Rejected",
+  "expectedReasonCode": "HWC009_DEVICE_NOT_APPROVED",
+  "deviceClass": "XboxController",
+  "includedInFirstWave": false,
+  "separateEvidencePresent": false
+}

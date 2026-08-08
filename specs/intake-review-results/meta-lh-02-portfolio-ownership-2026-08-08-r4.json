@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "56da6c85-f3ca-4557-86a1-035c42f0b754",
+  "mode": "Single",
+  "status": "Ready",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-08T16:21:27Z",
+  "repository": {
+    "root": ".",
+    "head": "a3629bd20c3596579dfa7f333e6cc8e24ca5963a"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/meta-lh-02-portfolio-ownership-2026-08-08-r4.json",
+    "normalizedSha256": "7f2f68968b24351b96993d8b22a1ef8fb772a18e3cdd8fa978c80cbbfd39a800"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "role": "Primary",
+      "normalizedSha256": "7965323e2981472fd061bfb9ca20fd10d6a6217df53fd0300127de74b0b9c14b",
+      "gitBlob": "3200b9dda5d4c555e73638be844c4e7ba29994e6"
+    }
+  ],
+  "findings": [],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "specs/intake-review-results/meta-lh-02-portfolio-ownership-2026-08-05-r3.json"
+}

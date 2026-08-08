@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "7db6965e-4345-4db0-beff-ae4bdf474a4c",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.2"
+  },
+  "createdAt": "2026-08-05T20:41:57Z",
+  "operation": {
+    "operationId": "36f7b078-8ff3-4cc3-96e0-bdf1325b7130",
+    "type": "Update",
+    "authorityEvidence": "Thorsten explicitly authorised this bounded Series update on 2026-08-05. RAW-02 changes only from Eligible to Completed while its current Single review b5b1c9d3-9248-4703-9d7f-358dd4ae8398 remains Ready; RAW-04 changes only from Pending to the sole declared Eligible target. RAW-05 remains Pending and read-only research-only. Fourteen targets, one root, fourteen dependencies, exact order, every target hash, all other lifecycle values, intake contents, evidence paths, and Delivery Authority remain unchanged. Review, Specify, implementation, remote writes, merge, bypass, presets, and Level-0 actions are excluded."
+  },
+  "status": "NeedsClarification",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "cf61c0be338c948a80d2257d9d6da5d9c238be704c79e794d6971ee01d5b4f0c"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/36f7b078-8ff3-4cc3-96e0-bdf1325b7130/receipt.json",
+    "receiptNormalizedSha256": "7a446303fadbfa216850571c3bddc494d346ccf5c644b00d9662f0da03ff1b6a",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/36f7b078-8ff3-4cc3-96e0-bdf1325b7130/manifest.json",
+    "manifestArchiveSha256": "bb4382e35977696aa8d31126963daa9129afa5d1e7088d49f6cb8d893bcce9be"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-series-status"
+}

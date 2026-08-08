@@ -1,0 +1,30 @@
+{
+  "fixtureId": "RAW06-VALID-CLI-CAPABILITIES",
+  "fixtureKind": "ValidContract",
+  "expectedOutcome": "Valid",
+  "cases": [
+    {
+      "id": "shell-free-read-only-probe",
+      "nodeType": "Host",
+      "capabilityId": "git-version",
+      "executableIdentity": "tool-snapshot:git",
+      "arguments": ["--version"],
+      "shellEvaluation": false,
+      "sideEffectClass": "ReadOnlyProbe",
+      "environmentPolicy": "git-version-host-v1",
+      "expectedResult": "Succeeded"
+    },
+    {
+      "id": "nonzero-with-native-detail",
+      "nodeType": "Container",
+      "capabilityId": "fixture-nonzero",
+      "executableIdentity": "fixture:nonzero",
+      "arguments": ["--exit-code", "7"],
+      "shellEvaluation": false,
+      "sideEffectClass": "ReadOnlyProbe",
+      "environmentPolicy": "fixture-container-v1",
+      "expectedResult": "ExitedNonZero",
+      "nativeExitCode": 7
+    }
+  ]
+}

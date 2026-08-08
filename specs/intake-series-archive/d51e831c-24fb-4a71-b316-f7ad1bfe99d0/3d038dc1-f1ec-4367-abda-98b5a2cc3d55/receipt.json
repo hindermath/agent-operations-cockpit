@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "c61d3d61-a6e8-4db0-b2d0-00fb8303530a",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.2"
+  },
+  "createdAt": "2026-08-08T15:24:29Z",
+  "operation": {
+    "operationId": "5de64d27-6fbd-496c-b858-6acd8db8d1bd",
+    "type": "Update",
+    "authorityEvidence": "Thorsten explicitly authorised repair of RAW-08 findings IR802 through IR806 on 2026-08-08 while preserving IAD801-IAD803, purpose, scope, non-goals, dependencies, Series lifecycle, and Delivery Authority, followed by complete re-review. This successor renews only the RAW-08 target hash binding required by that repair. RAW-08 remains the sole Eligible target; order, root, dependencies, lifecycle values, and all other target hashes remain unchanged. No Specify, implementation, remote, merge, bypass, preset, GitHub, or Level-0 action is performed."
+  },
+  "status": "NeedsClarification",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "88602b7914a37b6531160ed2f3ca68fa2676a426a24895f5cd3aa9729fae331c"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/5de64d27-6fbd-496c-b858-6acd8db8d1bd/receipt.json",
+    "receiptNormalizedSha256": "02857a28f72e9b41a4f1b3a15746d7a694212694f20ed6256dff99cccd764205",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/5de64d27-6fbd-496c-b858-6acd8db8d1bd/manifest.json",
+    "manifestArchiveSha256": "14ee3c13d18d8cf60aafea1d61b4fa0b7b552c5d8df504bcbd019cd1840cc85d"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-review requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md"
+}

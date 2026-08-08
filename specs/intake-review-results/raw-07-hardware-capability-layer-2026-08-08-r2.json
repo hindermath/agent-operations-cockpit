@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "14c10979-84c5-4451-957d-b34e65f111ec",
+  "mode": "Single",
+  "status": "Ready",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-08T21:52:17Z",
+  "repository": {
+    "root": ".",
+    "head": "a3629bd20c3596579dfa7f333e6cc8e24ca5963a"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-07-hardware-capability-layer-2026-08-08-r2.json",
+    "normalizedSha256": "a90a890473d5760e5717f4afafc8e46f118b13932e018b9867d6046892f9f74f"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "role": "Primary",
+      "normalizedSha256": "ade666e411ed9a81b9736e628adb8613be0d9d732295c7e5470d90f0c64f513a",
+      "gitBlob": "N/A"
+    }
+  ],
+  "findings": [],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "specs/intake-review-results/raw-07-hardware-capability-layer-2026-08-07.json"
+}

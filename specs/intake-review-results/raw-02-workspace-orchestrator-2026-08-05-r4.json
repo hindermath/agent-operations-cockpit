@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "b5b1c9d3-9248-4703-9d7f-358dd4ae8398",
+  "mode": "Single",
+  "status": "Ready",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-05T20:33:36Z",
+  "repository": {
+    "root": ".",
+    "head": "a3629bd20c3596579dfa7f333e6cc8e24ca5963a"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-02-workspace-orchestrator-2026-08-05-r4.json",
+    "normalizedSha256": "930245e99fa3b9bafc79b8fd00be5bd3513699376f6fca8f52d202c9cf8b4ddc"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "role": "Primary",
+      "normalizedSha256": "7b2f4241e92c9dba5eb6b420d98d587b34ffe6a6ee5e607762125687a334c4e6",
+      "gitBlob": "c541636d28dd9ca6443603aca6b4fd941d27401d"
+    }
+  ],
+  "findings": [],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "specs/intake-review-results/raw-02-workspace-orchestrator-2026-08-05-r3.json"
+}

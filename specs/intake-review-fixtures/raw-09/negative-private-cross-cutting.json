@@ -1,0 +1,7 @@
+{
+  "fixtureId": "RAW09-NEGATIVE-PRIVATE-CROSS-CUTTING",
+  "case": "PrivateOrCrossCuttingViolation",
+  "privatePathPresent": true,
+  "crossCuttingComplete": false,
+  "expectedReasonCode": "PEV011_PRIVATE_DATA_REJECTED"
+}

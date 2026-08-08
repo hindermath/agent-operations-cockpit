@@ -1,0 +1,259 @@
+{
+  "schemaVersion": "requirements-v1",
+  "documentType": "AocPresetEvolutionContract",
+  "contractId": "RAW-09-Preset-Evolution-Contract-requirements-v1",
+  "owner": "RAW-09",
+  "boundary": {
+    "knowledgePackageProducer": "RAW-08",
+    "proposalAnalysisOwner": "RAW-09",
+    "canonicalTargetRepository": "hindermath/home-baseline",
+    "communityTargetRepository": "github/spec-kit",
+    "productStateOwned": false,
+    "presetWriteOwned": false,
+    "promotionOwned": false,
+    "executionEnabledByThisContract": false
+  },
+  "decisions": {
+    "promotionThreshold": {
+      "id": "IAD901",
+      "status": "Answered",
+      "model": "ReviewedCrossProjectPromotionReviewThreshold",
+      "proposalDraftMinimum": {
+        "independentEvidenceEvents": 2,
+        "systemicEvidenceAlternativeAllowed": true,
+        "systemicEvidenceRationaleRequired": true
+      },
+      "promotionReviewMinimum": {
+        "reviewedFindings": 2,
+        "independentProjects": 2,
+        "positiveEvidenceRequired": true,
+        "negativeEvidenceRequired": true,
+        "boundRetrospectiveRequired": true,
+        "crossProjectAssessmentRequired": true,
+        "compatibilityRequired": true,
+        "migrationRequired": true,
+        "rollbackRequired": true,
+        "testsRequired": true,
+        "securityRequired": true,
+        "accessibilityRequired": true,
+        "documentationRequired": true,
+        "blockingFindingsAllowed": false
+      },
+      "singleProjectMayBecomeCanonical": false,
+      "promotionReviewEligibilityIsPromotion": false
+    },
+    "targetRepository": {
+      "id": "IAD902",
+      "status": "Answered",
+      "model": "Level0FirstCommunityConditionalSerialQueue",
+      "default": "hindermath/home-baseline",
+      "communityAlternative": "github/spec-kit",
+      "communityGeneralApplicabilityRequired": true,
+      "serialSingleItemQueueRequired": true,
+      "parallelCommunitySubmissionsAllowed": false,
+      "queueContractReference": "docs/maintenance/Preset-and-Fleet-Operations-Lessons-Learned.md"
+    },
+    "promotionAuthority": {
+      "id": "AUTH-RAW09-PROMOTION",
+      "status": "Answered",
+      "model": "CurrentHumanApprovalPerProposal",
+      "standingAuthorityAllowed": false,
+      "automaticBypassAllowed": false,
+      "administrativeBypassAllowed": false,
+      "historicDeliveryAuthoritySufficient": false,
+      "missingAuthorityResult": "Deferred"
+    }
+  },
+  "lifecycle": {
+    "states": [
+      "Observation",
+      "EvidenceCandidate",
+      "ProposalDraft",
+      "ProposalReviewed",
+      "PromotionReviewEligible",
+      "Deferred",
+      "RejectedWithRationale",
+      "Superseded"
+    ],
+    "allowedTransitions": [
+      "Observation->EvidenceCandidate",
+      "EvidenceCandidate->ProposalDraft",
+      "ProposalDraft->ProposalReviewed",
+      "ProposalReviewed->PromotionReviewEligible",
+      "ProposalReviewed->Deferred",
+      "ProposalReviewed->RejectedWithRationale",
+      "PromotionReviewEligible->Deferred",
+      "PromotionReviewEligible->Superseded",
+      "Deferred->ProposalDraft",
+      "RejectedWithRationale->Superseded"
+    ],
+    "unknownTransitionResult": "Blocked",
+    "missingEvidenceResult": "Deferred",
+    "missingAuthorityResult": "Deferred",
+    "providerFailureResult": "DeferredWithPartialEvidence",
+    "actualPromotionStateOwned": false
+  },
+  "handoffs": [
+    {
+      "id": "H-RAW08-RAW09",
+      "producer": "RAW-08",
+      "consumer": "RAW-09",
+      "version": "requirements-v1",
+      "artifact": "EvidenceAndRetrospectiveKnowledgePackage",
+      "requiredFields": [
+        "sourceIds",
+        "decisionIds",
+        "findingIds",
+        "positiveEvidenceIds",
+        "negativeEvidenceIds",
+        "retrospectiveIds",
+        "traceabilityRootHash",
+        "attestation",
+        "compatibilityVersion"
+      ],
+      "authority": "Analysis input without preset-write or promotion authority",
+      "compatibility": "Exact major version and validated attestation required",
+      "failureBehavior": "Deferred when provenance, privacy, attestation, or compatibility is invalid",
+      "seriesRelation": "FinalAuditInput; binding"
+    },
+    {
+      "id": "H-RAW09-HOME-BASELINE",
+      "producer": "RAW-09",
+      "consumer": "hindermath/home-baseline",
+      "version": "requirements-v1",
+      "artifact": "DeidentifiedPresetProposal",
+      "requiredFields": [
+        "proposalId",
+        "applicability",
+        "benefit",
+        "risks",
+        "positiveEvidence",
+        "negativeEvidence",
+        "crossProjectAssessment",
+        "tests",
+        "compatibility",
+        "migration",
+        "rollback",
+        "security",
+        "accessibility",
+        "documentation",
+        "authorityReceipt"
+      ],
+      "authority": "Proposal handoff only; separate current Level-0 write authority required",
+      "compatibility": "Proposal contract requirements-v1",
+      "failureBehavior": "Deferred when any required field, evidence, or current authority is missing",
+      "seriesRelation": "RAW-09 output; no automatic write"
+    },
+    {
+      "id": "H-RAW09-SPEC-KIT",
+      "producer": "hindermath/home-baseline",
+      "consumer": "github/spec-kit",
+      "version": "requirements-v1",
+      "artifact": "CommunityGeneralPresetProposal",
+      "requiredFields": [
+        "communityGeneralApplicability",
+        "crossProjectEvidence",
+        "maintainerQueueState",
+        "singleActiveSubmission",
+        "currentGitHubAuthority"
+      ],
+      "authority": "Separate current GitHub and community-submission authority required",
+      "compatibility": "Community contract and current single-item queue",
+      "failureBehavior": "Deferred when applicability, queue, or authority is missing",
+      "seriesRelation": "Conditional external handoff; never parallel"
+    }
+  ],
+  "childContracts": [
+    {
+      "id": "RAW09-CHILD-GAP-DETECTION",
+      "owner": "RAW-09 Gap Detection",
+      "input": "Versioned knowledge package",
+      "output": "Evidence-bound gap record",
+      "nonGoal": "No preset modification"
+    },
+    {
+      "id": "RAW09-CHILD-GENERALISATION-REVIEW",
+      "owner": "RAW-09 Generalisation Review",
+      "input": "Gap record and cross-project evidence",
+      "output": "Applicability classification",
+      "nonGoal": "No canonical promotion"
+    },
+    {
+      "id": "RAW09-CHILD-PROPOSAL-PACKAGE",
+      "owner": "RAW-09 Proposal Package",
+      "input": "Reviewed applicability and evidence",
+      "output": "De-identified proposal",
+      "nonGoal": "No repository write"
+    },
+    {
+      "id": "RAW09-CHILD-FIELD-VALIDATION",
+      "owner": "RAW-09 Field Validation",
+      "input": "Approved validation plan",
+      "output": "Positive, negative, and provider-failure evidence",
+      "nonGoal": "No preset activation"
+    }
+  ],
+  "authorityGates": {
+    "requiredCurrentAuthoritiesForAnyEnabledDeliveryPrompt": [
+      "ScopeAuthority",
+      "StartAuthority",
+      "ImplementationAuthority",
+      "GovernanceWriteAuthority",
+      "RemoteWriteAuthority",
+      "MergeAuthority",
+      "BypassAuthority",
+      "ProviderAuthority",
+      "PresetWriteAuthority",
+      "PromotionAuthority"
+    ],
+    "historicDeliveryAuthoritySufficient": false,
+    "eligibleLifecycleSufficient": false,
+    "readyReviewSufficient": false,
+    "missingOrExpiredAuthorityResult": "Deferred",
+    "currentPromptState": "EnabledFailClosed"
+  },
+  "reasonCodes": [
+    "PEV001_VALID_PROPOSAL",
+    "PEV002_INSUFFICIENT_PROJECTS",
+    "PEV003_INSUFFICIENT_FINDINGS",
+    "PEV004_NEGATIVE_EVIDENCE_MISSING",
+    "PEV005_RETROSPECTIVE_MISSING",
+    "PEV006_PRODUCT_SPECIFIC_REJECTED",
+    "PEV007_REPOSITORY_NOT_ALLOWED",
+    "PEV008_COMMUNITY_APPLICABILITY_MISSING",
+    "PEV009_SERIAL_QUEUE_VIOLATION",
+    "PEV010_AUTHORITY_MISSING",
+    "PEV011_PRIVATE_DATA_REJECTED",
+    "PEV012_CROSS_CUTTING_EVIDENCE_MISSING",
+    "PEV013_PROVIDER_FAILURE",
+    "PEV014_BLOCKING_FINDING"
+  ],
+  "crossCutting": {
+    "security": "Secrets, credentials, private keys, private paths, and unreviewed executable payloads are forbidden.",
+    "privacy": "Only de-identified and data-minimised evidence may leave AOC.",
+    "publicContent": "Public handoff requires repository-safe content and community-general rationale.",
+    "accessibility": "Documents are German first, English second, CEFR B2, text-first, keyboard-usable, and WCAG 2.2 AA where applicable.",
+    "platforms": [
+      "macOS",
+      "Linux",
+      "Windows"
+    ],
+    "sameLogicalOutcomesAcrossPlatforms": true,
+    "containerAndRemoteNodes": "Evidence retains node, trust-zone, provider, and provenance fields; missing provenance blocks proposal completion.",
+    "supplyChain": "No implementation dependency is introduced by this requirements contract; any future dependency requires licence, provenance, SBOM, vulnerability, platform, and maintenance evidence."
+  },
+  "reevaluationTriggers": [
+    "Promotion threshold or evidence taxonomy changes",
+    "Target repository or community queue contract changes",
+    "RAW-08 knowledge-package compatibility changes",
+    "Security, privacy, accessibility, platform, or supply-chain policy changes",
+    "Standing, automatic, administrative, preset-write, or promotion authority is proposed"
+  ],
+  "evidence": {
+    "validator": "specs/intake-review-fixtures/raw-09/validate-preset-evolution-contract.py",
+    "bashWrapper": "specs/intake-review-fixtures/raw-09/validate-preset-evolution-contract.sh",
+    "powerShellWrapper": "specs/intake-review-fixtures/raw-09/validate-preset-evolution-contract.ps1",
+    "successExitCode": 0,
+    "validatorErrorExitCode": 2
+  }
+}

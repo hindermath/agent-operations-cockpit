@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "c71d4abc-11ee-4160-a506-46a9019dd17d",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.2"
+  },
+  "createdAt": "2026-08-06T20:05:00Z",
+  "operation": {
+    "operationId": "12b2c211-ee34-4c6d-8141-f4cf93711b89",
+    "type": "Update",
+    "authorityEvidence": "Thorsten explicitly authorised on 2026-08-06: set RAW-05 to Completed only while its current Ready Single review remains current; leave RAW-06, RAW-07, RAW-08, and RAW-09 unchanged; do not review, specify, implement, write remotely, merge, or bypass. RAW-05 remains read-only in its domain contract. The predecessor manifest and receipt are archived byte-identically and the successor Receipt, Operation, and order documentation are hash-bound."
+  },
+  "status": "NeedsClarification",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "d7f2c3a24d62b0605f0f2185c3785dfbb84df285cacf08f743423e2269cf4347"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/12b2c211-ee34-4c6d-8141-f4cf93711b89/receipt.json",
+    "receiptNormalizedSha256": "d6b5abed3ef4994ac374b8e28b6eb6489ce8400b3a10c53f09a84f64dee75513",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/12b2c211-ee34-4c6d-8141-f4cf93711b89/manifest.json",
+    "manifestArchiveSha256": "2ec11204d018fab3f8bb186893e2804cf608aaf894977902414a02c89ba8c3f3"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-series-status"
+}

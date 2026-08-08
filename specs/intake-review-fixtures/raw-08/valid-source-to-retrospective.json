@@ -1,0 +1,89 @@
+{
+  "fixtureId": "RAW08-VALID-SOURCE-TO-RETROSPECTIVE",
+  "fixtureKind": "ValidEndToEnd",
+  "expectedOutcome": "Valid",
+  "expectedReasonCode": "WFE001_VALID",
+  "artifacts": [
+    "Charter",
+    "Source",
+    "Decision",
+    "Intake",
+    "Spec",
+    "Plan",
+    "Task",
+    "Evidence",
+    "Retrospective",
+    "KnowledgePackage",
+    "Receipt"
+  ],
+  "transitions": [
+    "Draft->Validated",
+    "Validated->Approved",
+    "Approved->InProgress",
+    "InProgress->Completed"
+  ],
+  "evidenceClasses": [
+    "Positive",
+    "Negative",
+    "ProviderFailure"
+  ],
+  "handoffs": [
+    {
+      "id": "H-RAW05-RAW08",
+      "version": "requirements-v1",
+      "compatible": true
+    },
+    {
+      "id": "H-RAW06-RAW08",
+      "version": "requirements-v1",
+      "compatible": true
+    },
+    {
+      "id": "H-RAW08-RAW09",
+      "version": "requirements-v1",
+      "compatible": true
+    }
+  ],
+  "traceabilityComplete": true,
+  "allInputAndOutputHashesValid": true,
+  "attestation": {
+    "signaturePresent": true,
+    "signatureValid": true,
+    "keyAllowed": true,
+    "trustRootAllowed": true,
+    "policyCurrent": true
+  },
+  "currentAuthorities": [
+    "ScopeAuthority",
+    "StartAuthority",
+    "ImplementationAuthority",
+    "GovernanceWriteAuthority",
+    "RemoteWriteAuthority",
+    "MergeAuthority",
+    "BypassAuthority",
+    "ProviderAuthority"
+  ],
+  "retention": {
+    "operationalDays": 90,
+    "securityAndFailureMonths": 12,
+    "legalHoldSuspendsDeletion": true,
+    "deletionReceiptRequired": true
+  },
+  "crossCutting": {
+    "dataMinimised": true,
+    "publicContentDeidentified": true,
+    "germanFirstEnglishSecond": true,
+    "textAndKeyboardAlternatives": true,
+    "platforms": [
+      "macOS",
+      "Linux",
+      "Windows"
+    ],
+    "sameLogicalOutcome": true,
+    "nodeProvenanceComplete": true,
+    "implementationDependencyIntroduced": false
+  },
+  "providerFailureClaimsCompletion": false,
+  "retrospectiveCreatesNormativeDecision": false,
+  "presetPromotionClaimed": false
+}

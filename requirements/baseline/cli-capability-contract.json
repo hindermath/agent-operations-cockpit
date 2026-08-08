@@ -1,0 +1,217 @@
+{
+  "schemaVersion": "requirements-v1",
+  "documentType": "AocCliCapabilityContract",
+  "contractId": "RAW-06-CLI-Capability-Contract-requirements-v1",
+  "owner": "RAW-06",
+  "boundary": {
+    "logicalOrchestrationOwner": "RAW-02",
+    "executionNodeOwner": "RAW-05",
+    "processAndEnvironmentOwner": "RAW-06",
+    "evidenceConsumer": "RAW-08",
+    "productCommandPolicyOwned": false,
+    "hardwareOwned": false,
+    "userInterfaceOwned": false,
+    "executionEnabledByThisContract": false
+  },
+  "decisions": {
+    "processApi": {
+      "id": "IAD601",
+      "status": "Answered",
+      "model": "TypedShellFreeProcessApi",
+      "executableAndArgumentsSeparated": true,
+      "argumentsAreArray": true,
+      "shellEvaluationAllowed": false,
+      "requiredRequestFields": [
+        "capabilityId",
+        "executableIdentity",
+        "nodeId",
+        "arguments",
+        "workingDirectoryRef",
+        "environmentPolicyRef",
+        "timeoutProfileRef",
+        "cancellationHandle",
+        "correlationId",
+        "sideEffectClass"
+      ],
+      "requiredResponseFields": [
+        "correlationId",
+        "outcome",
+        "nativeExitCode",
+        "nativeSignal",
+        "startedAt",
+        "finishedAt",
+        "stdoutRecords",
+        "stderrRecords",
+        "partialOutput",
+        "reasonCode"
+      ]
+    },
+    "exitAndSignal": {
+      "id": "IAD602",
+      "status": "Answered",
+      "outcomes": [
+        "Succeeded",
+        "ExitedNonZero",
+        "StartFailed",
+        "TimedOut",
+        "Cancelled",
+        "Signaled",
+        "ToolMissing"
+      ],
+      "nativeDetailsPreserved": true,
+      "partialOutputPreserved": true,
+      "automaticUnknownRetryAllowed": false,
+      "nonIdempotentRetryAllowed": false,
+      "cancellationBoundToProcessInstance": true,
+      "processTreeTerminationAllowed": false
+    },
+    "environmentAllowlist": {
+      "id": "IAD603",
+      "status": "Answered",
+      "model": "VersionedCapabilityAndNodeAllowlist",
+      "parentEnvironmentInheritedByDefault": false,
+      "variablesRequireNameSourceAndPurpose": true,
+      "secretValuesAllowedInDescriptorLogOrReceipt": false,
+      "secretReferencesAllowed": true,
+      "unknownVariablesAllowed": false,
+      "dangerousVariableCategoriesBlockedByDefault": [
+        "DynamicLoaderInjection",
+        "ShellStartupInjection",
+        "ExecutableSearchPathOverride",
+        "RuntimeHookInjection"
+      ]
+    },
+    "remoteTransport": {
+      "id": "IAD604",
+      "status": "Answered",
+      "contract": "TransportNeutralRemoteExecutionContract",
+      "referenceAdapter": "SSHv2",
+      "enabledByDefault": false,
+      "arbitraryRemoteShellAllowed": false,
+      "fixedRemoteEndpointRequired": true,
+      "structuredRequestRequired": true,
+      "hostIdentityVerificationRequired": true,
+      "keyOrCertificateAuthenticationRequired": true,
+      "credentialReferencesOnly": true,
+      "agentForwardingAllowed": false,
+      "remoteWriteAuthorityGranted": false,
+      "remoteProcessAuthorityGranted": false,
+      "activationRequiresSeparateReviewAndAuthority": true
+    }
+  },
+  "capabilityDescriptor": {
+    "requiredFields": [
+      "capabilityId",
+      "schemaVersion",
+      "executableIdentity",
+      "versionEvidence",
+      "nodeTypes",
+      "argumentSchema",
+      "outputSchema",
+      "environmentPolicyRef",
+      "timeoutProfileRef",
+      "cancellationModel",
+      "sideEffectClass",
+      "authorityRequirements"
+    ],
+    "sideEffectClasses": [
+      "ReadOnlyProbe",
+      "ReversibleMutation",
+      "IrreversibleMutation"
+    ],
+    "readOnlyAndMutationClassesSeparated": true,
+    "unknownCapabilityFailsClosed": true
+  },
+  "failureContract": {
+    "reasonCodes": [
+      "CLI001_SUCCEEDED",
+      "CLI002_EXITED_NONZERO",
+      "CLI003_START_FAILED",
+      "CLI004_TIMED_OUT",
+      "CLI005_CANCELLED",
+      "CLI006_TOOL_MISSING",
+      "CLI007_SHELL_EVAL_FORBIDDEN",
+      "CLI008_ENVIRONMENT_REJECTED",
+      "CLI009_REMOTE_DISABLED",
+      "CLI010_SECRET_MATERIAL_REJECTED",
+      "CLI011_RETRY_FORBIDDEN",
+      "CLI012_NODE_NOT_AUTHORIZED",
+      "CLI013_SIGNALED"
+    ],
+    "missingOrInvalidNode": "Blocked",
+    "missingAuthority": "Blocked",
+    "unknownEnvironmentPolicy": "Blocked",
+    "lostRemoteEndpoint": "Unavailable",
+    "outputRecordOrdering": "PerStreamObservedOrder",
+    "crossStreamTotalOrderClaimed": false
+  },
+  "handoffs": [
+    {
+      "id": "H-RAW05-RAW06",
+      "producer": "RAW-05",
+      "consumer": "RAW-06",
+      "contract": "Node Capability and Authority Contract",
+      "version": "requirements-v1",
+      "authority": "Read-only node, capability, mount, attestation, and freshness evidence",
+      "failureBehavior": "Unknown, Untrusted, Stale, or Unavailable evidence cannot authorize CLI execution.",
+      "seriesRelation": "HardCompletionGateBinding"
+    },
+    {
+      "id": "H-RAW06-RAW02",
+      "producer": "RAW-06",
+      "consumer": "RAW-02",
+      "contract": "CLI Capability Descriptor",
+      "version": "requirements-v1",
+      "authority": "Non-binding typed capability and result projection",
+      "failureBehavior": "Missing or invalid capabilities remain unavailable and never authorize a command.",
+      "seriesRelation": "FunctionalHandoff"
+    },
+    {
+      "id": "H-RAW06-RAW08",
+      "producer": "RAW-06",
+      "consumer": "RAW-08",
+      "contract": "CLI Execution Evidence",
+      "version": "requirements-v1",
+      "authority": "De-identified result and failure evidence without secrets or command authority",
+      "failureBehavior": "Incomplete evidence remains partial and cannot be promoted to successful execution evidence.",
+      "seriesRelation": "HardCompletionGateBinding"
+    }
+  ],
+  "forbiddenActionsForThisRequirementsUpdate": [
+    "ProcessStart",
+    "ProcessStop",
+    "ShellEvaluation",
+    "HardwareIO",
+    "CredentialRead",
+    "CredentialWrite",
+    "RemoteConnection",
+    "RemoteWrite",
+    "ProductMutation",
+    "PresetMutation",
+    "Level0Mutation"
+  ],
+  "crossCutting": {
+    "platforms": [
+      "macOS",
+      "Linux",
+      "Windows"
+    ],
+    "sameLogicalOutcomesAcrossPlatforms": true,
+    "privacyDataMinimised": true,
+    "publicEvidenceDeidentified": true,
+    "userFacingStatusHasTextAlternative": true,
+    "documentationGermanFirstEnglishSecond": true,
+    "cefrB2": true,
+    "wcag22AAWhereApplicable": true,
+    "supplyChain": "N/A for this requirements-only contract and dependency-free fixtures; any process or SSH implementation dependency requires SBOM, licence, provenance, and vulnerability evidence."
+  },
+  "reevaluationTriggers": [
+    "A process API or output-ordering model changes",
+    "A new outcome, signal, retry, or cancellation rule is introduced",
+    "An environment variable category or secret mechanism changes",
+    "Remote execution becomes enabled",
+    "The SSH reference adapter or fixed remote endpoint changes",
+    "Write, process, credential, hardware, product, preset, or Level-0 authority is proposed",
+    "A platform, data category, or implementation dependency is introduced"
+  ]
+}

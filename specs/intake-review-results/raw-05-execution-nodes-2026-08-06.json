@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "79d43997-ada1-4b19-b9bd-31d368b5b1eb",
+  "mode": "Single",
+  "status": "NeedsClarification",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-06T19:22:44Z",
+  "repository": {
+    "root": ".",
+    "head": "a3629bd20c3596579dfa7f333e6cc8e24ca5963a"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-05-execution-nodes-2026-08-06.json",
+    "normalizedSha256": "0062bd6c95a986344988bfbfc807c71ab44fbd9fac51e34421ef37986219b00d"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "role": "Primary",
+      "normalizedSha256": "51b844e44e226ee1b00e1b74e23d86ee59d207a9873d7ed343b27e4ff2429f03",
+      "gitBlob": "48845d019bd63a04b56a0ccb9e8a61123419630a"
+    }
+  ],
+  "findings": [
+    {
+      "id": "IR501",
+      "severity": "High",
+      "category": "OpenDecisionAndProvenance",
+      "target": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "disposition": "NeedsClarification",
+      "owner": "RAW-05",
+      "evidence": "The target leaves Remote Transport, Node Attestation, and Timeout Policy open, while the Authoring Receipt records decisions=[], openDecisionIds=[], and questionCount=0. The target therefore cannot establish deterministic Node authority or recovery provenance.",
+      "reevaluationTrigger": "IRQ501 through IRQ503 are answered explicitly, the selected transport, attestation, and timeout model are written into the intake, the Authoring Receipt records the decisions and openDecisionIds is empty, and RAW-05 receives a complete Single re-review."
+    },
+    {
+      "id": "IR502",
+      "severity": "High",
+      "category": "RequirementsEvidence",
+      "target": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-05",
+      "evidence": "AC-001 and AC-002 name host/sandbox differentiation, read-only mounts, missing nodes, and refused access, but no versioned Node Descriptor or Authority Contract, fixture paths, schemas, validator commands, expected outputs, exit codes, platform matrix, or reproducible mount/identity comparison is bound.",
+      "reevaluationTrigger": "A versioned Node Descriptor and Authority Contract binds deterministic positive and negative fixtures, validator commands, expected results and exit codes, platform applicability, and structured mount and identity evidence without implementing product or node runtime."
+    },
+    {
+      "id": "IR503",
+      "severity": "High",
+      "category": "LanguageAndTerminology",
+      "target": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-05",
+      "evidence": "The learner-facing profile requires German-first/English-second CEFR-B2 content, but requirements, decisions, acceptance, evidence, and recovery are not complete bilingual pairs. Node Descriptor, Trust Zone, Mount, Freshness, Health, WSL, ABS-DD, read-only Research, serial-autonomous, Spec Kit, and MergeAndSync are not explained locally or linked precisely. Current lifecycle, predecessor, decision state, review-only next action, and authority separation are not ordered text.",
+      "reevaluationTrigger": "Normative sections receive complete DE/EN pairs, first-use terms have local explanations or precise glossary links, and current lifecycle, dependencies, decisions, next action, and non-authority are explicit text before a complete re-review."
+    },
+    {
+      "id": "IR504",
+      "severity": "High",
+      "category": "CrossCuttingApplicability",
+      "target": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-05",
+      "evidence": "The target mentions secrets, personal host paths, mounts, and authority, but does not explicitly classify security, privacy and data minimisation, public-content limits, WCAG 2.2 AA, macOS/Linux/Windows applicability, container/WSL boundaries, or supply-chain applicability. Positive and negative cross-cutting evidence and re-evaluation triggers are absent.",
+      "reevaluationTrigger": "Security, privacy, public-content, accessibility, platform, container/WSL, and supply-chain applicability receive measurable boundaries, evidence, and re-evaluation triggers while product working-copy ownership remains excluded."
+    },
+    {
+      "id": "IR505",
+      "severity": "High",
+      "category": "HandoffAndDependencyContract",
+      "target": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-05",
+      "evidence": "The target names outputs to RAW-02, RAW-06, and RAW-08 but does not identify each producer/consumer contract, version, authority, failure behaviour, or the distinction between the non-binding RAW-02 preferred-order edge and later functional consumers. Mount and Node Descriptor handoffs are not traceable to requirements or acceptance criteria.",
+      "reevaluationTrigger": "Typed Node Descriptor, Mount Authority, Health/Freshness, and Attestation handoffs identify producer, consumer, version, authority, failure behaviour, and binding versus preferred sequencing; then RAW-05 is fully re-reviewed."
+    },
+    {
+      "id": "IR506",
+      "severity": "High",
+      "category": "PromptAndDeliveryAuthority",
+      "target": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-05",
+      "evidence": "The target grants no Workspace, CLI, or Remote-Write authority, but the enabled Autonomous prompt requests MergeAndSync and only a current review. The Authoring Receipt stores historical MergeAndSync and Admin-Bypass authority. Historical delivery data, Eligible lifecycle, and a future Ready review do not grant current scope, start, implementation, remote-write, merge, bypass, or provider authority, yet the prompt has no explicit fail-closed current-authority precondition.",
+      "reevaluationTrigger": "Both prompts and the renewed Receipt fail closed unless separate current scope, start, implementation, remote-write, merge, bypass, and provider authority is present; historic authority and Eligibility remain explicitly insufficient, followed by a complete Single re-review."
+    }
+  ],
+  "questions": [
+    {
+      "id": "IRQ501",
+      "status": "Open",
+      "owner": "RAW-05",
+      "question": "Welche Transportgrenze gilt für spätere Remote Nodes und wie wird sie von read-only Research, Trust Zone und Delivery Authority getrennt? / Which transport boundary applies to later remote nodes, and how is it separated from read-only research, trust zone, and delivery authority?"
+    },
+    {
+      "id": "IRQ502",
+      "status": "Open",
+      "owner": "RAW-05",
+      "question": "Welche Node-Attestation und welche fail-closed Vertrauensentscheidung gelten für Host, WSL, Container, ABS-DD-Sandbox und spätere Remote Nodes? / Which node attestation and fail-closed trust decision apply to host, WSL, container, ABS-DD sandbox, and later remote nodes?"
+    },
+    {
+      "id": "IRQ503",
+      "status": "Open",
+      "owner": "RAW-05",
+      "question": "Welche Timeout-, Freshness-, Health- und Recovery-Schwellen gelten, und welche Aktionen bleiben bei Timeout oder Mount-Drift ausdrücklich verboten? / Which timeout, freshness, health, and recovery thresholds apply, and which actions remain explicitly forbidden on timeout or mount drift?"
+    }
+  ],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 6,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "N/A"
+}

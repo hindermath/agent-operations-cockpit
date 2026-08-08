@@ -1,31 +1,31 @@
 {
   "schemaVersion": "2.0",
   "documentType": "IntakeReceipt",
-  "receiptId": "8b1f5d8b-91ef-4f98-8e6b-82c5ab1e3f70",
+  "receiptId": "2ad39cf4-67b3-4c26-b89b-4e08755df680",
   "intakeId": "d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b",
   "generator": {
     "preset": "intake-authoring-governance",
     "version": "0.3.0"
   },
-  "createdAt": "2026-08-05T19:01:48Z",
+  "createdAt": "2026-08-08T21:44:31Z",
   "operation": {
-    "operationId": "bdb84f16-71b4-46d1-8400-15dcfc017d10",
+    "operationId": "5bc04ecc-6823-48c8-8b85-1f325e33b9cc",
     "type": "Update",
-    "authorityEvidence": "Thorsten explicitly authorised on 2026-08-05 receipt-only provenance supersession for META-LH-02: refresh mutable source hashes, preserve the target byte-for-byte, archive the prior target and receipt, and perform a complete new Single review. Scope, ownership intent, nine series, non-goals, dependencies, Delivery Authority, Specify, implementation, remote writes, merge, bypass, presets, promotion, and Level-0 actions remain excluded."
+    "authorityEvidence": "Thorsten explicitly authorised on 2026-08-08 the bounded repair of only IR005 and IR006 from Series review 35f4d174-cef2-4293-8994-a0263bc10b3f. IAD601-IAD604 move without semantic change from the open to the confirmed decision table; stale lifecycle statements become historical snapshots with stable references to the canonical manifest and order. Purpose, scope, non-goals, decisions, owners, handoffs, dependencies, and Delivery Authority remain unchanged. Only predecessor archive, receipt and Series hash renewal, complete re-reviews, and AEPS evidence capture are authorised. Specify, implementation, remote, merge, bypass, preset, promotion, GitHub, and Level-0 actions are excluded."
   },
   "status": "ReadyForReview",
   "target": {
     "path": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
-    "normalizedSha256": "7965323e2981472fd061bfb9ca20fd10d6a6217df53fd0300127de74b0b9c14b"
+    "normalizedSha256": "9fc31a833421915b68b85c7dd499dc5b97a81152a8cf668599bb243ef3e17503"
   },
   "sources": [
     {
       "sourceId": "SRC001",
       "order": 1,
       "kind": "File",
-      "label": "Immediately superseded byte-identical META-LH-02-Portfolio-Ownership intake as first binding source",
+      "label": "Superseded META-LH-02-Portfolio-Ownership intake as first binding repair source",
       "location": "Repository",
-      "path": "specs/intake-authoring-archive/d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b/bdb84f16-71b4-46d1-8400-15dcfc017d10/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "path": "specs/intake-authoring-archive/d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b/5bc04ecc-6823-48c8-8b85-1f325e33b9cc/Lastenheft_META-LH-02-Portfolio-Ownership.md",
       "requestedUrl": "N/A",
       "finalUrl": "N/A",
       "retrievedAt": "N/A",
@@ -38,7 +38,7 @@
       "rawSha256": "N/A",
       "normalizedSha256": "7965323e2981472fd061bfb9ca20fd10d6a6217df53fd0300127de74b0b9c14b",
       "gitBlob": "N/A",
-      "proofBoundary": "RepositoryArchiveAtRepair"
+      "proofBoundary": "RepositoryArchiveAtBoundedSeriesRepair"
     },
     {
       "sourceId": "SRC002",
@@ -149,7 +149,7 @@
       "sourceId": "SRC007",
       "order": 7,
       "kind": "File",
-      "label": "Reconciled open and confirmed decision map",
+      "label": "Reconciled open and confirmed decision map after IR005 repair",
       "location": "Repository",
       "path": "docs/decisions/open-decisions.md",
       "requestedUrl": "N/A",
@@ -162,9 +162,9 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "c3467c421fe72538a1af1b2dfcba620f11589fbe475fae5cf8956cb5d5739e6b",
+      "normalizedSha256": "cf85b9053368903d0126cb080237dea04c3abed3620f5d29709d20466f461d15",
       "gitBlob": "N/A",
-      "proofBoundary": "RepositoryAtRepair"
+      "proofBoundary": "RepositoryAtBoundedSeriesRepair"
     },
     {
       "sourceId": "SRC008",
@@ -270,6 +270,27 @@
       "normalizedSha256": "cdb6d94ddb9cf282e377f449348b7a78aa15b2eb6eb0a54b9cc57343927320e8",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryAtRepair"
+    },
+    {
+      "sourceId": "SRC013",
+      "order": 13,
+      "kind": "File",
+      "label": "Series review that authorises bounded IR005 and IR006 repair",
+      "location": "Repository",
+      "path": "specs/intake-review-results/aoc-phase-2-series-2026-08-08-r3.json",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "11a42bd28136bf82c4dc0f36ac6e4d69b5ad8bfed6422d98d9cdb9be7c603345",
+      "gitBlob": "N/A",
+      "proofBoundary": "RepositoryAtRepairAuthorization"
     }
   ],
   "profile": "aoc-bilingual-requirements",
@@ -284,14 +305,14 @@
     "autonomousInvocation": "$speckit-autonomous requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md --delivery-mode MergeAndSync --require-current-review"
   },
   "deliveryAuthority": "MergeAndSync",
-  "authorityEvidence": "MergeAndSync remains the unchanged historical delivery ceiling. Any stored Admin-Bypass evidence is historical and grants no current authority. The current 2026-08-05 authority covers only receipt-provenance supersession and a complete new Single review; it grants no Specify, implementation, remote-write, merge, bypass, preset, promotion, or provider-administration authority.",
+  "authorityEvidence": "MergeAndSync remains the unchanged historical delivery ceiling. Any stored Admin-Bypass evidence is historical and grants no current authority. The current 2026-08-05 authority covers only receipt-provenance supersession and a complete new Single review; it grants no Specify, implementation, remote-write, merge, bypass, preset, promotion, or provider-administration authority. The 2026-08-08 provenance repair grants only receipt lineage renewal against the final Decision Register and no current downstream authority.",
   "promptState": "Enabled",
   "provenanceMode": "Supersession",
   "supersedes": {
-    "receiptPath": "specs/intake-authoring-archive/d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b/bdb84f16-71b4-46d1-8400-15dcfc017d10/META-LH-02-Portfolio-Ownership.json",
+    "receiptPath": "specs/intake-authoring-archive/d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b/5bc04ecc-6823-48c8-8b85-1f325e33b9cc/META-LH-02-Portfolio-Ownership.json",
     "targetNormalizedSha256": "7965323e2981472fd061bfb9ca20fd10d6a6217df53fd0300127de74b0b9c14b",
-    "archiveTargetPath": "specs/intake-authoring-archive/d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b/bdb84f16-71b4-46d1-8400-15dcfc017d10/Lastenheft_META-LH-02-Portfolio-Ownership.md",
-    "archiveReceiptPath": "specs/intake-authoring-archive/d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b/bdb84f16-71b4-46d1-8400-15dcfc017d10/META-LH-02-Portfolio-Ownership.json"
+    "archiveTargetPath": "specs/intake-authoring-archive/d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b/5bc04ecc-6823-48c8-8b85-1f325e33b9cc/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+    "archiveReceiptPath": "specs/intake-authoring-archive/d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b/5bc04ecc-6823-48c8-8b85-1f325e33b9cc/META-LH-02-Portfolio-Ownership.json"
   },
   "legacyAdoption": {
     "evidenceType": "N/A",
@@ -299,7 +320,7 @@
     "priorGitBlob": "N/A"
   },
   "updateAuthorized": true,
-  "updateAuthorityEvidence": "Thorsten explicitly approved receipt-only provenance supersession for META-LH-02 on 2026-08-05. This authorises only current source-hash binding, immutable archival of the prior target and receipt, and a complete new Single review; the target remains byte-identical and all product and downstream actions remain excluded.",
+  "updateAuthorityEvidence": "Thorsten explicitly authorised this bounded IR005 and IR006 repair, predecessor archive, Authoring Receipt and Series hash renewal, and complete re-review on 2026-08-08.",
   "series": {
     "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
     "manifestPath": "specs/intake-series/aoc-phase-2/manifest.json",

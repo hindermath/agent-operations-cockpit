@@ -47,13 +47,13 @@ drift closes the gate again. Legacy root intakes are out of scope.*
 | 5 | `Lastenheft_META-LH-05-Erste-Welle.md` | Completed | neun fachliche Intakes |
 | 6 | `Lastenheft_RAW-01-Reference-Agentic-Workspace.md` | Completed | read-only Referenzslice |
 | 7 | `Lastenheft_RAW-03-State-Truthfulness.md` | Completed | Zustandssemantik |
-| 8 | `Lastenheft_RAW-02-Workspace-Orchestrator.md` | Eligible | Orchestration; IAD201–203 bestätigt |
-| 9 | `Lastenheft_RAW-04-Presentation-Fabric.md` | Pending | zugängliche Projektionen |
-| 10 | `Lastenheft_RAW-05-Execution-Nodes.md` | Pending | Host-/Sandbox-Grenzen |
-| 11 | `Lastenheft_RAW-06-CLI-Environment-Orchestration.md` | Blocked | CLI; IAD601–604 |
-| 12 | `Lastenheft_RAW-07-Hardware-Capability-Layer.md` | Blocked | Hardware; IAD701–704 |
-| 13 | `Lastenheft_RAW-08-Workflow-Engine.md` | Pending | Knowledge Workflow |
-| 14 | `Lastenheft_RAW-09-Preset-Evolution.md` | Blocked | Preset Proposal; IAD901–902 |
+| 8 | `Lastenheft_RAW-02-Workspace-Orchestrator.md` | Completed | Orchestration; IAD201–203 bestätigt |
+| 9 | `Lastenheft_RAW-04-Presentation-Fabric.md` | Completed | zugängliche Projektionen |
+| 10 | `Lastenheft_RAW-05-Execution-Nodes.md` | Completed | Host-/Sandbox-Grenzen |
+| 11 | `Lastenheft_RAW-06-CLI-Environment-Orchestration.md` | Completed | CLI; IAD601–604 |
+| 12 | `Lastenheft_RAW-07-Hardware-Capability-Layer.md` | Completed | Hardware; IAD701–704 bestätigt |
+| 13 | `Lastenheft_RAW-08-Workflow-Engine.md` | Completed | Knowledge Workflow |
+| 14 | `Lastenheft_RAW-09-Preset-Evolution.md` | Completed | Preset Proposal; IAD901–902 bestätigt |
 
 Alle Pfade liegen unter `requirements/intakes/active/`. Die fachliche
 Nummerierung benennt Owner-Reihen; die Verarbeitungsposition folgt dem
@@ -78,22 +78,19 @@ is preferred only, so read-only node research may proceed earlier.*
 
 ## Nächster Kandidat und Blocker / Next candidate and blockers
 
-META-LH-01 bis META-LH-05, RAW-01 und RAW-03 sind nach aktueller
-`Ready`-Single-Review-Evidence im Manifest `Completed`. RAW-02 ist der einzige
-ausdrücklich als `Eligible` markierte Kandidat; IAD201–203 sind bestätigt und
-sein bindender Vorgänger RAW-03 ist abgeschlossen. RAW-04 und RAW-05 bleiben
-`Pending`. RAW-05 besitzt keine bindende Vorgängerkante und ist strukturell
-ebenfalls eligible, bleibt aber auf read-only Research begrenzt. Das ist eine
-Auskunft, keine Review-, Specify- oder Ausführungsfreigabe. Zusätzlich hält die
-globale Review-Sperre alle nachgelagerten Läufe geschlossen, bis alle 14 Ziele
-die oben definierte aktuelle `Ready`-Evidence besitzen. RAW-06, RAW-07 und
-RAW-09 bleiben bis zu den im jeweiligen Intake genannten IAD-Decisions
-blockiert.
+META-LH-01 bis META-LH-05 sowie RAW-01 bis RAW-09 sind nach aktueller
+`Ready`-Single-Review-Evidence im Manifest `Completed`. Es gibt keinen
+`Eligible`-Kandidaten und keinen Lifecycle-Blocker. Das vollständige aktuelle
+Series Review `86763944-9aab-4178-81b7-40dff7c1af51` ist `Ready`; der
+ausdrücklich autorisierte Statuswechsel setzt deshalb auch den deklarierten
+Serienstatus auf `Completed`. Dieser Abschluss startet keine Folgearbeit und
+erteilt keine Review-, Specify-, Implementierungs-, Remote-, Merge-, Bypass-,
+Preset- oder Promotion-Authority.
 
-*META-LH-01 through META-LH-05, RAW-01, and RAW-03 are `Completed` after
-current `Ready` Single-review evidence. RAW-02 is the sole explicitly declared
-`Eligible` candidate; IAD201 through IAD203 are confirmed and its binding
-RAW-03 predecessor is complete. RAW-04 and RAW-05 remain Pending. RAW-05 has no
-binding predecessor and is structurally eligible but remains research-only.
-This is information, not authority; the global review gate still blocks all
-downstream runs until all 14 targets have current Ready evidence.*
+*META-LH-01 through META-LH-05 and RAW-01 through RAW-09 are `Completed` after
+current Ready Single-review evidence. No Eligible candidate or lifecycle
+blocker remains. Complete current Series review
+`86763944-9aab-4178-81b7-40dff7c1af51` is `Ready`; the explicitly authorised
+transition therefore also sets the declared Series status to `Completed`.
+This completion starts no downstream work and grants no downstream or
+promotion authority.*

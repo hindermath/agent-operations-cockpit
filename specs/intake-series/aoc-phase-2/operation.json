@@ -1,41 +1,59 @@
 {
   "schemaVersion": "1.0",
   "documentType": "IntakeSeriesOperation",
-  "operationId": "4375e082-36ce-4397-ad19-1f0474ad1fdc",
+  "operationId": "072608d5-c4a6-4981-b2d4-0718204ff252",
   "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
   "type": "Update",
   "status": "Published",
-  "authorityEvidence": "Thorsten explicitly authorised this bounded Series update on 2026-08-02. RAW-03 changes only from Eligible to Completed while its current Single review remains Ready; RAW-02 changes only from Blocked to the sole declared Eligible target. RAW-04 and RAW-05 remain Pending, and RAW-05 remains research-only. Fourteen targets, one root, fourteen dependencies, exact order, every target hash, all other lifecycle values, intake contents, evidence paths, and Delivery Authority remain unchanged. Review, Specify, implementation, remote writes, merge, bypass, presets, and Level-0 actions are excluded.",
-  "proposalNormalizedSha256": "bb4382e35977696aa8d31126963daa9129afa5d1e7088d49f6cb8d893bcce9be",
+  "authorityEvidence": "Thorsten explicitly authorised on 2026-08-09 the single declared Series-status transition from NeedsClarification to Completed, gated by current Ready Series review 86763944-9aab-4178-81b7-40dff7c1af51. Every target lifecycle value, target hash, order position, root, dependency, intake, and delivery boundary remains unchanged. The subsequent explicitly authorised RIG017 repair changes only the local requirements-governance validator so a terminal Completed series accepts zero Eligible targets exactly when all targets are Completed; mixed terminal states remain blocked.",
+  "proposalNormalizedSha256": "6e928925d0a8133be83ddbfe75b379ed70fe82c7aeb7e34cc5c3ef10138eefec",
   "preparedPaths": [
+    "requirements/intakes/series/order.md",
     "specs/intake-series/aoc-phase-2/manifest.json",
     "specs/intake-series-receipts/aoc-phase-2.json",
-    "requirements/intakes/series/order.md",
-    "specs/intake-series/aoc-phase-2/operation.json"
+    "specs/intake-series/aoc-phase-2/operation.json",
+    ".specify/presets/intake-sequencing-governance/scripts/validate-intake-governance-config.py",
+    ".specify/presets/intake-sequencing-governance/tests/test-intake-governance-config.ps1",
+    ".specify/presets/intake-sequencing-governance/README.md",
+    ".specify/presets/intake-sequencing-governance/docs/man/validate-intake-governance-config.1",
+    ".specify/presets/intake-sequencing-governance/docs/field-validation-summary.md",
+    ".specify/presets/intake-sequencing-governance/templates/field-validation-summary.md",
+    "docs/aeps/findings-ledger.md",
+    "docs/aeps/receipts/2026-08-09-rig017-terminal-series-repair.md"
   ],
   "documentationImpact": {
     "decision": "UpdateRequired",
-    "source": "Thorsten's explicit RAW-03-to-RAW-02 lifecycle transition authority from 2026-08-02",
-    "owner": "AOC Phase 2 intake series",
+    "source": "Thorsten's explicit AOC Phase 2 Series completion and bounded RIG017 terminal-state repair authority from 2026-08-09",
+    "owner": "AOC Phase 2 Intake Series",
     "documents": [
+      "requirements/intakes/series/order.md",
       "specs/intake-series/aoc-phase-2/manifest.json",
       "specs/intake-series-receipts/aoc-phase-2.json",
       "specs/intake-series/aoc-phase-2/operation.json",
-      "requirements/intakes/series/order.md"
+      ".specify/presets/intake-sequencing-governance/scripts/validate-intake-governance-config.py",
+      ".specify/presets/intake-sequencing-governance/tests/test-intake-governance-config.ps1",
+      ".specify/presets/intake-sequencing-governance/README.md",
+      ".specify/presets/intake-sequencing-governance/docs/man/validate-intake-governance-config.1",
+      ".specify/presets/intake-sequencing-governance/docs/field-validation-summary.md",
+      ".specify/presets/intake-sequencing-governance/templates/field-validation-summary.md",
+      "docs/aeps/findings-ledger.md",
+      "docs/aeps/receipts/2026-08-09-rig017-terminal-series-repair.md"
     ],
     "evidence": [
-      "specs/intake-review-results/raw-03-state-truthfulness-2026-08-02-r2.json",
-      "docs/reviews/raw-03-state-truthfulness-intake-review-2026-08-02-r2.md",
-      "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/4375e082-36ce-4397-ad19-1f0474ad1fdc/"
+      "specs/intake-review-results/aoc-phase-2-series-2026-08-08-r4.json",
+      "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/072608d5-c4a6-4981-b2d4-0718204ff252/",
+      ".specify/presets/intake-sequencing-governance/tests/test-intake-governance-config.ps1",
+      ".specify/presets/intake-sequencing-governance/tests/test-intake-sequencing-validator.ps1",
+      "docs/aeps/findings-ledger.md",
+      "docs/aeps/receipts/2026-08-09-rig017-terminal-series-repair.md"
     ]
   },
   "reviewInvalidation": {
-    "status": "Superseded",
+    "status": "Preserved",
     "results": [
-      "specs/intake-review-results/aoc-phase-2-series.json",
-      "specs/intake-review-results/aoc-phase-2-series-2026-08-01-r2.json"
+      "specs/intake-review-results/aoc-phase-2-series-2026-08-08-r4.json"
     ],
-    "reason": "The bounded lifecycle transition changes only the Series-manifest hash, so historic Series results remain immutable but non-current. The current RAW-03 and RAW-02 Ready Single reviews retain exact target-hash currency and are not invalidated. No review or downstream work is started."
+    "reason": "The authorised transition changes only the declared Series status and its canonical explanatory text. All reviewed target paths, target hashes, exact order, root, and dependencies remain unchanged, so Ready Series review 86763944-9aab-4178-81b7-40dff7c1af51 remains current."
   },
   "validation": {
     "bash": "Passed",
@@ -44,10 +62,18 @@
   "publication": {
     "status": "Published",
     "publishedPaths": [
+      "requirements/intakes/series/order.md",
       "specs/intake-series/aoc-phase-2/manifest.json",
       "specs/intake-series-receipts/aoc-phase-2.json",
       "specs/intake-series/aoc-phase-2/operation.json",
-      "requirements/intakes/series/order.md"
+      ".specify/presets/intake-sequencing-governance/scripts/validate-intake-governance-config.py",
+      ".specify/presets/intake-sequencing-governance/tests/test-intake-governance-config.ps1",
+      ".specify/presets/intake-sequencing-governance/README.md",
+      ".specify/presets/intake-sequencing-governance/docs/man/validate-intake-governance-config.1",
+      ".specify/presets/intake-sequencing-governance/docs/field-validation-summary.md",
+      ".specify/presets/intake-sequencing-governance/templates/field-validation-summary.md",
+      "docs/aeps/findings-ledger.md",
+      "docs/aeps/receipts/2026-08-09-rig017-terminal-series-repair.md"
     ]
   }
 }
