@@ -1,0 +1,8 @@
+{
+  "fixtureId": "RAW07-NEGATIVE-DOMAIN-COMMAND",
+  "fixtureKind": "DomainCommand",
+  "expectedOutcome": "Rejected",
+  "expectedReasonCode": "HWC008_DOMAIN_COMMAND_FORBIDDEN",
+  "adapterEmitsProductCommand": true,
+  "adapterOwnsState": true
+}

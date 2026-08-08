@@ -1,0 +1,7 @@
+{
+  "fixtureId": "RAW09-NEGATIVE-PRODUCT-SPECIFIC-GENERALISATION",
+  "case": "ProductSpecificGeneralisation",
+  "productSpecific": true,
+  "genericPresetRuleClaimed": true,
+  "expectedReasonCode": "PEV006_PRODUCT_SPECIFIC_REJECTED"
+}

@@ -15,13 +15,19 @@ Die Menge der aktuell zielhashgültigen `Ready`-Review-Ergebnisse umfasst: /
 | Lastenheft / Intake | Review-ID | Zielhash / target hash | Evidence-Commit |
 |---|---|---|---|
 | META-LH-01 | `7715d4e3-c116-43ba-a029-a2197dca2233` | `99eab2565a73b3f1fe836feb89b543392360d3a5d56063c13fd28cf2f0a16704` | `ddba7482163c7e61161ad0b90f4e019844335898` |
-| META-LH-02 | `719a5aa0-6a0b-4eda-88dd-634824530251` | `7965323e2981472fd061bfb9ca20fd10d6a6217df53fd0300127de74b0b9c14b` | `PendingPublication`; Base-HEAD `25b7081d2563a275675a45112e3048bfdd060df7` |
+| META-LH-02 | `56da6c85-f3ca-4557-86a1-035c42f0b754` | `7965323e2981472fd061bfb9ca20fd10d6a6217df53fd0300127de74b0b9c14b` | `PendingPublication`; Base-HEAD `a3629bd20c3596579dfa7f333e6cc8e24ca5963a` |
 | META-LH-03 | `cd2c3f92-2db3-4a34-b16a-5c34c304221c` | `8b1a0b37c7938d8ff5577bfb9daaedc710990e95e5470edf65b0761724c668c4` | `PendingPublication`; Base-HEAD `ddba7482163c7e61161ad0b90f4e019844335898` |
 | RAW-01 | `f9f08f54-95eb-4abd-8ce1-bac180a6f742` | `c61d9786b27ea09e0e954363a1b4335d3255ea55b0f8a5167ee52c25c583f9b6` | `PendingPublication`; Base-HEAD `ddba7482163c7e61161ad0b90f4e019844335898` |
-| RAW-02 | `b1ffb007-f963-4f0f-b787-492f1b4b6717` | `7b2f4241e92c9dba5eb6b420d98d587b34ffe6a6ee5e607762125687a334c4e6` | `PendingPublication`; Base-HEAD `ddba7482163c7e61161ad0b90f4e019844335898` |
-| META-LH-04 | `6e2581c9-5f60-4f90-b990-3f00fe5883f5` | `87b454f82e40288625d5613099795a39fc236d514f8868fd17d3907930ccd8bc` | `PendingPublication`; Base-HEAD `25b7081d2563a275675a45112e3048bfdd060df7` |
-| META-LH-05 | `b6f48a52-cf43-4377-9ea4-4e3f505945f2` | `533ecf072fc81a08c43c7c9a794d30e3ea9237e0e8d75602251373881dfc6ec0` | `PendingPublication`; Base-HEAD `25b7081d2563a275675a45112e3048bfdd060df7` |
+| RAW-02 | `b5b1c9d3-9248-4703-9d7f-358dd4ae8398` | `7b2f4241e92c9dba5eb6b420d98d587b34ffe6a6ee5e607762125687a334c4e6` | `PendingPublication`; Base-HEAD `a3629bd20c3596579dfa7f333e6cc8e24ca5963a` |
+| META-LH-04 | `c9ea6131-9680-40d7-a50e-c9bcd0c2393c` | `87b454f82e40288625d5613099795a39fc236d514f8868fd17d3907930ccd8bc` | `PendingPublication`; Base-HEAD `a3629bd20c3596579dfa7f333e6cc8e24ca5963a` |
+| META-LH-05 | `a9e9f685-0287-4048-8ea8-97f1d67701c6` | `533ecf072fc81a08c43c7c9a794d30e3ea9237e0e8d75602251373881dfc6ec0` | `PendingPublication`; Base-HEAD `a3629bd20c3596579dfa7f333e6cc8e24ca5963a` |
 | RAW-03 | `d868f04f-cfe3-4393-98ab-6f4451526d0d` | `7c6248efe4bb77bc8767d0b0302dcd968c3da95c5fa3c428681f1e2968c9fb22` | `PendingPublication`; Base-HEAD `60706c5dc6d96996fd7b4b4780c0b736a643dbb0` |
+| RAW-04 | `3fd458f6-7d86-4961-a03d-05ae4bb89662` | `d3b4240276767a2cd67e86292ccc3b00f7d1aae32b583e081c0fc02751dcbc10` | `PendingPublication`; Base-HEAD `a3629bd20c3596579dfa7f333e6cc8e24ca5963a` |
+| RAW-05 | `e81d7013-defc-4649-9f08-ff839f48301b` | `69eb3cc6c4aa43c3472f2c7f976d19de935ee28562b4eb4cb15a1bc205248659` | `PendingPublication`; Base-HEAD `a3629bd20c3596579dfa7f333e6cc8e24ca5963a` |
+| RAW-06 | `bcf426d0-4b2b-4add-86e6-ff6bf3f1dfbe` | `957e8c5a6607f900d88d4e854eee3373410142735e4b8b8eb893c9e0a65bf3fb` | `PendingPublication`; Base-HEAD `a3629bd20c3596579dfa7f333e6cc8e24ca5963a` |
+| RAW-07 | `b4e3bed0-6002-4110-b378-01de9f3d040e` | `319a704fcb875f3996ce5aba182c0878718a21d011b38c5af09e81998ca6a7ed` | `PendingPublication`; Base-HEAD `a3629bd20c3596579dfa7f333e6cc8e24ca5963a` |
+| RAW-08 | `fbcfda58-7c07-417b-9eb9-6167fbd78dc7` | `e9c39efd55e9ca5646eaf0c6e52b4bcf8d50b3ead10ea494b0499594251d1f55` | `PendingPublication`; Base-HEAD `a3629bd20c3596579dfa7f333e6cc8e24ca5963a` |
+| RAW-09 | `fdf2a68c-ab87-462c-9622-3e7cd39bd164` | `640af2a4eb49b0c0dbb966e82f7bd06e1006dea4aa46fba66b368d59b577ce56` | `PendingPublication`; Base-HEAD `a3629bd20c3596579dfa7f333e6cc8e24ca5963a` |
 
 `PendingPublication` ist kein fehlender Nachweis: Review-ID, Base-HEAD und
 normalisierter Zielhash binden den lokalen Zustand, aber ein Upstream-Handoff
@@ -31,16 +37,21 @@ artifact.*
 
 Die strengere formale Ready-Grenze und die globale Review-Sperre verlangen
 zusätzlich ein aktuell validierbares Authoring Receipt. Der Abgleich vom
-`2026-08-05` ergibt nun acht vollständig gate-konforme Ziele:
-`META-LH-01` bis `META-LH-05` sowie `RAW-01` bis `RAW-03`. Die drei zuvor
-driftenden META-Receipts bestehen nach der Provenienz-Supersession auf Bash und
-PowerShell; `RAW-04` bis `RAW-09` besitzen noch kein formales Ready-Review. Das
-globale Gate ist daher weiterhin `Closed`. / *The stricter Ready boundary also
-requires a currently valid Authoring Receipt. The 2026-08-05 comparison now
-has eight fully gate-compliant targets: META-LH-01 through META-LH-05 and
-RAW-01 through RAW-03. The three previously drifting META receipts pass both
-Bash and PowerShell surfaces after provenance supersession; RAW-04 through
-RAW-09 still lack formal Ready reviews. The global gate remains Closed.*
+`2026-08-08` ergibt vierzehn vollständig gate-konforme Ziele: `META-LH-01` bis
+`META-LH-05` sowie `RAW-01` bis `RAW-09`. Alle Authoring Receipts und alle
+aktuellen, nicht supersedierten Single Reviews bestehen auf Bash und
+PowerShell. Das vollständige RAW-09-Ersatzreview ist `Ready`; `IR901` bis
+`IR906` sowie `IRQ901` bis `IRQ903` sind erledigt. Das globale Review-Gate ist
+damit `OpenForSeparateAuthorization`. Es erteilt selbst weder Start-, Specify-,
+Implementierungs-, Remote-, Merge-, Bypass-, Preset- noch Promotion-Authority.
+/ *The stricter Ready boundary also requires a currently valid Authoring
+Receipt. The 2026-08-08 comparison now has fourteen fully gate-compliant
+targets: META-LH-01 through META-LH-05 and RAW-01 through RAW-09. Every current
+Receipt and non-superseded Single review passes Bash and PowerShell. The
+complete RAW-09 replacement review is Ready and resolves IR901 through IR906
+and IRQ901 through IRQ903. The global review gate is therefore open for a
+separate authorisation; it grants no downstream or promotion authority by
+itself.*
 
 ## Bereits in #196 verankerte Kandidaten / Candidates already anchored in #196
 
@@ -591,3 +602,162 @@ duplicate these candidates. They refine evidence, limits, or possible gaps.*
 - **Promotion-Blocker:** keine allgemeine Decision-Extraktion, keine
   Cross-Project-Fixture und keine Level-0-Authority für Validatoränderungen.
 - **Status:** `PotentialCandidate`; Upstream `PendingPublication`.
+
+**Ergänzende Evidence vom 2026-08-08 / Additional evidence from 2026-08-08:**
+RAW-08 bestätigt dasselbe Muster ein zweites Mal innerhalb des AOC. Das
+begrenzte Update bindet `IAD801` bis `IAD803` konsistent in Target, Decision
+Register und Authoring Receipt. Das vollständige Single Review
+`5d0b7069-0a37-4339-88ba-a512409fd8f6` besteht auf Bash und PowerShell,
+erledigt `IR801` und meldet null offene Fragen. Ergebnis-Hash ist
+`83874c4c89cf635f384f6d7705122be4f511131cb35916f8acdf38d7df25febe`;
+Evidence bleibt `PendingPublication` auf Base-HEAD
+`a3629bd20c3596579dfa7f333e6cc8e24ca5963a`. Das Review bleibt wegen der
+unabhängigen Findings `IR802` bis `IR806` bei `NeedsRemediation`. Damit ist
+belegt, dass hergestellte Decision-Parität genau ihr Finding schließt, aber
+keine pauschale Ready-Freigabe erzeugt. / *RAW-08 confirms the same pattern a
+second time inside AOC. IAD801 through IAD803 are consistent across target,
+Decision Register, and Authoring Receipt; the validated Single review resolves
+IR801 with zero questions. Independent IR802 through IR806 still produce
+NeedsRemediation, proving that restored decision parity closes its own finding
+without implying overall Ready.*
+
+**Ergänzende Ready-Evidence vom 2026-08-08 / Additional Ready evidence from
+2026-08-08:** Das autorisierte Repair bewahrt IAD801 bis IAD803 und schließt
+`IR802` bis `IR806` durch einen versionierten Workflow-Evidence-Vertrag,
+positive und negative Offline-Fixtures, typisierte Handoffs, Cross-Cutting-
+Evidence sowie acht fail-closed Authority-Gates. Das vollständige Ersatzreview
+`fbcfda58-7c07-417b-9eb9-6167fbd78dc7` besteht auf Bash und PowerShell mit
+`Ready`, null Findings und null offenen Fragen; Ergebnis-Hash ist
+`2c338c9410e7184ad68d924999395eccc95837af2e2351c7dda6bd5b652379ed`.
+Diese weitere AOC-interne Evidence stärkt `AEPS-FIND-AOC-002`, `003`, `006`,
+`009`, `010`, `011` und `015`, erzeugt aber keine neue Finding-Klasse und
+keine Cross-Project- oder Runtime-Evidence. / *The authorised repair preserves
+IAD801 through IAD803 and resolves IR802 through IR806 with a versioned
+contract, positive and negative offline fixtures, typed handoffs,
+cross-cutting evidence, and eight fail-closed authority gates. The complete
+replacement review passes both validators as Ready with no findings or open
+questions. This additional AOC-local evidence strengthens existing findings
+without creating a new finding class, cross-project evidence, or runtime
+evidence.*
+
+**Ergänzende RAW-09-Evidence vom 2026-08-08 / Additional RAW-09 evidence from
+2026-08-08:** Das erste vollständige Single Review
+`90d504e8-88d1-4d68-8d1c-1c647478ad8b` meldete sechs High-Findings und drei
+offene Entscheidungen. Das begrenzte Update schloss IAD901 und IAD902,
+definierte Promotion Authority als neue menschliche Einzelfreigabe ohne
+Standing Grant oder Bypass und band einen versionierten Vertrag sowie positive
+und negative Offline-Fixtures. Das vollständige Ersatzreview
+`fdf2a68c-ab87-462c-9622-3e7cd39bd164` besteht auf Bash und PowerShell mit
+`Ready`, null Findings und null offenen Fragen; Ergebnis-Hash ist
+`60eb98213111a767d9f9c655529850b6b425871fa8cb2380e1e07fcdf85de6aa`.
+Alle vierzehn aktiven Lastenhefte erfüllen damit gleichzeitig die formale
+Ready-Grenze. Diese AOC-interne Evidence stärkt `AEPS-FIND-AOC-002`, `003`,
+`006`, `007`, `009`, `010`, `011` und `015`, erzeugt aber keine neue
+Finding-Klasse, keine Cross-Project-Evidence und keine Promotion Authority. /
+*The initial complete RAW-09 review reported six High findings and three open
+decisions. The bounded update closed both decisions, made promotion a fresh
+per-proposal human approval without a standing grant or bypass, and added a
+versioned contract with positive and negative offline fixtures. The complete
+replacement review passes both validators as Ready with no findings or open
+questions. All fourteen active intakes now meet the formal Ready boundary at
+the same time. This remains AOC-local evidence and grants no promotion.*
+
+**Ergänzende Abschluss-Serienreview-Evidence vom 2026-08-08 / Additional
+completion Series-review evidence from 2026-08-08:** Das vollständige aktuelle
+Series Review `35f4d174-cef2-4293-8994-a0263bc10b3f` bestätigt 14 aktuelle
+`Ready`-Single-Reviews und 14 gültige Authoring Receipts, endet aber wegen zwei
+neuer High-Governance-Inkonsistenzen mit `NeedsRemediation`. `IR005` zeigt,
+dass IAD601 bis IAD604 in RAW-06, Receipt und Review beantwortet, im zentralen
+Decision Register jedoch weiterhin offen sind. `IR006` zeigt, dass zwölf
+Lastenhefte frühere `Eligible`- oder `Blocked`-Snapshots noch als aktuellen
+Lifecycle beschreiben, während Manifest und Order alle 14 Ziele als
+`Completed` binden. Ergebnis-Hash ist
+`11a42bd28136bf82c4dc0f36ac6e4d69b5ad8bfed6422d98d9cdb9be7c603345`.
+Die Evidence stärkt `AEPS-FIND-AOC-001`, `007`, `010` und `015`, erzeugt aber
+keine neue Finding-Klasse und keine Produkt-, Cross-Project- oder
+Promotion-Evidence. / *The complete current Series review confirms fourteen
+current Ready reviews and valid Authoring Receipts but reports two High
+governance inconsistencies. Decision and human-readable lifecycle truths do
+not yet agree with their canonical evidence. This strengthens existing AOC
+findings without creating a new finding class or downstream authority.*
+
+
+## Ergänzende IR005-/IR006-Repair-Evidence vom 2026-08-08 / Additional IR005/IR006 repair evidence from 2026-08-08
+
+Der ausdrücklich begrenzte Repair verschiebt IAD601 bis IAD604 ohne
+inhaltliche Änderung aus der offenen in die bestätigte Decision-Tabelle und
+ersetzt in zwölf Intakes gegenwärtig formulierte alte Lifecycle-Aussagen durch
+klar gekennzeichnete historische Authoring-Snapshots mit stabilen Verweisen
+auf Manifest und Order. Zwölf erneuerte Authoring Receipts und zwölf
+vollständige Ersatz-Single-Reviews bestehen auf Bash und PowerShell mit
+`Ready`, null Findings und null offenen Fragen. / *The explicitly bounded
+repair moves IAD601 through IAD604 unchanged into the confirmed decision table
+and replaces present-tense old lifecycle wording in twelve intakes with clearly
+historical authoring snapshots linked to the canonical manifest and order
+document. Twelve renewed receipts and twelve complete replacement Single
+reviews pass both validator surfaces as Ready with no findings or questions.*
+
+| Review-ID | Ziel / Target | Normalisierter Zielhash / Normalised target hash |
+|---|---|---|
+| `722d1188-c961-47a1-b149-afef548791ed` | `requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md` | `9fc31a833421915b68b85c7dd499dc5b97a81152a8cf668599bb243ef3e17503` |
+| `7667b091-eb3d-42e8-b3dd-cf52cc1175d1` | `requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md` | `f6d57cacc954b4899fc5bd8ddcc235570ec20470094feec506e1b8e9ea07e3e9` |
+| `fc33bdf1-5857-45c1-a5d4-f89d3a4fdca9` | `requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md` | `eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce` |
+| `82c61d7f-9bb3-4adf-90d8-92ffeef25c76` | `requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md` | `cb255e60b49237f8cc655486b6529536b831b5b942f89f838678386bc31f930f` |
+| `393d5c45-2a01-4d20-8246-232060761c8e` | `requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md` | `6a41e6ae6447ff0192a03af7940362e05e48bff48a5fd21f39e9b6e670eade20` |
+| `609edc9a-96b7-4b5d-8ddf-3eb89cd1d067` | `requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md` | `31d31e82ab1857182d1201192438e5c91abfc3190ba47a2f68b9543034ab0cfd` |
+| `101da312-394f-48e7-9ad0-ad3f718e7374` | `requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md` | `ce89a73e9e1d0bdeadcc166a0f4a7b3b94052037cabb8225ceb4ef2ebd345ec4` |
+| `f9f84045-d19c-486b-8813-e30c195ef205` | `requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md` | `3fd7c5fbf4f419ed6131c4984a948f26d0b6b8c6ab3a5b068cdadce501c3fbad` |
+| `d6cea7b3-724d-4715-b2b8-7d73ac2019c8` | `requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md` | `dde4a283ac2c761373085beea976dcd927d813e17aa2b1ad76ceab800c1d604a` |
+| `14c10979-84c5-4451-957d-b34e65f111ec` | `requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md` | `ade666e411ed9a81b9736e628adb8613be0d9d732295c7e5470d90f0c64f513a` |
+| `97d2c9fc-2c5e-4852-8ee5-5ccbb3cee8e0` | `requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md` | `623451757149794556a9f4efef73c13c6894244476b7fd484f0eaaa9fdba7f1a` |
+| `2190e2cd-16cf-4afc-8d8e-12eba5bdd71f` | `requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md` | `c3da0eec782279678b1599e0e2365e409fbfe9e0e6f40e5f2e1b768e385f3b83` |
+
+Das vollständige Series-Ersatzreview `86763944-9aab-4178-81b7-40dff7c1af51` ist `Ready`, umfasst
+14 Ziele, einen Root und 14 azyklische Abhängigkeiten und schließt `IR005` und
+`IR006` ohne Risikoakzeptanz. Ergebnis-Hash ist `c511ea75ac1fe67ee4701cd45c9d9e9876bb3c39c0a84dcd7debdac647c1238b`. Der im
+Manifest weiterhin deklarierte Status `NeedsClarification` wird dadurch nicht
+automatisch geändert; der formale Lifecycle-Abschluss benötigt einen neuen
+ausdrücklichen Series-Update-Auftrag. / *The complete replacement Series review
+is Ready and resolves IR005 and IR006 without risk acceptance. It does not
+automatically change the declared manifest status; formal lifecycle completion
+requires a new explicit Series update.*
+
+Die Evidence stärkt `AEPS-FIND-AOC-001`, `007`, `010` und `015`, erzeugt
+aber keine neue Finding-Klasse. Besonders bestätigt wird das Muster, dass
+maschinenlesbare kanonische Zustände und menschenlesbare Intakes nur dann
+dauerhaft konsistent bleiben, wenn lokale Lifecycle-Texte keine zweite
+gegenwärtige Wahrheit duplizieren. Dies ist weiterhin nur AOC-interne
+Requirements-Governance-Evidence: keine Cross-Project-, Runtime-, Preset- oder
+Promotion-Evidence. / *This strengthens existing findings without creating a
+new class. Human-readable intakes remain durable when they do not duplicate a
+second current lifecycle truth. The evidence remains AOC-local and grants no
+cross-project, runtime, preset, or promotion claim.*
+
+## Ergänzende RIG017-Terminal-Evidence vom 2026-08-09 / Additional RIG017 terminal evidence from 2026-08-09
+
+Der autorisierte Series-Abschluss zeigte eine zustandsunabhängige
+Kardinalitätsannahme im lokalen Governance-Validator: `RIG017` verlangte auch
+für eine vollständig abgeschlossene Serie genau ein `Eligible`-Ziel. Das
+positive Terminal-Fixture bestätigt nun `Completed` mit vierzehn
+`Completed`-Zielen und genau null `Eligible`; das negative Fixture weist einen
+gemischten Zustand mit `Completed`-Serie und verbleibendem `Eligible`-Ziel
+weiterhin fail-closed als `RIG017` zurück. Die Bash- und PowerShell-Oberflächen
+melden den aktuellen AOC-Zustand als `Aligned` und geben
+`eligibleCandidate: N/A` aus. / *The authorised Series completion exposed a
+state-independent cardinality assumption in the local governance validator:
+RIG017 required exactly one Eligible target even for a fully completed Series.
+The positive terminal fixture now accepts Completed with fourteen Completed
+targets and zero Eligible targets; the negative fixture keeps a mixed
+Completed/Eligible state fail-closed as RIG017. Both validator surfaces report
+the current AOC state as Aligned with no eligible candidate.*
+
+Es entsteht keine neue Finding-ID. Die reparierte Terminalinvariante stärkt
+`AEPS-FIND-AOC-001`, `007` und `010`: Reviewstatus, Series-Lifecycle und
+Eligibility bleiben getrennte Wahrheiten; terminale Zustände benötigen
+zustandsabhängige, explizit negativ getestete Invarianten. Candidate-Matrix,
+Gap-Analyse und Handoff bleiben unverändert, weil dies ausschließlich
+AOC-lokale Governance-Evidence ohne Cross-Project-, Preset- oder
+Promotion-Aussage ist. / *No new finding is created. The repaired terminal
+invariant strengthens the existing lifecycle, drift, and validation findings.
+Derived candidate artifacts remain unchanged because this is AOC-local
+governance evidence only.*

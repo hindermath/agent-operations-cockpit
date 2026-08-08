@@ -1,0 +1,32 @@
+{
+  "fixtureId": "RAW07-VALID-HARDWARE-CAPABILITIES",
+  "fixtureKind": "ValidContract",
+  "expectedOutcome": "Valid",
+  "cases": [
+    {
+      "id": "midi-controller-capability",
+      "deviceClass": "MidiController",
+      "capabilities": ["Button", "Encoder", "Fader", "Pad", "Feedback"],
+      "rawProtocolInDomain": false,
+      "domainCommandEmitted": false,
+      "deviceApproved": true,
+      "labApproval": "Approved",
+      "killSwitchVerified": true
+    },
+    {
+      "id": "stream-deck-capability",
+      "deviceClass": "StreamDeck",
+      "capabilities": ["Button", "Text", "Icon", "Feedback"],
+      "rawProtocolInDomain": false,
+      "domainCommandEmitted": false,
+      "deviceApproved": true,
+      "labApproval": "Approved",
+      "killSwitchVerified": true
+    }
+  ],
+  "failureCases": [
+    {"input": "Disconnect", "expectedState": "Disconnected"},
+    {"input": "UnknownControl", "expectedState": "Unsupported"},
+    {"input": "MalformedMidi", "expectedState": "RejectedInAdapter"}
+  ]
+}

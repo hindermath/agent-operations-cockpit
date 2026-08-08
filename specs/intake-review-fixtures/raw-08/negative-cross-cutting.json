@@ -1,0 +1,19 @@
+{
+  "fixtureId": "RAW08-NEGATIVE-CROSS-CUTTING",
+  "fixtureKind": "CrossCuttingViolation",
+  "expectedOutcome": "Rejected",
+  "expectedReasonCodes": [
+    "WFE009_PERSONAL_DATA_REJECTED",
+    "WFE010_A11Y_PROJECTION_REQUIRED",
+    "WFE011_PLATFORM_SEMANTICS_MISMATCH",
+    "WFE012_SUPPLY_CHAIN_EVIDENCE_REQUIRED"
+  ],
+  "privateHostPathPresent": true,
+  "unnecessaryPersonalDataPresent": true,
+  "textAlternativePresent": false,
+  "keyboardAlternativePresent": false,
+  "sameLogicalOutcomeAcrossPlatforms": false,
+  "implementationDependencyIntroduced": true,
+  "sbomPresent": false,
+  "vulnerabilityEvidencePresent": false
+}

@@ -1,0 +1,11 @@
+{
+  "fixtureId": "RAW08-NEGATIVE-RETENTION-VIOLATION",
+  "fixtureKind": "RetentionViolation",
+  "expectedOutcome": "Rejected",
+  "expectedReasonCode": "WFE007_RETENTION_VIOLATION",
+  "evidenceClass": "OperationalExecution",
+  "ageDaysAfterCompletion": 91,
+  "legalHoldActive": false,
+  "deletionReceiptPresent": false,
+  "retainedWithoutException": true
+}

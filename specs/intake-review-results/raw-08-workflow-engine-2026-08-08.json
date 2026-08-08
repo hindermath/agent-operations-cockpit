@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "5d0b7069-0a37-4339-88ba-a512409fd8f6",
+  "mode": "Single",
+  "status": "NeedsRemediation",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-08T15:09:10Z",
+  "repository": {
+    "root": ".",
+    "head": "a3629bd20c3596579dfa7f333e6cc8e24ca5963a"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-08-workflow-engine-2026-08-08.json",
+    "normalizedSha256": "39bf131cb3d917a027f413402379d0c9a03cd3351a8cdbe9eda3af8ca54ee3f5"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "role": "Primary",
+      "normalizedSha256": "69228e27f596683ae7e1c502d27b230e736577d73610e1781f47fe01d4bdaae6",
+      "gitBlob": "8efb6dd30120d34fa80a768a15adbbd762faf6de"
+    }
+  ],
+  "findings": [
+    {
+      "id": "IR802",
+      "severity": "High",
+      "category": "RequirementsEvidence",
+      "target": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-08",
+      "evidence": "IAD801 through IAD803 now bind persistence, attestation, and retention, but FR-001 through FR-004 and AC-001 through AC-002 still bind no versioned workflow or knowledge-package contract, state-transition table, JSON Schemas, positive, negative, provider-failure, retention, signature-failure, or end-to-end fixtures, validator commands, expected reason codes, outputs, or exit codes.",
+      "reevaluationTrigger": "A versioned workflow and knowledge-package contract plus deterministic lifecycle transitions, schemas, positive and negative fixtures, Bash and PowerShell validation commands, stable reason codes, expected outputs and exit codes, and a complete source-to-retrospective trace are bound before a complete Single re-review."
+    },
+    {
+      "id": "IR803",
+      "severity": "High",
+      "category": "LanguageAndTerminology",
+      "target": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-08",
+      "evidence": "The decision section is now a complete German-first and English-second pair, but purpose, sources, requirements, child intakes, acceptance criteria, evidence, revision rules, prompts, and next action remain incomplete bilingual pairs. Charter, Source, Decision, Intake, Spec, Receipt, Evidence class, ProviderFailure, Knowledge Package, Retrospective Handoff, Stop-Gate, Attestation Envelope, Trust Policy, Legal Hold, research-only, serial-autonomous, Spec Kit, and MergeAndSync are not explained locally or linked precisely for the declared first-year learner audience.",
+      "reevaluationTrigger": "Every normative section receives semantically complete DE-first and EN-second text, technical and Spec Kit terms are explained on first use or precisely linked to the bilingual glossary, and lifecycle, dependencies, decisions, next action, and non-authority are explicit as ordered text before a complete Single re-review."
+    },
+    {
+      "id": "IR804",
+      "severity": "High",
+      "category": "CrossCuttingApplicability",
+      "target": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-08",
+      "evidence": "IAD802 and IAD803 add signature, secret, personal-data, retention, deletion, and legal-hold boundaries, but the target still does not explicitly classify public-content limits, WCAG 2.2 AA, text alternatives, macOS, Linux, Windows, container and remote-node evidence, or software-supply-chain applicability. It binds no measurable positive and negative evidence or re-evaluation trigger for these cross-cutting concerns.",
+      "reevaluationTrigger": "Security, privacy and data minimisation, public-content, accessibility, platform, node, and supply-chain applicability receive explicit measurable boundaries, positive and negative evidence, failure behaviour, and re-evaluation triggers without adding product-state ownership."
+    },
+    {
+      "id": "IR805",
+      "severity": "High",
+      "category": "HandoffAndDependencyContract",
+      "target": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-08",
+      "evidence": "RAW-05 and RAW-06 are named as input evidence and RAW-09 as the knowledge-package consumer, but producer, consumer, contract version, authority, compatibility, failure behaviour, required fields, and binding Series relation are not specified. Artifact Lifecycle, Traceability Graph, Evidence or Receipt Contract, and Retrospective Handoff remain labels rather than independently reviewable typed boundaries.",
+      "reevaluationTrigger": "Typed and versioned input and output handoffs bind producer, consumer, authority, compatibility, failure behaviour, required evidence fields, and Series relation for RAW-05, RAW-06, RAW-09, and every proposed child-intake boundary before a complete Single re-review."
+    },
+    {
+      "id": "IR806",
+      "severity": "High",
+      "category": "PromptAndDeliveryAuthority",
+      "target": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-08",
+      "evidence": "The normative text correctly says that decisions, Eligibility, and receipts grant no start or delivery authority, but the enabled Autonomous prompt still requests MergeAndSync and requires only a current review. The Authoring Receipt retains historical MergeAndSync and the superseded predecessor retained Admin-Bypass. Neither prompt explicitly requires separate current scope, start, implementation, governance-write, remote-write, merge, bypass, and provider authority or fails closed when any authority is absent.",
+      "reevaluationTrigger": "Copy-ready prompts and the renewed Authoring Receipt distinguish historical delivery ceilings from current authority and fail closed unless every required current scope, start, implementation, governance-write, remote-write, merge, bypass, and provider permission exists, followed by a complete Single re-review."
+    }
+  ],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 5,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "specs/intake-review-results/raw-08-workflow-engine-2026-08-07.json"
+}

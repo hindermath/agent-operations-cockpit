@@ -1,0 +1,180 @@
+{
+  "schemaVersion": "2.0",
+  "documentType": "IntakeReceipt",
+  "receiptId": "a558038d-12a2-43c8-86c3-2e7f082ce4b7",
+  "intakeId": "8c0ddc2e-a816-467c-a2c2-ec86680850b0",
+  "generator": {
+    "preset": "intake-authoring-governance",
+    "version": "0.3.0"
+  },
+  "createdAt": "2026-08-07T20:33:02Z",
+  "operation": {
+    "operationId": "3c3f82a3-c756-45b2-abb6-d1805c13c993",
+    "type": "Update",
+    "authorityEvidence": "Thorsten explicitly invoked speckit-intake-update for RAW-07 on 2026-08-07. The bounded authority covers only confirmed option A for IAD701-IAD704, predecessor archive, Authoring Receipt and Series hash renewal, and a complete RAW-07 re-review. Specify, implementation, hardware I/O, remote, preset, Level-0, GitHub, merge, and bypass actions are excluded."
+  },
+  "status": "ReadyForReview",
+  "target": {
+    "path": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+    "normalizedSha256": "319a704fcb875f3996ce5aba182c0878718a21d011b38c5af09e81998ca6a7ed"
+  },
+  "sources": [
+    {
+      "sourceId": "SRC001", "order": 1, "kind": "File",
+      "label": "Superseded RAW-07 intake as first binding update source",
+      "location": "Repository",
+      "path": "specs/intake-authoring-archive/8c0ddc2e-a816-467c-a2c2-ec86680850b0/3c3f82a3-c756-45b2-abb6-d1805c13c993/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "requestedUrl": "N/A", "finalUrl": "N/A", "retrievedAt": "N/A", "httpStatus": "N/A", "contentType": "N/A", "contentLength": "N/A", "etag": "N/A", "lastModified": "N/A", "redirectChain": [], "rawSha256": "N/A",
+      "normalizedSha256": "fa069ebc98b5e1352a83465be1bf728e9434dd36fa8033422a25d5037f46a8af", "gitBlob": "N/A", "proofBoundary": "RepositoryArchiveAtUpdate"
+    },
+    {
+      "sourceId": "SRC002", "order": 2, "kind": "File",
+      "label": "Phase-2 Series review defining IAD701-IAD704 and IR003",
+      "location": "Repository", "path": "specs/intake-review-results/aoc-phase-2-series-2026-08-01-r2.json",
+      "requestedUrl": "N/A", "finalUrl": "N/A", "retrievedAt": "N/A", "httpStatus": "N/A", "contentType": "N/A", "contentLength": "N/A", "etag": "N/A", "lastModified": "N/A", "redirectChain": [], "rawSha256": "N/A",
+      "normalizedSha256": "c74544dff3cd65c61f9d529de03ac8eddf1e6a3279513fcd003dc60927dacc19", "gitBlob": "N/A", "proofBoundary": "RepositoryAtUpdateAuthorization"
+    },
+    {
+      "sourceId": "SRC003", "order": 3, "kind": "File",
+      "label": "Readable Phase-2 Series review evidence",
+      "location": "Repository", "path": "docs/reviews/aoc-phase-2-intake-review-2026-08-01-r2.md",
+      "requestedUrl": "N/A", "finalUrl": "N/A", "retrievedAt": "N/A", "httpStatus": "N/A", "contentType": "N/A", "contentLength": "N/A", "etag": "N/A", "lastModified": "N/A", "redirectChain": [], "rawSha256": "N/A",
+      "normalizedSha256": "2a91b64723fe95a378eb56996ef4aa811e4425e5533c9225277ebd7f04676483", "gitBlob": "N/A", "proofBoundary": "RepositoryAtUpdateAuthorization"
+    },
+    {
+      "sourceId": "SRC004", "order": 4, "kind": "File", "label": "Self-contained AOC programme source pack",
+      "location": "Repository", "path": "requirements/baseline/source-pack.md",
+      "requestedUrl": "N/A", "finalUrl": "N/A", "retrievedAt": "N/A", "httpStatus": "N/A", "contentType": "N/A", "contentLength": "N/A", "etag": "N/A", "lastModified": "N/A", "redirectChain": [], "rawSha256": "N/A",
+      "normalizedSha256": "a1a3907634c0903863d64031e5b6d7e4eb8818eea29bbf1bc2065a81d7a5bb93", "gitBlob": "N/A", "proofBoundary": "RepositoryAtUpdate"
+    },
+    {
+      "sourceId": "SRC005", "order": 5, "kind": "File", "label": "RAW-04 Presentation Contract consumed by RAW-07",
+      "location": "Repository", "path": "requirements/baseline/presentation-contract.json",
+      "requestedUrl": "N/A", "finalUrl": "N/A", "retrievedAt": "N/A", "httpStatus": "N/A", "contentType": "N/A", "contentLength": "N/A", "etag": "N/A", "lastModified": "N/A", "redirectChain": [], "rawSha256": "N/A",
+      "normalizedSha256": "f7e8929e0b84feb866ed2df3e175bcd0e986afe293ed570b2294218257fc5ceb", "gitBlob": "N/A", "proofBoundary": "RepositoryAtUpdate"
+    },
+    {
+      "sourceId": "SRC006", "order": 6, "kind": "File", "label": "Human Decision Register with confirmed IAD701-IAD704",
+      "location": "Repository", "path": "docs/decisions/open-decisions.md",
+      "requestedUrl": "N/A", "finalUrl": "N/A", "retrievedAt": "N/A", "httpStatus": "N/A", "contentType": "N/A", "contentLength": "N/A", "etag": "N/A", "lastModified": "N/A", "redirectChain": [], "rawSha256": "N/A",
+      "normalizedSha256": "752f485309fdd3a589f3224f336b868982629f7596cc1b627b5ca026d145e67e", "gitBlob": "N/A", "proofBoundary": "RepositoryAtUpdate"
+    },
+    {
+      "sourceId": "SRC007", "order": 7, "kind": "File", "label": "Machine-readable RAW-07 capability, adapter, device-wave, and lab contract",
+      "location": "Repository", "path": "requirements/baseline/hardware-capability-contract.json",
+      "requestedUrl": "N/A", "finalUrl": "N/A", "retrievedAt": "N/A", "httpStatus": "N/A", "contentType": "N/A", "contentLength": "N/A", "etag": "N/A", "lastModified": "N/A", "redirectChain": [], "rawSha256": "N/A",
+      "normalizedSha256": "83ddc44d58f196bebeb20bd52a201349e044a44d2ba982bfaf601e7d6e7dee50", "gitBlob": "N/A", "proofBoundary": "RepositoryAtUpdate"
+    },
+    {
+      "sourceId": "SRC008", "order": 8, "kind": "File", "label": "Hardware-free RAW-07 requirements validator",
+      "location": "Repository", "path": "specs/intake-review-fixtures/raw-07/validate-hardware-capability-contract.py",
+      "requestedUrl": "N/A", "finalUrl": "N/A", "retrievedAt": "N/A", "httpStatus": "N/A", "contentType": "N/A", "contentLength": "N/A", "etag": "N/A", "lastModified": "N/A", "redirectChain": [], "rawSha256": "N/A",
+      "normalizedSha256": "6e5df811895f56cb5cb67250820206f295c853e3f94e20dc4d5bca5200d0fcc4", "gitBlob": "N/A", "proofBoundary": "RepositoryAtUpdate"
+    },
+    {
+      "sourceId": "SRC009", "order": 9, "kind": "File", "label": "Bash surface for RAW-07 offline validation",
+      "location": "Repository", "path": "specs/intake-review-fixtures/raw-07/validate-hardware-capability-contract.sh",
+      "requestedUrl": "N/A", "finalUrl": "N/A", "retrievedAt": "N/A", "httpStatus": "N/A", "contentType": "N/A", "contentLength": "N/A", "etag": "N/A", "lastModified": "N/A", "redirectChain": [], "rawSha256": "N/A",
+      "normalizedSha256": "9df38f589b1c5d9114d8ea2037621566f00ad9e697047e652e8a3707d4da7338", "gitBlob": "N/A", "proofBoundary": "RepositoryAtUpdate"
+    },
+    {
+      "sourceId": "SRC010", "order": 10, "kind": "File", "label": "PowerShell surface for RAW-07 offline validation",
+      "location": "Repository", "path": "specs/intake-review-fixtures/raw-07/validate-hardware-capability-contract.ps1",
+      "requestedUrl": "N/A", "finalUrl": "N/A", "retrievedAt": "N/A", "httpStatus": "N/A", "contentType": "N/A", "contentLength": "N/A", "etag": "N/A", "lastModified": "N/A", "redirectChain": [], "rawSha256": "N/A",
+      "normalizedSha256": "44b25f85d9068026cd9f13858d8db22b87c64de7701c6f4434b200754b624399", "gitBlob": "N/A", "proofBoundary": "RepositoryAtUpdate"
+    },
+    {
+      "sourceId": "SRC011", "order": 11, "kind": "File", "label": "Positive two-class RAW-07 contract and failure fixture",
+      "location": "Repository", "path": "specs/intake-review-fixtures/raw-07/valid-hardware-capability-cases.json",
+      "requestedUrl": "N/A", "finalUrl": "N/A", "retrievedAt": "N/A", "httpStatus": "N/A", "contentType": "N/A", "contentLength": "N/A", "etag": "N/A", "lastModified": "N/A", "redirectChain": [], "rawSha256": "N/A",
+      "normalizedSha256": "e27afbd308cb2944972e0f8768896d9686ce27914908892d512b850fc7a30dd4", "gitBlob": "N/A", "proofBoundary": "RepositoryAtUpdate"
+    },
+    {
+      "sourceId": "SRC012", "order": 12, "kind": "File", "label": "Negative raw-protocol leakage fixture",
+      "location": "Repository", "path": "specs/intake-review-fixtures/raw-07/negative-raw-protocol-leak.json",
+      "requestedUrl": "N/A", "finalUrl": "N/A", "retrievedAt": "N/A", "httpStatus": "N/A", "contentType": "N/A", "contentLength": "N/A", "etag": "N/A", "lastModified": "N/A", "redirectChain": [], "rawSha256": "N/A",
+      "normalizedSha256": "008ecaa957e6472d232610ce6d9e9e28456aa86f6e4292b6065fd5d94c1342bf", "gitBlob": "N/A", "proofBoundary": "RepositoryAtUpdate"
+    },
+    {
+      "sourceId": "SRC013", "order": 13, "kind": "File", "label": "Negative adapter domain-command fixture",
+      "location": "Repository", "path": "specs/intake-review-fixtures/raw-07/negative-domain-command.json",
+      "requestedUrl": "N/A", "finalUrl": "N/A", "retrievedAt": "N/A", "httpStatus": "N/A", "contentType": "N/A", "contentLength": "N/A", "etag": "N/A", "lastModified": "N/A", "redirectChain": [], "rawSha256": "N/A",
+      "normalizedSha256": "ae0c93ac61dd47af97651f63ab498b7a53bcfc3da079ac2ef69afb83af6e1386", "gitBlob": "N/A", "proofBoundary": "RepositoryAtUpdate"
+    },
+    {
+      "sourceId": "SRC014", "order": 14, "kind": "File", "label": "Negative unapproved-device fixture",
+      "location": "Repository", "path": "specs/intake-review-fixtures/raw-07/negative-unapproved-device.json",
+      "requestedUrl": "N/A", "finalUrl": "N/A", "retrievedAt": "N/A", "httpStatus": "N/A", "contentType": "N/A", "contentLength": "N/A", "etag": "N/A", "lastModified": "N/A", "redirectChain": [], "rawSha256": "N/A",
+      "normalizedSha256": "3789b507bed07a426ae8edd996ca5d07cf24655284ea76acfc79ded8b6e27228", "gitBlob": "N/A", "proofBoundary": "RepositoryAtUpdate"
+    },
+    {
+      "sourceId": "SRC015", "order": 15, "kind": "File", "label": "Negative missing lab-approval fixture",
+      "location": "Repository", "path": "specs/intake-review-fixtures/raw-07/negative-missing-lab-approval.json",
+      "requestedUrl": "N/A", "finalUrl": "N/A", "retrievedAt": "N/A", "httpStatus": "N/A", "contentType": "N/A", "contentLength": "N/A", "etag": "N/A", "lastModified": "N/A", "redirectChain": [], "rawSha256": "N/A",
+      "normalizedSha256": "9053d05e37820f81316f6cf5c0e916e3c45d325860b16e068969bacbfdc3e9f6", "gitBlob": "N/A", "proofBoundary": "RepositoryAtUpdate"
+    },
+    {
+      "sourceId": "SRC016", "order": 16, "kind": "File", "label": "Negative missing kill-switch fixture",
+      "location": "Repository", "path": "specs/intake-review-fixtures/raw-07/negative-kill-switch-missing.json",
+      "requestedUrl": "N/A", "finalUrl": "N/A", "retrievedAt": "N/A", "httpStatus": "N/A", "contentType": "N/A", "contentLength": "N/A", "etag": "N/A", "lastModified": "N/A", "redirectChain": [], "rawSha256": "N/A",
+      "normalizedSha256": "cf59519448fa9b09400854578a34f67b87ea5348d709f9d3524060cd9a76bd14", "gitBlob": "N/A", "proofBoundary": "RepositoryAtUpdate"
+    }
+  ],
+  "profile": "aoc-bilingual-requirements",
+  "languagePolicy": "GermanFirstAuthoritativeEnglishSecondCEFRB2",
+  "decisions": [
+    {
+      "id": "IAD701", "status": "Answered",
+      "question": "Which MIDI-library boundary applies?",
+      "answer": "A cross-platform MIDI library is isolated behind a thin vendor-neutral adapter. Raw MIDI, SysEx, and control-change numbers remain outside the domain contract; concrete package selection is an implementation detail within these constraints.",
+      "evidence": "Thorsten explicitly confirmed recommended option A for IAD701 on 2026-08-07."
+    },
+    {
+      "id": "IAD702", "status": "Answered",
+      "question": "Which Elgato transport and SDK boundary applies?",
+      "answer": "The official Elgato SDK bridge is isolated as a thin adapter. TypeScript is allowed only where required by the SDK, and only normalized capability events and feedback leave the bridge.",
+      "evidence": "Thorsten explicitly confirmed recommended option A for IAD702 on 2026-08-07."
+    },
+    {
+      "id": "IAD703", "status": "Answered",
+      "question": "Which first approved device set applies?",
+      "answer": "The first reference wave contains exactly one representative MIDI device and one Stream Deck. Xbox remains a separate later adapter candidate requiring its own evidence.",
+      "evidence": "Thorsten explicitly confirmed recommended option A for IAD703 on 2026-08-07."
+    },
+    {
+      "id": "IAD704", "status": "Answered",
+      "question": "Which physical lab and safety approval gate applies?",
+      "answer": "Every field test requires a versioned lab inventory, device-specific risk and safety assessment, verified kill switch, supervised test plan, and documented approval. Approval alone grants no product-command or hardware-I/O authority.",
+      "evidence": "Thorsten explicitly confirmed recommended option A for IAD704 on 2026-08-07."
+    }
+  ],
+  "openDecisionIds": [],
+  "questionCount": 0,
+  "agentSurface": {
+    "specifyCanonicalId": "speckit.specify",
+    "specifyInvocation": "$speckit-specify requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md --bind-exact-intake --no-implementation --no-hardware-io --no-remote-writes",
+    "autonomousCanonicalId": "speckit.autonomous",
+    "autonomousInvocation": "$speckit-autonomous requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md --delivery-mode MergeAndSync --require-current-review"
+  },
+  "deliveryAuthority": "MergeAndSync",
+  "authorityEvidence": "MergeAndSync remains the unchanged historical delivery ceiling. The current update authority excludes Specify, implementation, hardware I/O, remote, preset, Level-0, GitHub, merge, bypass, provider, and downstream start actions.",
+  "promptState": "Enabled",
+  "provenanceMode": "Supersession",
+  "supersedes": {
+    "receiptPath": "specs/intake-authoring-archive/8c0ddc2e-a816-467c-a2c2-ec86680850b0/3c3f82a3-c756-45b2-abb6-d1805c13c993/RAW-07-Hardware-Capability-Layer.json",
+    "targetNormalizedSha256": "fa069ebc98b5e1352a83465be1bf728e9434dd36fa8033422a25d5037f46a8af",
+    "archiveTargetPath": "specs/intake-authoring-archive/8c0ddc2e-a816-467c-a2c2-ec86680850b0/3c3f82a3-c756-45b2-abb6-d1805c13c993/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+    "archiveReceiptPath": "specs/intake-authoring-archive/8c0ddc2e-a816-467c-a2c2-ec86680850b0/3c3f82a3-c756-45b2-abb6-d1805c13c993/RAW-07-Hardware-Capability-Layer.json"
+  },
+  "legacyAdoption": {"evidenceType": "N/A", "priorTargetNormalizedSha256": "N/A", "priorGitBlob": "N/A"},
+  "updateAuthorized": true,
+  "updateAuthorityEvidence": "Thorsten explicitly authorised this bounded RAW-07 decision update, predecessor archive, Authoring Receipt and Series hash renewal, and complete re-review on 2026-08-07.",
+  "series": {
+    "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+    "manifestPath": "specs/intake-series/aoc-phase-2/manifest.json",
+    "order": 12,
+    "role": "OrderedMember",
+    "supersedesIntakeIds": []
+  },
+  "nextAction": "$speckit-intake-review requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md"
+}

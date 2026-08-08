@@ -1,0 +1,10 @@
+{
+  "fixtureId": "RAW09-NEGATIVE-MISSING-AUTHORITY",
+  "case": "AuthorityMissing",
+  "currentAuthorities": [
+    "ScopeAuthority",
+    "StartAuthority"
+  ],
+  "promotionClaimed": true,
+  "expectedReasonCode": "PEV010_AUTHORITY_MISSING"
+}

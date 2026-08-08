@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "736c386a-0a60-4ff3-a67a-df5536e9152b",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.2"
+  },
+  "createdAt": "2026-08-08T21:44:31Z",
+  "operation": {
+    "operationId": "976fe5ed-4aa5-46c7-8717-f476b53c14b9",
+    "type": "Update",
+    "authorityEvidence": "Thorsten explicitly authorised on 2026-08-08 the bounded repair of only IR005 and IR006 from Series review 35f4d174-cef2-4293-8994-a0263bc10b3f. Twelve intake lifecycle statements are converted to historical snapshots with stable manifest and order references, and IAD601-IAD604 move without semantic change to the confirmed decision table. All 14 lifecycle values, order, root, dependencies, purpose, scope, non-goals, decisions, owners, handoffs, and Delivery Authority remain unchanged. Predecessor archive, receipt and hash renewal, complete re-reviews, and AEPS evidence capture are authorised; all downstream and remote actions are excluded."
+  },
+  "status": "NeedsClarification",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "d05c8c5c6e860b20c1c9419360dba188f713be39a6f34c21a785d28d8da65c00"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/976fe5ed-4aa5-46c7-8717-f476b53c14b9/receipt.json",
+    "receiptNormalizedSha256": "25ed2ad9810778cca370ac6070245f3f11505a3470d0163b75cbb0418256ddce",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/976fe5ed-4aa5-46c7-8717-f476b53c14b9/manifest.json",
+    "manifestArchiveSha256": "0d1886deb63db1f9e8fd5cf14e0faa4fc917a656d3a8d0ccfc52d386e7fe193c"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-review specs/intake-series/aoc-phase-2/manifest.json"
+}

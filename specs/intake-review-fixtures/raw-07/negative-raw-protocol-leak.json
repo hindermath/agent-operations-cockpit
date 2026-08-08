@@ -1,0 +1,8 @@
+{
+  "fixtureId": "RAW07-NEGATIVE-RAW-PROTOCOL-LEAK",
+  "fixtureKind": "RawProtocolLeak",
+  "expectedOutcome": "Rejected",
+  "expectedReasonCode": "HWC007_RAW_PROTOCOL_LEAK",
+  "rawMidiInDomainContract": true,
+  "vendorProtocolInDomainContract": true
+}

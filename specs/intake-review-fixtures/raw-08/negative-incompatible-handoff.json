@@ -1,0 +1,11 @@
+{
+  "fixtureId": "RAW08-NEGATIVE-INCOMPATIBLE-HANDOFF",
+  "fixtureKind": "IncompatibleHandoff",
+  "expectedOutcome": "Blocked",
+  "expectedReasonCode": "WFE008_HANDOFF_INCOMPATIBLE",
+  "handoffId": "H-RAW06-RAW08",
+  "expectedVersion": "requirements-v1",
+  "observedVersion": "requirements-v2",
+  "knownOutcome": false,
+  "completionClaimed": true
+}

@@ -190,17 +190,20 @@ decisions are confirmed:*
    automatically, and mutating commands remain disabled until the read-only
    slice is complete.*
 
-Der Authoring-Status ist `ReadyForReview`. Der Serien-Lifecycle bleibt
-`Blocked`, bis RAW-01 und RAW-03 in der bindenden Reihenfolge abgeschlossen und
-ihre Reviews aktuell sind. Danach ist `serial-autonomous` nur mit einer neuen,
-ausdrücklichen Start- und Scope-Autorität zulässig. Recovery verwirft
-unbestätigten Context, behält den letzten gültigen Snapshot und rät weder
-Migration noch Wiederholung. / *The authoring status is `ReadyForReview`; the
-Series lifecycle remains blocked until RAW-01 and RAW-03 are completed in the
-binding order with current reviews. A later `serial-autonomous` run requires
-separate current start and scope authority. Recovery discards unconfirmed
-context, retains the last valid snapshot, and does not guess a migration or
-retry.*
+Beim damaligen Authoring galt als historischer Snapshot: RAW-02 war bis zum
+Abschluss von RAW-01 und RAW-03 `Blocked`. Dieser Snapshot ist keine aktuelle
+Lifecycle-Quelle. Der aktuelle kanonische Zustand steht ausschließlich im
+[`manifest.json`](../../../specs/intake-series/aoc-phase-2/manifest.json) und
+in der [`order.md`](../series/order.md). Ein späterer `serial-autonomous`-Lauf
+benötigt weiterhin eine neue ausdrückliche Start- und Scope-Autorität. Recovery
+verwirft unbestätigten Context, behält den letzten gültigen Snapshot und rät
+weder Migration noch Wiederholung. / *At authoring time, the historical
+snapshot recorded RAW-02 as Blocked until RAW-01 and RAW-03 were completed.
+This snapshot is not a current lifecycle source. Only the linked manifest and
+order document define the current canonical state. A later serial-autonomous
+run still requires separate current start and scope authority. Recovery
+discards unconfirmed context, retains the last valid snapshot, and does not
+guess a migration or retry.*
 
 `serial-autonomous` bedeutet hier nur einen späteren, einzeln ausgeführten und
 separat autorisierten autonomen Lauf; der Begriff erteilt selbst keine

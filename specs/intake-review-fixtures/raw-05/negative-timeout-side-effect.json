@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1.0",
+  "fixtureKind": "ExecutionNodeCases",
+  "fixtureId": "RAW05-NEGATIVE-TIMEOUT-SIDE-EFFECT",
+  "expectedOutcome": "Rejected",
+  "expectedError": "EN010",
+  "cases": [
+    {
+      "id": "timeout-triggers-remount",
+      "nodeType": "Host",
+      "platform": "Windows",
+      "endpointKind": "LocalAdapter",
+      "remoteEnabled": false,
+      "identity": {
+        "nodeId": "node-host-timeout-remount",
+        "stable": true
+      },
+      "observedAt": "2026-08-06T19:00:00Z",
+      "freshnessAsOf": "2026-08-06T19:00:10Z",
+      "profile": {
+        "probeTimeoutSeconds": 5,
+        "freshnessTSeconds": 60
+      },
+      "probe": {
+        "outcome": "Timeout",
+        "elapsedSeconds": 5
+      },
+      "attestationEvidence": {
+        "complete": true,
+        "consistent": true,
+        "expectedResult": "Verified"
+      },
+      "mounts": [],
+      "sideEffects": [
+        "Remount"
+      ],
+      "expected": {}
+    }
+  ]
+}

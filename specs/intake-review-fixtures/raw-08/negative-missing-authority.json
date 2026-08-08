@@ -1,0 +1,16 @@
+{
+  "fixtureId": "RAW08-NEGATIVE-MISSING-AUTHORITY",
+  "fixtureKind": "MissingAuthority",
+  "expectedOutcome": "Blocked",
+  "expectedReasonCode": "WFE003_AUTHORITY_MISSING",
+  "requestedDeliveryMode": "MergeAndSync",
+  "historicalDeliveryAuthorityPresent": true,
+  "eligible": true,
+  "readyReview": true,
+  "currentAuthorities": [
+    "ScopeAuthority",
+    "StartAuthority",
+    "ImplementationAuthority"
+  ],
+  "mergeClaimed": true
+}

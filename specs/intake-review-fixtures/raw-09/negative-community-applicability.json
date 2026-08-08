@@ -1,0 +1,7 @@
+{
+  "fixtureId": "RAW09-NEGATIVE-COMMUNITY-APPLICABILITY",
+  "case": "CommunityWithoutApplicability",
+  "repository": "github/spec-kit",
+  "communityGeneralApplicability": false,
+  "expectedReasonCode": "PEV008_COMMUNITY_APPLICABILITY_MISSING"
+}

@@ -1,0 +1,189 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesManifest",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "title": "AOC Phase 2 meta requirements and first domain wave",
+  "policy": "aoc-bilingual-requirements",
+  "status": "NeedsClarification",
+  "orderedTargets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
+      "role": "Primary",
+      "normalizedSha256": "99eab2565a73b3f1fe836feb89b543392360d3a5d56063c13fd28cf2f0a16704",
+      "status": "Completed"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "9fc31a833421915b68b85c7dd499dc5b97a81152a8cf668599bb243ef3e17503",
+      "status": "Completed"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "f6d57cacc954b4899fc5bd8ddcc235570ec20470094feec506e1b8e9ea07e3e9",
+      "status": "Completed"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+      "status": "Completed"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "cb255e60b49237f8cc655486b6529536b831b5b942f89f838678386bc31f930f",
+      "status": "Completed"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "c61d9786b27ea09e0e954363a1b4335d3255ea55b0f8a5167ee52c25c583f9b6",
+      "status": "Completed"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "31d31e82ab1857182d1201192438e5c91abfc3190ba47a2f68b9543034ab0cfd",
+      "status": "Completed"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "6a41e6ae6447ff0192a03af7940362e05e48bff48a5fd21f39e9b6e670eade20",
+      "status": "Completed"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "ce89a73e9e1d0bdeadcc166a0f4a7b3b94052037cabb8225ceb4ef2ebd345ec4",
+      "status": "Completed"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "3fd7c5fbf4f419ed6131c4984a948f26d0b6b8c6ab3a5b068cdadce501c3fbad",
+      "status": "Completed"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "dde4a283ac2c761373085beea976dcd927d813e17aa2b1ad76ceab800c1d604a",
+      "status": "Completed"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "ade666e411ed9a81b9736e628adb8613be0d9d732295c7e5470d90f0c64f513a",
+      "status": "Completed"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "623451757149794556a9f4efef73c13c6894244476b7fd484f0eaaa9fdba7f1a",
+      "status": "Completed"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "c3da0eec782279678b1599e0e2365e409fbfe9e0e6f40e5f2e1b768e385f3b83",
+      "status": "Completed"
+    }
+  ],
+  "roots": [
+    "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md"
+  ],
+  "dependencies": [
+    {
+      "from": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
+      "to": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "kind": "RequirementsGovernanceGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "to": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "kind": "RequirementsGovernanceGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "to": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "to": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "kind": "RequirementsGovernanceGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "kind": "PreferredSerialOrder",
+      "binding": false
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "kind": "AssessmentBaseline",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+      "kind": "FinalAuditInput",
+      "binding": true
+    }
+  ],
+  "evidencePaths": [
+    "requirements/baseline/coverage-matrix.md",
+    "requirements/baseline/autonomy-and-evidence-model.md",
+    "requirements/intakes/series/order.md",
+    "docs/governance/phase-2-public-readiness.md"
+  ]
+}

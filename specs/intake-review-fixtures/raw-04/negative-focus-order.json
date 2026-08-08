@@ -1,0 +1,32 @@
+{
+  "fixtureId": "RAW04-NEGATIVE-FOCUS-ORDER",
+  "fixtureKind": "PresentationCases",
+  "expectedOutcome": "Rejected",
+  "expectedError": "PR010",
+  "cases": [
+    {
+      "id": "duplicate-focus-position",
+      "width": 79,
+      "terminalInteractive": true,
+      "tuiAdapterAvailable": true,
+      "expectedLayout": "Compact",
+      "surfaceAvailable": true,
+      "stateStatus": "Known",
+      "statusLabel": "Bekannt / Known",
+      "messageId": "presentation.state.known",
+      "translations": {
+        "de": "Zustand bekannt",
+        "en": "State known"
+      },
+      "focusOrder": [1, 1, 3],
+      "consoleSemantics": {
+        "stateStatus": "Known",
+        "reasonCodes": ["STATE_FRESH"]
+      },
+      "jsonSemantics": {
+        "stateStatus": "Known",
+        "reasonCodes": ["STATE_FRESH"]
+      }
+    }
+  ]
+}

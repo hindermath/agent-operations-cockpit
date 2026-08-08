@@ -1,0 +1,9 @@
+{
+  "fixtureId": "RAW06-NEGATIVE-NONIDEMPOTENT-RETRY",
+  "fixtureKind": "NonIdempotentRetry",
+  "expectedOutcome": "Rejected",
+  "expectedReasonCode": "CLI011_RETRY_FORBIDDEN",
+  "sideEffectClass": "ReversibleMutation",
+  "idempotent": false,
+  "automaticRetryRequested": true
+}

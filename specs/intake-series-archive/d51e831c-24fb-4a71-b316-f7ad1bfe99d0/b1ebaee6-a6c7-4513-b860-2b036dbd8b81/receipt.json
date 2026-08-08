@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "3d6e9a2b-49ba-4ae5-8a40-dfac11a21a4d",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.2"
+  },
+  "createdAt": "2026-08-07T20:33:02Z",
+  "operation": {
+    "operationId": "0cfe0f91-3225-4d85-9509-e55756cb010d",
+    "type": "Update",
+    "authorityEvidence": "Thorsten explicitly authorised the bounded RAW-07 intake update and required renewal of the Series hash binding on 2026-08-07. Only the RAW-07 target hash, synchronized decision text, this operation, and this receipt change; Series order, roots, dependencies, lifecycle values, other intakes, and Delivery Authority remain unchanged."
+  },
+  "status": "NeedsClarification",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "c2fb6855f6b2eb0dcc0ec6105838ad0e45b48f7961339bb68705eb6f818a92d4"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/0cfe0f91-3225-4d85-9509-e55756cb010d/receipt.json",
+    "receiptNormalizedSha256": "d0e6510fce412e304f4694af8435c0855db8153eb51dd8a08be4e308ec27d270",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/0cfe0f91-3225-4d85-9509-e55756cb010d/manifest.json",
+    "manifestArchiveSha256": "e9a8863f0e3eeb753672f80210fa7bbf115d9e83c4d4dee32ce66733a9e0e079"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-series-status"
+}

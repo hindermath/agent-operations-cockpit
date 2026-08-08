@@ -1,0 +1,10 @@
+{
+  "fixtureId": "RAW07-NEGATIVE-MISSING-LAB-APPROVAL",
+  "fixtureKind": "MissingLabApproval",
+  "expectedOutcome": "Rejected",
+  "expectedReasonCode": "HWC010_LAB_APPROVAL_REQUIRED",
+  "fieldTestRequested": true,
+  "labInventoryPresent": false,
+  "riskAndSafetyAssessmentPresent": false,
+  "documentedApproval": "Unknown"
+}

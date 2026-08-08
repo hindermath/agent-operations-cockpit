@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "90d504e8-88d1-4d68-8d1c-1c647478ad8b",
+  "mode": "Single",
+  "status": "NeedsClarification",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-08T16:03:03Z",
+  "repository": {
+    "root": ".",
+    "head": "a3629bd20c3596579dfa7f333e6cc8e24ca5963a"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-09-preset-evolution-2026-08-08.json",
+    "normalizedSha256": "be06de6414f45c1cc443f4e1bd4234e1bd76a060bc13afc457d392f5415290b8"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+      "role": "Primary",
+      "normalizedSha256": "f8a887170a1e5bd5434ff715119784d87db26c6c956a98e00590399404b9640c",
+      "gitBlob": "7ad238bb2d2d2a02d5a76f6589619354b3f2d7d2"
+    }
+  ],
+  "findings": [
+    {
+      "id": "IR901",
+      "severity": "High",
+      "category": "DecisionAndPromotionAuthority",
+      "target": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+      "disposition": "NeedsClarification",
+      "owner": "RAW-09",
+      "evidence": "IAD901 Promotion Threshold and IAD902 target repository are explicitly open. The text requires separate human promotion authority but does not define whether that is a standing grant, a per-proposal gate, or a current non-authority statement. The blocked prompts and Authoring Receipt confirm all three unresolved boundaries.",
+      "reevaluationTrigger": "IAD901 and IAD902 receive explicit answers and promotion authority is defined fail closed as a separately current per-proposal human decision without standing or bypass authority."
+    },
+    {
+      "id": "IR902",
+      "severity": "High",
+      "category": "RequirementsEvidence",
+      "target": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-09",
+      "evidence": "FR-001 through FR-004 and AC-001 through AC-002 name proposal quality but bind no versioned proposal contract, maturity states, threshold evaluation, positive and negative fixtures, stable reason codes, validator commands, expected outputs, or exit codes. The one-or-systemic-source proposal minimum is not distinguished from the stricter promotion-review threshold.",
+      "reevaluationTrigger": "A versioned proposal contract distinguishes observation, proposal, promotion-review eligibility, and actual promotion; deterministic offline fixtures and both shell commands prove every acceptance boundary."
+    },
+    {
+      "id": "IR903",
+      "severity": "High",
+      "category": "LanguageAndTerminology",
+      "target": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-09",
+      "evidence": "Purpose is bilingual, but sources, requirements, decisions, child-intakes, acceptance, recovery, revision, status, and next action are not complete semantic German-first and English-second pairs. Proposal, promotion, preset, applicability, generalisation, compatibility, ProviderFailure, Deferred, RejectedWithRationale, research-only, Spec Kit, and delivery authority are not explained for the first-year learner audience.",
+      "reevaluationTrigger": "Every normative section is a complete DE-first and EN-second pair at CEFR B2, with first-use terminology and explicit text-first lifecycle, dependency, decisions, next action, and non-authority."
+    },
+    {
+      "id": "IR904",
+      "severity": "High",
+      "category": "CrossCuttingApplicability",
+      "target": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-09",
+      "evidence": "Security, de-identification, A11Y, versioning, migration, and tests are named but lack measurable positive and negative evidence. Public-content limits, WCAG 2.2 AA and text alternatives, macOS/Linux/Windows and node portability, supply-chain applicability, failure behavior, and reevaluation triggers are incomplete.",
+      "reevaluationTrigger": "Cross-cutting concerns receive explicit applicability, measurable positive and negative evidence, failure behavior, and reevaluation triggers without granting preset-write or promotion authority."
+    },
+    {
+      "id": "IR905",
+      "severity": "High",
+      "category": "HandoffAndRepositoryContract",
+      "target": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-09",
+      "evidence": "RAW-08 is named as input and preset proposals as output, but producer, consumer, contract version, required fields, compatibility, failure behavior, authority, repository selection, community-general applicability, and the serial github/spec-kit queue boundary are not typed. The four proposed child-intakes remain labels.",
+      "reevaluationTrigger": "RAW-08 input, home-baseline proposal output, conditional github/spec-kit handoff, and every child boundary are versioned and typed with authority and failure behavior."
+    },
+    {
+      "id": "IR906",
+      "severity": "High",
+      "category": "PromptAndDeliveryAuthority",
+      "target": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+      "disposition": "NeedsRemediation",
+      "owner": "RAW-09",
+      "evidence": "The blocked prompts correctly prevent execution while decisions are open, but the historical Authoring Receipt retains MergeAndSync and Admin-Bypass. No future copy-ready prompt contract requires separate current scope, start, implementation, governance-write, remote-write, merge, bypass, provider, preset-write, and promotion authority or fails closed when any applicable grant is absent.",
+      "reevaluationTrigger": "The renewed receipt and any enabled prompt distinguish historical delivery ceilings from current authority and require every applicable current gate, including separate preset-write and per-proposal promotion authority."
+    }
+  ],
+  "questions": [
+    {
+      "id": "IRQ901",
+      "status": "Open",
+      "owner": "RAW-09",
+      "question": "Which reviewed, positive, negative, retrospective, and cross-project evidence threshold makes a proposal eligible for a separate promotion review?"
+    },
+    {
+      "id": "IRQ902",
+      "status": "Open",
+      "owner": "RAW-09",
+      "question": "Which repository receives a proposal first, and under which community-general and serial-queue conditions may github/spec-kit be selected?"
+    },
+    {
+      "id": "IRQ903",
+      "status": "Open",
+      "owner": "RAW-09",
+      "question": "Is promotion authority a new current per-proposal human gate with no standing grant and no automatic or administrative bypass?"
+    }
+  ],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 6,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "N/A"
+}

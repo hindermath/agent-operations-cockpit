@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "d58266ae-9ee1-43ec-a5e4-fd5378f96807",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.2"
+  },
+  "createdAt": "2026-08-06T19:52:10Z",
+  "operation": {
+    "operationId": "6b375cf4-5f4c-4363-9175-12ff8e4d55d5",
+    "type": "Update",
+    "authorityEvidence": "Thorsten explicitly authorised the bounded RAW-05 repair on 2026-08-06 and selected option A for IRQ501, IRQ502, and IRQ503. This Series update changes only the normalized hash for the existing RAW-05 target. RAW-05 remains the sole Eligible target and remains limited to read-only research. Fourteen targets, one root, fourteen dependencies, exact order, every other target hash, all lifecycle values, intake purpose and scope, evidence paths, and historical Delivery Authority remain unchanged. The predecessor manifest and receipt are archived byte-identically. Specify, implementation, remote writes, merge, bypass, presets, and Level-0 actions are excluded."
+  },
+  "status": "NeedsClarification",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "2ec11204d018fab3f8bb186893e2804cf608aaf894977902414a02c89ba8c3f3"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/6b375cf4-5f4c-4363-9175-12ff8e4d55d5/receipt.json",
+    "receiptNormalizedSha256": "d5c69b3487ff423909d8a71a3761665ddb1e1fe4885a2eb628e8f4767b5b3393",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/6b375cf4-5f4c-4363-9175-12ff8e4d55d5/manifest.json",
+    "manifestArchiveSha256": "0a7cc8c1ed849827d3b19d72974833e65f4aa1d53cc218b6df4673b1b9e2c30f"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-series-status"
+}

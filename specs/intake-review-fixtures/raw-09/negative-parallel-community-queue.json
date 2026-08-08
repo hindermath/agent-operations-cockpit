@@ -1,0 +1,7 @@
+{
+  "fixtureId": "RAW09-NEGATIVE-PARALLEL-COMMUNITY-QUEUE",
+  "case": "ParallelCommunityQueue",
+  "repository": "github/spec-kit",
+  "activeSubmissions": 2,
+  "expectedReasonCode": "PEV009_SERIAL_QUEUE_VIOLATION"
+}

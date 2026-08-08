@@ -1,31 +1,31 @@
 {
   "schemaVersion": "2.0",
   "documentType": "IntakeReceipt",
-  "receiptId": "f7a9a1a8-8e05-4c23-8d6a-13c7dc7bb7c2",
+  "receiptId": "8b0fe1c6-eb66-4208-ad63-b1790d1acb63",
   "intakeId": "d672cfa4-13f0-43cb-84ba-27d191710342",
   "generator": {
     "preset": "intake-authoring-governance",
     "version": "0.3.0"
   },
-  "createdAt": "2026-08-05T19:01:48Z",
+  "createdAt": "2026-08-08T21:44:31Z",
   "operation": {
-    "operationId": "5e158b96-d8a0-41c5-a47a-ed42af279a46",
+    "operationId": "2e7fe766-e1ad-425c-925b-959f267232cf",
     "type": "Update",
-    "authorityEvidence": "Thorsten explicitly authorised on 2026-08-05 receipt-only provenance supersession for META-LH-05: refresh mutable source hashes, preserve the target byte-for-byte, archive the prior target and receipt, and perform a complete new Single review. Purpose, nine-domain wave intent, scope, non-goals, dependencies, Delivery Authority, Specify, implementation, remote writes, merge, bypass, presets, promotion, and Level-0 actions remain excluded."
+    "authorityEvidence": "Thorsten explicitly authorised on 2026-08-08 the bounded repair of only IR005 and IR006 from Series review 35f4d174-cef2-4293-8994-a0263bc10b3f. IAD601-IAD604 move without semantic change from the open to the confirmed decision table; stale lifecycle statements become historical snapshots with stable references to the canonical manifest and order. Purpose, scope, non-goals, decisions, owners, handoffs, dependencies, and Delivery Authority remain unchanged. Only predecessor archive, receipt and Series hash renewal, complete re-reviews, and AEPS evidence capture are authorised. Specify, implementation, remote, merge, bypass, preset, promotion, GitHub, and Level-0 actions are excluded."
   },
   "status": "ReadyForReview",
   "target": {
     "path": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
-    "normalizedSha256": "533ecf072fc81a08c43c7c9a794d30e3ea9237e0e8d75602251373881dfc6ec0"
+    "normalizedSha256": "cb255e60b49237f8cc655486b6529536b831b5b942f89f838678386bc31f930f"
   },
   "sources": [
     {
       "sourceId": "SRC001",
       "order": 1,
       "kind": "File",
-      "label": "Immediately superseded byte-identical META-LH-05-Erste-Welle intake as first binding source",
+      "label": "Superseded META-LH-05-Erste-Welle intake as first binding repair source",
       "location": "Repository",
-      "path": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/5e158b96-d8a0-41c5-a47a-ed42af279a46/Lastenheft_META-LH-05-Erste-Welle.md",
+      "path": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/2e7fe766-e1ad-425c-925b-959f267232cf/Lastenheft_META-LH-05-Erste-Welle.md",
       "requestedUrl": "N/A",
       "finalUrl": "N/A",
       "retrievedAt": "N/A",
@@ -38,7 +38,7 @@
       "rawSha256": "N/A",
       "normalizedSha256": "533ecf072fc81a08c43c7c9a794d30e3ea9237e0e8d75602251373881dfc6ec0",
       "gitBlob": "N/A",
-      "proofBoundary": "RepositoryArchiveAtRepair"
+      "proofBoundary": "RepositoryArchiveAtBoundedSeriesRepair"
     },
     {
       "sourceId": "SRC002",
@@ -354,6 +354,27 @@
       "normalizedSha256": "103572b4f35be8a96154dbe86b462264a09721bce9017146d2e90e76a9ce23a3",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryAtRepair"
+    },
+    {
+      "sourceId": "SRC017",
+      "order": 17,
+      "kind": "File",
+      "label": "Series review that authorises bounded IR005 and IR006 repair",
+      "location": "Repository",
+      "path": "specs/intake-review-results/aoc-phase-2-series-2026-08-08-r3.json",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "11a42bd28136bf82c4dc0f36ac6e4d69b5ad8bfed6422d98d9cdb9be7c603345",
+      "gitBlob": "N/A",
+      "proofBoundary": "RepositoryAtRepairAuthorization"
     }
   ],
   "profile": "aoc-bilingual-requirements",
@@ -372,10 +393,10 @@
   "promptState": "Enabled",
   "provenanceMode": "Supersession",
   "supersedes": {
-    "receiptPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/5e158b96-d8a0-41c5-a47a-ed42af279a46/META-LH-05-Erste-Welle.json",
+    "receiptPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/2e7fe766-e1ad-425c-925b-959f267232cf/META-LH-05-Erste-Welle.json",
     "targetNormalizedSha256": "533ecf072fc81a08c43c7c9a794d30e3ea9237e0e8d75602251373881dfc6ec0",
-    "archiveTargetPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/5e158b96-d8a0-41c5-a47a-ed42af279a46/Lastenheft_META-LH-05-Erste-Welle.md",
-    "archiveReceiptPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/5e158b96-d8a0-41c5-a47a-ed42af279a46/META-LH-05-Erste-Welle.json"
+    "archiveTargetPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/2e7fe766-e1ad-425c-925b-959f267232cf/Lastenheft_META-LH-05-Erste-Welle.md",
+    "archiveReceiptPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/2e7fe766-e1ad-425c-925b-959f267232cf/META-LH-05-Erste-Welle.json"
   },
   "legacyAdoption": {
     "evidenceType": "N/A",
@@ -383,7 +404,7 @@
     "priorGitBlob": "N/A"
   },
   "updateAuthorized": true,
-  "updateAuthorityEvidence": "Thorsten explicitly approved receipt-only provenance supersession for META-LH-05 on 2026-08-05. This authorises only current source-hash binding, immutable archival of the prior target and receipt, and a complete new Single review; the target remains byte-identical and all product and downstream actions remain excluded.",
+  "updateAuthorityEvidence": "Thorsten explicitly authorised this bounded IR005 and IR006 repair, predecessor archive, Authoring Receipt and Series hash renewal, and complete re-review on 2026-08-08.",
   "series": {
     "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
     "manifestPath": "specs/intake-series/aoc-phase-2/manifest.json",

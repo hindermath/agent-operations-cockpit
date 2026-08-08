@@ -1,0 +1,31 @@
+{
+  "fixtureId": "RAW04-NEGATIVE-MISSING-TRANSLATION",
+  "fixtureKind": "PresentationCases",
+  "expectedOutcome": "Rejected",
+  "expectedError": "PR008",
+  "cases": [
+    {
+      "id": "missing-english-translation",
+      "width": 39,
+      "terminalInteractive": true,
+      "tuiAdapterAvailable": true,
+      "expectedLayout": "Linear",
+      "surfaceAvailable": true,
+      "stateStatus": "Known",
+      "statusLabel": "Bekannt / Known",
+      "messageId": "presentation.state.known",
+      "translations": {
+        "de": "Zustand bekannt"
+      },
+      "focusOrder": [1, 2, 3],
+      "consoleSemantics": {
+        "stateStatus": "Known",
+        "reasonCodes": ["STATE_FRESH"]
+      },
+      "jsonSemantics": {
+        "stateStatus": "Known",
+        "reasonCodes": ["STATE_FRESH"]
+      }
+    }
+  ]
+}

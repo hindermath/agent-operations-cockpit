@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "1421502c-9a1e-488a-8eb2-8fa1d4015917",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.2"
+  },
+  "createdAt": "2026-08-07T21:29:05Z",
+  "operation": {
+    "operationId": "9aad75a4-10c5-452e-a264-e13acd0396f3",
+    "type": "Update",
+    "authorityEvidence": "Thorsten explicitly authorised on 2026-08-07 the bounded Series transition discussed for RAW-08: with the current Ready Single reviews for RAW-06 and RAW-07 still current, set RAW-06 and RAW-07 to Completed and declare RAW-08 the sole Eligible target. Leave RAW-09 unchanged; preserve order, root, dependencies, all other lifecycle values, intake content, and Delivery Authority. The predecessor manifest and receipt are archived byte-identically and the successor hash binding is renewed. No RAW-08 review, Specify, implementation, remote, merge, preset, Level-0, GitHub, or bypass action is performed."
+  },
+  "status": "NeedsClarification",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "7c828c07e420e3839d7d9a3b5c6ec8f5af9eb7a4f4f5b3726622eb874cdad35f"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/9aad75a4-10c5-452e-a264-e13acd0396f3/receipt.json",
+    "receiptNormalizedSha256": "6f0a884b9cb1ac10c03e4e5e2cd52f4282f4883d777a959047a2a91e4ac35bb4",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/9aad75a4-10c5-452e-a264-e13acd0396f3/manifest.json",
+    "manifestArchiveSha256": "7504e0fa9c470028ef6e934c80ea8d174b9d99dd5f47dcb29609d107e14792d1"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-series-status"
+}

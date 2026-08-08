@@ -1,0 +1,8 @@
+{
+  "fixtureId": "RAW06-NEGATIVE-SHELL-EVAL",
+  "fixtureKind": "ShellEvaluation",
+  "expectedOutcome": "Rejected",
+  "expectedReasonCode": "CLI007_SHELL_EVAL_FORBIDDEN",
+  "shellEvaluation": true,
+  "commandStringFromUntrustedInput": true
+}

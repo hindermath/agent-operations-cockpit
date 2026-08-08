@@ -1,0 +1,171 @@
+{
+  "schemaVersion": "requirements-v1",
+  "documentType": "AocHardwareCapabilityContract",
+  "owner": "RAW-07",
+  "boundary": {
+    "presentationContractOwner": "RAW-04",
+    "hardwareCapabilityOwner": "RAW-07",
+    "workspaceStateAndProductCommandOwned": false,
+    "domainLogicAllowedInAdapters": false,
+    "hardwareIoEnabledByThisContract": false
+  },
+  "decisions": {
+    "midiLibrary": {
+      "id": "IAD701",
+      "status": "Answered",
+      "model": "CrossPlatformMidiLibraryBehindThinAdapter",
+      "crossPlatformRequired": true,
+      "vendorNeutralCapabilityBoundaryRequired": true,
+      "rawMidiAllowedInDomainContract": false,
+      "sysExAllowedInDomainContract": false,
+      "controlChangeNumbersAllowedInDomainContract": false,
+      "packageSelectionIsImplementationDetailWithinTheseConstraints": true
+    },
+    "elgatoTransport": {
+      "id": "IAD702",
+      "status": "Answered",
+      "model": "OfficialSdkIsolatedThinBridge",
+      "officialSdkRequired": true,
+      "typeScriptAllowedOnlyWhenSdkRequiresIt": true,
+      "normalizedCapabilityEventsRequired": true,
+      "vendorLogicAllowedInAocCore": false,
+      "rawHidReverseEngineeringSelected": false
+    },
+    "firstApprovedDeviceSet": {
+      "id": "IAD703",
+      "status": "Answered",
+      "model": "TwoClassReferenceWave",
+      "requiredDeviceClasses": [
+        "MidiController",
+        "StreamDeck"
+      ],
+      "devicesPerRequiredClass": 1,
+      "xboxIncludedInFirstWave": false,
+      "xboxRemainsSeparateCandidate": true,
+      "serialNumbersAllowedInPublicProfiles": false,
+      "additionalDevicesRequireSeparateEvidence": true
+    },
+    "labAndSafetyApproval": {
+      "id": "IAD704",
+      "status": "Answered",
+      "model": "ExplicitPreFieldTestApprovalGate",
+      "requiredEvidence": [
+        "VersionedLabInventory",
+        "DeviceSpecificRiskAndSafetyAssessment",
+        "VerifiedKillSwitch",
+        "SupervisedTestPlan",
+        "DocumentedApproval"
+      ],
+      "approvalStates": [
+        "Approved",
+        "Rejected",
+        "Expired",
+        "Unknown"
+      ],
+      "missingEvidenceState": "Unknown",
+      "hardwareIoAllowedWhenApprovalIsNotApproved": false,
+      "approvalGrantsProductCommandAuthority": false
+    }
+  },
+  "capabilityModel": {
+    "vendorNeutralCapabilities": [
+      "Button",
+      "Encoder",
+      "Fader",
+      "Pad",
+      "Text",
+      "Icon",
+      "Feedback"
+    ],
+    "requiredAdapterStates": [
+      "Connected",
+      "Disconnected",
+      "Reconnecting",
+      "Degraded",
+      "Unsupported"
+    ],
+    "profilesDeclarativeAndVersioned": true,
+    "profilesPublishableWithoutSerialNumbers": true,
+    "hardwareFailureMayDegradeConsoleOrJsonBaseline": false,
+    "userFunctionsRequireKeyboardOrTextAlternative": true
+  },
+  "failureContract": {
+    "reasonCodes": [
+      "HWC001_VALID",
+      "HWC002_DISCONNECTED",
+      "HWC003_DEGRADED",
+      "HWC004_UNSUPPORTED",
+      "HWC005_MALFORMED_INPUT",
+      "HWC006_RECONNECT_REQUIRES_STATE_REBUILD",
+      "HWC007_RAW_PROTOCOL_LEAK",
+      "HWC008_DOMAIN_COMMAND_FORBIDDEN",
+      "HWC009_DEVICE_NOT_APPROVED",
+      "HWC010_LAB_APPROVAL_REQUIRED",
+      "HWC011_KILL_SWITCH_REQUIRED"
+    ],
+    "unknownControl": "Unsupported",
+    "malformedMidi": "RejectedInAdapter",
+    "disconnect": "Disconnected",
+    "reconnect": "ExplicitAndRebuildsState",
+    "missingApproval": "Blocked",
+    "missingKillSwitch": "Blocked"
+  },
+  "handoffs": [
+    {
+      "id": "H-RAW04-RAW07",
+      "producer": "RAW-04",
+      "consumer": "RAW-07",
+      "contract": "Presentation Contract",
+      "version": "requirements-v1",
+      "authority": "Accessible presentation capabilities without hardware protocol authority",
+      "failureBehavior": "An incompatible or unavailable presentation capability disables the adapter visibly.",
+      "seriesRelation": "HardCompletionGateBinding"
+    },
+    {
+      "id": "H-RAW07-AOC",
+      "producer": "RAW-07",
+      "consumer": "AOC Presentation and Orchestration",
+      "contract": "Hardware Capability Events and Feedback",
+      "version": "requirements-v1",
+      "authority": "Normalized device events and feedback only; no domain command or state ownership",
+      "failureBehavior": "Invalid, unsupported, disconnected, degraded, or unapproved devices remain unavailable and cannot emit a product command.",
+      "seriesRelation": "FunctionalHandoff"
+    }
+  ],
+  "forbiddenActionsForThisRequirementsUpdate": [
+    "HardwareIO",
+    "DeviceDiscovery",
+    "DeviceConnection",
+    "MidiSendOrReceive",
+    "ElgatoSdkInvocation",
+    "ProductMutation",
+    "RemoteWrite",
+    "PresetMutation",
+    "Level0Mutation"
+  ],
+  "crossCutting": {
+    "platforms": [
+      "macOS",
+      "Linux",
+      "Windows"
+    ],
+    "sameLogicalCapabilitiesAcrossPlatforms": true,
+    "privacyDataMinimised": true,
+    "publicEvidenceDeidentified": true,
+    "serialNumbersExcludedFromPublicEvidence": true,
+    "userFacingStatusHasTextAlternative": true,
+    "documentationGermanFirstEnglishSecond": true,
+    "cefrB2": true,
+    "wcag22AAWhereApplicable": true,
+    "supplyChain": "N/A for this requirements-only contract and dependency-free fixtures; any MIDI library or Elgato SDK dependency requires licence, provenance, SBOM, vulnerability, platform, and maintenance evidence before implementation."
+  },
+  "reevaluationTriggers": [
+    "The vendor-neutral capability model changes",
+    "A MIDI library or operating-system transport is selected or replaced",
+    "The Elgato SDK or bridge boundary changes",
+    "A device class enters or leaves the reference wave",
+    "Lab inventory, safety assessment, supervision, approval, or kill-switch policy changes",
+    "Hardware I/O, product command, state, remote, preset, or Level-0 authority is proposed",
+    "A platform, personal-data category, or implementation dependency is introduced"
+  ]
+}

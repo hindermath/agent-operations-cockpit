@@ -1,0 +1,9 @@
+{
+  "fixtureId": "RAW06-NEGATIVE-REMOTE-ENABLED",
+  "fixtureKind": "RemoteActivation",
+  "expectedOutcome": "Rejected",
+  "expectedReasonCode": "CLI009_REMOTE_DISABLED",
+  "remoteExecutionRequested": true,
+  "separateReviewPresent": false,
+  "separateAuthorityPresent": false
+}

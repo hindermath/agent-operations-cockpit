@@ -1,0 +1,127 @@
+{
+  "fixtureId": "RAW04-VALID-PRESENTATION-CASES",
+  "fixtureKind": "PresentationCases",
+  "expectedOutcome": "Valid",
+  "cases": [
+    {
+      "id": "linear-width-39",
+      "width": 39,
+      "terminalInteractive": true,
+      "tuiAdapterAvailable": true,
+      "expectedLayout": "Linear",
+      "surfaceAvailable": true,
+      "stateStatus": "Known",
+      "statusLabel": "Bekannt / Known",
+      "messageId": "presentation.state.known",
+      "translations": {
+        "de": "Zustand bekannt",
+        "en": "State known"
+      },
+      "focusOrder": [1, 2, 3],
+      "consoleSemantics": {
+        "stateStatus": "Known",
+        "reasonCodes": ["STATE_FRESH"]
+      },
+      "jsonSemantics": {
+        "stateStatus": "Known",
+        "reasonCodes": ["STATE_FRESH"]
+      }
+    },
+    {
+      "id": "compact-width-79",
+      "width": 79,
+      "terminalInteractive": true,
+      "tuiAdapterAvailable": true,
+      "expectedLayout": "Compact",
+      "surfaceAvailable": true,
+      "stateStatus": "Stale",
+      "statusLabel": "Veraltet / Stale",
+      "messageId": "presentation.state.stale",
+      "translations": {
+        "de": "Zustand veraltet",
+        "en": "State stale"
+      },
+      "focusOrder": [1, 2, 3],
+      "consoleSemantics": {
+        "stateStatus": "Stale",
+        "reasonCodes": ["STALE_THRESHOLD_EXCEEDED"]
+      },
+      "jsonSemantics": {
+        "stateStatus": "Stale",
+        "reasonCodes": ["STALE_THRESHOLD_EXCEEDED"]
+      }
+    },
+    {
+      "id": "enhanced-width-120",
+      "width": 120,
+      "terminalInteractive": true,
+      "tuiAdapterAvailable": true,
+      "expectedLayout": "Enhanced",
+      "surfaceAvailable": true,
+      "stateStatus": "Degraded",
+      "statusLabel": "Eingeschränkt / Degraded",
+      "messageId": "presentation.state.degraded",
+      "translations": {
+        "de": "Zustand eingeschränkt",
+        "en": "State degraded"
+      },
+      "focusOrder": [1, 2, 3],
+      "consoleSemantics": {
+        "stateStatus": "Degraded",
+        "reasonCodes": ["AUTHORITY_CONFLICT"]
+      },
+      "jsonSemantics": {
+        "stateStatus": "Degraded",
+        "reasonCodes": ["AUTHORITY_CONFLICT"]
+      }
+    },
+    {
+      "id": "forced-linear-unavailable-adapter",
+      "width": 120,
+      "terminalInteractive": true,
+      "tuiAdapterAvailable": false,
+      "expectedLayout": "Linear",
+      "surfaceAvailable": false,
+      "stateStatus": "Degraded",
+      "statusLabel": "Eingeschränkt / Degraded",
+      "messageId": "presentation.surface.unavailable",
+      "translations": {
+        "de": "Darstellungsfläche nicht verfügbar",
+        "en": "Presentation surface unavailable"
+      },
+      "focusOrder": [1, 2, 3],
+      "consoleSemantics": {
+        "stateStatus": "Degraded",
+        "reasonCodes": ["SURFACE_UNAVAILABLE"]
+      },
+      "jsonSemantics": {
+        "stateStatus": "Degraded",
+        "reasonCodes": ["SURFACE_UNAVAILABLE"]
+      }
+    },
+    {
+      "id": "forced-linear-noninteractive",
+      "width": 120,
+      "terminalInteractive": false,
+      "tuiAdapterAvailable": true,
+      "expectedLayout": "Linear",
+      "surfaceAvailable": true,
+      "stateStatus": "Unknown",
+      "statusLabel": "Unbekannt / Unknown",
+      "messageId": "presentation.state.unknown",
+      "translations": {
+        "de": "Zustand unbekannt",
+        "en": "State unknown"
+      },
+      "focusOrder": [1, 2, 3],
+      "consoleSemantics": {
+        "stateStatus": "Unknown",
+        "reasonCodes": ["FRESHNESS_UNKNOWN"]
+      },
+      "jsonSemantics": {
+        "stateStatus": "Unknown",
+        "reasonCodes": ["FRESHNESS_UNKNOWN"]
+      }
+    }
+  ]
+}

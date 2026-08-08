@@ -1,0 +1,394 @@
+{
+  "schemaVersion": "requirements-v1",
+  "documentType": "AocWorkflowEvidenceContract",
+  "contractId": "RAW-08-Workflow-Evidence-Contract-requirements-v1",
+  "owner": "RAW-08",
+  "boundary": {
+    "programToKnowledgeOwner": "RAW-08",
+    "executionNodeEvidenceOwner": "RAW-05",
+    "cliExecutionEvidenceOwner": "RAW-06",
+    "knowledgePackageConsumer": "RAW-09",
+    "productStateOwned": false,
+    "productCommandOwned": false,
+    "presetWriteOrPromotionOwned": false,
+    "executionEnabledByThisContract": false
+  },
+  "decisions": {
+    "persistence": {
+      "id": "IAD801",
+      "status": "Answered",
+      "model": "VersionedCanonicalJsonReceiptLast",
+      "canonicalRoot": "evidence/workflow/<workflow-id>/",
+      "requiredArtifactFields": [
+        "schemaVersion",
+        "artifactId",
+        "artifactType",
+        "sourceIds",
+        "status",
+        "owner",
+        "revision",
+        "contentSha256"
+      ],
+      "sameDirectoryTemporaryWrite": true,
+      "validateBeforeReplace": true,
+      "atomicReplaceRequired": true,
+      "receiptPublishedLast": true,
+      "partialTemporaryFileIsState": false,
+      "recoveryAnchor": "LastFullyValidatedHashBoundReceipt",
+      "databaseMayBeCanonical": false,
+      "databaseMayBeDerivedIndex": true
+    },
+    "attestation": {
+      "id": "IAD802",
+      "status": "Answered",
+      "model": "VersionedStandardDetachedAttestationEnvelope",
+      "signedValue": "CanonicalSha256ContentHash",
+      "requiredEnvelopeFields": [
+        "schemaVersion",
+        "subjectArtifactId",
+        "subjectSha256",
+        "signatureProfile",
+        "keyId",
+        "trustPolicyRef",
+        "signedAt",
+        "signature"
+      ],
+      "trustPolicySeparatelyVersioned": true,
+      "trustPolicyRequiredFields": [
+        "policyVersion",
+        "allowedSignatureProfiles",
+        "allowedKeyIds",
+        "trustRoots",
+        "validFrom",
+        "validUntil"
+      ],
+      "privateKeysOrSecretsAllowedInRepository": false,
+      "missingSignatureResult": "Blocked",
+      "unknownKeyOrTrustRootResult": "Blocked",
+      "invalidSignatureResult": "Blocked",
+      "hashMismatchResult": "Blocked",
+      "expiredPolicyResult": "Blocked"
+    },
+    "retention": {
+      "id": "IAD803",
+      "status": "Answered",
+      "model": "EvidenceClassRetentionWithLegalHold",
+      "classes": [
+        {
+          "evidenceClass": "GovernanceDecisionCompletionReceipt",
+          "retention": "ProjectLifetime",
+          "supersessionAction": "Archive"
+        },
+        {
+          "evidenceClass": "OperationalExecution",
+          "retentionDaysAfterCompletion": 90,
+          "supersessionAction": "ArchiveUntilExpiry"
+        },
+        {
+          "evidenceClass": "SecurityAndFailure",
+          "retentionMonthsAfterCompletion": 12,
+          "supersessionAction": "ArchiveUntilExpiry"
+        }
+      ],
+      "legalHoldRequiredFields": [
+        "reason",
+        "owner",
+        "reviewAt",
+        "expiresAt",
+        "releaseAuthority"
+      ],
+      "legalHoldSuspendsDeletion": true,
+      "deletionReceiptRequired": true,
+      "deletionReceiptFields": [
+        "artifactId",
+        "evidenceClass",
+        "dueAt",
+        "authorityRef",
+        "executedAt",
+        "result",
+        "resultSha256"
+      ],
+      "secretsAllowed": false,
+      "unnecessaryPersonalDataAllowed": false
+    }
+  },
+  "artifactModel": {
+    "artifactTypes": [
+      "Charter",
+      "Source",
+      "Decision",
+      "Intake",
+      "Spec",
+      "Plan",
+      "Task",
+      "Evidence",
+      "Retrospective",
+      "KnowledgePackage",
+      "Receipt"
+    ],
+    "evidenceClasses": [
+      "Positive",
+      "Negative",
+      "ProviderFailure"
+    ],
+    "evidenceRequiredFields": [
+      "evidenceId",
+      "evidenceClass",
+      "subjectArtifactIds",
+      "observedAt",
+      "provider",
+      "outcome",
+      "reasonCode",
+      "contentSha256",
+      "retentionClass"
+    ],
+    "providerFailureMayClaimCompletion": false,
+    "retrospectiveMayCreateNormativeDecision": false,
+    "knowledgePackageRequiredFields": [
+      "packageId",
+      "schemaVersion",
+      "sourceIds",
+      "decisionIds",
+      "intakeIds",
+      "specIds",
+      "planIds",
+      "taskIds",
+      "evidenceIds",
+      "retrospectiveIds",
+      "traceabilityRootSha256",
+      "attestationRef",
+      "compatibilityVersion"
+    ]
+  },
+  "lifecycle": {
+    "states": [
+      "Draft",
+      "Validated",
+      "Approved",
+      "InProgress",
+      "Blocked",
+      "Completed",
+      "Superseded",
+      "Expired"
+    ],
+    "allowedTransitions": [
+      "Draft->Validated",
+      "Validated->Approved",
+      "Approved->InProgress",
+      "InProgress->Blocked",
+      "Blocked->InProgress",
+      "InProgress->Completed",
+      "Completed->Superseded",
+      "Superseded->Expired"
+    ],
+    "transitionRequiredFields": [
+      "transitionId",
+      "artifactId",
+      "from",
+      "to",
+      "preconditionEvidenceIds",
+      "authorityRef",
+      "inputHashes",
+      "outputSha256",
+      "receiptId",
+      "occurredAt",
+      "reasonCode"
+    ],
+    "unknownTransitionResult": "Blocked",
+    "missingPreconditionResult": "Blocked",
+    "missingAuthorityResult": "Blocked",
+    "hashDriftResult": "Blocked",
+    "providerFailureResult": "BlockedWithPartialEvidence"
+  },
+  "handoffs": [
+    {
+      "id": "H-RAW05-RAW08",
+      "producer": "RAW-05",
+      "consumer": "RAW-08",
+      "contract": "Node Health and Freshness Assessment",
+      "version": "requirements-v1",
+      "requiredFields": [
+        "nodeId",
+        "nodeState",
+        "health",
+        "freshness",
+        "attestation",
+        "reasonCodes",
+        "observedAt",
+        "freshnessAsOf",
+        "policyVersion"
+      ],
+      "authority": "Read-only workflow assessment input",
+      "compatibility": "ExactMajorAndKnownReasonCodes",
+      "failureBehavior": "Unknown, Untrusted, Stale, Expired, or Unavailable evidence blocks or visibly degrades the workflow and never authorizes execution.",
+      "seriesRelation": "AssessmentBaselineBinding"
+    },
+    {
+      "id": "H-RAW06-RAW08",
+      "producer": "RAW-06",
+      "consumer": "RAW-08",
+      "contract": "CLI Execution Evidence",
+      "version": "requirements-v1",
+      "requiredFields": [
+        "correlationId",
+        "capabilityId",
+        "nodeId",
+        "outcome",
+        "startedAt",
+        "finishedAt",
+        "stdoutRecords",
+        "stderrRecords",
+        "partialOutput",
+        "reasonCode",
+        "contentSha256"
+      ],
+      "authority": "De-identified result and failure evidence without process, product, or remote-write authority",
+      "compatibility": "ExactMajorAndKnownOutcome",
+      "failureBehavior": "Incomplete, unknown, timed-out, cancelled, signaled, or failed evidence remains partial or negative and cannot be promoted to successful execution evidence.",
+      "seriesRelation": "HardCompletionGateBinding"
+    },
+    {
+      "id": "H-RAW08-RAW09",
+      "producer": "RAW-08",
+      "consumer": "RAW-09",
+      "contract": "Evidence and Retrospective Knowledge Package",
+      "version": "requirements-v1",
+      "requiredFields": [
+        "packageId",
+        "sourceIds",
+        "decisionIds",
+        "evidenceIds",
+        "retrospectiveIds",
+        "traceabilityRootSha256",
+        "attestationRef",
+        "compatibilityVersion"
+      ],
+      "authority": "Read-only de-identified proposal input without preset-write or promotion authority",
+      "compatibility": "ExactMajorAndValidAttestation",
+      "failureBehavior": "Missing traceability, invalid attestation, private content, or incompatible version blocks proposal completion.",
+      "seriesRelation": "FinalAuditInputBinding"
+    }
+  ],
+  "childContracts": [
+    {
+      "id": "RAW08-CHILD-ARTIFACT-LIFECYCLE",
+      "owner": "RAW-08",
+      "output": "Versioned lifecycle transition receipt",
+      "nonGoal": "Product state transition"
+    },
+    {
+      "id": "RAW08-CHILD-TRACEABILITY-GRAPH",
+      "owner": "RAW-08",
+      "output": "Hash-bound artifact graph",
+      "nonGoal": "Repository dependency graph"
+    },
+    {
+      "id": "RAW08-CHILD-EVIDENCE-RECEIPT",
+      "owner": "RAW-08",
+      "output": "Positive, negative, and provider-failure evidence receipt",
+      "nonGoal": "Provider or product success claim"
+    },
+    {
+      "id": "RAW08-CHILD-RETROSPECTIVE-HANDOFF",
+      "owner": "RAW-08",
+      "output": "Non-normative retrospective observation package",
+      "nonGoal": "Automatic normative decision or preset promotion"
+    }
+  ],
+  "authorityGates": {
+    "requiredCurrentAuthoritiesForAutonomousExecution": [
+      "ScopeAuthority",
+      "StartAuthority",
+      "ImplementationAuthority",
+      "GovernanceWriteAuthority",
+      "RemoteWriteAuthority",
+      "MergeAuthority",
+      "BypassAuthority",
+      "ProviderAuthority"
+    ],
+    "historicalDeliveryAuthoritySufficient": false,
+    "eligibleLifecycleSufficient": false,
+    "readyReviewSufficient": false,
+    "missingOrExpiredAuthorityResult": "Blocked"
+  },
+  "failureContract": {
+    "reasonCodes": [
+      "WFE001_VALID",
+      "WFE002_INVALID_TRANSITION",
+      "WFE003_AUTHORITY_MISSING",
+      "WFE004_HASH_DRIFT",
+      "WFE005_PROVIDER_FAILURE",
+      "WFE006_SIGNATURE_INVALID",
+      "WFE007_RETENTION_VIOLATION",
+      "WFE008_HANDOFF_INCOMPATIBLE",
+      "WFE009_PERSONAL_DATA_REJECTED",
+      "WFE010_A11Y_PROJECTION_REQUIRED",
+      "WFE011_PLATFORM_SEMANTICS_MISMATCH",
+      "WFE012_SUPPLY_CHAIN_EVIDENCE_REQUIRED",
+      "WFE013_PARTIAL_ARTIFACT",
+      "WFE014_TRUST_POLICY_INVALID"
+    ],
+    "successWithoutCompleteEvidenceAllowed": false,
+    "unknownStateMayBePromoted": false,
+    "providerFailurePreservesPartialEvidence": true
+  },
+  "crossCutting": {
+    "security": "Attestation, hashes, trust policy, transitions, and current authority fail closed; secret values, private keys, and credentials are prohibited.",
+    "privacy": "Evidence is data-minimised and de-identified; private host paths, user names, device serials, and unnecessary personal data are prohibited.",
+    "publicContent": "Public knowledge packages contain only reviewed de-identified content and logical repository-relative references.",
+    "accessibility": "All user-facing status, reason, evidence, and workflow projections provide German-first and English-second text, stable reason codes, keyboard and text alternatives, and do not rely on colour, sound, motion, or position alone.",
+    "platforms": [
+      "macOS",
+      "Linux",
+      "Windows"
+    ],
+    "sameLogicalOutcomesAcrossPlatforms": true,
+    "containerAndRemoteNodes": "Container, WSL, ABS-DD, and Remote evidence retain node identity, trust zone, mount, freshness, and provider boundaries; missing provenance blocks completion.",
+    "documentationGermanFirstEnglishSecond": true,
+    "cefrB2": true,
+    "wcag22AAWhereApplicable": true,
+    "supplyChain": "N/A for this requirements contract and dependency-free offline fixtures; any implementation dependency requires licence, provenance, SBOM, vulnerability, platform, and maintenance evidence."
+  },
+  "forbiddenActionsForThisRequirementsRepair": [
+    "ProductImplementation",
+    "ProductStateMutation",
+    "ProcessStart",
+    "HardwareIO",
+    "CredentialRead",
+    "CredentialWrite",
+    "RemoteWrite",
+    "Merge",
+    "Bypass",
+    "PresetMutation",
+    "PresetPromotion",
+    "Level0Mutation",
+    "GitHubWrite"
+  ],
+  "reevaluationTriggers": [
+    "An artifact type, lifecycle state, transition, evidence class, reason code, or required field changes",
+    "Persistence path, atomic write, recovery, attestation, trust policy, retention, legal hold, or deletion rules change",
+    "RAW-05, RAW-06, RAW-09, or a child-contract handoff changes",
+    "A platform, node type, public-data category, accessibility projection, or implementation dependency changes",
+    "Any current authority gate or historical delivery boundary changes",
+    "Product, remote, merge, bypass, provider, preset, promotion, GitHub, or Level-0 authority is proposed"
+  ],
+  "evidence": {
+    "validator": "specs/intake-review-fixtures/raw-08/validate-workflow-evidence-contract.py",
+    "bashSurface": "specs/intake-review-fixtures/raw-08/validate-workflow-evidence-contract.sh",
+    "powerShellSurface": "specs/intake-review-fixtures/raw-08/validate-workflow-evidence-contract.ps1",
+    "positiveFixtures": [
+      "specs/intake-review-fixtures/raw-08/valid-source-to-retrospective.json"
+    ],
+    "negativeFixtures": [
+      "specs/intake-review-fixtures/raw-08/negative-invalid-transition.json",
+      "specs/intake-review-fixtures/raw-08/negative-missing-authority.json",
+      "specs/intake-review-fixtures/raw-08/negative-provider-failure.json",
+      "specs/intake-review-fixtures/raw-08/negative-invalid-attestation.json",
+      "specs/intake-review-fixtures/raw-08/negative-retention-violation.json",
+      "specs/intake-review-fixtures/raw-08/negative-incompatible-handoff.json",
+      "specs/intake-review-fixtures/raw-08/negative-cross-cutting.json"
+    ],
+    "successExitCode": 0,
+    "validatorErrorExitCode": 2
+  }
+}

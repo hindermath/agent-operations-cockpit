@@ -1,0 +1,10 @@
+{
+  "fixtureId": "RAW08-NEGATIVE-PROVIDER-FAILURE",
+  "fixtureKind": "ProviderFailure",
+  "expectedOutcome": "BlockedWithPartialEvidence",
+  "expectedReasonCode": "WFE005_PROVIDER_FAILURE",
+  "providerFailure": true,
+  "partialEvidencePreserved": true,
+  "completionClaimed": false,
+  "retryClaimedSuccessful": false
+}
