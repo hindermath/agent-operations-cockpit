@@ -5,8 +5,8 @@
   "branch": "001-programmquellen-baseline",
   "deliveryMode": "MergeAndSync",
   "authorityRevalidationRequired": false,
-  "stage": "Implement",
-  "status": "Active",
+  "stage": "MergeAndSync",
+  "status": "Completed",
   "checkpointCommit": "b8eb0735b2a7c46a65712d2e280242c85f8c1d64",
   "acceptedArtifacts": [
     {
@@ -29,8 +29,8 @@
   },
   "tasks": {
     "path": "specs/001-programmquellen-baseline/tasks.md",
-    "sha256": "8d1c858d0b3f419f41d68bfc7fe43afe7425e3b930bbd56bc7e7d517ed7d85a3",
-    "completed": 0,
+    "sha256": "b0e05871052dbb5929550d6dd766a72a83a10e19cacb39d290907e41198681e2",
+    "completed": 66,
     "total": 66
   },
   "routing": {
@@ -361,12 +361,12 @@
       }
     ]
   },
-  "lastPassingGate": "GlobalReadyBeforeImplement",
-  "nextExactAction": "Continue autonomous validation and closeout.",
+  "lastPassingGate": "CausalCloseoutValidated",
+  "nextExactAction": "N/A",
   "lastOperation": {
-    "kind": "ModelRoutingPhase:implement-converge",
+    "kind": "CausalCloseout",
     "state": "Completed",
-    "summary": "Phase completed with profile 'codex-implementation-auto' and result SHA-256 1f3c0288db53c52875a71b8161e25391dd9bb80915d18680089223e1eba93a63."
+    "summary": "Feature PR 19 merged at 031c335360afd75f04a8837dc2fe6723a3c9ea91; main was fast-forward synchronized and the exact three-path closeout passed final validation."
   },
   "stop": {
     "reason": "N/A",
@@ -394,10 +394,21 @@
     "mandatoryDeltaDisposition": "Current mandatory correctness, security, permission, accessibility, cross-platform, routing, exact-head, evidence-integrity, and closeout rules are already represented by the accepted gates. C-001 alone requires the authorized lifecycle amendment; no preset, Level-0, product, or Constitution mutation is authorized."
   },
   "closeout": {
-    "mergeOrPublication": "Pending",
-    "defaultBranchSync": "Pending",
+    "mergeOrPublication": "Completed",
+    "defaultBranchSync": "Completed",
     "postMergeActions": "N/A",
-    "finalValidation": "Pending"
+    "finalValidation": "Completed"
   },
-  "updatedAt": "2026-08-09T18:27:22.3931910Z"
+  "causalCloseout": {
+    "evidencePath": "specs/001-programmquellen-baseline/causal-closeout-evidence.json",
+    "branch": "codex/001-programmquellen-baseline-closeout",
+    "allowedPaths": [
+      "specs/001-programmquellen-baseline/tasks.md",
+      "specs/001-programmquellen-baseline/autonomous-run-state.json",
+      "specs/001-programmquellen-baseline/causal-closeout-evidence.json"
+    ],
+    "status": "Completed",
+    "publicationEvidence": "ExternalOnly"
+  },
+  "updatedAt": "2026-08-09T19:24:47Z"
 }
