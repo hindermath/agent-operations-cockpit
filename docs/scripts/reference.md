@@ -5,7 +5,7 @@
 > Generated from `scripts/config/script-catalog.json` and the Git index. Do not edit manually.
 
 Stand / Updated: 2026-07-28
-Kanonische Skriptdateien / Canonical script files: 123
+Kanonische Skriptdateien / Canonical script files: 125
 
 ## Workspace-Lebenszyklus / Workspace lifecycle
 
@@ -308,6 +308,30 @@ pwsh -NoProfile -File scripts/register-level2-repository.ps1 -WhatIf  # falls Su
 ```text
 bash scripts/register-level2-repository.sh --help
 bash scripts/register-level2-repository.sh --dry-run  # falls angeboten / when supported
+```
+
+### `scripts/resolve-model-routing.ps1`
+
+- **Rolle / Role:** oeffentliches Kommando / public command
+- **Kurzbeschreibung / Summary:** Prueft oder aktualisiert lokale Spec-Kit-Modellbindungen.
+- **Voraussetzungen / Prerequisites:** passende Shell; weitere Anforderungen stehen in `--help` oder `Get-Help`.
+- **Nebenwirkungen / Side effects:** zuerst Check-, Dry-Run- oder WhatIf-Modus verwenden, sofern angeboten.
+
+```text
+Get-Help ./scripts/resolve-model-routing.ps1 -Full
+pwsh -NoProfile -File scripts/resolve-model-routing.ps1 -WhatIf  # falls SupportsShouldProcess angeboten wird / when supported
+```
+
+### `scripts/resolve-model-routing.sh`
+
+- **Rolle / Role:** oeffentliches Kommando / public command
+- **Kurzbeschreibung / Summary:** Siehe Quelltext und Hilfe. / See source and help.
+- **Voraussetzungen / Prerequisites:** passende Shell; weitere Anforderungen stehen in `--help` oder `Get-Help`.
+- **Nebenwirkungen / Side effects:** zuerst Check-, Dry-Run- oder WhatIf-Modus verwenden, sofern angeboten.
+
+```text
+bash scripts/resolve-model-routing.sh --help
+bash scripts/resolve-model-routing.sh --dry-run  # falls angeboten / when supported
 ```
 
 ### `scripts/sync-constitution.ps1`

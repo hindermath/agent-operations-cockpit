@@ -15,6 +15,9 @@
     "intake-sequencing-eleven-governance-presets": {
       "presetConfig": "scripts/config/spec-kit-intake-sequencing-governance-presets.json"
     },
+    "model-routing-twelve-governance-presets": {
+      "presetConfig": "scripts/config/spec-kit-model-routing-governance-presets.json"
+    },
     "none": {
       "presetConfig": null
     }

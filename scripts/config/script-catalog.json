@@ -24,7 +24,7 @@
       "id": "governance",
       "titleDe": "Governance und Spec Kit",
       "titleEn": "Governance and Spec Kit",
-      "patterns": ["install-spec-kit-*", "update-spec-kit.*", "sync-constitution.*", "register-level2-*", "check-gsdb-*"],
+      "patterns": ["install-spec-kit-*", "resolve-model-routing.*", "update-spec-kit.*", "sync-constitution.*", "register-level2-*", "check-gsdb-*"],
       "purposeDe": "Installiert und prueft Spec-Kit-, Constitution- und Repository-Governance.",
       "purposeEn": "Installs and checks Spec Kit, constitution, and repository governance."
     },

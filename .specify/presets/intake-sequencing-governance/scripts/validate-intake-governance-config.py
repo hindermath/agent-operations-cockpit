@@ -151,7 +151,6 @@ def validate_series_manifest(
     }
     target_paths: list[str] = []
     eligible: list[str] = []
-    target_statuses: dict[str, str] = {}
     for index, target in enumerate(targets):
         if not isinstance(target, dict):
             fail("RIG014", f"orderedTargets[{index}] must be an object")
@@ -169,7 +168,6 @@ def validate_series_manifest(
         if normalized_sha256(target_file) != expected_hash:
             fail("RIG015", f"hash drift for {target_path}")
         status = required_text(target, "status", "RIG017")
-        target_statuses[target_path] = status
         if status == "Eligible":
             eligible.append(target_path)
 
@@ -177,18 +175,7 @@ def validate_series_manifest(
         missing = sorted(active_paths - set(target_paths))
         extra = sorted(set(target_paths) - active_paths)
         fail("RIG013", f"active inventory mismatch; missing={missing}, extra={extra}")
-    if series_status == "Completed":
-        incomplete = sorted(
-            target_path
-            for target_path, target_status in target_statuses.items()
-            if target_status != "Completed"
-        )
-        if incomplete:
-            fail(
-                "RIG017",
-                f"Completed requires every target to be Completed; incomplete={incomplete}",
-            )
-    elif len(eligible) != 1:
+    if len(eligible) != 1:
         fail("RIG017", f"exactly one Eligible target is required, found {len(eligible)}")
 
     dependencies = manifest.get("dependencies", [])
@@ -208,7 +195,7 @@ def validate_series_manifest(
     return {
         "activeIntakeCount": len(target_paths),
         "seriesTargetCount": len(target_paths),
-        "eligibleCandidate": "N/A" if series_status == "Completed" else eligible[0],
+        "eligibleCandidate": eligible[0],
         "dependencyCount": len(dependencies),
     }
 

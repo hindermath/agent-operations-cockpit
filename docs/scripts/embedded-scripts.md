@@ -12,10 +12,15 @@ Change their respective canonical source first, then propagate the result.*
 
 | Pfad / Path | Bereich / Area |
 |---|---|
+| `.specify/presets/autonomous-run-governance/scripts/invoke-autonomous-model-phase.ps1` | `.specify` |
+| `.specify/presets/autonomous-run-governance/scripts/invoke-autonomous-model-phase.sh` | `.specify` |
 | `.specify/presets/autonomous-run-governance/scripts/validate-autonomous-gate-evidence.ps1` | `.specify` |
 | `.specify/presets/autonomous-run-governance/scripts/validate-autonomous-gate-evidence.sh` | `.specify` |
 | `.specify/presets/autonomous-run-governance/scripts/validate-autonomous-run-state.ps1` | `.specify` |
 | `.specify/presets/autonomous-run-governance/scripts/validate-autonomous-run-state.sh` | `.specify` |
+| `.specify/presets/autonomous-run-governance/tests/fixture-model-runner.ps1` | `.specify` |
+| `.specify/presets/autonomous-run-governance/tests/test-model-routing.ps1` | `.specify` |
+| `.specify/presets/autonomous-run-governance/tests/test-model-routing.sh` | `.specify` |
 | `.specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-artifact.ps1` | `.specify` |
 | `.specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-artifact.sh` | `.specify` |
 | `.specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.ps1` | `.specify` |
@@ -45,6 +50,10 @@ Change their respective canonical source first, then propagate the result.*
 | `.specify/presets/intake-sequencing-governance/tests/test-home-baseline-field.ps1` | `.specify` |
 | `.specify/presets/intake-sequencing-governance/tests/test-intake-governance-config.ps1` | `.specify` |
 | `.specify/presets/intake-sequencing-governance/tests/test-intake-sequencing-validator.ps1` | `.specify` |
+| `.specify/presets/model-routing-governance/scripts/resolve-model-routing.ps1` | `.specify` |
+| `.specify/presets/model-routing-governance/scripts/resolve-model-routing.sh` | `.specify` |
+| `.specify/presets/model-routing-governance/tests/test-model-routing-discovery.ps1` | `.specify` |
+| `.specify/presets/model-routing-governance/tests/test-model-routing-discovery.sh` | `.specify` |
 | `.specify/presets/parallel-autonomous-run-governance/scripts/orchestrate-parallel-autonomous-runs.ps1` | `.specify` |
 | `.specify/presets/parallel-autonomous-run-governance/scripts/orchestrate-parallel-autonomous-runs.sh` | `.specify` |
 | `.specify/presets/parallel-autonomous-run-governance/tests/fixture-post-merge.ps1` | `.specify` |
