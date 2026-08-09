@@ -146,7 +146,7 @@ Der `programmeEvidenceSnapshot` besitzt exakt `snapshotVersion`, `runId`, `branc
 | `porcelainStatus` | Maschinenlesbare staged, unstaged und untracked Zustaende; fremde unstaged Pfade bleiben unberuehrt. / Machine-readable states; unrelated unstaged paths remain untouched. |
 | `stagedPaths` | Exakt gleich `expectedPaths`; kein zusaetzlicher oder fehlender Pfad. / Exactly equal to expected paths. |
 | `whitespaceResult` | `git diff --cached --check` besteht. / The staged whitespace check passes. |
-| `terminalRename` | Nach dem normalen Kandidaten-Commit genau ein byteidentischer `R100`-Rename vom Original- zum Archivpfad; vom Script als letzter Feature-Branch-Commit erzeugt und mit `terminal-rename` validiert. / After the normal candidate commit, exactly one byte-identical R100 rename created by the script as the final branch commit. |
+| `terminalRename` | Nach dem normalen Kandidaten-Commit genau ein byteidentischer `R100`-Rename vom Original- zum Archivpfad; vom Script als letzter Intake-mutierender Commit erzeugt und mit `terminal-rename` in der Feature-Lineage validiert. Danach ist genau ein generierter Statistik-Synchronisationscommit erlaubt. / The rename is the final intake mutation; exactly one generated statistics-only commit may follow. |
 
 ## Entitaet: Kausaler Closeout-Datensatz / Entity: Causal Closeout Record
 
@@ -179,5 +179,5 @@ Der `programmeEvidenceSnapshot` besitzt exakt `snapshotVersion`, `runId`, `branc
 3. Kein `Covered`-Status behauptet Produktimplementierung oder Wirksamkeit. / No `Covered` status claims product implementation or effectiveness.
 4. Keine Quelle, Decision oder Evidence erweitert Produkt-, Remote-, Provider- oder Preset-Autoritaet. / No source, decision, or evidence expands product, remote, provider, or preset authority.
 5. Fehlende oder veraltete Evidence fuehrt zu `Stop`, nicht zu impliziter Zustimmung. / Missing or stale evidence results in `Stop`, not implicit approval.
-6. Nach dem terminalen Rename darf keine weitere Feature-Head-Mutation stattfinden; spaetere Fakten werden nur im separat reviewten Drei-Pfad-Closeout-Commit persistiert. / No feature-head mutation follows the terminal rename; later facts are persisted only in the separately reviewed three-path closeout commit.
+6. Nach dem terminalen Rename darf ausschliesslich `docs/project-statistics.md` aus dem vorhandenen Renderer committed werden. Dieser Statistik-Head wird unveraendert reviewt und gemergt; spaetere Fakten werden nur im separat reviewten Drei-Pfad-Closeout-Commit persistiert. / Only the generated statistics synchronization follows the rename; that reviewed head is then immutable.
 7. `causal-closeout` verlangt exakt 66 gepruefte Tasks, State-Gleichheit, realen Task-Hash, terminale Closeout-Felder, exakte Drei-Pfad-Stage und keine Selbstreferenz. / Causal closeout requires exactly 66 checked tasks, matching state and hash, terminal fields, an exact three-path stage, and no self-reference.

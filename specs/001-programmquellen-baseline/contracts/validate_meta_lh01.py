@@ -38,6 +38,7 @@ CLOSEOUT_PATHS = (
 LOGICAL_META01 = "META-LH-01"
 EXPECTED_RUN_ID = "b3694a58-208b-4d6b-a4d4-1b01f3816dcc"
 EXPECTED_BRANCH = "001-programmquellen-baseline"
+ACCEPTED_BASE_SHA = "b8eb0735b2a7c46a65712d2e280242c85f8c1d64"
 ORIGINAL_META01 = "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md"
 ARCHIVED_META01 = (
     "requirements/intakes/active/"
@@ -1323,12 +1324,21 @@ def validate_terminal_rename(root: Path) -> str:
     )
     if branch.returncode or branch.stdout.strip() != record["branch"]:
         fail("terminal rename commit must remain on the lifecycle branch")
+    lineage = subprocess.run(
+        ["git", "rev-list", f"{ACCEPTED_BASE_SHA}..HEAD", "--",
+         str(record["originalPath"]), str(record["archivedPath"])],
+        cwd=root, text=True, capture_output=True, check=False,
+    )
+    rename_commits = [line for line in lineage.stdout.splitlines() if line]
+    if lineage.returncode or len(rename_commits) != 1:
+        fail("feature lineage must contain exactly one intake lifecycle commit")
+    rename_commit = rename_commits[0]
     diff = subprocess.run(
-        ["git", "diff-tree", "--no-commit-id", "--name-status", "-r", "-M100%", "-z", "HEAD"],
+        ["git", "diff-tree", "--no-commit-id", "--name-status", "-r", "-M100%", "-z", rename_commit],
         cwd=root, capture_output=True, check=False,
     )
     if diff.returncode:
-        fail("cannot inspect terminal rename commit")
+        fail("cannot inspect terminal rename lifecycle commit")
     validate_terminal_rename_entries(terminal_rename_entries(diff.stdout), record)
     staged = subprocess.run(
         ["git", "diff", "--cached", "--name-only", "-z"], cwd=root,
@@ -1337,13 +1347,13 @@ def validate_terminal_rename(root: Path) -> str:
     if staged.returncode or any(staged.stdout.split(b"\0")):
         fail("terminal rename commit must leave no staged paths")
     message = subprocess.run(
-        ["git", "show", "-s", "--format=%B", "HEAD"], cwd=root, text=True,
+        ["git", "show", "-s", "--format=%B", rename_commit], cwd=root, text=True,
         capture_output=True, check=False,
     )
     trailer = "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
     if message.returncode or trailer not in message.stdout.splitlines():
-        fail("terminal rename commit lacks the exact constitutional Co-authored-by trailer")
-    return "one byte-identical R100 terminal rename commit and immutable archived head"
+        fail("terminal rename lifecycle commit lacks the exact constitutional Co-authored-by trailer")
+    return "one byte-identical R100 terminal rename lifecycle commit and immutable archived reviewed head"
 
 
 def render_gate_evidence(root: Path, requirements_path: Path, execution_path: Path,

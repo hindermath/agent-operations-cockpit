@@ -14,7 +14,7 @@ Die aktuelle Benutzeranweisung autorisiert den vollstaendigen META-LH-01-Lauf, C
 
 ### Verbindliche Fixpunkt-Reihenfolge / Binding Fixed-point Order
 
-Die nummerierten Abschnitte liefern die Befehle; ausgefuehrt werden sie in dieser fail-closed Reihenfolge: Lifecycle-Datensatz, Domain und alle Feature-Artefakte; eingebetteter Skriptkatalog; getrennte semantische und Accessibility-Reviews; AEPS-Receipt und gegebenenfalls vollstaendiger Ledger-Abschnitt; Statistik; vorbenannte Public-Content- und Documentation-Impact-Dateien als vorhandene Pfadanker; Kandidatenmenge eins; Secret-Scans und Vervollstaendigung beider Evidence-Dateien gegen die normale Kandidatenmenge plus Original-/Archivtransition; Kandidatenmenge zwei; bytegleicher Vergleich und `candidate-fixpoint`; Public-Content-/Documentation-Impact-Validierung; Stage und normaler Commit; erst danach terminaler Rename-Commit. / Execute the fixed point for the normal candidate first, with public/documentation inventories expanded by the lifecycle transition; commit it before the terminal rename commit.
+Die nummerierten Abschnitte liefern die Befehle; ausgefuehrt werden sie in dieser fail-closed Reihenfolge: Lifecycle-Datensatz, Domain und alle Feature-Artefakte; eingebetteter Skriptkatalog; getrennte semantische und Accessibility-Reviews; AEPS-Receipt und gegebenenfalls vollstaendiger Ledger-Abschnitt; Statistik; vorbenannte Public-Content- und Documentation-Impact-Dateien als vorhandene Pfadanker; Kandidatenmenge eins; Secret-Scans und Vervollstaendigung beider Evidence-Dateien gegen die normale Kandidatenmenge plus Original-/Archivtransition; Kandidatenmenge zwei; bytegleicher Vergleich und `candidate-fixpoint`; Public-Content-/Documentation-Impact-Validierung; Stage und normaler Commit; terminaler Rename als letzte Intake-Mutation; danach genau ein generierter Statistik-Synchronisationscommit als unveraenderlicher Review-Head. / The normal candidate is followed by the terminal intake rename and one generated statistics-only reviewed head.
 
 ## 1. Akzeptierte Eingaben vor jedem Edit / Accepted Inputs Before Every Edit
 
@@ -185,13 +185,27 @@ committed_head=$(git rev-parse HEAD)
 git show -s --format=%B "$committed_head" \
   | rg -Fx "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
 
-# Letzte Polish-Aktion und letzter Feature-Branch-Commit; vorher keine Stage-/Kandidatenreste.
-# Last Polish action and last feature-branch commit; no staged/candidate residue beforehand.
+# Letzte fachliche Polish-Aktion und letzte Intake-Mutation; vorher keine Stage-/Kandidatenreste.
+# Last semantic Polish action and final intake mutation; no staged/candidate residue beforehand.
 bash scripts/rename-lastenheft.sh \
   requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md \
   001-programmquellen-baseline
+rename_head=$(git rev-parse HEAD)
+test "$rename_head" != "$committed_head"
+python3 specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py \
+  --repo . terminal-rename
+
+# Methodik v2 bindet den letzten nicht ausgeschlossenen Rename-Commit.
+bash scripts/render-project-statistics.sh --repo .
+bash scripts/render-project-statistics.sh --repo . --check-only
+pwsh -NoProfile -File scripts/render-project-statistics.ps1 -Repo . -CheckOnly
+git add -- docs/project-statistics.md
+test "$(git diff --cached --name-only)" = "docs/project-statistics.md"
+git diff --cached --check
+git commit -m "docs: render programme baseline statistics" \
+  -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
 terminal_head=$(git rev-parse HEAD)
-test "$terminal_head" != "$committed_head"
+test "$terminal_head" != "$rename_head"
 python3 specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py \
   --repo . terminal-rename
 
@@ -236,7 +250,7 @@ test "$reviewed_head" = "$terminal_head"
 test "$(gh pr view "$pr_number" --json headRefOid --jq .headRefOid)" = "$reviewed_head"
 ```
 
-Der normale Kandidat ist `committed_head`; der ausschliessliche Folgecommit ist `terminal_head`. Kein weiterer Feature-Head-Commit darf zwischen `terminal_head`/`reviewed_head` und Merge entstehen. PR-Body, Push, Exact-Head-Evidence und Review folgen erst nach dem Rename. / The normal candidate head is followed only by the terminal rename head; no later feature-head commit is allowed.
+Der normale Kandidat ist `committed_head`; `rename_head` ist die einzige Intake-Mutation und `terminal_head` der ausschliessliche generierte Statistik-Folgecommit. Kein weiterer Feature-Head-Commit darf zwischen `terminal_head`/`reviewed_head` und Merge entstehen. PR-Body, Push, Exact-Head-Evidence und Review folgen erst nach beiden Schritten. / The immutable reviewed head is the statistics-only commit immediately following the terminal intake rename.
 
 ## 11. Checks, Review-Entscheidung und Threads konvergieren / Converge Checks, Review Decision, and Threads
 
@@ -324,7 +338,7 @@ git pull --ff-only
 
 Admin-Bypass ist nur erlaubt, wenn die unabhaengige Approval der einzige verbleibende Blocker ist: alle Checks erfolgreich, Exact-Head-Evidence auf beiden Oberflaechen gueltig, keine Change Request, null actionable Threads, unveraenderter PR-Head und aktuelle Authority. Dann und nur dann darf statt des normalen Merge-Befehls `gh pr merge "$pr_number" --merge --delete-branch --admin` laufen. / Admin bypass is permitted only when independent Approval is the sole remaining blocker after checks, exact-head evidence, no change request, zero actionable threads, exact PR head, and current authority all pass.
 
-Der Feature-Branch bleibt nach `terminal_head` unveraendert. Merge, Branch-Cleanup und dieser Fast-forward-Sync stehen nicht in der Pre-Merge-Primary-Evidence. Die folgenden Schritte beginnen ausschliesslich auf sauberem, synchronisiertem `main`. / The feature branch remains immutable after the terminal head. The next steps begin only from clean synchronized main.
+Der Feature-Branch bleibt nach dem Statistik-`terminal_head` unveraendert. Merge, Branch-Cleanup und dieser Fast-forward-Sync stehen nicht in der Pre-Merge-Primary-Evidence. Die folgenden Schritte beginnen ausschliesslich auf sauberem, synchronisiertem `main`. / The feature branch remains immutable after the statistics terminal head. The next steps begin only from clean synchronized main.
 
 ## 15. Exakte Drei-Pfad-Closeout-Transaktion / Exact Three-Path Closeout Transaction
 
