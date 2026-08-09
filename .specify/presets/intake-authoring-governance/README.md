@@ -335,6 +335,14 @@ implementation or remote authority. `DirectoryStrict` validates a dedicated
 active directory; `SeriesManifest` supports established flat or mixed layouts
 without trusting manual counts.*
 
+Eine terminale `Completed`-Serie besitzt genau null `Eligible`-Kandidaten und
+ist nur gültig, wenn jedes deklarierte Ziel `Completed` ist. Für alle nicht
+terminalen Serienzustände bleibt genau ein `Eligible`-Kandidat erforderlich.
+
+*A terminal `Completed` Series has exactly zero `Eligible` candidates and is
+valid only when every declared target is `Completed`. Every non-terminal
+Series state still requires exactly one `Eligible` candidate.*
+
 ## Status / Statuspruefung
 
 ```text

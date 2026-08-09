@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "fb4caee5-5523-4275-9536-9232e7874fbc",
+  "mode": "Single",
+  "policy": "aoc-bilingual-requirements",
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "role": "Primary"
+    }
+  ],
+  "series": {
+    "orderedTargetPaths": [],
+    "roots": [],
+    "dependencies": []
+  },
+  "campaign": {
+    "manifestPath": "N/A",
+    "workers": [],
+    "operatorExceptions": []
+  }
+}

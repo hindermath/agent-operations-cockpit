@@ -10,3 +10,8 @@ For Series schema 1.1, record request hash binding, roots, target-order
 cardinality, edge count, Bash/PowerShell error-class parity, and negative
 fixtures for drift, target mismatch, invalid references, duplicate edges,
 order contradiction, missing predecessors, and cycles.
+
+For the shared requirements-governance configuration, record a terminal
+`Completed` fixture with all targets `Completed` and zero eligible candidates,
+plus a negative mixed-state fixture that fails with `RIG017`. Non-terminal
+Series states still require exactly one eligible candidate.

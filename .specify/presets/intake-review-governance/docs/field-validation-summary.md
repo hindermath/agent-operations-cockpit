@@ -37,6 +37,8 @@ The shared schema-2.0 requirements-collection fixtures also passed in the
 Authoring, Review, and Sequencing packages. Invalid language, role/path drift,
 incomplete active inventory, stale target hashes, empty manifests, and
 multiple eligible candidates fail before semantic readiness can be reported.
+A terminal `Completed` Series passes only with all targets `Completed` and zero
+eligible candidates; a mixed terminal state fails consistently with `RIG017`.
 
 Separate temporary Codex, Claude, Copilot Skills, and Antigravity projects each
 contained exactly one generated surface for `speckit.intake-review`,

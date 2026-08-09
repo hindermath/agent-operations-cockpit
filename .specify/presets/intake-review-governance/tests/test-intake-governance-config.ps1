@@ -168,6 +168,22 @@ try {
     $MultipleEligible.orderedTargets[1].normalizedSha256 = Get-NormalizedSha256 $Second
     $MultipleEligible | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $ManifestPath -Encoding utf8NoBOM
     Invoke-Fixture (Write-JsonFixture 'multiple-eligible.json' $Base) 2 'RIG017'
+    Remove-Item -LiteralPath $Second
+
+    $CompletedManifest = $Manifest.Clone()
+    $CompletedManifest['status'] = 'Completed'
+    $CompletedManifest.orderedTargets = @($Manifest.orderedTargets[0].Clone())
+    $CompletedManifest.orderedTargets[0].status = 'Completed'
+    $CompletedManifest | ConvertTo-Json -Depth 12 |
+        Set-Content -LiteralPath $ManifestPath -Encoding utf8NoBOM
+    Invoke-Fixture (Write-JsonFixture 'completed-series.json' $Base) 0 '"eligibleCandidate": "N/A"'
+
+    $InvalidCompletedManifest = $CompletedManifest.Clone()
+    $InvalidCompletedManifest.orderedTargets = @($CompletedManifest.orderedTargets[0].Clone())
+    $InvalidCompletedManifest.orderedTargets[0].status = 'Eligible'
+    $InvalidCompletedManifest | ConvertTo-Json -Depth 12 |
+        Set-Content -LiteralPath $ManifestPath -Encoding utf8NoBOM
+    Invoke-Fixture (Write-JsonFixture 'completed-with-eligible.json' $Base) 2 'RIG017'
 
     Write-Output 'PASS: requirements intake governance fixtures'
 }

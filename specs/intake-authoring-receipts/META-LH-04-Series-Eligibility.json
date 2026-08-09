@@ -1,17 +1,17 @@
 {
   "schemaVersion": "2.0",
   "documentType": "IntakeReceipt",
-  "receiptId": "c395722d-4464-4430-960d-1cd7676d2096",
+  "receiptId": "ba227a02-d639-4090-826c-0115bc45ab43",
   "intakeId": "00365f2e-65e7-462e-8a8e-cdc74040f729",
   "generator": {
     "preset": "intake-authoring-governance",
     "version": "0.3.0"
   },
-  "createdAt": "2026-08-08T21:44:31Z",
+  "createdAt": "2026-08-09T09:04:32Z",
   "operation": {
-    "operationId": "efbd91e8-de3c-4c6a-9075-ccda4c4d9e53",
+    "operationId": "3a475250-c36d-451f-b852-3ec625eca0eb",
     "type": "Update",
-    "authorityEvidence": "Thorsten explicitly authorised on 2026-08-08 the bounded repair of only IR005 and IR006 from Series review 35f4d174-cef2-4293-8994-a0263bc10b3f. IAD601-IAD604 move without semantic change from the open to the confirmed decision table; stale lifecycle statements become historical snapshots with stable references to the canonical manifest and order. Purpose, scope, non-goals, decisions, owners, handoffs, dependencies, and Delivery Authority remain unchanged. Only predecessor archive, receipt and Series hash renewal, complete re-reviews, and AEPS evidence capture are authorised. Specify, implementation, remote, merge, bypass, preset, promotion, GitHub, and Level-0 actions are excluded."
+    "authorityEvidence": "Thorsten explicitly authorised on 2026-08-09 the bounded META-LH-04 Authoring Receipt renewal required after canonical Intake Sequencing preset-source drift, followed by a complete Single re-review. The active intake content, purpose, scope, non-goals, decisions, owners, handoffs, dependencies, Series lifecycle, and Delivery Authority remain unchanged."
   },
   "status": "ReadyForReview",
   "target": {
@@ -23,9 +23,9 @@
       "sourceId": "SRC001",
       "order": 1,
       "kind": "File",
-      "label": "Superseded META-LH-04-Series-Eligibility intake as first binding repair source",
+      "label": "Superseded META-LH-04-Series-Eligibility intake as first binding receipt-renewal source",
       "location": "Repository",
-      "path": "specs/intake-authoring-archive/00365f2e-65e7-462e-8a8e-cdc74040f729/efbd91e8-de3c-4c6a-9075-ccda4c4d9e53/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "path": "specs/intake-authoring-archive/00365f2e-65e7-462e-8a8e-cdc74040f729/3a475250-c36d-451f-b852-3ec625eca0eb/Lastenheft_META-LH-04-Series-Eligibility.md",
       "requestedUrl": "N/A",
       "finalUrl": "N/A",
       "retrievedAt": "N/A",
@@ -36,9 +36,9 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "87b454f82e40288625d5613099795a39fc236d514f8868fd17d3907930ccd8bc",
+      "normalizedSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
       "gitBlob": "N/A",
-      "proofBoundary": "RepositoryArchiveAtBoundedSeriesRepair"
+      "proofBoundary": "RepositoryArchiveAtReceiptRenewal"
     },
     {
       "sourceId": "SRC002",
@@ -162,7 +162,7 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "b3ec3e86903d2abcc50e4ff58b7e14febc9c9de135dd5d98501ef815eb7e033f",
+      "normalizedSha256": "1613cc06af74f12e82b5a524b058953a7f2c876af6d945b2573538dba7a413a1",
       "gitBlob": "N/A",
       "proofBoundary": "RepositoryAtRepair"
     },
@@ -288,10 +288,10 @@
   "promptState": "Enabled",
   "provenanceMode": "Supersession",
   "supersedes": {
-    "receiptPath": "specs/intake-authoring-archive/00365f2e-65e7-462e-8a8e-cdc74040f729/efbd91e8-de3c-4c6a-9075-ccda4c4d9e53/META-LH-04-Series-Eligibility.json",
-    "targetNormalizedSha256": "87b454f82e40288625d5613099795a39fc236d514f8868fd17d3907930ccd8bc",
-    "archiveTargetPath": "specs/intake-authoring-archive/00365f2e-65e7-462e-8a8e-cdc74040f729/efbd91e8-de3c-4c6a-9075-ccda4c4d9e53/Lastenheft_META-LH-04-Series-Eligibility.md",
-    "archiveReceiptPath": "specs/intake-authoring-archive/00365f2e-65e7-462e-8a8e-cdc74040f729/efbd91e8-de3c-4c6a-9075-ccda4c4d9e53/META-LH-04-Series-Eligibility.json"
+    "receiptPath": "specs/intake-authoring-archive/00365f2e-65e7-462e-8a8e-cdc74040f729/3a475250-c36d-451f-b852-3ec625eca0eb/META-LH-04-Series-Eligibility.json",
+    "targetNormalizedSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+    "archiveTargetPath": "specs/intake-authoring-archive/00365f2e-65e7-462e-8a8e-cdc74040f729/3a475250-c36d-451f-b852-3ec625eca0eb/Lastenheft_META-LH-04-Series-Eligibility.md",
+    "archiveReceiptPath": "specs/intake-authoring-archive/00365f2e-65e7-462e-8a8e-cdc74040f729/3a475250-c36d-451f-b852-3ec625eca0eb/META-LH-04-Series-Eligibility.json"
   },
   "legacyAdoption": {
     "evidenceType": "N/A",
@@ -299,7 +299,7 @@
     "priorGitBlob": "N/A"
   },
   "updateAuthorized": true,
-  "updateAuthorityEvidence": "Thorsten explicitly authorised this bounded IR005 and IR006 repair, predecessor archive, Authoring Receipt and Series hash renewal, and complete re-review on 2026-08-08.",
+  "updateAuthorityEvidence": "Thorsten explicitly authorised the bounded META-LH-04 Receipt renewal and complete re-review on 2026-08-09; no intake-content, Series-lifecycle, implementation, remote, merge, bypass, preset, promotion, GitHub, or Level-0 change is authorised by this update.",
   "series": {
     "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
     "manifestPath": "specs/intake-series/aoc-phase-2/manifest.json",
