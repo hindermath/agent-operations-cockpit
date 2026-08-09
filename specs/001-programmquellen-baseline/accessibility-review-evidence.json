@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "1.0",
+  "reviewer": {
+    "independent": true,
+    "role": "Independent Accessibility Reviewer",
+    "independenceStatement": "I freshly reread the current bytes of all six bound baseline domain artefacts and the readable causal-closeout evidence anchor as a reviewer separate from implementation and semantic review. I made no repository changes and assessed each path independently against the six named accessibility criteria."
+  },
+  "accessibilityReviews": [
+    {
+      "path": "requirements/baseline/source-pack.md",
+      "criteria": {
+        "headingHierarchy": "Pass",
+        "linearReadingOrder": "Pass",
+        "descriptiveLinks": "Pass",
+        "textFirst": "Pass",
+        "statusNotColorOnly": "Pass",
+        "wcag22AAApplicability": "Pass"
+      },
+      "rationale": "The freshly reviewed document has one level-1 title followed only by logically ordered level-2 sections, so no heading level is skipped. Its expanded Agent Operations Cockpit (AOC) introduction, source inventory, target model, decisions, supersession rules, and final reader path form a coherent linear sequence; the table has explicit bilingual column headers and each row remains understandable in source order. Link labels name their destinations, including the glossary and every next reader-path document, and all relative targets are present. The binding-layer diagram is a text code block and is followed by a normative prose explanation of the arrows, so meaning is text-first rather than diagram-dependent. Authority, currency, supersession, decision, and next-action states are written as words and never rely on colour. For this Markdown scope, the applicable WCAG 2.2 AA concerns around structure, link purpose, reading order, non-colour meaning, and text alternatives are addressed; visual focus and contrast remain renderer responsibilities rather than defects in this content."
+    },
+    {
+      "path": "requirements/baseline/constraint-register.md",
+      "criteria": {
+        "headingHierarchy": "Pass",
+        "linearReadingOrder": "Pass",
+        "descriptiveLinks": "Pass",
+        "textFirst": "Pass",
+        "statusNotColorOnly": "Pass",
+        "wcag22AAApplicability": "Pass"
+      },
+      "rationale": "The single level-1 title is an adequate hierarchy for this compact register and introduces content without a skipped heading level. Introductory guidance precedes a table with explicit ID, constraint, and applicability/evidence headers; CON-01 through CON-25 and the final next-step sentence have a stable linear reading order. The glossary and Findings Ledger links use destination-specific labels and resolve to the named baseline documents. Every requirement, applicability boundary, proof, and re-evaluation trigger is expressed in text, with no visual-only diagram or positional instruction. Controlled states such as Unknown, Stale, Unavailable, read-only, and applicability are spelled out and do not depend on colour. The Markdown content meets the applicable WCAG 2.2 AA content responsibilities for semantic structure, link purpose, sequence, and colour-independent meaning; keyboard focus and contrast apply only when a renderer supplies an interface."
+    },
+    {
+      "path": "requirements/baseline/review-findings-ledger.md",
+      "criteria": {
+        "headingHierarchy": "Pass",
+        "linearReadingOrder": "Pass",
+        "descriptiveLinks": "Pass",
+        "textFirst": "Pass",
+        "statusNotColorOnly": "Pass",
+        "wcag22AAApplicability": "Pass"
+      },
+      "rationale": "The freshly reviewed ledger uses one descriptive level-1 title and has no lower-level heading that could create a hierarchy gap. Explanatory text precedes a header-labelled table whose RF-01 through RF-21 rows now present bilingual severity, combined statement and source, owner series, target, acceptance criterion, positive evidence, negative evidence, status, and residual gap as ten distinct fields in a consistent source order. The glossary and Coverage Matrix links describe their destinations and resolve within the reviewed baseline set. Findings and evidence remain text-first, including explicit positive and negative evidence, rather than relying on graphics or spatial cues. Severity, Abgedeckt/Covered status, and residual gaps are literal bilingual text values, so neither urgency nor completion depends on colour. For Markdown, the applicable WCAG 2.2 AA aspects of information structure, reading sequence, link purpose, and use of colour are satisfied; any rendered table navigation, focus styling, or contrast is a renderer-level obligation."
+    },
+    {
+      "path": "requirements/baseline/coverage-matrix.md",
+      "criteria": {
+        "headingHierarchy": "Pass",
+        "linearReadingOrder": "Pass",
+        "descriptiveLinks": "Pass",
+        "textFirst": "Pass",
+        "statusNotColorOnly": "Pass",
+        "wcag22AAApplicability": "Pass"
+      },
+      "rationale": "A single level-1 title contains two sequential level-2 sections for source coverage and finding coverage, with no skipped heading level. The controlled-value explanation comes before both header-labelled tables, and each source or finding occupies one ordered row, followed by a plain-language summary and next reader-path step. The glossary and next-step glossary links have descriptive labels and valid relative targets. Owner, coverage, and direct-responsibility relationships are represented as literal table text, not through placement, imagery, or a visual-only matrix encoding. Covered, Yes, No, and N/A are explicitly defined in words and shown as text, so colour is not required. The applicable WCAG 2.2 AA requirements for headings, table information and relationships, meaningful sequence, link purpose, and non-colour status communication are met in the Markdown source; renderer-specific contrast and keyboard focus are outside this content artefact."
+    },
+    {
+      "path": "requirements/baseline/glossary.md",
+      "criteria": {
+        "headingHierarchy": "Pass",
+        "linearReadingOrder": "Pass",
+        "descriptiveLinks": "Pass",
+        "textFirst": "Pass",
+        "statusNotColorOnly": "Pass",
+        "wcag22AAApplicability": "Pass"
+      },
+      "rationale": "The glossary has one clear level-1 title and no subordinate heading level that could be skipped. Its short introduction leads directly to a three-column table with explicit German, English, and explanation headers; each term-definition row is independently understandable in linear source order, followed by the next reader-path instruction. The Authority and Stop Gates link names its destination and resolves to the reviewed file. All definitions are text-first and no term depends on an image, layout, or directional visual cue. State terms such as Unknown, Stale, Unavailable, degraded mode, and stop gate are explained in words rather than colour. Within this text-only Markdown scope, applicable WCAG 2.2 AA concerns for structure, sequence, link purpose, language comprehension support, and colour-independent meaning are addressed; interface focus and visual contrast depend on the renderer."
+    },
+    {
+      "path": "requirements/baseline/authority-and-stop-gates.md",
+      "criteria": {
+        "headingHierarchy": "Pass",
+        "linearReadingOrder": "Pass",
+        "descriptiveLinks": "Pass",
+        "textFirst": "Pass",
+        "statusNotColorOnly": "Pass",
+        "wcag22AAApplicability": "Pass"
+      },
+      "rationale": "The level-1 document title is followed by one logically subordinate level-2 section, with no hierarchy jump. Fail-closed guidance and terminology precede a table with explicit headers for gate, allowed action, stop condition, evidence, human decision, and one safe next action; G-00 through G-08 then lead into the global-review explanation and terminal reader-path statement. The glossary link is destination-specific and resolves correctly. Gate relationships, blockers, evidence, authority, and next actions are all expressed as text instead of a visual flowchart or spatial dependency. Ready, Pending-equivalent blockers, fail-closed conditions, and permissions are communicated with literal words and not colour. The applicable WCAG 2.2 AA content requirements for semantic structure, meaningful order, link purpose, and colour-independent state are satisfied; renderer-provided table interaction, focus indication, and contrast require separate presentation testing."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/causal-closeout-evidence.json",
+      "criteria": {
+        "headingHierarchy": "Pass",
+        "linearReadingOrder": "Pass",
+        "descriptiveLinks": "Pass",
+        "textFirst": "Pass",
+        "statusNotColorOnly": "Pass",
+        "wcag22AAApplicability": "Pass"
+      },
+      "rationale": "Heading hierarchy is not applicable to raw JSON, and the clearly nested object and array structure provides the corresponding machine-readable hierarchy without an accessibility blocker. The keys proceed from schema and overall Pending state through bounded paths, pending publication facts, review placeholders, and the non-self-referential boundary in a coherent linear order. There is no active hyperlink requiring link text; path and future URL fields are explicitly named, while the URL value remains the truthful text status Pending rather than an ambiguous link. All content, paths, statuses, and the boundary statement are available as text in a structured format, with no image or visual-only representation. Pending, false, N/A, empty arrays, and the explanatory rationales convey state directly without colour. For this JSON evidence anchor, applicable WCAG 2.2 AA concerns are limited to programmatic structure, meaningful sequence, and non-visual status meaning, all of which are met; presentation-layer headings, focus, and contrast must be assessed only if a UI later renders the data."
+    }
+  ],
+  "blockingFindings": [],
+  "overallResult": "Pass"
+}

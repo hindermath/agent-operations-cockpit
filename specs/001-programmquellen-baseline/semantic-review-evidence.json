@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "1.0",
+  "reviewer": {
+    "independent": true,
+    "role": "Independent semantic reviewer",
+    "independenceStatement": "I independently reviewed the current contents of every listed path after remediation, did not edit the repository, and did not rely on the prior semantic-review result."
+  },
+  "semanticReviews": [
+    {
+      "path": "requirements/baseline/authority-and-stop-gates.md",
+      "criteria": {
+        "germanFirst": "Pass",
+        "englishEquivalent": "Pass",
+        "cefrB2": "Pass",
+        "firstUseTerms": "Pass",
+        "domainTruth": "Pass",
+        "authorityInterpretation": "Pass"
+      },
+      "rationale": "German consistently precedes equivalent English, specialist gate and evidence terms are linked to the bilingual glossary at first use, and the concise gate table is suitable for a CEFR-B2 technical audience. G-00 through G-08 remain consistent with the baseline counts and reader path, keep the global Ready gate separate from implementation authority, and explicitly exclude implicit product, preset, remote, merge, bypass, and downstream authority."
+    },
+    {
+      "path": "requirements/baseline/constraint-register.md",
+      "criteria": {
+        "germanFirst": "Pass",
+        "englishEquivalent": "Pass",
+        "cefrB2": "Pass",
+        "firstUseTerms": "Pass",
+        "domainTruth": "Pass",
+        "authorityInterpretation": "Pass"
+      },
+      "rationale": "All 25 constraints use German-first, meaning-equivalent English and short, direct applicability or evidence statements. The introductory glossary binding covers the specialist first-use vocabulary, the constraints are understandable at CEFR B2, and their scope, platform, read-only, evidence, security, accessibility, ownership, and authority boundaries agree with the other baseline artefacts without granting execution authority."
+    },
+    {
+      "path": "requirements/baseline/coverage-matrix.md",
+      "criteria": {
+        "germanFirst": "Pass",
+        "englishEquivalent": "Pass",
+        "cefrB2": "Pass",
+        "firstUseTerms": "Pass",
+        "domainTruth": "Pass",
+        "authorityInterpretation": "Pass"
+      },
+      "rationale": "The explanatory prose, headings, owner labels, and target labels are German-first with equivalent English, while controlled values are explicitly translated before use and specialist terms are linked to the glossary. The matrix is CEFR-B2 readable, contains one row for each of the 23 sources and 21 findings, identifies the exact ten direct META-LH-01 findings, and correctly states that Covered proves requirements traceability rather than implementation or authority."
+    },
+    {
+      "path": "requirements/baseline/glossary.md",
+      "criteria": {
+        "germanFirst": "Pass",
+        "englishEquivalent": "Pass",
+        "cefrB2": "Pass",
+        "firstUseTerms": "Pass",
+        "domainTruth": "Pass",
+        "authorityInterpretation": "Pass"
+      },
+      "rationale": "The glossary is consistently German-first, provides equivalent English labels and explanations, and defines its specialist vocabulary in short CEFR-B2 descriptions without assuming prior Spec Kit knowledge. The definitions align with the source, constraint, evidence, state, ownership, and gate semantics used by the reader path and carefully distinguish evidence, readiness, supersession, and bounded authority from automatic execution or promotion."
+    },
+    {
+      "path": "requirements/baseline/review-findings-ledger.md",
+      "criteria": {
+        "germanFirst": "Pass",
+        "englishEquivalent": "Pass",
+        "cefrB2": "Pass",
+        "firstUseTerms": "Pass",
+        "domainTruth": "Pass",
+        "authorityInterpretation": "Pass"
+      },
+      "rationale": "The remediated ten-column ledger now uses German-first bilingual severity, statement/source, owner, target, status, and residual-gap content with semantically equivalent English. Its glossary binding and compact evidence statements support CEFR B2 and first-use comprehension; RF-01 through RF-21 each retain a distinct traceable row, status is separated from residual risk, and Covered is explicitly limited to coverage rather than implementation, effectiveness, or authority."
+    },
+    {
+      "path": "requirements/baseline/source-pack.md",
+      "criteria": {
+        "germanFirst": "Pass",
+        "englishEquivalent": "Pass",
+        "cefrB2": "Pass",
+        "firstUseTerms": "Pass",
+        "domainTruth": "Pass",
+        "authorityInterpretation": "Pass"
+      },
+      "rationale": "The current source pack is German-first with equivalent English across prose, headings, inventory fields, source roles, decisions, layers, and reader instructions. Agent Operations Cockpit (AOC) is now expanded at first use, remaining specialist terms are bound to the glossary, and the text is suitable for CEFR B2. The 23-source inventory, six decisions, precedence and supersession rules, product-neutral layer model, and read-only first slice are internally consistent, while provenance, field evidence, presets, bypass, and the reader path are correctly denied implicit product, architecture, remote, or execution authority."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/causal-closeout-evidence.json",
+      "criteria": {
+        "germanFirst": "Pass",
+        "englishEquivalent": "Pass",
+        "cefrB2": "Pass",
+        "firstUseTerms": "Pass",
+        "domainTruth": "Pass",
+        "authorityInterpretation": "Pass"
+      },
+      "rationale": "This path is a schema-controlled machine evidence record rather than bilingual domain prose, so its stable English field identifiers, enum placeholders, and concise boundary text do not introduce a German-first ordering or translation mismatch. The fields are self-descriptive and CEFR-B2 readable; Pending values truthfully avoid claiming unavailable terminal, pull-request, merge, synchronization, command, or review facts, and the non-self-referential boundary explicitly prevents the file from claiming its own containing commit or later publication authority."
+    }
+  ],
+  "blockingFindings": [],
+  "overallResult": "Pass"
+}

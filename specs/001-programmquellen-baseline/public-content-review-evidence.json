@@ -1,0 +1,392 @@
+{
+  "schemaVersion": "1.0",
+  "reviewer": {
+    "independent": true,
+    "role": "Independent public-content reviewer",
+    "independenceStatement": "I independently inspected the current contents of the exact unchanged 38-path logical delivery inventory after the option-A snapshot remediation, including the lifecycle-bound byte-identical future archive content. I did not edit the repository, did not participate in the semantic or accessibility reviews, and treated automated secret-pattern results only as supporting evidence for my own publication-suitability judgement."
+  },
+  "publicContentReviews": [
+    {
+      "path": "docs/aeps/receipts/meta-lh-01-programmquellen-implementation.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The receipt contains a repository-relative source reference, a SHA-256 integrity value, a date, and a bounded NoChange rationale; these are traceability data rather than credentials or private locations. It contains no personal data and is suitable public governance evidence."
+    },
+    {
+      "path": "docs/project-statistics.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The ledger contains aggregate Git-derived project metrics and no credentials or private filesystem locations. The limited first-name label 'Thorsten' identifies the project-mandated manual comparison baseline and exposes no contact, account, employment, or sensitive information, so it is necessary context rather than unnecessary personal data and is suitable for publication."
+    },
+    {
+      "path": "docs/scripts/embedded-scripts.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The generated inventory lists only repository-relative script paths and classifications. It contains no secret value, user-specific path, personal data, or restricted content and is suitable as a public script reference."
+    },
+    {
+      "path": "requirements/baseline/authority-and-stop-gates.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The gate document contains generic repository governance, relative links, counts, roles, and stop conditions only. It discloses no credential, private location, personal data, or non-public operational fact and is suitable for public use."
+    },
+    {
+      "path": "requirements/baseline/constraint-register.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The constraint register states generic policy and public-content exclusions with repository-relative evidence references. It contains no actual secret, private path, personal record, or redistributability problem and is appropriate public governance documentation."
+    },
+    {
+      "path": "requirements/baseline/coverage-matrix.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The matrix exposes only internal requirement identifiers, role labels, coverage states, and relative links. These are non-secret project metadata with no private host paths or personal data and are suitable for public traceability."
+    },
+    {
+      "path": "requirements/baseline/glossary.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The glossary defines generic project and governance terms and uses only relative references. It includes no secret material, private path, personal data, or publication-restricted content and is suitable for a public audience."
+    },
+    {
+      "path": "requirements/baseline/review-findings-ledger.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The ledger records generalized requirement findings, role owners, acceptance criteria, and evidence states without naming people, hosts, accounts, customers, or confidential sources. No secret or private path is present, and the content is suitable for public review history."
+    },
+    {
+      "path": "requirements/baseline/source-pack.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The source pack summarizes source IDs, roles, authority, decisions, and product-neutral layers without publishing source-system credentials, private locations, contact details, or non-redistributable source bodies. Its high-level Xbox field-evaluation reference is project context rather than personal data, and the document is suitable for public baseline traceability."
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.001-programmquellen-baseline.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "This declared archive path is intentionally absent before the terminal rename. The lifecycle record binds it to the original file's verified raw SHA-256 99eab2565a73b3f1fe836feb89b543392360d3a5d56063c13fd28cf2f0a16704, so its future byte-identical content inherits the original's absence of secrets, private paths, unnecessary personal data, and publication blockers."
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The intake contains generic scope, requirements, authority boundaries, relative repository links, and copy-ready commands only. Its reference to a personal canonical source is conceptual and gives no private path or identity; no secret or unnecessary personal data is present, and the content is suitable for publication."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/accessibility-review-evidence.json",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The structured review contains an independent role statement, repository-relative paths, criteria, and content rationales. It includes no reviewer identity, credential, private location, or unnecessary personal data and is suitable public quality evidence."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/autonomous-run-gate-requirements.json",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The gate inventory contains generic command tokens, repository-relative paths, generic /tmp evidence paths, roles, and validation requirements. None is a credential, user-specific path, or personal record, and the operational contract is suitable for public repository use."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/autonomous-run-state.json",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The state file contains a run UUID, commit and SHA-256 integrity identifiers, repository-relative runtime result paths, version metadata, and bounded authority text. These values are traceability identifiers rather than credentials or personal information; no private absolute location is exposed, and the state is suitable for public auditability."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/causal-closeout-evidence.json",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The Pending closeout anchor contains only a run identifier, repository-relative closeout paths, explicit Pending/N/A values, and non-self-referential boundary text. It exposes no secret, private path, personal data, or false completed publication claim and is suitable for public inclusion in its current state."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/checklists/implementation-validation.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The validation matrix records generic roles, commands, repository-relative or generic /tmp evidence locations, results, risks, and follow-ups. It contains no live credentials, private user/host paths, named individuals, or confidential provider data and is suitable public implementation evidence."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/checklists/requirements-quality.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The checklist consists of generalized requirement-quality questions and public repository references. It contains no secret, private location, personal data, or restricted source content and is suitable for publication."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/contracts/baseline-validation-contract.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The contract documents schemas, generic commands, repository-relative paths, checks, and public-content rules. It discloses no credential value, user-specific filesystem path, personal record, or confidential infrastructure detail and is suitable public technical documentation."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/contracts/candidate-paths.json",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The allowlist contains only repository-relative candidate paths and schema metadata. It has no secret, personal data, private absolute path, or restricted content and is suitable for publication."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/contracts/test_validate_meta_lh01.py",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The 66-case test suite uses temporary fixtures, dummy hashes and commits, repository-relative paths, example.invalid URLs, and a fixed public Copilot noreply service identity. The new snapshot fixtures contain only synthetic target, receipt, review, run and branch values. These are deliberate non-secret test values with no private host path or unnecessary human data, making the source suitable for public distribution."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The validator contains generic fail-closed snapshot and lifecycle validation logic, command arrays, repository-relative paths, hashes, and the constitutionally required public Copilot noreply trailer. It embeds no credential, private machine path, personal contact record, mutable provider fact, or non-public service endpoint and is suitable open-source code."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/data-model.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The data model describes generic entities, status values, integrity hashes, role ownership, and repository-relative evidence bindings. It contains no secret values, private paths, unnecessary personal data, or confidential deployment detail and is suitable for publication."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/documentation-impact-evidence.json",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The structured evidence lists repository-relative documents, generic roles, scope, distribution, and validation references. It contains no credentials, private filesystem details, personal records, or confidential publication target and is suitable public governance evidence."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/intake-lifecycle.json",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The schema-1.1 lifecycle contract contains repository-relative original, archive, target, receipt, and review paths plus one run UUID, branch name, and SHA-256 integrity bindings for exactly fourteen accepted snapshots. It contains no containing-commit SHA or mutable future fact. These are non-secret traceability metadata, not private locations or personal data, and they are suitable for public lifecycle evidence."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/plan-review-r2.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The R2 review records technical findings, generic commands, roles, and repository-relative artefact references without credentials, private host paths, individual identities, or confidential provider data. Historical open findings are clearly review evidence and do not make the document unsuitable for public audit history."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/plan-review-r3.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The R3 review contains public technical reasoning, generic GitHub command tokens, repository-relative paths, and role-based conclusions. No credential, private path, unnecessary personal data, or restricted information is present, so it is suitable for publication."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/plan-review-r4.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The R4 review documents generic validation evidence, findings, roles, and scoped authority using repository-relative references. It exposes no secret, private machine location, person-specific information, or confidential service data and is suitable public review evidence."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/plan-review-r5.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The R5 review contains bounded technical findings, role names, generic commands, and repository-relative references only. It has no live secret, personal location, individual record, or publication-restricted material and is suitable for a public engineering history."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/plan-review-r6.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The sole Gitleaks finding at line 77 captures the ordinary German words 'zweiter/falscher' from a sentence describing adversarial status and maturity cases; it is explanatory prose and not authentication material. The remainder contains generic review evidence, commands, hashes, and repository-relative references with no private path or personal data, so the document is suitable for publication."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/plan-review-r7.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The R7 review records generic validation probes, role-based findings, hashes, and repository-relative artefact references. It contains no credential, personal machine path, unnecessary personal data, or confidential endpoint and is suitable public review evidence."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/plan-review.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The original plan review contains a public Git commit identifier, technical findings, generic repository paths, and role-level authority statements. These are traceability data rather than secrets or personal data; no private host information is disclosed, and the historical review is suitable for publication."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/plan.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The implementation plan contains generic technical architecture, applicability decisions, repository-relative or generic /tmp paths, commands, and role ownership. Its first-name statistics-baseline reference is necessary project methodology context and carries no contact or sensitive data; no secret or private machine path is present, so the plan is suitable for publication."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/public-content-review-evidence.json",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The completed review record represented by this row contains only the independent role statement, repository-relative paths, Pass criteria, public-content rationales, the disclosed false-positive phrase, and integrity metadata already present in reviewed public artefacts. It introduces no credential, private path, reviewer identity, unnecessary personal data, or publication blocker and is suitable as public evidence."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/quickstart.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The quickstart provides generic local and GitHub CLI commands, repository-relative paths, generic /tmp evidence locations, example workflow variables, and the required public Copilot noreply trailer. It includes no literal credential, private user/host path, unnecessary human data, or non-public endpoint and is suitable public operational documentation."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/research.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The research record explains generalized design choices and proof boundaries using roles and repository concepts only. It contains no secret, private location, personal data, customer information, or confidential dependency and is suitable for public publication."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/semantic-review-evidence.json",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The semantic evidence contains an independent role statement, repository-relative paths, criteria, and content assessments without naming a reviewer or exposing accounts, credentials, or private locations. It contains no unnecessary personal data and is suitable public quality evidence."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/spec.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The specification uses repository-relative paths, integrity hashes, generic actors and scenarios, and public governance requirements. Hashes identify accepted artefact bytes rather than credentials; no private host path, personal record, or restricted customer/provider detail is present, so the specification is suitable for publication."
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/tasks.md",
+      "criteria": {
+        "secretPatterns": "Pass",
+        "privatePaths": "Pass",
+        "unnecessaryPersonalData": "Pass",
+        "publicationSuitability": "Pass"
+      },
+      "rationale": "The task list contains generic commands, repository-relative and generic /tmp working paths, gate identifiers, roles, and expected validation results. It includes no live credential, user-specific filesystem path, unnecessary personal data, or confidential endpoint and is suitable public execution guidance."
+    }
+  ],
+  "blockingFindings": [],
+  "overallResult": "Pass"
+}
