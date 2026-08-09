@@ -1,7 +1,7 @@
 # Intake Sequencing Governance
 
 Optional Spec Kit preset for managing the order and lifecycle of existing
-intakes. Version `0.2.2` uses priority `66`: after Intake Review at `65` and
+intakes. Version `0.2.3` uses priority `66`: after Intake Review at `65` and
 before Autonomous Run at `70`.
 
 ## Why This Preset Exists
@@ -10,6 +10,9 @@ An order table alone cannot distinguish a binding predecessor from a preferred
 delivery order. This preset stores both a learner-readable order and a
 machine-checkable typed graph. It never writes intake content and never starts
 the work it selects.
+
+Version `0.2.3` publishes the agent-neutral `model-routing.json` contract for
+composition with Model Routing Governance. Sequencing behavior is unchanged.
 
 Version `0.2.2` preserves the project-declared learner contract in the readable
 order: audience, prior knowledge, language and readability, first-use terms,
@@ -38,7 +41,7 @@ Ein gewöhnlicher zweiter Index im selben Repository bleibt ein Fehler.*
 
 ```bash
 specify preset add \
-  --from https://github.com/hindermath/spec-kit-preset-intake-sequencing-governance/archive/refs/tags/v0.2.2.zip \
+  --from https://github.com/hindermath/spec-kit-preset-intake-sequencing-governance/archive/refs/tags/v0.2.3.zip \
   --priority 66
 ```
 
@@ -97,11 +100,8 @@ requirements migration must finish before existing roots are released. Under
 schema 2.0, target paths are resolved from portable roles and collection paths.
 At most one target may explicitly declare `Eligible`; that state selects order
 only and grants no implementation or remote authority. A valid `Idle` series
-has no eligible target. A terminal `Completed` series also has no eligible
-target and is valid only when every declared target is `Completed`.
+has no eligible target.
 
 *`RequirementsGovernanceGate` sperrt bestehende Roots bis zum gemeinsamen
 Requirements-Abschluss. Schema 2.0 löst Pfade über Rollen auf. Höchstens ein
-Ziel darf `Eligible` sein; daraus entstehen keine Lieferrechte. Eine
-terminale `Completed`-Serie besitzt ebenfalls keinen Kandidaten und ist nur
-gültig, wenn alle Ziele `Completed` sind.*
+Ziel darf `Eligible` sein; daraus entstehen keine Lieferrechte.*
