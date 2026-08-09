@@ -768,7 +768,7 @@ exit 2
 
     def test_workspace_signal_and_late_error_paths_finalize_exactly_once(self) -> None:
         source = WORKSPACE_MAINTAINER.read_text(encoding="utf-8")
-        start = source.index("finalize_run() {")
+        start = source.index("completion_event_details() {")
         end = source.index("\nwhile [ $# -gt 0 ]; do", start)
         finalization_functions = source[start:end]
         with tempfile.TemporaryDirectory() as directory:
