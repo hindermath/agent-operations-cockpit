@@ -1006,6 +1006,14 @@ class ContractNegativeTests(unittest.TestCase):
     def test_causal_closeout_accepts_complete_transaction(self) -> None:
         causal_closeout_fixture(self.root)
         self.assertIn("66/66 tasks", contract.validate_causal_closeout(self.root))
+        requirements_path = Path(__file__).resolve().parents[1] / "autonomous-run-gate-requirements.json"
+        requirements = json.loads(requirements_path.read_text(encoding="utf-8"))
+        not_applicable = [
+            gate for gate in requirements["gates"] if gate["applicability"] == "N/A"
+        ]
+        self.assertTrue(not_applicable)
+        self.assertTrue(all(gate["requiredCommandTokens"] == [] for gate in not_applicable))
+        self.assertTrue(all(gate["requiredRunnerOrPlatformTokens"] == [] for gate in not_applicable))
 
     def test_causal_closeout_rejects_unchecked_task(self) -> None:
         causal_closeout_fixture(self.root)
