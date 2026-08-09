@@ -282,6 +282,65 @@ def base_report(run_id: str) -> dict:
 
 @unittest.skipIf(os.name == "nt", "Linux maintenance fixtures require a POSIX host.")
 class LinuxMaintenanceHardeningTests(unittest.TestCase):
+    def test_empty_optional_module_probe_still_publishes_one_valid_result(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = empty_registries(root)
+            bin_dir, _, _ = install_fake_brew(root)
+            write_executable(bin_dir / "pwsh", "#!/usr/bin/env bash\nexit 1\n")
+
+            completed = run_brew_maintainer(root, paths)
+
+            self.assertEqual(completed.returncode, 0, completed.stdout)
+            self.assertNotIn("Traceback", completed.stdout)
+            result_path = root / "toolchain-result.json"
+            inspected = run_helper("inspect-result", "--input", str(result_path))
+            self.assertEqual(inspected.returncode, 0, inspected.stdout)
+            result = json.loads(result_path.read_text(encoding="utf-8"))
+            self.assertEqual(result["overallStatus"], "SUCCESS")
+
+    def test_toolchain_result_contract_classifies_invalid_inputs(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cases = {
+                "missing.json": (None, "ResultMissing"),
+                "empty.json": (b"", "ResultEmpty"),
+                "truncated.json": (b'{"schemaVersion":"1.0"', "ResultTruncated"),
+                "malformed.json": (b'{"schemaVersion":}', "ResultMalformed"),
+                "utf8.json": (b"\xff\xfe", "ResultInvalidUtf8"),
+                "schema.json": (b'{"schemaVersion":"9.9"}\n', "ResultSchemaMismatch"),
+            }
+            for name, (payload, failure_class) in cases.items():
+                with self.subTest(name=name):
+                    path = root / name
+                    if payload is not None:
+                        path.write_bytes(payload)
+                    completed = run_helper("inspect-result", "--input", str(path))
+                    self.assertEqual(completed.returncode, 2, completed.stdout)
+                    output = json.loads(completed.stdout)
+                    self.assertEqual(output["failureClass"], failure_class)
+                    self.assertNotIn(str(root), completed.stdout)
+
+    def test_failure_result_is_atomic_and_valid(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            result_path = root / "toolchain.json"
+            completed = run_helper(
+                "failure-result",
+                "--output", str(result_path),
+                "--platform", "Darwin",
+                "--mode", "compare-only",
+                "--failure-class", "ProducerExitedBeforeResult",
+            )
+            self.assertEqual(completed.returncode, 2, completed.stdout)
+            inspected = run_helper("inspect-result", "--input", str(result_path))
+            self.assertEqual(inspected.returncode, 0, inspected.stdout)
+            result = json.loads(result_path.read_text(encoding="utf-8"))
+            self.assertEqual(result["overallStatus"], "FAILED")
+            self.assertEqual(result["exitCode"], 2)
+            self.assertEqual(result["failureClass"], "ProducerExitedBeforeResult")
+            self.assertEqual(list(root.glob(".*.tmp")), [])
+
     def test_stdin_consuming_brew_processes_all_formulae_once(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -662,6 +721,8 @@ exit 2
                 result_path,
                 {
                     "schemaVersion": "1.0",
+                    "platform": "Darwin",
+                    "mode": "compare-only",
                     "overallStatus": "PARTIAL",
                     "exitCode": 1,
                     "items": [
@@ -729,6 +790,43 @@ exit 2
                 [item["itemId"] for item in report["toolchain"]],
                 ["missing-a", "missing-b"],
             )
+
+    def test_parent_consumer_reports_stable_toolchain_result_failure_classes(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cases = {
+                "missing.json": (None, "ResultMissing"),
+                "empty.json": (b"", "ResultEmpty"),
+                "truncated.json": (b'{"schemaVersion":"1.0"', "ResultTruncated"),
+                "malformed.json": (b'{"schemaVersion":}', "ResultMalformed"),
+                "schema.json": (b'{"schemaVersion":"9.9"}\n', "ResultSchemaMismatch"),
+            }
+            for name, (payload, failure_class) in cases.items():
+                with self.subTest(name=name):
+                    report_path = root / f"report-{name}"
+                    result_path = root / name
+                    write_json(report_path, base_report(name))
+                    if payload is not None:
+                        result_path.write_bytes(payload)
+                    completed = subprocess.run(
+                        [
+                            "python3", str(FLEET_ENGINE), "stage",
+                            "--report", str(report_path),
+                            "--stage-id", "toolchain",
+                            "--status", "Failed",
+                            "--exit-code", "2",
+                            "--summary", "fixture",
+                            "--next-action", "regenerate",
+                            "--toolchain-results", str(result_path),
+                        ],
+                        text=True,
+                        capture_output=True,
+                        check=False,
+                    )
+                    self.assertEqual(completed.returncode, 2, completed.stdout)
+                    self.assertIn(failure_class, completed.stdout)
+                    self.assertNotIn(str(root), completed.stdout)
+                    self.assertNotIn("Traceback", completed.stdout + completed.stderr)
 
     def test_signal_finalization_uses_canonical_exitcodes(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
