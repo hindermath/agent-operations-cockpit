@@ -761,3 +761,63 @@ Promotion-Aussage ist. / *No new finding is created. The repaired terminal
 invariant strengthens the existing lifecycle, drift, and validation findings.
 Derived candidate artifacts remain unchanged because this is AOC-local
 governance evidence only.*
+
+## Ergänzende Cross-Preset-RIG017-Evidence vom 2026-08-09 / Additional cross-preset RIG017 evidence from 2026-08-09
+
+Die erneuerten Authoring Receipts für META-LH-03 und META-LH-04 binden die
+aktuellen Preset-Quellen und bestehen Bash sowie PowerShell. Das vollständige
+META-LH-04-Re-Review `50329563-b930-4142-bb11-bb52a0e54ba6` ist `Ready` mit
+null Findings. Das vollständige META-LH-03-Re-Review
+`fb4caee5-5523-4275-9536-9232e7874fbc` findet dagegen die High-Inkonsistenz
+`IR305`: Der bereits reparierte Intake-Sequencing-Validator akzeptiert die
+terminale Serie mit null `Eligible`, während die separat installierten Intake-
+Review-Governance-Validatoren dieselbe aktive Konfiguration weiterhin mit
+`RIG017` blockieren. / *The renewed META-LH-03 and META-LH-04 Authoring
+Receipts bind current preset sources and pass Bash and PowerShell. The complete
+META-LH-04 re-review is Ready with no findings. The complete META-LH-03
+re-review detects High finding IR305: the repaired Intake Sequencing validator
+accepts the terminal Series with zero Eligible targets, while the separately
+installed Intake Review Governance validators still reject the same active
+configuration with RIG017.*
+
+Es entsteht keine neue Finding-ID. Die positive Evidence stärkt
+`AEPS-FIND-AOC-007` und `011`: Receipt-Supersession stellt Quellbindung wieder
+her, und ein einzelnes `Ready` öffnet das Portfolio-Gate nicht. Die negative
+Evidence stärkt `AEPS-FIND-AOC-001`, `007` und `009`: Eine reparierte
+Lifecycle-Invariante muss über alle installierten konsumierenden
+Validatoroberflächen konsistent propagiert und gegen den aktiven Vertrag
+geprüft werden; grüne isolierte Fixtures genügen nicht. Candidate-Matrix,
+Gap-Analyse und Handoff bleiben unverändert, weil die Evidence AOC-lokal und
+`PendingPublication` bleibt. / *No new finding ID is created. Positive evidence
+strengthens source-drift and authority separation. Negative evidence shows
+that a repaired lifecycle invariant must propagate consistently to every
+installed consuming validator and be tested against the active contract;
+green isolated fixtures are insufficient. Derived candidate artifacts remain
+unchanged because the evidence is AOC-local and PendingPublication.*
+
+## Ergänzende IR305-Abschlussevidence vom 2026-08-09 / Additional IR305 closure evidence from 2026-08-09
+
+Die autorisierte IR305-Reparatur spiegelt die bestätigte RIG017-Terminalregel
+jetzt in allen drei installierten Intake-Governance-Presets. Eine
+`Completed`-Serie besteht nur mit ausschließlich `Completed`-Zielen und genau
+null `Eligible`; nicht terminale Zustände benötigen genau einen Kandidaten.
+Je Preset bestehen die direkte Bash- und PowerShell-Prüfung der aktiven AOC-
+Konfiguration sowie der positive Terminalfall und der negative gemischte Fall.
+Das vollständige META-LH-03-Re-Review
+`324bbb5e-8d56-4d0c-8a29-0514e7131f82` ist `Ready` ohne Findings, Fragen oder
+Risikoakzeptanz. / *The authorised IR305 repair now mirrors the confirmed
+RIG017 terminal rule in all three installed Intake Governance presets. Each
+preset passes direct Bash and PowerShell validation of the active AOC contract,
+the positive terminal case, and the negative mixed case. The complete
+META-LH-03 re-review is Ready without findings, questions, or risk acceptance.*
+
+Es entsteht keine neue Finding-ID. Die positive und negative Evidence stärkt
+`AEPS-FIND-AOC-001`, `007`, `009` und `011`: zustandsabhängige Invarianten
+müssen an jeder konsumierenden Oberfläche identisch propagiert, direkt gegen
+den aktiven Vertrag geprüft und durch Gegenbeispiele geschützt werden. Die
+Evidence bleibt AOC-lokal und `PendingPublication`; Cross-Project-Validierung,
+Preset-Promotion und Level-0-Übernahme bleiben getrennte spätere Entscheidungen.
+ / *No new finding ID is created. The evidence strengthens the existing
+lifecycle, drift, reproducibility, and authority findings. It remains AOC-local
+and PendingPublication; cross-project validation, preset promotion, and Level-0
+adoption remain separate future decisions.*

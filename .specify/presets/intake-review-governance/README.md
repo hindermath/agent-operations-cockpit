@@ -53,6 +53,13 @@ inventory, canonical index, hashes, receipts, references, and eligibility.
 Implementation language and locale are not language evidence. `Ready` and
 `Eligible` grant no implementation or remote permission.
 
+A terminal `Completed` Series has exactly zero `Eligible` candidates and is
+valid only when every declared target is `Completed`. Every non-terminal
+Series state still requires exactly one `Eligible` candidate. / *Eine
+terminale `Completed`-Serie besitzt genau null `Eligible`-Kandidaten und ist
+nur gültig, wenn jedes deklarierte Ziel `Completed` ist. Für alle nicht
+terminalen Serienzustände bleibt genau ein Kandidat erforderlich.*
+
 *Version 0.2.1 prüft sprachbewusste Requirements-Sammlungen zusammen mit Intake
 oder Series. Dokumentationssprache, Rollen, Pfade, Hashes, Referenzen und
 Eligibility bleiben nachvollziehbar; Review-Erfolg ist keine Lieferfreigabe.*

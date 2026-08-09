@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "fb4caee5-5523-4275-9536-9232e7874fbc",
+  "mode": "Single",
+  "status": "NeedsRemediation",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-09T09:08:55Z",
+  "repository": {
+    "root": ".",
+    "head": "aa451d9a8ac488c9eee80d24b229ee8d9de8317c"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/meta-lh-03-authoring-contract-2026-08-09-r4.json",
+    "normalizedSha256": "619658cd598f31c54cec2eaafa89c8b31e42610584fb892e253257e3ce8e9791"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "role": "Primary",
+      "normalizedSha256": "f6d57cacc954b4899fc5bd8ddcc235570ec20470094feec506e1b8e9ea07e3e9",
+      "gitBlob": "ac4b2da15eb3c10382ad6fc225c2b737f8902567"
+    }
+  ],
+  "findings": [
+    {
+      "id": "IR305",
+      "severity": "High",
+      "category": "RequirementsEvidence",
+      "target": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "disposition": "NeedsRemediation",
+      "owner": "META-LH-03",
+      "evidence": "AC-002 and AC-003 require the bound Intake Governance contract and its direct Bash/PowerShell validation to pass. After the AOC Phase 2 Series reached Completed with zero Eligible targets, both direct validators return RIG017 because requirements/intake-governance.json still requires exactly one Eligible target without a Completed-Series exception. The fixture suite passes, but the active repository contract fails, so the acceptance evidence is contradictory.",
+      "reevaluationTrigger": "The active Intake Governance contract and both direct validators consistently allow exactly zero Eligible targets only for a Completed Series whose targets are all Completed, retain exactly-one Eligible for non-completed Series states, pass positive and negative fixtures, and META-LH-03 is completely re-reviewed."
+    }
+  ],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 1,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "specs/intake-review-results/meta-lh-03-authoring-contract-2026-08-08-r3.json"
+}
