@@ -124,7 +124,7 @@
     {
       "gateId": "META01-G12-exact-candidate",
       "applicability": "Applicable",
-      "requiredScope": "Against a reviewed execution-specific expected-paths file, reconcile the normal feature candidate with the maximum allowlist, porcelain including untracked paths, exact staged names, remaining unstaged candidate changes, and git diff --cached --check while preserving unrelated work. After that normal candidate commit, prove separately that the rename script creates exactly one byte-identical R100 original-to-archive terminal commit with no later feature-head mutation.",
+      "requiredScope": "Against a reviewed execution-specific expected-paths file, reconcile the normal feature candidate with the maximum allowlist, porcelain including untracked paths, exact staged names, remaining unstaged candidate changes, and git diff --cached --check while preserving unrelated work. After that normal candidate commit, prove separately that the rename script creates exactly one byte-identical R100 original-to-archive lifecycle commit. Permit only the generated docs/project-statistics.md synchronization after that intake mutation and keep its resulting reviewed head immutable.",
       "requiredCommandTokens": ["contracts/validate_meta_lh01.py", "candidate", "terminal-rename", "scripts/rename-lastenheft.sh", "--allowlist specs/001-programmquellen-baseline/contracts/candidate-paths.json", "--expected-paths"],
       "requiredRunnerOrPlatformTokens": ["Local macOS", "Python 3", "Git"],
       "plannedEvidence": "specs/001-programmquellen-baseline/checklists/implementation-validation.md#exact-candidate",
@@ -144,7 +144,7 @@
     {
       "gateId": "META01-G13-pr-head-convergence",
       "applicability": "Applicable",
-      "requiredScope": "Commit the normal feature candidate first, then require the script-created terminal rename as the last feature-branch commit. For that exact immutable pushed pull-request head, fail closed on PR-head mismatch, later head mutation, any non-successful reported check including non-required checks, an empty or inconsistent required-check subset, Change Requested, any actionable non-outdated review thread, or commands/runners not derived from workflow definitions or logs. Keep independent Approval as the separate normal-merge gate. Merge and fast-forward sync follow without another feature-head commit; the pre-named closeout branch and separate exact three-path closeout PR perform durable completion without mutating the terminal feature head.",
+      "requiredScope": "Commit the normal feature candidate first, require the script-created terminal rename as the final intake mutation, and allow exactly one generated docs/project-statistics.md synchronization commit as the immutable pushed pull-request head. For that exact head, fail closed on PR-head mismatch, later head mutation, any non-successful reported check including non-required checks, an empty or inconsistent required-check subset, Change Requested, any actionable non-outdated review thread, or commands/runners not derived from workflow definitions or logs. Keep independent Approval as the separate normal-merge gate. Merge and fast-forward sync follow without another feature-head commit; the pre-named closeout branch and separate exact three-path closeout PR perform durable completion without mutating the reviewed feature head.",
       "requiredCommandTokens": ["gh pr view", "headRefOid", "gh pr checks", "--watch", "--fail-fast", "--json bucket,name,state,link", "--required", "check-inventory", "reviewDecision", "gh api graphql", "reviewThreads", "gh run view", "actions/runs/"],
       "requiredRunnerOrPlatformTokens": ["GitHub", "GitHub CLI", "exact reviewed head"],
       "plannedEvidence": "/tmp/001-programmquellen-baseline-execution-record.json",
@@ -153,13 +153,13 @@
     },
     {
       "gateId": "META01-G14-causal-closeout",
-      "applicability": "Applicable",
+      "applicability": "N/A",
       "requiredScope": "After the feature PR merge and fast-forward sync, create only codex/001-programmquellen-baseline-closeout from synchronized main. Before its single commit, require archive-aware final validation, exactly 66 checked tasks, state completed/total equality at 66, actual tasks SHA equality, schema-1.1 Completed at MergeAndSync with terminal closeout fields and nextExactAction N/A, exact staged paths tasks.md plus autonomous-run-state.json plus causal-closeout-evidence.json, complete independent Documentation Impact and public-content review of that delta, and no containing-commit, closeout-PR, or closeout-merge self-claims. For the checkbox-free publication, write the PR body to a temporary file; under exactly one each of Affected scripts and documents, Manual verification, Sample output, and Security risk headings, name exactly the three closeout paths, actual manual verification, sample output or reasoned N/A, and an explicit security-risk statement. Validate all four headings before using gh pr create --body-file or gh pr edit --body-file. Publish that immutable closeout head through exact-head verification, independent review, all checks including a non-empty required subset, zero actionable threads, normal merge or the bounded approval-only admin fallback, cleanup, final main...origin/main 0 0, clean worktree, and external reporting only.",
       "requiredCommandTokens": ["contracts/validate_meta_lh01.py", "causal-closeout", "codex/001-programmquellen-baseline-closeout", "git diff --cached --check", "/tmp/001-programmquellen-baseline-closeout-pr-body.md", "rg -Fxc", "Betroffene Skripte und Dokumente / Affected scripts and documents", "Manuelle Pruefung / Manual verification", "Beispielausgabe / Sample output", "Security-Risiko / Security risk", "gh pr create", "gh pr edit", "--body-file", "gh pr checks", "gh pr view", "gh api graphql", "gh pr merge", "git pull --ff-only", "main...origin/main"],
       "requiredRunnerOrPlatformTokens": ["Local macOS", "Python 3", "Git", "GitHub", "GitHub CLI", "Independent closeout reviewer"],
       "plannedEvidence": "specs/001-programmquellen-baseline/causal-closeout-evidence.json",
-      "rationale": "",
-      "reevaluationTrigger": ""
+      "rationale": "The feature-PR primary-evidence checkpoint occurs before its own merge and main synchronization, so claiming causal closeout completion here would assert mutable future facts. The separate closeout transaction remains mandatory and fail-closed after the feature merge.",
+      "reevaluationTrigger": "Immediately after the feature PR is merged and local main is fast-forward synchronized, before creating or committing the exact three-path closeout transaction."
     },
     {
       "gateId": "META01-N01-product-tests-runtime",
