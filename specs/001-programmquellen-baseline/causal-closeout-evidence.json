@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1.0",
+  "status": "Pending",
+  "runId": "b3694a58-208b-4d6b-a4d4-1b01f3816dcc",
+  "closeoutBranch": "codex/001-programmquellen-baseline-closeout",
+  "closeoutPaths": [
+    "specs/001-programmquellen-baseline/tasks.md",
+    "specs/001-programmquellen-baseline/autonomous-run-state.json",
+    "specs/001-programmquellen-baseline/causal-closeout-evidence.json"
+  ],
+  "terminalFeatureHead": "Pending",
+  "featurePullRequest": {
+    "number": "Pending",
+    "url": "Pending"
+  },
+  "featureMergeSha": "Pending",
+  "synchronizedMainSha": "Pending",
+  "commands": [],
+  "documentationReview": {
+    "result": "Pending",
+    "reviewer": {
+      "independent": false,
+      "role": "Pending",
+      "independenceStatement": "Pending"
+    },
+    "reviewedPaths": [],
+    "rationale": "Pending until the exact post-merge three-path delta exists.",
+    "blockingFindings": []
+  },
+  "publicContentReview": {
+    "result": "Pending",
+    "reviewer": {
+      "independent": false,
+      "role": "Pending",
+      "independenceStatement": "Pending"
+    },
+    "reviewedPaths": [],
+    "rationale": "Pending until the exact post-merge three-path delta exists.",
+    "blockingFindings": [],
+    "reviews": []
+  },
+  "nonSelfReferentialBoundary": {
+    "containingCommitSha": "N/A",
+    "closeoutPullRequest": "N/A",
+    "closeoutMergeSha": "N/A",
+    "statement": "This file never claims its own containing commit, closeout pull request, or closeout merge SHA; those publication facts are reported externally."
+  }
+}

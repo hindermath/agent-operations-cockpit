@@ -69,6 +69,8 @@ Change their respective canonical source first, then propagate the result.*
 | `.specify/scripts/bash/create-new-feature.sh` | `.specify` |
 | `.specify/scripts/bash/setup-plan.sh` | `.specify` |
 | `.specify/scripts/bash/setup-tasks.sh` | `.specify` |
+| `specs/001-programmquellen-baseline/contracts/test_validate_meta_lh01.py` | `specs` |
+| `specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py` | `specs` |
 | `specs/intake-review-fixtures/meta-lh-02/validate-portfolio.ps1` | `specs` |
 | `specs/intake-review-fixtures/meta-lh-02/validate-portfolio.py` | `specs` |
 | `specs/intake-review-fixtures/meta-lh-02/validate-portfolio.sh` | `specs` |

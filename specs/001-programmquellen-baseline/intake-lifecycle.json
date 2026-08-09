@@ -1,0 +1,240 @@
+{
+  "schemaVersion": "1.1",
+  "records": [
+    {
+      "recordVersion": "1.0",
+      "logicalTargetId": "META-LH-01",
+      "originalPath": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
+      "archivedPath": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.001-programmquellen-baseline.md",
+      "originalRawSha256": "99eab2565a73b3f1fe836feb89b543392360d3a5d56063c13fd28cf2f0a16704",
+      "originalNormalizedSha256": "99eab2565a73b3f1fe836feb89b543392360d3a5d56063c13fd28cf2f0a16704",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/META-LH-01-Programmquellen.json",
+        "rawSha256": "ec8808ca77440e6bc1a31e5b7315d498997d6cf381e4bcc7d67802874b85daf6"
+      },
+      "readySingleReview": {
+        "path": "specs/intake-review-results/meta-lh-01-programmquellen-2026-08-01-r2.json",
+        "rawSha256": "d119805254e0191a2cd34ccbe4746e4a6fb0921ed9b025f3d91eb8546c322334"
+      },
+      "runId": "b3694a58-208b-4d6b-a4d4-1b01f3816dcc",
+      "branch": "001-programmquellen-baseline"
+    }
+  ],
+  "programmeEvidenceSnapshot": {
+    "snapshotVersion": "1.0",
+    "runId": "b3694a58-208b-4d6b-a4d4-1b01f3816dcc",
+    "branch": "001-programmquellen-baseline",
+    "orderedLogicalTargets": [
+      {
+        "logicalTargetId": "META-LH-01",
+        "target": {
+          "path": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
+          "normalizedSha256": "99eab2565a73b3f1fe836feb89b543392360d3a5d56063c13fd28cf2f0a16704"
+        },
+        "authoringReceipt": {
+          "path": "specs/intake-authoring-receipts/META-LH-01-Programmquellen.json",
+          "rawSha256": "ec8808ca77440e6bc1a31e5b7315d498997d6cf381e4bcc7d67802874b85daf6"
+        },
+        "readySingleReview": {
+          "path": "specs/intake-review-results/meta-lh-01-programmquellen-2026-08-01-r2.json",
+          "rawSha256": "d119805254e0191a2cd34ccbe4746e4a6fb0921ed9b025f3d91eb8546c322334"
+        }
+      },
+      {
+        "logicalTargetId": "META-LH-02",
+        "target": {
+          "path": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+          "normalizedSha256": "9fc31a833421915b68b85c7dd499dc5b97a81152a8cf668599bb243ef3e17503"
+        },
+        "authoringReceipt": {
+          "path": "specs/intake-authoring-receipts/META-LH-02-Portfolio-Ownership.json",
+          "rawSha256": "3c95e47592ff8eb7646d9f96b3ee173205365dfeb540da736ee5fb2c3c4d7f14"
+        },
+        "readySingleReview": {
+          "path": "specs/intake-review-results/meta-lh-02-portfolio-ownership-2026-08-08-r5.json",
+          "rawSha256": "d32287ec6a9feec4c2bb736c6962da4d5689ccc0389f4d054be3fb6a90b67662"
+        }
+      },
+      {
+        "logicalTargetId": "META-LH-03",
+        "target": {
+          "path": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+          "normalizedSha256": "f6d57cacc954b4899fc5bd8ddcc235570ec20470094feec506e1b8e9ea07e3e9"
+        },
+        "authoringReceipt": {
+          "path": "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json",
+          "rawSha256": "02b2984a91a9178854dfc6dffbf5f339af409d0430a72ee2ce5d567ea56ba805"
+        },
+        "readySingleReview": {
+          "path": "specs/intake-review-results/meta-lh-03-authoring-contract-2026-08-09-r5.json",
+          "rawSha256": "e3043fa6bf68220396084930e4273542e57071a5a1cccbd4c9b46f1c2418043e"
+        }
+      },
+      {
+        "logicalTargetId": "META-LH-04",
+        "target": {
+          "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+          "normalizedSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce"
+        },
+        "authoringReceipt": {
+          "path": "specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json",
+          "rawSha256": "0ae7317540406694635ad0be6c6980305b231db529d3b5632793438a9e627c46"
+        },
+        "readySingleReview": {
+          "path": "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-09-r7.json",
+          "rawSha256": "13f4be2a129b25d902ca77edfe9eda2f843e1eb9c2de3cfd041ed7b081bc6e32"
+        }
+      },
+      {
+        "logicalTargetId": "META-LH-05",
+        "target": {
+          "path": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+          "normalizedSha256": "cb255e60b49237f8cc655486b6529536b831b5b942f89f838678386bc31f930f"
+        },
+        "authoringReceipt": {
+          "path": "specs/intake-authoring-receipts/META-LH-05-Erste-Welle.json",
+          "rawSha256": "e699480f0c99486df3f51ea932dbef6125e5f9d69fbe586842368d8a4d43e2b7"
+        },
+        "readySingleReview": {
+          "path": "specs/intake-review-results/meta-lh-05-erste-welle-2026-08-08-r5.json",
+          "rawSha256": "ad271d30970c6dbd1ae7bbd8b780f1a1933b75ac54b6f970f5818d9958d62da9"
+        }
+      },
+      {
+        "logicalTargetId": "RAW-01",
+        "target": {
+          "path": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+          "normalizedSha256": "c61d9786b27ea09e0e954363a1b4335d3255ea55b0f8a5167ee52c25c583f9b6"
+        },
+        "authoringReceipt": {
+          "path": "specs/intake-authoring-receipts/RAW-01-Reference-Agentic-Workspace.json",
+          "rawSha256": "113d5f328c58c65b97a2610399d1c9555a2c86f318cb00db375de8b89274f1e3"
+        },
+        "readySingleReview": {
+          "path": "specs/intake-review-results/raw-01-reference-agentic-workspace-2026-08-01-r2.json",
+          "rawSha256": "a4d9c116cbf65ff6586aeefc093bb3573e1f12e7d8a0a4f3683b845ab314b8b6"
+        }
+      },
+      {
+        "logicalTargetId": "RAW-02",
+        "target": {
+          "path": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+          "normalizedSha256": "6a41e6ae6447ff0192a03af7940362e05e48bff48a5fd21f39e9b6e670eade20"
+        },
+        "authoringReceipt": {
+          "path": "specs/intake-authoring-receipts/RAW-02-Workspace-Orchestrator.json",
+          "rawSha256": "fab2ad176c3523e9ad60366cfd3676b529f652ae9de5a44bdf61a43e19bfc23c"
+        },
+        "readySingleReview": {
+          "path": "specs/intake-review-results/raw-02-workspace-orchestrator-2026-08-08-r5.json",
+          "rawSha256": "19fe73b0aebff709ff16231493ef6758412bbb572d42f92d0dcdba4b3d16d865"
+        }
+      },
+      {
+        "logicalTargetId": "RAW-03",
+        "target": {
+          "path": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+          "normalizedSha256": "31d31e82ab1857182d1201192438e5c91abfc3190ba47a2f68b9543034ab0cfd"
+        },
+        "authoringReceipt": {
+          "path": "specs/intake-authoring-receipts/RAW-03-State-Truthfulness.json",
+          "rawSha256": "a1f4b1905917617a405bda0d10d58711852e0f93140088b7c567843d369dd3a0"
+        },
+        "readySingleReview": {
+          "path": "specs/intake-review-results/raw-03-state-truthfulness-2026-08-08-r3.json",
+          "rawSha256": "cf685f2e9fb88e918fe52ea389f68f3a3a48f2639d7ee13a47bd9633894a98df"
+        }
+      },
+      {
+        "logicalTargetId": "RAW-04",
+        "target": {
+          "path": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+          "normalizedSha256": "ce89a73e9e1d0bdeadcc166a0f4a7b3b94052037cabb8225ceb4ef2ebd345ec4"
+        },
+        "authoringReceipt": {
+          "path": "specs/intake-authoring-receipts/RAW-04-Presentation-Fabric.json",
+          "rawSha256": "791a9c58879c3c3a4f67ec47141af236a94fa2303a888615aa55f19a6f33e0e4"
+        },
+        "readySingleReview": {
+          "path": "specs/intake-review-results/raw-04-presentation-fabric-2026-08-08-r3.json",
+          "rawSha256": "8ed9eb0883ded43cf1140b1af041f6c2348adda1c6a6868304c89c8fe99dd0fa"
+        }
+      },
+      {
+        "logicalTargetId": "RAW-05",
+        "target": {
+          "path": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+          "normalizedSha256": "3fd7c5fbf4f419ed6131c4984a948f26d0b6b8c6ab3a5b068cdadce501c3fbad"
+        },
+        "authoringReceipt": {
+          "path": "specs/intake-authoring-receipts/RAW-05-Execution-Nodes.json",
+          "rawSha256": "2b6f6f075433c446a3b9b8118347746e074bb1a2dd706df28da93c30000699f8"
+        },
+        "readySingleReview": {
+          "path": "specs/intake-review-results/raw-05-execution-nodes-2026-08-08-r3.json",
+          "rawSha256": "5ff27f9f3d5f81a90385948a178eeb47fad9758b6b71c3381b6dbd0d9c3e3e39"
+        }
+      },
+      {
+        "logicalTargetId": "RAW-06",
+        "target": {
+          "path": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+          "normalizedSha256": "dde4a283ac2c761373085beea976dcd927d813e17aa2b1ad76ceab800c1d604a"
+        },
+        "authoringReceipt": {
+          "path": "specs/intake-authoring-receipts/RAW-06-CLI-Environment-Orchestration.json",
+          "rawSha256": "b061152602f0a768c957ea0ffc09dab065d90df551eddf9575b490f865109e96"
+        },
+        "readySingleReview": {
+          "path": "specs/intake-review-results/raw-06-cli-environment-orchestration-2026-08-08-r2.json",
+          "rawSha256": "e8689fb22097849960e259e097d298fb9e2a5800092fde02d219fc386523b6f8"
+        }
+      },
+      {
+        "logicalTargetId": "RAW-07",
+        "target": {
+          "path": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+          "normalizedSha256": "ade666e411ed9a81b9736e628adb8613be0d9d732295c7e5470d90f0c64f513a"
+        },
+        "authoringReceipt": {
+          "path": "specs/intake-authoring-receipts/RAW-07-Hardware-Capability-Layer.json",
+          "rawSha256": "a40a457107a3e98646352f35270d39371665c109f70a56219d73ee7de93c70eb"
+        },
+        "readySingleReview": {
+          "path": "specs/intake-review-results/raw-07-hardware-capability-layer-2026-08-08-r2.json",
+          "rawSha256": "3b2e76893571836fbb91a132e665c623222835e5b3f5c77e0cb6b912810c8511"
+        }
+      },
+      {
+        "logicalTargetId": "RAW-08",
+        "target": {
+          "path": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+          "normalizedSha256": "623451757149794556a9f4efef73c13c6894244476b7fd484f0eaaa9fdba7f1a"
+        },
+        "authoringReceipt": {
+          "path": "specs/intake-authoring-receipts/RAW-08-Workflow-Engine.json",
+          "rawSha256": "9616de1cef25bd53564cd5041a69ba34a362712445dcc398739e74b7a3ddedd3"
+        },
+        "readySingleReview": {
+          "path": "specs/intake-review-results/raw-08-workflow-engine-2026-08-08-r3.json",
+          "rawSha256": "37da394251c03faf451563082602358f445d4e690ae054a6dcc5c0ac92493017"
+        }
+      },
+      {
+        "logicalTargetId": "RAW-09",
+        "target": {
+          "path": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+          "normalizedSha256": "c3da0eec782279678b1599e0e2365e409fbfe9e0e6f40e5f2e1b768e385f3b83"
+        },
+        "authoringReceipt": {
+          "path": "specs/intake-authoring-receipts/RAW-09-Preset-Evolution.json",
+          "rawSha256": "4a02982f3312ff40c33e98d1282645b6cdb7cd87f354faf2fc79c4bf008d595a"
+        },
+        "readySingleReview": {
+          "path": "specs/intake-review-results/raw-09-preset-evolution-2026-08-08-r3.json",
+          "rawSha256": "a0941c0e7813683a2e8dfcdf1a1a189f199300e783be0d00357319d7827eef98"
+        }
+      }
+    ]
+  }
+}

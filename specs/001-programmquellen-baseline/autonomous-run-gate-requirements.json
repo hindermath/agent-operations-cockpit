@@ -1,0 +1,201 @@
+{
+  "schemaVersion": "1.0",
+  "gates": [
+    {
+      "gateId": "META01-G01-input-binding-bash",
+      "applicability": "Applicable",
+      "requiredScope": "Resolve three logical accepted artifacts through the schema-1.1 lifecycle contract and preserve the exact META-LH-01 record. Before Implement run generic Bash receipt and review freshness. Only for exact stage Implement, status Active, lastPassingGate GlobalReadyBeforeImplement, current branch/run/lifecycle bindings, and a fully valid ordered fourteen-target snapshot may the snapshot replace receipt source freshness; always continue the Bash run-state and review surfaces.",
+      "requiredCommandTokens": ["contracts/validate_meta_lh01.py", "input-bindings", "--surface bash"],
+      "requiredRunnerOrPlatformTokens": ["Local macOS", "Python 3", "Bash"],
+      "plannedEvidence": "specs/001-programmquellen-baseline/checklists/implementation-validation.md#input-binding",
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "META01-G02-input-binding-powershell",
+      "applicability": "Applicable",
+      "requiredScope": "Resolve three logical accepted artifacts through the schema-1.1 lifecycle contract and preserve the exact META-LH-01 record. Before Implement run generic PowerShell receipt and review freshness. Only for exact stage Implement, status Active, lastPassingGate GlobalReadyBeforeImplement, current branch/run/lifecycle bindings, and a fully valid ordered fourteen-target snapshot may the snapshot replace receipt source freshness; always continue the PowerShell run-state and review surfaces.",
+      "requiredCommandTokens": ["contracts/validate_meta_lh01.py", "input-bindings", "--surface powershell"],
+      "requiredRunnerOrPlatformTokens": ["Local macOS", "Python 3", "PowerShell 7"],
+      "plannedEvidence": "specs/001-programmquellen-baseline/checklists/implementation-validation.md#input-binding",
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "META01-G03-global-ready-14",
+      "applicability": "Applicable",
+      "requiredScope": "Before Implement prove exactly fourteen ordered logical META/RAW targets with META-LH-01 first by running both installed receipt and review validators. In the exact qualified Implement/Active/GlobalReadyBeforeImplement state, exhaustively validate the schema-1.1 snapshot: exact ordered set, no duplicates, lowercase hashes, current immutable receipt/review bytes, target path/hash, ReadyForReview, Single/Primary/Ready, empty findings/questions/accepted risks, unique current leaves, current branch/run/lifecycle binding, and original/archive META-LH-01 resolution. Only then replace receipt source freshness with the snapshot while continuing both installed review validators for all fourteen targets. Every mismatch fails.",
+      "requiredCommandTokens": ["contracts/validate_meta_lh01.py", "global-ready"],
+      "requiredRunnerOrPlatformTokens": ["Local macOS", "Python 3", "Bash", "PowerShell 7"],
+      "plannedEvidence": "specs/001-programmquellen-baseline/checklists/implementation-validation.md#global-ready-before-tasks-analyze-implement",
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "META01-G04-domain-contract",
+      "applicability": "Applicable",
+      "requiredScope": "Read all six bound domain files and prove the exact 23-source inventory and coverage, all source fields, CON-01 through CON-25, RF-01 through RF-21 with separate complete fields, Covered semantics, the exact ten direct META-LH-01 findings, glossary terms, and complete G-01/G-05/G-06 gate rows.",
+      "requiredCommandTokens": ["contracts/validate_meta_lh01.py", "domain"],
+      "requiredRunnerOrPlatformTokens": ["Local macOS", "Python 3"],
+      "plannedEvidence": "specs/001-programmquellen-baseline/checklists/implementation-validation.md#domain-contract",
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "META01-G05-markdown-structure",
+      "applicability": "Applicable",
+      "requiredScope": "Preview, render, and check the generated embedded-script inventory caused by the new tracked feature-local Python contract and test, then run the Bash and PowerShell homogeneity surfaces only as deterministic Markdown structure and repository-convention checks; do not treat them as semantic language, truth, or accessibility proof.",
+      "requiredCommandTokens": ["pwsh -NoProfile -File scripts/render-script-reference.ps1 -Repo . -WhatIf", "pwsh -NoProfile -File scripts/render-script-reference.ps1 -Repo .", "pwsh -NoProfile -File scripts/render-script-reference.ps1 -Repo . -CheckOnly", "bash scripts/check-homogeneity.sh --json --dry-run --no-patch .", "pwsh -NoProfile -File scripts/check-homogeneity.ps1 -TargetDir . -Json -DryRun -NoPatch"],
+      "requiredRunnerOrPlatformTokens": ["Local macOS", "Bash", "PowerShell 7"],
+      "plannedEvidence": "specs/001-programmquellen-baseline/checklists/implementation-validation.md#markdown-structure",
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "META01-G06-independent-semantic-review",
+      "applicability": "Applicable",
+      "requiredScope": "Validate that an independent semantic reviewer recorded one structured Pass/Fail assessment with rationale for every six-domain-path German-first, English-equivalence, CEFR-B2, first-use-term, domain-truth, and authority-interpretation criterion; the command proves evidence completeness, not the semantics itself.",
+      "requiredCommandTokens": ["contracts/validate_meta_lh01.py", "review-evidence", "--kind semantic", "--evidence"],
+      "requiredRunnerOrPlatformTokens": ["Local macOS", "Python 3", "Independent semantic reviewer"],
+      "plannedEvidence": "specs/001-programmquellen-baseline/checklists/implementation-validation.md#independent-semantic-review",
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "META01-G06A-independent-accessibility-review",
+      "applicability": "Applicable",
+      "requiredScope": "Validate that a separately independent accessibility reviewer recorded one structured Pass/Fail assessment with rationale for every six-domain-path heading hierarchy, linear reading order, descriptive links, text-first representation, status-not-colour-only, and WCAG 2.2 AA applicability criterion, with zero blocking findings.",
+      "requiredCommandTokens": ["contracts/validate_meta_lh01.py", "review-evidence", "--kind accessibility", "--evidence"],
+      "requiredRunnerOrPlatformTokens": ["Local macOS", "Python 3", "Independent accessibility reviewer"],
+      "plannedEvidence": "specs/001-programmquellen-baseline/accessibility-review-evidence.json",
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "META01-G07-secret-pattern-scans",
+      "applicability": "Applicable",
+      "requiredScope": "Run gitleaks and both repository scanner surfaces as secret-pattern checks over the declared candidate; do not claim that these commands prove all publication suitability or all unnecessary personal data decisions.",
+      "requiredCommandTokens": ["gitleaks dir --redact --no-banner --no-color", "bash scripts/scan-agent-secrets.sh --fail-on-high .", "pwsh -NoProfile -File scripts/scan-agent-secrets.ps1 -FailOnHigh -WorkspaceRoot ."],
+      "requiredRunnerOrPlatformTokens": ["Local macOS", "gitleaks", "Bash", "PowerShell 7"],
+      "plannedEvidence": "specs/001-programmquellen-baseline/checklists/implementation-validation.md#secret-pattern-scans",
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "META01-G08-independent-public-content-review",
+      "applicability": "Applicable",
+      "requiredScope": "After a byte-identical two-pass normal-candidate fixed point, validate that an independent reviewer recorded exact normal candidate coverage including the pre-named Pending causal-closeout anchor plus the lifecycle record and both original-to-archive transition paths, with Pass/Fail rationales for secret patterns, private paths, unnecessary personal data, and publication suitability; the command proves review-record completeness, not public suitability by itself.",
+      "requiredCommandTokens": ["contracts/validate_meta_lh01.py", "review-evidence", "--kind public", "--evidence", "--expected-paths"],
+      "requiredRunnerOrPlatformTokens": ["Local macOS", "Python 3", "Independent public-content reviewer"],
+      "plannedEvidence": "specs/001-programmquellen-baseline/checklists/implementation-validation.md#independent-public-content-review",
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "META01-G09-documentation-impact",
+      "applicability": "Applicable",
+      "requiredScope": "After a byte-identical two-pass normal-candidate fixed point, prove schema 1.1, exactly one UpdateRequired entry, the Ready-reviewed original META-LH-01 logical target as the single canonical domain source, complete normal candidate inventory including the pre-named Pending causal-closeout anchor plus lifecycle record and both original-to-archive transition paths, and all documentation-governance fields, then run both installed validator surfaces.",
+      "requiredCommandTokens": ["contracts/validate_meta_lh01.py", "documentation-impact", "--evidence", "--expected-paths"],
+      "requiredRunnerOrPlatformTokens": ["Local macOS", "Python 3", "Bash", "PowerShell 7"],
+      "plannedEvidence": "specs/001-programmquellen-baseline/documentation-impact-evidence.json",
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "META01-G10-aeps-outcome",
+      "applicability": "Applicable",
+      "requiredScope": "Prove exactly one structured AEPS Finding or NoChange outcome, source hash and deduplication key, bounded single-AOC maturity, and false preset-promotion and level-0-handoff claims; a Finding must bind exactly one complete canonical ledger section with every required field, source and receipt paths, and valid capture and upstream statuses, while NoChange leaves the ledger unchanged.",
+      "requiredCommandTokens": ["contracts/validate_meta_lh01.py", "aeps", "--receipt docs/aeps/receipts/meta-lh-01-programmquellen-implementation.md"],
+      "requiredRunnerOrPlatformTokens": ["Local macOS", "Python 3", "AEPS reviewer"],
+      "plannedEvidence": "docs/aeps/receipts/meta-lh-01-programmquellen-implementation.md",
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "META01-G11-statistics",
+      "applicability": "Applicable",
+      "requiredScope": "After implementation, render Profile 2 from its canonical configuration and prove no drift with both check-only surfaces.",
+      "requiredCommandTokens": ["bash scripts/render-project-statistics.sh --repo .", "bash scripts/render-project-statistics.sh --repo . --check-only", "pwsh -NoProfile -File scripts/render-project-statistics.ps1 -Repo . -CheckOnly"],
+      "requiredRunnerOrPlatformTokens": ["Local macOS", "Bash", "PowerShell 7"],
+      "plannedEvidence": "docs/project-statistics.md",
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "META01-G12-exact-candidate",
+      "applicability": "Applicable",
+      "requiredScope": "Against a reviewed execution-specific expected-paths file, reconcile the normal feature candidate with the maximum allowlist, porcelain including untracked paths, exact staged names, remaining unstaged candidate changes, and git diff --cached --check while preserving unrelated work. After that normal candidate commit, prove separately that the rename script creates exactly one byte-identical R100 original-to-archive terminal commit with no later feature-head mutation.",
+      "requiredCommandTokens": ["contracts/validate_meta_lh01.py", "candidate", "terminal-rename", "scripts/rename-lastenheft.sh", "--allowlist specs/001-programmquellen-baseline/contracts/candidate-paths.json", "--expected-paths"],
+      "requiredRunnerOrPlatformTokens": ["Local macOS", "Python 3", "Git"],
+      "plannedEvidence": "specs/001-programmquellen-baseline/checklists/implementation-validation.md#exact-candidate",
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "META01-G12A-candidate-fixed-point",
+      "applicability": "Applicable",
+      "requiredScope": "After every normal delivery path including the lifecycle record, the two review/documentation anchors, and the pre-named Pending causal-closeout anchor exist, render normal candidate sets one and two outside the repository, require byte equality, and prove that the frozen set still exactly matches changed allowlisted worktree paths before expanded public-content and Documentation Impact validation or staging. The later rename transition is declared in the maximum allowlist but is not part of the simultaneous pre-rename worktree set.",
+      "requiredCommandTokens": ["candidate-list", "cmp", "candidate-fixpoint", "--allowlist specs/001-programmquellen-baseline/contracts/candidate-paths.json", "--expected-paths"],
+      "requiredRunnerOrPlatformTokens": ["Local macOS", "Python 3", "Git"],
+      "plannedEvidence": "specs/001-programmquellen-baseline/checklists/implementation-validation.md#candidate-fixed-point",
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "META01-G13-pr-head-convergence",
+      "applicability": "Applicable",
+      "requiredScope": "Commit the normal feature candidate first, then require the script-created terminal rename as the last feature-branch commit. For that exact immutable pushed pull-request head, fail closed on PR-head mismatch, later head mutation, any non-successful reported check including non-required checks, an empty or inconsistent required-check subset, Change Requested, any actionable non-outdated review thread, or commands/runners not derived from workflow definitions or logs. Keep independent Approval as the separate normal-merge gate. Merge and fast-forward sync follow without another feature-head commit; the pre-named closeout branch and separate exact three-path closeout PR perform durable completion without mutating the terminal feature head.",
+      "requiredCommandTokens": ["gh pr view", "headRefOid", "gh pr checks", "--watch", "--fail-fast", "--json bucket,name,state,link", "--required", "check-inventory", "reviewDecision", "gh api graphql", "reviewThreads", "gh run view", "actions/runs/"],
+      "requiredRunnerOrPlatformTokens": ["GitHub", "GitHub CLI", "exact reviewed head"],
+      "plannedEvidence": "/tmp/001-programmquellen-baseline-execution-record.json",
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "META01-G14-causal-closeout",
+      "applicability": "Applicable",
+      "requiredScope": "After the feature PR merge and fast-forward sync, create only codex/001-programmquellen-baseline-closeout from synchronized main. Before its single commit, require archive-aware final validation, exactly 66 checked tasks, state completed/total equality at 66, actual tasks SHA equality, schema-1.1 Completed at MergeAndSync with terminal closeout fields and nextExactAction N/A, exact staged paths tasks.md plus autonomous-run-state.json plus causal-closeout-evidence.json, complete independent Documentation Impact and public-content review of that delta, and no containing-commit, closeout-PR, or closeout-merge self-claims. For the checkbox-free publication, write the PR body to a temporary file; under exactly one each of Affected scripts and documents, Manual verification, Sample output, and Security risk headings, name exactly the three closeout paths, actual manual verification, sample output or reasoned N/A, and an explicit security-risk statement. Validate all four headings before using gh pr create --body-file or gh pr edit --body-file. Publish that immutable closeout head through exact-head verification, independent review, all checks including a non-empty required subset, zero actionable threads, normal merge or the bounded approval-only admin fallback, cleanup, final main...origin/main 0 0, clean worktree, and external reporting only.",
+      "requiredCommandTokens": ["contracts/validate_meta_lh01.py", "causal-closeout", "codex/001-programmquellen-baseline-closeout", "git diff --cached --check", "/tmp/001-programmquellen-baseline-closeout-pr-body.md", "rg -Fxc", "Betroffene Skripte und Dokumente / Affected scripts and documents", "Manuelle Pruefung / Manual verification", "Beispielausgabe / Sample output", "Security-Risiko / Security risk", "gh pr create", "gh pr edit", "--body-file", "gh pr checks", "gh pr view", "gh api graphql", "gh pr merge", "git pull --ff-only", "main...origin/main"],
+      "requiredRunnerOrPlatformTokens": ["Local macOS", "Python 3", "Git", "GitHub", "GitHub CLI", "Independent closeout reviewer"],
+      "plannedEvidence": "specs/001-programmquellen-baseline/causal-closeout-evidence.json",
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "META01-N01-product-tests-runtime",
+      "applicability": "N/A",
+      "requiredScope": "Product build, unit, integration, runtime, performance, and architecture tests.",
+      "requiredCommandTokens": [],
+      "requiredRunnerOrPlatformTokens": [],
+      "rationale": "META-LH-01 changes documentation and workflow evidence only. The feature-local Python acceptance contract is validation tooling, not product code, runtime, architecture, or a product command surface.",
+      "reevaluationTrigger": "Re-evaluate if product code, runtime, scaffold, architecture, parser, generator, or executable product behaviour enters scope."
+    },
+    {
+      "gateId": "META01-N02-supply-chain",
+      "applicability": "N/A",
+      "requiredScope": "Dependency, SBOM, VEX, SLSA, AI-SBOM, package, build-provenance, and release validation.",
+      "requiredCommandTokens": [],
+      "requiredRunnerOrPlatformTokens": [],
+      "rationale": "The standard-library acceptance contract adds no external dependency, package, binary, AI runtime, build, or release artefact.",
+      "reevaluationTrigger": "Re-evaluate at any dependency, component, AI-runtime, build, package, publication, or release handoff."
+    },
+    {
+      "gateId": "META01-N03-script-platform-parity",
+      "applicability": "N/A",
+      "requiredScope": "New or changed Bash and PowerShell product scripts, man pages, cmdlets, dry-run behaviour, and platform-specific product validation.",
+      "requiredCommandTokens": [],
+      "requiredRunnerOrPlatformTokens": [],
+      "rationale": "No Bash or PowerShell script, product CLI, cmdlet, man page, or platform-specific product behaviour changes. The bounded Python contract uses only the standard library and validates both installed Bash and PowerShell surfaces where required.",
+      "reevaluationTrigger": "Re-evaluate if a Bash/PowerShell script pair, product CLI, cmdlet, man page, or platform-specific product behaviour is added, changed, or removed."
+    },
+    {
+      "gateId": "META01-N04-agent-parity-presets-level0",
+      "applicability": "N/A",
+      "requiredScope": "Shared agent guidance, templates, constitution, presets, preset promotion, and level-0 synchronization.",
+      "requiredCommandTokens": [],
+      "requiredRunnerOrPlatformTokens": [],
+      "rationale": "The accepted scope excludes all shared guidance, templates, constitution, preset mutation or promotion, level-0 changes, and Home Sync. The installed preset-version delta audit is recorded read-only in autonomous-run-state.json and plan.md; no version changes.",
+      "reevaluationTrigger": "Re-evaluate if shared guidance, templates, constitution, preset metadata, promotion, level-0 content, or Home Sync enters scope."
+    }
+  ]
+}
