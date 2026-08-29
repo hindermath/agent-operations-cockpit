@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "a32cb9e3-a356-4235-9d86-cd1d0efc1b71",
+  "mode": "Single",
+  "status": "Ready",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-29T22:05:00Z",
+  "repository": {
+    "root": ".",
+    "head": "633aacdb674e3f17678574ebfcf68ceaf2f9333a"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/meta-lh-03-authoring-contract-2026-08-29-r6.json",
+    "normalizedSha256": "534f72daf08f4433e5a66d26e5ab1466231be24e440733a434e4b7e90db02aa4"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "role": "Primary",
+      "normalizedSha256": "f6d57cacc954b4899fc5bd8ddcc235570ec20470094feec506e1b8e9ea07e3e9",
+      "gitBlob": "ac4b2da15eb3c10382ad6fc225c2b737f8902567"
+    }
+  ],
+  "findings": [],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "specs/intake-review-results/meta-lh-03-authoring-contract-2026-08-09-r5.json"
+}

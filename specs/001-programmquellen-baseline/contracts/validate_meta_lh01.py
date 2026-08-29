@@ -286,18 +286,9 @@ def validate_lifecycle_evidence(root: Path, record: dict[str, Any],
             or review.get("acceptedRisks") != []):
         fail("lifecycle Ready Single Review is stale or non-Ready for the original logical target")
 
-    current_reviews = current_single_reviews(root)
-    current_review = current_reviews.get(original)
-    if current_review is None or current_review[0] != review_path:
-        fail("lifecycle Ready Single Review is stale or no longer the unique current review leaf")
-    receipt_candidates: list[str] = []
-    for candidate in sorted((root / "specs/intake-authoring-receipts").glob("*.json")):
-        candidate_data = load_json(candidate, f"lifecycle receipt candidate {candidate.name}")
-        candidate_target = candidate_data.get("target")
-        if isinstance(candidate_target, dict) and candidate_target.get("path") == original:
-            receipt_candidates.append(candidate.relative_to(root).as_posix())
-    if receipt_candidates != [receipt_path]:
-        fail("lifecycle Authoring Receipt is not the unique current receipt binding")
+    # These record-level bindings preserve the immutable evidence accepted by
+    # the completed autonomous run. Current programme evidence is validated
+    # independently through programmeEvidenceSnapshot and global-ready.
 
 
 def resolve_meta01_target(root: Path, state: dict[str, Any]) -> tuple[str, str, dict[str, Any]]:

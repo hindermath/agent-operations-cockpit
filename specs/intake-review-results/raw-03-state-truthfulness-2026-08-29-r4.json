@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "087053fa-d5d8-457f-af2b-c2d7f6418798",
+  "mode": "Single",
+  "status": "Ready",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-29T22:05:00Z",
+  "repository": {
+    "root": ".",
+    "head": "633aacdb674e3f17678574ebfcf68ceaf2f9333a"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-03-state-truthfulness-2026-08-29-r4.json",
+    "normalizedSha256": "c665515b57270546b5abc05d8fcf17f514dbeccae18d2d17aca43eb5fb662fee"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "role": "Primary",
+      "normalizedSha256": "31d31e82ab1857182d1201192438e5c91abfc3190ba47a2f68b9543034ab0cfd",
+      "gitBlob": "e7b1885224f18eb5cfb116f29f9ba9dd97711286"
+    }
+  ],
+  "findings": [],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "specs/intake-review-results/raw-03-state-truthfulness-2026-08-08-r3.json"
+}

@@ -53,6 +53,39 @@ def normalized(path):
         raise ValueError("binary NUL detected")
     return text.replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")
 
+def resolve_lifecycle_target(logical_path, expected_hash):
+    matches = []
+    for lifecycle_path in sorted((repo / "specs").glob("*/intake-lifecycle.json")):
+        try:
+            lifecycle = json.loads(normalized(lifecycle_path).decode("utf-8"))
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise ValueError(f"invalid lifecycle contract {lifecycle_path}: {exc}") from exc
+        records = lifecycle.get("records") if isinstance(lifecycle, dict) else None
+        if lifecycle.get("schemaVersion") != "1.1" or not isinstance(records, list):
+            raise ValueError(f"invalid lifecycle contract {lifecycle_path}")
+        matches.extend(
+            record for record in records
+            if isinstance(record, dict) and record.get("originalPath") == logical_path
+        )
+    if not matches:
+        return repo / logical_path
+    if len(matches) != 1:
+        raise ValueError(f"ambiguous lifecycle resolution for {logical_path}")
+    record = matches[0]
+    archived_path = record.get("archivedPath")
+    if not isinstance(archived_path, str) or not relative(archived_path):
+        raise ValueError(f"invalid lifecycle archivedPath for {logical_path}")
+    if record.get("originalNormalizedSha256") != expected_hash:
+        raise ValueError(f"lifecycle hash drift for {logical_path}")
+    original_file = repo / logical_path
+    archived_file = repo / archived_path
+    if original_file.is_file() == archived_file.is_file():
+        raise ValueError(f"lifecycle requires exactly one physical target for {logical_path}")
+    resolved = original_file if original_file.is_file() else archived_file
+    if hashlib.sha256(normalized(resolved)).hexdigest() != expected_hash:
+        raise ValueError(f"resolved target hash drift for {logical_path}")
+    return resolved
+
 try:
     data = json.loads(result_path.read_text(encoding="utf-8"))
 except Exception as exc:
@@ -97,7 +130,11 @@ for i, target in enumerate(targets):
     target_paths.add(path_text)
     target_roles[path_text] = role
     if not re.fullmatch(r"[0-9a-f]{64}", digest): errors.append(f"{label}.normalizedSha256 is invalid")
-    target_path = repo / path_text
+    try:
+        target_path = resolve_lifecycle_target(path_text, digest)
+    except ValueError as exc:
+        errors.append(f"target {path_text}: {exc}")
+        target_path = repo / path_text
     if not target_path.is_file(): errors.append(f"target missing: {path_text}")
     else:
         try: actual = hashlib.sha256(normalized(target_path)).hexdigest()

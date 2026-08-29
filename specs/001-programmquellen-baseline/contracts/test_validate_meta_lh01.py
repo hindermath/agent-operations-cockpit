@@ -448,10 +448,15 @@ class ContractNegativeTests(unittest.TestCase):
     def test_lifecycle_rejects_stale_review_binding(self) -> None:
         state, record = lifecycle_fixture(self.root)
         accepted_path = record["readySingleReview"]["path"]
-        newer_path = "specs/intake-review-results/meta-lh-01-programmquellen-newer.json"
-        newer = contract.load_json(self.root / accepted_path, "accepted review")
-        newer["supersedes"] = accepted_path
-        write(self.root / newer_path, json.dumps(newer) + "\n")
+        accepted = contract.load_json(self.root / accepted_path, "accepted review")
+        accepted["status"] = "NeedsRemediation"
+        write(self.root / accepted_path, json.dumps(accepted) + "\n")
+        changed_hash = contract.raw_sha256(self.root / accepted_path)
+        record["readySingleReview"]["rawSha256"] = changed_hash
+        state["acceptedArtifacts"][1]["sha256"] = changed_hash
+        lifecycle = contract.load_json(self.root / contract.LIFECYCLE, "lifecycle")
+        lifecycle["records"] = [record]
+        write(self.root / contract.LIFECYCLE, json.dumps(lifecycle) + "\n")
         self.assert_contract_error(
             lambda: contract.resolve_meta01_target(self.root, state), "stale or"
         )

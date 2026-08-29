@@ -1,17 +1,17 @@
 {
   "schemaVersion": "2.0",
   "documentType": "IntakeReceipt",
-  "receiptId": "9eea6094-7378-4e36-91e8-f44e9e13506e",
+  "receiptId": "abaa129d-d898-47fc-be25-21ba7b06ae86",
   "intakeId": "4f4d740a-8804-43e0-9a47-9ac4756fbab6",
   "generator": {
     "preset": "intake-authoring-governance",
     "version": "0.3.0"
   },
-  "createdAt": "2026-08-08T21:44:31Z",
+  "createdAt": "2026-08-29T21:56:08Z",
   "operation": {
-    "operationId": "f56fc92e-9fae-4420-b701-d054e094ed66",
+    "operationId": "2c112f6e-898c-4815-af97-e61a702fc2a3",
     "type": "Update",
-    "authorityEvidence": "Thorsten explicitly authorised on 2026-08-08 the bounded repair of only IR005 and IR006 from Series review 35f4d174-cef2-4293-8994-a0263bc10b3f. IAD601-IAD604 move without semantic change from the open to the confirmed decision table; stale lifecycle statements become historical snapshots with stable references to the canonical manifest and order. Purpose, scope, non-goals, decisions, owners, handoffs, dependencies, and Delivery Authority remain unchanged. Only predecessor archive, receipt and Series hash renewal, complete re-reviews, and AEPS evidence capture are authorised. Specify, implementation, remote, merge, bypass, preset, promotion, GitHub, and Level-0 actions are excluded."
+    "authorityEvidence": "Thorsten explicitly authorized the bounded IR007 and IR008 repair on 2026-08-29, including lifecycle-aware consumer resolution, renewal of all fourteen authoring receipts, complete Single and Series re-reviews, and MergeAndSync with Admin-Bypass."
   },
   "status": "ReadyForReview",
   "target": {
@@ -37,7 +37,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "640af2a4eb49b0c0dbb966e82f7bd06e1006dea4aa46fba66b368d59b577ce56",
-      "gitBlob": "N/A",
+      "gitBlob": "212e2e1b2a2c38b4b403abfa0c56d74a53db9fac",
       "proofBoundary": "RepositoryArchiveAtBoundedSeriesRepair"
     },
     {
@@ -58,7 +58,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "ce711f3b942950e35bce0a54aa856c1dad735d4059ecaa2d27330670c9507015",
-      "gitBlob": "N/A",
+      "gitBlob": "3dc9636c3f694898c12e70cb45e6ef968fbb42ba",
       "proofBoundary": "RepositoryAtUpdateAuthorization"
     },
     {
@@ -79,7 +79,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "cf85b9053368903d0126cb080237dea04c3abed3620f5d29709d20466f461d15",
-      "gitBlob": "N/A",
+      "gitBlob": "a4956fa108d53a2d4317d14da0beaf0f38c7a808",
       "proofBoundary": "RepositoryAtBoundedSeriesRepair"
     },
     {
@@ -99,8 +99,8 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "a1a3907634c0903863d64031e5b6d7e4eb8818eea29bbf1bc2065a81d7a5bb93",
-      "gitBlob": "N/A",
+      "normalizedSha256": "f859235e64f3cddaaecb21025581fa236a8fc38e08206a3723cde17ad8b3603f",
+      "gitBlob": "00a812f9e84ebd288443a76a3aad377e0c449e11",
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
@@ -121,7 +121,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "c33eedd4067a9b26852393f197b591d1231deda7d01448f262a419ef569021e7",
-      "gitBlob": "N/A",
+      "gitBlob": "53dfdae309f05384ae173893b421638405727d3e",
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
@@ -142,7 +142,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "bc1e95de2d34ebd33ae7452ee6c1f495e8d2b31b5157eccaadde3b110f5c1dfc",
-      "gitBlob": "N/A",
+      "gitBlob": "ef310dd3d29f03dba3e7d8b4948e97d47ebdd979",
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
@@ -163,7 +163,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "13bbe967cde353048b5be20e5b235c96c1933819b20902db834315c2e2f6c220",
-      "gitBlob": "N/A",
+      "gitBlob": "baeb19b3da33b7512c082c69ff0f4e9905d8c9a0",
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
@@ -184,7 +184,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "f45e676163a9a68f7f309644b2f00aa3e2f9da4f117e0e4f9c0ea0aff49627cb",
-      "gitBlob": "N/A",
+      "gitBlob": "e558cee9f1def1e0c0bb6a28401be0b64c03addd",
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
@@ -205,7 +205,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "b7ad4b125b56105952dff7f6fad073b5df9a1b618e9bc7797b4fc2b07c59d339",
-      "gitBlob": "N/A",
+      "gitBlob": "16d017b8fb268b0bd8954338f67b0e2d4e1b84d1",
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
@@ -226,7 +226,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "b98140cb845748e137ce394b1b8559a11afa0a3c785501749be12a966a4b14ca",
-      "gitBlob": "N/A",
+      "gitBlob": "60159d93bbe00c7aec3ab7eecce5ad6a3fc398c4",
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
@@ -247,7 +247,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "71db84c366540f714fe87e852ee87f327043cbd0345614d63408f8cbe0b42fcb",
-      "gitBlob": "N/A",
+      "gitBlob": "dbd3d1c7fcba73259b8624e65d62ebc227cd5d9e",
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
@@ -268,7 +268,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "d15b0d3d038f2dc1866f353f196fcafb5c91f39c0af0c6b822290ebe183105bb",
-      "gitBlob": "N/A",
+      "gitBlob": "5175f53e4ec446b1d2a9fb876a0af2eca2b1b7c2",
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
@@ -289,7 +289,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "9ed4c1972b97b7c217581f84e8325988dce729725557a904c13d400bb6d90eae",
-      "gitBlob": "N/A",
+      "gitBlob": "9acbee0e7dcecde5f774fd9650adf9db9fc162b3",
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
@@ -310,7 +310,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "3847c108a9ed846190fec124b83904f6f62d963373d0157507c657f113a91dc3",
-      "gitBlob": "N/A",
+      "gitBlob": "269c74f769244e2c9a28adbc98a8bbcd508af7d5",
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
@@ -331,7 +331,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "09240e83a7e8f04515e0b0d07b09ae860a0f6c5081e87a6a0bb4bbd356a3a8d9",
-      "gitBlob": "N/A",
+      "gitBlob": "e731be5b211cd76bc606f755c67b7a0ee6654eb3",
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
@@ -352,7 +352,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "519871c706640ad9f7c5cdf63ae12e13cd337ba42b4277ee7a7669a679f7dfe0",
-      "gitBlob": "N/A",
+      "gitBlob": "b2953c17dba2099172952163c14eb957d57f2f8e",
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
@@ -373,7 +373,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "ca64f21cb582062f9c391da3d214af088f90525735f52fb482db7920457f5fdd",
-      "gitBlob": "N/A",
+      "gitBlob": "f37092aa4a2a0308a34ee611e4ab563f8c9a66ab",
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
@@ -394,7 +394,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "d6e2dd8748d30a6e485d403cf85daeaf00a4afac4808172b4b8f580d899a5227",
-      "gitBlob": "N/A",
+      "gitBlob": "76937087914b3858bb3e5dd6cdda167435ea3289",
       "proofBoundary": "RepositoryAtUpdateAuthorization"
     },
     {
@@ -415,7 +415,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "be06de6414f45c1cc443f4e1bd4234e1bd76a060bc13afc457d392f5415290b8",
-      "gitBlob": "N/A",
+      "gitBlob": "6ae590095d3ac8b255314c30297a437a07175c7e",
       "proofBoundary": "RepositoryAtUpdateAuthorization"
     },
     {
@@ -436,7 +436,7 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "11a42bd28136bf82c4dc0f36ac6e4d69b5ad8bfed6422d98d9cdb9be7c603345",
-      "gitBlob": "N/A",
+      "gitBlob": "485c98741448bd61bb0d22b5bd49f396ab17f957",
       "proofBoundary": "RepositoryAtRepairAuthorization"
     }
   ],
@@ -471,10 +471,10 @@
   "promptState": "Enabled",
   "provenanceMode": "Supersession",
   "supersedes": {
-    "receiptPath": "specs/intake-authoring-archive/4f4d740a-8804-43e0-9a47-9ac4756fbab6/f56fc92e-9fae-4420-b701-d054e094ed66/RAW-09-Preset-Evolution.json",
-    "targetNormalizedSha256": "640af2a4eb49b0c0dbb966e82f7bd06e1006dea4aa46fba66b368d59b577ce56",
-    "archiveTargetPath": "specs/intake-authoring-archive/4f4d740a-8804-43e0-9a47-9ac4756fbab6/f56fc92e-9fae-4420-b701-d054e094ed66/Lastenheft_RAW-09-Preset-Evolution.md",
-    "archiveReceiptPath": "specs/intake-authoring-archive/4f4d740a-8804-43e0-9a47-9ac4756fbab6/f56fc92e-9fae-4420-b701-d054e094ed66/RAW-09-Preset-Evolution.json"
+    "receiptPath": "specs/intake-authoring-archive/4f4d740a-8804-43e0-9a47-9ac4756fbab6/2c112f6e-898c-4815-af97-e61a702fc2a3/RAW-09-Preset-Evolution.json",
+    "targetNormalizedSha256": "c3da0eec782279678b1599e0e2365e409fbfe9e0e6f40e5f2e1b768e385f3b83",
+    "archiveTargetPath": "specs/intake-authoring-archive/4f4d740a-8804-43e0-9a47-9ac4756fbab6/2c112f6e-898c-4815-af97-e61a702fc2a3/Lastenheft_RAW-09-Preset-Evolution.md",
+    "archiveReceiptPath": "specs/intake-authoring-archive/4f4d740a-8804-43e0-9a47-9ac4756fbab6/2c112f6e-898c-4815-af97-e61a702fc2a3/RAW-09-Preset-Evolution.json"
   },
   "legacyAdoption": {
     "evidenceType": "N/A",
@@ -482,7 +482,7 @@
     "priorGitBlob": "N/A"
   },
   "updateAuthorized": true,
-  "updateAuthorityEvidence": "Thorsten explicitly authorised this bounded IR005 and IR006 repair, predecessor archive, Authoring Receipt and Series hash renewal, and complete re-review on 2026-08-08.",
+  "updateAuthorityEvidence": "Thorsten explicitly authorized the bounded IR007 and IR008 repair on 2026-08-29, including lifecycle-aware consumer resolution, renewal of all fourteen authoring receipts, complete Single and Series re-reviews, and MergeAndSync with Admin-Bypass.",
   "series": {
     "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
     "manifestPath": "specs/intake-series/aoc-phase-2/manifest.json",

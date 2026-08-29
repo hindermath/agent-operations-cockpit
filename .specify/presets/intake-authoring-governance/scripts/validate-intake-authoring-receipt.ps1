@@ -79,6 +79,63 @@ function Test-IntakeAuthoringReceipt {
         return [Convert]::ToHexString([Security.Cryptography.SHA256]::HashData($Bytes)).ToLowerInvariant()
     }
 
+    function Resolve-HBLifecycleTarget([string]$LogicalPath, [string]$ExpectedHash) {
+        $Direct = Join-Path $RepoRoot $LogicalPath
+        $LifecycleMatches = [Collections.Generic.List[object]]::new()
+        $Specs = Join-Path $RepoRoot 'specs'
+        if (Test-Path -LiteralPath $Specs -PathType Container) {
+            foreach ($LifecyclePath in @(Get-ChildItem -LiteralPath $Specs -Filter 'intake-lifecycle.json' -File -Recurse)) {
+                try {
+                    $Lifecycle = (Get-HBNormalizedText $LifecyclePath.FullName) | ConvertFrom-Json
+                } catch {
+                    $Errors.Add("invalid lifecycle contract $($LifecyclePath.FullName): $($_.Exception.Message)")
+                    return $Direct
+                }
+                $Records = @(Get-HBProperty $Lifecycle 'records')
+                if ((Get-HBProperty $Lifecycle 'schemaVersion') -ne '1.1' -or $Records.Count -eq 0) {
+                    $Errors.Add("invalid lifecycle contract $($LifecyclePath.FullName)")
+                    return $Direct
+                }
+                foreach ($Record in $Records) {
+                    if ((Get-HBProperty $Record 'originalPath') -eq $LogicalPath) {
+                        $LifecycleMatches.Add($Record)
+                    }
+                }
+            }
+        }
+        if ($LifecycleMatches.Count -eq 0) { return $Direct }
+        if ($LifecycleMatches.Count -ne 1) {
+            $Errors.Add("ambiguous lifecycle resolution for $LogicalPath")
+            return $Direct
+        }
+        $Record = $LifecycleMatches[0]
+        $Archived = [string](Get-HBProperty $Record 'archivedPath')
+        if (-not $Archived -or -not (Test-HBRelativePath $Archived)) {
+            $Errors.Add("invalid lifecycle archivedPath for $LogicalPath")
+            return $Direct
+        }
+        if ((Get-HBProperty $Record 'originalNormalizedSha256') -ne $ExpectedHash) {
+            $Errors.Add("lifecycle hash drift for $LogicalPath")
+            return $Direct
+        }
+        $ArchivedFile = Join-Path $RepoRoot $Archived
+        $OriginalExists = Test-Path -LiteralPath $Direct -PathType Leaf
+        $ArchivedExists = Test-Path -LiteralPath $ArchivedFile -PathType Leaf
+        if ($OriginalExists -eq $ArchivedExists) {
+            $Errors.Add("lifecycle requires exactly one physical target for $LogicalPath")
+            return $Direct
+        }
+        $Resolved = if ($OriginalExists) { $Direct } else { $ArchivedFile }
+        try { $Actual = Get-HBNormalizedHash $Resolved } catch {
+            $Errors.Add("resolved target ${LogicalPath}: $($_.Exception.Message)")
+            return $Direct
+        }
+        if ($Actual -ne $ExpectedHash) {
+            $Errors.Add("resolved target hash drift for $LogicalPath")
+        }
+        return $Resolved
+    }
+
     function Get-HBNormalizedHashFromBytes([byte[]]$Bytes) {
         $Offset = if ($Bytes.Length -ge 3 -and $Bytes[0] -eq 0xEF -and $Bytes[1] -eq 0xBB -and $Bytes[2] -eq 0xBF) { 3 } else { 0 }
         $Utf8Strict = [Text.UTF8Encoding]::new($false, $true)
@@ -255,7 +312,7 @@ function Test-IntakeAuthoringReceipt {
     if ($TargetPathText -and -not (Test-HBRelativePath $TargetPathText)) {
         $Errors.Add('target.path must be repository-relative')
     }
-    $TargetPath = Join-Path $RepoRoot $TargetPathText
+    $TargetPath = Resolve-HBLifecycleTarget $TargetPathText $TargetHash
     $TargetText = ''
     if ($TargetPathText -and -not (Test-Path -LiteralPath $TargetPath -PathType Leaf)) {
         $Errors.Add("target missing: $TargetPathText")
