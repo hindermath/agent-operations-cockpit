@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "60d1f2c8-7658-4ab4-ac9e-907e3e8629ff",
+  "mode": "Single",
+  "status": "Ready",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-29T22:05:00Z",
+  "repository": {
+    "root": ".",
+    "head": "633aacdb674e3f17678574ebfcf68ceaf2f9333a"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-04-presentation-fabric-2026-08-29-r4.json",
+    "normalizedSha256": "e516bd27ca58766a4002cb6cd620ee4bef52b8066b922a9cc77571429b290bb4"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "role": "Primary",
+      "normalizedSha256": "ce89a73e9e1d0bdeadcc166a0f4a7b3b94052037cabb8225ceb4ef2ebd345ec4",
+      "gitBlob": "cb27a138de7537cf00173d8128de10af61f884e7"
+    }
+  ],
+  "findings": [],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "specs/intake-review-results/raw-04-presentation-fabric-2026-08-08-r3.json"
+}

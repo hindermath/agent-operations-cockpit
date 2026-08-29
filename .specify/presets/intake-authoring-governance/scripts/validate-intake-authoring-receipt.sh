@@ -60,6 +60,39 @@ def normalized_bytes(path):
 def digest(path):
     return hashlib.sha256(normalized_bytes(path)).hexdigest()
 
+def resolve_lifecycle_target(logical_path, expected_hash):
+    matches = []
+    for lifecycle_path in sorted((repo / "specs").glob("*/intake-lifecycle.json")):
+        try:
+            lifecycle = json.loads(normalized_bytes(lifecycle_path).decode("utf-8"))
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise ValueError(f"invalid lifecycle contract {lifecycle_path}: {exc}") from exc
+        records = lifecycle.get("records") if isinstance(lifecycle, dict) else None
+        if lifecycle.get("schemaVersion") != "1.1" or not isinstance(records, list):
+            raise ValueError(f"invalid lifecycle contract {lifecycle_path}")
+        matches.extend(
+            record for record in records
+            if isinstance(record, dict) and record.get("originalPath") == logical_path
+        )
+    if not matches:
+        return repo / logical_path
+    if len(matches) != 1:
+        raise ValueError(f"ambiguous lifecycle resolution for {logical_path}")
+    record = matches[0]
+    archived_path = record.get("archivedPath")
+    if not isinstance(archived_path, str) or not relative(archived_path):
+        raise ValueError(f"invalid lifecycle archivedPath for {logical_path}")
+    if record.get("originalNormalizedSha256") != expected_hash:
+        raise ValueError(f"lifecycle hash drift for {logical_path}")
+    original_file = repo / logical_path
+    archived_file = repo / archived_path
+    if original_file.is_file() == archived_file.is_file():
+        raise ValueError(f"lifecycle requires exactly one physical target for {logical_path}")
+    resolved = original_file if original_file.is_file() else archived_file
+    if digest(resolved) != expected_hash:
+        raise ValueError(f"resolved target hash drift for {logical_path}")
+    return resolved
+
 def normalized_digest_bytes(raw):
     if raw.startswith(b"\xef\xbb\xbf"):
         raw = raw[3:]
@@ -185,7 +218,11 @@ target_hash = required_text(target, "normalizedSha256", "target")
 check_digest(target_hash, "target.normalizedSha256")
 if target_path_text and not relative(target_path_text):
     errors.append("target.path must be repository-relative")
-target_path = repo / target_path_text
+try:
+    target_path = resolve_lifecycle_target(target_path_text, target_hash)
+except ValueError as exc:
+    errors.append(f"target {target_path_text}: {exc}")
+    target_path = repo / target_path_text
 target_text = ""
 if target_path_text and not target_path.is_file():
     errors.append(f"target missing: {target_path_text}")

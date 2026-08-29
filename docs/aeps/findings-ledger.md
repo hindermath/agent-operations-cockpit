@@ -951,6 +951,32 @@ adoption remain separate future decisions.*
 - **Erfassungsstatus / Capture status:** `PotentialCandidate`.
 - **Upstream-Status / Upstream status:** `PendingPublication`.
 
+## Ergänzende Series-Review-Evidence vom 2026-08-29 / Additional Series Review Evidence from 2026-08-29
+
+Der vollständige Phase-2-Serienreview
+`fd3e061d-10ee-4403-a892-c804f9736296` reproduziert die Lifecycle-Lücke aus
+`AEPS-FIND-AOC-018` nicht nur in der Requirements Governance, sondern auch in
+Series-Manifest, Series Receipt, Order, Authoring Receipt und Single Review.
+Bash und PowerShell melden übereinstimmend `RIG014` oder `ISG004`. Damit wird
+die bestehende lokale Negativ-Evidence für `AEPS-FIND-AOC-007` und `018`
+gestärkt; eine neue Finding-ID ist nicht erforderlich. / *The complete Series
+review reproduces the lifecycle gap across governance, sequencing, receipt,
+order, and review consumers on both surfaces. This strengthens existing local
+negative evidence without creating a new finding.*
+
+Das Review zeigt außerdem, dass eine materielle Aktualisierung des gemeinsamen
+Source Packs alle 14 zuvor aktuellen Authoring Receipts gleichzeitig
+invalidiert. Zusätzliche Drift in Coverage Matrix und Review Findings Ledger
+betrifft einzelne Receipts. Die benannten Dateien, Hashes, Befehle und
+Exitcodes stärken `AEPS-FIND-AOC-007` und `009`; die Resultate belegen zugleich,
+dass ein formal weiterhin vorhandenes Ready-Single-Review ohne aktuelles
+Authoring Receipt das globale Gate nicht erfüllt. Diese Evidence bleibt
+AOC-lokal und `PendingPublication`; Candidate-Matrix, Gap-Analyse, Handoff und
+Preset-Reifegrade ändern sich nicht. / *A material shared-source update also
+invalidates all fourteen authoring receipts at once. Named files, hashes,
+commands, and exit codes strengthen findings 007 and 009. The evidence remains
+AOC-local and does not change candidate or promotion status.*
+
 ## Ergänzende Closeout-/Statistik-Beobachtung vom 2026-08-29 / Additional Closeout and Statistics Observation from 2026-08-29
 
 Der als single-commit-faehig geplante Drei-Pfad-Closeout in Commit
@@ -963,3 +989,23 @@ Preset-Lücke, weil erst ein Lauf und eine AOC-spezifische Renderer-Kopplung
 belegt sind. / *The planned single-commit closeout caused a second
 statistics-only commit because the ledger is Git-history based. AR-004 remains
 ObserveAgain until a second independent field observation exists.*
+
+## Ergänzende Reparatur-Evidence vom 2026-08-30 / Additional Repair Evidence from 2026-08-30
+
+Das vollständige Series Review `ed06821a-bf3d-438a-96ca-d85eb5f8cb8a`
+bestätigt die lokale Schließung von IR007 und IR008. Governance, Sequencing,
+Receipt und Review lösen den logischen META-LH-01-Pfad nun über denselben
+eindeutigen, hashgebundenen Lifecycle-Vertrag auf; fehlende, driftende und
+mehrdeutige Evidence bleibt blockierend. `14/14` Authoring Receipts und
+`14/14` Single Reviews sind aktuell, und das globale Ready-Gate besteht. /
+*The complete Series review confirms the local closure of both findings with
+one fail-closed lifecycle contract and current evidence for all fourteen
+targets.*
+
+Diese positive Evidence stärkt `AEPS-FIND-AOC-007`, `009` und `018`, erzeugt
+aber keine neue Finding-ID. Die Trennung zwischen unveränderlicher historischer
+Completion-Evidence und erneuerbarer aktueller Programmevidence ist jetzt im
+AOC praktisch belegt. Cross-Project-Evidence und Level-0-Autorität fehlen
+weiterhin; Reifegrade, Candidate-Matrix, Gap-Analyse, Handoff und
+Preset-Promotion bleiben deshalb unverändert. / *The repair strengthens three
+existing findings without changing maturity or promotion status.*

@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "2.0",
+  "documentType": "IntakeReceipt",
+  "receiptId": "b5b513dd-66ab-461d-bf64-970da24cfd0b",
+  "intakeId": "c3991109-ab92-435d-ac92-1a4e734bd1f0",
+  "generator": {
+    "preset": "intake-authoring-governance",
+    "version": "0.3.0"
+  },
+  "createdAt": "2026-07-31T22:58:32Z",
+  "operation": {
+    "operationId": "073a05e4-6111-4e55-aa0b-e9fedeff26e0",
+    "type": "Update",
+    "authorityEvidence": "User explicitly authorized the bounded META-LH-01 and RF-19 through RF-21 repair on 2026-08-01."
+  },
+  "status": "ReadyForReview",
+  "target": {
+    "path": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
+    "normalizedSha256": "99eab2565a73b3f1fe836feb89b543392360d3a5d56063c13fd28cf2f0a16704"
+  },
+  "sources": [
+    {
+      "sourceId": "SRC001",
+      "order": 1,
+      "kind": "File",
+      "label": "Superseded META-LH-01 intake as first binding update source",
+      "location": "Repository",
+      "path": "specs/intake-authoring-archive/c3991109-ab92-435d-ac92-1a4e734bd1f0/073a05e4-6111-4e55-aa0b-e9fedeff26e0/Lastenheft_META-LH-01-Programmquellen.md",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "4429ca8c4c132fac83a840f5c29f8361a01c3c233e5805d4a0c4055931eb9fe7",
+      "gitBlob": "e21e94530c36a9cc5347ed1ab89e24bffcadf7b6",
+      "proofBoundary": "RepositoryArchiveAtUpdate"
+    },
+    {
+      "sourceId": "SRC002",
+      "order": 2,
+      "kind": "File",
+      "label": "Independent single-intake review authorizing the bounded findings repair",
+      "location": "Repository",
+      "path": "specs/intake-review-results/meta-lh-01-programmquellen-2026-08-01.json",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "47a7f9dbd7692e69eb699fef465a37a2345b6af82506b1ff2bb36732c54373e7",
+      "gitBlob": "N/A",
+      "proofBoundary": "RepositoryAtRepairAuthorization"
+    },
+    {
+      "sourceId": "SRC003",
+      "order": 3,
+      "kind": "File",
+      "label": "Self-contained AOC programme source pack",
+      "location": "Repository",
+      "path": "requirements/baseline/source-pack.md",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "a1a3907634c0903863d64031e5b6d7e4eb8818eea29bbf1bc2065a81d7a5bb93",
+      "gitBlob": "3217d11a79c713fdd36c53ce69797d46f5b99302",
+      "proofBoundary": "RepositoryAtUpdate"
+    },
+    {
+      "sourceId": "SRC004",
+      "order": 4,
+      "kind": "File",
+      "label": "Repaired RF-19 through RF-21 evidence ledger",
+      "location": "Repository",
+      "path": "requirements/baseline/review-findings-ledger.md",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "647f09a43176b6940c475fbaadc7d2a6908f3a9dcf605bdfe77726f7f33545ec",
+      "gitBlob": "N/A",
+      "proofBoundary": "RepositoryAtUpdate"
+    }
+  ],
+  "profile": "aoc-bilingual-requirements",
+  "languagePolicy": "GermanFirstAuthoritativeEnglishSecondCEFRB2",
+  "decisions": [],
+  "openDecisionIds": [],
+  "questionCount": 0,
+  "agentSurface": {
+    "specifyCanonicalId": "speckit.specify",
+    "specifyInvocation": "$speckit-specify requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md --bind-exact-intake --no-implementation --no-remote-writes",
+    "autonomousCanonicalId": "speckit.autonomous",
+    "autonomousInvocation": "$speckit-autonomous requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md --delivery-mode MergeAndSync --require-current-review"
+  },
+  "deliveryAuthority": "MergeAndSync",
+  "authorityEvidence": "Explicit user approval for Phase 2 continuation with MergeAndSync and Admin-Bypass on 2026-07-31.",
+  "promptState": "Enabled",
+  "provenanceMode": "Supersession",
+  "supersedes": {
+    "receiptPath": "specs/intake-authoring-archive/c3991109-ab92-435d-ac92-1a4e734bd1f0/073a05e4-6111-4e55-aa0b-e9fedeff26e0/META-LH-01-Programmquellen.json",
+    "targetNormalizedSha256": "4429ca8c4c132fac83a840f5c29f8361a01c3c233e5805d4a0c4055931eb9fe7",
+    "archiveTargetPath": "specs/intake-authoring-archive/c3991109-ab92-435d-ac92-1a4e734bd1f0/073a05e4-6111-4e55-aa0b-e9fedeff26e0/Lastenheft_META-LH-01-Programmquellen.md",
+    "archiveReceiptPath": "specs/intake-authoring-archive/c3991109-ab92-435d-ac92-1a4e734bd1f0/073a05e4-6111-4e55-aa0b-e9fedeff26e0/META-LH-01-Programmquellen.json"
+  },
+  "legacyAdoption": {
+    "evidenceType": "N/A",
+    "priorTargetNormalizedSha256": "N/A",
+    "priorGitBlob": "N/A"
+  },
+  "updateAuthorized": true,
+  "updateAuthorityEvidence": "User explicitly requested execution of the bounded repair identified by review 3484ab5e-f374-4a57-be11-6ff510277f22 on 2026-08-01.",
+  "series": {
+    "seriesId": "N/A",
+    "manifestPath": "N/A",
+    "order": "N/A",
+    "role": "N/A",
+    "supersedesIntakeIds": []
+  },
+  "nextAction": "$speckit-intake-review requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md"
+}

@@ -9,7 +9,7 @@
       "originalRawSha256": "99eab2565a73b3f1fe836feb89b543392360d3a5d56063c13fd28cf2f0a16704",
       "originalNormalizedSha256": "99eab2565a73b3f1fe836feb89b543392360d3a5d56063c13fd28cf2f0a16704",
       "authoringReceipt": {
-        "path": "specs/intake-authoring-receipts/META-LH-01-Programmquellen.json",
+        "path": "specs/intake-authoring-archive/c3991109-ab92-435d-ac92-1a4e734bd1f0/66b891a4-4e19-4245-a88c-41a6563e006f/META-LH-01-Programmquellen.json",
         "rawSha256": "ec8808ca77440e6bc1a31e5b7315d498997d6cf381e4bcc7d67802874b85daf6"
       },
       "readySingleReview": {
@@ -33,11 +33,11 @@
         },
         "authoringReceipt": {
           "path": "specs/intake-authoring-receipts/META-LH-01-Programmquellen.json",
-          "rawSha256": "ec8808ca77440e6bc1a31e5b7315d498997d6cf381e4bcc7d67802874b85daf6"
+          "rawSha256": "94c05a279bf0e7cd360d2d99085af1aefe506d320d105163d5822b264f767401"
         },
         "readySingleReview": {
-          "path": "specs/intake-review-results/meta-lh-01-programmquellen-2026-08-01-r2.json",
-          "rawSha256": "d119805254e0191a2cd34ccbe4746e4a6fb0921ed9b025f3d91eb8546c322334"
+          "path": "specs/intake-review-results/meta-lh-01-programmquellen-2026-08-29-r3.json",
+          "rawSha256": "524ef4cfbd6b07c8eb2c279e0070cd20c45970b7985cec33d0f3f4d8728d5810"
         }
       },
       {
@@ -48,11 +48,11 @@
         },
         "authoringReceipt": {
           "path": "specs/intake-authoring-receipts/META-LH-02-Portfolio-Ownership.json",
-          "rawSha256": "3c95e47592ff8eb7646d9f96b3ee173205365dfeb540da736ee5fb2c3c4d7f14"
+          "rawSha256": "4c468df900e62c7d1c7927c86fda894afdbb4a8c97f092c215311b08dc209876"
         },
         "readySingleReview": {
-          "path": "specs/intake-review-results/meta-lh-02-portfolio-ownership-2026-08-08-r5.json",
-          "rawSha256": "d32287ec6a9feec4c2bb736c6962da4d5689ccc0389f4d054be3fb6a90b67662"
+          "path": "specs/intake-review-results/meta-lh-02-portfolio-ownership-2026-08-29-r6.json",
+          "rawSha256": "2807c8be25b4127e8a1182b2ae0d35303cc1b6c71add37c238db1b3e91f4ff90"
         }
       },
       {
@@ -63,11 +63,11 @@
         },
         "authoringReceipt": {
           "path": "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json",
-          "rawSha256": "02b2984a91a9178854dfc6dffbf5f339af409d0430a72ee2ce5d567ea56ba805"
+          "rawSha256": "6acc207f5533eb9fb92613f23537c669605eef475eb5bb3a911806f6c28e1aeb"
         },
         "readySingleReview": {
-          "path": "specs/intake-review-results/meta-lh-03-authoring-contract-2026-08-09-r5.json",
-          "rawSha256": "e3043fa6bf68220396084930e4273542e57071a5a1cccbd4c9b46f1c2418043e"
+          "path": "specs/intake-review-results/meta-lh-03-authoring-contract-2026-08-29-r6.json",
+          "rawSha256": "9de62c488c4223e78636837e78c3d36910f5a11664df45cc6f53c1ffc8d83e5a"
         }
       },
       {
@@ -78,11 +78,11 @@
         },
         "authoringReceipt": {
           "path": "specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json",
-          "rawSha256": "0ae7317540406694635ad0be6c6980305b231db529d3b5632793438a9e627c46"
+          "rawSha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b"
         },
         "readySingleReview": {
-          "path": "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-09-r7.json",
-          "rawSha256": "13f4be2a129b25d902ca77edfe9eda2f843e1eb9c2de3cfd041ed7b081bc6e32"
+          "path": "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json",
+          "rawSha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07"
         }
       },
       {
@@ -93,11 +93,11 @@
         },
         "authoringReceipt": {
           "path": "specs/intake-authoring-receipts/META-LH-05-Erste-Welle.json",
-          "rawSha256": "e699480f0c99486df3f51ea932dbef6125e5f9d69fbe586842368d8a4d43e2b7"
+          "rawSha256": "aec1c2b2878f6267814e8bc7b6b8f256a5ff093fe62d976de1aa0a76756adf06"
         },
         "readySingleReview": {
-          "path": "specs/intake-review-results/meta-lh-05-erste-welle-2026-08-08-r5.json",
-          "rawSha256": "ad271d30970c6dbd1ae7bbd8b780f1a1933b75ac54b6f970f5818d9958d62da9"
+          "path": "specs/intake-review-results/meta-lh-05-erste-welle-2026-08-29-r6.json",
+          "rawSha256": "a9da42a486af6291d24429ddd0c9689f6fb7e2de3abd42b5ab52d61ac935d501"
         }
       },
       {
@@ -108,11 +108,11 @@
         },
         "authoringReceipt": {
           "path": "specs/intake-authoring-receipts/RAW-01-Reference-Agentic-Workspace.json",
-          "rawSha256": "113d5f328c58c65b97a2610399d1c9555a2c86f318cb00db375de8b89274f1e3"
+          "rawSha256": "0c716e620dd4462b790272e2dc79d369ff932c3d05bafe2cdb7d2933520e0825"
         },
         "readySingleReview": {
-          "path": "specs/intake-review-results/raw-01-reference-agentic-workspace-2026-08-01-r2.json",
-          "rawSha256": "a4d9c116cbf65ff6586aeefc093bb3573e1f12e7d8a0a4f3683b845ab314b8b6"
+          "path": "specs/intake-review-results/raw-01-reference-agentic-workspace-2026-08-29-r3.json",
+          "rawSha256": "66636f6d84f520b4c025977634f5cbf68674b8758adcff170076568ba8b4fb04"
         }
       },
       {
@@ -123,11 +123,11 @@
         },
         "authoringReceipt": {
           "path": "specs/intake-authoring-receipts/RAW-02-Workspace-Orchestrator.json",
-          "rawSha256": "fab2ad176c3523e9ad60366cfd3676b529f652ae9de5a44bdf61a43e19bfc23c"
+          "rawSha256": "802993e16875494c0f1116e6459e5463c557fbc8adac5966e60e4dfed2062a81"
         },
         "readySingleReview": {
-          "path": "specs/intake-review-results/raw-02-workspace-orchestrator-2026-08-08-r5.json",
-          "rawSha256": "19fe73b0aebff709ff16231493ef6758412bbb572d42f92d0dcdba4b3d16d865"
+          "path": "specs/intake-review-results/raw-02-workspace-orchestrator-2026-08-29-r6.json",
+          "rawSha256": "ada4f87362ec6edd19f1a99228d354daec6d8a1ebd42844ced0efecf54f10e4c"
         }
       },
       {
@@ -138,11 +138,11 @@
         },
         "authoringReceipt": {
           "path": "specs/intake-authoring-receipts/RAW-03-State-Truthfulness.json",
-          "rawSha256": "a1f4b1905917617a405bda0d10d58711852e0f93140088b7c567843d369dd3a0"
+          "rawSha256": "ec7869bf6c702e18367b39dba6c1af08f27590722ca387b8f55bcb14eea4fe2b"
         },
         "readySingleReview": {
-          "path": "specs/intake-review-results/raw-03-state-truthfulness-2026-08-08-r3.json",
-          "rawSha256": "cf685f2e9fb88e918fe52ea389f68f3a3a48f2639d7ee13a47bd9633894a98df"
+          "path": "specs/intake-review-results/raw-03-state-truthfulness-2026-08-29-r4.json",
+          "rawSha256": "d0051d0f3f5d1fa5c4aade02a558339a805515a147a569ec3006a47b8e177dae"
         }
       },
       {
@@ -153,11 +153,11 @@
         },
         "authoringReceipt": {
           "path": "specs/intake-authoring-receipts/RAW-04-Presentation-Fabric.json",
-          "rawSha256": "791a9c58879c3c3a4f67ec47141af236a94fa2303a888615aa55f19a6f33e0e4"
+          "rawSha256": "457d28d4f76e149e56c9112e1a312697bf54115eacce031bf58fea11bfec2719"
         },
         "readySingleReview": {
-          "path": "specs/intake-review-results/raw-04-presentation-fabric-2026-08-08-r3.json",
-          "rawSha256": "8ed9eb0883ded43cf1140b1af041f6c2348adda1c6a6868304c89c8fe99dd0fa"
+          "path": "specs/intake-review-results/raw-04-presentation-fabric-2026-08-29-r4.json",
+          "rawSha256": "2626a8b01ea26dc3f060d0de4774d789a9a712467782b5a0ddff650dfbf1dea3"
         }
       },
       {
@@ -168,11 +168,11 @@
         },
         "authoringReceipt": {
           "path": "specs/intake-authoring-receipts/RAW-05-Execution-Nodes.json",
-          "rawSha256": "2b6f6f075433c446a3b9b8118347746e074bb1a2dd706df28da93c30000699f8"
+          "rawSha256": "5b1c879233e455bf932eececc3cd7fa88008db0c6b4ded468f702f924ef4784b"
         },
         "readySingleReview": {
-          "path": "specs/intake-review-results/raw-05-execution-nodes-2026-08-08-r3.json",
-          "rawSha256": "5ff27f9f3d5f81a90385948a178eeb47fad9758b6b71c3381b6dbd0d9c3e3e39"
+          "path": "specs/intake-review-results/raw-05-execution-nodes-2026-08-29-r4.json",
+          "rawSha256": "969a1e1fb0d350e3e5acf5411080ef178e58e184557ac30aef69569f585fdcac"
         }
       },
       {
@@ -183,11 +183,11 @@
         },
         "authoringReceipt": {
           "path": "specs/intake-authoring-receipts/RAW-06-CLI-Environment-Orchestration.json",
-          "rawSha256": "b061152602f0a768c957ea0ffc09dab065d90df551eddf9575b490f865109e96"
+          "rawSha256": "54f77169d693b4ed60070ef76435a414004d1173bb24eff0d8cbd381e948e4a3"
         },
         "readySingleReview": {
-          "path": "specs/intake-review-results/raw-06-cli-environment-orchestration-2026-08-08-r2.json",
-          "rawSha256": "e8689fb22097849960e259e097d298fb9e2a5800092fde02d219fc386523b6f8"
+          "path": "specs/intake-review-results/raw-06-cli-environment-orchestration-2026-08-29-r3.json",
+          "rawSha256": "cfcfee663dc9086328fd71c9db31686fbfd71fc8c55de1078b9c8cf73a879832"
         }
       },
       {
@@ -198,11 +198,11 @@
         },
         "authoringReceipt": {
           "path": "specs/intake-authoring-receipts/RAW-07-Hardware-Capability-Layer.json",
-          "rawSha256": "a40a457107a3e98646352f35270d39371665c109f70a56219d73ee7de93c70eb"
+          "rawSha256": "785212a1f484ba8f4e3de1caccb1c70f01c627e73cc4b161e766540340a90ae0"
         },
         "readySingleReview": {
-          "path": "specs/intake-review-results/raw-07-hardware-capability-layer-2026-08-08-r2.json",
-          "rawSha256": "3b2e76893571836fbb91a132e665c623222835e5b3f5c77e0cb6b912810c8511"
+          "path": "specs/intake-review-results/raw-07-hardware-capability-layer-2026-08-29-r3.json",
+          "rawSha256": "6912054b10f2926b85ae9ec29b533d9d9d40693ce8d0f09dd1c471b0442d6e35"
         }
       },
       {
@@ -213,11 +213,11 @@
         },
         "authoringReceipt": {
           "path": "specs/intake-authoring-receipts/RAW-08-Workflow-Engine.json",
-          "rawSha256": "9616de1cef25bd53564cd5041a69ba34a362712445dcc398739e74b7a3ddedd3"
+          "rawSha256": "89776ffcea4342ab55c45551447526144b85679327774ed80146a06e03305aa5"
         },
         "readySingleReview": {
-          "path": "specs/intake-review-results/raw-08-workflow-engine-2026-08-08-r3.json",
-          "rawSha256": "37da394251c03faf451563082602358f445d4e690ae054a6dcc5c0ac92493017"
+          "path": "specs/intake-review-results/raw-08-workflow-engine-2026-08-29-r4.json",
+          "rawSha256": "29eea5999f76b63c1c80c91a9d5f3fc7aee7c2a81060f528e6bfb1fd8afa1bb6"
         }
       },
       {
@@ -228,11 +228,11 @@
         },
         "authoringReceipt": {
           "path": "specs/intake-authoring-receipts/RAW-09-Preset-Evolution.json",
-          "rawSha256": "4a02982f3312ff40c33e98d1282645b6cdb7cd87f354faf2fc79c4bf008d595a"
+          "rawSha256": "97961fdc15f41aff5e74dd4100d23294aa6a2453eb7dd3668a212dacb1260f12"
         },
         "readySingleReview": {
-          "path": "specs/intake-review-results/raw-09-preset-evolution-2026-08-08-r3.json",
-          "rawSha256": "a0941c0e7813683a2e8dfcdf1a1a189f199300e783be0d00357319d7827eef98"
+          "path": "specs/intake-review-results/raw-09-preset-evolution-2026-08-29-r4.json",
+          "rawSha256": "7e59a67e4d830f5d600f386c8543356035f031744d7143a42c547f533e6529fe"
         }
       }
     ]

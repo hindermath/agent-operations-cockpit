@@ -69,6 +69,38 @@ def digest(path: Path) -> str:
     return hashlib.sha256(normalized_bytes(path)).hexdigest()
 
 
+def resolve_lifecycle_target(repo: Path, logical_path: str, expected_hash: str) -> Path:
+    """Resolve a logical target only through one unambiguous schema-1.1 record."""
+    matches: list[dict] = []
+    for lifecycle_path in sorted((repo / "specs").glob("*/intake-lifecycle.json")):
+        lifecycle = load_json(lifecycle_path)
+        records = lifecycle.get("records")
+        if lifecycle.get("schemaVersion") != "1.1" or not isinstance(records, list):
+            fail("ISG004", f"invalid lifecycle contract: {lifecycle_path.relative_to(repo)}")
+        matches.extend(
+            record for record in records
+            if isinstance(record, dict) and record.get("originalPath") == logical_path
+        )
+    if not matches:
+        return repo / logical_path
+    if len(matches) != 1:
+        fail("ISG004", f"ambiguous lifecycle resolution: {logical_path}")
+    record = matches[0]
+    archived_path = record.get("archivedPath")
+    if not isinstance(archived_path, str) or not relative_path(archived_path):
+        fail("ISG004", f"invalid lifecycle archivedPath: {logical_path}")
+    if record.get("originalNormalizedSha256") != expected_hash:
+        fail("ISG004", f"lifecycle hash drift: {logical_path}")
+    original_file = repo / logical_path
+    archived_file = repo / archived_path
+    if original_file.is_file() == archived_file.is_file():
+        fail("ISG004", f"lifecycle requires exactly one physical target: {logical_path}")
+    resolved = original_file if original_file.is_file() else archived_file
+    if digest(resolved) != expected_hash:
+        fail("ISG004", f"resolved target hash drift: {logical_path}")
+    return resolved
+
+
 def text(obj: dict, key: str, code: str) -> str:
     value = obj.get(key)
     if not isinstance(value, str) or not value.strip():
@@ -135,7 +167,7 @@ def validate_manifest(path: Path, repo: Path) -> tuple[dict, dict]:
         expected_hash = text(target, "normalizedSha256", "ISG004")
         if not re.fullmatch(r"[0-9a-f]{64}", expected_hash):
             fail("ISG004", f"invalid target hash: {target_path}")
-        full_path = repo / target_path
+        full_path = resolve_lifecycle_target(repo, target_path, expected_hash)
         if not full_path.is_file() or digest(full_path) != expected_hash:
             fail("ISG004", f"target missing or hash drift: {target_path}")
         target_status = text(target, "status", "ISG009")

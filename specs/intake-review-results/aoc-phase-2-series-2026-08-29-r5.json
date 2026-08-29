@@ -1,0 +1,178 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "fd3e061d-10ee-4403-a892-c804f9736296",
+  "mode": "Series",
+  "status": "NeedsRemediation",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-08-29T21:36:40Z",
+  "repository": {
+    "root": ".",
+    "head": "633aacdb674e3f17678574ebfcf68ceaf2f9333a"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/aoc-phase-2-series-2026-08-29-r5.json",
+    "normalizedSha256": "317085a2de48f8bb42c5cf829aa5d9859866ef7b6c2aa8390fd6b36381f6077f"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.001-programmquellen-baseline.md",
+      "role": "Primary",
+      "normalizedSha256": "99eab2565a73b3f1fe836feb89b543392360d3a5d56063c13fd28cf2f0a16704",
+      "gitBlob": "862604468ec20228f6750d7d9c350706d7e292ce"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "9fc31a833421915b68b85c7dd499dc5b97a81152a8cf668599bb243ef3e17503",
+      "gitBlob": "be1e69ba6e47ed3f4c707debabc0caf82962dd39"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "f6d57cacc954b4899fc5bd8ddcc235570ec20470094feec506e1b8e9ea07e3e9",
+      "gitBlob": "ac4b2da15eb3c10382ad6fc225c2b737f8902567"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+      "gitBlob": "b6e1b7458a527526ef67010442b5fd98166cc4a1"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "cb255e60b49237f8cc655486b6529536b831b5b942f89f838678386bc31f930f",
+      "gitBlob": "2a63d06255de68fecc1092b88d3be1efb5cc6c97"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "c61d9786b27ea09e0e954363a1b4335d3255ea55b0f8a5167ee52c25c583f9b6",
+      "gitBlob": "9f50a21ec52a6cf0ddcf0ee825953ede89591c6a"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "31d31e82ab1857182d1201192438e5c91abfc3190ba47a2f68b9543034ab0cfd",
+      "gitBlob": "e7b1885224f18eb5cfb116f29f9ba9dd97711286"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "6a41e6ae6447ff0192a03af7940362e05e48bff48a5fd21f39e9b6e670eade20",
+      "gitBlob": "415be8856342c38744c3bce3252ff5bb266f1fbe"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "ce89a73e9e1d0bdeadcc166a0f4a7b3b94052037cabb8225ceb4ef2ebd345ec4",
+      "gitBlob": "cb27a138de7537cf00173d8128de10af61f884e7"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "3fd7c5fbf4f419ed6131c4984a948f26d0b6b8c6ab3a5b068cdadce501c3fbad",
+      "gitBlob": "901fc9d8e5d5a37be52dd15fbaa00145b1e70100"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "dde4a283ac2c761373085beea976dcd927d813e17aa2b1ad76ceab800c1d604a",
+      "gitBlob": "c920f3cef627772a245af90e43698588c566adce"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "ade666e411ed9a81b9736e628adb8613be0d9d732295c7e5470d90f0c64f513a",
+      "gitBlob": "8a45a8b865640b126a24776ae64a46cc8202359f"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "623451757149794556a9f4efef73c13c6894244476b7fd484f0eaaa9fdba7f1a",
+      "gitBlob": "698e57e38571e3a44e321164a0977720446faf2e"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "c3da0eec782279678b1599e0e2365e409fbfe9e0e6f40e5f2e1b768e385f3b83",
+      "gitBlob": "f606a8d4409c486586dcfdb6a0d8fd01e2feebec"
+    }
+  ],
+  "findings": [
+    {
+      "id": "IR007",
+      "severity": "High",
+      "category": "LifecycleConsumerConsistency",
+      "target": "specs/intake-series/aoc-phase-2/manifest.json",
+      "disposition": "NeedsRemediation",
+      "owner": "AOC Intake Governance Maintainer",
+      "evidence": "The authorized META-LH-01 lifecycle migration moved the byte-identical target to requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.001-programmquellen-baseline.md and bound it in specs/001-programmquellen-baseline/intake-lifecycle.json. The schema-2 governance validator, the Series manifest and receipt validators, the current Series order, the META-LH-01 authoring receipt, and its Ready Single review still require the former active path. Bash and PowerShell reproduce RIG014 or ISG004 with exit code 2.",
+      "reevaluationTrigger": "Provide one unambiguous lifecycle-aware resolution contract, or an atomic reference migration, across governance, sequencing, receipt, review, and order consumers; preserve logical identity, target hash, supersession, and fail-closed behavior for missing, drifted, or ambiguous lifecycle evidence; then revalidate on Bash and PowerShell."
+    },
+    {
+      "id": "IR008",
+      "severity": "High",
+      "category": "ReceiptSourceFreshness",
+      "target": "requirements/baseline/source-pack.md",
+      "disposition": "NeedsRemediation",
+      "owner": "AOC Requirements Evidence Maintainer",
+      "evidence": "The completed META-LH-01 implementation materially updated the shared source pack. All 14 authoring receipts still bind its predecessor hash and fail on Bash and PowerShell. META-LH-01 additionally binds the predecessor review-findings ledger hash; META-LH-05 additionally binds predecessor coverage-matrix and review-findings-ledger hashes. Thirteen non-META-LH-01 Ready Single results remain structurally valid, but the global current-review gate is closed because their bound authoring receipts are stale.",
+      "reevaluationTrigger": "Renew all 14 authoring receipts against the current shared sources without changing intake decisions or scope, fully re-review every affected intake, renew the Series binding, and prove all authoring, Single-review, governance, sequencing, and Series validators on Bash and PowerShell."
+    }
+  ],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.001-programmquellen-baseline.md",
+      "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md"
+    ],
+    "series": [
+      "identity",
+      "audience",
+      "scope",
+      "non-goals",
+      "requirements",
+      "acceptance",
+      "dependencies",
+      "dag",
+      "security",
+      "privacy",
+      "a11y",
+      "platform",
+      "evidence",
+      "authority",
+      "prompts",
+      "terminology",
+      "handoffs",
+      "future-scope",
+      "requirements-governance",
+      "decision-registry",
+      "lifecycle-truthfulness",
+      "lifecycle-consumer-consistency",
+      "receipt-source-freshness"
+    ],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 2,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "specs/intake-review-results/aoc-phase-2-series-2026-08-08-r4.json"
+}
