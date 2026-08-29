@@ -821,3 +821,145 @@ Preset-Promotion und Level-0-Übernahme bleiben getrennte spätere Entscheidunge
 lifecycle, drift, reproducibility, and authority findings. It remains AOC-local
 and PendingPublication; cross-project validation, preset promotion, and Level-0
 adoption remain separate future decisions.*
+
+## AEPS-FIND-AOC-016 – N/A-Gates benötigen eine disjunkte Evidence-Form
+
+- **Quelle und Lastenheft / Source and intake:**
+  `specs/001-programmquellen-baseline/autonomous-run-retrospective.md`;
+  `docs/aeps/receipts/2026-08-29-meta-lh-01-autonomous-retrospective.md`.
+- **Datum und Commit / Date and commit:** `2026-08-29`;
+  `PendingPublication`, Base-HEAD
+  `703494f0ec7edb603653c61834e32fd2de2e8415`, Retrospektiv-SHA-256
+  `1d8bef8965ab811163612a0c36fdc613785b9f8a7e6528aab124b9eaa7e6801d`.
+- **Problem / Problem:** Ein Gate mit `applicability: N/A` kann im generischen
+  Autonomous-Evidence-Validator weiterhin nichtleere erforderliche Command-
+  und Runner-Tokens tragen. Die Evidence-Zeile wird trotzdem akzeptiert, weil
+  diese Tokens bei N/A nicht geprüft werden. / *A generic N/A gate may retain
+  required command and runner tokens and still pass because those tokens are
+  ignored for N/A evidence.*
+- **Kontext / Context:** AR-001 der Retrospektive bindet den Feature-Fix aus
+  Commit 3ff1a80795a791fa7a9e1ea81bc41162be9e0fb9. Das AOC-Feature
+  korrigierte den konkreten META01-G14-Eintrag und ergänzte eine lokale
+  Assertion. Eine In-Memory-Mutation des aktuell installierten Presets 0.4.1
+  ergibt weiterhin `UNEXPECTED_PASS`.
+- **Positive Evidence:** Der korrigierte Featurevertrag enthält für alle fünf
+  N/A-Gates leere Command- und Runner-Listen; 66 isolierte Vertragstests
+  bestehen.
+- **Negative Evidence:** Der generische Validator aus Commit `703494f`,
+  SHA-256
+  `847cebda48f698f08e21f05abf276c38aca20d4365c86d70de675bc6bcdfc5dd`,
+  akzeptiert die synthetische widersprüchliche N/A-Form.
+- **Grenzen / Limits:** Die Evidence beweist die Schema-/Validatorlücke, nicht
+  die Ausführung eines verbotenen Befehls. Andere Gate-Schemata sind nicht
+  geprüft.
+- **AOC-spezifisch / generisch:** ID und Befehle sind AOC-spezifisch; disjunkte
+  Applicable-/N/A-Formen sind provider- und projektneutral.
+- **AEPS-Domäne / AEPS Domain:** Review and Evidence / Agent Authority.
+- **Reifegrad / Maturity:** `pilot-pattern`.
+- **Preset-Bezug / Related presets:** Autonomous Run Governance;
+  `CAND-AEPS-08`.
+- **Nächste Validierung / Next validation:** Positive und negative
+  Requirements-Fixtures auf beiden Shell-Oberflächen ergänzen und in einem
+  zweiten Projekt ausführen.
+- **Promotion-Blocker:** keine Cross-Project-Evidence und keine aktuelle
+  Level-0-Authority für einen Preset-Fix.
+- **Erfassungsstatus / Capture status:** `PotentialCandidate`.
+- **Upstream-Status / Upstream status:** `PendingPublication`.
+
+## AEPS-FIND-AOC-017 – Dauerhafte Closeout-Evidence darf nicht an Temp-Pfaden enden
+
+- **Quelle und Lastenheft / Source and intake:**
+  `specs/001-programmquellen-baseline/autonomous-run-retrospective.md`;
+  `docs/aeps/receipts/2026-08-29-meta-lh-01-autonomous-retrospective.md`.
+- **Datum und Commit / Date and commit:** `2026-08-29`;
+  `PendingPublication`, Base-HEAD
+  `703494f0ec7edb603653c61834e32fd2de2e8415`, Retrospektiv-SHA-256
+  `1d8bef8965ab811163612a0c36fdc613785b9f8a7e6528aab124b9eaa7e6801d`.
+- **Problem / Problem:** Neun als `Pass` gespeicherte Closeout-Kommandos
+  verweisen ausschließlich auf nicht mehr vorhandene `/tmp`-Dateien. Ein
+  späteres Audit kann die konkrete Ausgabe nicht aus dem dauerhaften Artefakt
+  lesen. / *Nine persisted passing commands point only to vanished temporary
+  files, so a later audit cannot inspect their concrete output.*
+- **Kontext / Context:** AR-002 bindet die Closeout-Evidence in Commit
+  c773548c6cca752f61e73de4d77e1077347924d7 und PR #20. Der terminale
+  State, Tasks-Hash, Merge-IDs und die Remote-Checks bleiben belastbar. Die
+  Lücke betrifft die Dauerhaftigkeit der lokalen Command-Ausgaben, nicht die
+  Tatsache des erfolgreichen Merges.
+- **Positive Evidence:** Beide State-Validatoren melden `Completed`, 66/66;
+  PR #19 und #20 sind mit erfolgreichen Checks gemergt; der Closeout-Hash ist
+  `0f93b1beb51d69c1b89e05e4bb512cd22265eef6e85c974f3cbeaf67304a5588`.
+- **Negative Evidence:** Alle neun referenzierten Temp-Dateien fehlen am
+  `2026-08-29`; nur ihre Pfadnamen sind gespeichert.
+- **Grenzen / Limits:** Nicht jede rohe Logdatei muss dauerhaft gespeichert
+  werden. Eine stabile, hashgebundene Ergebniszusammenfassung kann genügen;
+  Secrets, private Pfade und Aufbewahrung bleiben zu prüfen.
+- **AOC-spezifisch / generisch:** Pfade, Befehle und PRs sind spezifisch; die
+  Trennung von flüchtiger Laufzeit-Evidence und dauerhaftem Completion-Nachweis
+  ist generisch.
+- **AEPS-Domäne / AEPS Domain:** Review and Evidence / Repository Governance.
+- **Reifegrad / Maturity:** `pilot-pattern`.
+- **Preset-Bezug:** Autonomous Run Governance; `CAND-AEPS-02` und
+  `CAND-AEPS-08`.
+- **Nächste Validierung:** Durable-Reference-Validator mit Temp-, Commit-Blob-,
+  Repository-Hash- und Provider-Artefakt-Fixtures in einem zweiten Projekt.
+- **Promotion-Blocker:** keine portable Aufbewahrungs- und Redaktionsregel,
+  keine Cross-Project-Evidence und keine Level-0-Authority.
+- **Erfassungsstatus / Capture status:** `PotentialCandidate`.
+- **Upstream-Status / Upstream status:** `PendingPublication`.
+
+## AEPS-FIND-AOC-018 – Lifecycle-Auflösung muss alle Intake-Konsumenten erreichen
+
+- **Quelle und Lastenheft / Source and intake:**
+  `specs/001-programmquellen-baseline/autonomous-run-retrospective.md`;
+  `docs/aeps/receipts/2026-08-29-meta-lh-01-autonomous-retrospective.md`.
+- **Datum und Commit / Date and commit:** `2026-08-29`;
+  `PendingPublication`, Base-HEAD
+  `703494f0ec7edb603653c61834e32fd2de2e8415`, Retrospektiv-SHA-256
+  `1d8bef8965ab811163612a0c36fdc613785b9f8a7e6528aab124b9eaa7e6801d`.
+- **Problem / Problem:** Der feature-lokale Lifecycle-Vertrag löst das
+  bytegleich archivierte META-LH-01 eindeutig auf. Die generischen Intake-
+  Governance-Validatoren verlangen weiterhin den ursprünglichen aktiven Pfad
+  und blockieren die abgeschlossene Serie mit `RIG014`. / *The feature-local
+  lifecycle contract resolves the archived target, while generic intake
+  governance still requires the former active path and blocks with RIG014.*
+- **Kontext / Context:** AR-003 bindet Lifecycle-Datensatz, Serienmanifest und
+  Governance-Konfiguration aus Commit
+  703494f0ec7edb603653c61834e32fd2de2e8415. Die Transition ist im Feature
+  abgeschlossen und hashgebunden. Das Serienmanifest ist `Completed`, behält
+  aber den logischen Originalpfad als Zielreferenz.
+- **Positive Evidence:** Archivbewusste Input-Bindungen und terminale
+  State-Validatoren bestehen; Lifecycle-Hash ist
+  `5f4dae9fe27f4ac0167c3fc80d76366a374c52aa75c46b2d600c806368a19496`.
+- **Negative Evidence:** Bash und PowerShell der Intake-Sequencing-Governance
+  enden beide mit Exitcode 2 und `RIG014: missing active target`.
+- **Grenzen / Limits:** Eine generische Lösung darf keine beliebige Datei aus
+  dem Archiv akzeptieren. Eindeutige logische ID, Hash, Supersession und
+  autorisierte Transition bleiben Pflicht.
+- **AOC-spezifisch / generisch:** Namen, Archivsuffix und 14er-Serie sind
+  spezifisch; konsistente Lifecycle-Auflösung über alle Konsumenten ist
+  generisch.
+- **AEPS-Domäne / AEPS Domain:** Requirements Engineering / Review and
+  Evidence.
+- **Reifegrad / Maturity:** `pilot-pattern`.
+- **Preset-Bezug:** Intake Authoring, Intake Review, Intake Sequencing und
+  Autonomous Run; `CAND-AEPS-05`, `CAND-AEPS-08`.
+- **Nächste Validierung:** Eine portable Rename-/Archive-Fixture mit positivem
+  Lifecycle-Datensatz sowie fehlendem, driftendem und mehrdeutigem Datensatz
+  gegen alle drei Intake-Presets ausführen.
+- **Promotion-Blocker:** Lifecycle-Schema ist bisher feature-lokal; keine
+  Cross-Project-Evidence und keine Level-0-Authority.
+- **Erfassungsstatus / Capture status:** `PotentialCandidate`.
+- **Upstream-Status / Upstream status:** `PendingPublication`.
+
+## Ergänzende Closeout-/Statistik-Beobachtung vom 2026-08-29 / Additional Closeout and Statistics Observation from 2026-08-29
+
+Der als single-commit-faehig geplante Drei-Pfad-Closeout in Commit
+`c773548c6cca752f61e73de4d77e1077347924d7` erzeugte wegen des
+Git-history-basierten Projektstatistik-Ledgers einen zweiten, ausschließlich
+`docs/project-statistics.md` ändernden Commit
+`f682be5660eeee5e5247592e467683868413e08d`. Die Beobachtung ist als
+`AR-004` mit `ObserveAgain` erfasst. Sie erzeugt noch keine Finding-ID oder
+Preset-Lücke, weil erst ein Lauf und eine AOC-spezifische Renderer-Kopplung
+belegt sind. / *The planned single-commit closeout caused a second
+statistics-only commit because the ledger is Git-history based. AR-004 remains
+ObserveAgain until a second independent field observation exists.*

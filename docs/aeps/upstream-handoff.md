@@ -31,6 +31,9 @@ duplicating them:*
 | `AEPS-FIND-AOC-013` | `CAND-AEPS-05`, `07` | Neun Eligibility-Achsen, Shared-Write-/Shared-Decision-Negativfixtures und lokaler vertragsgetriebener Validator; Runtime- und Cross-Project-Evidence fehlen. |
 | `AEPS-FIND-AOC-014` | möglicher Ausbau `CAND-AEPS-04`, `08` | Lokale Create-/Verify-/Partial-/Collision-Fixtures bestehen; Cross-Project- und Runtime-Recovery-Evidence fehlen. |
 | `AEPS-FIND-AOC-015` | `CAND-AEPS-06`, `08` | Negativ-Evidence: Ein hash- und schemagültiges Receipt kann offene Target-Decisions fälschlich als leer ausweisen. Die manuelle Reparatur mit Ready-Re-Review liefert positive lokale Paritäts-Evidence; automatische Validator- und Cross-Project-Evidence fehlen. |
+| `AEPS-FIND-AOC-016` | `CAND-AEPS-08` | Eine N/A-Gate-Zeile muss Ausfuehrungstokens und geplante Ausfuehrungsevidence ausschliessen; der aktuelle generische Validator akzeptiert den widerspruechlichen Negativfall. / An N/A gate must exclude execution tokens and planned execution evidence; the current generic validator accepts the contradictory negative case. |
+| `AEPS-FIND-AOC-017` | `CAND-AEPS-02`, `08` | Neun lokale Pass-Ausgaben des abgeschlossenen Closeouts sind nur an inzwischen verschwundene Temp-Pfade gebunden; dauerhafte Completion-Evidence benoetigt aufloesbare, redigierte Referenzen. / Nine local passing outputs are bound only to vanished temporary paths; durable completion evidence needs resolvable, redacted references. |
+| `AEPS-FIND-AOC-018` | `CAND-AEPS-05`, `08` | Der feature-lokale Lifecycle-Vertrag loest den archivierten Intake auf, waehrend beide generischen Governance-Oberflaechen mit RIG014 blockieren; alle Konsumenten benoetigen dieselbe hashgebundene logische Identitaet. / Feature-local lifecycle resolution succeeds while both generic governance surfaces fail with RIG014; every consumer needs the same hash-bound logical identity. |
 
 Der Kommentar bindet mindestens AOC-Commit oder PR, Ledgerpfad, Ready-Review-
 IDs, positive und negative Evidence, Grenzen und weiterhin offene Promotion-
@@ -62,15 +65,34 @@ IDs, positive and negative evidence, limits, and remaining promotion blockers.*
   und negative Decision-Paritätsfixtures in einem zweiten Intake-Programm.
 - **Verlinkung:** wechselseitig mit #196, keine Preset-Promotion im Issue.
 
-### 3. Review-Lineage Impact Graph
+### 3. Review-Lineage and Lifecycle Resolution Graph
 
-- **Enthält:** `AEPS-FIND-AOC-007` und `AEPS-GAP-AOC-004`.
+- **Enthält:** `AEPS-FIND-AOC-007`, `018` sowie `AEPS-GAP-AOC-004`, `014`.
 - **Geeignetes Repository:** AOC für eine erste zusätzliche Graphfixture;
   Level 0 erst bei wiederholtem Auftreten oder bestätigtem Preset-Änderungsbedarf.
 - **Eröffnungskriterium:** zweite Reparaturkette mit Single- und Series-
-  Supersession oder Evidence aus einem weiteren Projekt.
+  Supersession oder eine portable Lifecycle-Rename-Fixture in einem weiteren
+  Projekt.
 - **Verlinkung:** AOC-Issue verweist auf #196; Handoff nach Level 0 folgt den
   Kriterien des Anchor-Issues.
+
+### 4. Autonomous Gate Applicability and Durable Closeout Evidence
+
+- **Enthält / Contains:** `AEPS-FIND-AOC-016`, `017` sowie
+  `AEPS-GAP-AOC-012`, `013`.
+- **Geeignetes Repository / Suitable repository:** zunächst
+  `hindermath/home-baseline`, weil Autonomous-Run- und AEPS-Evidence-Vertraege
+  gemeinsam betroffen sein koennen; eine Preset-Reparatur bleibt ein eigener
+  spaeterer Auftrag. / *Start in home-baseline because Autonomous Run and AEPS
+  evidence contracts may both be affected; a preset repair remains separate.*
+- **Eröffnungskriterium / Opening criterion:** stabile AOC-Publikation,
+  aktuelle Authority und portable Positiv-/Negativfixtures fuer N/A-Form sowie
+  dauerhafte Referenzen. Cross-Project-Evidence ist fuer kanonische Promotion
+  weiterhin erforderlich. / *Require stable AOC publication, current
+  authority, portable fixtures, and later cross-project evidence.*
+- **Verlinkung / Linking:** neues Issue verweist auf #196 und die
+  Retrospektive; #196 erhaelt nur bei aktueller Schreibautoritaet einen
+  Rueckverweis.
 
 ## Nicht upstream zu generalisieren / Do not generalise upstream
 
