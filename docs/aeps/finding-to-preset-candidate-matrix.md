@@ -28,19 +28,22 @@ preset already resolves the observation completely.*
 | `AEPS-FIND-AOC-013` Parallel Eligibility | `CAND-AEPS-05`, `CAND-AEPS-07` | Intake Sequencing, Parallel Autonomous Run, Intake Review | Partial | Vertragsgetriebener lokaler Validator besteht; Cross-Project- und Runtime-Preflight-Evidence fehlen / contract-driven local validator passes; cross-project and runtime-preflight evidence are missing |
 | `AEPS-FIND-AOC-014` Wave Re-Entry | möglicher Ausbau von `CAND-AEPS-04`, `CAND-AEPS-08` | Intake Authoring, Intake Sequencing, Intake Repair | Partial | Lokale Verify-/Partial-/Collision-Fixtures bestehen; Cross-Project- und Runtime-Recovery-Evidence fehlen |
 | `AEPS-FIND-AOC-015` Receipt Decision Parity | `CAND-AEPS-06`, `CAND-AEPS-08` | Intake Authoring, Intake Review | Gap | Manuelle Reparatur und Ready-Re-Review belegen die gewünschte Parität; Hash-/Schema-Validatoren erkennen Widersprüche weiterhin nicht automatisch. / Manual repair and Ready re-review prove the desired parity; hash and schema validators still do not detect conflicts automatically. |
+| `AEPS-FIND-AOC-016` Disjunkte N/A-Gate-Form | `CAND-AEPS-08` | Autonomous Run | Gap | Feature-lokaler Fix und Negativprobe liegen vor; der generische Validator akzeptiert weiterhin N/A mit Ausfuehrungstokens. / A feature-local fix and negative probe exist; the generic validator still accepts N/A with execution tokens. |
+| `AEPS-FIND-AOC-017` Dauerhafte Closeout-Evidence | `CAND-AEPS-02`, `CAND-AEPS-08` | Autonomous Run | Gap | Terminaler State und Remote-Checks bestehen, aber neun lokale Pass-Ausgaben sind nur ueber verschwundene Temp-Pfade referenziert. / Terminal state and remote checks pass, but nine local passing outputs are referenced only through vanished temporary paths. |
+| `AEPS-FIND-AOC-018` Konsumentenweite Lifecycle-Aufloesung | `CAND-AEPS-05`, `CAND-AEPS-08` | Intake Authoring, Intake Review, Intake Sequencing, Autonomous Run | Gap | Feature-lokale Archivauflösung besteht; beide generischen Governance-Oberflaechen blockieren den migrierten Pfad mit RIG014. / Feature-local archive resolution passes; both generic governance surfaces block the migrated path with RIG014. |
 
 ## Abgleich mit den zwölf Upstream-Kandidaten / Coverage of the twelve upstream candidates
 
 | Upstream-Kandidat | Neue AOC-Evidence / new AOC evidence | Bewertung / assessment |
 |---|---|---|
 | `CAND-AEPS-01` Development Readiness | Findings 003 und 011 | fail-closed Authority-Grenze gestärkt / strengthened |
-| `CAND-AEPS-02` Findings Coverage | Finding 009 | reproduzierbare Artefakt- und Command-Bindung ergänzt / added |
+| `CAND-AEPS-02` Findings Coverage | Findings 009 und 017 | reproduzierbare Artefakt-, Command- und Dauerhaftigkeitsbindung ergänzt / reproducible artifact, command, and durability binding added |
 | `CAND-AEPS-03` Level-2-Handoff | Phase-2-Completion-Receipt, RF-15 und RF-21 | bereits ausreichend als AOC Pilot Pattern erfasst / already captured |
 | `CAND-AEPS-04` Meta-Lastenhefte | META-LH-01 bis META-LH-05 Ready; Finding 014 | fünf Meta-Verträge Ready; Wave-Re-Entry lokal als Pilot Pattern belegt / five Ready, local pilot evidence exists |
-| `CAND-AEPS-05` Ownership/DAG | Findings 007, 008 und 013 | Doppelowner-, Zyklus-, Shared-Write- und Shared-Decision-Evidence gestärkt / strengthened |
+| `CAND-AEPS-05` Ownership/DAG | Findings 007, 008, 013 und 018 | Doppelowner-, Zyklus-, Shared-Write-, Shared-Decision- und Lifecycle-Aufloesungsevidence gestärkt / strengthened with lifecycle-resolution evidence |
 | `CAND-AEPS-06` Decision Gate | Findings 002, 011, 015 und RAW-IADs | Preservation und manuell reviewte Receipt-Parität belegt; automatische Paritätsprüfung und erster Specify-Lauf bleiben offen. / Preservation and manually reviewed Receipt parity are proven; automated parity validation and the first Specify run remain open. |
 | `CAND-AEPS-07` Autonomie-Modi | Findings 001, 003, 011 und 013 | neun Eligibility-Achsen sowie Review-/Authority-Trennung reproduzierbar präzisiert / reproducibly refined |
-| `CAND-AEPS-08` Receipts | Findings 002, 005, 007, 009, 014 und 015 | Lineage-, Quellenrollen-, Reproduzierbarkeits-, Re-Entry- und Decision-Paritätslücken sichtbar / gaps exposed |
+| `CAND-AEPS-08` Receipts | Findings 002, 005, 007, 009, 014 bis 018 | Lineage-, Quellenrollen-, Reproduzierbarkeits-, N/A-, Dauerhaftigkeits- und Lifecycle-Luecken sichtbar / lineage, evidence-role, reproducibility, N/A, durability, and lifecycle gaps exposed |
 | `CAND-AEPS-09` Maintenance Sync | AOC-Issue #4, PRs #5/#6 gemäß #196 | keine neue Evidence aus den fünf Ready-Reviews / no new evidence here |
 | `CAND-AEPS-10` Public Readiness | Finding 006 und Phase-2-Receipt | Requirements-Evidence ergänzt, zweites Projekt fehlt / second project missing |
 | `CAND-AEPS-11` A11Y/CEFR/DE-EN | Findings 006 und 010 | wiederkehrende Review-Evidence vorhanden, UI-Evidence fehlt / UI evidence missing |
