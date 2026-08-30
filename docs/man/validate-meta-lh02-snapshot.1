@@ -16,8 +16,9 @@ qualifizierten Zustand, den Schema-1.1-Lifecycle, die Original-/Archiv-
 Exklusivitaet und den unveraenderten historischen 14-Ziele-Snapshot.
 .PP
 Validates fail closed the exact Feature-002 run and branch, a qualified active
-state, the schema-1.1 lifecycle, original/archive exclusivity, and the immutable
-historical fourteen-target snapshot.
+state or its strictly completed MergeAndSync terminal state, the schema-1.1
+lifecycle, original/archive exclusivity, and the immutable historical
+fourteen-target snapshot.
 .PP
 Alle Receipt- und Review-Bytes, eindeutigen aktuellen Single/Primary/Ready-
 Leaves ohne Blocker sowie beide installierten Review-Oberflaechen werden
@@ -73,13 +74,15 @@ Ein fachliches, Hash-, Pfad-, State-, Review- oder Subprozess-Gate schlug fehl.
 .B 2
 Die CLI-Argumente sind ungueltig. / CLI arguments are invalid.
 .SH FEHLERFAELLE / FAILURE CASES
-Falscher Run oder Branch, unzulaessige Stage, inaktiver State, mehrdeutige
+Falscher Run oder Branch, unzulaessige Stage, weder aktiver noch vollstaendig
+abgeschlossener State, mehrdeutige
 Lifecycle-Form, beide oder keine Intake-Pfade, Ziel-/Receipt-/Review-Hashdrift,
 mehrdeutige Ready-Leaves und der Ausfall einer installierten Review-Oberflaeche
 stoppen die Folgephase.
 .PP
 Wrong run or branch, event/head mismatch, synthetic or ambiguous checkout,
-unavailable required Bash, a disallowed stage, inactive state, ambiguous
+unavailable required Bash, a disallowed stage, neither active nor fully
+completed state, ambiguous
 lifecycle shape, both or neither intake path, substantive target drift,
 receipt/review hash drift, ambiguous Ready leaves, and failure of either
 installed review surface stop the next phase.

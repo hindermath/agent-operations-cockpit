@@ -23,7 +23,7 @@ function Test-AocMetaLh02Snapshot {
     Prueft den read-only META-LH-02-Programme-Snapshot. / Validates the read-only META-LH-02 programme snapshot.
 
     .DESCRIPTION
-    Prueft Run, Branch, aktiven Zustand, Lifecycle, 14 Ziele, unveraenderte
+    Prueft Run, Branch, aktiven oder terminal abgeschlossenen Zustand, Lifecycle, 14 Ziele, unveraenderte
     Receipts und Ready-Reviews sowie beide installierten Review-Oberflaechen.
     Lokal bleibt die Git-Branchpruefung strikt. In GitHub Actions wird eine
     logische PR-/Push-Branchidentitaet nur bei exaktem Event-, Repository- und
@@ -31,7 +31,7 @@ function Test-AocMetaLh02Snapshot {
     unveraenderliche Rohbelege dagegen aus den exakten Git-Blobs geprueft.
     Das Cmdlet schreibt nicht in das Repository und bietet keinen Stage-Override.
 
-    Validates the run, branch, active state, lifecycle, fourteen targets,
+    Validates the run, branch, active or terminal completed state, lifecycle, fourteen targets,
     immutable receipts and Ready reviews, and both installed review surfaces.
     Local Git branch checks stay strict. GitHub Actions admits logical PR/push
     identity only with exact event, repository, and checked-out HEAD proof.
