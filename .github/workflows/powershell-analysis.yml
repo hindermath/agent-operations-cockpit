@@ -82,6 +82,9 @@ jobs:
         shell: pwsh
         run: |
           python -B specs/002-portfolio-ownership/contracts/test_validate_meta_lh02_snapshot.py
+          if ($LASTEXITCODE -ne 0) {
+            throw "Feature-002 Python suite failed with exit $LASTEXITCODE."
+          }
           $bashArguments = @(
             'specs/002-portfolio-ownership/contracts/validate-meta-lh02-snapshot.sh',
             '--repo', '.', '--', 'post-global-ready'
@@ -91,3 +94,6 @@ jobs:
             throw "Feature-002 Bash peer failed with exit $LASTEXITCODE."
           }
           ./specs/002-portfolio-ownership/contracts/validate-meta-lh02-snapshot.ps1 -Repo . -Mode post-global-ready
+          if ($LASTEXITCODE -ne 0) {
+            throw "Feature-002 PowerShell peer failed with exit $LASTEXITCODE."
+          }

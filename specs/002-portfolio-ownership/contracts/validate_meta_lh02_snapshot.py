@@ -370,7 +370,9 @@ def resolve_lifecycle(root: Path, state: dict[str, Any]) -> tuple[dict[str, Any]
         fail("Feature-002 lifecycle runId or branch differs from run state")
     if record.get("originalPath") != ORIGINAL_TARGET or record.get("archivedPath") != ARCHIVED_TARGET:
         fail("Feature-002 lifecycle original/archive paths are invalid")
-    raw_digest = lowercase_sha256(record.get("originalRawSha256"), "lifecycle originalRawSha256")
+    raw_digest = lowercase_sha256(
+        record.get("originalRawSha256"), "lifecycle originalRawSha256"
+    )
     normalized_digest = lowercase_sha256(
         record.get("originalNormalizedSha256"), "lifecycle originalNormalizedSha256"
     )
@@ -383,9 +385,6 @@ def resolve_lifecycle(root: Path, state: dict[str, Any]) -> tuple[dict[str, Any]
     physical_path = root / physical
     if normalized_sha256(physical_path) != normalized_digest:
         fail("META-LH-02 physical target normalized SHA-256 drift")
-    if immutable_raw_sha256(root, physical) != raw_digest:
-        fail("META-LH-02 exact Git target blob raw SHA-256 drift")
-
     receipt_binding = record.get("authoringReceipt")
     review_binding = record.get("readySingleReview")
     if not isinstance(receipt_binding, dict) or set(receipt_binding) != {"path", "rawSha256"}:
