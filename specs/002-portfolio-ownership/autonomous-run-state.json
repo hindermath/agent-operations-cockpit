@@ -4,7 +4,7 @@
   "featurePath": "specs/002-portfolio-ownership",
   "branch": "002-portfolio-ownership",
   "deliveryMode": "MergeAndSync",
-  "authorityRevalidationRequired": false,
+  "authorityRevalidationRequired": true,
   "stage": "Implement",
   "status": "Active",
   "checkpointCommit": "N/A",
@@ -24,7 +24,7 @@
   ],
   "tasks": {
     "path": "specs/002-portfolio-ownership/tasks.md",
-    "sha256": "f412b3c7d1705d44f59796a8f9a694a28fd245c90f6b237f4a69d75770612e5c",
+    "sha256": "3f82b78d07b0f4ade3a7860a46461a735f2fb33c3ba4036e631af27dd6e1227e",
     "completed": 72,
     "total": 93
   },
@@ -584,22 +584,108 @@
         "dependsOn": [
           "analyze-11"
         ],
+        "status": "Blocked",
+        "agentFamily": "Codex",
+        "model": "gpt-5.6-sol",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-08-30T16:27:51.352939Z"
+      },
+      {
+        "phaseId": "ci-t079-remediation",
+        "command": "speckit.plan",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "analyze-11"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-5.6-sol",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-08-30T16:54:49.517329Z",
+        "resultPath": ".specify/runtime/autonomous-routing/aa60069e-ded5-463f-a737-9b5aa96070c7/ci-t079-remediation.result.json",
+        "resultSha256": "c92b5d049bd7f0e245bf0117ab2ab8ae50c94194e6a4fe4b19c450e1675ab506"
+      },
+      {
+        "phaseId": "analyze-12",
+        "command": "speckit.analyze",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "ci-t079-remediation"
+        ],
+        "status": "Blocked",
+        "agentFamily": "Codex",
+        "model": "gpt-5.6-sol",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-08-30T17:03:10.000462Z"
+      },
+      {
+        "phaseId": "implement-resume-8",
+        "command": "speckit.implement",
+        "routingRole": "long-running-implementation",
+        "runnerProfile": "codex-implementation-auto",
+        "dependsOn": [
+          "analyze-13"
+        ],
         "status": "Running",
         "agentFamily": "Codex",
         "model": "gpt-5.6-sol",
         "reasoningEffort": "high",
         "preflight": "Completed",
         "exitCode": null,
-        "updatedAt": "2026-08-30T16:10:33.2390090Z"
+        "updatedAt": "2026-08-30T17:26:13.1528760Z"
+      },
+      {
+        "phaseId": "analyze12-remediation",
+        "command": "speckit.plan",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "ci-t079-remediation"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-5.6-sol",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-08-30T17:16:41.507512Z",
+        "resultPath": ".specify/runtime/autonomous-routing/aa60069e-ded5-463f-a737-9b5aa96070c7/analyze12-remediation.result.json",
+        "resultSha256": "cce4cb1aad5380932f6ca3c0d9c736383dff2a22ed40276a2e49731d05f23a6e"
+      },
+      {
+        "phaseId": "analyze-13",
+        "command": "speckit.analyze",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "analyze12-remediation"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-5.6-sol",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-08-30T17:25:08.001025Z",
+        "resultPath": ".specify/runtime/autonomous-routing/aa60069e-ded5-463f-a737-9b5aa96070c7/analyze-13.result.json",
+        "resultSha256": "dc05b2a439fd00f72e08886e5c5f863eedb6ae55227b02aeee0497c5a6462b7c"
       }
     ]
   },
-  "lastPassingGate": "AtomicT069T072: accepted only with the externally verified single-amend postconditions and exact normal-head binding",
-  "nextExactAction": "Execute T073 from the frozen amended normal head: unchanged renderer, one ledger-only statistics-head-sync commit, dual real CURRENT/0, and full affected-gate revalidation.",
+  "lastPassingGate": "AnalyzeConvergedForImplementation: analyze-13 completed with zero Critical, High, or unresolved Medium findings and validated all 93 T079-remediated tasks",
+  "nextExactAction": "Run routing phase 'implement-resume-8'.",
   "lastOperation": {
-    "kind": "ModelRoutingPhase:implement-resume-7",
-    "state": "Completed",
-    "summary": "T069-T072 are an atomic single-amend boundary; all four markers remain conditional on the verified post-amend path, subject, trailer, clean-state, peer-gate, and external normal-head postconditions."
+    "kind": "ModelRoutingPhase:implement-resume-8",
+    "state": "NeedsRevalidation",
+    "summary": "Phase process started with profile 'codex-implementation-auto'."
   },
   "stop": {
     "reason": "N/A",
@@ -612,5 +698,5 @@
     "postMergeActions": "Pending",
     "finalValidation": "Pending"
   },
-  "updatedAt": "2026-08-30T16:15:42Z"
+  "updatedAt": "2026-08-30T17:26:13.1528760Z"
 }

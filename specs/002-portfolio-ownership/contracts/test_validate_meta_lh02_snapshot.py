@@ -105,8 +105,9 @@ class SnapshotContractTests(unittest.TestCase):
 
     def test_01_real_repository_positive_and_peer_parity(self) -> None:
         environment = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
+        bash = contract.bash_executable(environment)
         commands = (
-            ["bash", str(BASH_SURFACE), "--repo", ".", "--", "post-global-ready"],
+            [bash, str(BASH_SURFACE), "--repo", ".", "--", "post-global-ready"],
             ["pwsh", "-NoProfile", "-File", str(POWERSHELL_SURFACE),
              "-Repo", ".", "-Mode", "post-global-ready"],
         )
@@ -122,6 +123,7 @@ class SnapshotContractTests(unittest.TestCase):
 
     def test_02_tracked_fixtures_fail_closed_with_peer_parity(self) -> None:
         environment = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
+        bash = contract.bash_executable(environment)
         for fixture_path in sorted(FIXTURES.glob("programme-snapshot-*.json")):
             fixture = load(fixture_path)
             with self.subTest(scenario=fixture["scenario"]), projection() as temporary:
@@ -134,7 +136,7 @@ class SnapshotContractTests(unittest.TestCase):
                 else:
                     set_target(root, fixture["target"], fixture["value"])
                 commands = (
-                    ["bash", str(BASH_SURFACE), "--repo", str(root), "--", "post-global-ready"],
+                    [bash, str(BASH_SURFACE), "--repo", str(root), "--", "post-global-ready"],
                     ["pwsh", "-NoProfile", "-File", str(POWERSHELL_SURFACE),
                      "-Repo", str(root), "-Mode", "post-global-ready"],
                 )
@@ -215,9 +217,10 @@ class SnapshotContractTests(unittest.TestCase):
                 )
 
     def test_09_help_manual_and_cmdlet(self) -> None:
+        bash = contract.bash_executable()
         commands = (
-            ["bash", str(BASH_SURFACE), "-h"],
-            ["bash", str(BASH_SURFACE), "--help"],
+            [bash, str(BASH_SURFACE), "-h"],
+            [bash, str(BASH_SURFACE), "--help"],
             ["pwsh", "-NoProfile", "-File", str(POWERSHELL_SURFACE), "-Help"],
             ["pwsh", "-NoProfile", "-Command",
              f". '{POWERSHELL_SURFACE}'; Get-Help Test-AocMetaLh02Snapshot -Full; "
@@ -246,8 +249,8 @@ class SnapshotContractTests(unittest.TestCase):
             if isinstance(node, ast.ImportFrom)
         }
         allowed = {
-            "__future__", "argparse", "hashlib", "json", "re", "subprocess",
-            "sys", "tempfile", "pathlib", "typing",
+            "__future__", "argparse", "hashlib", "json", "os", "re", "shutil",
+            "subprocess", "sys", "tempfile", "pathlib", "typing",
         }
         self.assertEqual(imports - allowed, set())
         for forbidden in ("shell=True", "eval(", "exec(", "pickle", "yaml", "Invoke-Expression"):
@@ -261,6 +264,72 @@ class SnapshotContractTests(unittest.TestCase):
                       "$ErrorActionPreference = 'Stop'", "[ValidateSet('post-global-ready')]",
                       "function Test-AocMetaLh02Snapshot"):
             self.assertIn(token, powershell)
+
+    def test_11_exact_pull_request_head_identity(self) -> None:
+        head = "1" * 40
+        environment = {
+            "GITHUB_ACTIONS": "true",
+            "GITHUB_EVENT_NAME": "pull_request",
+            "GITHUB_REPOSITORY": contract.EXPECTED_REPOSITORY,
+            "GITHUB_HEAD_REF": contract.EXPECTED_BRANCH,
+        }
+        event = {
+            "repository": {"full_name": contract.EXPECTED_REPOSITORY},
+            "pull_request": {"head": {"ref": contract.EXPECTED_BRANCH, "sha": head}},
+        }
+        self.assertEqual(
+            contract.resolve_logical_branch(environment, event, head, ""),
+            contract.EXPECTED_BRANCH,
+        )
+
+    def test_12_synthetic_or_ambiguous_identity_fails_closed(self) -> None:
+        event_head = "1" * 40
+        synthetic_head = "2" * 40
+        environment = {
+            "GITHUB_ACTIONS": "true",
+            "GITHUB_EVENT_NAME": "pull_request",
+            "GITHUB_REPOSITORY": contract.EXPECTED_REPOSITORY,
+            "GITHUB_HEAD_REF": contract.EXPECTED_BRANCH,
+        }
+        event = {
+            "repository": {"full_name": contract.EXPECTED_REPOSITORY},
+            "pull_request": {
+                "head": {"ref": contract.EXPECTED_BRANCH, "sha": event_head}
+            },
+        }
+        with self.assertRaisesRegex(contract.ContractError, "event head SHA"):
+            contract.resolve_logical_branch(environment, event, synthetic_head, "")
+        with self.assertRaisesRegex(contract.ContractError, "current Git branch"):
+            contract.resolve_logical_branch({}, {}, event_head, "")
+
+    def test_13_lf_crlf_equivalence_and_substantive_drift(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="meta-lh02-line-endings-") as temporary:
+            root = Path(temporary)
+            lf = root / "lf.md"
+            crlf = root / "crlf.md"
+            changed = root / "changed.md"
+            lf.write_bytes(b"alpha\nbeta\n")
+            crlf.write_bytes(b"alpha\r\nbeta\r\n")
+            changed.write_bytes(b"alpha\ngamma\n")
+            self.assertNotEqual(contract.raw_sha256(lf), contract.raw_sha256(crlf))
+            self.assertEqual(contract.normalized_sha256(lf), contract.normalized_sha256(crlf))
+            self.assertNotEqual(contract.normalized_sha256(lf), contract.normalized_sha256(changed))
+
+    def test_14_git_bash_selected_and_wsl_launcher_rejected(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="meta-lh02-bash-capability-") as temporary:
+            root = Path(temporary)
+            git_bash = root / "Git/bin/bash.exe"
+            git_bash.parent.mkdir(parents=True)
+            git_bash.write_bytes(b"fixture")
+            self.assertEqual(
+                contract.select_bash_executable([str(git_bash)], windows=True),
+                str(git_bash),
+            )
+            wsl = root / "Windows/System32/bash.exe"
+            wsl.parent.mkdir(parents=True)
+            wsl.write_bytes(b"fixture")
+            with self.assertRaisesRegex(contract.ContractError, "WSL launcher"):
+                contract.select_bash_executable([str(wsl)], windows=True)
 
 
 if __name__ == "__main__":

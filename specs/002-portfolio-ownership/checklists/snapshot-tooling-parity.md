@@ -90,3 +90,25 @@ for both variants on macOS and the minimal workflow delta. Windows execution,
 retroactive Analyze-6 success,
 and downstream completion are not claimed; Windows remains a later exact-head
 CI merge gate.*
+
+## T079-Reparaturevidence / T079 repair evidence
+
+Der erneute lokale Standardbibliothekslauf umfasst jetzt 14 Tests und endet
+mit Exitcode `0`. Die vier fokussierten Faelle beweisen zusaetzlich: einen
+exakten `pull_request`-Head mit passendem Repository und `GITHUB_HEAD_REF`, die
+Ablehnung eines synthetischen SHA-Mismatch und einer lokal mehrdeutigen
+detached Identitaet, identische normalisierte SHA-256 fuer LF und CRLF bei
+weiterhin abgelehnter fachlicher Inhaltsdrift sowie die Auswahl eines absoluten
+Git-for-Windows-`bash.exe` bei Ablehnung eines `System32`-/WSL-Launchers. /
+*The renewed fourteen-test suite passes and adds exact PR-head proof,
+synthetic/detached rejection, LF/CRLF equivalence with substantive-drift
+failure, and Git-for-Windows Bash selection with WSL-launcher rejection.*
+
+Beide reale Snapshot-Peers, beide Intake-Review-Peers, beide Series-Peers,
+beide Run-State-Peers, alle sechs Portfolio-Laeufe, Bash-Syntax und
+PSScriptAnalyzer `1.25.0` bestanden lokal. Das Workflow-Delta checkt
+`github.event.pull_request.head.sha` beziehungsweise `github.sha` explizit aus
+und startet den Bash-Peer nur ueber ein validiertes ausfuehrbares Argumentarray.
+Die drei Windows-/Provider-Checkboxen oben bleiben bis zur erneuten Evidence am
+exakten publizierten Head bewusst offen. / *All proportional local peers pass;
+the provider-bound checkboxes remain open until renewed exact-head CI evidence.*

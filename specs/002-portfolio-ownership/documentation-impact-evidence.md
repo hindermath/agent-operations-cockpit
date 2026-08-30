@@ -43,11 +43,18 @@ review, and delivery evidence.*
   `requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md`.
   Der Pfadwechsel aendert keine fachliche Aussage. / *The later byte-identical
   path transition changes no domain statement.*
-- Generierte Ableitung / generated derivation: `docs/project-statistics.md`
-  wird erst nach dem AEPS-Ergebnis aus
-  `docs/project-statistics.config.json` und Git-Historie gerendert; es ist
-  keine unabhaengige Source of Truth. / *Statistics are renderer-owned and not
-  an independent source.*
+- Generierte Ableitungen / generated derivations: `docs/project-statistics.md`
+  wird nach dem AEPS-Ergebnis aus `docs/project-statistics.config.json` und
+  Git-Historie gerendert. Fuer T079 kommt konditional genau
+  `docs/scripts/embedded-scripts.md` hinzu, weil der in-scope Feature-002-
+  Skriptbestand das Embedded-Inventar aendert. Dieser Pfad wird ausschliesslich
+  nach Bash-`--dry-run` und PowerShell-`-WhatIf` mit
+  `render-script-reference.*` erzeugt und durch beide Check-only-Peers
+  validiert; `docs/scripts/reference.md` bleibt unveraendert. Keine der beiden
+  Ableitungen ist eine unabhaengige Source of Truth und keine wird
+  hand-editiert. / *Statistics and the conditionally triggered embedded-script
+  inventory remain renderer-owned outputs; the canonical script reference
+  stays unchanged.*
 
 ## Zielgruppen und Leserpfad / Audiences and reader path
 

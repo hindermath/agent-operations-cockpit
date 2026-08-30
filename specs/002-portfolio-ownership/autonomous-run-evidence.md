@@ -100,17 +100,23 @@
 | `analyze-10` | `frontier-reasoning` | `codex-frontier-auto`, `gpt-5.6-sol`, `high` | `Blocked`; genau ein High-Befund G1: `PO-G24-project-statistics` konnte nur mit historischer T055-bis-T058-Projektionsevidence bestehen und erzwang den akzeptierten finalen T073-Statistik-Head-Vertrag noch nicht. Ergebnisbeleg `e0bd6e440db28215616d48a2fe025dc741d5e8dd556675aa3c2cbbccbd6928fc`; keine weitere Finding-Klasse und kein Git-/Remote-Schritt. / Truthfully blocked on the single G1 machine-contract gap. |
 | `gate24-remediation` | `frontier-reasoning` | `codex-frontier-auto`, `gpt-5.6-sol`, `high` | `Completed`; aendert nur die autorisierten `PO-G24`-Felder und aktuelle Hash-Bindungen. Der Vertrag bindet nun historische Projektion und finalen T073-Head mit hoechstens einem 35-Pfad-Amend, unveraendertem Renderer, genau einem Ledger-only-Commit, Methodik-v2-Ausschluss, realem Dual-`CURRENT`/`0`, finaler Head-/PR-Body-Bindung und kompletter betroffener Gate-Wiederholung vor T074. Gate-Requirements `ebc9eea66a02ef6d98e721d89f836bfbe64cf24de0af023b57f673e20a4793d0`; 93 IDs, 68 Abschluesse, keine Task-Marker-, Render-, Git- oder Remote-Mutation. / Bounded machine-contract correction only. |
 | `analyze-11` | `frontier-reasoning` | `codex-frontier-auto`, `gpt-5.6-sol`, `high` | `Completed`; null Critical, null High und null unaufgeloeste Medium-Findings bei 93/93 Task-Abdeckung. Der semantisch validierte Beleg bindet Payload `633ec64990cc9ba45ac9bfa897a84fb15ae9a2e8c77270c0ef4e3f5abd2a17e5` und besitzt SHA-256 `409c1aa7b82d411de22a8c820db4b4ff6044730bb53609ce5361546ec529d482`. / Accepted Analyze-11 convergence with complete task coverage and no blocking finding. |
+| `implement-resume-7` | `long-running-implementation` | `codex-implementation-auto`, `gpt-5.6-sol`, `high` | `Blocked` bei T076/T077 nach 72/93 legitimen Abschluessen auf PR #29 und exaktem Head `a78a78558459e32ad640c238f5eaf96337a70f83`. Alle 18 Checks sind terminal; 12 bestanden, sechs technische Jobs scheiterten. Zwei Homogeneity-Jobs melden `docs/scripts/embedded-scripts.md`-Drift; die drei PR-Matrixjobs scheitern an Checkout-Branchidentitaet, Windows zusaetzlich an Worktree-Rohbytes und unbrauchbarem WSL-Bash. Admin-Bypass ist verboten. Ergebnisbeleg `736ad84f6e43288790018b28c9ee0cacdb567b6d689928e2b5a34cfcabde5b31`, Tasks-Payload `f412b3c7d1705d44f59796a8f9a694a28fd245c90f6b237f4a69d75770612e5c`. Kein Merge, Bypass oder Closeout. / Truthfully blocked on six technical exact-head failures. |
+| `ci-t079-remediation` | `frontier-reasoning` | `codex-frontier-auto`, `gpt-5.6-sol`, `high` | `Completed`; plant ausschliesslich die neue fail-closed T079-Transaktion fuer die sechs technischen PR-#29-Fehler. 93 IDs und 72 Marker bleiben unveraendert; T073 bis T093 sind offen. Der durch Bash und PowerShell semantisch validierte Phasenbeleg bindet Tasks-Payload `d123fcd716bdef9f6588e8aa43ac6223eb690f6a9c1701880d3355cdc356e0f8` und besitzt SHA-256 `244084cf01264ed8e918b9f49bd9b69ce08ae328744a7f4ab18393b9e944e7fe`. Keine Implementierungs-, Generator-, Test-, Git-, Remote-, Provider- oder Task-Marker-Mutation. / Completed bounded plan-only remediation with no implementation or delivery action. |
+| `analyze-12` | `frontier-reasoning` | `codex-frontier-auto`, `gpt-5.6-sol`, `high` | `Blocked` nach vollstaendiger 93-Task-Abdeckung auf exakt drei begrenzten Cross-Artefakt-Befunden: R-016 autorisierte die verbrauchte `7b992270`-Amend-/Ledger-Sequenz weiter; PO-G23 war nach der materiellen T092-Retrospektive nicht auf eine abschliessende AEPS-Neubewertung in T093 gemappt; beide Closeout-Pfade besassen keine explizite No-next-run-Disposition. Alle anderen T079-Grenzen bestanden die Konsistenzanalyse. Der unveraenderte Ergebnisbeleg besitzt SHA-256 `026a9bc0bf1b92622715a077e1103e7ce13d9569a1ec025716358f90aa71bc27` und bindet den damaligen Tasks-Payload `d123fcd716bdef9f6588e8aa43ac6223eb690f6a9c1701880d3355cdc356e0f8`. Keine Repository-, Git-, Remote-, Provider- oder Marker-Mutation. / Truthfully blocked on exactly the three bounded consistency findings with all other T079 boundaries accepted. |
 
 ### Tasks-zu-Analyze-Grenze / Tasks-to-Analyze boundary
 
 Der historische `tasks`-Runner-Beleg bindet Payload
 `b257eac0e24af0a0b081e5e3e6b1bad3d13f5f8621ebe4d3f7caca4507f8f5ab`.
-Die spaeteren begrenzten Remediations und der konvergierte `analyze-9`-Beleg
-binden den akzeptierten Implement-Eingang. Der aktuelle Payload behaelt alle
-93 IDs und 68 Abschluesse, T069 bis T093 offen und bindet den normalisierten
-Hash `633ec64990cc9ba45ac9bfa897a84fb15ae9a2e8c77270c0ef4e3f5abd2a17e5`
-im Run-State. Analyze-10 bleibt als `Blocked` auf genau G1 erhalten;
-`implement-resume-6` oder eine spaetere Ausfuehrung werden nicht vorweggenommen.
+Die spaeteren begrenzten Remediations und die konvergierten Analyze-Belege
+binden ihre jeweiligen akzeptierten Implement-Eingaenge. Der aktuelle
+`analyze12-remediation`-Planungspayload behaelt alle 93 IDs und 72 Abschluesse, T073 bis T093
+offen und bindet den normalisierten Hash
+`3f82b78d07b0f4ade3a7860a46461a735f2fb33c3ba4036e631af27dd6e1227e`.
+Der Runner darf diese Bindung erst nach semantischer Validierung des
+Phasenergebnisses in den Run-State uebernehmen. `implement-resume-7` bleibt
+als `Blocked` auf dem exakten PR-#29-Head erhalten; eine spaetere Ausfuehrung
+wird nicht vorweggenommen.
 Jeder geroutete Phasenbeleg muss vor Akzeptanz mit
 `.specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.sh`
 oder dem PowerShell-Peer semantisch validiert werden; Exitcode allein reicht
@@ -300,18 +306,17 @@ Bypass-, Provider-, Level-0- oder Preset-Schritt aus. / *This phase is plan
 only and preserves every accepted cardinality, hash, scope, and authority
 boundary.*
 
-Die spaetere Minimalfolge erlaubt hoechstens ein reviewtes lokales Amend des
-unpublizierten normalen Kandidaten, nur fuer Korrekturpfade innerhalb seiner
-unveraenderten 35-Pfad-Menge und mit unveraendertem Subject/Trailer. T069 bis
-T072 sind atomare Amend-Postconditions. Nach eingefrorenem amended Normal-Head
-folgt genau ein `statistics-head-sync`-Commit nur fuer
-`docs/project-statistics.md`; Methodik v2 schliesst ihn aus. Erst wenn beide
-realen Peers und alle betroffenen Gates auf diesem finalen Statistik-Head
-bestehen, darf T073 passieren und T074 genau diesen Head publizieren. Spaetere
-runner-owned Task-/State-Marker folgen kausal im akzeptierten Closeout und
-verbreitern weder den Statistikcommit noch die Pre-Push-History. / *The future
-bounded sequence is one optional reviewed amend, one ledger-only sync commit,
-full final-head revalidation, and causal later marker persistence.*
+Die damalige Minimalfolge wurde spaeter vollstaendig ausgefuehrt und verbraucht:
+ein reviewtes lokales Amend des 35-Pfad-Kandidaten und ein Ledger-only-Sync
+endeten am publizierten Head `a78a78558459e32ad640c238f5eaf96337a70f83`.
+Diese Passage ist historische Phasenevidence und erteilt keine erneute
+Autoritaet. Fuer weitere Arbeit gilt ausschliesslich die neue ausdrueckliche
+T079-Transaktion mit neuem 36-Pfad-Reparatur-Head und nur bei weiterem Drift
+hoechstens einem neuen Ein-Pfad-`statistics-head-sync`; alle betroffenen Gates
+und PR-Bindungen werden dort neu belegt. / *The earlier one-amend/one-sync
+sequence is consumed history. Only the new explicit T079 transaction, its new
+36-path repair head, and an at-most-one new sync when drift remains are
+authoritative.*
 
 Specify, Clarify, Checklists, Plan, Plan-Review, Tasks, Analyze, Implement,
 Validierung, Review, PreMerge-Evidence, Merge, PostMerge-Evidence und finale
@@ -363,3 +368,63 @@ not authorised.*
   Head bindet. Ein Fehlschlag verwirft alle vier Marker. / *All four markers
   become effective only after every amend postcondition and the external
   normal-head binding pass; any failure rejects all four.*
+
+## PR-#29-CI-Blocker und T079-Planungsgrenze / PR #29 CI blocker and T079 planning boundary
+
+- Der finale publizierte Statistik-Head
+  `a78a78558459e32ad640c238f5eaf96337a70f83` existiert auf
+  `origin/002-portfolio-ownership` und PR #29. Kein Merge oder Bypass erfolgte.
+  / *The published exact head exists on the feature branch and PR #29; no
+  merge or bypass occurred.*
+- Alle 18 Checks sind terminal: 12 bestanden. Push- und PR-Homogeneity melden
+  `canonical=131`, `embedded=100`. Die drei PR-`PowerShell Static Analysis`-
+  Jobs auf Ubuntu, macOS und `windows-2022` verwerfen die Checkout-
+  Branchidentitaet. Windows meldet zusaetzlich Target-Worktree-Rohbyte-Drift
+  durch Zeilenenden und einen WSL-Launcher ohne installierte Distribution. /
+  *Six technical jobs fail on generated inventory, checkout identity, Windows
+  checkout bytes, and unavailable WSL Bash.*
+- Deshalb bleibt `implement-resume-7` nach 72/93 bei T076/T077 `Blocked`.
+  `PO-N01` ist `N/A`; technische, Plattform-, Hash- und Evidence-Fehler sind
+  nie bypassbar. T073 bis T093 bleiben fuer dauerhaften Closeout offen. /
+  *The run is truthfully blocked and all downstream closeout remains open.*
+- `ci-t079-remediation` ist ausschliesslich Plan. Es bewahrt 93 IDs, 72
+  Marker, `40 = 33 Applicable + 7 N/A`, die drei akzeptierten Intake-/Review-/
+  Receipt-Hashes, genau eine `UpdateRequired`-Entscheidung, R100, kausalen
+  Closeout, Retrospektive, AEPS, finalen Main-Sync und No-next-run-Stop. Es
+  fuehrt keine Generator-, Implementierungs-, Test-, Git-, Remote-, CI-, PR-,
+  Merge-, Bypass-, Level-0- oder Preset-Mutation aus. / *This phase is plan
+  only and preserves every accepted cardinality and downstream boundary.*
+- Die spaetere ausdruecklich autorisierte T079-Transaktion darf nur akzeptierte
+  Feature-002-Pfade plus den eng ausgeloesten konditionalen Generated-Update-
+  Pfad `docs/scripts/embedded-scripts.md` aendern. Sie startet T059 neu,
+  friert den ausgeloesten 36-Pfad-Normalkandidaten ein, erzeugt einen neuen
+  realen Reparatur-/Statistik-Head, bindet PR #29 neu und wiederholt lokale
+  Gates, alle 18 Checks, exakte Ubuntu-/macOS-/Windows-Command-Evidence und
+  Review-Konvergenz. / *Future implementation requires a fresh explicit T079
+  transaction and complete fixed-point reconvergence.*
+
+## Implement-resume-8: T079 lokaler Reparatur-Fixpunkt / Local repair fixed point
+
+Die neue ausdrueckliche T079-Authority wurde ausschliesslich fuer die vier
+gebundenen technischen Reparaturfamilien verwendet. Beide Script-Reference-
+Previews waren bytegleich; die kanonische Regeneration aenderte nur den
+konditionalen Pfad `docs/scripts/embedded-scripts.md`, waehrend
+`docs/scripts/reference.md` unveraendert blieb und beide Check-only-Peers
+`CURRENT` meldeten. / *The bounded authority produced only the conditionally
+triggered generated inventory after matching previews and CURRENT peer checks.*
+
+Der Core und Workflow implementieren exakten PR-/Push-Head-Checkout,
+fail-closed Event-/Repository-/Branch-/SHA-/HEAD-Beweis, normalisierte
+LF-/CRLF-Zielidentitaet mit exakten Git-Blobbytes fuer rohe Evidence sowie
+validiertes Git-for-Windows-Bash statt eines unbrauchbaren WSL-Launchers. Die
+14 fokussierten/isolierten Tests und alle proportionalen lokalen Peers
+bestanden. T059 bis T072 wurden fuer exakt 36 Pfade erneut belegt; der fremde
+Preset-Cache blieb ausgeschlossen und unveraendert. / *The exact-head,
+line-ending, immutable-blob, and Windows Bash repairs pass fourteen tests and
+the complete renewed local fixed point.*
+
+Diese Evidence behauptet vor dem neuen Commit weder T073, PR-Neubindung,
+Provider-Gruen, Review, Merge, Rename noch PostMerge. Der naechste exakte
+Schritt ist die einzeln gestagte 36-Pfad-Reparatur, danach die kausale
+Methodik-v2-Statistikbindung. / *No downstream head-bound fact is pre-claimed;
+the exact next action is the reviewed repair commit and statistics binding.*

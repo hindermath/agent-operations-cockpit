@@ -26,32 +26,28 @@ separate reviews assess semantic and human-facing proof classes. A row becomes
   Funktion und semantischer Feld-/Pfad-/Token-/Rollenabgleich bestanden; genau
   40 eindeutige Gates, `33 Applicable`, `7 N/A`, identischer normalisierter und
   roher SHA-256
-  `ebc9eea66a02ef6d98e721d89f836bfbe64cf24de0af023b57f673e20a4793d0`.
-  Dies bindet sowohl die wahrheitsgemaesse historische T055-bis-T058-
-  Projektionsevidence als auch den finalen T073-Vertrag. Analyze-10 bleibt auf
-  genau G1 `Blocked`; die begrenzte Reparatur aenderte ausschliesslich die
-  Scope-, Command-/Plattformtoken-, Evidence-Timing- und Triggerfelder von
-  `PO-G24`. Gate-ID, Anzahl, Anwendbarkeit, Owner, Reviewer und alle anderen
-  Gates blieben unveraendert. / *This binds both truthful historical projection
-  evidence and the final T073 contract. Analyze-10 remains Blocked on exactly
-  G1; the bounded repair changed only the authorised PO-G24 fields.*
+  `e37006a90ff8da3fc25739e469a4e8f47aac431824cb1fd4bb6153df8258b9fa`.
+  Die T079-Planungsremediation aktualisiert nur direkt betroffene Scope-,
+  Command-/Plattformtoken-, Evidence-, Generated-Update-, Identity-, Hash-,
+  Capability- und Triggerfelder. Gate-ID, Anzahl, Anwendbarkeit, Owner und
+  Reviewer bleiben unveraendert. Der historische Gate-Hash bleibt in den
+  damaligen Phasenbelegen erhalten. / *The current hash binds the bounded T079
+  machine contract while historical phase hashes remain unchanged.*
 - Direkt betroffene Reparaturpruefung / directly affected remediation check:
   `python3 -m json.tool` und der installierte `validate_requirements()`-Core
   bestanden mit 40 Gates, `33 Applicable`, `7 N/A` und Hash
-  `ebc9eea66a02ef6d98e721d89f836bfbe64cf24de0af023b57f673e20a4793d0`.
-  Beide aktuellen Intake-Review-Peers, beide Run-State-Peers und beide
-  Feature-002-Snapshot-Peers bestanden; alle zehn isolierten Snapshot-Tests
-  endeten mit `OK`. Die State-Peers bestaetigten `Plan`, `Active`, `68/93`.
-  Es wurde kein Statistik-Renderer und kein Git-/Remote-Schritt ausgefuehrt. /
-  *Both requirements checks and every directly affected review, state, and
-  snapshot peer passed; all ten isolated tests passed without render, Git, or
-  remote action.*
-- Aktueller Tasks-Payload / current task payload: exakt 93 IDs, 68 markierte
-  Abschluesse, T069 bis T093 offen; normalisierter und roher SHA-256
-  `633ec64990cc9ba45ac9bfa897a84fb15ae9a2e8c77270c0ef4e3f5abd2a17e5`. Der historische `implement-resume-3`-Beleg
+  `e37006a90ff8da3fc25739e469a4e8f47aac431824cb1fd4bb6153df8258b9fa`.
+  Diese Planphase fuehrte keine Feature-002-Tests, Generatoren, Statistik-
+  Renderer oder Git-/Remote-Schritte aus. Die drei akzeptierten Artefakthashes
+  und die historische `implement-resume-7`-Failure-Evidence bleiben erhalten. /
+  *The current machine contract validates structurally without claiming new
+  implementation, generator, test, Git, or provider evidence.*
+- Aktueller Tasks-Payload / current task payload: exakt 93 IDs, 72 markierte
+  Abschluesse, T073 bis T093 offen; normalisierter und roher SHA-256
+  `3f82b78d07b0f4ade3a7860a46461a735f2fb33c3ba4036e631af27dd6e1227e`. Der historische `implement-resume-3`-Beleg
   behaelt unveraendert seinen damaligen Payload-Hash
   `952ec25c1cd6bafedf0deff9b988f2746245516eeacaf3a1fdda0c6e4e4fe057`. /
-  *The current task payload keeps 93 IDs and 68 completions with T069-T093
+  *The current task payload keeps 93 IDs and 72 completions with T073-T093
   open; the historical blocked result retains its original payload hash.*
 
 ## 40-Gate-Evidence-Matrix / 40-gate evidence matrix
@@ -173,14 +169,14 @@ separate reviews assess semantic and human-facing proof classes. A row becomes
 | PO-G18-gitleaks-public-scope | Applicable | Fulfilled | Beide oeffentlichen Kandidatenbereiche wurden nach dem per-path Review frisch auf Secret-Muster geprueft. | `gitleaks dir --redact --no-banner --no-color requirements/baseline`; danach identisch fuer `specs/002-portfolio-ownership`; Local macOS, gitleaks | Beide Exit `0`: etwa 151.79 KB bzw. 617.88 KB gescannt, jeweils `no leaks found`. | Security Owner / Independent public-content reviewer | Mustercheck beweist allein keine Publikationseignung. | Bei Inhalts- oder Pfaddrift erneut. | Jeder Inhalts- oder Pfaddelta. |
 | PO-G19-secret-scan-bash | Applicable | Fulfilled | Repository-Scanner lieferte nach Review aktuell `high=0`. | `bash scripts/scan-agent-secrets.sh --fail-on-high .`; Local macOS, Bash | Exit `0`: Git-Diff ohne Secrets; `high=0 medium=0 low=5`, fuenf niedrige bekannte Agentenverzeichnishinweise. | Security Owner / Independent public-content reviewer | Heuristische Abdeckung. | Vor Push bei Kandidatendrift erneut. | Scanner- oder Kandidatendrift. |
 | PO-G20-secret-scan-powershell | Applicable | Fulfilled | Gleicher Scanner bestand nach Review ueber PowerShell. | `pwsh -NoProfile -File scripts/scan-agent-secrets.ps1 -FailOnHigh -WorkspaceRoot .`; Local macOS, PowerShell 7 | Exit `0`: keine Secrets im aktuellen Git-Diff oder in Git-getrackten Dateien. | Security Owner / Independent public-content reviewer | Plattformdivergenz. | Vor Push bei Kandidatendrift erneut. | Scanner- oder Kandidatendrift. |
-| PO-G21-security-privacy-review | Applicable | Fulfilled | Jeder der 35 eingefrorenen Kandidatenpfade wurde manuell als `Public` und publikationstauglich geprueft; Maschinen-Scans sind nur Zusatz-Evidence. | `specs/002-portfolio-ownership/security-privacy-review-evidence.md`; per-path SHA-/Inhaltsreview; Local independent role | `Pass`, `blocking findings: 0`; keine Secrets, privaten Pfade, Kontaktdaten oder unnoetigen Personendaten. Die genehmigte Thorsten-Solo-Statistikreferenz ist nur ein oeffentlich dokumentiertes Vergleichslabel. Der spaetere Archivpfad erbt die Disposition nur bei nachgewiesenem byteidentischem `R100`. | Security and Privacy Owner / Independent public-content reviewer | Spaetere Byte- oder Pfaddrift invalidiert Review. | Bei Drift neues per-path Review. | Inhalt, Pfad, Datenklasse oder Byteidentitaet aendert sich. |
-| PO-G22-documentation-impact | Applicable | Fulfilled | Genau eine vollstaendige `UpdateRequired`-Entscheidung wurde erfasst. | `test -s`, `rg -n 'UpdateRequired|portfolio-ownership.md'`; acht Reader-Path-Dateien und relative Linkziele geprüft; Local macOS, Python 3 | Source, Owner, Inventar, Zielgruppen, Hub-Leserpfad, Dokumentklasse, Sprache, Plattform, Distribution, Home Sync `N/A`, Validation, Review und Trigger vollständig; fünf beschreibende Hub-Links bestanden; keine falsche Bidirektionalitätsbehauptung. | Documentation Owner / Independent accessibility and documentation reviewer | Navigations- oder Inventardrift. | Gegen finalen Kandidaten reviewen. | Source-, Owner-, Leserpfad- oder Distributiondrift. |
-| PO-G23-aeps-assessment | Applicable | Fulfilled | Das kanonische Assessment endet begruendet mit `NoChange`: Die lokale Evidence staerkt bestehende Findings 008, 015 und 018, erzeugt aber keine neue deduplizierbare oder projektuebergreifende Klasse. | JSON-Block-Parse, Source-/Conditional-Path-Hashes, Secret-/Public-Pruefung und `git diff --check`; lokales AOC | `docs/aeps/receipts/2026-08-30-meta-lh-02-portfolio-ownership.md`; Receipt 028; unabhängige read-only Abnahme `Pass`, `blocking findings: 0`; vier Conditional Paths bytegleich. | AEPS Evidence Owner / Independent AEPS reviewer | Einzel-AOC-Evidence ist nicht upstream-reif. | Statistik erst nach diesem Receipt; kein Upstream-, Level-0- oder Preset-Schritt. | Neue deduplizierbare Evidence, Cross-Project-Beleg oder stabile Publikation plus neue Authority. |
-| PO-G24-project-statistics | Applicable | Partly Fulfilled | Die historische T055-bis-T058-Projektion bleibt erfuellt. Der spaetere reale provisorische 35-Pfad-Kandidat machte die finale Statistikbindung erwartbar erneut offen; identisches reales `DRIFT` darf nicht als Pass umgedeutet werden. Analyze-10 bleibt auf G1 `Blocked`, waehrend der korrigierte maschinenlesbare Vertrag nun beide Evidence-Zeiten zwingend bindet. / Historical projection evidence remains fulfilled; Analyze-10 stays Blocked on G1, and the corrected machine contract now requires both historical and final-head evidence. | Provisorischer Kandidat `7b99227045deb8cc34e0062db09eb4f6dd134501`; committed Ledger-Quelle `3e1d9d5ccd98`; reale Quelle `7b99227045de`; Gate-Requirements-Hash `ebc9eea66a02ef6d98e721d89f836bfbe64cf24de0af023b57f673e20a4793d0`; Methodik v2 222411 getrackte Textzeilen; beide realen Bash-/PowerShell-Check-only-Peers | Beide realen Peers: identisch `DRIFT`/Exit `1`. Renderer, Konfiguration und Methodik bleiben unveraendert. Nach hoechstens einem reviewten Amend der exakten 35 Pfade verlangt T073 genau einen required-trailer `statistics-head-sync`-Commit nur fuer `docs/project-statistics.md`, dessen Methodik-v2-Ausschluss, beide realen Peers `CURRENT`/`0`, finale Feature-Head-/PR-Body-Bindung und die frische Wiederholung aller betroffenen Pfad-, Diff-, Stage-, State-, Review-, Snapshot-, Dokumentations-, Security-, Authority- und Exact-head-Gates vor T074. | Repository Statistics Maintainer / Independent documentation reviewer | Finaler amended Normal-Head und finaler Statistik-Head existieren noch nicht; aktuelle Drift blockiert Push/PR. | T073 erst nach finalem Render und genau einem Ledger-only-Commit bestehen; keine zweite Documentation-Impact-Entscheidung und keine Wiederverwendung geaenderter Head-Evidence. | Amend-/Commitanzahl, Git-/Ledger-/Renderer-/Methodik-, Pfad-, Trailer-, Hash-, Kandidaten-, State-, Review-, Snapshot-, Security-, Authority-, PR-Body- oder Head-Drift. |
-| PO-G25-delivery-set-bash | Applicable | Fulfilled | Die eingefrorene normale Liefermenge passt read-only und laesst fremde Cachepfade sichtbar. | `bash .../validate-autonomous-delivery-set.sh --repo .` mit jedem der 32 unversionierten Kandidatenpfade einzeln als `--intended`; Local macOS, Bash, Python 3, Git | `Pass`: 35 gepruefte Pfade, drei geaenderte getrackte, 32 beabsichtigte unversionierte und genau zwei sachfremde Cachedateien; leerer realer Index. | AOC Autonomous Run Operator / Independent delivery-set reviewer | Jede spaetere Pfaddrift invalidiert den Pass. | Vor Staging und Push bei Drift erneut. | Jede Pfaddrift. |
-| PO-G26-delivery-set-powershell | Applicable | Fulfilled | Der PowerShell-Peer pruefte dieselbe eingefrorene Liefermenge semantisch identisch. | `validate-autonomous-delivery-set.ps1 -Repo . -Intended <32-element array>`; Local macOS, PowerShell 7, Python 3, Git | Normalisierte JSON-Ausgabe bytegleich zum Bash-Ergebnis; dieselben 35/3/32/2 Mengen und derselbe Indexbaum. | AOC Autonomous Run Operator / Independent delivery-set reviewer | Plattform- oder Pfaddrift invalidiert den Pass. | Vor Staging und Push bei Drift erneut. | Jede Pfad-/Plattformdrift. |
-| PO-G27-exact-stage | Applicable | Partly Fulfilled | Der provisorische normale Kandidat wurde mit exakt 35 allowlistgebundenen Pfaden, leerem Rest-Stage und `git diff --cached --check` erstellt; diese Evidence bleibt fuer `7b992270` wahr, gilt aber nicht automatisch fuer einen amended oder Statistik-Head. / The provisional candidate exact-stage proof remains truthful for 7b992270 only. | `git show --name-only 7b99227045deb8cc34e0062db09eb4f6dd134501`; `git status --porcelain=v1 --untracked-files=all`; `git diff --cached --name-only`; `git diff --cached --check`; Local Git | Provisorischer 35-Pfad-Pass mit Subject `docs: establish portfolio ownership baseline` und erforderlichem Trailer; finaler Amend-/Ledger-only-Stage-Pass ist Pending T069-T073. | AOC Autonomous Run Operator / Independent delivery-set reviewer | Jede Head- oder Stage-Mutation invalidiert die uebertragbare Disposition. | Korrektur-Stage, vollstaendigen 35-Pfad-Amend und exakten Ein-Pfad-Statistikcommit getrennt pruefen; auf finalem Statistik-Head erneut. | Stage-, Head-, Trailer- oder Pfaddrift. |
-| PO-G28-ci-exact-head | Applicable | Not Fulfilled | Alle gemeldeten Checks und Required-Teilmenge muessen denselben Head binden. `PowerShell Static Analysis` muss die Feature-002-Snapshot-Suite und den PowerShell-Peer auf Ubuntu, macOS und `windows-2022` ausfuehren; Windows ist vor Merge zwingend und nicht bypassbar. | `gh pr view`, `gh pr checks --watch --fail-fast`, `--required`, `gh run view --log`; GitHub/gh; Workflow-/Job-/Runner-/Head-/Log-/Command-Evidence | Pending T075-T077/T080/T084/T090 fuer normalen und Rename-Head. | AOC Autonomous Run Operator / Independent pull-request reviewer | Providerzustand ist veraenderlich; Checkname allein beweist keine Ausfuehrung. | Fuer normalen und Rename-Head Linux/macOS/Windows neu binden. | Head-, Check-, Job-, Runner-, Log-, Command- oder Workflowdrift. |
+| PO-G21-security-privacy-review | Applicable | Partly Fulfilled | Das historische 35-Pfad-Review bleibt fuer byteunveraenderte Inputs wahr. Der neue konditionale Generated-Update-Pfad und jede T079-Code-/Help-/Evidence-Aenderung benoetigen ein frisches Public-/Secret-/Privacy-Review auf dem eingefrorenen 36-Pfad-Kandidaten. | Historische `security-privacy-review-evidence.md`; spaeter neue per-path SHA-/Inhaltspruefung und beide Scanner | Historisch `Pass`, `blocking findings: 0`; frische T079-Disposition Pending. | Security and Privacy Owner / Independent public-content reviewer | Neue Bytes und neuer Pfad sind noch nicht reviewt. | Vor neuem T073-Head alle 36 Pfade und Scans neu pruefen. | Inhalt, Pfad, Datenklasse oder Byteidentitaet aendert sich. |
+| PO-G22-documentation-impact | Applicable | Partly Fulfilled | Genau eine `UpdateRequired`-Entscheidung bleibt bindend; T079 ergaenzt darin nur die konditionale renderer-owned Ableitung `docs/scripts/embedded-scripts.md` unter `render-script-reference.*` und erzeugt keine zweite Entscheidung. | `documentation-impact-evidence.md`; beide Previews, Renderer, exakter Diff, beide Check-only-Peers | Aktualisiertes Inventar und Generated-Output-Evidence stehen aus. | Documentation Owner / Independent accessibility and documentation reviewer | Generator-/Inventardrift. | Gegen neuen 36-Pfad-Kandidaten reviewen; `docs/scripts/reference.md` muss unveraendert bleiben. | Source-, Inventory-, Renderer-, Leserpfad- oder Distributiondrift. |
+| PO-G23-aeps-assessment | Applicable | Partly Fulfilled | Das Implementierungsassessment T054 endet begruendet mit unabhaengig validiertem `NoChange`: Die lokale Evidence staerkt bestehende Findings 008, 015 und 018, erzeugt aber keine neue deduplizierbare oder projektuebergreifende Klasse. Die materielle Retrospektive T092 loest zwingend die getrennte Allowlist-Transaktion `final-aeps-reassessment` nach T092 und vor T093-Completion aus. | Historisch JSON-Block-Parse, Source-/Conditional-Path-Hashes, Secret-/Public-Pruefung und `git diff --check`; abschliessend `/tmp/002-portfolio-ownership-retrospective.md`, `docs/aeps/README.md`, verpflichtender Receipt, nur bei Finding vier konditionale AEPS-Pfade, exakter separater Delivery-Delta und unabhaengige AEPS-Validierung | T054: `docs/aeps/receipts/2026-08-30-meta-lh-02-portfolio-ownership.md`, Receipt 028, `Pass`, `blocking findings: 0`; getrennte Abschluss-Neubewertung, stabile Lieferung/Main-Synchronisation und unabhaengige Validierung Pending. | AEPS Evidence Owner / Independent AEPS reviewer | Einzel-AOC-Evidence ist nicht upstream-reif; Retrospektiv-Folgerungen sind noch nicht bewertet. | Nach T092 und vor jeder persistierten oder No-Persistence-T093-Completion; die Transaktion verbreitert den exakten Drei-Pfad-Closeout nicht und erteilt keinen Upstream-, Level-0-, Preset- oder Folgelauf-Schritt. | T092-Retrospektive oder Finding-, Deduplizierungs-, Receipt-, Ledger-/Derivations-, Review-, Delivery-, Closeout-, Authority- oder No-next-run-Drift. |
+| PO-G24-project-statistics | Applicable | Partly Fulfilled | Historische Projektion und publizierter Statistik-Head `a78a78558459e32ad640c238f5eaf96337a70f83` bleiben wahr. Jede T079-Headmutation erzwingt neuen T059-Fixpunkt, neuen normalen Reparatur-Head und neue Methodik-v2-Bindung. | Historische Heads/Renderer-Evidence; spaeter neuer 36-Pfad-Normalkandidat, unveraenderter Statistikrenderer und Dual-`CURRENT`/`0` | Neue Statistik-/PR-Head-Bindung Pending; ein neuer Ledger-only-Commit nur bei weiterem Drift und exakt ein Pfad. | Repository Statistics Maintainer / Independent documentation reviewer | Neuer Head existiert noch nicht. | T073 fuer neuen Head vollstaendig wiederholen. | Transaction-, Renderer-, Methodik-, Pfad-, Hash-, PR- oder Head-Drift. |
+| PO-G25-delivery-set-bash | Applicable | Partly Fulfilled | Historischer 35-Pfad-Pass bleibt wahr; T079 loest genau `docs/scripts/embedded-scripts.md` aus und verlangt einen neuen 36-Pfad-Pass. | Bash Delivery-Set-Validator mit exakter temporaerer Liste | Neuer Pass Pending; fremde Caches und alle anderen generierten Pfade bleiben ausgeschlossen. | AOC Autonomous Run Operator / Independent delivery-set reviewer | Neue Pfaddrift. | Vor Reparatur-Stage und neuem T073 ausfuehren. | Jede Pfaddrift. |
+| PO-G26-delivery-set-powershell | Applicable | Partly Fulfilled | PowerShell muss denselben neuen 36-Pfad-Vertrag semantisch identisch beweisen. | PowerShell Delivery-Set-Validator mit derselben Liste | Neuer Peer-Pass Pending. | AOC Autonomous Run Operator / Independent delivery-set reviewer | Plattform-/Pfaddrift. | Vor Reparatur-Stage und neuem T073 ausfuehren. | Jede Pfad-/Plattformdrift. |
+| PO-G27-exact-stage | Applicable | Partly Fulfilled | Historische Stage-Paesse bleiben headgebunden. T079 verlangt getrennt den exakten Reparatur-Stage, den vollstaendigen 36-Pfad-Normalkandidaten und gegebenenfalls einen exakten Ein-Pfad-Statistikcommit. | `git status`, `git diff --cached --name-only`, `git diff --cached --check`, kompletter Basisdiff | Neue Stage-/Head-Paesse Pending; kein Wildcard- oder Verzeichnis-Staging. | AOC Autonomous Run Operator / Independent delivery-set reviewer | Neue Head-/Stage-Mutation. | Jede Transaktion separat pruefen. | Stage-, Head-, Trailer- oder Pfaddrift. |
+| PO-G28-ci-exact-head | Applicable | Not Fulfilled | PR #29 auf Head `a78a78558459e32ad640c238f5eaf96337a70f83`: 18 terminale Checks, 12 bestanden, sechs technische Jobs fehlgeschlagen. Homogeneity meldet Embedded-Inventar-Drift; alle drei PR-Matrixjobs verwerfen Checkout-Branchidentitaet, Windows zusaetzlich Target-Rohbytes und WSL-Bash. | `gh pr view`, `gh pr checks`, `gh run view --log`; angenommene aktuelle Providerfakten | Neuer Head muss alle 18 Checks, expliziten Event-Head, Branchbeweis, Generatorchecks und exakte Ubuntu-/macOS-/Windows-Commands bestehen. | AOC Autonomous Run Operator / Independent pull-request reviewer | Technische Fehler blockieren; Admin-Bypass verboten. | Nach T079 neu binden. | Head-, Check-, Generator-, Identity-, Hash-, Bash-, Job-, Runner-, Log-, Command- oder Workflowdrift. |
 | PO-G29-review-thread-convergence | Applicable | Not Fulfilled | Keine CHANGES_REQUESTED oder offenen handlungsrelevanten Threads. | paginiertes `gh api graphql` mit `reviewThreads`; GitHub/gh, exact head | Pending T078-T079/T090. | AOC Autonomous Run Operator / Independent pull-request reviewer | Neue Review kann Zustand aendern. | Vor jedem Merge frisch. | Review-, Thread- oder Headdrift. |
 | PO-G30-premerge-evidence-bash | Applicable | Not Fulfilled | Vollstaendiges Schema 2.0 ist erst am terminalen Rename-Head wahr. | `validate-autonomous-gate-evidence.sh --requirements ... --evidence ... --head ...`; Local Bash/Python 3 | Pending T090. | AOC Autonomous Run Operator / Independent gate-evidence reviewer | Kein Zukunftsbeweis fuer normalen Head. | Nach Rename-Checks/Review. | Requirements-, Head- oder Evidence-Drift. |
 | PO-G31-premerge-evidence-powershell | Applicable | Not Fulfilled | Gleicher PreMerge-Nachweis ueber PowerShell. | `validate-autonomous-gate-evidence.ps1 -Requirements ... -Evidence ... -Head ...`; Local PowerShell 7/Python 3 | Pending T090. | AOC Autonomous Run Operator / Independent gate-evidence reviewer | Plattformdivergenz. | Nach Rename-Checks/Review. | Requirements-, Head- oder Evidence-Drift. |
@@ -464,14 +460,58 @@ schedule.*
   `implement-resume-5` bei T073 `Blocked`. / *Both real peers truthfully report
   DRIFT because the ledger binds the disposable source instead of the real
   provisional head; implement-resume-5 is blocked at T073.*
-- Die akzeptierte Reparatur ist ausschliesslich lokal und zukuenftig: hoechstens
-  ein reviewtes Amend innerhalb derselben 35 Pfade, danach genau ein
-  Ledger-only-Commit, beide realen Peers `CURRENT`/`0` und alle betroffenen
-  Gates auf diesem Statistik-Head erneut. Diese Planungsphase fuehrt keinen
-  Renderer-, Stage-, Amend-, Commit-, Push-, PR-, Merge-, Bypass- oder
-  Provider-Schritt aus und markiert keine weitere Aufgabe. / *This planning
-  phase only binds the future one-amend/one-ledger-sync repair and performs no
-  implementation or delivery action.*
+- Die damalige akzeptierte Reparatur wurde spaeter vollstaendig verbraucht:
+  genau ein reviewtes Amend innerhalb derselben 35 Pfade und der anschliessende
+  Ledger-only-Sync endeten am publizierten Head
+  `a78a78558459e32ad640c238f5eaf96337a70f83`. Diese Sequenz bleibt historische
+  Evidence und erteilt keine Wiederverwendungsautoritaet. Ausschliesslich die
+  neue T079-Transaktion darf einen neuen 36-Pfad-Reparatur-Head erzeugen und
+  danach nur bei weiterem Drift hoechstens einen neuen Ein-Pfad-Ledger-Sync
+  verwenden. / *The prior one-amend/one-sync sequence is consumed history; only
+  the new T079 transaction and its conditional at-most-one new ledger sync are
+  authoritative.*
+
+### PR #29 Exact-head-Blocker und T079-Plan / PR #29 exact-head blocker and T079 plan
+
+- Die vorstehende T055-bis-T073-Evidence bleibt historische Wahrheit. Danach
+  wurden ein reviewter Normal-Amend und der urspruengliche Ledger-only-Sync
+  verbraucht. Finaler publizierter Head und PR-#29-`headRefOid` sind
+  `a78a78558459e32ad640c238f5eaf96337a70f83`; kein Merge oder Bypass erfolgte.
+  / *The previous transaction was consumed and the published exact head remains
+  immutable failure evidence.*
+- `implement-resume-7` ist nach 72/93 bei T076/T077 `Blocked`. Alle 18 Checks
+  sind terminal, 12 bestanden. Push- und PR-Homogeneity melden
+  `docs/scripts/embedded-scripts.md`-Drift mit `canonical=131`, `embedded=100`.
+  Die PR-Matrixjobs auf Ubuntu, macOS und `windows-2022` verwerfen die
+  Checkout-Branchidentitaet; Windows meldet zusaetzlich Target-Rohbyte-Drift
+  und nicht ausfuehrbares WSL-Bash. / *Six technical exact-head failures block
+  the run.*
+- Aktuelle Gate-Disposition: `PO-G05`, `PO-G24`, `PO-G25` bis `PO-G28` und
+  `PO-N04` muessen fuer den neuen Head neu belegt werden; `PO-G28` bleibt
+  `Not Fulfilled`. `PO-N01` bleibt begruendet `N/A`, weil technische und
+  Plattformfehler Admin-Bypass verbieten. Historische Paesse werden nur fuer
+  nachweislich byteunveraenderte Inputs wiederverwendet. / *All head-affected
+  gates require fresh evidence and bypass remains prohibited.*
+- Der spaetere T079-Fixpunkt besitzt 35 Required-Pfade plus genau den durch
+  Feature-002-Skriptinventar ausgeloesten konditionalen Pfad
+  `docs/scripts/embedded-scripts.md`. Beide `render-script-reference`-Previews,
+  deterministische Erzeugung, exakter Generated-Diff und beide Check-only-
+  Peers sind Pflicht; `docs/scripts/reference.md` und alle anderen generierten
+  Pfade bleiben unveraendert. / *The triggered candidate is exactly 36 paths
+  and only the embedded inventory may be generated.*
+- Fokussierte spaetere Evidence muss gueltigen exakten PR-Head sowie Ablehnung
+  synthetischer Merge-/detached-Identitaet, LF-/CRLF-Aequivalenz mit
+  substantiver Driftablehnung und ausfuehrbares Git-for-Windows-Bash gegen
+  unbrauchbaren WSL-Launcher beweisen. Receipt-/Review-Rohbytes, sichere
+  shell-freie Subprozesse, Public-Klassifikation und No-secret-Grenze bleiben
+  unveraendert. / *Focused tests retain immutable evidence and secure process
+  boundaries.*
+- Diese Planphase fuehrt weder Generator noch Tests aus und nimmt keine Git-
+  oder Remote-Mutation vor. Erst neue ausdrueckliche T079-Autoritaet erlaubt
+  Implementierung, T059-T073-Neustart, neuen realen Head, Statistik-/PR-
+  Neubindung, alle 18 Providerchecks und exakte Ubuntu-/macOS-/Windows-
+  Command-Evidence. / *Planning alone grants no implementation or delivery
+  action.*
 
 - `analyze-1` bewahrte den CRITICAL Lifecycle-Konflikt, `analyze-2` den letzten
   MEDIUM-Phasenfehler und `analyze-4` sechs begrenzte Planungsbefunde; alle
@@ -677,3 +717,40 @@ review supplied the semantic proof class that the fixtures cannot provide.*
   Head. Erst der gemeinsame Pass akzeptiert T069 bis T072; jede Abweichung
   akzeptiert keinen der vier Marker. / *Only the complete post-amend proof and
   external normal-head binding accept the four atomic markers.*
+
+## T079 und erneuter T059-Fixpunkt / T079 and renewed T059 fixed point
+
+- Die kanonischen Bash-`--dry-run`- und PowerShell-`-WhatIf`-Previews waren
+  bytegleich. Die anschliessende Regeneration aenderte ausschliesslich
+  `docs/scripts/embedded-scripts.md`; `docs/scripts/reference.md` blieb
+  unveraendert. Beide Check-only-Peers melden `CURRENT`, `canonical=131` und
+  `embedded=100`. / *Both previews were byte-identical; canonical generation
+  changed only the conditionally admitted embedded inventory and both peers
+  report CURRENT.*
+- Der Feature-002-Core bindet lokale Branchidentitaet weiterhin strikt an Git.
+  In CI akzeptiert er `GITHUB_HEAD_REF` nur fuer ein passendes
+  `pull_request`-/`push`-Event, das erwartete Repository, den Event-Head-SHA und
+  den exakt ausgecheckten HEAD. Git-Rohbelege stammen ohne Shellinterpolation
+  aus `git show HEAD:<path>`; normalisierte UTF-8-Zielidentitaet bleibt fuer LF
+  und CRLF gleich, Receipt-/Review-Rohhashes bleiben unveraendert. /
+  *Logical CI identity and exact Git-blob evidence are fail closed while local
+  identity, normalized targets, and immutable raw bindings remain strict.*
+- Der Workflow waehlt auf `windows-2022` nur den absoluten Git-for-Windows-
+  `bash.exe`-Pfad und verwirft `System32`/WSL. Das sichere Argumentarray startet
+  den erforderlichen Bash-Peer zusaetzlich zum PowerShell-Peer; fehlende
+  Capability scheitert sichtbar. / *Windows uses validated Git Bash through an
+  argument array and never treats unavailable WSL as a skip.*
+- Die 14 isolierten Tests sowie beide Snapshot-, Review-, Series-, Run-State-
+  und Delivery-Set-Peers, alle sechs Portfolio-Laeufe, Bash-Syntax und
+  PSScriptAnalyzer bestanden lokal. Der T059-Freeze enthaelt exakt 35 Required-
+  Pfade plus den ausgeloesten Generated-Update-Pfad, also 36 Pfade. Nur der
+  fremde Preset-Cache bleibt sichtbar und ausgeschlossen; das erlaubte
+  Feature-Testresiduum wurde am exakten Pfad entfernt. / *All proportional local
+  gates pass and the renewed fixed point is exactly the triggered 36-path
+  candidate with only the unrelated preset cache excluded.*
+- Das per-path Public-/Security-/Privacy-Review bleibt `Public`, meldet
+  `blocking findings: 0` und bindet genau dieselbe 36-Pfad-Liste. Die einzige
+  Documentation-Impact-Entscheidung bleibt `UpdateRequired`; Provider-,
+  Windows-, PR- und Merge-Evidence werden erst am neuen unveraenderten Head
+  vervollstaendigt. / *The renewed public review and single documentation
+  decision pass without pre-claiming downstream provider evidence.*

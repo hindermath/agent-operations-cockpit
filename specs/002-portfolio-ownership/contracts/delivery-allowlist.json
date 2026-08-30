@@ -4,12 +4,12 @@
   "runId": "aa60069e-ded5-463f-a737-9b5aa96070c7",
   "reviewStatus": "AcceptedIndependentPlanReview",
   "statisticsProjection": {
-    "purpose": "Preserve the truthful historical T055-T058 projection and permit the final non-recursive statistics synchronization only after the unpublished normal candidate is frozen.",
+    "purpose": "Preserve the truthful historical T055-T058 projection, consumed amend/statistics sequence, and failed published head a78a78558459e32ad640c238f5eaf96337a70f83; require a fresh non-recursive statistics binding after the explicitly authorised T079 repair candidate is frozen.",
     "sourceTransaction": "normal-feature-candidate",
-    "inputRule": "Use the final amended normal candidate head or a byte-identical clean projection of it. Exclude docs/project-statistics.md itself, .specify/runtime/**, logs, phase results, caches including both known __pycache__ paths, and every unrelated path. The unchanged renderer, configuration, and schema bytes come from the exact frozen normal head.",
-    "gitBoundary": "Preserve provisional commit 7b99227045deb8cc34e0062db09eb4f6dd134501 as historical evidence. Permit at most one explicitly reviewed unpublished local amend that preserves the normal candidate subject, required trailer, and exact 35-path full diff. After that head is frozen, permit exactly one additional local statistics-head-sync commit containing only docs/project-statistics.md and the required trailer. No stash, push, PR, provider action, or further commit is implied by this planning contract.",
-    "outputRule": "Copy back only generated docs/project-statistics.md bytes after Bash and PowerShell CURRENT on the exact clean normal head. Methodology v2 excludes the ledger-only synchronization commit, so both real check-only peers must report CURRENT with exit 0 on the final statistics head before T073 can pass.",
-    "cleanupRule": "If a clean projection is used, validate and remove only its exact temporary worktree/ref and prove absence. Revalidate candidate paths, diff, state, review, snapshot, documentation, secret/security, authority, stage, and exact-head gates on the final statistics head. Any later head mutation requires a new explicit transaction review."
+    "inputRule": "Use the new final T079 normal repair candidate head or a byte-identical clean projection of it. Exclude docs/project-statistics.md itself, .specify/runtime/**, logs, phase results, caches including both known __pycache__ paths, and every unrelated path. The unchanged renderer, configuration, and schema bytes come from the exact newly frozen normal head.",
+    "gitBoundary": "Preserve provisional commit 7b99227045deb8cc34e0062db09eb4f6dd134501, the consumed reviewed amend, the consumed original statistics-head-sync commit, and published failed head a78a78558459e32ad640c238f5eaf96337a70f83 as historical evidence. They grant no reuse authority. A later implementation requires one new explicit T079 transaction, a new normal repair head from the triggered 36-path candidate, and, only when the unchanged renderer still requires it, exactly one new local statistics-head-sync commit containing only docs/project-statistics.md and the required trailer. No mutation is implied by this planning contract.",
+    "outputRule": "Copy back only generated docs/project-statistics.md bytes after Bash and PowerShell CURRENT on the exact clean new normal repair head. Methodology v2 excludes any ledger-only synchronization commit, so both real check-only peers must report CURRENT with exit 0 on the new final statistics head before renewed T073 evidence can pass.",
+    "cleanupRule": "If a clean projection is used, validate and remove only its exact temporary worktree/ref and prove absence. Revalidate the triggered generated update, candidate paths, diff, state, review, snapshot, documentation, secret/security, authority, stage, and exact-head gates on the new final statistics head. Any later head mutation requires another explicit transaction review."
   },
   "transactions": [
     {
@@ -27,6 +27,8 @@
         "specs/002-portfolio-ownership/intake-lifecycle.json",
         "specs/002-portfolio-ownership/tasks.md",
         "specs/002-portfolio-ownership/checklists/implementation-validation.md",
+        "specs/002-portfolio-ownership/security-privacy-review-evidence.md",
+        "specs/002-portfolio-ownership/documentation-impact-evidence.md",
         "specs/002-portfolio-ownership/autonomous-run-state.json",
         "specs/002-portfolio-ownership/autonomous-run-evidence.md"
       ],
@@ -47,7 +49,7 @@
     },
     {
       "transactionId": "normal-feature-candidate",
-      "timing": "Only after plan review, tasks, analyze, implementation, all local gates, and fresh authority revalidation.",
+      "timing": "For the T079 repair, only after this bounded plan, a fresh Analyze pass, explicit new T079 transaction authority, and complete local gate revalidation. The prior amend/statistics authority is consumed and cannot be reused.",
             "requiredPaths": [
                 ".github/workflows/powershell-analysis.yml",
                 "requirements/baseline/portfolio-ownership.md",
@@ -87,6 +89,10 @@
       ],
       "conditionalPaths": [
         {
+          "path": "docs/scripts/embedded-scripts.md",
+          "condition": "Only when the in-scope Feature-002 contract or test script inventory changes. Require Bash --dry-run and PowerShell -WhatIf preview review, deterministic canonical render-script-reference generation, exact diff review, and both check-only peers. Do not hand-edit; docs/scripts/reference.md and every other generated path must remain unchanged."
+        },
+        {
           "path": "docs/aeps/findings-ledger.md",
           "condition": "Only when the canonical AEPS assessment records a genuine new Finding."
         },
@@ -122,11 +128,11 @@
         "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md"
       ],
       "authorityBoundary": "Exact documentary feature candidate only; no product code, RAW-series start, Level-0 work, preset promotion, provider administration, bypass, or implicit remote authority.",
-      "freezeRule": "Resolve every required path and only conditionally triggered path, reject all other changed paths, and require the Python core, Bash/PowerShell peers, Unix man page, bilingual PowerShell help and approved Cmdlet, tests, named fixtures, parity checklist, and the minimal .github/workflows/powershell-analysis.yml matrix update as one same-commit tooling unit. The workflow must run the Feature-002 snapshot suite and PowerShell peer on Ubuntu, macOS, and windows-2022 for the exact reviewed head; missing Windows job, runner, log, command, or successful exit evidence blocks merge and cannot be bypassed. The tests create extra lifecycle-shape, original/archive-exclusivity, target-hash, inactive-state, and individual review-surface-failure projections only in a temporary directory, so no additional tracked fixture path is authorised. Write the exact repository-relative list to a temporary file, review it, then run both delivery-set validators before explicit per-file staging and git diff --cached --check. Any path drift invalidates the frozen set."
+      "freezeRule": "Resolve all 35 required paths plus only a proven conditional path. For T079, docs/scripts/embedded-scripts.md is triggered, yielding exactly 36 normal candidate paths; no other generated path is allowed. Require both renderer previews, deterministic generation, exact generated diff, and both check-only peers. Require the Python core, Bash/PowerShell peers, Unix man page, bilingual PowerShell help and approved Cmdlet, focused tests/projections, parity checklist, quickstart/evidence, and the minimal .github/workflows/powershell-analysis.yml update as one bounded tooling repair. Pull-request checkout uses github.event.pull_request.head.sha and push uses github.sha; the fail-closed resolver accepts GITHUB_HEAD_REF only when event, repository, accepted branch, event head SHA, and checked-out HEAD all prove the same identity. Preserve local Git branch validation. Keep normalized target hashing and immutable raw receipt/review hashes; use exact Git blob bytes when raw Git target evidence is required. On windows-2022 use validated executable Git-for-Windows bash and treat unavailable WSL as a hard capability failure. Tests prove exact PR-head acceptance, synthetic merge/detached rejection, LF/CRLF equivalence with substantive drift failure, and Git-Bash versus unavailable WSL. Write and review the exact list, run both delivery-set validators, stage per file, and require git diff --cached --check. Any path, identity, hash, capability, or generated-output drift invalidates the set."
     },
     {
       "transactionId": "statistics-head-sync",
-      "timing": "Only after the unpublished normal-feature-candidate has been frozen following at most one reviewed local amend and the unchanged canonical renderer plus both check-only peers report CURRENT on that exact clean normal head or its byte-identical clean projection; complete before first push or PR.",
+      "timing": "For the new T079 transaction only after the triggered 36-path normal repair candidate is frozen and the unchanged canonical renderer plus both check-only peers report CURRENT on that exact clean normal head or its byte-identical clean projection; complete before updating PR #29 to the new head and only when a ledger delta remains required.",
       "requiredPaths": [
         "docs/project-statistics.md"
       ],
@@ -142,8 +148,8 @@
         "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
         "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md"
       ],
-      "authorityBoundary": "Exactly one local causal generated-output synchronization commit containing only docs/project-statistics.md with the required trailer. It is not a second feature implementation, does not create another Documentation Impact decision, and grants no push, PR, merge, bypass, provider, Level-0, preset, or additional commit authority.",
-      "freezeRule": "Require an empty stage before explicit ledger-only staging, exact one-path staged and committed diff, git diff --cached --check, required trailer, unchanged renderer/methodology, methodology-v2 exclusion of the ledger-only commit, Bash and PowerShell CURRENT with exit 0 on the resulting final statistics head, and fresh revalidation of every affected path, diff, state, review, snapshot, documentation, secret/security, authority, stage, and exact-head gate. Bind the PR body and feature-head temporary evidence only to this statistics head."
+      "authorityBoundary": "At most one new local causal generated-output synchronization commit for the explicit T079 transaction, containing only docs/project-statistics.md with the required trailer and only when the new normal repair head still produces a ledger delta. It is not a second feature implementation, does not create another Documentation Impact decision, and grants no push, PR, merge, bypass, provider, Level-0, preset, or additional commit authority.",
+      "freezeRule": "Require an empty stage before explicit ledger-only staging, exact one-path staged and committed diff, git diff --cached --check, required trailer, unchanged renderer/methodology, methodology-v2 exclusion of the ledger-only commit, Bash and PowerShell CURRENT with exit 0 on the resulting new final statistics head, and fresh revalidation of every affected generated-output, path, diff, state, review, snapshot, documentation, secret/security, authority, stage, and exact-head gate. Bind PR #29 body and feature-head temporary evidence only to this new final head."
     },
     {
       "transactionId": "terminal-intake-rename",
@@ -168,6 +174,42 @@
       ],
       "authorityBoundary": "Exactly one byte-identical original-to-archive path transition created by the existing Bash or PowerShell rename script; no intake-content, receipt, review, series, lifecycle-record, domain, product, Level-0, preset, task, state, evidence, provider-administration, or bypass authority.",
       "freezeRule": "Before the script commit, require the merged exact-shape schema-1.1 lifecycle record and fourteen-target programme snapshot, original present, archive absent, accepted historical target hashes, immutable receipt and Ready Single review bytes, unique current Ready leaves, active qualified state, success of each installed review surface, current series binding, a clean dedicated branch, both Feature-002-local post-global-ready surfaces, and fresh authority. After the script commit, require exactly one R100 rename and no other changed or staged path; validate archive-only exclusivity through both local snapshot surfaces, both review surfaces, and series validator. Generic receipt-source freshness and generic global-ready are not post-delta success requirements. Publish only this immutable rename head through its own exact-head checks and independent review; any drift invalidates the transaction."
+    },
+    {
+      "transactionId": "final-aeps-reassessment",
+      "timing": "Only after the material T092 retrospective and before terminal completion in T093. This is a separate AEPS evidence transaction and must complete before either the exact causal-post-merge-closeout transaction or the truthful no-persistence completion path; omit no required receipt update.",
+      "requiredPaths": [
+        "docs/aeps/receipts/2026-08-30-meta-lh-02-portfolio-ownership.md"
+      ],
+      "conditionalPaths": [
+        {
+          "path": "docs/aeps/findings-ledger.md",
+          "condition": "Only when the final retrospective-triggered assessment records a genuine new Finding."
+        },
+        {
+          "path": "docs/aeps/finding-to-preset-candidate-matrix.md",
+          "condition": "Only with the same genuine new Finding and the canonical atomic AEPS update."
+        },
+        {
+          "path": "docs/aeps/preset-gap-analysis.md",
+          "condition": "Only with the same genuine new Finding and the canonical atomic AEPS update."
+        },
+        {
+          "path": "docs/aeps/upstream-handoff.md",
+          "condition": "Only with the same genuine new Finding; local status cannot claim upstream authority, posting, handoff, or promotion."
+        }
+      ],
+      "forbiddenPaths": [
+        "specs/002-portfolio-ownership/tasks.md",
+        "specs/002-portfolio-ownership/autonomous-run-state.json",
+        "specs/002-portfolio-ownership/causal-closeout-evidence.json",
+        "docs/project-statistics.md",
+        "requirements/baseline/portfolio-ownership.md",
+        "requirements/baseline/portfolio-ownership.json",
+        "specs/002-portfolio-ownership/intake-lifecycle.json"
+      ],
+      "authorityBoundary": "Repository-local AEPS evidence only under the existing docs/aeps/README.md contract and fresh current delivery authority; no Level-0 handoff, preset promotion, upstream posting, product/domain mutation, provider administration, bypass, new Spec Kit run, or broadening of the separate exact three-path causal closeout.",
+      "freezeRule": "Bind the T092 retrospective trigger and deduplication identity. Record exactly one final Finding or justified NoChange disposition in the required receipt. For Finding, update the canonical ledger and all three derived surfaces atomically and include the local handoff surface only without claiming upstream action; for NoChange, require every conditional path byte-unchanged. Require independent AEPS validation, the same single Documentation Impact decision, exact path/diff/stage review, no unrelated path, stable publication and main synchronization before terminal T093 completion. This transaction grants no next-run authority."
     },
     {
       "transactionId": "causal-post-merge-closeout",
