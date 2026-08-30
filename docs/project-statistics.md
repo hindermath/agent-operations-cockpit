@@ -54,23 +54,23 @@ Profil 2 verwendet Git-getrackte Textdateien und sichtbare Git-Aktivitaet. Die W
 
 | Kennzahl / Metric | Wert / Value |
 |---|---:|
-| Textbasis / Text base | 223576 lines |
+| Textbasis / Text base | 223593 lines |
 | Textdateien / Text files | 1468 |
 | Beobachtbarer Zeitraum / Observable period | 2025-09-07..2026-08-30 |
 | Aktivtage / Active days | 11 |
-| Relevante Commits / Relevant commits | 55 |
-| Zeilen je Aktivtag / Lines per active day | 20325.1 |
+| Relevante Commits / Relevant commits | 56 |
+| Zeilen je Aktivtag / Lines per active day | 20326.6 |
 | Peak-Tag im Fenster / Peak day in window | 2026-07-31 / 132656 |
 | Peak-Woche im Fenster / Peak week in window | 2026-07-26 / 135472 |
 | Laengste Serie / Longest streak | 3 days |
 | Speedup vs. 80 lines/day | 254.1x |
 | Speedup vs. 125 lines/day | 162.6x |
-| Methodik / Methodology | v2; source `3cb78b77bab4` |
+| Methodik / Methodology | v2; source `265767cf68f1` |
 
 ### Artefaktmix / Artifact Mix
 
 ```text
-Produktiv / Production          [#...................]   2.6% | 5721
+Produktiv / Production          [#...................]   2.6% | 5738
 Tests                           [#...................]   3.1% | 6966
 Dokumentation / Documentation   [###########.........]  56.5% | 126336
 Skripte / Scripts               [####................]  19.0% | 42399
@@ -190,7 +190,7 @@ Die Faktoren vergleichen sichtbare Lieferdichte mit den dokumentierten manuellen
 Scale: 0..50000 lines/day
 Experienced manual [#...................] 80
 Thorsten solo      [#...................] 125
-Visible repository [########............] 20325.1
+Visible repository [########............] 20326.6
 ```
 
 Die gemeinsame Skala vergleicht Referenzen und sichtbare Lieferdichte. Sie schreibt die Git-Aktivitaet keiner Person oder KI pauschal zu.
@@ -216,6 +216,6 @@ DE: Das Fenster beginnt am 2025-09-07 und endet am 2026-08-30. Es enthaelt 11 ak
 | 2026-05 | 0 |
 | 2026-06 | 0 |
 | 2026-07 | 132656 |
-| 2026-08 | 99869 |
+| 2026-08 | 99886 |
 
 <!-- project-statistics-v2:end -->
