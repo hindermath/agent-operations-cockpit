@@ -1,0 +1,6 @@
+{
+  "scenario": "duplicate-review-leaf",
+  "source": "specs/intake-review-results/meta-lh-02-portfolio-ownership-2026-08-29-r6.json",
+  "destination": "specs/intake-review-results/meta-lh-02-portfolio-ownership-duplicate-leaf.json",
+  "expectedError": "needs exactly one non-superseded Single review; found 2"
+}

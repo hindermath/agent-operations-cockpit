@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.1",
+  "records": [
+    {
+      "recordVersion": "1.0",
+      "logicalTargetId": "META-LH-02",
+      "originalPath": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "archivedPath": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md",
+      "originalRawSha256": "9fc31a833421915b68b85c7dd499dc5b97a81152a8cf668599bb243ef3e17503",
+      "originalNormalizedSha256": "9fc31a833421915b68b85c7dd499dc5b97a81152a8cf668599bb243ef3e17503",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/META-LH-02-Portfolio-Ownership.json",
+        "rawSha256": "4c468df900e62c7d1c7927c86fda894afdbb4a8c97f092c215311b08dc209876"
+      },
+      "readySingleReview": {
+        "path": "specs/intake-review-results/meta-lh-02-portfolio-ownership-2026-08-29-r6.json",
+        "rawSha256": "2807c8be25b4127e8a1182b2ae0d35303cc1b6c71add37c238db1b3e91f4ff90"
+      },
+      "runId": "aa60069e-ded5-463f-a737-9b5aa96070c7",
+      "branch": "002-portfolio-ownership"
+    }
+  ],
+  "programmeEvidenceSnapshot": {
+    "snapshotVersion": "1.0",
+    "runId": "aa60069e-ded5-463f-a737-9b5aa96070c7",
+    "branch": "002-portfolio-ownership",
+    "orderedLogicalTargets": [
+      {
+        "logicalTargetId": "META-LH-01",
+        "target": { "path": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md", "normalizedSha256": "99eab2565a73b3f1fe836feb89b543392360d3a5d56063c13fd28cf2f0a16704" },
+        "authoringReceipt": { "path": "specs/intake-authoring-receipts/META-LH-01-Programmquellen.json", "rawSha256": "94c05a279bf0e7cd360d2d99085af1aefe506d320d105163d5822b264f767401" },
+        "readySingleReview": { "path": "specs/intake-review-results/meta-lh-01-programmquellen-2026-08-29-r3.json", "rawSha256": "524ef4cfbd6b07c8eb2c279e0070cd20c45970b7985cec33d0f3f4d8728d5810" }
+      },
+      {
+        "logicalTargetId": "META-LH-02",
+        "target": { "path": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md", "normalizedSha256": "9fc31a833421915b68b85c7dd499dc5b97a81152a8cf668599bb243ef3e17503" },
+        "authoringReceipt": { "path": "specs/intake-authoring-receipts/META-LH-02-Portfolio-Ownership.json", "rawSha256": "4c468df900e62c7d1c7927c86fda894afdbb4a8c97f092c215311b08dc209876" },
+        "readySingleReview": { "path": "specs/intake-review-results/meta-lh-02-portfolio-ownership-2026-08-29-r6.json", "rawSha256": "2807c8be25b4127e8a1182b2ae0d35303cc1b6c71add37c238db1b3e91f4ff90" }
+      },
+      {
+        "logicalTargetId": "META-LH-03",
+        "target": { "path": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md", "normalizedSha256": "f6d57cacc954b4899fc5bd8ddcc235570ec20470094feec506e1b8e9ea07e3e9" },
+        "authoringReceipt": { "path": "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json", "rawSha256": "6acc207f5533eb9fb92613f23537c669605eef475eb5bb3a911806f6c28e1aeb" },
+        "readySingleReview": { "path": "specs/intake-review-results/meta-lh-03-authoring-contract-2026-08-29-r6.json", "rawSha256": "9de62c488c4223e78636837e78c3d36910f5a11664df45cc6f53c1ffc8d83e5a" }
+      },
+      {
+        "logicalTargetId": "META-LH-04",
+        "target": { "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md", "normalizedSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce" },
+        "authoringReceipt": { "path": "specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json", "rawSha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b" },
+        "readySingleReview": { "path": "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json", "rawSha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07" }
+      },
+      {
+        "logicalTargetId": "META-LH-05",
+        "target": { "path": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md", "normalizedSha256": "cb255e60b49237f8cc655486b6529536b831b5b942f89f838678386bc31f930f" },
+        "authoringReceipt": { "path": "specs/intake-authoring-receipts/META-LH-05-Erste-Welle.json", "rawSha256": "aec1c2b2878f6267814e8bc7b6b8f256a5ff093fe62d976de1aa0a76756adf06" },
+        "readySingleReview": { "path": "specs/intake-review-results/meta-lh-05-erste-welle-2026-08-29-r6.json", "rawSha256": "a9da42a486af6291d24429ddd0c9689f6fb7e2de3abd42b5ab52d61ac935d501" }
+      },
+      {
+        "logicalTargetId": "RAW-01",
+        "target": { "path": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md", "normalizedSha256": "c61d9786b27ea09e0e954363a1b4335d3255ea55b0f8a5167ee52c25c583f9b6" },
+        "authoringReceipt": { "path": "specs/intake-authoring-receipts/RAW-01-Reference-Agentic-Workspace.json", "rawSha256": "0c716e620dd4462b790272e2dc79d369ff932c3d05bafe2cdb7d2933520e0825" },
+        "readySingleReview": { "path": "specs/intake-review-results/raw-01-reference-agentic-workspace-2026-08-29-r3.json", "rawSha256": "66636f6d84f520b4c025977634f5cbf68674b8758adcff170076568ba8b4fb04" }
+      },
+      {
+        "logicalTargetId": "RAW-02",
+        "target": { "path": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md", "normalizedSha256": "6a41e6ae6447ff0192a03af7940362e05e48bff48a5fd21f39e9b6e670eade20" },
+        "authoringReceipt": { "path": "specs/intake-authoring-receipts/RAW-02-Workspace-Orchestrator.json", "rawSha256": "802993e16875494c0f1116e6459e5463c557fbc8adac5966e60e4dfed2062a81" },
+        "readySingleReview": { "path": "specs/intake-review-results/raw-02-workspace-orchestrator-2026-08-29-r6.json", "rawSha256": "ada4f87362ec6edd19f1a99228d354daec6d8a1ebd42844ced0efecf54f10e4c" }
+      },
+      {
+        "logicalTargetId": "RAW-03",
+        "target": { "path": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md", "normalizedSha256": "31d31e82ab1857182d1201192438e5c91abfc3190ba47a2f68b9543034ab0cfd" },
+        "authoringReceipt": { "path": "specs/intake-authoring-receipts/RAW-03-State-Truthfulness.json", "rawSha256": "ec7869bf6c702e18367b39dba6c1af08f27590722ca387b8f55bcb14eea4fe2b" },
+        "readySingleReview": { "path": "specs/intake-review-results/raw-03-state-truthfulness-2026-08-29-r4.json", "rawSha256": "d0051d0f3f5d1fa5c4aade02a558339a805515a147a569ec3006a47b8e177dae" }
+      },
+      {
+        "logicalTargetId": "RAW-04",
+        "target": { "path": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md", "normalizedSha256": "ce89a73e9e1d0bdeadcc166a0f4a7b3b94052037cabb8225ceb4ef2ebd345ec4" },
+        "authoringReceipt": { "path": "specs/intake-authoring-receipts/RAW-04-Presentation-Fabric.json", "rawSha256": "457d28d4f76e149e56c9112e1a312697bf54115eacce031bf58fea11bfec2719" },
+        "readySingleReview": { "path": "specs/intake-review-results/raw-04-presentation-fabric-2026-08-29-r4.json", "rawSha256": "2626a8b01ea26dc3f060d0de4774d789a9a712467782b5a0ddff650dfbf1dea3" }
+      },
+      {
+        "logicalTargetId": "RAW-05",
+        "target": { "path": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md", "normalizedSha256": "3fd7c5fbf4f419ed6131c4984a948f26d0b6b8c6ab3a5b068cdadce501c3fbad" },
+        "authoringReceipt": { "path": "specs/intake-authoring-receipts/RAW-05-Execution-Nodes.json", "rawSha256": "5b1c879233e455bf932eececc3cd7fa88008db0c6b4ded468f702f924ef4784b" },
+        "readySingleReview": { "path": "specs/intake-review-results/raw-05-execution-nodes-2026-08-29-r4.json", "rawSha256": "969a1e1fb0d350e3e5acf5411080ef178e58e184557ac30aef69569f585fdcac" }
+      },
+      {
+        "logicalTargetId": "RAW-06",
+        "target": { "path": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md", "normalizedSha256": "dde4a283ac2c761373085beea976dcd927d813e17aa2b1ad76ceab800c1d604a" },
+        "authoringReceipt": { "path": "specs/intake-authoring-receipts/RAW-06-CLI-Environment-Orchestration.json", "rawSha256": "54f77169d693b4ed60070ef76435a414004d1173bb24eff0d8cbd381e948e4a3" },
+        "readySingleReview": { "path": "specs/intake-review-results/raw-06-cli-environment-orchestration-2026-08-29-r3.json", "rawSha256": "cfcfee663dc9086328fd71c9db31686fbfd71fc8c55de1078b9c8cf73a879832" }
+      },
+      {
+        "logicalTargetId": "RAW-07",
+        "target": { "path": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md", "normalizedSha256": "ade666e411ed9a81b9736e628adb8613be0d9d732295c7e5470d90f0c64f513a" },
+        "authoringReceipt": { "path": "specs/intake-authoring-receipts/RAW-07-Hardware-Capability-Layer.json", "rawSha256": "785212a1f484ba8f4e3de1caccb1c70f01c627e73cc4b161e766540340a90ae0" },
+        "readySingleReview": { "path": "specs/intake-review-results/raw-07-hardware-capability-layer-2026-08-29-r3.json", "rawSha256": "6912054b10f2926b85ae9ec29b533d9d9d40693ce8d0f09dd1c471b0442d6e35" }
+      },
+      {
+        "logicalTargetId": "RAW-08",
+        "target": { "path": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md", "normalizedSha256": "623451757149794556a9f4efef73c13c6894244476b7fd484f0eaaa9fdba7f1a" },
+        "authoringReceipt": { "path": "specs/intake-authoring-receipts/RAW-08-Workflow-Engine.json", "rawSha256": "89776ffcea4342ab55c45551447526144b85679327774ed80146a06e03305aa5" },
+        "readySingleReview": { "path": "specs/intake-review-results/raw-08-workflow-engine-2026-08-29-r4.json", "rawSha256": "29eea5999f76b63c1c80c91a9d5f3fc7aee7c2a81060f528e6bfb1fd8afa1bb6" }
+      },
+      {
+        "logicalTargetId": "RAW-09",
+        "target": { "path": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md", "normalizedSha256": "c3da0eec782279678b1599e0e2365e409fbfe9e0e6f40e5f2e1b768e385f3b83" },
+        "authoringReceipt": { "path": "specs/intake-authoring-receipts/RAW-09-Preset-Evolution.json", "rawSha256": "97961fdc15f41aff5e74dd4100d23294aa6a2453eb7dd3668a212dacb1260f12" },
+        "readySingleReview": { "path": "specs/intake-review-results/raw-09-preset-evolution-2026-08-29-r4.json", "rawSha256": "7e59a67e4d830f5d600f386c8543356035f031744d7143a42c547f533e6529fe" }
+      }
+    ]
+  }
+}

@@ -1,0 +1,70 @@
+.TH VALIDATE-META-LH02-SNAPSHOT 1 "2026-08-30" "AgentOperationsCockpit" "User Commands"
+.SH NAME
+validate-meta-lh02-snapshot \- read-only META-LH-02 programme-snapshot validation
+.SH SYNOPSIS
+.B validate-meta-lh02-snapshot.sh
+[
+.B --repo
+.IR PATH ]
+[
+.B --
+]
+.B post-global-ready
+.SH BESCHREIBUNG / DESCRIPTION
+Prueft fail-closed den exakten Feature-002-Run und Branch, einen aktiven
+qualifizierten Zustand, den Schema-1.1-Lifecycle, die Original-/Archiv-
+Exklusivitaet und den unveraenderten historischen 14-Ziele-Snapshot.
+.PP
+Validates fail closed the exact Feature-002 run and branch, a qualified active
+state, the schema-1.1 lifecycle, original/archive exclusivity, and the immutable
+historical fourteen-target snapshot.
+.PP
+Alle Receipt- und Review-Bytes, eindeutigen aktuellen Single/Primary/Ready-
+Leaves ohne Blocker sowie beide installierten Review-Oberflaechen werden
+geprueft. Das Werkzeug ist immer read-only, besitzt keinen Write-Modus und
+keinen Stage-Override.
+.PP
+All receipt and review bytes, unique current Single/Primary/Ready leaves without
+blockers, and both installed review surfaces are checked. The tool is always
+read-only and has no write mode or stage override.
+.SH OPTIONEN / OPTIONS
+.TP
+.BR --repo " " PATH
+Repository-Wurzel; Standard ist das aktuelle Verzeichnis. / Repository root;
+the default is the current directory.
+.TP
+.BR -h , " " --help
+Zeigt die interne Hilfe und verweist auf dieses Handbuch. / Shows internal help
+and points to this manual.
+.TP
+.B --
+Beendet die Optionsauswertung. / Ends option processing.
+.SH EXIT STATUS
+.TP
+.B 0
+Der Vertrag oder die Hilfe wurde erfolgreich geprueft. / Contract or help
+validation succeeded.
+.TP
+.B 1
+Ein fachliches, Hash-, Pfad-, State-, Review- oder Subprozess-Gate schlug fehl.
+/ A contract, hash, path, state, review, or subprocess gate failed.
+.TP
+.B 2
+Die CLI-Argumente sind ungueltig. / CLI arguments are invalid.
+.SH FEHLERFAELLE / FAILURE CASES
+Falscher Run oder Branch, unzulaessige Stage, inaktiver State, mehrdeutige
+Lifecycle-Form, beide oder keine Intake-Pfade, Ziel-/Receipt-/Review-Hashdrift,
+mehrdeutige Ready-Leaves und der Ausfall einer installierten Review-Oberflaeche
+stoppen die Folgephase.
+.PP
+Wrong run or branch, a disallowed stage, inactive state, ambiguous lifecycle
+shape, both or neither intake path, target/receipt/review hash drift, ambiguous
+Ready leaves, and failure of either installed review surface stop the next phase.
+.SH DATEIEN / FILES
+.I specs/002-portfolio-ownership/contracts/validate_meta_lh02_snapshot.py
+.br
+.I specs/002-portfolio-ownership/intake-lifecycle.json
+.br
+.I specs/002-portfolio-ownership/autonomous-run-state.json
+.SH SEE ALSO
+.BR validate-intake-review-result.sh (1)

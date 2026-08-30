@@ -24,6 +24,11 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
+      - name: Set up Python
+        uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
+        with:
+          python-version: '3.x'
+
       - name: Install required PowerShell modules
         shell: pwsh
         run: ./scripts/maintain-powershell-modules.ps1
@@ -31,3 +36,11 @@ jobs:
       - name: Analyze tracked PowerShell files
         shell: pwsh
         run: ./scripts/invoke-psscriptanalyzer.ps1
+
+      - name: Test Feature 002 snapshot contract
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        shell: pwsh
+        run: |
+          python -B specs/002-portfolio-ownership/contracts/test_validate_meta_lh02_snapshot.py
+          ./specs/002-portfolio-ownership/contracts/validate-meta-lh02-snapshot.ps1 -Repo . -Mode post-global-ready

@@ -1,0 +1,6 @@
+{
+  "scenario": "wrong-branch",
+  "target": "lifecycle.programmeEvidenceSnapshot.branch",
+  "value": "002-wrong-branch",
+  "expectedError": "programme evidence snapshot branch differs from run state"
+}

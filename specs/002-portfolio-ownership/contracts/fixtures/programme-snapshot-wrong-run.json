@@ -1,0 +1,6 @@
+{
+  "scenario": "wrong-run",
+  "target": "lifecycle.programmeEvidenceSnapshot.runId",
+  "value": "00000000-0000-0000-0000-000000000001",
+  "expectedError": "programme evidence snapshot runId differs from run state"
+}
