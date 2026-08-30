@@ -4,32 +4,26 @@
   "runId": "aa60069e-ded5-463f-a737-9b5aa96070c7",
   "reviewStatus": "AcceptedIndependentPlanReview",
   "statisticsProjection": {
-    "purpose": "Preserve the truthful historical T055-T058 projection, consumed amend/statistics sequence, and failed published head a78a78558459e32ad640c238f5eaf96337a70f83; require a fresh non-recursive statistics binding after the explicitly authorised T079 repair candidate is frozen.",
-    "sourceTransaction": "normal-feature-candidate",
-    "inputRule": "Use the new final T079 normal repair candidate head or a byte-identical clean projection of it. Exclude docs/project-statistics.md itself, .specify/runtime/**, logs, phase results, caches including both known __pycache__ paths, and every unrelated path. The unchanged renderer, configuration, and schema bytes come from the exact newly frozen normal head.",
-    "gitBoundary": "Preserve provisional commit 7b99227045deb8cc34e0062db09eb4f6dd134501, the consumed reviewed amend, the consumed original statistics-head-sync commit, and published failed head a78a78558459e32ad640c238f5eaf96337a70f83 as historical evidence. They grant no reuse authority. A later implementation requires one new explicit T079 transaction, a new normal repair head from the triggered 36-path candidate, and, only when the unchanged renderer still requires it, exactly one new local statistics-head-sync commit containing only docs/project-statistics.md and the required trailer. No mutation is implied by this planning contract.",
-    "outputRule": "Copy back only generated docs/project-statistics.md bytes after Bash and PowerShell CURRENT on the exact clean new normal repair head. Methodology v2 excludes any ledger-only synchronization commit, so both real check-only peers must report CURRENT with exit 0 on the new final statistics head before renewed T073 evidence can pass.",
-    "cleanupRule": "If a clean projection is used, validate and remove only its exact temporary worktree/ref and prove absence. Revalidate the triggered generated update, candidate paths, diff, state, review, snapshot, documentation, secret/security, authority, stage, and exact-head gates on the new final statistics head. Any later head mutation requires another explicit transaction review."
+    "purpose": "Preserve T079 repair commit 8f395f8 and its consumed ledger-only synchronization head 0b0808c56be649d088b397c6a88463ff5f52edb6 as immutable history; permit one final non-recursive statistics binding only after the Ubuntu Bash cardinality follow-up commit is frozen.",
+    "sourceTransaction": "ubuntu-bash-cardinality-followup",
+    "inputRule": "Use the new normal Ubuntu Bash cardinality follow-up head on top of 0b0808c56be649d088b397c6a88463ff5f52edb6 or a byte-identical clean projection. Exclude docs/project-statistics.md itself, .specify/runtime/**, logs, phase results, caches, and every unrelated path. The unchanged renderer, configuration, schema, and methodology bytes come from that exact follow-up head.",
+    "gitBoundary": "Preserve 8f395f8 and 0b0808c56be649d088b397c6a88463ff5f52edb6 as published consumed evidence with no amend, force-push, history-rewrite, or reuse authority. Permit exactly one new normal follow-up commit on 0b0808c and, only when the unchanged renderer reports drift, at most one new local statistics-head-sync commit containing only docs/project-statistics.md and the required trailer.",
+    "outputRule": "When drift is reported, copy back only generated docs/project-statistics.md bytes. Methodology v2 excludes the ledger-only synchronization commit, so both real check-only peers must report CURRENT with exit 0 on the resulting final head. When no drift is reported, the normal follow-up head itself is final.",
+    "cleanupRule": "If a clean projection is used, validate and remove only its exact temporary worktree/ref and prove absence. Revalidate the follow-up path set, diff, state, review, snapshot, documentation, secret/security, authority, stage, all eighteen checks, and exact Ubuntu/macOS/windows-2022 evidence on the final head. Any later head mutation fails closed."
   },
   "transactions": [
     {
       "transactionId": "planning-phase",
       "timing": "Current plan phase; no staging or commit is authorised by this transaction.",
       "requiredPaths": [
-        "specs/002-portfolio-ownership/spec.md",
         "specs/002-portfolio-ownership/plan.md",
         "specs/002-portfolio-ownership/research.md",
-        "specs/002-portfolio-ownership/data-model.md",
         "specs/002-portfolio-ownership/quickstart.md",
         "specs/002-portfolio-ownership/contracts/planning-validation-contract.md",
         "specs/002-portfolio-ownership/contracts/delivery-allowlist.json",
         "specs/002-portfolio-ownership/autonomous-run-gate-requirements.json",
-        "specs/002-portfolio-ownership/intake-lifecycle.json",
         "specs/002-portfolio-ownership/tasks.md",
         "specs/002-portfolio-ownership/checklists/implementation-validation.md",
-        "specs/002-portfolio-ownership/security-privacy-review-evidence.md",
-        "specs/002-portfolio-ownership/documentation-impact-evidence.md",
-        "specs/002-portfolio-ownership/autonomous-run-state.json",
         "specs/002-portfolio-ownership/autonomous-run-evidence.md"
       ],
       "conditionalPaths": [],
@@ -49,7 +43,7 @@
     },
     {
       "transactionId": "normal-feature-candidate",
-      "timing": "For the T079 repair, only after this bounded plan, a fresh Analyze pass, explicit new T079 transaction authority, and complete local gate revalidation. The prior amend/statistics authority is consumed and cannot be reused.",
+      "timing": "Consumed historical T079 transaction only. Its published repair head 8f395f8 and ledger-only synchronization head 0b0808c56be649d088b397c6a88463ff5f52edb6 grant no current staging, commit, delivery, amend, or reuse authority.",
             "requiredPaths": [
                 ".github/workflows/powershell-analysis.yml",
                 "requirements/baseline/portfolio-ownership.md",
@@ -127,12 +121,60 @@
         "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
         "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md"
       ],
-      "authorityBoundary": "Exact documentary feature candidate only; no product code, RAW-series start, Level-0 work, preset promotion, provider administration, bypass, or implicit remote authority.",
-      "freezeRule": "Resolve all 35 required paths plus only a proven conditional path. For T079, docs/scripts/embedded-scripts.md is triggered, yielding exactly 36 normal candidate paths; no other generated path is allowed. Require both renderer previews, deterministic generation, exact generated diff, and both check-only peers. Require the Python core, Bash/PowerShell peers, Unix man page, bilingual PowerShell help and approved Cmdlet, focused tests/projections, parity checklist, quickstart/evidence, and the minimal .github/workflows/powershell-analysis.yml update as one bounded tooling repair. Pull-request checkout uses github.event.pull_request.head.sha and push uses github.sha; the fail-closed resolver accepts GITHUB_HEAD_REF only when event, repository, accepted branch, event head SHA, and checked-out HEAD all prove the same identity. Preserve local Git branch validation. Keep normalized target hashing and immutable raw receipt/review hashes; use exact Git blob bytes when raw Git target evidence is required. On windows-2022 use validated executable Git-for-Windows bash and treat unavailable WSL as a hard capability failure. Tests prove exact PR-head acceptance, synthetic merge/detached rejection, LF/CRLF equivalence with substantive drift failure, and Git-Bash versus unavailable WSL. Write and review the exact list, run both delivery-set validators, stage per file, and require git diff --cached --check. Any path, identity, hash, capability, or generated-output drift invalidates the set."
+      "authorityBoundary": "Historical evidence only; this consumed transaction grants no current write, staging, commit, remote, product, Level-0, preset, provider, bypass, or next-run authority.",
+      "freezeRule": "Preserve the published 8f395f8 and 0b0808c56be649d088b397c6a88463ff5f52edb6 heads and their exact evidence bytes without amend, rewrite, force-push, or authority reuse. Current follow-up work must resolve exclusively through ubuntu-bash-cardinality-followup."
+    },
+    {
+      "transactionId": "ubuntu-bash-cardinality-followup",
+      "timing": "Only after this bounded plan and Analyze-14 pass. Build one normal follow-up commit directly on immutable head 0b0808c56be649d088b397c6a88463ff5f52edb6; do not amend, rewrite, force-push, or reuse consumed T079 authority.",
+      "requiredPaths": [
+        ".github/workflows/powershell-analysis.yml",
+        "specs/002-portfolio-ownership/plan.md",
+        "specs/002-portfolio-ownership/research.md",
+        "specs/002-portfolio-ownership/quickstart.md",
+        "specs/002-portfolio-ownership/contracts/planning-validation-contract.md",
+        "specs/002-portfolio-ownership/contracts/delivery-allowlist.json",
+        "specs/002-portfolio-ownership/autonomous-run-gate-requirements.json",
+        "specs/002-portfolio-ownership/tasks.md",
+        "specs/002-portfolio-ownership/checklists/implementation-validation.md",
+        "specs/002-portfolio-ownership/autonomous-run-evidence.md"
+      ],
+      "conditionalPaths": [
+        {
+          "path": "specs/002-portfolio-ownership/contracts/test_validate_meta_lh02_snapshot.py",
+          "condition": "Only if the existing accepted executable evidence path is required to prove zero, one, and duplicate-alias Bash candidate cardinality; do not add a new test framework or broaden snapshot semantics."
+        },
+        {
+          "path": "specs/002-portfolio-ownership/checklists/snapshot-tooling-parity.md",
+          "condition": "Only if the existing parity evidence must record the focused zero, one, and duplicate-alias proof for the final head."
+        }
+      ],
+      "forbiddenPaths": [
+        "docs/project-statistics.md",
+        "docs/scripts/embedded-scripts.md",
+        "docs/scripts/reference.md",
+        "requirements/baseline/portfolio-ownership.md",
+        "requirements/baseline/portfolio-ownership.json",
+        "docs/decisions/open-decisions.md",
+        "specs/002-portfolio-ownership/intake-lifecycle.json",
+        "specs/002-portfolio-ownership/spec.md",
+        "specs/002-portfolio-ownership/data-model.md",
+        "AGENTS.md",
+        "CLAUDE.md",
+        "GEMINI.md",
+        ".github/copilot-instructions.md",
+        ".github/agents/copilot-instructions.md",
+        "constitution.md",
+        ".specify/memory/constitution.md",
+        "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+        "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md"
+      ],
+      "authorityBoundary": "One scalar-cardinality follow-up only. Implementation bytes are limited to .github/workflows/powershell-analysis.yml; directly affected plan/gate/evidence bindings and at most the two existing conditional proof paths may accompany it. No product, provider, Level-0, preset, bypass, next-run, or additional commit authority.",
+      "freezeRule": "On non-Windows, deterministically order Get-Command bash ApplicationInfo candidates, require at least one, select exactly one ApplicationInfo before reading Source, require exactly one non-empty fully qualified executable path, and invoke it through the existing safe argument array. Prove zero candidates fail closed, one candidate stays scalar, and duplicate aliases reduce deterministically to one path. Keep the Windows Git-for-Windows validation and WSL rejection unchanged. Freeze and review the exact resolved list, run both delivery-set validators, stage per file, require staged-name equality and git diff --cached --check, and reject every unrelated path."
     },
     {
       "transactionId": "statistics-head-sync",
-      "timing": "For the new T079 transaction only after the triggered 36-path normal repair candidate is frozen and the unchanged canonical renderer plus both check-only peers report CURRENT on that exact clean normal head or its byte-identical clean projection; complete before updating PR #29 to the new head and only when a ledger delta remains required.",
+      "timing": "Only after the normal ubuntu-bash-cardinality-followup commit is frozen and the unchanged methodology-v2 renderer reports a ledger delta on that exact clean head or its byte-identical clean projection; omit this transaction when no drift exists.",
       "requiredPaths": [
         "docs/project-statistics.md"
       ],
@@ -148,7 +190,7 @@
         "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
         "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md"
       ],
-      "authorityBoundary": "At most one new local causal generated-output synchronization commit for the explicit T079 transaction, containing only docs/project-statistics.md with the required trailer and only when the new normal repair head still produces a ledger delta. It is not a second feature implementation, does not create another Documentation Impact decision, and grants no push, PR, merge, bypass, provider, Level-0, preset, or additional commit authority.",
+      "authorityBoundary": "At most one new local causal generated-output synchronization commit for the Ubuntu Bash cardinality follow-up, containing only docs/project-statistics.md with the required trailer and only when the unchanged renderer reports drift. It is not a second feature implementation and grants no additional authority.",
       "freezeRule": "Require an empty stage before explicit ledger-only staging, exact one-path staged and committed diff, git diff --cached --check, required trailer, unchanged renderer/methodology, methodology-v2 exclusion of the ledger-only commit, Bash and PowerShell CURRENT with exit 0 on the resulting new final statistics head, and fresh revalidation of every affected generated-output, path, diff, state, review, snapshot, documentation, secret/security, authority, stage, and exact-head gate. Bind PR #29 body and feature-head temporary evidence only to this new final head."
     },
     {

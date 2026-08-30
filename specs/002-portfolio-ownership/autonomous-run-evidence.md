@@ -103,6 +103,10 @@
 | `implement-resume-7` | `long-running-implementation` | `codex-implementation-auto`, `gpt-5.6-sol`, `high` | `Blocked` bei T076/T077 nach 72/93 legitimen Abschluessen auf PR #29 und exaktem Head `a78a78558459e32ad640c238f5eaf96337a70f83`. Alle 18 Checks sind terminal; 12 bestanden, sechs technische Jobs scheiterten. Zwei Homogeneity-Jobs melden `docs/scripts/embedded-scripts.md`-Drift; die drei PR-Matrixjobs scheitern an Checkout-Branchidentitaet, Windows zusaetzlich an Worktree-Rohbytes und unbrauchbarem WSL-Bash. Admin-Bypass ist verboten. Ergebnisbeleg `736ad84f6e43288790018b28c9ee0cacdb567b6d689928e2b5a34cfcabde5b31`, Tasks-Payload `f412b3c7d1705d44f59796a8f9a694a28fd245c90f6b237f4a69d75770612e5c`. Kein Merge, Bypass oder Closeout. / Truthfully blocked on six technical exact-head failures. |
 | `ci-t079-remediation` | `frontier-reasoning` | `codex-frontier-auto`, `gpt-5.6-sol`, `high` | `Completed`; plant ausschliesslich die neue fail-closed T079-Transaktion fuer die sechs technischen PR-#29-Fehler. 93 IDs und 72 Marker bleiben unveraendert; T073 bis T093 sind offen. Der durch Bash und PowerShell semantisch validierte Phasenbeleg bindet Tasks-Payload `d123fcd716bdef9f6588e8aa43ac6223eb690f6a9c1701880d3355cdc356e0f8` und besitzt SHA-256 `244084cf01264ed8e918b9f49bd9b69ce08ae328744a7f4ab18393b9e944e7fe`. Keine Implementierungs-, Generator-, Test-, Git-, Remote-, Provider- oder Task-Marker-Mutation. / Completed bounded plan-only remediation with no implementation or delivery action. |
 | `analyze-12` | `frontier-reasoning` | `codex-frontier-auto`, `gpt-5.6-sol`, `high` | `Blocked` nach vollstaendiger 93-Task-Abdeckung auf exakt drei begrenzten Cross-Artefakt-Befunden: R-016 autorisierte die verbrauchte `7b992270`-Amend-/Ledger-Sequenz weiter; PO-G23 war nach der materiellen T092-Retrospektive nicht auf eine abschliessende AEPS-Neubewertung in T093 gemappt; beide Closeout-Pfade besassen keine explizite No-next-run-Disposition. Alle anderen T079-Grenzen bestanden die Konsistenzanalyse. Der unveraenderte Ergebnisbeleg besitzt SHA-256 `026a9bc0bf1b92622715a077e1103e7ce13d9569a1ec025716358f90aa71bc27` und bindet den damaligen Tasks-Payload `d123fcd716bdef9f6588e8aa43ac6223eb690f6a9c1701880d3355cdc356e0f8`. Keine Repository-, Git-, Remote-, Provider- oder Marker-Mutation. / Truthfully blocked on exactly the three bounded consistency findings with all other T079 boundaries accepted. |
+| `analyze12-remediation` | `frontier-reasoning` | `codex-frontier-auto`, `gpt-5.6-sol`, `high` | `Completed`; korrigierte ausschliesslich die drei Analyze-12-Befunde und bewahrte 93 IDs, 72 Marker, 40 Gates, eine Documentation-Impact-Entscheidung und alle Scope-/Hashgrenzen. / Bounded correction of the three findings only. |
+| `analyze-13` | `frontier-reasoning` | `codex-frontier-auto`, `gpt-5.6-sol`, `high` | `Completed`; null Critical, null High und null unaufgeloeste Medium-Findings bei 93/93 Task-Abdeckung; Ergebnisbeleg `dc05b2a439fd00f72e08886e5c5f863eedb6ae55227b02aeee0497c5a6462b7c`. / Accepted convergence before implementation resume. |
+| `implement-resume-8` | `long-running-implementation` | `codex-implementation-auto`, `gpt-5.6-sol`, `high` | `Blocked` nach 72/93 dauerhaften Abschluessen auf PR #29 und exaktem Head `0b0808c56be649d088b397c6a88463ff5f52edb6`. 16/18 Checks bestehen. Beide Restfehler sind derselbe Ubuntu-PSScriptAnalyzer-Defekt: `/usr/bin/bash` und `/bin/bash` werden als `Source`-Array an `$bash` gebunden und wie ein einzelner Pfad aufgerufen. Homogeneity, Public Readiness, Maintenance TUI, macOS und Windows samt Feature-002-Evidence bestehen. Admin-Bypass ist verboten. / Truthfully blocked only on duplicate-alias Bash array cardinality. |
+| `ubuntu-bash-cardinality-remediation` | `frontier-reasoning` | `codex-frontier-auto`, `gpt-5.6-sol`, `high` | `Completed` nur wenn der strukturierte Phasenbeleg den finalen Tasks-Payload bindet: plant genau einen normalen Workflow-Follow-up-Commit auf `0b0808c`, null/eins/mehrere-Alias-Proof, unveraenderten Windows-Zweig, optional hoechstens einen rendererbegruendeten Ledger-only-Commit und vollstaendige 18-Check-/Dreiplattform-/Review-Neubindung. Keine Implementierungs-, Workflow-, Renderer-, Test-, Task-Marker-, Git-, Remote-, PR-, CI-, Merge-, Bypass-, Level-0-, Preset-, Produkt- oder Folgelauf-Mutation. / Bounded plan-only phase with no implementation or delivery action. |
 
 ### Tasks-zu-Analyze-Grenze / Tasks-to-Analyze boundary
 
@@ -110,13 +114,13 @@ Der historische `tasks`-Runner-Beleg bindet Payload
 `b257eac0e24af0a0b081e5e3e6b1bad3d13f5f8621ebe4d3f7caca4507f8f5ab`.
 Die spaeteren begrenzten Remediations und die konvergierten Analyze-Belege
 binden ihre jeweiligen akzeptierten Implement-Eingaenge. Der aktuelle
-`analyze12-remediation`-Planungspayload behaelt alle 93 IDs und 72 Abschluesse, T073 bis T093
-offen und bindet den normalisierten Hash
-`3f82b78d07b0f4ade3a7860a46461a735f2fb33c3ba4036e631af27dd6e1227e`.
+`ubuntu-bash-cardinality-remediation`-Planungspayload behaelt alle 93 IDs und
+72 Abschluesse; T079 bis T093 bleiben offen. Sein finaler normalisierter
+SHA-256 wird im semantisch validierten Phasenbeleg gebunden.
 Der Runner darf diese Bindung erst nach semantischer Validierung des
-Phasenergebnisses in den Run-State uebernehmen. `implement-resume-7` bleibt
-als `Blocked` auf dem exakten PR-#29-Head erhalten; eine spaetere Ausfuehrung
-wird nicht vorweggenommen.
+Phasenergebnisses in den Run-State uebernehmen. `implement-resume-8` bleibt
+ausschliesslich auf der Ubuntu-Array-Kardinalitaet `Blocked`; eine spaetere
+Ausfuehrung wird nicht vorweggenommen.
 Jeder geroutete Phasenbeleg muss vor Akzeptanz mit
 `.specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.sh`
 oder dem PowerShell-Peer semantisch validiert werden; Exitcode allein reicht
@@ -423,8 +427,24 @@ Preset-Cache blieb ausgeschlossen und unveraendert. / *The exact-head,
 line-ending, immutable-blob, and Windows Bash repairs pass fourteen tests and
 the complete renewed local fixed point.*
 
-Diese Evidence behauptet vor dem neuen Commit weder T073, PR-Neubindung,
-Provider-Gruen, Review, Merge, Rename noch PostMerge. Der naechste exakte
-Schritt ist die einzeln gestagte 36-Pfad-Reparatur, danach die kausale
-Methodik-v2-Statistikbindung. / *No downstream head-bound fact is pre-claimed;
-the exact next action is the reviewed repair commit and statistics binding.*
+Diese historische Evidence führte später zum publizierten Reparatur-Commit
+`8f395f8` und zum verbrauchten Ledger-only-Synchronisationshead
+`0b0808c56be649d088b397c6a88463ff5f52edb6`. Beide bleiben unveränderlich und
+erteilen keine Wiederverwendungsautorität. / *This historical evidence later
+produced the immutable published repair and consumed ledger-only heads and
+grants no reuse authority.*
+
+## Ubuntu-Bash-Kardinalitäts-Planung / Ubuntu Bash cardinality planning
+
+Auf `0b0808c` bestehen 16/18 Exact-head-Checks. `implement-resume-8` bleibt
+ausschließlich wegen der zwei Ubuntu-Ausprägungen desselben Defekts `Blocked`:
+`Get-Command bash` liefert `/usr/bin/bash` und `/bin/bash`, beide `Source`-Werte
+entkommen als Array, und die Invocation behandelt den Verbund als einen Pfad.
+Die Planung bindet genau eine neue normale Follow-up-Transaktion, skalare
+Null-/Eins-/Mehrfach-Alias-Semantik, unveränderte Windows-Validierung, höchstens
+einen rendererbegründeten Ledger-only-Sync sowie vollständige 18-Check-,
+Dreiplattform- und Review-Neukonvergenz. Sie bewahrt 93 Task-IDs, 72 Marker,
+`40 = 33 Applicable + 7 N/A`, genau eine Documentation-Impact-Entscheidung und
+alle akzeptierten Hash- und Scope-Grenzen. / *The current plan is limited to
+one scalar-cardinality follow-up and complete exact-head reconvergence while
+preserving every accepted count, hash, and scope boundary.*

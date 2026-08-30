@@ -52,8 +52,22 @@ jobs:
             }
             $bash = (Resolve-Path -LiteralPath $candidate).Path
           } else {
-            $command = Get-Command bash -CommandType Application -ErrorAction Stop
-            $bash = $command.Source
+            $candidates = @(Get-Command bash -CommandType Application -ErrorAction SilentlyContinue |
+              Sort-Object -Property Source, Name)
+            if ($candidates.Count -eq 0) {
+              throw 'Required Bash capability unavailable.'
+            }
+            [System.Management.Automation.ApplicationInfo] $command = $candidates[0]
+            $sources = @($command.Source)
+            if ($sources.Count -ne 1 -or
+                [string]::IsNullOrWhiteSpace([string] $sources[0])) {
+              throw 'Required Bash capability did not resolve to exactly one executable source.'
+            }
+            $bash = [string] $sources[0]
+            if (-not [IO.Path]::IsPathFullyQualified($bash) -or
+                -not (Test-Path -LiteralPath $bash -PathType Leaf)) {
+              throw 'Required Bash capability is not a fully qualified executable file.'
+            }
           }
           & $bash @('--version')
           if ($LASTEXITCODE -ne 0) {

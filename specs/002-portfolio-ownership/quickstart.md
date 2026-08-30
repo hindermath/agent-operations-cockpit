@@ -11,38 +11,19 @@ Dieser Leitfaden beschreibt die spaetere Ausfuehrung des dokumentarischen Deltas
 - Vertraege: [Planungs- und Validierungsvertrag](contracts/planning-validation-contract.md), [Delivery-Allowlist](contracts/delivery-allowlist.json), [Gate-Requirements](autonomous-run-gate-requirements.json). / Contracts are linked above.
 - Schreibgrenze: Kein Produktcode, kein RAW-Start, kein Level 0, keine Preset-Promotion und keine Remote-Aktion vor ihren spaeter autorisierten Gates. / No product code, RAW start, Level 0, preset promotion, or premature remote action.
 
-## 0. T079-Reparaturgrenze fuer PR #29 / T079 remediation boundary for PR #29
+## 0. Finale Ubuntu-Bash-Kardinalitaetsgrenze fuer PR #29 / Final Ubuntu Bash cardinality boundary for PR #29
 
-Der aktuelle exakte PR-Head `a78a78558459e32ad640c238f5eaf96337a70f83` bleibt historische Failure-Evidence: 18 terminale Checks, 12 bestanden, sechs technische Fehler. `implement-resume-7` ist bei T076/T077 `Blocked`. Kein Befehl dieses Abschnitts wird in der Planphase ausgefuehrt; die folgenden Schritte sind der spaetere fail-closed Implementierungsvertrag. / *The current PR head remains immutable failure evidence. This planning phase executes none of the following implementation commands.*
+Die publizierten Heads `8f395f8` und `0b0808c56be649d088b397c6a88463ff5f52edb6` bleiben unveraenderliche historische Evidence. Auf `0b0808c` bestehen 16/18 Checks; beide verbleibenden Ubuntu-Fehler haben dieselbe Ursache: `/usr/bin/bash` und `/bin/bash` verlassen `Get-Command` als zwei `ApplicationInfo`-Treffer, ihre `Source`-Werte werden als Array gebunden und die Invocation behandelt dieses Array wie einen Executable-Pfad. `implement-resume-8` ist ausschliesslich darauf `Blocked`. Kein Befehl dieses Abschnitts wird in der Planphase ausgefuehrt. / *The two published heads are immutable. Sixteen checks pass; only the duplicate-alias array-cardinality defect blocks implement-resume-8. Planning executes none of the later commands.*
 
-1. Embedded-Inventar nur ueber den kanonischen Generator behandeln: / Treat the embedded inventory only through the canonical generator:
+Der spaetere Follow-up-Vertrag ist bewusst klein: / *The later follow-up contract is intentionally small:*
 
-```bash
-bash scripts/render-script-reference.sh --repo . --dry-run
-pwsh -NoProfile -File scripts/render-script-reference.ps1 -Repo . -WhatIf
-# Erst nach exaktem Preview-Review / only after exact preview review
-bash scripts/render-script-reference.sh --repo .
-bash scripts/render-script-reference.sh --repo . --check-only
-pwsh -NoProfile -File scripts/render-script-reference.ps1 -Repo . -CheckOnly
-git diff -- docs/scripts/embedded-scripts.md docs/scripts/reference.md
-```
+1. Implementierend darf nur `.github/workflows/powershell-analysis.yml` geaendert werden. Auf Nicht-Windows wird die Bash-Kandidatenmenge deterministisch geordnet und auf genau einen `ApplicationInfo` reduziert, bevor `Source` gelesen wird.
+2. Null Kandidaten muessen fail-closed scheitern. Genau ein Kandidat muss genau einen nichtleeren absolut qualifizierten Pfad liefern. Doppelte Alias-Kandidaten muessen deterministisch genau einen Pfad liefern; ein Array oder verbundener Pseudopfad darf die Invocation nie erreichen.
+3. Das bestehende sichere Argumentarray bleibt unveraendert. Der Windows-Zweig mit validiertem Git-for-Windows-Bash und WSL-Ablehnung bleibt unveraendert.
+4. Genau ein normaler Follow-up-Commit auf `0b0808c` ist erlaubt. Kein Amend, Force-Push oder History-Rewrite. Nur wenn der unveraenderte Methodik-v2-Renderer danach Drift meldet, darf hoechstens ein weiterer Commit ausschliesslich `docs/project-statistics.md` synchronisieren.
+5. PR #29 wird erst an den neuen unveraenderlichen finalen Head gebunden. Alle 18 Checks, exakte Ubuntu-/macOS-/`windows-2022`-Evidence und aktuelle Review-Konvergenz laufen neu. Technischer Fehler bleibt nicht bypassbar.
 
-Erwartet: nur `docs/scripts/embedded-scripts.md` aendert sich deterministisch; `docs/scripts/reference.md` bleibt leer im Diff. Kein Handedit. / *Only the generated embedded inventory may change; the canonical reference remains unchanged.*
-
-2. Der Workflow checkt fuer `pull_request` exakt `github.event.pull_request.head.sha`, fuer `push` `github.sha` aus. Danach muss der Resolver Eventtyp, `github.repository`, `GITHUB_HEAD_REF`, Event-Head-SHA und `git rev-parse HEAD` gegen Branch `002-portfolio-ownership` gemeinsam beweisen. Synthetische Merge-Refs, detached Namen ohne diesen Beweis, falsches Repository, falscher Branch oder SHA-Mismatch muessen scheitern. / *Explicit event-head checkout and complete identity proof are required; synthetic or ambiguous identity fails closed.*
-
-3. Die fokussierte Testsuite muss vier Klassen belegen: / The focused suite must prove four classes:
-
-- gueltiger exakter PR-Head wird akzeptiert, synthetischer Merge-/detached-Fall abgelehnt;
-- LF- und CRLF-Checkout desselben UTF-8-Ziels besitzen denselben akzeptierten Normalhash;
-- eine substantive Zielaenderung scheitert weiterhin;
-- Windows waehlt einen validierten absoluten Git-for-Windows-`bash.exe`-Pfad; ein WSL-Launcher ohne Distribution gilt als nicht ausfuehrbar und blockiert sichtbar.
-
-Receipt- und Ready-Review-Rohhashes bleiben unveraendert. Falls ein roher Git-Beweis erforderlich ist, stammt er aus dem exakten Blob am ausgecheckten Head und nicht aus plattformabhaengigen Worktree-Bytes. Subprozesse bleiben Shell-frei und verwenden Argumentarrays. / *Immutable raw receipt/review hashes remain; raw Git proof uses exact blob bytes and subprocesses remain shell-free.*
-
-4. Danach beginnt der Fixpunkt erneut bei T059. Die tatsaechliche Kandidatenliste besteht aus den 35 historisch akzeptierten Required-Pfaden plus dem nun ausgeloesten konditionalen Generated-Update-Pfad, also 36 Pfaden. Nach neuem normalen Reparatur-Head werden Methodik-v2-Statistik, erforderlicher Ledger-only-Sync, `/tmp/002-portfolio-ownership-feature-head.txt`, PR-#29-Body, lokale Gates, alle 18 Providerchecks und exakte Ubuntu-/macOS-/`windows-2022`-Command-Evidence neu gebunden. / *Restart T059 with the triggered 36-path candidate and fully regenerate statistics, PR binding, local gates, all eighteen checks, and three-platform command evidence.*
-
-Bis alle technischen Gates gruen sind, bleiben Admin-Bypass, Merge, terminaler Rename, PostMerge, Retrospektive, AEPS-Abschluss, finaler Main-Sync und jeder naechste Lauf gesperrt. Auch nach erfolgreicher Konvergenz erteilt dieser Vertrag keine Folgelauf-Autoritaet: Nach META-LH-02-Completion endet T093 auf beiden Closeout-Pfaden mit einer ausdruecklichen No-next-run-Disposition. / *Bypass and all downstream closeout remain blocked until complete green convergence; success still grants no next-run authority, and both completion paths end with an explicit stop.*
+Nach Gruenkonvergenz werden nur die bereits akzeptierten T080 bis T093 fortgesetzt. Der Lauf endet nach META-LH-02 mit ausdruecklicher No-next-run-Disposition; META-LH-03 und jeder andere Spec-Kit-Lauf bleiben ungestartet. / *After green convergence, only the accepted closeout continues and the run stops without starting another feature.*
 
 ## 1. Gate-Requirements vor Implementierung pruefen / Check gate requirements before implementation
 
@@ -158,9 +139,9 @@ Diese Befehle beweisen keine semantische Publikationseignung und ersetzen nicht 
 
 T055 bis T058 bleiben als abgeschlossene historische Projektions-Evidence erhalten. Der spaetere reale provisorische 35-Pfad-Kandidat `7b99227045deb8cc34e0062db09eb4f6dd134501` machte beide realen Peers erwartbar erneut `DRIFT`/`1`: Das committed Ledger bindet Quelle `3e1d9d5ccd98`, die reale Methodik-v2-Quelle ist `7b99227045de` mit 222411 getrackten Textzeilen. Das ist kein Rendererfehler und darf nicht als `CURRENT` umgedeutet werden. / *T055-T058 remain truthful historical projection evidence. The later provisional 35-path real commit necessarily made both real peers report DRIFT because the committed ledger binds the disposable source rather than the real methodology-v2 source.*
 
-`7b992270`, sein einmal reviewtes Amend und die bereits verbrauchte Ledger-only-Synchronisation bis `a78a78558459e32ad640c238f5eaf96337a70f83` bleiben ausschliesslich historische Evidence und erteilen keine Wiederverwendungsautoritaet. Die spaetere Implementierungsfortsetzung benoetigt die neue ausdrueckliche T079-Transaktion und friert einen neuen 36-Pfad-Reparatur-Head ein. Die abgeschlossenen T069-bis-T072-Marker bleiben historische Postconditions und werden nicht geaendert; T059 bis T073 werden fuer den neuen Kandidaten vollstaendig neu belegt. / *The provisional head, reviewed amend, and consumed synchronization through the failed published head are historical evidence only. The new explicit T079 transaction freezes a fresh 36-path repair head and replays T059-T073 without changing completed markers.*
+`7b992270`, sein reviewtes Amend, `a78a785`, die T079-Reparatur `8f395f8` und ihr verbrauchter Ledger-only-Head `0b0808c` bleiben ausschliesslich historische Evidence und erteilen keine Wiederverwendungsautoritaet. Der finale Follow-up-Commit baut normal auf `0b0808c` auf. Die 72 abgeschlossenen Marker bleiben unveraendert. / *All published predecessors remain immutable history; the final normal follow-up builds on `0b0808c` without changing the 72 durable markers.*
 
-Nach dem neuen gefrorenen T079-Reparatur-Head laeuft der unveraenderte Renderer auf genau diesem sauberen Head oder einer bytegenauen sauberen Projektion. Erst dort sind die folgenden drei Befehle zulaessig: / *After the new T079 repair head is frozen, run the unchanged renderer only on that exact clean head or a byte-identical clean projection:*
+Nach dem neuen normalen Follow-up-Commit laeuft der unveraenderte Renderer auf genau diesem sauberen Head oder einer bytegenauen sauberen Projektion. Erst dort sind die folgenden drei Befehle zulaessig: / *After the normal follow-up commit, run the unchanged renderer only on that exact clean head or a byte-identical clean projection:*
 
 ```bash
 bash scripts/render-project-statistics.sh --repo "$projection_worktree"
@@ -170,7 +151,7 @@ pwsh -NoProfile -File scripts/render-project-statistics.ps1 -Repo "$projection_w
 
 Nur die erzeugten `docs/project-statistics.md`-Bytes duerfen in den realen Branch uebernommen werden. Meldet der unveraenderte Renderer danach weiterhin Drift, darf hoechstens ein neuer lokaler `statistics-head-sync`-Commit entstehen, der nur diesen Pfad und den vorgeschriebenen Trailer enthaelt; ohne Ledger-Delta entsteht kein solcher Commit. Methodik v2 muss weiterhin Git-getrackten Text und Nicht-Merge-Bruttoaenderungen verwenden und Ledger, `STATS.md` sowie Binaerdaten ausschliessen. Beide realen Check-only-Peers muessen auf dem daraus resultierenden neuen finalen Head `CURRENT`/`0` melden. / *Copy back only the ledger and create at most one new ledger-only synchronization commit only if drift remains; both real peers must be CURRENT on the resulting new final head.*
 
-Erst dieser Statistik-Head wird als `/tmp/002-portfolio-ownership-feature-head.txt` und im PR-Body gebunden. Diese Sequenz wurde historisch bis Head `a78a78558459e32ad640c238f5eaf96337a70f83` ausgefuehrt; die sechs technischen PR-#29-Fehler verbrauchen keine stille Wiederholungsautoritaet. Nach T079 muss die gesamte T059-bis-T073-Sequenz fuer den neuen 36-Pfad-Normalkandidaten und seine neue Methodik-v2-Bindung erneut belegt werden. Danach werden alle betroffenen Pfad-, Diff-, State-, Review-, Snapshot-, Documentation-, Secret/Security-, Authority-, Stage- und Exact-head-Gates wiederholt. / *The historical sequence produced the failed published head; T079 requires a newly authorized complete replay for the triggered 36-path candidate and new statistics binding.*
+Der normale Follow-up-Head bleibt final, wenn der Renderer keinen Drift meldet. Meldet er Drift, wird ausschliesslich der daraus kausal erzeugte Ledger-only-Head als `/tmp/002-portfolio-ownership-feature-head.txt` und im PR-Body gebunden. Danach werden alle betroffenen Pfad-, Diff-, State-, Review-, Snapshot-, Documentation-, Secret/Security-, Authority-, Stage- und Exact-head-Gates wiederholt. / *Use the normal follow-up head unless the unchanged renderer proves a ledger-only synchronization is required; bind and revalidate only the resulting immutable final head.*
 
 ## 8. Exakte Liefermenge read-only pruefen / Validate the exact delivery set read-only
 
@@ -194,7 +175,7 @@ git diff --cached --name-only
 git diff --cached --check
 ```
 
-Fuer die neue T079-Transaktion muessen die staged Namen exakt der eingefrorenen Reparaturliste entsprechen; der vollstaendige resultierende Diff gegen die Basis muss exakt die 35 Required-Pfade plus den nachgewiesen ausgeloesten konditionalen Pfad `docs/scripts/embedded-scripts.md`, also 36 Pfade, enthalten. Fuer einen erneut erforderlichen `statistics-head-sync` darf Stage und Commit ausschliesslich `docs/project-statistics.md` enthalten. Unstaged Kandidatenreste, fremde Stage-Pfade oder Pfaddrift stoppen. / *The new transaction proves the triggered 36-path candidate and retains a strictly one-path ledger-only synchronization when required.*
+Fuer `ubuntu-bash-cardinality-followup` muessen die staged Namen exakt der neu eingefrorenen Follow-up-Liste entsprechen; implementierende Bytes duerfen nur in `.github/workflows/powershell-analysis.yml` liegen, hinzu kommen ausschliesslich die direkt betroffenen Planungs-/Gate-/Evidence-Bindungen. Fuer einen rendererbegruendet erforderlichen `statistics-head-sync` darf Stage und Commit ausschliesslich `docs/project-statistics.md` enthalten. Unstaged Kandidatenreste, fremde Stage-Pfade oder Pfaddrift stoppen. / *The follow-up uses its exact bounded list and retains a strictly one-path ledger-only synchronization only when required.*
 
 ## 10. Normalen Feature-Head reviewen und mergen / Review and merge the normal feature head
 
