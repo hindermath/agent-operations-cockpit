@@ -178,13 +178,19 @@ class SnapshotContractTests(unittest.TestCase):
     def test_04_temporary_original_archive_exclusivity_projections(self) -> None:
         with projection() as temporary:
             root = Path(temporary)
+            original = root / contract.ORIGINAL_TARGET
             archive = root / contract.ARCHIVED_TARGET
-            archive.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(root / contract.ORIGINAL_TARGET, archive)
+            physical = original if original.is_file() else archive
+            counterpart = archive if physical == original else original
+            counterpart.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(physical, counterpart)
             self.assert_contract_error(root, "mutually exclusive; found both")
         with projection() as temporary:
             root = Path(temporary)
-            (root / contract.ORIGINAL_TARGET).unlink()
+            original = root / contract.ORIGINAL_TARGET
+            archive = root / contract.ARCHIVED_TARGET
+            physical = original if original.is_file() else archive
+            physical.unlink()
             self.assert_contract_error(root, "mutually exclusive; found neither")
 
     def test_05_temporary_target_hash_drift_projection(self) -> None:
