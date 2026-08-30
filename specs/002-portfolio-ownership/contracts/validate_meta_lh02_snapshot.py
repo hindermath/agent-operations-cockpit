@@ -97,14 +97,14 @@ def git_blob_sha256(root: Path, relative: str) -> str:
     """Hash the exact blob at checked-out HEAD without shell interpolation."""
     try:
         result = subprocess.run(
-            ["git", "-C", str(root), "show", f"HEAD:{relative}"],
+            ["git", "-C", str(root), "cat-file", "blob", f"HEAD:{relative}"],
             capture_output=True, check=False,
         )
     except OSError as exc:
         fail(f"cannot read exact Git blob for {relative}: {exc}")
     if result.returncode != 0:
         diagnostic = result.stderr.decode("utf-8", errors="replace").strip()
-        fail(f"cannot read exact Git blob for {relative}: {diagnostic or 'git show failed'}")
+        fail(f"cannot read exact Git blob for {relative}: {diagnostic or 'git cat-file failed'}")
     return hashlib.sha256(result.stdout).hexdigest()
 
 

@@ -731,7 +731,7 @@ review supplied the semantic proof class that the fixtures cannot provide.*
   In CI akzeptiert er `GITHUB_HEAD_REF` nur fuer ein passendes
   `pull_request`-/`push`-Event, das erwartete Repository, den Event-Head-SHA und
   den exakt ausgecheckten HEAD. Git-Rohbelege stammen ohne Shellinterpolation
-  aus `git show HEAD:<path>`; normalisierte UTF-8-Zielidentitaet bleibt fuer LF
+  aus `git cat-file blob HEAD:<path>`; normalisierte UTF-8-Zielidentitaet bleibt fuer LF
   und CRLF gleich, Receipt-/Review-Rohhashes bleiben unveraendert. /
   *Logical CI identity and exact Git-blob evidence are fail closed while local
   identity, normalized targets, and immutable raw bindings remain strict.*
