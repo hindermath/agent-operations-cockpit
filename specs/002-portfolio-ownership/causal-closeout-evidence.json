@@ -1,0 +1,120 @@
+{
+  "schemaVersion": "1.0",
+  "status": "Completed",
+  "runId": "aa60069e-ded5-463f-a737-9b5aa96070c7",
+  "closeoutBranch": "002-portfolio-ownership",
+  "closeoutPaths": [
+    "specs/002-portfolio-ownership/tasks.md",
+    "specs/002-portfolio-ownership/autonomous-run-state.json",
+    "specs/002-portfolio-ownership/causal-closeout-evidence.json"
+  ],
+  "deliveries": [
+    {
+      "purpose": "META-LH-02 feature delivery",
+      "reviewedHead": "684ea7aded16f837272a807ad867d06cc6149215",
+      "pullRequest": "https://github.com/hindermath/agent-operations-cockpit/pull/29",
+      "mergeSha": "55771970f1a64460f1b2e32c38ffbeadf82b1fd2"
+    },
+    {
+      "purpose": "Archive-aware contract projection and generated statistics",
+      "reviewedHead": "645f7b14a9d7eb63438bf260e3adcdb4d5634125",
+      "pullRequest": "https://github.com/hindermath/agent-operations-cockpit/pull/32",
+      "mergeSha": "4d78088587c925c2ad1663e15ff807b5e64f24a4"
+    },
+    {
+      "purpose": "Exact terminal R100 intake rename",
+      "reviewedHead": "975731079d11a2847419705dcdfb9653872a6d5a",
+      "pullRequest": "https://github.com/hindermath/agent-operations-cockpit/pull/33",
+      "mergeSha": "3c426c2a9b96a4ddcdce703fb58a472208df4f4d"
+    },
+    {
+      "purpose": "Final retrospective-triggered AEPS reassessment and generated statistics",
+      "reviewedHead": "fe95fbed2a6e9e841e015b5cfe92866a1432ee9c",
+      "pullRequest": "https://github.com/hindermath/agent-operations-cockpit/pull/35",
+      "mergeSha": "96ca25fb2d2c7684d53ba9cad5610f52be04115d"
+    }
+  ],
+  "synchronizedMainSha": "96ca25fb2d2c7684d53ba9cad5610f52be04115d",
+  "postMergeSnapshot": {
+    "requirementsSha256": "fd52e771297484d5669fe284b5e8c9d91aa9cef9f2d1c2a8347e5773b4c4b500",
+    "reviewedHead": "975731079d11a2847419705dcdfb9653872a6d5a",
+    "mergeSha": "3c426c2a9b96a4ddcdce703fb58a472208df4f4d",
+    "acceptedPreMergeSha256": "5c460c65d0df2b69e6cefb850dd32b84281f5da3604b138432992f89bc89a350",
+    "postMergeSha256": "7bad2d9cde1b9ba66033bc4484c5c80df5dc2d4545123872932b038fdb905674",
+    "changedPaths": [],
+    "captureDisposition": "The accepted PreMerge snapshot was reconstructed from immutable exact-head evidence after merge and is explicitly not represented as a contemporaneous pre-merge capture.",
+    "bashValidation": "Pass",
+    "powerShellValidation": "Pass"
+  },
+  "retrospective": {
+    "sha256": "9df08a9ea20f4ef183da91015cd43b924a91aa13b591b4cc723a55b8fc7423f1",
+    "aepsOutcome": "NoChange",
+    "receiptPath": "docs/aeps/receipts/2026-08-30-meta-lh-02-portfolio-ownership.md",
+    "strengthenedFindings": [
+      "AEPS-FIND-AOC-016",
+      "AEPS-FIND-AOC-017",
+      "AEPS-FIND-AOC-018"
+    ]
+  },
+  "commands": [
+    {
+      "checkId": "pull-request-checks",
+      "result": "Pass",
+      "command": "gh pr checks 29; gh pr checks 32; gh pr checks 33; gh pr checks 35",
+      "evidenceReference": "All four delivered pull requests completed their required technical check matrices before merge."
+    },
+    {
+      "checkId": "main-fast-forward-sync",
+      "result": "Pass",
+      "command": "git rev-list --left-right --count main...origin/main",
+      "evidenceReference": "0 0 at synchronized main 96ca25fb2d2c7684d53ba9cad5610f52be04115d"
+    },
+    {
+      "checkId": "post-merge-snapshot-validation",
+      "result": "Pass",
+      "command": "Validate accepted PreMerge and PostMerge snapshots with the Bash and PowerShell autonomous gate validators",
+      "evidenceReference": "Accepted snapshot SHA-256 5c460c65d0df2b69e6cefb850dd32b84281f5da3604b138432992f89bc89a350; post-merge snapshot SHA-256 7bad2d9cde1b9ba66033bc4484c5c80df5dc2d4545123872932b038fdb905674"
+    },
+    {
+      "checkId": "task-ledger",
+      "result": "Pass",
+      "command": "Verify all task markers and hash specs/002-portfolio-ownership/tasks.md",
+      "evidenceReference": "93 of 93 tasks completed; SHA-256 bd75e9b222640e0a8ddc319794d7ce2d801676c00601859e255048aeac322aa0"
+    }
+  ],
+  "documentationReview": {
+    "result": "Pass",
+    "reviewer": {
+      "independent": false,
+      "role": "Primary closeout reviewer"
+    },
+    "reviewedPaths": [
+      "specs/002-portfolio-ownership/tasks.md",
+      "specs/002-portfolio-ownership/autonomous-run-state.json",
+      "specs/002-portfolio-ownership/causal-closeout-evidence.json"
+    ],
+    "rationale": "The bounded closeout records completion of the existing run. It adds no new feature scope and no second Documentation Impact decision.",
+    "blockingFindings": []
+  },
+  "publicContentReview": {
+    "result": "Pass",
+    "reviewer": {
+      "independent": false,
+      "role": "Primary closeout reviewer"
+    },
+    "reviewedPaths": [
+      "specs/002-portfolio-ownership/tasks.md",
+      "specs/002-portfolio-ownership/autonomous-run-state.json",
+      "specs/002-portfolio-ownership/causal-closeout-evidence.json"
+    ],
+    "rationale": "The closeout contains repository-relative paths, public GitHub references, Git object IDs, validation outcomes, and no credential or unnecessary personal data.",
+    "blockingFindings": []
+  },
+  "noNextRunDisposition": "META-LH-02 is the only run closed by this transaction. No subsequent Spec Kit run is started or authorized by this evidence.",
+  "nonSelfReferentialBoundary": {
+    "containingCommitSha": "N/A",
+    "closeoutPullRequest": "N/A",
+    "closeoutMergeSha": "N/A",
+    "statement": "This file does not claim its own containing commit, closeout pull request, or closeout merge SHA; those publication facts are reported externally."
+  }
+}
