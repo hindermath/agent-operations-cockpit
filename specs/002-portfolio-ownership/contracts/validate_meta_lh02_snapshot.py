@@ -343,7 +343,7 @@ def validate_state(root: Path) -> dict[str, Any]:
     status = state.get("status")
     if status not in {"Active", "Completed"}:
         fail("autonomous run state must be Active or terminal Completed")
-    if status == "Active" and state.get("stage") not in ALLOWED_STAGES:
+    if state.get("stage") not in ALLOWED_STAGES:
         fail(f"autonomous run state stage is not post-GlobalReady qualified: {state.get('stage')}")
     if status == "Completed":
         if state.get("stage") != "MergeAndSync" or state.get("nextExactAction") != "N/A":
