@@ -23,6 +23,13 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+
+      - name: Set up Python
+        uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
+        with:
+          python-version: '3.x'
 
       - name: Install required PowerShell modules
         shell: pwsh
@@ -31,3 +38,62 @@ jobs:
       - name: Analyze tracked PowerShell files
         shell: pwsh
         run: ./scripts/invoke-psscriptanalyzer.ps1
+
+      - name: Resolve required Bash capability
+        if: github.event_name == 'pull_request' || github.ref_name == '002-portfolio-ownership'
+        shell: pwsh
+        run: |
+          if ($IsWindows) {
+            $candidate = Join-Path $env:ProgramFiles 'Git\bin\bash.exe'
+            if (-not [IO.Path]::IsPathFullyQualified($candidate) -or
+                -not (Test-Path -LiteralPath $candidate -PathType Leaf) -or
+                $candidate -match '(?i)[\\/]Windows[\\/]System32[\\/]') {
+              throw 'Git-for-Windows bash unavailable; WSL launcher is not an accepted capability.'
+            }
+            $bash = (Resolve-Path -LiteralPath $candidate).Path
+          } else {
+            $candidates = @(Get-Command bash -CommandType Application -ErrorAction SilentlyContinue |
+              Sort-Object -Property Source, Name)
+            if ($candidates.Count -eq 0) {
+              throw 'Required Bash capability unavailable.'
+            }
+            [System.Management.Automation.ApplicationInfo] $command = $candidates[0]
+            $sources = @($command.Source)
+            if ($sources.Count -ne 1 -or
+                [string]::IsNullOrWhiteSpace([string] $sources[0])) {
+              throw 'Required Bash capability did not resolve to exactly one executable source.'
+            }
+            $bash = [string] $sources[0]
+            if (-not [IO.Path]::IsPathFullyQualified($bash) -or
+                -not (Test-Path -LiteralPath $bash -PathType Leaf)) {
+              throw 'Required Bash capability is not a fully qualified executable file.'
+            }
+          }
+          & $bash @('--version')
+          if ($LASTEXITCODE -ne 0) {
+            throw "Required Bash capability failed with exit $LASTEXITCODE."
+          }
+          "AOC_GIT_BASH_EXE=$bash" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Test Feature 002 snapshot contract
+        if: github.event_name == 'pull_request' || github.ref_name == '002-portfolio-ownership'
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        shell: pwsh
+        run: |
+          python -B specs/002-portfolio-ownership/contracts/test_validate_meta_lh02_snapshot.py
+          if ($LASTEXITCODE -ne 0) {
+            throw "Feature-002 Python suite failed with exit $LASTEXITCODE."
+          }
+          $bashArguments = @(
+            'specs/002-portfolio-ownership/contracts/validate-meta-lh02-snapshot.sh',
+            '--repo', '.', '--', 'post-global-ready'
+          )
+          & $env:AOC_GIT_BASH_EXE $bashArguments
+          if ($LASTEXITCODE -ne 0) {
+            throw "Feature-002 Bash peer failed with exit $LASTEXITCODE."
+          }
+          ./specs/002-portfolio-ownership/contracts/validate-meta-lh02-snapshot.ps1 -Repo . -Mode post-global-ready
+          if ($LASTEXITCODE -ne 0) {
+            throw "Feature-002 PowerShell peer failed with exit $LASTEXITCODE."
+          }

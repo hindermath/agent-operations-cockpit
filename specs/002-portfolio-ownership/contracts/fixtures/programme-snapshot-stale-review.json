@@ -1,0 +1,6 @@
+{
+  "scenario": "stale-review",
+  "target": "lifecycle.programmeEvidenceSnapshot.orderedLogicalTargets[1].readySingleReview.rawSha256",
+  "value": "0000000000000000000000000000000000000000000000000000000000000000",
+  "expectedError": "programmeEvidenceSnapshot.orderedLogicalTargets[1].readySingleReview raw SHA-256 drift"
+}

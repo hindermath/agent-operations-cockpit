@@ -1,0 +1,279 @@
+{
+  "schemaVersion": "1.0",
+  "featurePath": "specs/002-portfolio-ownership",
+  "runId": "aa60069e-ded5-463f-a737-9b5aa96070c7",
+  "reviewStatus": "AcceptedIndependentPlanReview",
+  "statisticsProjection": {
+    "purpose": "Preserve T079 repair commit 8f395f8 and its consumed ledger-only synchronization head 0b0808c56be649d088b397c6a88463ff5f52edb6 as immutable history; permit one final non-recursive statistics binding only after the Ubuntu Bash cardinality follow-up commit is frozen.",
+    "sourceTransaction": "ubuntu-bash-cardinality-followup",
+    "inputRule": "Use the new normal Ubuntu Bash cardinality follow-up head on top of 0b0808c56be649d088b397c6a88463ff5f52edb6 or a byte-identical clean projection. Exclude docs/project-statistics.md itself, .specify/runtime/**, logs, phase results, caches, and every unrelated path. The unchanged renderer, configuration, schema, and methodology bytes come from that exact follow-up head.",
+    "gitBoundary": "Preserve 8f395f8 and 0b0808c56be649d088b397c6a88463ff5f52edb6 as published consumed evidence with no amend, force-push, history-rewrite, or reuse authority. Permit exactly one new normal follow-up commit on 0b0808c and, only when the unchanged renderer reports drift, at most one new local statistics-head-sync commit containing only docs/project-statistics.md and the required trailer.",
+    "outputRule": "When drift is reported, copy back only generated docs/project-statistics.md bytes. Methodology v2 excludes the ledger-only synchronization commit, so both real check-only peers must report CURRENT with exit 0 on the resulting final head. When no drift is reported, the normal follow-up head itself is final.",
+    "cleanupRule": "If a clean projection is used, validate and remove only its exact temporary worktree/ref and prove absence. Revalidate the follow-up path set, diff, state, review, snapshot, documentation, secret/security, authority, stage, all eighteen checks, and exact Ubuntu/macOS/windows-2022 evidence on the final head. Any later head mutation fails closed."
+  },
+  "transactions": [
+    {
+      "transactionId": "planning-phase",
+      "timing": "Current plan phase; no staging or commit is authorised by this transaction.",
+      "requiredPaths": [
+        "specs/002-portfolio-ownership/plan.md",
+        "specs/002-portfolio-ownership/research.md",
+        "specs/002-portfolio-ownership/quickstart.md",
+        "specs/002-portfolio-ownership/contracts/planning-validation-contract.md",
+        "specs/002-portfolio-ownership/contracts/delivery-allowlist.json",
+        "specs/002-portfolio-ownership/autonomous-run-gate-requirements.json",
+        "specs/002-portfolio-ownership/tasks.md",
+        "specs/002-portfolio-ownership/checklists/implementation-validation.md",
+        "specs/002-portfolio-ownership/autonomous-run-evidence.md"
+      ],
+      "conditionalPaths": [],
+      "forbiddenPaths": [
+        "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+        "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md",
+        "specs/intake-authoring-receipts/META-LH-02-Portfolio-Ownership.json",
+        "specs/intake-review-results/meta-lh-02-portfolio-ownership-2026-08-29-r6.json",
+        "specs/intake-series/aoc-phase-2/manifest.json",
+        "requirements/intakes/series/order.md",
+        "requirements/baseline/portfolio-ownership.md",
+        "requirements/baseline/portfolio-ownership.json",
+        "docs/decisions/open-decisions.md"
+      ],
+      "authorityBoundary": "Planning artefacts and the runner phase result only; no Git or remote action.",
+      "freezeRule": "The runner validates the exact current changed and intended-untracked paths read-only; it does not stage them."
+    },
+    {
+      "transactionId": "normal-feature-candidate",
+      "timing": "Consumed historical T079 transaction only. Its published repair head 8f395f8 and ledger-only synchronization head 0b0808c56be649d088b397c6a88463ff5f52edb6 grant no current staging, commit, delivery, amend, or reuse authority.",
+            "requiredPaths": [
+                ".github/workflows/powershell-analysis.yml",
+                "requirements/baseline/portfolio-ownership.md",
+        "specs/002-portfolio-ownership/spec.md",
+        "specs/002-portfolio-ownership/clarification-report.md",
+        "specs/002-portfolio-ownership/checklists/requirements.md",
+        "specs/002-portfolio-ownership/plan.md",
+        "specs/002-portfolio-ownership/research.md",
+        "specs/002-portfolio-ownership/data-model.md",
+        "specs/002-portfolio-ownership/quickstart.md",
+        "specs/002-portfolio-ownership/contracts/planning-validation-contract.md",
+        "specs/002-portfolio-ownership/contracts/delivery-allowlist.json",
+        "specs/002-portfolio-ownership/contracts/validate_meta_lh02_snapshot.py",
+        "specs/002-portfolio-ownership/contracts/validate-meta-lh02-snapshot.sh",
+        "specs/002-portfolio-ownership/contracts/validate-meta-lh02-snapshot.ps1",
+        "specs/002-portfolio-ownership/contracts/test_validate_meta_lh02_snapshot.py",
+        "specs/002-portfolio-ownership/contracts/fixtures/programme-snapshot-wrong-run.json",
+        "specs/002-portfolio-ownership/contracts/fixtures/programme-snapshot-wrong-branch.json",
+        "specs/002-portfolio-ownership/contracts/fixtures/programme-snapshot-disallowed-stage.json",
+        "specs/002-portfolio-ownership/contracts/fixtures/programme-snapshot-stale-receipt.json",
+        "specs/002-portfolio-ownership/contracts/fixtures/programme-snapshot-stale-review.json",
+        "specs/002-portfolio-ownership/contracts/fixtures/programme-snapshot-duplicate-review-leaf.json",
+        "specs/002-portfolio-ownership/checklists/snapshot-tooling-parity.md",
+        "docs/man/validate-meta-lh02-snapshot.1",
+        "specs/002-portfolio-ownership/autonomous-run-gate-requirements.json",
+        "specs/002-portfolio-ownership/intake-lifecycle.json",
+        "specs/002-portfolio-ownership/tasks.md",
+        "specs/002-portfolio-ownership/checklists/implementation-validation.md",
+        "specs/002-portfolio-ownership/first-reader-review-evidence.md",
+        "specs/002-portfolio-ownership/accessibility-review-evidence.md",
+        "specs/002-portfolio-ownership/security-privacy-review-evidence.md",
+        "specs/002-portfolio-ownership/documentation-impact-evidence.md",
+        "specs/002-portfolio-ownership/autonomous-run-state.json",
+        "specs/002-portfolio-ownership/autonomous-run-evidence.md",
+        "docs/project-statistics.md",
+        "docs/aeps/receipts/2026-08-30-meta-lh-02-portfolio-ownership.md"
+      ],
+      "conditionalPaths": [
+        {
+          "path": "docs/scripts/embedded-scripts.md",
+          "condition": "Only when the in-scope Feature-002 contract or test script inventory changes. Require Bash --dry-run and PowerShell -WhatIf preview review, deterministic canonical render-script-reference generation, exact diff review, and both check-only peers. Do not hand-edit; docs/scripts/reference.md and every other generated path must remain unchanged."
+        },
+        {
+          "path": "docs/aeps/findings-ledger.md",
+          "condition": "Only when the canonical AEPS assessment records a genuine new Finding."
+        },
+        {
+          "path": "docs/aeps/finding-to-preset-candidate-matrix.md",
+          "condition": "Only with the same genuine new Finding and the canonical atomic AEPS update."
+        },
+        {
+          "path": "docs/aeps/preset-gap-analysis.md",
+          "condition": "Only with the same genuine new Finding and the canonical atomic AEPS update."
+        },
+        {
+          "path": "docs/aeps/upstream-handoff.md",
+          "condition": "Only with the same genuine new Finding; local status cannot claim upstream authority or promotion."
+        }
+      ],
+      "forbiddenPaths": [
+        "requirements/baseline/portfolio-ownership.json",
+        "docs/decisions/open-decisions.md",
+        "specs/intake-review-fixtures/meta-lh-02/validate-portfolio.py",
+        "specs/intake-review-fixtures/meta-lh-02/validate-portfolio.sh",
+        "specs/intake-review-fixtures/meta-lh-02/validate-portfolio.ps1",
+        "specs/intake-review-fixtures/meta-lh-02/duplicate-owner.json",
+        "specs/intake-review-fixtures/meta-lh-02/cycle.json",
+        "AGENTS.md",
+        "CLAUDE.md",
+        "GEMINI.md",
+        ".github/copilot-instructions.md",
+        ".github/agents/copilot-instructions.md",
+        "constitution.md",
+        ".specify/memory/constitution.md",
+        "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+        "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md"
+      ],
+      "authorityBoundary": "Historical evidence only; this consumed transaction grants no current write, staging, commit, remote, product, Level-0, preset, provider, bypass, or next-run authority.",
+      "freezeRule": "Preserve the published 8f395f8 and 0b0808c56be649d088b397c6a88463ff5f52edb6 heads and their exact evidence bytes without amend, rewrite, force-push, or authority reuse. Current follow-up work must resolve exclusively through ubuntu-bash-cardinality-followup."
+    },
+    {
+      "transactionId": "ubuntu-bash-cardinality-followup",
+      "timing": "Only after this bounded plan and Analyze-14 pass. Build one normal follow-up commit directly on immutable head 0b0808c56be649d088b397c6a88463ff5f52edb6; do not amend, rewrite, force-push, or reuse consumed T079 authority.",
+      "requiredPaths": [
+        ".github/workflows/powershell-analysis.yml",
+        "specs/002-portfolio-ownership/plan.md",
+        "specs/002-portfolio-ownership/research.md",
+        "specs/002-portfolio-ownership/quickstart.md",
+        "specs/002-portfolio-ownership/contracts/planning-validation-contract.md",
+        "specs/002-portfolio-ownership/contracts/delivery-allowlist.json",
+        "specs/002-portfolio-ownership/autonomous-run-gate-requirements.json",
+        "specs/002-portfolio-ownership/tasks.md",
+        "specs/002-portfolio-ownership/checklists/implementation-validation.md",
+        "specs/002-portfolio-ownership/autonomous-run-evidence.md"
+      ],
+      "conditionalPaths": [
+        {
+          "path": "specs/002-portfolio-ownership/contracts/test_validate_meta_lh02_snapshot.py",
+          "condition": "Only if the existing accepted executable evidence path is required to prove zero, one, and duplicate-alias Bash candidate cardinality; do not add a new test framework or broaden snapshot semantics."
+        },
+        {
+          "path": "specs/002-portfolio-ownership/checklists/snapshot-tooling-parity.md",
+          "condition": "Only if the existing parity evidence must record the focused zero, one, and duplicate-alias proof for the final head."
+        }
+      ],
+      "forbiddenPaths": [
+        "docs/project-statistics.md",
+        "docs/scripts/embedded-scripts.md",
+        "docs/scripts/reference.md",
+        "requirements/baseline/portfolio-ownership.md",
+        "requirements/baseline/portfolio-ownership.json",
+        "docs/decisions/open-decisions.md",
+        "specs/002-portfolio-ownership/intake-lifecycle.json",
+        "specs/002-portfolio-ownership/spec.md",
+        "specs/002-portfolio-ownership/data-model.md",
+        "AGENTS.md",
+        "CLAUDE.md",
+        "GEMINI.md",
+        ".github/copilot-instructions.md",
+        ".github/agents/copilot-instructions.md",
+        "constitution.md",
+        ".specify/memory/constitution.md",
+        "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+        "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md"
+      ],
+      "authorityBoundary": "One scalar-cardinality follow-up only. Implementation bytes are limited to .github/workflows/powershell-analysis.yml; directly affected plan/gate/evidence bindings and at most the two existing conditional proof paths may accompany it. No product, provider, Level-0, preset, bypass, next-run, or additional commit authority.",
+      "freezeRule": "On non-Windows, deterministically order Get-Command bash ApplicationInfo candidates, require at least one, select exactly one ApplicationInfo before reading Source, require exactly one non-empty fully qualified executable path, and invoke it through the existing safe argument array. Prove zero candidates fail closed, one candidate stays scalar, and duplicate aliases reduce deterministically to one path. Keep the Windows Git-for-Windows validation and WSL rejection unchanged. Freeze and review the exact resolved list, run both delivery-set validators, stage per file, require staged-name equality and git diff --cached --check, and reject every unrelated path."
+    },
+    {
+      "transactionId": "statistics-head-sync",
+      "timing": "Only after the normal ubuntu-bash-cardinality-followup commit is frozen and the unchanged methodology-v2 renderer reports a ledger delta on that exact clean head or its byte-identical clean projection; omit this transaction when no drift exists.",
+      "requiredPaths": [
+        "docs/project-statistics.md"
+      ],
+      "conditionalPaths": [],
+      "forbiddenPaths": [
+        "specs/002-portfolio-ownership/tasks.md",
+        "specs/002-portfolio-ownership/autonomous-run-state.json",
+        "specs/002-portfolio-ownership/autonomous-run-evidence.md",
+        "specs/002-portfolio-ownership/checklists/implementation-validation.md",
+        "specs/002-portfolio-ownership/contracts/delivery-allowlist.json",
+        "requirements/baseline/portfolio-ownership.md",
+        "docs/aeps/findings-ledger.md",
+        "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+        "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md"
+      ],
+      "authorityBoundary": "At most one new local causal generated-output synchronization commit for the Ubuntu Bash cardinality follow-up, containing only docs/project-statistics.md with the required trailer and only when the unchanged renderer reports drift. It is not a second feature implementation and grants no additional authority.",
+      "freezeRule": "Require an empty stage before explicit ledger-only staging, exact one-path staged and committed diff, git diff --cached --check, required trailer, unchanged renderer/methodology, methodology-v2 exclusion of the ledger-only commit, Bash and PowerShell CURRENT with exit 0 on the resulting new final statistics head, and fresh revalidation of every affected generated-output, path, diff, state, review, snapshot, documentation, secret/security, authority, stage, and exact-head gate. Bind PR #29 body and feature-head temporary evidence only to this new final head."
+    },
+    {
+      "transactionId": "terminal-intake-rename",
+      "timing": "Only after the normal feature pull request is merged and main is fast-forward synchronized; execute on a dedicated terminal-rename branch as the final task of the Polish phase.",
+      "requiredPaths": [
+        "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+        "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md"
+      ],
+      "conditionalPaths": [],
+      "forbiddenPaths": [
+        "specs/002-portfolio-ownership/intake-lifecycle.json",
+        "specs/intake-authoring-receipts/META-LH-02-Portfolio-Ownership.json",
+        "specs/intake-review-results/meta-lh-02-portfolio-ownership-2026-08-29-r6.json",
+        "specs/intake-series/aoc-phase-2/manifest.json",
+        "requirements/intakes/series/order.md",
+        "requirements/baseline/portfolio-ownership.md",
+        "specs/002-portfolio-ownership/tasks.md",
+        "specs/002-portfolio-ownership/autonomous-run-state.json",
+        "specs/002-portfolio-ownership/autonomous-run-evidence.md",
+        "docs/project-statistics.md",
+        "docs/aeps/findings-ledger.md"
+      ],
+      "authorityBoundary": "Exactly one byte-identical original-to-archive path transition created by the existing Bash or PowerShell rename script; no intake-content, receipt, review, series, lifecycle-record, domain, product, Level-0, preset, task, state, evidence, provider-administration, or bypass authority.",
+      "freezeRule": "Before the script commit, require the merged exact-shape schema-1.1 lifecycle record and fourteen-target programme snapshot, original present, archive absent, accepted historical target hashes, immutable receipt and Ready Single review bytes, unique current Ready leaves, active qualified state, success of each installed review surface, current series binding, a clean dedicated branch, both Feature-002-local post-global-ready surfaces, and fresh authority. After the script commit, require exactly one R100 rename and no other changed or staged path; validate archive-only exclusivity through both local snapshot surfaces, both review surfaces, and series validator. Generic receipt-source freshness and generic global-ready are not post-delta success requirements. Publish only this immutable rename head through its own exact-head checks and independent review; any drift invalidates the transaction."
+    },
+    {
+      "transactionId": "final-aeps-reassessment",
+      "timing": "Only after the material T092 retrospective and before terminal completion in T093. This is a separate AEPS evidence transaction and must complete before either the exact causal-post-merge-closeout transaction or the truthful no-persistence completion path; omit no required receipt update.",
+      "requiredPaths": [
+        "docs/aeps/receipts/2026-08-30-meta-lh-02-portfolio-ownership.md"
+      ],
+      "conditionalPaths": [
+        {
+          "path": "docs/aeps/findings-ledger.md",
+          "condition": "Only when the final retrospective-triggered assessment records a genuine new Finding."
+        },
+        {
+          "path": "docs/aeps/finding-to-preset-candidate-matrix.md",
+          "condition": "Only with the same genuine new Finding and the canonical atomic AEPS update."
+        },
+        {
+          "path": "docs/aeps/preset-gap-analysis.md",
+          "condition": "Only with the same genuine new Finding and the canonical atomic AEPS update."
+        },
+        {
+          "path": "docs/aeps/upstream-handoff.md",
+          "condition": "Only with the same genuine new Finding; local status cannot claim upstream authority, posting, handoff, or promotion."
+        }
+      ],
+      "forbiddenPaths": [
+        "specs/002-portfolio-ownership/tasks.md",
+        "specs/002-portfolio-ownership/autonomous-run-state.json",
+        "specs/002-portfolio-ownership/causal-closeout-evidence.json",
+        "docs/project-statistics.md",
+        "requirements/baseline/portfolio-ownership.md",
+        "requirements/baseline/portfolio-ownership.json",
+        "specs/002-portfolio-ownership/intake-lifecycle.json"
+      ],
+      "authorityBoundary": "Repository-local AEPS evidence only under the existing docs/aeps/README.md contract and fresh current delivery authority; no Level-0 handoff, preset promotion, upstream posting, product/domain mutation, provider administration, bypass, new Spec Kit run, or broadening of the separate exact three-path causal closeout.",
+      "freezeRule": "Bind the T092 retrospective trigger and deduplication identity. Record exactly one final Finding or justified NoChange disposition in the required receipt. For Finding, update the canonical ledger and all three derived surfaces atomically and include the local handoff surface only without claiming upstream action; for NoChange, require every conditional path byte-unchanged. Require independent AEPS validation, the same single Documentation Impact decision, exact path/diff/stage review, no unrelated path, stable publication and main synchronization before terminal T093 completion. This transaction grants no next-run authority."
+    },
+    {
+      "transactionId": "causal-post-merge-closeout",
+      "timing": "Only after the terminal-intake-rename pull request is merged, main is fast-forward synchronized, and a causally generated schema-2.0 PostMerge snapshot binds that rename head and merge; omit the transaction when no eligible repository-local delta exists.",
+      "requiredPaths": [
+        "specs/002-portfolio-ownership/tasks.md",
+        "specs/002-portfolio-ownership/autonomous-run-state.json",
+        "specs/002-portfolio-ownership/causal-closeout-evidence.json"
+      ],
+      "conditionalPaths": [],
+      "forbiddenPaths": [
+        "requirements/baseline/portfolio-ownership.md",
+        "requirements/baseline/portfolio-ownership.json",
+        "docs/decisions/open-decisions.md",
+        "docs/project-statistics.md",
+        "docs/aeps/findings-ledger.md",
+        "specs/002-portfolio-ownership/intake-lifecycle.json",
+        "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+        "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md"
+      ],
+      "authorityBoundary": "Evidence-only single-commit-capable closeout; no empty PR, feature-head mutation, product/domain mutation, or provider self-claim.",
+      "freezeRule": "Require exactly the three named changed and staged paths, a clean remaining worktree for the feature scope, git diff --cached --check, independent documentation/public-content review, and external verification of terminal provider facts."
+    }
+  ]
+}

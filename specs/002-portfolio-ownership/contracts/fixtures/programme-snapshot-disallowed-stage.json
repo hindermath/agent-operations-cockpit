@@ -1,0 +1,6 @@
+{
+  "scenario": "disallowed-stage",
+  "target": "state.stage",
+  "value": "Specify",
+  "expectedError": "autonomous run state stage is not post-GlobalReady qualified: Specify"
+}
