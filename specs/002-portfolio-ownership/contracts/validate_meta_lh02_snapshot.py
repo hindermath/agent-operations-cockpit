@@ -340,10 +340,26 @@ def validate_state(root: Path) -> dict[str, Any]:
         fail("autonomous run state branch differs from the accepted Feature-002 branch")
     if state.get("featurePath") != FEATURE:
         fail("autonomous run state featurePath differs from Feature 002")
-    if state.get("status") != "Active":
-        fail("autonomous run state must be Active")
-    if state.get("stage") not in ALLOWED_STAGES:
+    status = state.get("status")
+    if status not in {"Active", "Completed"}:
+        fail("autonomous run state must be Active or terminal Completed")
+    if status == "Active" and state.get("stage") not in ALLOWED_STAGES:
         fail(f"autonomous run state stage is not post-GlobalReady qualified: {state.get('stage')}")
+    if status == "Completed":
+        if state.get("stage") != "MergeAndSync" or state.get("nextExactAction") != "N/A":
+            fail("terminal Completed state must be at MergeAndSync with nextExactAction N/A")
+        tasks = state.get("tasks")
+        if not isinstance(tasks, dict) or tasks.get("completed") != 93 or tasks.get("total") != 93:
+            fail("terminal Completed state must bind exactly 93 of 93 completed tasks")
+        closeout = state.get("closeout")
+        required_closeout = {
+            "mergeOrPublication": "Completed",
+            "defaultBranchSync": "Completed",
+            "postMergeActions": "Completed",
+            "finalValidation": "Completed",
+        }
+        if not isinstance(closeout, dict) or closeout != required_closeout:
+            fail("terminal Completed state must bind the fully completed MergeAndSync closeout")
     if (root / ".git").exists():
         validate_git_identity(root)
     return state

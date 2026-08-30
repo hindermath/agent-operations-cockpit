@@ -210,9 +210,12 @@ class SnapshotContractTests(unittest.TestCase):
         }
         self.assertEqual(contract.ALLOWED_STAGES, expected_stages)
         with projection() as temporary:
+            root = Path(temporary)
+            set_target(root, "state.status", "Active")
+            set_target(root, "state.stage", "Plan")
             self.assertEqual(
                 contract.validate_post_global_ready(
-                    Path(temporary), runner=no_review_process
+                    root, runner=no_review_process
                 ),
                 contract.PASS_MESSAGE,
             )
@@ -221,7 +224,23 @@ class SnapshotContractTests(unittest.TestCase):
         with projection() as temporary:
             root = Path(temporary)
             set_target(root, "state.status", "PausedByUser")
-            self.assert_contract_error(root, "autonomous run state must be Active")
+            self.assert_contract_error(root, "autonomous run state must be Active or terminal Completed")
+
+    def test_07b_terminal_state_requires_complete_closeout(self) -> None:
+        with projection() as temporary:
+            root = Path(temporary)
+            set_target(root, "state.status", "Completed")
+            set_target(root, "state.stage", "MergeAndSync")
+            set_target(root, "state.nextExactAction", "N/A")
+            set_target(root, "state.tasks.completed", 93)
+            set_target(root, "state.tasks.total", 93)
+            for field in (
+                "mergeOrPublication", "defaultBranchSync",
+                "postMergeActions", "finalValidation",
+            ):
+                set_target(root, f"state.closeout.{field}", "Completed")
+            set_target(root, "state.closeout.finalValidation", "Pending")
+            self.assert_contract_error(root, "must bind the fully completed MergeAndSync closeout")
 
     def test_08_each_installed_review_surface_fails_independently(self) -> None:
         for surface, relative in (("Bash", contract.REVIEW_BASH),
