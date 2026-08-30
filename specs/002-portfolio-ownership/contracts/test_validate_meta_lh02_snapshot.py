@@ -41,6 +41,23 @@ def copy_path(source: Path, destination: Path) -> None:
     else:
         shutil.copy2(source, destination)
 
+    relative = source.relative_to(REPO).as_posix()
+    tracked = subprocess.run(
+        ["git", "ls-files", "-z", "--", relative],
+        cwd=REPO, capture_output=True, check=True,
+    ).stdout.split(b"\0")
+    for raw_path in tracked:
+        if not raw_path:
+            continue
+        tracked_path = raw_path.decode("utf-8")
+        blob = subprocess.run(
+            ["git", "cat-file", "blob", f"HEAD:{tracked_path}"],
+            cwd=REPO, capture_output=True, check=True,
+        ).stdout
+        target = destination if source.is_file() else destination / Path(tracked_path).relative_to(relative)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(blob)
+
 
 def projection() -> tempfile.TemporaryDirectory[str]:
     temporary = tempfile.TemporaryDirectory(prefix="meta-lh02-contract-test-")
