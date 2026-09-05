@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.1",
+  "records": [
+    {
+      "recordVersion": "1.0",
+      "logicalTargetId": "META-LH-03",
+      "originalPath": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "archivedPath": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.003-authoring-contract.md",
+      "originalRawSha256": "3a5c34b54bdb0b00f78415089cc0b926b33ddeabe44ee7a130ad603acd4a98ba",
+      "originalNormalizedSha256": "3a5c34b54bdb0b00f78415089cc0b926b33ddeabe44ee7a130ad603acd4a98ba",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json",
+        "rawSha256": "bc9c60792b2cb3f2a9cab4941169f7bb2a57d5df15faf0d09528ce5167b037db"
+      },
+      "readySingleReview": {
+        "path": "specs/intake-review-results/meta-lh-03-authoring-contract-2026-09-05-r2.json",
+        "rawSha256": "9a4da48ab43ed4a5e8167d75d14099ae248bb6eeb088ab6d6ccba43bf33af70f"
+      },
+      "runId": "044b77ae-85fd-46ee-97f4-61ce7a2c9c66",
+      "branch": "003-authoring-contract"
+    }
+  ]
+}

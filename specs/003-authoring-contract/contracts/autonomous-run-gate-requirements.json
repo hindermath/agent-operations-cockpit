@@ -366,7 +366,7 @@
     {
       "gateId": "ACG-027-level0-preset-promotion",
       "applicability": "N/A",
-      "requiredScope": "Level 0 propagation, preset installation, preset version mutation, preset promotion, provider mutation, and admin bypass.",
+      "requiredScope": "Level 0 propagation, preset installation, preset version mutation, preset promotion, and provider mutation. The separately authorized narrow Admin Bypass for the remaining human-approval rule is covered only by ACG-028 and supplies no technical evidence.",
       "requiredCommandTokens": [],
       "requiredRunnerOrPlatformTokens": [],
       "owner": "Delivery owner",
@@ -380,12 +380,12 @@
     {
       "gateId": "ACG-028-current-pr-merge-readiness",
       "applicability": "Applicable",
-      "requiredScope": "At the exact reviewed feature head, all technical gates are green, all actionable review threads are closed, required approval is actually available, and the PR is ready for a normal-policy merge without admin bypass; no executed merge or merge commit is required or claimed.",
-      "requiredCommandTokens": ["gh pr view", "headRefOid", "mergeStateStatus", "reviewDecision", "statusCheckRollup", "gh pr checks", "reviewThreads(first:100)"],
-      "requiredRunnerOrPlatformTokens": ["GitHub CLI", "exact reviewed head", "normal policy"],
+      "requiredScope": "At the exact reviewed feature head, all technical gates are green and all actionable review threads are closed. If independent approval alone remains unavailable, the current maintainer instruction authorizes Admin Bypass only for that human-approval or ruleset barrier; it supplies no technical evidence and cannot hide a wrong head, failed or missing check, actionable review thread, drift, or security finding. No executed merge or merge commit is required or claimed.",
+      "requiredCommandTokens": ["gh pr view", "headRefOid", "mergeStateStatus", "reviewDecision", "statusCheckRollup", "gh pr checks", "reviewThreads(first:100)", "Admin Bypass", "--admin"],
+      "requiredRunnerOrPlatformTokens": ["GitHub CLI", "exact reviewed head", "narrow maintainer authority"],
       "owner": "Delivery owner",
       "reviewer": "Independent PR readiness reviewer",
-      "primaryProof": "Retained schema-2.0 PreMerge runner snapshot with current CLI/API evidence and exact-head reconciliation.",
+      "primaryProof": "Retained schema-2.0 PreMerge runner snapshot with current CLI/API evidence, exact-head reconciliation, green technical scope, zero actionable threads, and the narrow maintainer authority.",
       "supplementalProof": "Current PR URL and check logs referencing the Primary snapshot.",
       "plannedEvidence": ".specify/runtime/autonomous-routing/044b77ae-85fd-46ee-97f4-61ce7a2c9c66/premerge-gate-evidence.json",
       "reevaluationTrigger": "Head, check, review, thread, approval, mergeability, policy, or authority drift."

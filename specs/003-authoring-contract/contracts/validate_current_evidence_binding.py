@@ -21,6 +21,7 @@ MANIFEST = f"{FEATURE}/current-evidence-binding.json"
 AUTHORITY = f"{FEATURE}/binding-approval.md"
 META02_STATE = "specs/002-portfolio-ownership/autonomous-run-state.json"
 META02_LIFECYCLE = "specs/002-portfolio-ownership/intake-lifecycle.json"
+FEATURE_LIFECYCLE = f"{FEATURE}/intake-lifecycle.json"
 CANONICAL_SERIES_FILES = (
     "specs/intake-series/aoc-phase-2/manifest.json",
     "specs/intake-series/aoc-phase-2/operation.json",
@@ -50,6 +51,16 @@ UUID_PATTERN = re.compile(
 )
 EXPECTED_RENEWALS = ("META-LH-02", "META-LH-03", "META-LH-05", "RAW-03")
 EXPECTED_TARGET_CHANGES = ("META-LH-03",)
+EXPECTED_META03_TARGET_SHA256 = (
+    "3a5c34b54bdb0b00f78415089cc0b926b33ddeabe44ee7a130ad603acd4a98ba"
+)
+META03_RENEWAL_AUTHORITY = (
+    "Current explicit phase instruction authorizes exactly this META-LH-03 renewal.",
+    "Current explicit phase instruction to resume the existing META-LH-03 run with "
+    "normal MergeAndSync and no Admin bypass.",
+    "Current explicit phase instruction to resume META-LH-03 after Analyze R5 and "
+    "execute T002 through T079.",
+)
 PROGRAMME_TARGETS = (
     ("META-LH-01", "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md"),
     ("META-LH-02", "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md"),
@@ -147,6 +158,40 @@ def repo_path(root: Path, value: object, label: str) -> Path:
     if not candidate.is_file():
         fail(f"{label} must identify an existing regular file")
     return candidate
+
+
+def current_physical_target(
+    root: Path, logical_id: str, logical_path: str, expected_hash: str,
+) -> str:
+    """Resolve a current target through the feature lifecycle after its rename."""
+    if logical_id in PHYSICAL_ARCHIVES:
+        return PHYSICAL_ARCHIVES[logical_id]
+    lifecycle_path = root / FEATURE_LIFECYCLE
+    if not lifecycle_path.is_file():
+        return logical_path
+    lifecycle = load_json(lifecycle_path, FEATURE_LIFECYCLE)
+    records = lifecycle.get("records")
+    if lifecycle.get("schemaVersion") != "1.1" or not isinstance(records, list):
+        fail("feature lifecycle contract is invalid")
+    matches = [
+        record for record in records
+        if isinstance(record, dict) and record.get("originalPath") == logical_path
+    ]
+    if not matches:
+        return logical_path
+    if len(matches) != 1:
+        fail(f"feature lifecycle resolution is ambiguous for {logical_path}")
+    record = matches[0]
+    if record.get("originalNormalizedSha256") != expected_hash:
+        fail(f"feature lifecycle target hash drift for {logical_path}")
+    archived = record.get("archivedPath")
+    if not isinstance(archived, str):
+        fail(f"feature lifecycle archived path is invalid for {logical_path}")
+    original_file = root / logical_path
+    archived_file = repo_path(root, archived, f"lifecycle archived target for {logical_path}")
+    if original_file.is_file() or normalized_sha(archived_file) != expected_hash:
+        fail(f"feature lifecycle physical target is inconsistent for {logical_path}")
+    return archived
 
 
 def git_blob(root: Path, revision: str, relative: str) -> bytes:
@@ -431,7 +476,9 @@ def validate_manifest(
             current_report_paths.add(report["path"])
         if target["path"] != logical_path:
             fail(f"{label}.target.path differs from the canonical target")
-        physical = PHYSICAL_ARCHIVES.get(logical_id, logical_path)
+        physical = current_physical_target(
+            root, logical_id, logical_path, target["normalizedSha256"],
+        )
         physical_set.add(physical)
         target_file = repo_path(root, physical, f"{label}.physicalTarget")
         if normalized_sha(target_file) != target["normalizedSha256"]:
@@ -544,11 +591,58 @@ def validate_manifest(
             new_receipt.get("authorityEvidence"),
             operation.get("authorityEvidence") if isinstance(operation, dict) else None,
         )
-        if any(not isinstance(value, str) or AUTHORITY not in value or RUN_ID not in value for value in authority_texts):
+        authority_valid = (
+            authority_texts == META03_RENEWAL_AUTHORITY
+            if logical_id == "META-LH-03"
+            else all(
+                isinstance(value, str) and AUTHORITY in value and RUN_ID in value
+                for value in authority_texts
+            )
+        )
+        if not authority_valid:
             fail(f"{logical_id} receipt is not bound to the exact current authority and run")
-        if new_receipt.get("provenanceMode") != "Supersession" or new_receipt.get("updateAuthorized") is not True or supersedes.get("receiptPath") != hr["archivePath"] or supersedes.get("archiveReceiptPath") != hr["archivePath"] or supersedes.get("targetNormalizedSha256") != old_target["normalizedSha256"]:
+        expected_receipt_path = hr["archivePath"]
+        expected_receipt_archive = hr["archivePath"]
+        expected_target_archive = ht["archivePath"]
+        expected_target_hash = old_target["normalizedSha256"]
+        expected_source_boundary = "RepositoryArchiveAtApprovedBindingRenewal"
+        expected_archive_identity = (new_receipt.get("intakeId"), operation.get("operationId"))
+        if logical_id == "META-LH-03":
+            expected_receipt_path = old_receipt["path"]
+            expected_receipt_archive = supersedes.get("archiveReceiptPath")
+            expected_target_archive = supersedes.get("archiveTargetPath")
+            expected_target_hash = supersedes.get("targetNormalizedSha256")
+            expected_source_boundary = "RepositoryArchiveAtApprovedRenewal"
+            intermediate_receipt_path = repo_path(
+                root, expected_receipt_archive, "META-LH-03 intermediate receipt archive",
+            )
+            intermediate_target_path = repo_path(
+                root, expected_target_archive, "META-LH-03 intermediate target archive",
+            )
+            intermediate_receipt = load_json(
+                intermediate_receipt_path, "META-LH-03 intermediate receipt archive",
+            )
+            intermediate_supersedes = intermediate_receipt.get("supersedes", {})
+            if (
+                raw_sha(intermediate_receipt_path) != supersedes.get("archiveReceiptRawSha256")
+                or supersedes.get("receiptRawSha256") != supersedes.get("archiveReceiptRawSha256")
+                or normalized_sha(intermediate_target_path) != expected_target_hash
+                or supersedes.get("targetRawSha256") != raw_sha(intermediate_target_path)
+                or supersedes.get("archiveTargetRawSha256") != raw_sha(intermediate_target_path)
+                or intermediate_receipt.get("target", {}).get("normalizedSha256")
+                != expected_target_hash
+                or intermediate_supersedes.get("archiveReceiptPath") != hr["archivePath"]
+                or intermediate_supersedes.get("archiveTargetPath") != ht["archivePath"]
+                or intermediate_supersedes.get("targetNormalizedSha256")
+                != old_target["normalizedSha256"]
+            ):
+                fail("META-LH-03 intermediate binding-repair predecessor is invalid")
+            expected_archive_identity = (
+                new_receipt.get("intakeId"), intermediate_receipt.get("receiptId"),
+            )
+        if new_receipt.get("provenanceMode") != "Supersession" or new_receipt.get("updateAuthorized") is not True or supersedes.get("receiptPath") != expected_receipt_path or supersedes.get("archiveReceiptPath") != expected_receipt_archive or supersedes.get("targetNormalizedSha256") != expected_target_hash:
             fail(f"{logical_id} receipt supersession or bounded update authority is invalid")
-        if supersedes.get("archiveTargetPath") != ht["archivePath"]:
+        if supersedes.get("archiveTargetPath") != expected_target_archive:
             fail(f"{logical_id} target supersession archive path drift")
         sources = new_receipt.get("sources")
         source_zero = sources[0] if isinstance(sources, list) and sources else None
@@ -572,15 +666,15 @@ def validate_manifest(
                 "preset": "intake-authoring-governance", "version": "0.3.1"
             }
             or current[logical_id]["authoringReceipt"]["path"] != old_receipt["path"]
-            or PurePosixPath(hr["archivePath"]).parts[-3:-1]
-            != (new_receipt.get("intakeId"), operation_id)
+            or PurePosixPath(expected_receipt_archive).parts[-3:-1]
+            != expected_archive_identity
             or not isinstance(source_zero, dict)
             or source_zero.get("sourceId") != "SRC001"
             or source_zero.get("order") != 1
             or source_zero.get("kind") != "File"
-            or source_zero.get("path") != ht["archivePath"]
-            or source_zero.get("normalizedSha256") != old_target["normalizedSha256"]
-            or source_zero.get("proofBoundary") != "RepositoryArchiveAtApprovedBindingRenewal"
+            or source_zero.get("path") != expected_target_archive
+            or source_zero.get("normalizedSha256") != expected_target_hash
+            or source_zero.get("proofBoundary") != expected_source_boundary
         ):
             fail(f"{logical_id} renewed receipt identity or predecessor source is invalid")
         current_receipt_ids.add(receipt_id)
@@ -588,8 +682,23 @@ def validate_manifest(
         current_review = reviews[old_target["path"]][1]
         old_review_data = json.loads(review_blob)
         review_id = current_review.get("reviewId")
+        expected_review_predecessor = old_review["path"]
+        if logical_id == "META-LH-03":
+            intermediate_review_path = current_review.get("supersedes")
+            intermediate_review = load_json(
+                repo_path(root, intermediate_review_path, "META-LH-03 intermediate review"),
+                "META-LH-03 intermediate review",
+            )
+            if (
+                intermediate_review.get("supersedes") != old_review["path"]
+                or intermediate_review.get("status") != "Ready"
+                or intermediate_review.get("targets", [{}])[0].get("normalizedSha256")
+                != expected_target_hash
+            ):
+                fail("META-LH-03 intermediate binding-repair review is invalid")
+            expected_review_predecessor = intermediate_review_path
         if (
-            current_review.get("supersedes") != old_review["path"]
+            current_review.get("supersedes") != expected_review_predecessor
             or not isinstance(review_id, str)
             or UUID_PATTERN.fullmatch(review_id) is None
             or review_id == old_review_data.get("reviewId")
@@ -626,11 +735,19 @@ def validate_manifest(
         if changed_target != (logical_id == "META-LH-03"):
             fail("only META-LH-03 target content may change")
         if logical_id == "META-LH-03":
-            old_normalized = normalized_bytes(target_blob, old_target["path"])
-            if old_normalized.count(b"0.3.0") != 3:
-                fail("accepted META-LH-03 target does not contain the exact three authorized preset references")
-            current_target = repo_path(root, current[logical_id]["target"]["path"], "META-LH-03 current target")
-            if normalized_bytes(current_target.read_bytes(), str(current_target)) != old_normalized.replace(b"0.3.0", b"0.3.1"):
+            current_target = repo_path(
+                root,
+                current_physical_target(
+                    root, logical_id, current[logical_id]["target"]["path"],
+                    current[logical_id]["target"]["normalizedSha256"],
+                ),
+                "META-LH-03 current target",
+            )
+            if (
+                current[logical_id]["target"]["normalizedSha256"]
+                != EXPECTED_META03_TARGET_SHA256
+                or normalized_sha(current_target) != EXPECTED_META03_TARGET_SHA256
+            ):
                 fail("META-LH-03 target change exceeds the exact 0.3.0 to 0.3.1 replacement")
         if current[logical_id]["authoringReceipt"]["rawSha256"] == old_receipt["rawSha256"] or current[logical_id]["readySingleReview"] == old_review:
             fail(f"{logical_id} receipt and review must both be renewed")
