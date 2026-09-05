@@ -15,7 +15,7 @@ write-protected.*
 | Prüffeld / Checkpoint | Status | Evidence oder Begründung / Evidence or reason |
 |---|---|---|
 | MSL-Anwendbarkeit / MSL applicability | Pass | Governance-Vertrag für das Level-2-Repository; keine Sprach-Runtime wird ergänzt. / Governance contract for this level-2 repository; no language runtime is added. |
-| Pfadwurzeln / Path roots | Pass | `requirements/intake-governance.json` bindet ausschließlich die zwei erlaubten repository-relativen Roots; Traversal- und private Pfade sind Negativfälle. |
+| Pfadwurzeln / Path roots | Pass | `requirements/intake-governance.json` bindet ausschließlich die drei erlaubten repository-relativen Roots; Traversal- und private Pfade sind Negativfälle. |
 | Quellenreihenfolge und Datenbehandlung / Source order and data treatment | Pass | Operation und Receipt binden sechs geordnete Dateien; Template und Validator erklären Quelleninhalt ausdrücklich als nicht vertrauenswürdige Daten. |
 | Prompt Injection | Pass | Quellen werden nicht ausgeführt; `agentSurface.autoExecute=false`; offene Entscheidungen erzeugen `BLOCKED - DO NOT RUN`. |
 | Secrets, Privacy und Personendaten / Secrets, privacy, personal data | Pass | `gitleaks dir . --config .gitleaks.toml --no-banner --no-color --redact=100`, Exit `0`; keine Authoring-Testausnahme in `.gitleaks.toml`. Nur die für Approval notwendige Person ist benannt. |

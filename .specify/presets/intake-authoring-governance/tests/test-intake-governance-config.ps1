@@ -91,7 +91,7 @@ try {
     }
     Set-Content -LiteralPath (Join-Path $Root 'Pflichtenheft.md') -Value '# Index' -Encoding utf8NoBOM
     Set-Content -LiteralPath (Join-Path $Root 'Lastenheft_Abarbeitungsreihenfolge.md') -Value '# Order' -Encoding utf8NoBOM
-    $script:ProfileRelative = '.specify/presets/intake-authoring-governance/templates/project-profile.md'
+    $script:ProfileRelative = '.specify/presets/intake-authoring-governance/templates/project-profile-template.md'
     $script:ProfileId = 'generic-markdown'
     $ProfilePath = Join-Path $Root $script:ProfileRelative
     New-Item -ItemType Directory -Path (Split-Path -Parent $ProfilePath) -Force | Out-Null
