@@ -465,7 +465,7 @@ try {
 #!/usr/bin/env bash
 set +e
 inventory=$1
-parsed=$(jq -r '.[] | [.id,.path] | @tsv' "$inventory")
+parsed=$(jq -r '.[] | [.id,.path] | @tsv' < "$inventory")
 jq_exit=$?
 printf 'JQ_IMMEDIATE_EXIT: %s\n' "$jq_exit"
 if [ "$jq_exit" -ne 0 ]; then exit "$jq_exit"; fi
