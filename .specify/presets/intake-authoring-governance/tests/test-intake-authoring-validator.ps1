@@ -44,6 +44,18 @@ function Write-Utf8Text {
     [IO.File]::WriteAllText($Path, $Text, [Text.UTF8Encoding]::new($false))
 }
 
+function ConvertTo-BashPath {
+    [CmdletBinding()]
+    param([Parameter(Mandatory)][string]$Path)
+
+    if (-not $IsWindows) { return $Path }
+    $Converted = & $BashExecutable -lc 'cygpath -u -- "$1"' 'aoc-cygpath' $Path
+    if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace(($Converted -join ''))) {
+        throw "Cannot convert Windows path for Git Bash: $Path"
+    }
+    return ($Converted -join '').Trim()
+}
+
 function Invoke-ReceiptValidators {
     [CmdletBinding()]
     param(
@@ -475,7 +487,9 @@ exit "$aggregate"
 '@
     $InvalidInventory = Join-Path $TempRoot 'invalid-inventory.json'
     Write-Utf8Text -Path $InvalidInventory -Text '{'
-    $JqOutput = & $BashExecutable $AggregateHarness $InvalidInventory 2>&1
+    $BashAggregateHarness = ConvertTo-BashPath -Path $AggregateHarness
+    $BashInvalidInventory = ConvertTo-BashPath -Path $InvalidInventory
+    $JqOutput = & $BashExecutable $BashAggregateHarness $BashInvalidInventory 2>&1
     $JqExit = $LASTEXITCODE
     if ($JqExit -eq 0 -or ($JqOutput -join "`n") -notmatch 'JQ_IMMEDIATE_EXIT: [1-9]') {
         throw 'jq failure did not propagate through the Bash aggregate harness'
@@ -486,7 +500,8 @@ exit "$aggregate"
         [ordered]@{ id = ('TARGET-{0:D2}' -f $_); path = ('receipt-{0:D2}.json' -f $_) }
     })
     Write-Utf8Text -Path $Inventory -Text ($InventoryRows | ConvertTo-Json -Depth 4)
-    $AggregateOutput = & $BashExecutable $AggregateHarness $Inventory 2>&1
+    $BashInventory = ConvertTo-BashPath -Path $Inventory
+    $AggregateOutput = & $BashExecutable $BashAggregateHarness $BashInventory 2>&1
     $AggregateExit = $LASTEXITCODE
     $AggregateText = $AggregateOutput -join "`n"
     if ($AggregateExit -eq 0 -or
