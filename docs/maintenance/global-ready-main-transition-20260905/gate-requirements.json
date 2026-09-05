@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "1.0",
+  "gates": [
+    {
+      "gateId": "GR-ubuntu-22.04",
+      "applicability": "Applicable",
+      "requiredScope": "Run both Python contract suites, Global-Ready, both snapshot peers and PowerShell static analysis with fail-closed exit handling.",
+      "requiredCommandTokens": [
+        "test_validate_meta_lh01.py",
+        "test_validate_meta_lh02_snapshot.py",
+        "validate_meta_lh01.py",
+        "global-ready",
+        "validate-meta-lh02-snapshot.sh",
+        "validate-meta-lh02-snapshot.ps1",
+        "invoke-psscriptanalyzer.ps1"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "ubuntu-22.04"
+      ],
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "GR-macos-14",
+      "applicability": "Applicable",
+      "requiredScope": "Run both Python contract suites, Global-Ready, both snapshot peers and PowerShell static analysis with fail-closed exit handling.",
+      "requiredCommandTokens": [
+        "test_validate_meta_lh01.py",
+        "test_validate_meta_lh02_snapshot.py",
+        "validate_meta_lh01.py",
+        "global-ready",
+        "validate-meta-lh02-snapshot.sh",
+        "validate-meta-lh02-snapshot.ps1",
+        "invoke-psscriptanalyzer.ps1"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "macos-14"
+      ],
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "GR-windows-2022",
+      "applicability": "Applicable",
+      "requiredScope": "Run both Python contract suites, Global-Ready, both snapshot peers and PowerShell static analysis with fail-closed exit handling.",
+      "requiredCommandTokens": [
+        "test_validate_meta_lh01.py",
+        "test_validate_meta_lh02_snapshot.py",
+        "validate_meta_lh01.py",
+        "global-ready",
+        "validate-meta-lh02-snapshot.sh",
+        "validate-meta-lh02-snapshot.ps1",
+        "invoke-psscriptanalyzer.ps1"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "windows-2022"
+      ],
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "GR-homogeneity",
+      "applicability": "Applicable",
+      "requiredScope": "Read-only homogeneity including current generated statistics.",
+      "requiredCommandTokens": [
+        "check-homogeneity.sh",
+        "--dry-run"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "ubuntu-latest"
+      ],
+      "rationale": "",
+      "reevaluationTrigger": ""
+    },
+    {
+      "gateId": "GR-public",
+      "applicability": "Applicable",
+      "requiredScope": "Repository baseline: secret scan and tracked public-content checks.",
+      "requiredCommandTokens": [
+        "scan-agent-secrets.sh",
+        "--fail-on-high",
+        "git grep"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "ubuntu-latest"
+      ],
+      "rationale": "",
+      "reevaluationTrigger": ""
+    }
+  ]
+}

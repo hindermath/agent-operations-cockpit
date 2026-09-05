@@ -25,18 +25,25 @@ function Test-AocMetaLh02Snapshot {
     .DESCRIPTION
     Prueft Run, Branch, aktiven oder terminal abgeschlossenen Zustand, Lifecycle, 14 Ziele, unveraenderte
     Receipts und Ready-Reviews sowie beide installierten Review-Oberflaechen.
-    Lokal bleibt die Git-Branchpruefung strikt. In GitHub Actions wird eine
+    Aktive Laeufe bleiben an ihren Feature-Branch gebunden. Vollstaendig abgeschlossene
+    Laeufe erlauben main und spaetere Branches nur mit bewiesener Delivery-Abstammung
+    und unveraenderter Evidence. In GitHub Actions wird eine
     logische PR-/Push-Branchidentitaet nur bei exaktem Event-, Repository- und
     HEAD-Beweis akzeptiert. Zieltexte werden UTF-8-/zeilenendennormalisiert,
     unveraenderliche Rohbelege dagegen aus den exakten Git-Blobs geprueft.
+    Index und Arbeitsdateien muessen Git-clean sein; reine Checkout-Zeilenenden
+    duerfen vom kanonischen Blob abweichen.
     Das Cmdlet schreibt nicht in das Repository und bietet keinen Stage-Override.
 
     Validates the run, branch, active or terminal completed state, lifecycle, fourteen targets,
     immutable receipts and Ready reviews, and both installed review surfaces.
-    Local Git branch checks stay strict. GitHub Actions admits logical PR/push
+    Active runs remain bound to their feature branch. Fully completed runs admit
+    main and later branches only with proven delivery ancestry and unchanged
+    evidence. GitHub Actions admits logical PR/push
     identity only with exact event, repository, and checked-out HEAD proof.
     Target text is UTF-8/line-ending normalized while immutable raw evidence is
-    checked from exact Git blobs.
+    checked from exact Git blobs. Index and worktree files must be Git-clean;
+    checkout-only line endings may differ from the canonical blob.
     The cmdlet does not write to the repository and provides no stage override.
 
     .PARAMETER Repo

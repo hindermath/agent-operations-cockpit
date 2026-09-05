@@ -6,6 +6,7 @@ from __future__ import annotations
 import hashlib
 import io
 import json
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -21,6 +22,13 @@ BI = "Deutsch / English"
 def write(path: Path, text: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
+
+
+def git_command(root: Path, *arguments: str) -> str:
+    result = subprocess.run(
+        ["git", *arguments], cwd=root, text=True, capture_output=True, check=True,
+    )
+    return result.stdout.strip()
 
 
 def domain_fixture(root: Path) -> None:
@@ -303,6 +311,42 @@ def causal_closeout_fixture(root: Path) -> tuple[dict, dict]:
     return state, evidence
 
 
+def completed_meta02_dispatch_fixture(root: Path, disposition: str = "archived") -> None:
+    if disposition in {"original", "both"}:
+        write(root / contract.ORIGINAL_META02, "META-LH-02\n")
+    if disposition in {"archived", "both"}:
+        write(root / contract.ARCHIVED_META02, "META-LH-02\n")
+    state = {
+        "status": "Completed",
+        "stage": "MergeAndSync",
+        "nextExactAction": "N/A",
+        "tasks": {"completed": 93, "total": 93},
+        "closeout": {
+            "mergeOrPublication": "Completed",
+            "defaultBranchSync": "Completed",
+            "postMergeActions": "Completed",
+            "finalValidation": "Completed",
+        },
+    }
+    write(root / contract.META02_STATE, json.dumps(state) + "\n")
+
+
+def delivered_meta02_descendant_fixture(root: Path, state_present: bool) -> str:
+    git_command(root, "init", "-b", "main")
+    git_command(root, "config", "user.name", "Contract Test")
+    git_command(root, "config", "user.email", "contract-test@example.invalid")
+    write(root / "completion-marker.txt", "accepted completion\n")
+    git_command(root, "add", "--", "completion-marker.txt")
+    git_command(root, "commit", "-m", "fixture: accepted completion")
+    completion = git_command(root, "rev-parse", "HEAD")
+    write(root / contract.ORIGINAL_META02, "restored original META-LH-02\n")
+    if state_present:
+        write(root / contract.META02_STATE, json.dumps({"status": "Active"}) + "\n")
+    git_command(root, "add", "--", ".")
+    git_command(root, "commit", "-m", "fixture: descendant reversal")
+    return completion
+
+
 class ContractNegativeTests(unittest.TestCase):
     def setUp(self) -> None:
         self.temp = tempfile.TemporaryDirectory(prefix="meta-lh01-contract-")
@@ -515,6 +559,108 @@ class ContractNegativeTests(unittest.TestCase):
         self.assertEqual(28, sum("review validator" in label for label in calls))
         self.assertEqual([True, True], projected_targets)
         self.assertFalse(any("receipt validator" in label for label in calls))
+
+    def test_global_ready_dispatches_to_qualified_completed_meta02(self) -> None:
+        with mock.patch.object(
+                contract, "qualified_completed_meta02_snapshot",
+                return_value="completed snapshot proof") as dispatch:
+            self.assertEqual(
+                contract.validate_global_ready(self.root),
+                "qualified completed META-LH-02 snapshot; completed snapshot proof",
+            )
+        dispatch.assert_called_once_with(self.root)
+
+    def test_meta02_dispatch_rejects_unfinished_closeout(self) -> None:
+        write(self.root / contract.ARCHIVED_META02, "archived META-LH-02\n")
+        state = {
+            "status": "Active",
+            "stage": "MergeAndSync",
+            "nextExactAction": "Complete closeout",
+            "tasks": {"completed": 92, "total": 93},
+            "closeout": {
+                "mergeOrPublication": "Completed",
+                "defaultBranchSync": "Pending",
+                "postMergeActions": "Pending",
+                "finalValidation": "Pending",
+            },
+        }
+        write(self.root / contract.META02_STATE, json.dumps(state) + "\n")
+        self.assert_contract_error(
+            lambda: contract.qualified_completed_meta02_snapshot(self.root),
+            "not a qualified terminal Completed snapshot",
+        )
+
+    def test_meta02_dispatch_rejects_ambiguous_paths(self) -> None:
+        write(self.root / contract.ORIGINAL_META02, "original META-LH-02\n")
+        write(self.root / contract.ARCHIVED_META02, "archived META-LH-02\n")
+        self.assert_contract_error(
+            lambda: contract.qualified_completed_meta02_snapshot(self.root),
+            "original and archived paths are ambiguous",
+        )
+
+    def test_meta02_completed_dispatch_rejects_original_only_and_absent_target(self) -> None:
+        for disposition in ("original", "absent"):
+            with self.subTest(disposition=disposition):
+                root = self.root / disposition
+                completed_meta02_dispatch_fixture(root, disposition)
+                with mock.patch.object(
+                        contract, "meta02_completion_delivered", return_value=True):
+                    self.assert_contract_error(
+                        lambda root=root: contract.qualified_completed_meta02_snapshot(root),
+                        "not a qualified terminal Completed snapshot",
+                    )
+
+    def test_meta02_completed_dispatch_requires_exact_success_output(self) -> None:
+        completed_meta02_dispatch_fixture(self.root)
+        (self.root / ".git").mkdir()
+        accepted = subprocess.CompletedProcess(
+            args=[], returncode=0,
+            stdout=f"{contract.META02_PASS_MESSAGE}\n", stderr="",
+        )
+        with mock.patch.object(
+                contract, "meta02_completion_delivered", return_value=True), mock.patch.object(
+                contract.subprocess, "run", return_value=accepted):
+            self.assertIn(
+                "archive-aware META-LH-02",
+                contract.qualified_completed_meta02_snapshot(self.root),
+            )
+
+        invalid_results = (
+            subprocess.CompletedProcess(
+                args=[], returncode=0,
+                stdout=f"{contract.META02_PASS_MESSAGE} changed\n", stderr="",
+            ),
+            subprocess.CompletedProcess(
+                args=[], returncode=0,
+                stdout=f"{contract.META02_PASS_MESSAGE}\nextra\n", stderr="",
+            ),
+            subprocess.CompletedProcess(
+                args=[], returncode=0,
+                stdout=f"{contract.META02_PASS_MESSAGE}\n", stderr="warning\n",
+            ),
+        )
+        for result in invalid_results:
+            with self.subTest(stdout=result.stdout, stderr=result.stderr), mock.patch.object(
+                    contract, "meta02_completion_delivered", return_value=True), mock.patch.object(
+                    contract.subprocess, "run", return_value=result):
+                self.assert_contract_error(
+                    lambda: contract.qualified_completed_meta02_snapshot(self.root),
+                    "invalid success result",
+                )
+
+    def test_meta02_delivered_descendant_cannot_fall_back_to_legacy(self) -> None:
+        for state_present in (False, True):
+            with self.subTest(state_present=state_present):
+                root = self.root / ("active-state" if state_present else "missing-state")
+                root.mkdir(parents=True)
+                completion = delivered_meta02_descendant_fixture(root, state_present)
+                with mock.patch.object(
+                        contract, "META02_COMPLETION_MERGE", completion,
+                        create=True):
+                    self.assert_contract_error(
+                        lambda root=root: contract.qualified_completed_meta02_snapshot(root),
+                        "delivered META-LH-02 completion requires",
+                    )
 
     def test_snapshot_rejects_pre_implement_shared_source_drift(self) -> None:
         state, _ = self.snapshot_fixture()

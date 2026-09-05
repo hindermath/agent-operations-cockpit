@@ -11,8 +11,8 @@ validate-meta-lh02-snapshot \- read-only META-LH-02 programme-snapshot validatio
 ]
 .B post-global-ready
 .SH BESCHREIBUNG / DESCRIPTION
-Prueft fail-closed den exakten Feature-002-Run und Branch, einen aktiven
-qualifizierten Zustand, den Schema-1.1-Lifecycle, die Original-/Archiv-
+Prueft fail-closed den exakten Feature-002-Run, einen aktiven qualifizierten
+oder vollstaendig abgeschlossenen Zustand, den Schema-1.1-Lifecycle, die Original-/Archiv-
 Exklusivitaet und den unveraenderten historischen 14-Ziele-Snapshot.
 .PP
 Validates fail closed the exact Feature-002 run and branch, a qualified active
@@ -29,26 +29,35 @@ All receipt and review bytes, unique current Single/Primary/Ready leaves without
 blockers, and both installed review surfaces are checked. The tool is always
 read-only and has no write mode or stage override.
 .PP
-Lokal bleibt die Git-Branchidentitaet strikt. In GitHub Actions wird
-GITHUB_HEAD_REF nur fuer pull_request oder push und nur bei passendem
-Repository, Event-Head-SHA und exakt ausgechecktem HEAD akzeptiert. Ein
-synthetischer Merge-Head oder mehrdeutiger detached Head scheitert.
+Bei einem aktiven Lauf bleibt die Feature-Branchidentitaet strikt. Nach
+vollstaendigem MergeAndSync-Closeout darf auch main oder ein spaeterer Branch
+geprueft werden, sofern die ausgelieferte Historie als Vorfahr nachgewiesen
+ist und die gebundene Evidence unveraendert ist. In GitHub Actions bleiben
+Repository, Event-Head-SHA und exakt ausgecheckter HEAD Pflicht. Ein
+synthetischer Merge-Head oder mehrdeutiger lokaler detached Head scheitert.
+Der abgeschlossene META-LH-02-Intake muss ausschliesslich am Archivpfad liegen.
 .PP
-Local Git branch identity remains strict. In GitHub Actions, GITHUB_HEAD_REF is
-accepted only for pull_request or push with matching repository, event head SHA,
-and exact checked-out HEAD. Synthetic merge heads and ambiguous detached heads
-fail closed.
+Active runs retain strict feature-branch identity. After fully completed
+MergeAndSync closeout, main and later branches require proven delivery ancestry
+and unchanged bound evidence. GitHub Actions still requires matching repository,
+event head SHA and exact checked-out HEAD. Synthetic merge heads and ambiguous
+local detached heads fail closed.
+The completed META-LH-02 intake must exist only at its archive path.
 .PP
 Zielidentitaet verwendet normalisiertes UTF-8; LF und CRLF sind gleichwertig.
 Receipt-/Review-Rohhashes bleiben bytegenau und Roh-Git-Evidence wird aus dem
 exakten Blob am ausgecheckten HEAD gelesen. Auf Windows ist ausfuehrbares
 Git-for-Windows-Bash erforderlich; ein WSL-Launcher ohne Distribution gilt als
 nicht verfuegbar.
+Index und Arbeitsdateien muessen Git-clean sein; reine Checkout-Zeilenenden
+duerfen vom kanonischen Blob abweichen, Inhaltsaenderungen jedoch nicht.
 .PP
 Target identity uses normalized UTF-8 so LF and CRLF are equivalent. Raw
 receipt/review hashes remain byte-exact and raw Git evidence comes from the exact
 blob at checked-out HEAD. Windows requires executable Git-for-Windows Bash; a
 WSL launcher without a distribution is unavailable.
+Index and worktree files must be Git-clean; checkout-only line endings may
+differ from the canonical blob, but content changes may not.
 .SH OPTIONEN / OPTIONS
 .TP
 .BR --repo " " PATH
