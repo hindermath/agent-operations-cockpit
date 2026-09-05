@@ -91,11 +91,11 @@ merge, bypass, provider administration, and preset promotion are out of scope.*
 
 ## Aktueller und angestrebter Zustand / Current and target state
 
-Aktuell existieren das installierte Authoring-Preset `0.3.1`, 14 aktive
+Aktuell existieren das installierte Authoring-Preset `0.3.0`, 14 aktive
 Receipts und eine schema-2.0-Requirements-Sammlung. Der angestrebte Zustand ist
 ein einziger versionierter Authoring-Vertrag, dessen Templates, Receipts,
 Prompts und positive sowie negative Evidence auf Bash und PowerShell
-übereinstimmen. / *The installed Authoring preset 0.3.1, fourteen active
+übereinstimmen. / *The installed Authoring preset 0.3.0, fourteen active
 Receipts, and a schema-2.0 requirements collection exist. The target is one
 versioned Authoring contract whose templates, Receipts, prompts, and positive
 and negative evidence agree on Bash and PowerShell.*
@@ -199,7 +199,7 @@ Diese Pfade und die Preset-Version sind bindend; Drift erzwingt Re-Review. /
   paths and exit-code classes apply on macOS, Linux, and Windows. PowerShell
   fixture suites exercise both validator families when Bash is available.*
 - **Software Supply Chain:** anwendbar auf das installierte Preset
-  `intake-authoring-governance 0.3.1` und dessen Anforderung
+  `intake-authoring-governance 0.3.0` und dessen Anforderung
   `Spec Kit >=0.8.3`. Dieses Intake installiert kein Paket; eine Preset-,
   Template-, Validator- oder Mindestversionsänderung erzwingt erneute
   Hashprüfung und Review. / *Applicable to the installed preset and its Spec

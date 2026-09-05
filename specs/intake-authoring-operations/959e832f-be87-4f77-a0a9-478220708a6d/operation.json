@@ -1,0 +1,136 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeOperation",
+  "operationId": "959e832f-be87-4f77-a0a9-478220708a6d",
+  "type": "Update",
+  "status": "Published",
+  "createdAt": "2026-09-05T13:58:06.012Z",
+  "authorityEvidence": "specs/003-authoring-contract/binding-approval.md",
+  "proposalPath": "specs/003-authoring-contract/blocking-scope-decision.md",
+  "approval": {
+    "approved": true,
+    "approvedBy": "Thorsten Hindermann",
+    "evidence": "Current thread: Ja, genehmigt!",
+    "recordingTime": "2026-09-05T13:58:06.012Z"
+  },
+  "stagingDirectory": "specs/intake-authoring-operations/959e832f-be87-4f77-a0a9-478220708a6d/staging",
+  "stagingDisposition": "Isolated temporary HEAD projection; exact candidate files validated before one atomic apply_patch publication. No source repository or existing evidence was overwritten.",
+  "intendedTargets": [
+    "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+    "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+    "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+    "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md"
+  ],
+  "validatedTargets": [
+    "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+    "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+    "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+    "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md"
+  ],
+  "publishedTargets": [
+    "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+    "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+    "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+    "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md"
+  ],
+  "bindings": [
+    {
+      "logicalTargetId": "META-LH-02",
+      "receiptPath": "specs/intake-authoring-receipts/META-LH-02-Portfolio-Ownership.json",
+      "targetPath": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "physicalPath": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md",
+      "archiveTargetPath": "specs/intake-authoring-archive/d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b/53564be1-65eb-47e8-9786-6c1fb19fd844/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+      "archiveReceiptPath": "specs/intake-authoring-archive/d0a6ef89-8a1f-4957-aa6f-be82d3cdbf3b/53564be1-65eb-47e8-9786-6c1fb19fd844/META-LH-02-Portfolio-Ownership.json",
+      "priorTargetSha256": "9fc31a833421915b68b85c7dd499dc5b97a81152a8cf668599bb243ef3e17503",
+      "newTargetSha256": "9fc31a833421915b68b85c7dd499dc5b97a81152a8cf668599bb243ef3e17503"
+    },
+    {
+      "logicalTargetId": "META-LH-03",
+      "receiptPath": "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json",
+      "targetPath": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "physicalPath": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "archiveTargetPath": "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/4a0e33c5-6348-4778-823a-e4a093b75456/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "archiveReceiptPath": "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/4a0e33c5-6348-4778-823a-e4a093b75456/META-LH-03-Authoring-Contract.json",
+      "priorTargetSha256": "f6d57cacc954b4899fc5bd8ddcc235570ec20470094feec506e1b8e9ea07e3e9",
+      "newTargetSha256": "ca159a03a91a19c3f2812a1a638604ca29dab816a20a9a67b7c5d06b3281f5eb"
+    },
+    {
+      "logicalTargetId": "META-LH-05",
+      "receiptPath": "specs/intake-authoring-receipts/META-LH-05-Erste-Welle.json",
+      "targetPath": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "physicalPath": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "archiveTargetPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/238e0c7e-a300-4573-b91d-38385c155fed/Lastenheft_META-LH-05-Erste-Welle.md",
+      "archiveReceiptPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/238e0c7e-a300-4573-b91d-38385c155fed/META-LH-05-Erste-Welle.json",
+      "priorTargetSha256": "cb255e60b49237f8cc655486b6529536b831b5b942f89f838678386bc31f930f",
+      "newTargetSha256": "cb255e60b49237f8cc655486b6529536b831b5b942f89f838678386bc31f930f"
+    },
+    {
+      "logicalTargetId": "RAW-03",
+      "receiptPath": "specs/intake-authoring-receipts/RAW-03-State-Truthfulness.json",
+      "targetPath": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "physicalPath": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "archiveTargetPath": "specs/intake-authoring-archive/af8d8b59-d146-44b0-8bf5-a63966865d4a/89293949-6174-4549-a33d-6cd6eeb71df3/Lastenheft_RAW-03-State-Truthfulness.md",
+      "archiveReceiptPath": "specs/intake-authoring-archive/af8d8b59-d146-44b0-8bf5-a63966865d4a/89293949-6174-4549-a33d-6cd6eeb71df3/RAW-03-State-Truthfulness.json",
+      "priorTargetSha256": "31d31e82ab1857182d1201192438e5c91abfc3190ba47a2f68b9543034ab0cfd",
+      "newTargetSha256": "31d31e82ab1857182d1201192438e5c91abfc3190ba47a2f68b9543034ab0cfd"
+    }
+  ],
+  "validation": [
+    {
+      "target": "META-LH-02",
+      "bash": 0,
+      "powerShell": 0,
+      "archive": 0,
+      "output": [
+        "PASS: intake authoring eab48b88-eb28-44f5-8e94-a71dd81f11ad is current (ReadyForReview, 14 sources, requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md)\n",
+        "PASS: intake authoring eab48b88-eb28-44f5-8e94-a71dd81f11ad is current (ReadyForReview, 14 sources, requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md)\n",
+        ""
+      ]
+    },
+    {
+      "target": "META-LH-03",
+      "bash": 0,
+      "powerShell": 0,
+      "archive": 0,
+      "output": [
+        "PASS: intake authoring 7cc121ca-9c7a-4750-85e9-9cf2ebf2aa71 is current (ReadyForReview, 15 sources, requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md)\n",
+        "PASS: intake authoring 7cc121ca-9c7a-4750-85e9-9cf2ebf2aa71 is current (ReadyForReview, 15 sources, requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md)\n",
+        ""
+      ]
+    },
+    {
+      "target": "META-LH-05",
+      "bash": 0,
+      "powerShell": 0,
+      "archive": 0,
+      "output": [
+        "PASS: intake authoring 50244307-af74-4396-bb62-23398a386b70 is current (ReadyForReview, 18 sources, requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md)\n",
+        "PASS: intake authoring 50244307-af74-4396-bb62-23398a386b70 is current (ReadyForReview, 18 sources, requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md)\n",
+        ""
+      ]
+    },
+    {
+      "target": "RAW-03",
+      "bash": 0,
+      "powerShell": 0,
+      "archive": 0,
+      "output": [
+        "PASS: intake authoring 3cc19267-e548-4816-a539-8d652efdc529 is current (ReadyForReview, 15 sources, requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md)\n",
+        "PASS: intake authoring 3cc19267-e548-4816-a539-8d652efdc529 is current (ReadyForReview, 15 sources, requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md)\n",
+        ""
+      ]
+    }
+  ],
+  "preserved": [
+    "All prior target and receipt bytes in new archive paths",
+    "All prior Single requests/results/reports",
+    "META-LH-02 terminal state and lifecycle",
+    "Canonical series manifest, receipt and operation; current binding uses a separate feature-local bridge"
+  ],
+  "rollbackBoundary": "The complete four-target candidate passed both validators before publication. All predecessor bytes remain archived. Current reviews remain pending until full independent re-review; no downstream phase started.",
+  "failure": {
+    "class": "N/A",
+    "message": "N/A"
+  },
+  "nextAction": "Full Single re-review of META-LH-02, META-LH-03, META-LH-05 and RAW-03; then validate current-evidence bridge and resume existing META-LH-03 run only."
+}

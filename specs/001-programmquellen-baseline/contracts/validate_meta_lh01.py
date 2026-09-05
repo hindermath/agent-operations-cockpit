@@ -110,6 +110,14 @@ META02_PASS_MESSAGE = (
     "PASS: post-global-ready: 14 logical Ready targets with archive-aware META-LH-02 "
     "resolution, immutable programme snapshot, and Bash/PowerShell review surfaces"
 )
+META03_BINDING = "specs/003-authoring-contract/current-evidence-binding.json"
+META03_STATE = "specs/003-authoring-contract/autonomous-run-state.json"
+META03_AUTHORITY = "specs/003-authoring-contract/binding-approval.md"
+META03_VALIDATOR = "specs/003-authoring-contract/contracts/validate_current_evidence_binding.py"
+META03_PASS_MESSAGE = (
+    "PASS: current-evidence: immutable META-LH-02 history and 14 current Ready "
+    "receipt/review bindings"
+)
 SEMANTIC_CRITERIA = {
     "germanFirst", "englishEquivalent", "cefrB2", "firstUseTerms",
     "domainTruth", "authorityInterpretation",
@@ -289,6 +297,30 @@ def qualified_completed_meta02_snapshot(root: Path) -> str | None:
     if result.stdout != f"{META02_PASS_MESSAGE}\n" or result.stderr:
         fail("Feature-002 snapshot validator returned an invalid success result")
     return META02_PASS_MESSAGE.removeprefix("PASS: post-global-ready: ")
+
+
+def qualified_meta03_current_evidence(root: Path) -> str | None:
+    """Dispatch an explicit Feature-003 projection to its bounded bridge."""
+    if not (root / META03_BINDING).is_file():
+        if (root / META03_STATE).is_file() or (root / META03_AUTHORITY).is_file():
+            fail("Feature-003 state or authority requires its current-evidence binding manifest")
+        return None
+    validator_path = root / META03_VALIDATOR
+    try:
+        result = subprocess.run(
+            [sys.executable, "-B", str(validator_path), "--repo", str(root),
+             "current-evidence"],
+            cwd=root, text=True, capture_output=True, check=False,
+        )
+    except OSError as exc:
+        fail(f"Feature-003 current-evidence validator could not start: {exc}")
+    if result.returncode != 0:
+        detail = (result.stderr or result.stdout).strip().splitlines()
+        diagnostic = detail[0] if detail else "no diagnostic"
+        fail(f"Feature-003 current-evidence binding rejected: {diagnostic}")
+    if result.stdout != f"{META03_PASS_MESSAGE}\n" or result.stderr:
+        fail("Feature-003 current-evidence validator returned an invalid success result")
+    return META03_PASS_MESSAGE.removeprefix("PASS: current-evidence: ")
 
 
 def table_rows(text: str, identifier: re.Pattern[str]) -> list[list[str]]:
@@ -671,6 +703,9 @@ def current_single_reviews(root: Path) -> dict[str, tuple[str, dict[str, Any]]]:
 
 
 def validate_global_ready(root: Path) -> str:
+    current_meta03 = qualified_meta03_current_evidence(root)
+    if current_meta03 is not None:
+        return f"qualified Feature-003 current-evidence binding; {current_meta03}"
     completed_meta02 = qualified_completed_meta02_snapshot(root)
     if completed_meta02 is not None:
         return f"qualified completed META-LH-02 snapshot; {completed_meta02}"

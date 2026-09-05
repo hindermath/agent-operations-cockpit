@@ -570,6 +570,77 @@ class ContractNegativeTests(unittest.TestCase):
             )
         dispatch.assert_called_once_with(self.root)
 
+    def test_global_ready_dispatches_feature003_before_completed_meta02(self) -> None:
+        with mock.patch.object(
+                contract, "qualified_meta03_current_evidence",
+                return_value="current projection proof") as current_dispatch, mock.patch.object(
+                contract, "qualified_completed_meta02_snapshot") as completed_dispatch:
+            self.assertEqual(
+                contract.validate_global_ready(self.root),
+                "qualified Feature-003 current-evidence binding; current projection proof",
+            )
+        current_dispatch.assert_called_once_with(self.root)
+        completed_dispatch.assert_not_called()
+
+    def test_feature003_dispatch_requires_exact_success_output(self) -> None:
+        write(self.root / contract.META03_BINDING, "{}\n")
+        accepted = subprocess.CompletedProcess(
+            args=[], returncode=0,
+            stdout=f"{contract.META03_PASS_MESSAGE}\n", stderr="",
+        )
+        with mock.patch.object(contract.subprocess, "run", return_value=accepted):
+            self.assertIn(
+                "14 current Ready",
+                contract.qualified_meta03_current_evidence(self.root),
+            )
+
+        invalid_results = (
+            subprocess.CompletedProcess(
+                args=[], returncode=0,
+                stdout=f"{contract.META03_PASS_MESSAGE} changed\n", stderr="",
+            ),
+            subprocess.CompletedProcess(
+                args=[], returncode=0,
+                stdout=f"{contract.META03_PASS_MESSAGE}\nextra\n", stderr="",
+            ),
+            subprocess.CompletedProcess(
+                args=[], returncode=0,
+                stdout=f"{contract.META03_PASS_MESSAGE}\n", stderr="warning\n",
+            ),
+        )
+        for result in invalid_results:
+            with self.subTest(stdout=result.stdout, stderr=result.stderr), mock.patch.object(
+                    contract.subprocess, "run", return_value=result):
+                self.assert_contract_error(
+                    lambda: contract.qualified_meta03_current_evidence(self.root),
+                    "invalid success result",
+                )
+
+    def test_feature003_dispatch_absent_manifest_preserves_prior_path(self) -> None:
+        self.assertIsNone(contract.qualified_meta03_current_evidence(self.root))
+
+    def test_feature003_state_or_authority_without_manifest_cannot_fall_back(self) -> None:
+        for relative in (contract.META03_STATE, contract.META03_AUTHORITY):
+            with self.subTest(relative=relative):
+                root = self.root / Path(relative).name
+                root.mkdir(parents=True)
+                write(root / relative, "{}\n")
+                self.assert_contract_error(
+                    lambda root=root: contract.qualified_meta03_current_evidence(root),
+                    "requires its current-evidence binding manifest",
+                )
+
+    def test_feature003_dispatch_rejects_failed_bridge(self) -> None:
+        write(self.root / contract.META03_BINDING, "{}\n")
+        rejected = subprocess.CompletedProcess(
+            args=[], returncode=1, stdout="", stderr="ERROR: binding rejected\n",
+        )
+        with mock.patch.object(contract.subprocess, "run", return_value=rejected):
+            self.assert_contract_error(
+                lambda: contract.qualified_meta03_current_evidence(self.root),
+                "binding rejected",
+            )
+
     def test_meta02_dispatch_rejects_unfinished_closeout(self) -> None:
         write(self.root / contract.ARCHIVED_META02, "archived META-LH-02\n")
         state = {

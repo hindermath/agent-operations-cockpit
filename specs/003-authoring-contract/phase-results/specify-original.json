@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "specify",
+  "attemptId": "c6642d19-3203-400c-9546-85bf96d6db9b",
+  "outcome": "Completed",
+  "expectedTasks": 1,
+  "completedTasks": 1,
+  "blockedReason": "",
+  "gatesSatisfied": true,
+  "payloadPath": "specs/003-authoring-contract/spec.md",
+  "payloadSha256": "80eb52ceb3bad0a289e7d7e893a39af40b3822af06d8ec8a95add153e4e4d97b"
+}

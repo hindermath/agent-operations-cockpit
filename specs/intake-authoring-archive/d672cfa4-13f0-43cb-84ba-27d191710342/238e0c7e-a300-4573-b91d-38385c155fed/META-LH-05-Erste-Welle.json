@@ -1,17 +1,17 @@
 {
   "schemaVersion": "2.0",
   "documentType": "IntakeReceipt",
-  "receiptId": "50244307-af74-4396-bb62-23398a386b70",
+  "receiptId": "5b3382a0-582b-475b-99ab-253d8f57256e",
   "intakeId": "d672cfa4-13f0-43cb-84ba-27d191710342",
   "generator": {
     "preset": "intake-authoring-governance",
-    "version": "0.3.1"
+    "version": "0.3.0"
   },
-  "createdAt": "2026-09-05T13:58:06.012Z",
+  "createdAt": "2026-08-29T21:56:08Z",
   "operation": {
-    "operationId": "238e0c7e-a300-4573-b91d-38385c155fed",
+    "operationId": "afd1c188-5081-45bf-832d-b1192536a854",
     "type": "Update",
-    "authorityEvidence": "Thorsten explicitly approved the bounded binding repair recorded in specs/003-authoring-contract/binding-approval.md: version-reference alignment only, renewal of META-LH-02/META-LH-03/META-LH-05/RAW-03 receipts with preserved predecessors, full Single re-reviews and continuation of existing run 044b77ae-85fd-46ee-97f4-61ce7a2c9c66. No new feature, Level-0, promotion or Admin-Bypass authority."
+    "authorityEvidence": "Thorsten explicitly authorized the bounded IR007 and IR008 repair on 2026-08-29, including lifecycle-aware consumer resolution, renewal of all fourteen authoring receipts, complete Single and Series re-reviews, and MergeAndSync with Admin-Bypass."
   },
   "status": "ReadyForReview",
   "target": {
@@ -23,9 +23,9 @@
       "sourceId": "SRC001",
       "order": 1,
       "kind": "File",
-      "label": "Immediate predecessor intake, preserved byte-identically as first binding source",
+      "label": "Superseded META-LH-05-Erste-Welle intake as first binding repair source",
       "location": "Repository",
-      "path": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/238e0c7e-a300-4573-b91d-38385c155fed/Lastenheft_META-LH-05-Erste-Welle.md",
+      "path": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/2e7fe766-e1ad-425c-925b-959f267232cf/Lastenheft_META-LH-05-Erste-Welle.md",
       "requestedUrl": "N/A",
       "finalUrl": "N/A",
       "retrievedAt": "N/A",
@@ -36,9 +36,9 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "cb255e60b49237f8cc655486b6529536b831b5b942f89f838678386bc31f930f",
-      "gitBlob": "2a63d06255de68fecc1092b88d3be1efb5cc6c97",
-      "proofBoundary": "RepositoryArchiveAtApprovedBindingRenewal"
+      "normalizedSha256": "533ecf072fc81a08c43c7c9a794d30e3ea9237e0e8d75602251373881dfc6ec0",
+      "gitBlob": "dc4522ef90653281377fe9539f2c773e5e3a8ed8",
+      "proofBoundary": "RepositoryArchiveAtBoundedSeriesRepair"
     },
     {
       "sourceId": "SRC002",
@@ -183,9 +183,9 @@
       "lastModified": "N/A",
       "redirectChain": [],
       "rawSha256": "N/A",
-      "normalizedSha256": "12f062ba167a43b78b899b2f7b19d310363ce8c4438b1652e71c6f94e7b25106",
-      "gitBlob": "a97f6e70b54b9cb71dfee7324798233c76ef479b",
-      "proofBoundary": "CurrentRepositoryAtApprovedBindingRenewal"
+      "normalizedSha256": "10cb40e62c4e4b44bc25942c2bdff8cd2c1cda80124f6a3bfd1dc97ac5927c9d",
+      "gitBlob": "ae70de0856e0982341e20bafcd22de2946f1f545",
+      "proofBoundary": "RepositoryAtRepair"
     },
     {
       "sourceId": "SRC009",
@@ -375,27 +375,6 @@
       "normalizedSha256": "11a42bd28136bf82c4dc0f36ac6e4d69b5ad8bfed6422d98d9cdb9be7c603345",
       "gitBlob": "485c98741448bd61bb0d22b5bd49f396ab17f957",
       "proofBoundary": "RepositoryAtRepairAuthorization"
-    },
-    {
-      "sourceId": "SRC018",
-      "order": 18,
-      "kind": "File",
-      "label": "Explicit current bounded repair approval",
-      "location": "Repository",
-      "path": "specs/003-authoring-contract/binding-approval.md",
-      "requestedUrl": "N/A",
-      "finalUrl": "N/A",
-      "retrievedAt": "N/A",
-      "httpStatus": "N/A",
-      "contentType": "N/A",
-      "contentLength": "N/A",
-      "etag": "N/A",
-      "lastModified": "N/A",
-      "redirectChain": [],
-      "rawSha256": "N/A",
-      "normalizedSha256": "d86fd478f97ddb02a4d6c681926afdd0d123a1250a98401fa34847d2cf31ed82",
-      "gitBlob": "N/A",
-      "proofBoundary": "CurrentThreadApprovalRecordedInRepository"
     }
   ],
   "profile": "aoc-bilingual-requirements",
@@ -410,14 +389,14 @@
     "autonomousInvocation": "$speckit-autonomous requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md --delivery-mode MergeAndSync --require-current-review"
   },
   "deliveryAuthority": "MergeAndSync",
-  "authorityEvidence": "MergeAndSync remains the unchanged delivery ceiling; stored historical bypass grants confer no current authority. Current bounded repair authority: Thorsten explicitly approved the bounded binding repair recorded in specs/003-authoring-contract/binding-approval.md: version-reference alignment only, renewal of META-LH-02/META-LH-03/META-LH-05/RAW-03 receipts with preserved predecessors, full Single re-reviews and continuation of existing run 044b77ae-85fd-46ee-97f4-61ce7a2c9c66. No new feature, Level-0, promotion or Admin-Bypass authority.",
+  "authorityEvidence": "MergeAndSync remains the unchanged historical delivery ceiling. Any stored Admin-Bypass evidence is historical and grants no current authority. The current 2026-08-05 authority covers only receipt-provenance supersession and a complete new Single review; it grants no Specify, implementation, remote-write, merge, bypass, preset, promotion, or provider-administration authority.",
   "promptState": "Enabled",
   "provenanceMode": "Supersession",
   "supersedes": {
-    "receiptPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/238e0c7e-a300-4573-b91d-38385c155fed/META-LH-05-Erste-Welle.json",
+    "receiptPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/afd1c188-5081-45bf-832d-b1192536a854/META-LH-05-Erste-Welle.json",
     "targetNormalizedSha256": "cb255e60b49237f8cc655486b6529536b831b5b942f89f838678386bc31f930f",
-    "archiveTargetPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/238e0c7e-a300-4573-b91d-38385c155fed/Lastenheft_META-LH-05-Erste-Welle.md",
-    "archiveReceiptPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/238e0c7e-a300-4573-b91d-38385c155fed/META-LH-05-Erste-Welle.json"
+    "archiveTargetPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/afd1c188-5081-45bf-832d-b1192536a854/Lastenheft_META-LH-05-Erste-Welle.md",
+    "archiveReceiptPath": "specs/intake-authoring-archive/d672cfa4-13f0-43cb-84ba-27d191710342/afd1c188-5081-45bf-832d-b1192536a854/META-LH-05-Erste-Welle.json"
   },
   "legacyAdoption": {
     "evidenceType": "N/A",
@@ -425,7 +404,7 @@
     "priorGitBlob": "N/A"
   },
   "updateAuthorized": true,
-  "updateAuthorityEvidence": "Thorsten explicitly approved the bounded binding repair recorded in specs/003-authoring-contract/binding-approval.md: version-reference alignment only, renewal of META-LH-02/META-LH-03/META-LH-05/RAW-03 receipts with preserved predecessors, full Single re-reviews and continuation of existing run 044b77ae-85fd-46ee-97f4-61ce7a2c9c66. No new feature, Level-0, promotion or Admin-Bypass authority.",
+  "updateAuthorityEvidence": "Thorsten explicitly authorized the bounded IR007 and IR008 repair on 2026-08-29, including lifecycle-aware consumer resolution, renewal of all fourteen authoring receipts, complete Single and Series re-reviews, and MergeAndSync with Admin-Bypass.",
   "series": {
     "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
     "manifestPath": "specs/intake-series/aoc-phase-2/manifest.json",
