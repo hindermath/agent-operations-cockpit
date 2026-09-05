@@ -17,6 +17,7 @@ REPO = CONTRACT_DIR.parents[2]
 sys.path.insert(0, str(CONTRACT_DIR))
 
 from validate_authoring_contract import (  # noqa: E402
+    _canonical_raw_sha256,
     ContractViolation,
     normalized_sha256,
     validate_checkpoint,
@@ -116,7 +117,8 @@ class AuthoringContractAdapterTests(unittest.TestCase):
     powershell_adapter = CONTRACT_DIR / "validate-authoring-contract.ps1"
 
     def _run_pair(self, repo: Path, json_output: bool = False) -> list[subprocess.CompletedProcess[str]]:
-        bash_args = ["bash", str(self.bash_adapter), "--repo", str(repo)]
+        bash_script = self.bash_adapter.relative_to(REPO).as_posix()
+        bash_args = ["bash", bash_script, "--repo", str(repo)]
         pwsh_args = [
             "pwsh",
             "-NoProfile",
@@ -129,7 +131,13 @@ class AuthoringContractAdapterTests(unittest.TestCase):
             bash_args.append("--json")
             pwsh_args.append("-Json")
         return [
-            subprocess.run(args, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            subprocess.run(
+                args,
+                cwd=REPO,
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
             for args in (bash_args, pwsh_args)
         ]
 
@@ -148,11 +156,17 @@ class AuthoringContractAdapterTests(unittest.TestCase):
 
     def test_bash_and_powershell_usage_failure_parity(self) -> None:
         commands = [
-            ["bash", str(self.bash_adapter), "--unknown"],
+            ["bash", self.bash_adapter.relative_to(REPO).as_posix(), "--unknown"],
             ["pwsh", "-NoProfile", "-File", str(self.powershell_adapter), "-Unknown"],
         ]
         results = [
-            subprocess.run(args, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            subprocess.run(
+                args,
+                cwd=REPO,
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
             for args in commands
         ]
         self.assertEqual([64, 64], [item.returncode for item in results])
@@ -163,6 +177,31 @@ class AuthoringContractAdapterTests(unittest.TestCase):
         expected = hashlib.sha256(lf.encode("utf-8")).hexdigest()
         self.assertEqual(expected, normalized_sha256(lf.encode("utf-8")))
         self.assertEqual(expected, normalized_sha256(crlf_bom))
+
+    def test_tracked_raw_hash_accepts_checkout_only_line_endings(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            repo = Path(temporary)
+            subprocess.run(["git", "init", "-q", str(repo)], check=True)
+            subprocess.run(
+                ["git", "-C", str(repo), "config", "user.email", "fixture@example.invalid"],
+                check=True,
+            )
+            subprocess.run(
+                ["git", "-C", str(repo), "config", "user.name", "Fixture"],
+                check=True,
+            )
+            fixture = repo / "fixture.md"
+            fixture.write_bytes(b"Deutsch / English\n")
+            subprocess.run(["git", "-C", str(repo), "add", "--", "fixture.md"], check=True)
+            subprocess.run(
+                ["git", "-C", str(repo), "commit", "-q", "-m", "fixture"],
+                check=True,
+            )
+            fixture.write_bytes(b"Deutsch / English\r\n")
+            self.assertEqual(
+                hashlib.sha256(b"Deutsch / English\n").hexdigest(),
+                _canonical_raw_sha256(repo, "fixture.md"),
+            )
 
 
 if __name__ == "__main__":

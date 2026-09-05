@@ -179,11 +179,24 @@ def validate_leaf_replacement(
     }
 
 
-def _raw_sha256(path: Path) -> str:
+def _canonical_raw_sha256(repo: Path, relative: str) -> str:
+    """Bind tracked text to its Git blob while accepting checkout-only EOL conversion."""
+    path = repo / relative
     try:
-        return hashlib.sha256(path.read_bytes()).hexdigest()
+        worktree = path.read_bytes()
     except OSError as exc:
         raise ContractViolation(f"cannot hash {path}: {exc}") from exc
+    result = subprocess.run(
+        ["git", "-C", str(repo), "show", f"HEAD:{relative}"],
+        check=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    if result.returncode == 0:
+        blob = result.stdout
+        if normalized_sha256(worktree) == normalized_sha256(blob):
+            return hashlib.sha256(blob).hexdigest()
+    return hashlib.sha256(worktree).hexdigest()
 
 
 def _require_file_hash(
@@ -192,7 +205,11 @@ def _require_file_hash(
     path = repo / relative
     if not path.is_file():
         raise ContractViolation(f"required transaction file is missing: {relative}")
-    actual = normalized_sha256(path.read_bytes()) if normalized else _raw_sha256(path)
+    actual = (
+        normalized_sha256(path.read_bytes())
+        if normalized
+        else _canonical_raw_sha256(repo, relative)
+    )
     if actual != expected:
         kind = "normalized" if normalized else "raw"
         raise ContractViolation(f"{kind} hash drift: {relative}")
@@ -332,9 +349,18 @@ def validate_r2_transaction(
     expected_leaf = {
         "logicalTargetId": "META-LH-03",
         "target": {"path": active_target, "normalizedSha256": target_hash},
-        "authoringReceipt": {"path": active_receipt, "rawSha256": _raw_sha256(repo / active_receipt)},
-        "readySingleReview": {"path": r2_result_path, "rawSha256": _raw_sha256(repo / r2_result_path)},
-        "readySingleReviewReport": {"path": r2_report_path, "rawSha256": _raw_sha256(repo / r2_report_path)},
+        "authoringReceipt": {
+            "path": active_receipt,
+            "rawSha256": _canonical_raw_sha256(repo, active_receipt),
+        },
+        "readySingleReview": {
+            "path": r2_result_path,
+            "rawSha256": _canonical_raw_sha256(repo, r2_result_path),
+        },
+        "readySingleReviewReport": {
+            "path": r2_report_path,
+            "rawSha256": _canonical_raw_sha256(repo, r2_report_path),
+        },
     }
     if leaf != expected_leaf:
         raise ContractViolation("current META-LH-03 binding leaf does not match R2 evidence")
