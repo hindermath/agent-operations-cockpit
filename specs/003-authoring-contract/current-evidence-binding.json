@@ -4,7 +4,7 @@
   "runId": "044b77ae-85fd-46ee-97f4-61ce7a2c9c66",
   "authorityBinding": {
     "path": "specs/003-authoring-contract/binding-approval.md",
-    "rawSha256": "d86fd478f97ddb02a4d6c681926afdd0d123a1250a98401fa34847d2cf31ed82",
+    "rawSha256": "59179023d1b9d11f1ce18874ee8a2db8150127e305f718679fed9e564b16a463",
     "allowedReceiptReviewRenewals": [
       "META-LH-02",
       "META-LH-03",
@@ -59,7 +59,7 @@
         },
         "authoringReceipt": {
           "path": "specs/intake-authoring-receipts/META-LH-02-Portfolio-Ownership.json",
-          "rawSha256": "cbb417ee72520889022ec70ce1be51aaffbbc5b17cd845f194579fca7ff5b682"
+          "rawSha256": "72053e00c79def3dd506e84ce1c0a1a6ba3f80cb914e7051c94224b8ca4b31a9"
         },
         "readySingleReview": {
           "path": "specs/intake-review-results/meta-lh-02-portfolio-ownership-2026-09-05-r1.json",
@@ -67,7 +67,7 @@
         },
         "readySingleReviewReport": {
           "path": "docs/reviews/meta-lh-02-portfolio-ownership-intake-review-2026-09-05-r1.md",
-          "rawSha256": "acd9bac14226a9a8a1662e15909a9fddc4736878605c1cd102169d4ffee298a9"
+          "rawSha256": "324dcc836127c0ea3a9e3d9ef8a51a4e6f7b32d4531536448fc7cd09ec6643b6"
         }
       }
     },
@@ -97,7 +97,7 @@
         },
         "authoringReceipt": {
           "path": "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json",
-          "rawSha256": "392d893407ee5441e5f9d33f04e0df5365fc985e85f619dedeb47f3bea25bb0b"
+          "rawSha256": "85ffcea67b0723241606040c5d2b9eb586a51d8d13005b676ceb6eeab2caa745"
         },
         "readySingleReview": {
           "path": "specs/intake-review-results/meta-lh-03-authoring-contract-2026-09-05-r1.json",
@@ -105,7 +105,7 @@
         },
         "readySingleReviewReport": {
           "path": "docs/reviews/meta-lh-03-authoring-contract-intake-review-2026-09-05-r1.md",
-          "rawSha256": "1a0e3f7e5d99115eaec4f6e7053e5aad823c64aa9faa43e57695955773869e50"
+          "rawSha256": "0947e027578bb135ac7de39e3b0ff45d2f76242f6037616c40a9c866b96dd5a9"
         }
       }
     },
@@ -135,7 +135,7 @@
         },
         "authoringReceipt": {
           "path": "specs/intake-authoring-receipts/META-LH-05-Erste-Welle.json",
-          "rawSha256": "9618ab3202195f609565e99e80dad2705bec485e830b96721732e4c0185086f4"
+          "rawSha256": "db8506157dd5b8116deaed5a4f8855aaeff29a2a47bddb14324c5250e24741ee"
         },
         "readySingleReview": {
           "path": "specs/intake-review-results/meta-lh-05-erste-welle-2026-09-05-r1.json",
@@ -143,7 +143,7 @@
         },
         "readySingleReviewReport": {
           "path": "docs/reviews/meta-lh-05-erste-welle-intake-review-2026-09-05-r1.md",
-          "rawSha256": "afe06a16b42341df18cc5957b8aa01710a8e864de7e1bd418434bb0aeb81c17d"
+          "rawSha256": "764ef4d316f98722109c3bb66836017f273637cbfca3af6cd5fad41286269b78"
         }
       }
     },
@@ -173,7 +173,7 @@
         },
         "authoringReceipt": {
           "path": "specs/intake-authoring-receipts/RAW-03-State-Truthfulness.json",
-          "rawSha256": "bccf2d80921b73106667e0543a045e3183f8dcb5201630bca8db35ac9762b667"
+          "rawSha256": "b20f963fc7b60f78a5f7f7e0accfc047d2310a0832e73b3f19935bc699803144"
         },
         "readySingleReview": {
           "path": "specs/intake-review-results/raw-03-state-truthfulness-2026-09-05-r1.json",
@@ -181,7 +181,7 @@
         },
         "readySingleReviewReport": {
           "path": "docs/reviews/raw-03-state-truthfulness-intake-review-2026-09-05-r1.md",
-          "rawSha256": "7137d9408d7c165387a17a97f129bd8679108b875204b4e09532cacce5d58a52"
+          "rawSha256": "ae33c515d0a4fd4af214da60b126a6e5713d4946cb6b242b94ebdd0827088fb1"
         }
       }
     }
@@ -210,7 +210,7 @@
       },
       "authoringReceipt": {
         "path": "specs/intake-authoring-receipts/META-LH-02-Portfolio-Ownership.json",
-        "rawSha256": "cbb417ee72520889022ec70ce1be51aaffbbc5b17cd845f194579fca7ff5b682"
+        "rawSha256": "72053e00c79def3dd506e84ce1c0a1a6ba3f80cb914e7051c94224b8ca4b31a9"
       },
       "readySingleReview": {
         "path": "specs/intake-review-results/meta-lh-02-portfolio-ownership-2026-09-05-r1.json",
@@ -218,7 +218,7 @@
       },
       "readySingleReviewReport": {
         "path": "docs/reviews/meta-lh-02-portfolio-ownership-intake-review-2026-09-05-r1.md",
-        "rawSha256": "acd9bac14226a9a8a1662e15909a9fddc4736878605c1cd102169d4ffee298a9"
+        "rawSha256": "324dcc836127c0ea3a9e3d9ef8a51a4e6f7b32d4531536448fc7cd09ec6643b6"
       }
     },
     {
@@ -229,7 +229,7 @@
       },
       "authoringReceipt": {
         "path": "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json",
-        "rawSha256": "392d893407ee5441e5f9d33f04e0df5365fc985e85f619dedeb47f3bea25bb0b"
+        "rawSha256": "85ffcea67b0723241606040c5d2b9eb586a51d8d13005b676ceb6eeab2caa745"
       },
       "readySingleReview": {
         "path": "specs/intake-review-results/meta-lh-03-authoring-contract-2026-09-05-r1.json",
@@ -237,7 +237,7 @@
       },
       "readySingleReviewReport": {
         "path": "docs/reviews/meta-lh-03-authoring-contract-intake-review-2026-09-05-r1.md",
-        "rawSha256": "1a0e3f7e5d99115eaec4f6e7053e5aad823c64aa9faa43e57695955773869e50"
+        "rawSha256": "0947e027578bb135ac7de39e3b0ff45d2f76242f6037616c40a9c866b96dd5a9"
       }
     },
     {
@@ -263,7 +263,7 @@
       },
       "authoringReceipt": {
         "path": "specs/intake-authoring-receipts/META-LH-05-Erste-Welle.json",
-        "rawSha256": "9618ab3202195f609565e99e80dad2705bec485e830b96721732e4c0185086f4"
+        "rawSha256": "db8506157dd5b8116deaed5a4f8855aaeff29a2a47bddb14324c5250e24741ee"
       },
       "readySingleReview": {
         "path": "specs/intake-review-results/meta-lh-05-erste-welle-2026-09-05-r1.json",
@@ -271,7 +271,7 @@
       },
       "readySingleReviewReport": {
         "path": "docs/reviews/meta-lh-05-erste-welle-intake-review-2026-09-05-r1.md",
-        "rawSha256": "afe06a16b42341df18cc5957b8aa01710a8e864de7e1bd418434bb0aeb81c17d"
+        "rawSha256": "764ef4d316f98722109c3bb66836017f273637cbfca3af6cd5fad41286269b78"
       }
     },
     {
@@ -312,7 +312,7 @@
       },
       "authoringReceipt": {
         "path": "specs/intake-authoring-receipts/RAW-03-State-Truthfulness.json",
-        "rawSha256": "bccf2d80921b73106667e0543a045e3183f8dcb5201630bca8db35ac9762b667"
+        "rawSha256": "b20f963fc7b60f78a5f7f7e0accfc047d2310a0832e73b3f19935bc699803144"
       },
       "readySingleReview": {
         "path": "specs/intake-review-results/raw-03-state-truthfulness-2026-09-05-r1.json",
@@ -320,7 +320,7 @@
       },
       "readySingleReviewReport": {
         "path": "docs/reviews/raw-03-state-truthfulness-intake-review-2026-09-05-r1.md",
-        "rawSha256": "7137d9408d7c165387a17a97f129bd8679108b875204b4e09532cacce5d58a52"
+        "rawSha256": "ae33c515d0a4fd4af214da60b126a6e5713d4946cb6b242b94ebdd0827088fb1"
       }
     },
     {

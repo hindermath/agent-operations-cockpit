@@ -11,7 +11,7 @@
 - Ziel-SHA-256 / Target SHA-256: `31d31e82ab1857182d1201192438e5c91abfc3190ba47a2f68b9543034ab0cfd`
 - Authoring Receipt: `specs/intake-authoring-receipts/RAW-03-State-Truthfulness.json`
 - Receipt-ID: `3cc19267-e548-4816-a539-8d652efdc529`
-- Receipt-SHA-256: `bccf2d80921b73106667e0543a045e3183f8dcb5201630bca8db35ac9762b667`
+- Receipt-SHA-256: `b20f963fc7b60f78a5f7f7e0accfc047d2310a0832e73b3f19935bc699803144`
 - Request: `specs/intake-review-requests/raw-03-state-truthfulness-2026-09-05-r1.json`
 - Request-SHA-256: `9df4cf279aaa6cdaf47dc35956aaf77f95824582d3b29e93ea9ef69eb1cb8224`
 - Supersedes: `specs/intake-review-results/raw-03-state-truthfulness-2026-08-29-r4.json`

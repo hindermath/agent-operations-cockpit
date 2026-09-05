@@ -11,7 +11,7 @@
 - Ziel-SHA-256 / Target SHA-256: `ca159a03a91a19c3f2812a1a638604ca29dab816a20a9a67b7c5d06b3281f5eb`
 - Authoring Receipt: `specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json`
 - Receipt-ID: `7cc121ca-9c7a-4750-85e9-9cf2ebf2aa71`
-- Receipt-SHA-256: `392d893407ee5441e5f9d33f04e0df5365fc985e85f619dedeb47f3bea25bb0b`
+- Receipt-SHA-256: `85ffcea67b0723241606040c5d2b9eb586a51d8d13005b676ceb6eeab2caa745`
 - Request: `specs/intake-review-requests/meta-lh-03-authoring-contract-2026-09-05-r1.json`
 - Request-SHA-256: `8675e679f55e089c8d4081fd7d7565e351c6fa4ab3408c27b9974f872a8ed7ea`
 - Supersedes: `specs/intake-review-results/meta-lh-03-authoring-contract-2026-08-29-r6.json`

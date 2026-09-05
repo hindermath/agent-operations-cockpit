@@ -13,7 +13,7 @@
 - Git-Blob: `2a63d06255de68fecc1092b88d3be1efb5cc6c97`
 - Authoring Receipt: `specs/intake-authoring-receipts/META-LH-05-Erste-Welle.json`
 - Receipt-ID: `50244307-af74-4396-bb62-23398a386b70`
-- Receipt-SHA-256: `9618ab3202195f609565e99e80dad2705bec485e830b96721732e4c0185086f4`
+- Receipt-SHA-256: `db8506157dd5b8116deaed5a4f8855aaeff29a2a47bddb14324c5250e24741ee`
 - Request: `specs/intake-review-requests/meta-lh-05-erste-welle-2026-09-05-r1.json`
 - Request-SHA-256: `49ad74cfbe10223ceeab6dc6ffa3b533ad0f76485379e24f448bb6abfed3b36d`
 - Ersetzt / Supersedes: `specs/intake-review-results/meta-lh-05-erste-welle-2026-08-29-r6.json`

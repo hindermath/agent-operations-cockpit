@@ -14,7 +14,7 @@
 - Git-Blob: `be1e69ba6e47ed3f4c707debabc0caf82962dd39`
 - Authoring Receipt: `specs/intake-authoring-receipts/META-LH-02-Portfolio-Ownership.json`
 - Receipt-ID: `eab48b88-eb28-44f5-8e94-a71dd81f11ad`
-- Receipt-SHA-256: `cbb417ee72520889022ec70ce1be51aaffbbc5b17cd845f194579fca7ff5b682`
+- Receipt-SHA-256: `72053e00c79def3dd506e84ce1c0a1a6ba3f80cb914e7051c94224b8ca4b31a9`
 - Request: `specs/intake-review-requests/meta-lh-02-portfolio-ownership-2026-09-05-r1.json`
 - Request-SHA-256: `4d3c16e0228984503b44486a93d8dbee03bbff5a5aaab32da4ef250f605bec44`
 - Ersetzt / Supersedes: `specs/intake-review-results/meta-lh-02-portfolio-ownership-2026-08-29-r6.json`
