@@ -1,14 +1,17 @@
 <!--
 Sync Impact Report
-Version change: 1.19.0 -> 1.20.0
+Version change: 1.20.0 -> 1.21.0
 Modified principles:
-- VII. Inclusion & Accessibility By Default (bind first-year learner audiences and text-first dependency evidence)
-- VIII. DE-First / EN-Second Bilingual Delivery (explain first-use terms and require no prior Spec Kit experience)
+- VI. Agent Context & Template Synchronization (bind the persisted run-retrospective contract to project templates)
 Added sections:
-- None
+- XXI. Engineering Run Retrospectives & Learning Feedback
 Removed sections:
 - None
 Templates requiring updates:
+- ✅ .specify/templates/agent-file-template.md
+- ✅ .specify/templates/plan-template.md
+- ✅ .specify/templates/spec-template.md
+- ✅ .specify/templates/tasks-template.md
 - ✅ scripts/templates/speckit-workflow-section.md
 - ✅ scripts/templates/AGENTS.md.tmpl
 - ✅ scripts/templates/CLAUDE.md.tmpl
@@ -20,13 +23,14 @@ Runtime guidance requiring updates:
 - ✅ CLAUDE.md
 - ✅ GEMINI.md
 - ✅ .github/copilot-instructions.md
+- ✅ .github/agents/copilot-instructions.md
 New scripts:
 - None
 Follow-up TODOs:
 - None.
 -->
 
-# Constitution v1.20.0
+# Constitution v1.21.0
 
 # home-baseline Constitution
 
@@ -884,6 +888,38 @@ to memory or isolated agent instructions. One explicit decision across policy,
 workflow, review, and evidence keeps documentation aligned with repository
 reality without demanding unnecessary text changes.
 
+### XXI. Engineering Run Retrospectives & Learning Feedback
+
+Ab `003-authoring-contract` MUSS jeder abgeschlossene Spec-Kit-Feature-Lauf
+einen verständlichen, gespeicherten Bericht unter
+`specs/<feature>/engineering-retrospective.md` besitzen. Der Bericht trennt in
+dieser Reihenfolge Output, Findings, bestätigte Regeln,
+Interventionen/Reparaturen, Effizienzbeobachtungen, AEPS-Relevanz und
+Completion-/Retrospective-Evidence. Zwischenstände werden als solche
+gekennzeichnet; nicht ausgeführte Lieferung oder nicht vergleichbare Werte
+dürfen nicht als abgeschlossen oder messbar dargestellt werden. Nach dem
+dritten vergleichbaren Lauf MUSS ein quellen- und hashgebundener Trendvergleich
+erstellt werden; fehlende Vergleichsdaten bleiben ausdrücklich sichtbar.
+Projektvorlagen und alle gepflegten Agentenflächen MÜSSEN diesen Vertrag
+gemeinsam tragen. Der Bericht allein erteilt keine Review-, Remote-, Merge-,
+Bypass-, Level-0- oder Preset-Promotion-Autorität.
+
+*From `003-authoring-contract` onwards, every completed Spec Kit feature run
+MUST have a readable, saved report at
+`specs/<feature>/engineering-retrospective.md`. In order, the report separates
+output, findings, confirmed rules, interventions/repairs, efficiency
+observations, AEPS relevance, and completion/retrospective evidence. Interim
+states are labelled; unperformed delivery or non-comparable values must never
+be presented as completed or measurable. After the third comparable run, a
+source- and hash-bound trend comparison MUST be produced, while missing
+comparison evidence remains explicit. Project templates and every maintained
+agent surface MUST carry this contract together. The report alone grants no
+review, remote, merge, bypass, Level-0, or preset-promotion authority.*
+
+**Rationale**: A durable, consistently structured retrospective turns completed
+runs into comparable engineering evidence without conflating learning capture
+with additional delivery authority.
+
 ## Level-2 Project Environment Registry / Level-2-Projektumgebungsregister
 
 This registry consolidates the constitution-relevant Level-2 project facts
@@ -1124,7 +1160,7 @@ Community/catalog coordination is tracked in `github/spec-kit#2362`.
 `.github/copilot-instructions.md` for per-agent operational guidance. This
 constitution is the authoritative policy layer above all agent-specific files.
 
-**Version**: 1.20.0 | **Ratified**: 2026-03-31 | **Last Amended**: 2026-07-25
+**Version**: 1.21.0 | **Ratified**: 2026-03-31 | **Last Amended**: 2026-09-05
 
 <!-- EN: constitution.md placeholder
 [DE-Zusammenfassung: constitution.md beschreibt die Prinzipien und Standards für alle home-baseline Workspaces.]

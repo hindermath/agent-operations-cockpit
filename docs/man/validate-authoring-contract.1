@@ -1,0 +1,60 @@
+.TH VALIDATE-AUTHORING-CONTRACT 1 "2026-09-05" "AgentOperationsCockpit" "User Commands"
+.SH NAME
+validate-authoring-contract \- additiven META-LH-03-Vertrag pruefen
+.br
+validate the additive META-LH-03 contract
+.SH SYNOPSIS
+.B validate-authoring-contract.sh
+.BI --repo " PATH"
+.RI [ --json ]
+.PP
+.B validate-authoring-contract.ps1
+.BI -Repo " PATH"
+.RI [ -Json ]
+.SH BESCHREIBUNG / DESCRIPTION
+Prueft read-only die Ancestry des unveraenderlichen Reparatur-Checkpoints,
+seinen exakten Tree und alle 48 geordneten Pfad-Rohhashes. Das spaeter
+erstellte Manifest wird nicht im frueheren Reparatur-Commit erwartet.
+Anschliessend prueft der Validator genau ein erneuertes META-LH-03-Blatt,
+13 unveraenderte Blaetter und die unveraenderte abgeschlossene Series-Bruecke.
+.PP
+Read-only validation proves the immutable repair checkpoint ancestry, its
+exact tree, and all 48 ordered path raw hashes. The later manifest is not
+expected in the earlier repair commit. The validator then verifies exactly one
+renewed META-LH-03 leaf, 13 unchanged leaves, and the unchanged completed
+Series bridge.
+.PP
+Die Oberflaechen werten keine Quelldaten durch eine Shell aus, schreiben keine
+Datei und erteilen keine Remote-, Merge-, Bypass-, Level-0- oder
+Preset-Promotionsautoritaet. / The surfaces do not shell-evaluate source data,
+write no file, and grant no remote, merge, bypass, Level 0, or preset-promotion
+authority.
+.SH OPTIONEN / OPTIONS
+.TP
+.BR --repo " " PATH , " " -Repo " " PATH
+Repository-Wurzel. / Repository root.
+.TP
+.BR --json , " " -Json
+JSON mit schemaVersion, outcome und Checkpoint-Zusammenfassung. / JSON with
+schemaVersion, outcome, and checkpoint summary.
+.TP
+.BR -h , " " --help
+Bash-Hilfe. / Bash help.
+.SH EXIT STATUS
+.TP
+.B 0
+Vertrag bestanden. / Contract passed.
+.TP
+.B 2
+Validierungsfehler. / Validation failure.
+.TP
+.B 64
+CLI-Verwendungsfehler. / CLI usage failure.
+.SH BEISPIELE / EXAMPLES
+.nf
+bash specs/003-authoring-contract/contracts/validate-authoring-contract.sh --repo . --json
+pwsh -NoProfile -File specs/003-authoring-contract/contracts/validate-authoring-contract.ps1 -Repo . -Json
+.fi
+.SH SEE ALSO
+.BR validate-current-evidence-binding (1),
+.BR validate-intake-authoring-receipt (1)

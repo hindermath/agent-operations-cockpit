@@ -11,7 +11,8 @@
   "operation": {
     "operationId": "00000000-0000-0000-0000-000000000000",
     "type": "Create",
-    "authorityEvidence": "Explicit current create or update request"
+    "authorityEvidence": "Explicit current create or update request",
+    "activeTargetExistedBefore": false
   },
   "status": "NeedsClarification",
   "target": {
@@ -42,20 +43,43 @@
     }
   ],
   "profile": "generic-markdown",
+  "profileBinding": {
+    "path": ".specify/presets/intake-authoring-governance/templates/project-profile-template.md",
+    "profileId": "generic-markdown",
+    "documentationLanguage": "de-DE",
+    "normalizedSha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
   "languagePolicy": "RepositoryPolicyOrDominantSource",
-  "decisions": [],
+  "decisions": [
+    {
+      "id": "IAD001",
+      "status": "Open",
+      "question": "Replace with the material question / Durch materielle Frage ersetzen",
+      "answer": "",
+      "evidence": "Open at authoring time / Beim Authoring offen"
+    }
+  ],
   "openDecisionIds": ["IAD001"],
-  "questionCount": 0,
+  "questionCount": 1,
   "agentSurface": {
     "specifyCanonicalId": "speckit.specify",
     "specifyInvocation": "$speckit-specify",
     "autonomousCanonicalId": "speckit.autonomous",
-    "autonomousInvocation": "$speckit-autonomous"
+    "autonomousInvocation": "$speckit-autonomous",
+    "targetPath": "intakes/example.md",
+    "deliveryAuthority": "LocalImplementation",
+    "autoExecute": false
   },
   "deliveryAuthority": "LocalImplementation",
   "authorityEvidence": "Default: no explicit remote authority",
   "promptState": "Blocked",
   "provenanceMode": "New",
+  "lineage": {
+    "predecessorReceiptPath": "N/A",
+    "predecessorReceiptRawSha256": "N/A",
+    "predecessorTargetPath": "N/A",
+    "predecessorTargetNormalizedSha256": "N/A"
+  },
   "supersedes": {
     "receiptPath": "N/A",
     "targetNormalizedSha256": "N/A",

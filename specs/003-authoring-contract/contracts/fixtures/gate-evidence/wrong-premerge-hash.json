@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "2.0",
+  "snapshotType": "PostMerge",
+  "acceptedPreMergePath": "runner/premerge.json",
+  "acceptedPreMergeSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "entries": [
+    { "gateId": "PMG-001", "evidenceRole": "Primary", "evidenceReference": "primary:PMG-001", "supplementalFor": "" }
+  ]
+}

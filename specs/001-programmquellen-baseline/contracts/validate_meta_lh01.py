@@ -114,10 +114,39 @@ META03_BINDING = "specs/003-authoring-contract/current-evidence-binding.json"
 META03_STATE = "specs/003-authoring-contract/autonomous-run-state.json"
 META03_AUTHORITY = "specs/003-authoring-contract/binding-approval.md"
 META03_VALIDATOR = "specs/003-authoring-contract/contracts/validate_current_evidence_binding.py"
+META03_ADDITIVE_VALIDATOR = "specs/003-authoring-contract/contracts/validate_authoring_contract.py"
+META03_REPAIR_COMMIT = "ee530952acc8093c9afd8e01b97825a0a1c9ac72"
+META03_FROZEN_BINDING_SHA256 = "41d271b770622305338f316e059e70ccf0a5f16f086a18295bb2c2a0af7a0b5c"
+META03_R2_TARGET_SHA256 = "3a5c34b54bdb0b00f78415089cc0b926b33ddeabe44ee7a130ad603acd4a98ba"
+META03_R2_TARGET = "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md"
+META03_R2_RECEIPT = "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json"
+META03_R2_RECEIPT_SHA256 = "bc9c60792b2cb3f2a9cab4941169f7bb2a57d5df15faf0d09528ce5167b037db"
+META03_R2_REVIEW = "specs/intake-review-results/meta-lh-03-authoring-contract-2026-09-05-r2.json"
+META03_R2_REVIEW_SHA256 = "9a4da48ab43ed4a5e8167d75d14099ae248bb6eeb088ab6d6ccba43bf33af70f"
 META03_PASS_MESSAGE = (
     "PASS: current-evidence: immutable META-LH-02 history and 14 current Ready "
     "receipt/review bindings"
 )
+META03_ADDITIVE_SUCCESS = {
+    "checkpoint": {
+        "ancestryValid": True,
+        "manifestExpectedInsideCheckpoint": False,
+        "repairCommit": META03_REPAIR_COMMIT,
+        "repairTree": "ec9d73fd5c497daf76acf120d2c906a0b6fa993c",
+        "validatedPathCount": 48,
+    },
+    "outcome": "Pass",
+    "schemaVersion": "1.0",
+    "transaction": {
+        "changedLogicalTargets": ["META-LH-03"],
+        "completedPredecessorUnchanged": True,
+        "operationId": "986c1d6c-d485-460b-8d8d-7cf5816a2c36",
+        "operationStatus": "Completed",
+        "receiptId": "f41328cd-b301-4533-89dc-02aab758ab1f",
+        "reviewId": "b8d49ed7-d05f-40b0-9e18-1aa1b689f1cf",
+        "unchangedLogicalTargetCount": 13,
+    },
+}
 SEMANTIC_CRITERIA = {
     "germanFirst", "englishEquivalent", "cefrB2", "firstUseTerms",
     "domainTruth", "authorityInterpretation",
@@ -301,15 +330,54 @@ def qualified_completed_meta02_snapshot(root: Path) -> str | None:
 
 def qualified_meta03_current_evidence(root: Path) -> str | None:
     """Dispatch an explicit Feature-003 projection to its bounded bridge."""
-    if not (root / META03_BINDING).is_file():
+    binding_path = root / META03_BINDING
+    if not binding_path.is_file():
         if (root / META03_STATE).is_file() or (root / META03_AUTHORITY).is_file():
             fail("Feature-003 state or authority requires its current-evidence binding manifest")
         return None
-    validator_path = root / META03_VALIDATOR
+    try:
+        binding_raw = binding_path.read_bytes()
+    except OSError as exc:
+        fail(f"Feature-003 binding cannot be read: {exc}")
+    binding_raw_hash = hashlib.sha256(binding_raw).hexdigest()
+    historical = binding_raw_hash == META03_FROZEN_BINDING_SHA256
+    if historical:
+        validator_relative = META03_VALIDATOR
+        command = [
+            sys.executable, "-B", str(root / validator_relative), "--repo", str(root),
+            "current-evidence",
+        ]
+    else:
+        try:
+            binding = json.loads(binding_raw.decode("utf-8-sig"))
+            leaves = binding.get("orderedLogicalTargets")
+            meta = [
+                item for item in leaves
+                if isinstance(item, dict) and item.get("logicalTargetId") == "META-LH-03"
+            ] if isinstance(leaves, list) else []
+        except (UnicodeError, json.JSONDecodeError):
+            meta = []
+        expected = {
+            "target": {"path": META03_R2_TARGET, "normalizedSha256": META03_R2_TARGET_SHA256},
+            "authoringReceipt": {
+                "path": META03_R2_RECEIPT,
+                "rawSha256": META03_R2_RECEIPT_SHA256,
+            },
+            "readySingleReview": {
+                "path": META03_R2_REVIEW,
+                "rawSha256": META03_R2_REVIEW_SHA256,
+            },
+        }
+        if len(meta) != 1 or any(meta[0].get(key) != value for key, value in expected.items()):
+            fail("Feature-003 bridge metadata is unknown, mixed, or ambiguous")
+        validator_relative = META03_ADDITIVE_VALIDATOR
+        command = [
+            sys.executable, "-B", str(root / validator_relative), "--repo", str(root), "--json",
+        ]
+    validator_path = root / validator_relative
     try:
         result = subprocess.run(
-            [sys.executable, "-B", str(validator_path), "--repo", str(root),
-             "current-evidence"],
+            command,
             cwd=root, text=True, capture_output=True, check=False,
         )
     except OSError as exc:
@@ -318,7 +386,18 @@ def qualified_meta03_current_evidence(root: Path) -> str | None:
         detail = (result.stderr or result.stdout).strip().splitlines()
         diagnostic = detail[0] if detail else "no diagnostic"
         fail(f"Feature-003 current-evidence binding rejected: {diagnostic}")
-    if result.stdout != f"{META03_PASS_MESSAGE}\n" or result.stderr:
+    if historical:
+        valid_output = result.stdout == f"{META03_PASS_MESSAGE}\n" and not result.stderr
+    else:
+        try:
+            parsed = json.loads(result.stdout)
+        except json.JSONDecodeError:
+            parsed = None
+        expected_output = json.dumps(
+            META03_ADDITIVE_SUCCESS, ensure_ascii=True, indent=2, sort_keys=True
+        ) + "\n"
+        valid_output = parsed == META03_ADDITIVE_SUCCESS and result.stdout == expected_output and not result.stderr
+    if not valid_output:
         fail("Feature-003 current-evidence validator returned an invalid success result")
     return META03_PASS_MESSAGE.removeprefix("PASS: current-evidence: ")
 

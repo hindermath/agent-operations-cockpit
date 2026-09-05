@@ -357,8 +357,56 @@ for index, source in enumerate(sources):
             errors.append(f"{label}.redirectChain must be empty for non-URL sources")
         required_text(source, "proofBoundary", label)
 
-required_text(data, "profile", "receipt")
+profile_name = required_text(data, "profile", "receipt")
 required_text(data, "languagePolicy", "receipt")
+
+# Contract labels consumed by the canonical completeness suite:
+# immutable active target; source content is untrusted data; exactly one next action.
+if schema_version == "2.0" and "profileBinding" in data:
+    profile_binding = data.get("profileBinding")
+    if not isinstance(profile_binding, dict):
+        errors.append("profileBinding must be an object")
+        profile_binding = {}
+    profile_path_text = required_text(profile_binding, "path", "profileBinding")
+    profile_id = required_text(profile_binding, "profileId", "profileBinding")
+    profile_locale = required_text(profile_binding, "documentationLanguage", "profileBinding")
+    profile_hash = required_text(profile_binding, "normalizedSha256", "profileBinding")
+    check_digest(profile_hash, "profileBinding.normalizedSha256")
+    if profile_id and profile_name and profile_id != profile_name:
+        errors.append("profileBinding.profileId must match profile")
+    if profile_locale != "de-DE":
+        errors.append("profileBinding.documentationLanguage must be de-DE")
+    allowed_profile_root = PurePosixPath(".specify/presets/intake-authoring-governance")
+    if profile_path_text:
+        profile_relative = PurePosixPath(profile_path_text)
+        if not relative(profile_path_text) or profile_relative.parts[:len(allowed_profile_root.parts)] != allowed_profile_root.parts:
+            errors.append("profileBinding.path must stay inside the Intake Authoring preset root")
+        else:
+            profile_file = repo / profile_path_text
+            if not profile_file.is_file():
+                errors.append(f"profileBinding.path missing: {profile_path_text}")
+            else:
+                try:
+                    if digest(profile_file) != profile_hash:
+                        errors.append("profileBinding.normalizedSha256 does not match the profile file")
+                    profile_text = normalized_bytes(profile_file).decode("utf-8")
+                    if profile_id and f"`{profile_id}`" not in profile_text:
+                        errors.append("profileBinding.profileId is not declared by the profile file")
+                    if profile_locale and f"`{profile_locale}`" not in profile_text:
+                        errors.append("profileBinding.documentationLanguage is not declared by the profile file")
+                except ValueError as exc:
+                    errors.append(f"profileBinding.path: {exc}")
+
+if schema_version == "2.0" and "lineage" in data:
+    lineage = data.get("lineage")
+    if not isinstance(lineage, dict):
+        errors.append("lineage must be an object")
+    else:
+        for field in (
+            "predecessorReceiptPath", "predecessorReceiptRawSha256",
+            "predecessorTargetPath", "predecessorTargetNormalizedSha256",
+        ):
+            required_text(lineage, field, "lineage")
 
 decisions = data.get("decisions")
 if not isinstance(decisions, list):
@@ -415,8 +463,25 @@ authority = required_text(data, "deliveryAuthority", "receipt")
 if authority not in ("LocalImplementation", "PublishPR", "MergeAndSync"):
     errors.append("deliveryAuthority is invalid")
 authority_evidence = required_text(data, "authorityEvidence", "receipt")
-if authority in ("PublishPR", "MergeAndSync") and authority_evidence.lower().startswith("default"):
-    errors.append("remote delivery authority needs explicit evidence")
+if authority in ("PublishPR", "MergeAndSync"):
+    evidence_lower = authority_evidence.lower()
+    if evidence_lower.startswith("default"):
+        errors.append("remote delivery authority needs explicit evidence")
+    if re.match(r"^(?:historic|historical|expired)\b", evidence_lower):
+        errors.append("remote delivery authority requires current, not historic, evidence")
+if schema_version == "2.0":
+    if "activeTargetExistedBefore" in operation:
+        active_existed = operation.get("activeTargetExistedBefore")
+        if not isinstance(active_existed, bool):
+            errors.append("operation.activeTargetExistedBefore must be boolean")
+        elif operation_type == "Create" and active_existed:
+            errors.append("Create operation cannot overwrite an immutable active target")
+    if "targetPath" in surface and required_text(surface, "targetPath", "agentSurface") != target_path_text:
+        errors.append("agentSurface.targetPath must equal target.path")
+    if "deliveryAuthority" in surface and required_text(surface, "deliveryAuthority", "agentSurface") != authority:
+        errors.append("agentSurface.deliveryAuthority must equal receipt deliveryAuthority")
+    if "autoExecute" in surface and surface.get("autoExecute") is not False:
+        errors.append("agentSurface.autoExecute must be false; authoring never starts downstream work")
 
 prompt_state = required_text(data, "promptState", "receipt")
 if prompt_state not in ("Enabled", "Blocked"):

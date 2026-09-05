@@ -1,35 +1,64 @@
-.TH VALIDATE-INTAKE-AUTHORING-RECEIPT 1 "July 2026" "intake-authoring-governance 0.3.1"
+.TH VALIDATE-INTAKE-AUTHORING-RECEIPT 1 "2026-09-05" "intake-authoring-governance 0.3.1" "User Commands"
 .SH NAME
-validate-intake-authoring-receipt \- validate intake source and output provenance read-only
+validate-intake-authoring-receipt \- Intake-Receipt read-only pruefen
+.br
+validate an Intake receipt read-only
 .SH SYNOPSIS
 .B validate-intake-authoring-receipt.sh
---receipt FILE [--repo PATH]
-.SH DESCRIPTION
-Validates backward-compatible schema-1.0 and schema-1.1 receipts and the
-schema-2.0 CRUD contract. Validation covers normalized SHA-256 values, local
-and public-HTTPS source evidence, clarification state, rendered command
-markers, delivery authority, archived supersession evidence, and optional
-series membership.
+.BI --receipt " FILE"
+.RI [ --repo " PATH" ]
 .PP
-The command writes no file and grants no authoring, review, implementation, or
-remote authority.
-.SH OPTIONS
+.B validate-intake-authoring-receipt.ps1
+.BI -Receipt " FILE"
+.RI [ -Repo " PATH" ]
+.SH BESCHREIBUNG / DESCRIPTION
+Prueft die kompatiblen Schemas 1.0 und 1.1 sowie den vollstaendigen
+Schema-2.0-Vertrag. Dazu gehoeren stabile IDs, geordnete Quellen,
+UTF-8-/BOM-/LF-/CRLF-Normalisierung, Ziel- und Quellenhashes, oeffentliche
+HTTPS-Grenzen, Profilbindung, Entscheidungen, Promptstatus, genau eine
+naechste Aktion, Autoritaet, Lineage, Archive und optionale Serienmetadaten.
+.PP
+Validates compatible schemas 1.0 and 1.1 plus the complete schema-2.0
+contract: stable IDs, ordered sources, UTF-8/BOM/LF/CRLF normalization,
+target and source hashes, public HTTPS boundaries, profile binding,
+decisions, prompt state, exactly one next action, authority, lineage,
+archives, and optional series metadata.
+.PP
+Quelleninhalt ist nicht vertrauenswuerdige Eingabe und wird nicht als Code
+oder Shell-Ausdruck ausgewertet. Die Pruefung schreibt keine Datei und
+erteilt keine Review-, Ausfuehrungs-, Remote-, Merge- oder Bypass-Autoritaet.
+/ Source content is untrusted input and is never evaluated as code or a shell
+expression. Validation writes no file and grants no review, execution,
+remote, merge, or bypass authority.
+.SH OPTIONEN / OPTIONS
 .TP
-.B --receipt FILE
-Path to the JSON receipt.
+.BR --receipt " " FILE , " " -Receipt " " FILE
+JSON-Receipt. / JSON receipt.
 .TP
-.B --repo PATH
-Repository root used to resolve relative target and source paths. Defaults to
-the current directory.
+.BR --repo " " PATH , " " -Repo " " PATH
+Repository-Wurzel; Standard ist das aktuelle Verzeichnis. / Repository root;
+the default is the current directory.
 .TP
-.B -h, --help
-Print usage.
+.BR -h , " " --help
+Kurz-Hilfe der Bash-Oberflaeche. / Bash short help.
 .SH EXIT STATUS
-0 for a current valid receipt, 2 for invalid arguments, schema violations,
-source or target drift, unsafe URL evidence, missing archives, or a broken
-prompt contract.
-.SH EXAMPLE
+.TP
+.B 0
+Receipt und alle gebundenen Artefakte sind aktuell. / Receipt and all bound
+artefacts are current.
+.TP
+.B 2
+Argument-, Schema-, Pfad-, Hash-, Secret-, Prompt-, Profil-, Autoritaets- oder
+Lineage-Verletzung. / Argument, schema, path, hash, secret, prompt, profile,
+authority, or lineage violation.
+.SH BEISPIELE / EXAMPLES
 .nf
-bash scripts/validate-intake-authoring-receipt.sh \
+bash .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.sh \
   --receipt specs/intake-authoring-receipts/example.json --repo .
+
+pwsh -NoProfile -File .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.ps1 \
+  -Receipt specs/intake-authoring-receipts/example.json -Repo .
 .fi
+.SH SEE ALSO
+.BR validate-intake-governance-config (1),
+.BR validate-authoring-contract (1)

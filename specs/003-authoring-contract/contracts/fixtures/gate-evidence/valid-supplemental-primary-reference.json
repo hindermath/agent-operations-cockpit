@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "2.0",
+  "snapshotType": "PreMerge",
+  "entries": [
+    { "gateId": "ACG-001", "evidenceRole": "Primary", "evidenceReference": "primary:ACG-001", "supplementalFor": "" },
+    { "gateId": "ACG-001", "evidenceRole": "Supplemental", "evidenceReference": "supplemental:ACG-001", "supplementalFor": "primary:ACG-001" }
+  ]
+}

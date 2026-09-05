@@ -1,0 +1,92 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeOperation",
+  "operationId": "986c1d6c-d485-460b-8d8d-7cf5816a2c36",
+  "intakeId": "83b9481e-bc4c-4e3d-b67a-1c6c8d05a681",
+  "receiptId": "f41328cd-b301-4533-89dc-02aab758ab1f",
+  "reviewId": "b8d49ed7-d05f-40b0-9e18-1aa1b689f1cf",
+  "type": "Update",
+  "status": "Completed",
+  "createdAt": "2026-09-05T21:15:24Z",
+  "authorityEvidence": "Current explicit phase instruction to resume the existing META-LH-03 run and execute T002 through T079.",
+  "proposalPath": "specs/intake-authoring-operations/986c1d6c-d485-460b-8d8d-7cf5816a2c36/proposal.json",
+  "proposalNormalizedSha256": "a1b6af437ef7657c86e847d076c4ef747b5ce4fcfa0511433e40e20c7c3f54d0",
+  "approval": {
+    "approved": true,
+    "approvedBy": "Thorsten Hindermann",
+    "approvedAt": "2026-09-05T21:15:24Z",
+    "evidence": "Current explicit phase instruction: resume META-LH-03 after Analyze R5 and execute T002 through T079."
+  },
+  "preflight": {
+    "currentExplicitUpdateAuthority": true,
+    "currentTargetAndReceipt": true,
+    "orderedSources": true,
+    "currentReviewLinkage": true,
+    "gitStateScoped": true,
+    "noTombstone": true,
+    "noIncompleteOperation": true
+  },
+  "sourceOrder": [
+    "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/7cc121ca-9c7a-4750-85e9-9cf2ebf2aa71/Lastenheft_META-LH-03-Authoring-Contract.md",
+    ".specify/presets/intake-authoring-governance/templates/intake-template.md",
+    ".specify/presets/intake-authoring-governance/templates/intake-authoring-receipt-template.json",
+    ".specify/presets/intake-authoring-governance/templates/project-profile-template.md",
+    "requirements/intake-governance.json",
+    ".specify/presets/intake-authoring-governance/templates/field-validation-summary.md"
+  ],
+  "stagingDirectory": "specs/intake-authoring-operations/986c1d6c-d485-460b-8d8d-7cf5816a2c36/staging",
+  "stagedTargetPath": "specs/intake-authoring-operations/986c1d6c-d485-460b-8d8d-7cf5816a2c36/staging/Lastenheft_META-LH-03-Authoring-Contract.md",
+  "stagedReceiptPath": "specs/intake-authoring-operations/986c1d6c-d485-460b-8d8d-7cf5816a2c36/staging/META-LH-03-Authoring-Contract.json",
+  "supersedes": {
+    "targetPath": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+    "targetRawSha256": "ca159a03a91a19c3f2812a1a638604ca29dab816a20a9a67b7c5d06b3281f5eb",
+    "targetNormalizedSha256": "ca159a03a91a19c3f2812a1a638604ca29dab816a20a9a67b7c5d06b3281f5eb",
+    "archiveTargetPath": "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/7cc121ca-9c7a-4750-85e9-9cf2ebf2aa71/Lastenheft_META-LH-03-Authoring-Contract.md",
+    "archiveTargetRawSha256": "ca159a03a91a19c3f2812a1a638604ca29dab816a20a9a67b7c5d06b3281f5eb",
+    "receiptPath": "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json",
+    "receiptRawSha256": "85ffcea67b0723241606040c5d2b9eb586a51d8d13005b676ceb6eeab2caa745",
+    "archiveReceiptPath": "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/7cc121ca-9c7a-4750-85e9-9cf2ebf2aa71/META-LH-03-Authoring-Contract.json",
+    "archiveReceiptRawSha256": "85ffcea67b0723241606040c5d2b9eb586a51d8d13005b676ceb6eeab2caa745"
+  },
+  "r1ReviewSupersession": {
+    "reviewId": "0b31261e-e794-461f-8c28-3e3d9a518f69",
+    "requestPath": "specs/intake-review-requests/meta-lh-03-authoring-contract-2026-09-05-r1.json",
+    "requestRawSha256": "8675e679f55e089c8d4081fd7d7565e351c6fa4ab3408c27b9974f872a8ed7ea",
+    "resultPath": "specs/intake-review-results/meta-lh-03-authoring-contract-2026-09-05-r1.json",
+    "resultRawSha256": "2fe319d7c88ce5790f6ff6ba9a7d693936a7b88c787ff7dbe7588b5df9a35679",
+    "reportPath": "docs/reviews/meta-lh-03-authoring-contract-intake-review-2026-09-05-r1.md",
+    "reportRawSha256": "0947e027578bb135ac7de39e3b0ff45d2f76242f6037616c40a9c866b96dd5a9"
+  },
+  "intendedTargets": [
+    "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/7cc121ca-9c7a-4750-85e9-9cf2ebf2aa71/Lastenheft_META-LH-03-Authoring-Contract.md",
+    "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/7cc121ca-9c7a-4750-85e9-9cf2ebf2aa71/META-LH-03-Authoring-Contract.json",
+    "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+    "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json"
+  ],
+  "validatedTargets": [
+    "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/7cc121ca-9c7a-4750-85e9-9cf2ebf2aa71/Lastenheft_META-LH-03-Authoring-Contract.md",
+    "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/7cc121ca-9c7a-4750-85e9-9cf2ebf2aa71/META-LH-03-Authoring-Contract.json",
+    "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+    "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json"
+  ],
+  "publishedTargets": [
+    "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/7cc121ca-9c7a-4750-85e9-9cf2ebf2aa71/Lastenheft_META-LH-03-Authoring-Contract.md",
+    "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/7cc121ca-9c7a-4750-85e9-9cf2ebf2aa71/META-LH-03-Authoring-Contract.json",
+    "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+    "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json"
+  ],
+  "validation": {
+    "stagedTargetStrictUtf8": true,
+    "stagedReceiptStrictJson": true,
+    "proposalHash": true,
+    "archiveTargetByteIdentical": true,
+    "archiveReceiptByteIdentical": true
+  },
+  "completedAt": "2026-09-05T21:15:24Z",
+  "rollbackBoundary": "Both R1 predecessor bytes remain in the receipt-bound archive; recovery restores only those exact archived bytes after a separately authorized operation.",
+  "failure": {
+    "class": "N/A",
+    "message": "N/A"
+  },
+  "nextAction": "Create and validate the hash-bound META-LH-03 R2 Single review"
+}

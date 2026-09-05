@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "plan-review",
+  "attemptId": "ce43f8e1-7cce-4363-a26d-3ba477dbe69a",
+  "outcome": "Blocked",
+  "expectedTasks": 1,
+  "completedTasks": 1,
+  "blockedReason": "Independent review completed with five open material findings PR301-PR305: contradictory reporting allowlist/closeout, missing Global-Ready dispatch to the additive bridge validator, incomplete Update lineage, fail-open verification commands, and no required test-first vertical slice.",
+  "gatesSatisfied": false,
+  "payloadPath": "specs/003-authoring-contract/phase-results/plan-review-report.md",
+  "payloadSha256": "2ee71240ae60bf27490f712f805dd0d59e284be8af9390db756c0e95006619a7"
+}

@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "checklist",
+  "attemptId": "f189ad76-5783-4d80-84c8-a96bf8db1ce5",
+  "outcome": "Completed",
+  "expectedTasks": 1,
+  "completedTasks": 1,
+  "blockedReason": "",
+  "gatesSatisfied": true,
+  "payloadPath": "specs/003-authoring-contract/phase-results/checklist-report.md",
+  "payloadSha256": "ab5504fa4c84ae5e1897bf1e2a991d964db542ae9fc1c897fc90b3173263c023"
+}

@@ -1,0 +1,239 @@
+{
+  "schemaVersion": "1.0",
+  "featureId": "003-authoring-contract",
+  "runId": "044b77ae-85fd-46ee-97f4-61ce7a2c9c66",
+  "scope": {
+    "domainArtefactCount": 5,
+    "domainArtefactOrderIsBinding": true,
+    "newFeature": false,
+    "productImplementation": false,
+    "level0Change": false,
+    "presetInstallVersionMutationOrPromotion": false,
+    "nextIntake": false
+  },
+  "documentationImpactReference": "specs/003-authoring-contract/autonomous-run-evidence.md#dokumentationsauswirkung--documentation-impact",
+  "prerequisiteRepair": {
+    "status": "CompletedAndImmutable",
+    "bindingApprovalPath": "specs/003-authoring-contract/binding-approval.md",
+    "bindingApprovalRawSha256": "d86fd478f97ddb02a4d6c681926afdd0d123a1250a98401fa34847d2cf31ed82",
+    "validationPath": "specs/003-authoring-contract/binding-repair-validation.json",
+    "validationRawSha256": "e94db752385e92a7cb0a0d0c4341638ce307858edbdf0e0c1346d7a31482bf94",
+    "predecessorBindingPath": "specs/003-authoring-contract/current-evidence-binding.json",
+    "predecessorBindingRawSha256": "bdff2048cd133c205364873c3095076f57e174255609468a699a460fcebb2b78",
+    "renewedReceiptCount": 4,
+    "readySingleReviewCount": 4,
+    "focusedTestCount": 23,
+    "globalReviewRerunRequired": false,
+    "immutableCheckerPaths": [
+      "specs/003-authoring-contract/contracts/validate_current_evidence_binding.py",
+      "specs/003-authoring-contract/contracts/validate-current-evidence-binding.sh",
+      "specs/003-authoring-contract/contracts/validate-current-evidence-binding.ps1",
+      "specs/003-authoring-contract/contracts/test_validate_current_evidence_binding.py",
+      "docs/man/validate-current-evidence-binding.1"
+    ]
+  },
+  "domainArtefacts": [
+    {
+      "artifactId": "intake-template",
+      "order": 1,
+      "path": ".specify/presets/intake-authoring-governance/templates/intake-template.md",
+      "currentNormalizedSha256": "57ccc4118e8a029c5a808c85a19f9120f111bc0e89a2c66dc7ce20e40c93716d",
+      "requiredDelta": [
+        "stable-intake-id",
+        "german-and-english-title",
+        "purpose-current-and-target-state",
+        "audience-and-prior-knowledge",
+        "traceability",
+        "scope-and-non-goals",
+        "ordered-source-provenance",
+        "input-output-and-trust-boundaries",
+        "atomic-functional-and-nonfunctional-requirements",
+        "dependencies",
+        "separate-decisions-and-risks",
+        "expected-artefacts-and-measurable-acceptance",
+        "positive-and-negative-evidence",
+        "owner-and-reevaluation-trigger",
+        "exactly-one-next-safe-action",
+        "explicit-non-authority"
+      ]
+    },
+    {
+      "artifactId": "receipt-template",
+      "order": 2,
+      "path": ".specify/presets/intake-authoring-governance/templates/intake-authoring-receipt-template.json",
+      "currentNormalizedSha256": "b0c4e6435c2b1d74b6259a57dc6ea738f5c22c1527d6491547ca91ccdd6f786c",
+      "requiredDelta": [
+        "schema-2.0-contract",
+        "ordered-sources-and-normalized-source-target-hashes",
+        "stable-intake-and-new-operation-identities",
+        "profile-decisions-authority-lineage-and-optional-series",
+        "exactly-one-next-action",
+        "needs-clarification-default",
+        "blocked-prompt-default",
+        "stable-open-decision-identities",
+        "blocked-and-do-not-run-in-both-prompt-blocks",
+        "non-executable-blocked-prompts",
+        "ready-for-review-prompts-bind-the-same-exact-intake",
+        "no-automatic-execution-or-historical-authority-inference",
+        "explicit-non-authority"
+      ]
+    },
+    {
+      "artifactId": "project-profile-template",
+      "order": 3,
+      "path": ".specify/presets/intake-authoring-governance/templates/project-profile-template.md",
+      "currentNormalizedSha256": "4a368d6cd16f13b19e4cd6a9ee3f1f227e66140a73d4106f77948ea25a39b4d3",
+      "requiredDelta": [
+        "portable-trust-policy",
+        "portable-authority-policy",
+        "finding-traceability",
+        "autonomy-mode",
+        "positive-and-negative-evidence",
+        "revision-policy",
+        "explicit-non-authority"
+      ]
+    },
+    {
+      "artifactId": "aoc-governance-config",
+      "order": 4,
+      "path": "requirements/intake-governance.json",
+      "currentNormalizedSha256": "f790504fe7760535a577437b709f5932d0a3dc0c93f83060d614ef549b8cca76",
+      "requiredDelta": [
+        "profile-path-requirements/baseline/intake-authoring-profile.md",
+        "resolved-profile-id",
+        "documentation-language-de-DE"
+      ],
+      "schemaVersionMustRemain": "2.0"
+    },
+    {
+      "artifactId": "field-validation-summary",
+      "order": 5,
+      "path": ".specify/presets/intake-authoring-governance/templates/field-validation-summary.md",
+      "currentNormalizedSha256": "1b5f94886f01605a4ea949f9d97a5c21dd8df3d69e3237afec09557679bf323f",
+      "requiredDelta": [
+        "actual-field-coverage",
+        "actual-negative-cases",
+        "actual-platform-results",
+        "actual-evidence-boundaries"
+      ],
+      "futureSuccessMayBePreRecorded": false
+    }
+  ],
+  "requiredConsumers": {
+    "receiptValidation": [
+      ".specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.sh",
+      ".specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.ps1",
+      ".specify/presets/intake-authoring-governance/docs/man/validate-intake-authoring-receipt.1"
+    ],
+    "governanceConfigValidation": [
+      ".specify/presets/intake-authoring-governance/scripts/validate-intake-governance-config.py",
+      ".specify/presets/intake-authoring-governance/docs/man/validate-intake-governance-config.1"
+    ],
+    "canonicalFixtureSuites": [
+      ".specify/presets/intake-authoring-governance/tests/test-intake-authoring-validator.ps1",
+      ".specify/presets/intake-authoring-governance/tests/test-intake-authoring-lifecycle.ps1",
+      ".specify/presets/intake-authoring-governance/tests/test-intake-governance-config.ps1"
+    ],
+    "additiveFeatureValidator": [
+      "specs/003-authoring-contract/contracts/validate_authoring_contract.py",
+      "specs/003-authoring-contract/contracts/validate-authoring-contract.sh",
+      "specs/003-authoring-contract/contracts/validate-authoring-contract.ps1",
+      "specs/003-authoring-contract/contracts/test_validate_authoring_contract.py",
+      "docs/man/validate-authoring-contract.1"
+    ],
+    "platformWorkflowIfRequired": [
+      ".github/workflows/powershell-analysis.yml"
+    ]
+  },
+  "reviewEvidence": [
+    "specs/003-authoring-contract/security-review-evidence.md",
+    "specs/003-authoring-contract/architecture-review-evidence.md",
+    "specs/003-authoring-contract/accessibility-review-evidence.md",
+    "specs/003-authoring-contract/cross-platform-parity-evidence.md"
+  ],
+  "renewal": {
+    "logicalTargetId": "META-LH-03",
+    "targetPath": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+    "stableIntakeId": "83b9481e-bc4c-4e3d-b67a-1c6c8d05a681",
+    "reservedOperationId": "9a3586f4-a375-475c-b44f-bdc7c39d9d3d",
+    "reservedReceiptId": "0997f398-a986-437a-b091-87da3da83e9f",
+    "reservedReviewId": "e69644e1-adc7-4f1f-857b-bce390ae8764",
+    "reservedIdsMustBeUniqueAtUse": true,
+    "archiveMustBeByteIdentical": true,
+    "finalFiveHashesRequired": true,
+    "fullReadySingleReviewRequired": true,
+    "bashAndPowerShellReviewValidationRequired": true,
+    "otherLeafCountMustRemainIdentical": 13,
+    "seriesBridgeMustRemainIdentical": true,
+    "currentEvidenceBindingUpdatesAfterReadyOnly": true,
+    "renewalPaths": [
+      "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/9a3586f4-a375-475c-b44f-bdc7c39d9d3d/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/9a3586f4-a375-475c-b44f-bdc7c39d9d3d/META-LH-03-Authoring-Contract.json",
+      "specs/intake-authoring-operations/9a3586f4-a375-475c-b44f-bdc7c39d9d3d/operation.json",
+      "specs/intake-authoring-operations/9a3586f4-a375-475c-b44f-bdc7c39d9d3d/staging/META-LH-03-Authoring-Contract.json",
+      "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json",
+      "specs/intake-review-requests/meta-lh-03-authoring-contract-2026-09-05-r2.json",
+      "specs/intake-review-results/meta-lh-03-authoring-contract-2026-09-05-r2.json",
+      "docs/reviews/meta-lh-03-authoring-contract-intake-review-2026-09-05-r2.md",
+      "specs/003-authoring-contract/current-evidence-binding.json"
+    ]
+  },
+  "evidenceAndCloseout": {
+    "gateRequirementsPath": "specs/003-authoring-contract/contracts/autonomous-run-gate-requirements.json",
+    "gateEvidencePath": "specs/003-authoring-contract/autonomous-run-gate-evidence.json",
+    "preMergeRunnerArtifactLogicalName": "premerge-gate-evidence.json",
+    "preMergeRunnerArtifactIsRepositoryPath": false,
+    "lifecycleEvidencePath": "specs/003-authoring-contract/intake-lifecycle.json",
+    "causalCloseoutEvidencePath": "specs/003-authoring-contract/causal-closeout-evidence.json",
+    "evidenceOnlyCloseoutBranch": "003-authoring-contract-closeout",
+    "evidenceOnlyCloseoutPaths": [
+      "specs/003-authoring-contract/tasks.md",
+      "specs/003-authoring-contract/autonomous-run-state.json",
+      "specs/003-authoring-contract/causal-closeout-evidence.json"
+    ]
+  },
+  "delivery": {
+    "authority": "MergeAndSync",
+    "adminBypass": false,
+    "normalReviewAndApprovalRequired": true,
+    "unavailableApprovalIsApproval": false,
+    "preCommitSetComparison": [
+      "planned",
+      "changed",
+      "staged",
+      "foreign",
+      "missing"
+    ],
+    "bulkStage": false,
+    "reset": false,
+    "stash": false,
+    "force": false,
+    "amend": false,
+    "remoteProviderMutation": false,
+    "finalSync": "FastForwardOnly",
+    "finalAheadBehind": "0/0"
+  },
+  "statistics": {
+    "implementationCheckpointExcludesLedger": true,
+    "writerRequiresCleanRealBranch": true,
+    "writerCommand": "bash scripts/render-project-statistics.sh --repo .",
+    "bashCheckCommand": "bash scripts/render-project-statistics.sh --repo . --check-only --json",
+    "powerShellCheckCommand": "pwsh -NoProfile -File scripts/render-project-statistics.ps1 -Repo . -CheckOnly -Json",
+    "ledgerPath": "docs/project-statistics.md",
+    "ledgerOnlyCommit": true,
+    "ledgerAndLedgerCommitExcludedByMethodologyV2": true,
+    "emptyCommitAllowed": false,
+    "historyProjectionRestoreOrAmendAllowed": false,
+    "laterLifecycleAndCloseoutTextHandledAtNextRegularTrigger": true
+  },
+  "immutableOutOfScope": [
+    "specs/intake-series/aoc-phase-2/manifest.json",
+    "specs/002-portfolio-ownership/intake-lifecycle.json",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "GEMINI.md",
+    ".github/copilot-instructions.md",
+    ".github/agents/copilot-instructions.md",
+    ".specify/presets/*/preset.yml"
+  ]
+}

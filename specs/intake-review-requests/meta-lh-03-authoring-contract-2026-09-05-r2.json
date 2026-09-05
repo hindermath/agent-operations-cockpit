@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "b8d49ed7-d05f-40b0-9e18-1aa1b689f1cf",
+  "mode": "Single",
+  "policy": "aoc-bilingual-requirements",
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "role": "Primary"
+    }
+  ],
+  "series": {
+    "orderedTargetPaths": [],
+    "roots": [],
+    "dependencies": []
+  },
+  "campaign": {
+    "manifestPath": "N/A",
+    "workers": [],
+    "operatorExceptions": []
+  },
+  "completedOperation": {
+    "operationId": "986c1d6c-d485-460b-8d8d-7cf5816a2c36",
+    "path": "specs/intake-authoring-operations/986c1d6c-d485-460b-8d8d-7cf5816a2c36/operation.json",
+    "rawSha256": "70372bc7a5a1ec67eb420cfcb24ba6d3f93cfe052928e12467ae2dc3dea441f7",
+    "status": "Completed"
+  },
+  "receiptEvidence": {
+    "receiptId": "f41328cd-b301-4533-89dc-02aab758ab1f",
+    "path": "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json",
+    "rawSha256": "bc9c60792b2cb3f2a9cab4941169f7bb2a57d5df15faf0d09528ce5167b037db"
+  },
+  "supersedesReview": {
+    "reviewId": "0b31261e-e794-461f-8c28-3e3d9a518f69",
+    "requestPath": "specs/intake-review-requests/meta-lh-03-authoring-contract-2026-09-05-r1.json",
+    "requestRawSha256": "8675e679f55e089c8d4081fd7d7565e351c6fa4ab3408c27b9974f872a8ed7ea",
+    "resultPath": "specs/intake-review-results/meta-lh-03-authoring-contract-2026-09-05-r1.json",
+    "resultRawSha256": "2fe319d7c88ce5790f6ff6ba9a7d693936a7b88c787ff7dbe7588b5df9a35679",
+    "reportPath": "docs/reviews/meta-lh-03-authoring-contract-intake-review-2026-09-05-r1.md",
+    "reportRawSha256": "0947e027578bb135ac7de39e3b0ff45d2f76242f6037616c40a9c866b96dd5a9"
+  }
+}

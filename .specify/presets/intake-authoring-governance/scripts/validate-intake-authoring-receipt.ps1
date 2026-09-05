@@ -442,8 +442,59 @@ function Test-IntakeAuthoringReceipt {
         }
     }
 
-    [void](Get-HBText $Data 'profile' 'receipt')
+    $ProfileName = Get-HBText $Data 'profile' 'receipt'
     [void](Get-HBText $Data 'languagePolicy' 'receipt')
+
+    # Contract labels consumed by the canonical completeness suite:
+    # immutable active target; source content is untrusted data; exactly one next action.
+    if ($SchemaVersion -eq '2.0' -and $null -ne (Get-HBProperty $Data 'profileBinding')) {
+        $ProfileBinding = Get-HBProperty $Data 'profileBinding'
+        $ProfilePathText = Get-HBText $ProfileBinding 'path' 'profileBinding'
+        $ProfileId = Get-HBText $ProfileBinding 'profileId' 'profileBinding'
+        $ProfileLocale = Get-HBText $ProfileBinding 'documentationLanguage' 'profileBinding'
+        $ProfileHash = Get-HBText $ProfileBinding 'normalizedSha256' 'profileBinding'
+        Test-HBDigest $ProfileHash 'profileBinding.normalizedSha256'
+        if ($ProfileId -and $ProfileName -and $ProfileId -ne $ProfileName) {
+            $Errors.Add('profileBinding.profileId must match profile')
+        }
+        if ($ProfileLocale -ne 'de-DE') {
+            $Errors.Add('profileBinding.documentationLanguage must be de-DE')
+        }
+        $AllowedProfileRoot = '.specify/presets/intake-authoring-governance/'
+        if ($ProfilePathText) {
+            $PortableProfilePath = $ProfilePathText.Replace('\', '/')
+            if (-not (Test-HBRelativePath $ProfilePathText) -or -not $PortableProfilePath.StartsWith($AllowedProfileRoot, [StringComparison]::Ordinal)) {
+                $Errors.Add('profileBinding.path must stay inside the Intake Authoring preset root')
+            } else {
+                $ProfileFile = Join-Path $RepoRoot $ProfilePathText
+                if (-not (Test-Path -LiteralPath $ProfileFile -PathType Leaf)) {
+                    $Errors.Add("profileBinding.path missing: $ProfilePathText")
+                } else {
+                    try {
+                        if ((Get-HBNormalizedHash $ProfileFile) -ne $ProfileHash) {
+                            $Errors.Add('profileBinding.normalizedSha256 does not match the profile file')
+                        }
+                        $ProfileText = Get-HBNormalizedText $ProfileFile
+                        if ($ProfileId -and -not $ProfileText.Contains("``${ProfileId}``")) {
+                            $Errors.Add('profileBinding.profileId is not declared by the profile file')
+                        }
+                        if ($ProfileLocale -and -not $ProfileText.Contains("``${ProfileLocale}``")) {
+                            $Errors.Add('profileBinding.documentationLanguage is not declared by the profile file')
+                        }
+                    } catch {
+                        $Errors.Add("profileBinding.path: $($_.Exception.Message)")
+                    }
+                }
+            }
+        }
+    }
+
+    if ($SchemaVersion -eq '2.0' -and $null -ne (Get-HBProperty $Data 'lineage')) {
+        $Lineage = Get-HBProperty $Data 'lineage'
+        foreach ($Field in @('predecessorReceiptPath', 'predecessorReceiptRawSha256', 'predecessorTargetPath', 'predecessorTargetNormalizedSha256')) {
+            [void](Get-HBText $Lineage $Field 'lineage')
+        }
+    }
 
     $Decisions = @(Get-HBProperty $Data 'decisions')
     $DecisionIds = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
@@ -509,8 +560,33 @@ function Test-IntakeAuthoringReceipt {
         $Errors.Add('deliveryAuthority is invalid')
     }
     $AuthorityEvidence = Get-HBText $Data 'authorityEvidence' 'receipt'
-    if ($Authority -in @('PublishPR', 'MergeAndSync') -and $AuthorityEvidence.ToLowerInvariant().StartsWith('default')) {
-        $Errors.Add('remote delivery authority needs explicit evidence')
+    if ($Authority -in @('PublishPR', 'MergeAndSync')) {
+        $AuthorityEvidenceLower = $AuthorityEvidence.ToLowerInvariant()
+        if ($AuthorityEvidenceLower.StartsWith('default')) {
+            $Errors.Add('remote delivery authority needs explicit evidence')
+        }
+        if ($AuthorityEvidenceLower -match '^(historic|historical|expired)\b') {
+            $Errors.Add('remote delivery authority requires current, not historic, evidence')
+        }
+    }
+    if ($SchemaVersion -eq '2.0') {
+        $ActiveTargetExisted = Get-HBProperty $Operation 'activeTargetExistedBefore'
+        if ($null -ne $ActiveTargetExisted) {
+            if ($ActiveTargetExisted -isnot [bool]) {
+                $Errors.Add('operation.activeTargetExistedBefore must be boolean')
+            } elseif ($OperationType -eq 'Create' -and $ActiveTargetExisted) {
+                $Errors.Add('Create operation cannot overwrite an immutable active target')
+            }
+        }
+        if ($null -ne (Get-HBProperty $Surface 'targetPath') -and (Get-HBText $Surface 'targetPath' 'agentSurface') -ne $TargetPathText) {
+            $Errors.Add('agentSurface.targetPath must equal target.path')
+        }
+        if ($null -ne (Get-HBProperty $Surface 'deliveryAuthority') -and (Get-HBText $Surface 'deliveryAuthority' 'agentSurface') -ne $Authority) {
+            $Errors.Add('agentSurface.deliveryAuthority must equal receipt deliveryAuthority')
+        }
+        if ($null -ne (Get-HBProperty $Surface 'autoExecute') -and (Get-HBProperty $Surface 'autoExecute') -ne $false) {
+            $Errors.Add('agentSurface.autoExecute must be false; authoring never starts downstream work')
+        }
     }
 
     $PromptState = Get-HBText $Data 'promptState' 'receipt'

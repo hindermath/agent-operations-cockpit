@@ -1,6 +1,17 @@
 {
   "schemaVersion": "2.0",
   "documentationLanguage": "de-DE",
+  "projectProfile": {
+    "path": ".specify/presets/intake-authoring-governance/templates/project-profile-template.md",
+    "profileId": "generic-markdown",
+    "normalizedSha256": "4c1ecc785937b6dacb0330efdd656e7b21eba1ac309b905cce8988b7404953f2"
+  },
+  "allowedRoots": [
+    "requirements",
+    "specs",
+    ".specify/presets/intake-authoring-governance"
+  ],
+  "implicitAuthority": false,
   "artifactNaming": {
     "profile": "de",
     "canonicalIndex": "Pflichtenheft.md",

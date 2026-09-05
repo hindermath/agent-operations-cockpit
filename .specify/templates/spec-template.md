@@ -152,6 +152,12 @@
   re-evaluation trigger.
   `FollowUp` also requires owner, risk, due date, re-evaluation trigger,
   evidence, and scope rationale.
+- **CR-014**: Feature runs from `003-authoring-contract` onward MUST specify a
+  saved retrospective with Output, Findings, confirmed rules,
+  interventions/repairs, efficiency observations, AEPS relevance, and
+  Completion/Retrospective Evidence. After the third comparable run, the
+  retrospective MUST include a source- and hash-bound trend comparison and
+  keep missing comparable evidence explicit.
 
 ### Key Entities *(include if feature involves data)*
 

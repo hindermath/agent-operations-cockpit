@@ -77,6 +77,62 @@ jobs:
           }
           "AOC_GIT_BASH_EXE=$bash" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
+      - name: Test Feature 003 authoring contract matrix
+        if: github.event_name == 'pull_request' || github.event_name == 'push'
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        shell: pwsh
+        run: |
+          $Failures = 0
+          function Invoke-AocGate {
+            param([string] $Label, [scriptblock] $Command)
+            Write-Output "COMMAND: $Label"
+            & $Command
+            $Code = $LASTEXITCODE
+            Write-Output "IMMEDIATE_EXIT: $Code"
+            if ($Code -ne 0) { $script:Failures++ }
+          }
+
+          Write-Output "RUNNER: $env:RUNNER_OS / $env:ImageOS"
+          Invoke-AocGate 'git rev-parse HEAD' { git rev-parse HEAD }
+          Invoke-AocGate 'python --version' { python --version }
+          Write-Output "PowerShell: $($PSVersionTable.PSVersion)"
+          Invoke-AocGate 'bash --version' { & $env:AOC_GIT_BASH_EXE @('--version') }
+
+          Invoke-AocGate 'python -B specs/003-authoring-contract/contracts/test_validate_authoring_contract.py' {
+            python -B specs/003-authoring-contract/contracts/test_validate_authoring_contract.py
+          }
+          Invoke-AocGate 'python -B specs/003-authoring-contract/contracts/test_validate_gate_evidence_invariants.py' {
+            python -B specs/003-authoring-contract/contracts/test_validate_gate_evidence_invariants.py
+          }
+          Invoke-AocGate 'bash specs/003-authoring-contract/contracts/validate-authoring-contract.sh --repo . --json' {
+            & $env:AOC_GIT_BASH_EXE @('specs/003-authoring-contract/contracts/validate-authoring-contract.sh', '--repo', '.', '--json')
+          }
+          Invoke-AocGate 'pwsh -NoProfile -File specs/003-authoring-contract/contracts/validate-authoring-contract.ps1 -Repo . -Json' {
+            pwsh -NoProfile -File specs/003-authoring-contract/contracts/validate-authoring-contract.ps1 -Repo . -Json
+          }
+          Invoke-AocGate 'python -B specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py --repo . global-ready' {
+            python -B specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py --repo . global-ready
+          }
+          Invoke-AocGate 'bash validate-intake-authoring-receipt.sh META-LH-03' {
+            & $env:AOC_GIT_BASH_EXE @('.specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.sh', '--receipt', 'specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json', '--repo', '.')
+          }
+          Invoke-AocGate 'pwsh validate-intake-authoring-receipt.ps1 META-LH-03' {
+            pwsh -NoProfile -File .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.ps1 -Receipt specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json -Repo .
+          }
+          Invoke-AocGate 'pwsh test-intake-authoring-validator.ps1' {
+            pwsh -NoProfile -File .specify/presets/intake-authoring-governance/tests/test-intake-authoring-validator.ps1
+          }
+          Invoke-AocGate 'pwsh test-intake-authoring-lifecycle.ps1' {
+            pwsh -NoProfile -File .specify/presets/intake-authoring-governance/tests/test-intake-authoring-lifecycle.ps1
+          }
+          Invoke-AocGate 'pwsh test-intake-governance-config.ps1' {
+            pwsh -NoProfile -File .specify/presets/intake-authoring-governance/tests/test-intake-governance-config.ps1
+          }
+          if ($Failures -ne 0) {
+            throw "Feature-003 focused matrix failed in $Failures command(s)."
+          }
+
       - name: Test Feature 002 snapshot contract
         if: github.event_name == 'pull_request' || github.event_name == 'push'
         env:
