@@ -20,6 +20,7 @@ sys.path.insert(0, str(CONTRACT_DIR))
 
 from validate_authoring_contract import (  # noqa: E402
     _canonical_raw_sha256,
+    _resolve_completed_lifecycle_target,
     ContractViolation,
     normalized_sha256,
     validate_checkpoint,
@@ -82,6 +83,30 @@ class AuthoringContractBridgeTests(unittest.TestCase):
         self.assertEqual("Completed", summary["operationStatus"])
         self.assertEqual(13, summary["unchangedLogicalTargetCount"])
         self.assertEqual("b8d49ed7-d05f-40b0-9e18-1aa1b689f1cf", summary["reviewId"])
+
+    def test_completed_lifecycle_rejects_coexisting_logical_target(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            repo = Path(temporary)
+            logical = "requirements/intakes/active/Lastenheft_META-LH-03.md"
+            archived = "requirements/intakes/active/Lastenheft_META-LH-03.003.md"
+            content = b"Deutsch / English\n"
+            expected = normalized_sha256(content)
+            for relative in (logical, archived):
+                target = repo / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(content)
+            lifecycle = repo / "specs/003-authoring-contract/intake-lifecycle.json"
+            lifecycle.parent.mkdir(parents=True, exist_ok=True)
+            lifecycle.write_text(json.dumps({
+                "schemaVersion": "1.1",
+                "records": [{
+                    "originalPath": logical,
+                    "archivedPath": archived,
+                    "originalNormalizedSha256": expected,
+                }],
+            }), encoding="utf-8")
+            with self.assertRaisesRegex(ContractViolation, "logical target to be absent"):
+                _resolve_completed_lifecycle_target(repo, logical, expected)
 
     def test_wrong_reserved_ids_are_rejected(self) -> None:
         candidate = copy.deepcopy(self.binding)

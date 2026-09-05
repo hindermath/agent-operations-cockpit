@@ -219,8 +219,6 @@ def _resolve_completed_lifecycle_target(
     repo: Path, logical_path: str, expected_hash: str,
 ) -> str:
     """Resolve META-LH-03 after its post-feature lifecycle rename."""
-    if (repo / logical_path).is_file():
-        return logical_path
     lifecycle_path = repo / "specs/003-authoring-contract/intake-lifecycle.json"
     if not lifecycle_path.is_file():
         return logical_path
@@ -241,6 +239,8 @@ def _resolve_completed_lifecycle_target(
         or normalized_sha256((repo / archived).read_bytes()) != expected_hash
     ):
         raise ContractViolation("META-LH-03 lifecycle target binding drift")
+    if (repo / logical_path).is_file():
+        raise ContractViolation("META-LH-03 lifecycle requires the logical target to be absent")
     return archived
 
 
