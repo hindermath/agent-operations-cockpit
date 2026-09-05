@@ -37,6 +37,10 @@
   MUST cite the matching row from the Level-2 Project Environment Registry in
   `constitution.md` and use its runtime, build/test, docs/A11Y, statistics, and
   agent-surface baselines.
+- **Engineering run retrospective**: For feature runs from
+  `003-authoring-contract` onward, plan the saved seven-part retrospective,
+  its Completion/Retrospective Evidence links, and—after the third comparable
+  run—the source- and hash-bound trend comparison required by Principle XXI.
 - **Memory-safe languages (MSL)**: State the primary implementation language
   and confirm it is on the MSL allow-list in `constitution.md`, Principle XI.
   If the primary language is not an MSL (e.g. C, C++, Assembly, `cc65`), cite

@@ -1,0 +1,142 @@
+{
+  "schemaVersion": "1.1",
+  "runId": "044b77ae-85fd-46ee-97f4-61ce7a2c9c66",
+  "featurePath": "specs/003-authoring-contract",
+  "branch": "003-authoring-contract",
+  "deliveryMode": "MergeAndSync",
+  "authorityRevalidationRequired": true,
+  "stage": "Clarify",
+  "status": "Blocked",
+  "checkpointCommit": "ada16a88833aae246f2db396a565bc941109617b",
+  "acceptedArtifacts": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+      "sha256": "f6d57cacc954b4899fc5bd8ddcc235570ec20470094feec506e1b8e9ea07e3e9"
+    },
+    {
+      "path": "specs/intake-review-results/meta-lh-03-authoring-contract-2026-08-29-r6.json",
+      "sha256": "9de62c488c4223e78636837e78c3d36910f5a11664df45cc6f53c1ffc8d83e5a"
+    },
+    {
+      "path": "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json",
+      "sha256": "6acc207f5533eb9fb92613f23537c669605eef475eb5bb3a911806f6c28e1aeb"
+    }
+  ],
+  "tasks": {
+    "path": "N/A",
+    "sha256": "N/A",
+    "completed": 0,
+    "total": 0
+  },
+  "routing": {
+    "policy": "balanced-v1",
+    "fallbackPolicy": "fail-closed",
+    "phases": [
+      {
+        "phaseId": "specify",
+        "command": "speckit.specify",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-5.6-sol",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-05T13:28:11.0890380Z",
+        "resultPath": "specs/003-authoring-contract/phase-results/specify.json",
+        "resultSha256": "2199231cfe05a6557bc38a9056539c6a594e268459bc6e3ac9e21dcb85cd6369"
+      },
+      {
+        "phaseId": "clarify",
+        "command": "speckit.clarify",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "specify"
+        ],
+        "status": "Pending"
+      },
+      {
+        "phaseId": "checklist",
+        "command": "speckit.checklist",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "clarify"
+        ],
+        "status": "Pending"
+      },
+      {
+        "phaseId": "plan",
+        "command": "speckit.plan",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "checklist"
+        ],
+        "status": "Pending"
+      },
+      {
+        "phaseId": "plan-review",
+        "command": "speckit.plan",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "plan"
+        ],
+        "status": "Pending"
+      },
+      {
+        "phaseId": "tasks",
+        "command": "speckit.tasks",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "plan-review"
+        ],
+        "status": "Pending"
+      },
+      {
+        "phaseId": "analyze",
+        "command": "speckit.analyze",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "tasks"
+        ],
+        "status": "Pending"
+      },
+      {
+        "phaseId": "implement",
+        "command": "speckit.implement",
+        "routingRole": "long-running-implementation",
+        "runnerProfile": "codex-implementation-auto",
+        "dependsOn": [
+          "analyze"
+        ],
+        "status": "Pending"
+      }
+    ]
+  },
+  "lastPassingGate": "Merged PR #37; clean main ada16a8, 0/0 and live remote equality; Global-Ready 14 targets with Bash/PowerShell; both previous runs Completed; ModelRouting Aligned.",
+  "nextExactAction": "Obtain explicit bounded authority for META-LH-03 version binding, affected receipt renewal and full Single re-reviews with a new current-evidence bridge; then speckit-autonomous-resume specs/003-authoring-contract/autonomous-run-state.json after binding revalidation. Do not start a second run.",
+  "lastOperation": {
+    "kind": "ScopeAndAcceptanceAudit",
+    "state": "Failed",
+    "summary": "Specify process completed and structured result validated; independent audit found AC-003 receipt freshness outside authorised update scope and intake preset-version mismatch. See blocking-scope-decision.md."
+  },
+  "stop": {
+    "reason": "AC-003 requires fresh receipts but three bind the historical portfolio source; META-LH-03 pins preset 0.3.0 while 0.3.1 is installed. New receipt/review/target binding authority is required; immutable META02 startup evidence is not fresh AC-003 evidence.",
+    "requestedAt": "2026-09-05T13:29:50.198Z",
+    "safeBoundary": "Specify process completed; before Clarify, Plan or implementation process. No runner remains active."
+  },
+  "closeout": {
+    "mergeOrPublication": "Pending",
+    "defaultBranchSync": "Pending",
+    "postMergeActions": "Pending",
+    "finalValidation": "Pending"
+  },
+  "updatedAt": "2026-09-05T13:29:50.198Z"
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "HistoricalPlanSnapshot",
+  "phaseResultPath": "specs/003-authoring-contract/phase-results/plan.json",
+  "phaseReportPath": "specs/003-authoring-contract/phase-results/plan-report.md",
+  "reviewResultPath": "specs/003-authoring-contract/phase-results/plan-review-v1.json",
+  "createdAt": "2026-09-05T16:02:46.091Z",
+  "artifacts": [
+    {
+      "logicalPath": "specs/003-authoring-contract/plan.md",
+      "snapshotPath": "specs/003-authoring-contract/phase-results/plan-v1/plan.md",
+      "rawSha256": "a005b8a02a38b5fa7bd69763298d46ae1f4ff15da64560a65e8b8962c57babf7"
+    },
+    {
+      "logicalPath": "specs/003-authoring-contract/research.md",
+      "snapshotPath": "specs/003-authoring-contract/phase-results/plan-v1/research.md",
+      "rawSha256": "3f5ded3340d3dcb0b8e65a98f403513691f9307d4d75c3d758edaf7c2c091534"
+    },
+    {
+      "logicalPath": "specs/003-authoring-contract/data-model.md",
+      "snapshotPath": "specs/003-authoring-contract/phase-results/plan-v1/data-model.md",
+      "rawSha256": "3acaaa664b3657dd425821bb10a788a77c54db582fb770dc589612f019e755a4"
+    },
+    {
+      "logicalPath": "specs/003-authoring-contract/quickstart.md",
+      "snapshotPath": "specs/003-authoring-contract/phase-results/plan-v1/quickstart.md",
+      "rawSha256": "cf286f234bbf8c6f967f9ad12e47e96de6eedc7abe781ef0f0fae8a23007ec1b"
+    },
+    {
+      "logicalPath": "specs/003-authoring-contract/contracts/authoring-contract-design.json",
+      "snapshotPath": "specs/003-authoring-contract/phase-results/plan-v1/contracts/authoring-contract-design.json",
+      "rawSha256": "fc94547957e42a249aa1f3f3d99e3d2632e05cc33abb6f1dd7badd5402ffadd9"
+    },
+    {
+      "logicalPath": "specs/003-authoring-contract/contracts/autonomous-run-gate-requirements.json",
+      "snapshotPath": "specs/003-authoring-contract/phase-results/plan-v1/contracts/autonomous-run-gate-requirements.json",
+      "rawSha256": "abdaa3e5de8f17a67251ef604cdc226637aadb74903d254d4ddff0f2ae9e522e"
+    }
+  ],
+  "boundary": "Byte-identical initial Plan inputs retained before bounded remediation. Historical reports retain original logical paths; no rerun or passing review is fabricated."
+}

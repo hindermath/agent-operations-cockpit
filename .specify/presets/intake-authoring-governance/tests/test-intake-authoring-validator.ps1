@@ -15,6 +15,12 @@ param(
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
+$ProjectRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $PresetRoot))
+$BashExecutable = if ([string]::IsNullOrWhiteSpace($env:AOC_GIT_BASH_EXE)) {
+    'bash'
+} else {
+    $env:AOC_GIT_BASH_EXE
+}
 
 function Get-NormalizedHash {
     [CmdletBinding()]
@@ -38,6 +44,38 @@ function Write-Utf8Text {
     [IO.File]::WriteAllText($Path, $Text, [Text.UTF8Encoding]::new($false))
 }
 
+function ConvertTo-BashPath {
+    [CmdletBinding()]
+    param([Parameter(Mandatory)][string]$Path)
+
+    if (-not $IsWindows) { return $Path }
+    $Converted = & $BashExecutable -lc 'cygpath -u -- "$1"' 'aoc-cygpath' $Path
+    if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace(($Converted -join ''))) {
+        throw "Cannot convert Windows path for Git Bash: $Path"
+    }
+    return ($Converted -join '').Trim()
+}
+
+function Invoke-BashProcess {
+    [CmdletBinding()]
+    param([Parameter(Mandatory)][string[]]$ArgumentList)
+
+    $StartInfo = [Diagnostics.ProcessStartInfo]::new()
+    $StartInfo.FileName = $BashExecutable
+    $StartInfo.UseShellExecute = $false
+    $StartInfo.RedirectStandardOutput = $true
+    $StartInfo.RedirectStandardError = $true
+    foreach ($Argument in $ArgumentList) { $StartInfo.ArgumentList.Add($Argument) }
+    $Process = [Diagnostics.Process]::Start($StartInfo)
+    $StandardOutput = $Process.StandardOutput.ReadToEndAsync()
+    $StandardError = $Process.StandardError.ReadToEndAsync()
+    $Process.WaitForExit()
+    return [pscustomobject]@{
+        ExitCode = $Process.ExitCode
+        Output = (($StandardOutput.Result, $StandardError.Result) -join "`n").Trim()
+    }
+}
+
 function Invoke-ReceiptValidators {
     [CmdletBinding()]
     param(
@@ -54,9 +92,9 @@ function Invoke-ReceiptValidators {
         throw "${Case}: PowerShell exit ${PowerShellExit}, expected ${ExpectedExit}: $($PowerShellOutput -join ' | ')"
     }
 
-    if (Get-Command bash -ErrorAction SilentlyContinue) {
+    if (Get-Command $BashExecutable -ErrorAction SilentlyContinue) {
         $BashValidator = Join-Path $PresetRoot 'scripts/validate-intake-authoring-receipt.sh'
-        $BashOutput = & bash $BashValidator --receipt $Receipt --repo $Repo 2>&1
+        $BashOutput = & $BashExecutable $BashValidator --receipt $Receipt --repo $Repo 2>&1
         $BashExit = $LASTEXITCODE
         if ($BashExit -ne $ExpectedExit) {
             throw "${Case}: Bash exit ${BashExit}, expected ${ExpectedExit}: $($BashOutput -join ' | ')"
@@ -250,8 +288,16 @@ try {
     Write-Utf8Text -Path $ReceiptPath -Text ($Receipt | ConvertTo-Json -Depth 20)
     Invoke-ReceiptValidators -Receipt $ReceiptPath -Repo $TempRoot -ExpectedExit 2 -Case 'implicit remote authority'
 
+    Write-Utf8Text -Path $TargetPath -Text ((New-ReadyIntake -TargetPath 'intakes/example.md').Replace('LocalImplementation', 'MergeAndSync'))
+    $Receipt.target.normalizedSha256 = Get-NormalizedHash $TargetPath
+    $Receipt.authorityEvidence = 'Historical approval from a completed earlier run'
+    Write-Utf8Text -Path $ReceiptPath -Text ($Receipt | ConvertTo-Json -Depth 20)
+    Invoke-ReceiptValidators -Receipt $ReceiptPath -Repo $TempRoot -ExpectedExit 2 -Case 'historic authority rejection'
+
     $Receipt.deliveryAuthority = 'LocalImplementation'
     $Receipt.authorityEvidence = 'Default: no explicit remote authority'
+    Write-Utf8Text -Path $TargetPath -Text (New-ReadyIntake -TargetPath 'intakes/example.md')
+    $Receipt.target.normalizedSha256 = Get-NormalizedHash $TargetPath
     $Receipt.status = 'NeedsClarification'
     $Receipt.promptState = 'Blocked'
     $Receipt.questionCount = 5
@@ -265,11 +311,14 @@ try {
     })
     $Receipt.nextAction = 'Resolve open intake-authoring decisions'
     Write-Utf8Text -Path $TargetPath -Text (New-BlockedIntake)
+    $BlockedText = New-BlockedIntake
+    if ([regex]::Matches($BlockedText, 'BLOCKED - DO NOT RUN').Count -ne 2) { throw 'blocked intake must contain both stop markers' }
+    if ($BlockedText.Contains('$speckit-specify') -or $BlockedText.Contains('$speckit-autonomous')) { throw 'blocked intake must contain zero executable prompt invocations' }
     $Receipt.target.normalizedSha256 = Get-NormalizedHash $TargetPath
     Write-Utf8Text -Path $ReceiptPath -Text ($Receipt | ConvertTo-Json -Depth 20)
     Invoke-ReceiptValidators -Receipt $ReceiptPath -Repo $TempRoot -ExpectedExit 0 -Case 'blocked draft'
 
-    $UnsafeBlocked = (New-BlockedIntake) -replace 'BLOCKED - DO NOT RUN\nOpen decision: IAD001', '$speckit-specify run anyway'
+    $UnsafeBlocked = (New-BlockedIntake) -replace 'BLOCKED - DO NOT RUN\r?\nOpen decision: IAD001', '$speckit-specify run anyway'
     Write-Utf8Text -Path $TargetPath -Text $UnsafeBlocked
     $Receipt.target.normalizedSha256 = Get-NormalizedHash $TargetPath
     Write-Utf8Text -Path $ReceiptPath -Text ($Receipt | ConvertTo-Json -Depth 20)
@@ -277,7 +326,8 @@ try {
 
     Write-Utf8Text -Path $TargetPath -Text (New-BlockedIntake)
     $Receipt.target.normalizedSha256 = Get-NormalizedHash $TargetPath
-    Write-Utf8Text -Path $SourcePath -Text 'github_pat_ABCDEFGHIJKLMNOPQRSTUVWXYZ123456'
+    $SyntheticSecret = 'github_' + 'pat_' + ('A' * 24)
+    Write-Utf8Text -Path $SourcePath -Text $SyntheticSecret
     $Receipt.sources[0].normalizedSha256 = Get-NormalizedHash $SourcePath
     Write-Utf8Text -Path $ReceiptPath -Text ($Receipt | ConvertTo-Json -Depth 20)
     Invoke-ReceiptValidators -Receipt $ReceiptPath -Repo $TempRoot -ExpectedExit 2 -Case 'secret source'
@@ -347,12 +397,153 @@ try {
     Write-Utf8Text -Path $ReceiptPath -Text ($Receipt | ConvertTo-Json -Depth 20)
     Invoke-ReceiptValidators -Receipt $ReceiptPath -Repo $TempRoot -ExpectedExit 0 -Case 'legacy snapshot adoption'
 
+    Write-Utf8Text -Path $TargetPath -Text (New-ReadyIntake -TargetPath 'intakes/example.md')
+    Write-Utf8Text -Path $SourcePath -Text "First line`nSecond line`n"
+    $ProfileFixtureRelative = '.specify/presets/intake-authoring-governance/templates/project-profile-template.md'
+    $ProfileFixturePath = Join-Path $TempRoot $ProfileFixtureRelative
+    Write-Utf8Text -Path $ProfileFixturePath -Text "# Profile`n`n- Profile ID: ``generic-markdown```n- Documentation language: ``de-DE```n"
+    $Schema2Receipt = [ordered]@{
+        schemaVersion = '2.0'; documentType = 'IntakeReceipt'; receiptId = [Guid]::NewGuid().ToString(); intakeId = [Guid]::NewGuid().ToString()
+        generator = [ordered]@{ preset = 'intake-authoring-governance'; version = '0.3.1' }
+        createdAt = [DateTimeOffset]::UtcNow.ToString('yyyy-MM-ddTHH:mm:ssZ')
+        operation = [ordered]@{ operationId = [Guid]::NewGuid().ToString(); type = 'Create'; authorityEvidence = 'Explicit local fixture authority'; activeTargetExistedBefore = $false }
+        status = 'ReadyForReview'; target = [ordered]@{ path = 'intakes/example.md'; normalizedSha256 = Get-NormalizedHash $TargetPath }
+        sources = @([ordered]@{ sourceId = 'SRC001'; order = 1; kind = 'File'; label = 'Planning source'; location = 'Repository'; path = 'planning/source.md'; requestedUrl = 'N/A'; finalUrl = 'N/A'; retrievedAt = 'N/A'; httpStatus = 'N/A'; contentType = 'N/A'; contentLength = 'N/A'; etag = 'N/A'; lastModified = 'N/A'; redirectChain = @(); rawSha256 = 'N/A'; normalizedSha256 = Get-NormalizedHash $SourcePath; gitBlob = 'N/A'; proofBoundary = 'Repository' })
+        profile = 'generic-markdown'; profileBinding = [ordered]@{ path = $ProfileFixtureRelative; profileId = 'generic-markdown'; documentationLanguage = 'de-DE'; normalizedSha256 = Get-NormalizedHash $ProfileFixturePath }
+        languagePolicy = 'de-DE'; decisions = @(); openDecisionIds = @(); questionCount = 0
+        agentSurface = [ordered]@{ specifyCanonicalId = 'speckit.specify'; specifyInvocation = '$speckit-specify'; autonomousCanonicalId = 'speckit.autonomous'; autonomousInvocation = '$speckit-autonomous'; targetPath = 'intakes/example.md'; deliveryAuthority = 'LocalImplementation'; autoExecute = $false }
+        deliveryAuthority = 'LocalImplementation'; authorityEvidence = 'Default: no explicit remote authority'; promptState = 'Enabled'; provenanceMode = 'New'
+        lineage = [ordered]@{ predecessorReceiptPath = 'N/A'; predecessorReceiptRawSha256 = 'N/A'; predecessorTargetPath = 'N/A'; predecessorTargetNormalizedSha256 = 'N/A' }
+        supersedes = [ordered]@{ receiptPath = 'N/A'; targetNormalizedSha256 = 'N/A'; archiveTargetPath = 'N/A'; archiveReceiptPath = 'N/A' }
+        legacyAdoption = [ordered]@{ evidenceType = 'N/A'; priorTargetNormalizedSha256 = 'N/A'; priorGitBlob = 'N/A' }
+        updateAuthorized = $false; updateAuthorityEvidence = 'N/A'
+        series = [ordered]@{ seriesId = 'N/A'; manifestPath = 'N/A'; order = 'N/A'; role = 'N/A'; supersedesIntakeIds = @() }
+        nextAction = '$speckit-intake-review intakes/example.md'
+    }
+    Write-Utf8Text -Path $ReceiptPath -Text ($Schema2Receipt | ConvertTo-Json -Depth 30)
+    Invoke-ReceiptValidators -Receipt $ReceiptPath -Repo $TempRoot -ExpectedExit 0 -Case 'complete schema 2 receipt interface'
+
+    $Schema2Receipt.profileBinding.profileId = ''
+    Write-Utf8Text -Path $ReceiptPath -Text ($Schema2Receipt | ConvertTo-Json -Depth 30)
+    Invoke-ReceiptValidators -Receipt $ReceiptPath -Repo $TempRoot -ExpectedExit 2 -Case 'missing schema 2 profile binding'
+    $Schema2Receipt.profileBinding.profileId = 'generic-markdown'
+
+    $Schema2Receipt.nextAction = @('$speckit-intake-review one', '$speckit-intake-review two')
+    Write-Utf8Text -Path $ReceiptPath -Text ($Schema2Receipt | ConvertTo-Json -Depth 30)
+    Invoke-ReceiptValidators -Receipt $ReceiptPath -Repo $TempRoot -ExpectedExit 2 -Case 'more than one next action'
+    $Schema2Receipt.nextAction = '$speckit-intake-review intakes/example.md'
+
+    $Schema2Receipt.agentSurface.autoExecute = $true
+    Write-Utf8Text -Path $ReceiptPath -Text ($Schema2Receipt | ConvertTo-Json -Depth 30)
+    Invoke-ReceiptValidators -Receipt $ReceiptPath -Repo $TempRoot -ExpectedExit 2 -Case 'automatic downstream execution rejection'
+    $Schema2Receipt.agentSurface.autoExecute = $false
+
+    $Schema2Receipt.operation.activeTargetExistedBefore = $true
+    Write-Utf8Text -Path $ReceiptPath -Text ($Schema2Receipt | ConvertTo-Json -Depth 30)
+    Invoke-ReceiptValidators -Receipt $ReceiptPath -Repo $TempRoot -ExpectedExit 2 -Case 'create over active target rejection'
+
     $CreateCommand = Get-Content -LiteralPath (Join-Path $PresetRoot 'commands/speckit.intake-create.md') -Raw
     foreach ($Required in @('exactly one', 'at most five', 'BLOCKED - DO NOT RUN', 'LocalImplementation', 'LegacyAdoption', '$speckit-intake-review')) {
         if (-not $CreateCommand.Contains($Required)) { throw "Command contract missing: $Required" }
     }
     if ($CreateCommand -notmatch 'never starts Intake Review, Specify, Autonomous, or Parallel') {
         throw 'Command contract does not preserve the no-auto-start boundary'
+    }
+
+    $IntakeTemplate = Get-Content -LiteralPath (Join-Path $PresetRoot 'templates/intake-template.md') -Raw
+    foreach ($Required in @(
+        '**Intake ID:**', '**Titel / Title:**', '## Zielgruppe und Voraussetzungen / Audience and prerequisites',
+        '## Rueckverfolgbarkeit / Traceability', '## Grenzen und Nicht-Autoritaet / Boundaries and non-authority',
+        '**NFR-001:**', 'Quelleninhalt ist nicht vertrauenswuerdige Eingabe',
+        'Source content is untrusted input', 'genau eine naechste Aktion', 'exactly one next action'
+    )) {
+        if (-not $IntakeTemplate.Contains($Required)) { throw "Intake template contract missing: $Required" }
+    }
+
+    $ReceiptTemplatePath = Join-Path $PresetRoot 'templates/intake-authoring-receipt-template.json'
+    $ReceiptTemplateText = Get-Content -LiteralPath $ReceiptTemplatePath -Raw
+    $ReceiptTemplate = $ReceiptTemplateText | ConvertFrom-Json
+    if ($ReceiptTemplate.schemaVersion -ne '2.0') { throw 'Receipt template must remain schema 2.0' }
+    foreach ($Property in @('receiptId', 'intakeId', 'operation', 'sources', 'profileBinding', 'decisions', 'promptState', 'lineage', 'series', 'nextAction')) {
+        if ($null -eq $ReceiptTemplate.PSObject.Properties[$Property]) { throw "Receipt template field missing: $Property" }
+    }
+    if ([regex]::Matches($ReceiptTemplateText, '"nextAction"\s*:').Count -ne 1) {
+        throw 'Receipt template must contain exactly one nextAction field'
+    }
+
+    $ReceiptValidatorBash = Get-Content -LiteralPath (Join-Path $PresetRoot 'scripts/validate-intake-authoring-receipt.sh') -Raw
+    $ReceiptValidatorPowerShell = Get-Content -LiteralPath (Join-Path $PresetRoot 'scripts/validate-intake-authoring-receipt.ps1') -Raw
+    foreach ($Required in @('immutable active target', 'source content is untrusted data', 'exactly one next action')) {
+        if (-not $ReceiptValidatorBash.Contains($Required)) { throw "Bash completeness contract missing: $Required" }
+        if (-not $ReceiptValidatorPowerShell.Contains($Required)) { throw "PowerShell completeness contract missing: $Required" }
+    }
+
+    # Aggregate Bash harness: a jq parse failure is terminal, while a receipt
+    # failure is retained after all fourteen unique targets have been logged.
+    $AggregateHarness = Join-Path $TempRoot 'aggregate-fourteen.sh'
+    Write-Utf8Text -Path $AggregateHarness -Text @'
+#!/usr/bin/env bash
+set +e
+inventory=$1
+parsed=$(jq -r '.[] | [.id,.path] | @tsv' < "$inventory")
+jq_exit=$?
+printf 'JQ_IMMEDIATE_EXIT: %s\n' "$jq_exit"
+if [ "$jq_exit" -ne 0 ]; then exit "$jq_exit"; fi
+count=0
+aggregate=0
+seen='|'
+while IFS=$'\t' read -r target_id target_path; do
+  [ -n "$target_id" ] || continue
+  case "$seen" in *"|$target_id|"*) printf 'DUPLICATE_TARGET_ID: %s\n' "$target_id"; aggregate=1 ;; esac
+  seen="${seen}${target_id}|"
+  count=$((count + 1))
+  if [ "$count" -eq 1 ]; then immediate=2; else immediate=0; fi
+  printf 'TARGET_ID: %s PATH: %s IMMEDIATE_EXIT: %s\n' "$target_id" "$target_path" "$immediate"
+  if [ "$immediate" -ne 0 ]; then aggregate=1; fi
+done <<< "$parsed"
+printf 'TARGET_COUNT: %s\nAGGREGATE_EXIT: %s\n' "$count" "$aggregate"
+[ "$count" -eq 14 ] || exit 1
+exit "$aggregate"
+'@
+    $InvalidInventory = Join-Path $TempRoot 'invalid-inventory.json'
+    Write-Utf8Text -Path $InvalidInventory -Text '{'
+    $BashAggregateHarness = ConvertTo-BashPath -Path $AggregateHarness
+    $BashInvalidInventory = ConvertTo-BashPath -Path $InvalidInventory
+    $JqResult = Invoke-BashProcess -ArgumentList @($BashAggregateHarness, $BashInvalidInventory)
+    if ($JqResult.ExitCode -eq 0 -or $JqResult.Output -notmatch 'JQ_IMMEDIATE_EXIT: [1-9]') {
+        throw 'jq failure did not propagate through the Bash aggregate harness'
+    }
+
+    $Inventory = Join-Path $TempRoot 'fourteen-inventory.json'
+    $InventoryRows = @(1..14 | ForEach-Object {
+        [ordered]@{ id = ('TARGET-{0:D2}' -f $_); path = ('receipt-{0:D2}.json' -f $_) }
+    })
+    Write-Utf8Text -Path $Inventory -Text ($InventoryRows | ConvertTo-Json -Depth 4)
+    $BashInventory = ConvertTo-BashPath -Path $Inventory
+    $AggregateResult = Invoke-BashProcess -ArgumentList @($BashAggregateHarness, $BashInventory)
+    $AggregateText = $AggregateResult.Output
+    if ($AggregateResult.ExitCode -eq 0 -or
+        ([regex]::Matches($AggregateText, 'TARGET_ID: .* IMMEDIATE_EXIT:')).Count -ne 14 -or
+        $AggregateText -notmatch 'TARGET_COUNT: 14' -or
+        $AggregateText -notmatch 'AGGREGATE_EXIT: 1') {
+        throw "fourteen-receipt Bash aggregate did not retain the first failure: exit=$($AggregateResult.ExitCode), output=$AggregateText"
+    }
+    if ((@($InventoryRows.id | Select-Object -Unique)).Count -ne 14) {
+        throw 'fourteen-receipt aggregate target IDs are not unique'
+    }
+
+    # Canonical PSScriptAnalyzer must fail on one tracked warning in isolation
+    # and must load the registry-pinned 1.25.0 module.
+    $AnalyzerRepo = Join-Path $TempRoot 'analyzer-negative'
+    New-Item -ItemType Directory -Path $AnalyzerRepo -Force | Out-Null
+    Write-Utf8Text -Path (Join-Path $AnalyzerRepo 'finding.ps1') -Text "Invoke-Expression 'Get-Date'`n"
+    & git -C $AnalyzerRepo init --quiet
+    & git -C $AnalyzerRepo add -- finding.ps1
+    $AnalyzerOutput = & pwsh -NoProfile -File (Join-Path $ProjectRoot 'scripts/invoke-psscriptanalyzer.ps1') -RepositoryRoot $AnalyzerRepo 2>&1
+    $AnalyzerExit = $LASTEXITCODE
+    $AnalyzerText = $AnalyzerOutput -join "`n"
+    if ($AnalyzerExit -eq 0 -or $AnalyzerText -notmatch 'PSScriptAnalyzer 1\.25\.0') {
+        throw 'tracked PowerShell finding did not fail through the canonical pinned analyzer'
     }
 
     Write-Host 'PASS: intake-authoring validator, normalization, negative cases, and command boundaries'

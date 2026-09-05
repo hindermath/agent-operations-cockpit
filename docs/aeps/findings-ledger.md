@@ -909,6 +909,31 @@ adoption remain separate future decisions.*
 
 ## AEPS-FIND-AOC-018 – Lifecycle-Auflösung muss alle Intake-Konsumenten erreichen
 
+Die [Bindungsbrücke vom 2026-09-05](receipts/2026-09-05-meta-lh03-binding-bridge.md)
+ergänzt 23 fokussierte Tests und ein unabhängiges Abschlussreview. Historische
+Abschluss-Evidence und aktuelle Receipt-/Review-Blätter sind getrennt gebunden;
+Pfad-, Identitäts- und Supersession-Fehler schließen den Gate. Bestand und
+Reifegrad bleiben unverändert. / *The evidence bridge adds focused tests and
+an independent review. Historical completion and current receipt/review leaves
+are separately bound; path, identity and supersession failures close the gate.
+Inventory and maturity stay unchanged.*
+
+Die [vier Ready-Re-Reviews vom 2026-09-05](receipts/2026-09-05-meta-lh03-binding-renewal.md)
+bestätigen die separat genehmigte Receipt-Erneuerung mit unveränderten
+historischen Nachweisen. Vier eigene Deduplizierungsschlüssel sind im Receipt
+gebunden; keine neue Finding-ID, Reifegrad- oder Handoff-Änderung. /
+*Four independently renewed Ready reviews confirm the authorised binding repair;
+the receipt binds four distinct deduplication keys without inventory, maturity
+or handoff changes.*
+
+Der [META-LH-03-Scope-Nachweis vom 2026-09-05](receipts/2026-09-05-meta-lh03-contract-boundary.md)
+ergänzt Findings `007`, `009` und `018`: Ein akzeptierter historischer
+Start-Snapshot ist kein Ersatz für ein neues Akzeptanzkriterium, das aktuelle
+Receipt-Quellen verlangt. Keine neue Finding-ID und keine Reifegradänderung. /
+*The linked META-LH-03 record strengthens findings 007, 009 and 018: an accepted
+historical startup snapshot does not satisfy a new criterion requiring fresh
+receipt sources. No new finding ID or maturity change.*
+
 Ergaenzende Evidence vom 2026-09-05: Der nachfolgende Start auf `main` trifft
 dieselbe Konsumentenluecke auch nach META-LH-02. Der
 [hashgebundene Nachweis](receipts/2026-09-05-global-ready-main-transition.md)

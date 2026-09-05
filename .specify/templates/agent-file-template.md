@@ -55,5 +55,30 @@ bypass, cancellation, secret, or provider authority. Complete autonomous and
 parallel autonomous runs require explicit delegation. Parallel campaigns use
 separate worktrees and at most three concurrently active workers.
 
+<!-- engineering-retrospective:start -->
+## Engineering-Retrospektive je Feature / Engineering retrospective per feature
+
+Ab `003-authoring-contract` erhält jeder aktuelle und zukünftige Feature-Lauf
+einen gespeicherten, verständlichen Abschlussbericht nach
+`docs/governance/engineering-retrospective.md`, unter
+`specs/<feature>/engineering-retrospective.md`. In der Abschlussantwort kurz
+zusammenfassen und verlinken. Sechs Perspektiven getrennt behandeln: Output,
+Findings, bestätigte Regeln, Interventionen/Reparaturen, Effizienzbeobachtungen
+und AEPS-Relevanz. Completion-/Retrospective-Evidence verlinken; Zwischenstände
+kennzeichnen und keine nicht erfolgte Lieferung behaupten. Bestehende Evidence
+wiederverwenden, keine Review-Schleife oder Preset-Promotion allein durch den
+Bericht auslösen. Die Regel gilt auch für neu startende Agentensitzungen.
+
+*From `003-authoring-contract` onwards, every current and future feature run
+gets a readable, saved closeout report under
+`specs/<feature>/engineering-retrospective.md`, following
+`docs/governance/engineering-retrospective.md`. Summarize and link it in the
+final response. Keep six perspectives separate: output, findings, confirmed
+rules, interventions/repairs, efficiency observations, and AEPS relevance.
+Link completion/retrospective evidence, label interim reports, and never claim
+unperformed delivery. Reuse existing evidence; the report alone triggers no
+review loop or preset promotion. This applies to new agent sessions as well.*
+<!-- engineering-retrospective:end -->
+
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->

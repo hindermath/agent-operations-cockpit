@@ -1,0 +1,74 @@
+.TH VALIDATE-CURRENT-EVIDENCE-BINDING 1 "2026-09-05" "AgentOperationsCockpit" "User Commands"
+.SH NAME
+validate-current-evidence-binding \-
+read-only Feature-003 current-evidence validation
+.SH SYNOPSIS
+.B validate-current-evidence-binding.sh
+[
+.B --repo
+.IR PATH ]
+[
+.B --
+]
+.B current-evidence
+.SH BESCHREIBUNG / DESCRIPTION
+Prueft fail-closed die begrenzte Feature-003-Evidence-Projektion. Der
+abgeschlossene META-LH-02-State, Lifecycle und die abgeschlossene Series-
+Evidence bleiben byte-identisch zum akzeptierten Merge. Genau META-LH-02,
+META-LH-03, META-LH-05 und RAW-03 duerfen erneuerte Receipts und Reviews
+besitzen; nur im META-LH-03-Ziel duerfen exakt drei Referenzen von 0.3.0 auf
+0.3.1 wechseln.
+.PP
+Validates the bounded Feature-003 evidence projection fail closed. The
+completed META-LH-02 state, lifecycle, and completed Series evidence remain
+byte-identical to the accepted merge. Exactly META-LH-02, META-LH-03,
+META-LH-05, and RAW-03 may have renewed receipts and reviews; only the
+META-LH-03 target may change, through exactly three 0.3.0 to 0.3.1 reference
+replacements.
+.PP
+Alle 14 logischen Ziele behalten ihre feste Reihenfolge und benoetigen ein
+quellfrisches ReadyForReview-Receipt sowie genau ein aktuelles
+Single/Primary/Ready-Review-Blatt. Bash und PowerShell muessen fuer jedes
+Receipt und Review erfolgreich sein. Evidence-Pfade muessen regulaere Dateien
+innerhalb des Repositories sein und duerfen keine Symlink-Komponente enthalten.
+Das Werkzeug schreibt nicht und erteilt keine Folgeautoritaet.
+.PP
+All fourteen logical targets retain their fixed order and require a
+source-current ReadyForReview receipt plus exactly one current
+Single/Primary/Ready review leaf. Bash and PowerShell must succeed for every
+receipt and review. Evidence paths must be regular files confined to the
+repository and may not contain symlink components. The tool performs no writes
+and grants no downstream authority.
+.SH OPTIONEN / OPTIONS
+.TP
+.BR --repo " " PATH
+Repository-Wurzel; Standard ist das aktuelle Verzeichnis. / Repository root;
+the default is the current directory.
+.TP
+.BR -h , " " --help
+Zeigt die zweisprachige Kurz-Hilfe. / Shows bilingual short help.
+.TP
+.B --
+Beendet die Optionsauswertung. / Ends option processing.
+.SH EXIT STATUS
+.TP
+.B 0
+Der Vertrag oder die Hilfe wurde erfolgreich geprueft. / Contract or help
+validation succeeded.
+.TP
+.B 1
+Ein Evidence-, Hash-, Historien-, Review- oder Subprozess-Gate schlug fehl. /
+An evidence, hash, history, review, or subprocess gate failed.
+.TP
+.B 2
+Die CLI-Argumente sind ungueltig. / CLI arguments are invalid.
+.SH DATEIEN / FILES
+.I specs/003-authoring-contract/current-evidence-binding.json
+.br
+.I specs/003-authoring-contract/binding-approval.md
+.br
+.I specs/003-authoring-contract/contracts/validate_current_evidence_binding.py
+.SH SEE ALSO
+.BR validate-meta-lh02-snapshot (1),
+.BR validate-intake-authoring-receipt.sh (1),
+.BR validate-intake-review-result.sh (1)

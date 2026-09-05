@@ -204,6 +204,20 @@ try {
     Copy-Item (Join-Path $Root $ArchivedTarget) $Target
     Invoke-HBPair Artifact $TombstonePath $Root 2 'active target after delete rejection'
 
+    $RepositoryRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $PresetRoot))
+    $AuthorizedUpdatePath = Join-Path $RepositoryRoot 'specs/intake-authoring-operations/986c1d6c-d485-460b-8d8d-7cf5816a2c36/operation.json'
+    if (-not (Test-Path -LiteralPath $AuthorizedUpdatePath -PathType Leaf)) {
+        throw 'Expected-red: the authorized META-LH-03 Update operation is not implemented yet'
+    }
+    $AuthorizedUpdate = Get-Content -LiteralPath $AuthorizedUpdatePath -Raw | ConvertFrom-Json
+    if ($AuthorizedUpdate.status -notin @('Proposed', 'Approved', 'Applying', 'Completed', 'Failed')) { throw 'Update status vocabulary is invalid' }
+    if ($AuthorizedUpdate.status -ne 'Completed') { throw 'Only Completed is accepted as successful Update evidence' }
+    if (@($AuthorizedUpdate.intendedTargets).Count -ne 4 -or
+        (@($AuthorizedUpdate.intendedTargets) -join "`n") -ne (@($AuthorizedUpdate.validatedTargets) -join "`n") -or
+        (@($AuthorizedUpdate.intendedTargets) -join "`n") -ne (@($AuthorizedUpdate.publishedTargets) -join "`n")) {
+        throw 'Authorized Update requires identical four-path target sets'
+    }
+
     Write-Host 'PASS: schema 2 URL, series graph, transaction, tombstone, and Bash/PowerShell parity'
 } finally {
     Remove-Item -LiteralPath $Root -Recurse -Force -ErrorAction SilentlyContinue

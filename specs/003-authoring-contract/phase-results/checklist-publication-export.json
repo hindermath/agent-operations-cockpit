@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "PhasePublicationExport",
+  "phaseId": "checklist",
+  "attemptId": "f189ad76-5783-4d80-84c8-a96bf8db1ce5",
+  "originalExecutionResultSha256": "e591ca9f7a078391208b3451178e9cf77aa7c967eb828feb30e506493749a6a8",
+  "originalExecutionPayloadSha256": "0c64d88c0199e7bc85cb2fb99ab943b352e3eb943f83694d94e83efd94d00a6a",
+  "publicPayloadPath": "specs/003-authoring-contract/phase-results/checklist-report.md",
+  "publicPayloadSha256": "ab5504fa4c84ae5e1897bf1e2a991d964db542ae9fc1c897fc90b3173263c023",
+  "transformation": "Only remove local absolute repository prefix from three prerequisite paths, explain repository-relative publication representation, and remove one redundant final blank line. Original UTF-8 report and result bytes are base64-preserved in ignored private runtime. All phase identity, task counts, semantic dispositions, outcome and gates remain unchanged. This is a reviewed publication export, not a new model execution.",
+  "originalArchiveLocation": "Ignored local runtime; intentionally not published",
+  "documentationImpactReference": "specs/003-authoring-contract/autonomous-run-evidence.md#dokumentationsauswirkung--documentation-impact"
+}

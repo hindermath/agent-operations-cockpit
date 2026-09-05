@@ -1,25 +1,65 @@
-.TH VALIDATE-INTAKE-GOVERNANCE-CONFIG 1 "2026-07-28" "0.3.1"
+.TH VALIDATE-INTAKE-GOVERNANCE-CONFIG 1 "2026-09-05" "intake-authoring-governance 0.3.1" "User Commands"
 .SH NAME
-validate-intake-governance-config \- validate language-aware requirements governance
+validate-intake-governance-config \- AOC-Profilvertrag pruefen
+.br
+validate the AOC profile contract
 .SH SYNOPSIS
 .B validate-intake-governance-config.sh
 .BI --config " FILE"
 .RI [ --repo " PATH" ]
 .RI [ --json ]
 .PP
-.B validate-intake-governance-config.sh
-.BI --journal " FILE"
-.RI [ --json ]
-.SH DESCRIPTION
-Validates schema 2.0 documentation language, naming profiles, portable roles,
-collection paths, legacy aliases, and migration journals without modifying the
-repository.
-.SH OUTCOMES
-Configured collections report Aligned, MigrationRequired, NeedsClarification,
-or Blocked. Eligibility is an ordering result and grants no delivery authority.
-A Completed series is Aligned with no eligible candidate only when every
-declared target is Completed. Mixed terminal target states are blocked with
-RIG017; non-terminal series require exactly one eligible candidate.
+.B validate-intake-governance-config.ps1
+.BI -Config " FILE"
+.RI [ -Repo " PATH" ]
+.RI [ -Json ]
+.SH BESCHREIBUNG / DESCRIPTION
+Prueft Schema 2.0, den repository-relativen Profilpfad, passende Profil-ID,
+Dokumentationssprache de-DE, exakte erlaubte Wurzeln, vier portable Rollen,
+sechs Collections, Benennung, Inventar, Archive und fehlende implizite
+Autoritaet. Ein fehlendes oder widerspruechliches Profil, eine falsche Root,
+ID oder Locale und Hashdrift sperren fail-closed.
+.PP
+Validates schema 2.0, the repository-relative profile path, matching profile
+ID, de-DE documentation language, exact allowed roots, four portable roles,
+six collections, naming, inventory, archives, and absence of implicit
+authority. A missing or contradictory profile, wrong root, ID or locale, and
+hash drift fail closed.
+.PP
+Die Pruefung ist read-only und erteilt keine Ausfuehrungs- oder
+Delivery-Autoritaet. / Validation is read-only and grants no execution or
+delivery authority.
+.SH OPTIONEN / OPTIONS
+.TP
+.BR --config " " FILE , " " -Config " " FILE
+Governance-Konfiguration. / Governance configuration.
+.TP
+.BR --journal " " FILE , " " -Journal " " FILE
+Separates Migrationsjournal. / Separate migration journal.
+.TP
+.BR --repo " " PATH , " " -Repo " " PATH
+Repository-Wurzel. / Repository root.
+.TP
+.BR --json , " " -Json
+Maschinenlesbares JSON. / Machine-readable JSON.
 .SH EXIT STATUS
-Zero means Aligned or a valid journal. One means migration or clarification is
-required. Two means blocked or invalid input.
+.TP
+.B 0
+Aligned oder gueltiges Journal. / Aligned or valid journal.
+.TP
+.B 1
+MigrationRequired oder NeedsClarification.
+.TP
+.B 2
+Blocked oder ungueltige Eingabe. / Blocked or invalid input.
+.SH BEISPIELE / EXAMPLES
+.nf
+bash .specify/presets/intake-authoring-governance/scripts/validate-intake-governance-config.sh \
+  --config requirements/intake-governance.json --repo . --json
+
+pwsh -NoProfile -File .specify/presets/intake-authoring-governance/scripts/validate-intake-governance-config.ps1 \
+  -Config requirements/intake-governance.json -Repo . -Json
+.fi
+.SH SEE ALSO
+.BR validate-intake-authoring-receipt (1),
+.BR validate-authoring-contract (1)

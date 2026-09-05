@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "BoundedBindingRepairValidation",
+  "recordedAt": "2026-09-05T14:36:49.132Z",
+  "runId": "044b77ae-85fd-46ee-97f4-61ce7a2c9c66",
+  "baseCommit": "ada16a88833aae246f2db396a565bc941109617b",
+  "status": "PassedForResume",
+  "documentationImpactReference": "specs/003-authoring-contract/autonomous-run-evidence.md#dokumentationsauswirkung--documentation-impact",
+  "authorityReference": "specs/003-authoring-contract/binding-approval.md",
+  "reviewedFiles": [
+    {
+      "path": "specs/003-authoring-contract/contracts/validate_current_evidence_binding.py",
+      "rawSha256": "1e1edfe03a0ca869d6b420b40956897ab7b3a670524398f8254f013a65a9eadf"
+    },
+    {
+      "path": "specs/003-authoring-contract/contracts/test_validate_current_evidence_binding.py",
+      "rawSha256": "4c6c462189ff3870571e863867698b44dc4a234579ca475f97d2117b72123fcb"
+    },
+    {
+      "path": "specs/003-authoring-contract/contracts/validate-current-evidence-binding.sh",
+      "rawSha256": "1924301000cd18690fb63e2f273afb35f84e164adaf793062b8f0213f9f67010"
+    },
+    {
+      "path": "specs/003-authoring-contract/contracts/validate-current-evidence-binding.ps1",
+      "rawSha256": "c9780fb133d477769296ab8053da3245ee9ce575190e8bf289349e1b9720ad46"
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py",
+      "rawSha256": "eb5007245c79ac873db97a95bdf07685054c757e3bb2088ff60d94386a58dc70"
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/contracts/test_validate_meta_lh01.py",
+      "rawSha256": "f80c57dcfe12a3f8bf37510a7d35d9b77229c9826ac7fc96071081ba2221650d"
+    },
+    {
+      "path": "docs/man/validate-current-evidence-binding.1",
+      "rawSha256": "dbbc8a96cec3104e9e32cbaa9cd8d75c453b7fd6fb9b196d6ce1da8233c692e4"
+    },
+    {
+      "path": "specs/003-authoring-contract/current-evidence-binding.json",
+      "rawSha256": "bdff2048cd133c205364873c3095076f57e174255609468a699a460fcebb2b78"
+    }
+  ],
+  "validation": [
+    {
+      "executor": "repair_main_gate",
+      "command": "python3 -B specs/003-authoring-contract/contracts/test_validate_current_evidence_binding.py",
+      "exitCode": 0,
+      "result": "23 tests OK",
+      "durationSeconds": 48.65,
+      "evidenceBoundary": "Includes real Bash/PowerShell positive entrypoints and missing/invalid mode parity; no broad Single-review rerun."
+    },
+    {
+      "executor": "repair_main_gate",
+      "command": "python3 -B specs/001-programmquellen-baseline/contracts/test_validate_meta_lh01.py",
+      "exitCode": 0,
+      "result": "77 cases PASS",
+      "evidenceBoundary": "Legacy dispatcher suite before the final bridge-only hardening; dispatcher unchanged thereafter."
+    },
+    {
+      "executor": "repair_main_gate",
+      "command": "python3 -B specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py --repo . global-ready",
+      "exitCode": 0,
+      "result": "PASS: global-ready: qualified Feature-003 current-evidence binding; immutable META-LH-02 history and 14 current Ready receipt/review bindings"
+    },
+    {
+      "executor": "repair_main_gate",
+      "command": "Bash syntax; Python AST syntax; PSScriptAnalyzer; mandoc -Tlint; git diff --check",
+      "exitCode": 0,
+      "result": "PASS",
+      "evidenceBoundary": "Changed bridge surfaces only; full feature validation follows the implementation plan."
+    }
+  ],
+  "independentReview": {
+    "reviewer": "meta03_scope_audit",
+    "outcome": "Pass",
+    "blockingFindings": 0,
+    "scope": "Only previously named bridge findings and final narrow regressions; no full Single-review repetition.",
+    "resolved": [
+      "Symlink and path confinement",
+      "Stable intake and fresh unique receipt/operation/review identity",
+      "Review report hashes and receipt/review identity",
+      "Complete immutable completed Series evidence",
+      "Missing-manifest fail-closed dispatch",
+      "Malformed/unknown review modes and same-target acyclic supersession",
+      "Exact child-validator stdout and empty stderr",
+      "Explicit/missing/invalid Bash-PowerShell mode parity"
+    ]
+  },
+  "specifyPreservation": {
+    "originalResult": {
+      "path": "specs/003-authoring-contract/phase-results/specify-original.json",
+      "rawSha256": "2199231cfe05a6557bc38a9056539c6a594e268459bc6e3ac9e21dcb85cd6369"
+    },
+    "originalPayload": {
+      "path": "specs/003-authoring-contract/phase-results/specify-spec.md",
+      "rawSha256": "80eb52ceb3bad0a289e7d7e893a39af40b3822af06d8ec8a95add153e4e4d97b"
+    },
+    "preRepairState": {
+      "path": "specs/003-authoring-contract/phase-results/pre-binding-run-state.json",
+      "rawSha256": "489982adb7546c51df03e30c7a89cfe71a052d6b182e6ce21fdb655492e2fe33"
+    },
+    "relocatedResult": {
+      "path": "specs/003-authoring-contract/phase-results/specify.json",
+      "rawSha256": "0ff489e3e8c32856fa68ef6565a8dcc65e3e5256c08afa56fdb8b0f654d8a594",
+      "change": "Only payloadPath points to the byte-identical original Specify archive; attempt, outcome, exit evidence, task counts, payload hash remain unchanged. This is artifact relocation, not a new execution.",
+      "bashAndPowerShellValidation": "Completed"
+    },
+    "currentSpec": {
+      "path": "specs/003-authoring-contract/spec.md",
+      "rawSha256": "f4efd89a44e9eea743d34c2c8c3709593861511146cf6a3395d8eec7be70f1a0",
+      "change": "Approved target/receipt/review/version bindings and bounded repair note only; later Clarify amendments remain a separate routed phase."
+    }
+  },
+  "notExecuted": [
+    "New feature/run",
+    "Commit/push/PR/merge",
+    "Admin bypass",
+    "Product implementation",
+    "Preset installation or promotion",
+    "Level-0 change",
+    "Historical Series/terminal predecessor rewrite"
+  ]
+}

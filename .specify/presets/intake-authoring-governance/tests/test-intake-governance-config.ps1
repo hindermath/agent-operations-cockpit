@@ -47,6 +47,13 @@ function New-BaseConfig {
     return @{
         schemaVersion = '2.0'
         documentationLanguage = $Language
+        projectProfile = @{
+            path = $script:ProfileRelative
+            profileId = $script:ProfileId
+            normalizedSha256 = $script:ProfileHash
+        }
+        allowedRoots = @('requirements', 'specs', '.specify/presets/intake-authoring-governance')
+        implicitAuthority = $false
         artifactNaming = @{
             profile = $NamingProfile
             canonicalIndex = $Index
@@ -84,6 +91,12 @@ try {
     }
     Set-Content -LiteralPath (Join-Path $Root 'Pflichtenheft.md') -Value '# Index' -Encoding utf8NoBOM
     Set-Content -LiteralPath (Join-Path $Root 'Lastenheft_Abarbeitungsreihenfolge.md') -Value '# Order' -Encoding utf8NoBOM
+    $script:ProfileRelative = '.specify/presets/intake-authoring-governance/templates/project-profile-template.md'
+    $script:ProfileId = 'generic-markdown'
+    $ProfilePath = Join-Path $Root $script:ProfileRelative
+    New-Item -ItemType Directory -Path (Split-Path -Parent $ProfilePath) -Force | Out-Null
+    Set-Content -LiteralPath $ProfilePath -Value "# Profile`n`n- Profile ID: ``generic-markdown```n- Documentation language: ``de-DE```n" -Encoding utf8NoBOM
+    $script:ProfileHash = Get-NormalizedSha256 $ProfilePath
     $Target = Join-Path $Root 'requirements/intakes/active/Lastenheft_Beispiel.md'
     Set-Content -LiteralPath $Target -Value '# Beispiel' -Encoding utf8NoBOM
     $Manifest = @{
@@ -109,6 +122,24 @@ try {
 
     $Explicit = New-BaseConfig -Language 'de-DE' -NamingProfile 'explicit'
     Invoke-Fixture (Write-JsonFixture 'explicit.json' $Explicit) 0 '"profile": "explicit"'
+
+    $MissingProfile = New-BaseConfig
+    $MissingProfile.projectProfile = $MissingProfile.projectProfile.Clone()
+    $MissingProfile.projectProfile.path = '.specify/presets/intake-authoring-governance/templates/missing.md'
+    Invoke-Fixture (Write-JsonFixture 'missing-profile.json' $MissingProfile) 2 'RIG018'
+
+    $WrongProfileRoot = New-BaseConfig
+    $WrongProfileRoot.projectProfile = $WrongProfileRoot.projectProfile.Clone()
+    $WrongProfileRoot.projectProfile.path = 'requirements/outside-profile.md'
+    Invoke-Fixture (Write-JsonFixture 'wrong-profile-root.json' $WrongProfileRoot) 2 'RIG019'
+
+    $WrongProfileId = New-BaseConfig
+    $WrongProfileId.projectProfile = $WrongProfileId.projectProfile.Clone()
+    $WrongProfileId.projectProfile.profileId = 'contradictory-profile'
+    Invoke-Fixture (Write-JsonFixture 'wrong-profile-id.json' $WrongProfileId) 2 'RIG020'
+
+    $WrongProfileLocale = New-BaseConfig -Language 'en-US'
+    Invoke-Fixture (Write-JsonFixture 'wrong-profile-locale.json' $WrongProfileLocale) 2 'RIG021'
 
     $HistoricalInFlatLayout = Join-Path $Root 'requirements/intakes/active/Lastenheft_Historisch.md'
     Set-Content -LiteralPath $HistoricalInFlatLayout -Value '# Historisch' -Encoding utf8NoBOM

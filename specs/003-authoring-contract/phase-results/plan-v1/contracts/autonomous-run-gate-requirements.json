@@ -1,0 +1,584 @@
+{
+  "schemaVersion": "1.0",
+  "featureId": "003-authoring-contract",
+  "runId": "044b77ae-85fd-46ee-97f4-61ce7a2c9c66",
+  "evidenceContract": {
+    "requirementsAreNotExecutionEvidence": true,
+    "exactlyOnePrimaryPerApplicableGate": true,
+    "supplementalMustReferencePrimary": true,
+    "exactReviewedHeadRequired": true,
+    "immediateExitCodeRequiredForCommands": true,
+    "greenJobNameAloneIsSufficient": false,
+    "unavailableApprovalIsApproval": false,
+    "documentationImpactReference": "specs/003-authoring-contract/autonomous-run-evidence.md#dokumentationsauswirkung--documentation-impact"
+  },
+  "gates": [
+    {
+      "gateId": "ACG-001-prerequisite-repair",
+      "applicability": "Applicable",
+      "requiredScope": "The separately approved four-receipt binding repair, four Ready Single reviews, 23 focused tests, immutable predecessor archives, and Series bridge are frozen as the unchanged predecessor before domain edits; the completed checker is not modified.",
+      "requiredCommandTokens": [
+        "python3 -m unittest specs/003-authoring-contract/contracts/test_validate_current_evidence_binding.py",
+        "bash specs/003-authoring-contract/contracts/validate-current-evidence-binding.sh --repo .",
+        "pwsh -NoProfile -File specs/003-authoring-contract/contracts/validate-current-evidence-binding.ps1 -Repo .",
+        "git diff --cached --check"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "local repository",
+        "Python 3",
+        "Bash 5+",
+        "PowerShell Core 7+"
+      ],
+      "owner": "AOC maintainer",
+      "reviewer": "Independent prerequisite-repair reviewer",
+      "primaryProof": "A head-bound prerequisite checkpoint record that binds specs/003-authoring-contract/binding-repair-validation.json and its exact staged delivery set.",
+      "supplementalProof": "The existing binding-repair validation, four Ready review artefacts, and 23-test record, each referencing the Primary predecessor checkpoint.",
+      "plannedEvidence": "specs/003-authoring-contract/autonomous-run-gate-evidence.json",
+      "rationale": "The later feature needs an immutable, committed predecessor and must not rewrite its historical checker or rerun all four reviews and Global 14.",
+      "reevaluationTrigger": "Any byte drift in the repair validation, predecessor binding, four renewed leaves, archives, Series bridge, or completed checker."
+    },
+    {
+      "gateId": "ACG-002-five-domain-contract",
+      "applicability": "Applicable",
+      "requiredScope": "Exactly five canonical domain artefacts implement the accepted field, boundary, fail-closed, profile-binding, and evidence-summary deltas in stable order 1 through 5.",
+      "requiredCommandTokens": [
+        "specs/003-authoring-contract/contracts/validate-authoring-contract.sh --repo . --json",
+        "specs/003-authoring-contract/contracts/validate-authoring-contract.ps1 -Repo . -Json"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "Bash 5+",
+        "PowerShell Core 7+",
+        "Python 3"
+      ],
+      "owner": "Intake Authoring contract maintainer",
+      "reviewer": "Independent domain-contract reviewer",
+      "primaryProof": "Head-bound additive validator output listing the five final paths, final normalized hashes, required fields, and no sixth domain artefact.",
+      "supplementalProof": "specs/003-authoring-contract/architecture-review-evidence.md referencing the Primary validator item.",
+      "plannedEvidence": "specs/003-authoring-contract/autonomous-run-gate-evidence.json",
+      "rationale": "The accepted feature is a bounded contract hardening, not a generic feature programme.",
+      "reevaluationTrigger": "Any domain artefact, order, schema, required field, or consumer changes."
+    },
+    {
+      "gateId": "ACG-003-authoring-validator-fixtures",
+      "applicability": "Applicable",
+      "requiredScope": "The canonical validator fixture suite proves valid schema-2.0 and ReadyForReview prompt parity cases and expected negative exit classes for hash drift, a synthetic secret, implicit remote authority, executable blocked prompts, and private URLs.",
+      "requiredCommandTokens": [
+        "pwsh -NoProfile -File .specify/presets/intake-authoring-governance/tests/test-intake-authoring-validator.ps1"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "PowerShell Core 7+"
+      ],
+      "owner": "Intake Authoring validator maintainer",
+      "reviewer": "Security reviewer",
+      "primaryProof": "Immediate-exit-code log from the exact fixture command at the reviewed HEAD, naming valid schema-2.0, ReadyForReview parity, hash-drift, synthetic-secret, implicit-remote-authority, executable-blocked-prompt, and private-URL cases.",
+      "supplementalProof": "specs/003-authoring-contract/security-review-evidence.md referencing the Primary fixture log.",
+      "plannedEvidence": "specs/003-authoring-contract/autonomous-run-gate-evidence.json",
+      "rationale": "Blocked defaults must be mechanically non-executable and fail closed.",
+      "reevaluationTrigger": "Any change to receipt template, prompt-state semantics, invocation detection, or receipt validator."
+    },
+    {
+      "gateId": "ACG-004-authoring-lifecycle-fixtures",
+      "applicability": "Applicable",
+      "requiredScope": "The canonical lifecycle fixture suite proves stable intake identity, new event identities, immutable predecessor content, and expected negative exit classes for invalid roots, partial publication, an active target after logical delete, and traversal.",
+      "requiredCommandTokens": [
+        "pwsh -NoProfile -File .specify/presets/intake-authoring-governance/tests/test-intake-authoring-lifecycle.ps1"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "PowerShell Core 7+"
+      ],
+      "owner": "Intake Authoring lifecycle maintainer",
+      "reviewer": "Evidence-lineage reviewer",
+      "primaryProof": "Immediate-exit-code log from the exact lifecycle suite at the reviewed HEAD, naming invalid-root, partial-publication, active-after-delete, and traversal cases.",
+      "supplementalProof": "The META-LH-03 renewal lineage section in the additive validator output, referencing the Primary fixture log.",
+      "plannedEvidence": "specs/003-authoring-contract/autonomous-run-gate-evidence.json",
+      "rationale": "The approved renewal depends on immutable predecessor and lifecycle semantics.",
+      "reevaluationTrigger": "Any change to update, archive, supersession, or lifecycle resolution semantics."
+    },
+    {
+      "gateId": "ACG-005-governance-config-fixtures",
+      "applicability": "Applicable",
+      "requiredScope": "The canonical governance configuration suite proves the repository-bounded AOC profile path, matching profile identity, de-DE language contract, and expected negative exit classes for missing or escaping profiles and multiple eligibility while schema 2.0 remains unchanged.",
+      "requiredCommandTokens": [
+        "pwsh -NoProfile -File .specify/presets/intake-authoring-governance/tests/test-intake-governance-config.ps1",
+        "validate-intake-governance-config.sh --config requirements/intake-governance.json --repo . --json",
+        "validate-intake-governance-config.ps1 -Config requirements/intake-governance.json -Repo . -Json"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "PowerShell Core 7+",
+        "Bash 5+",
+        "Python 3"
+      ],
+      "owner": "AOC requirements-governance maintainer",
+      "reviewer": "Independent configuration-contract reviewer",
+      "primaryProof": "Head-bound exact-command logs for the fixture suite and both direct configuration surfaces, naming missing-profile, escaping-profile, and multiple-eligibility cases.",
+      "supplementalProof": "specs/003-authoring-contract/architecture-review-evidence.md referencing the Primary configuration proof.",
+      "plannedEvidence": "specs/003-authoring-contract/autonomous-run-gate-evidence.json",
+      "rationale": "A portable profile template needs one resolved and validated AOC policy binding.",
+      "reevaluationTrigger": "Any profile path, profile identity, language, schema, or path-boundary change."
+    },
+    {
+      "gateId": "ACG-006-meta-lh03-direct-bash",
+      "applicability": "Applicable",
+      "requiredScope": "The renewed current META-LH-03 receipt and target pass direct Bash receipt validation after final domain hashes are bound.",
+      "requiredCommandTokens": [
+        "bash .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.sh --receipt specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json --repo ."
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "Bash 5+"
+      ],
+      "owner": "META-LH-03 authoring owner",
+      "reviewer": "Intake receipt reviewer",
+      "primaryProof": "Immediate exit code and normalized target hash from the exact direct Bash command at the reviewed HEAD.",
+      "supplementalProof": "The new META-LH-03 Ready Single review referencing the Primary receipt validation.",
+      "plannedEvidence": "specs/003-authoring-contract/autonomous-run-gate-evidence.json",
+      "rationale": "The current target must pass the installed Bash contract directly, not only through a wrapper suite.",
+      "reevaluationTrigger": "Any META-LH-03 target, receipt, source, hash, or Bash validator change."
+    },
+    {
+      "gateId": "ACG-007-meta-lh03-direct-powershell",
+      "applicability": "Applicable",
+      "requiredScope": "The renewed current META-LH-03 receipt and target pass direct PowerShell receipt validation after final domain hashes are bound.",
+      "requiredCommandTokens": [
+        "pwsh -NoProfile -File .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.ps1 -Receipt specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json -Repo ."
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "PowerShell Core 7+"
+      ],
+      "owner": "META-LH-03 authoring owner",
+      "reviewer": "Intake receipt reviewer",
+      "primaryProof": "Immediate exit code and normalized target hash from the exact direct PowerShell command at the reviewed HEAD.",
+      "supplementalProof": "The new META-LH-03 Ready Single review referencing the Primary receipt validation.",
+      "plannedEvidence": "specs/003-authoring-contract/autonomous-run-gate-evidence.json",
+      "rationale": "The current target must pass the installed PowerShell contract directly, not only through a wrapper suite.",
+      "reevaluationTrigger": "Any META-LH-03 target, receipt, source, hash, or PowerShell validator change."
+    },
+    {
+      "gateId": "ACG-008-fourteen-receipts-bash",
+      "applicability": "Applicable",
+      "requiredScope": "An inventory derived from current-evidence-binding.json contains exactly 14 unique logical targets and receipt paths, and every receipt passes the direct Bash validator.",
+      "requiredCommandTokens": [
+        "jq -r '.orderedLogicalTargets[].authoringReceipt.path' specs/003-authoring-contract/current-evidence-binding.json",
+        "jq -e '(.orderedLogicalTargets | length) == 14' specs/003-authoring-contract/current-evidence-binding.json",
+        "jq -e '([.orderedLogicalTargets[].authoringReceipt.path] | unique | length) == 14' specs/003-authoring-contract/current-evidence-binding.json",
+        "validate-intake-authoring-receipt.sh --receipt \"$receipt_path\" --repo ."
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "Bash 5+"
+      ],
+      "owner": "AOC evidence-binding owner",
+      "reviewer": "Global receipt-coverage reviewer",
+      "primaryProof": "Head-bound Bash log with inventory assertions and one immediate exit code for each of the 14 direct receipt invocations.",
+      "supplementalProof": "The additive feature-validator result referencing the Primary 14-receipt log.",
+      "plannedEvidence": "specs/003-authoring-contract/autonomous-run-gate-evidence.json",
+      "rationale": "Only META-LH-03 may change, but receipt-validator compatibility must remain true for all 14 current receipts.",
+      "reevaluationTrigger": "Any ordered target, receipt path, receipt hash, inventory count, or Bash validator change."
+    },
+    {
+      "gateId": "ACG-009-fourteen-receipts-powershell",
+      "applicability": "Applicable",
+      "requiredScope": "An inventory derived from current-evidence-binding.json contains exactly 14 unique logical targets and receipt paths, and every receipt passes the direct PowerShell validator.",
+      "requiredCommandTokens": [
+        "$Binding = Get-Content -LiteralPath 'specs/003-authoring-contract/current-evidence-binding.json' -Raw | ConvertFrom-Json",
+        "Expected exactly 14 unique receipt paths.",
+        "validate-intake-authoring-receipt.ps1 -Receipt $ReceiptPath -Repo '.'"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "PowerShell Core 7+"
+      ],
+      "owner": "AOC evidence-binding owner",
+      "reviewer": "Global receipt-coverage reviewer",
+      "primaryProof": "Head-bound PowerShell log with inventory assertions and one immediate exit code for each of the 14 direct receipt invocations.",
+      "supplementalProof": "The additive feature-validator result referencing the Primary 14-receipt log.",
+      "plannedEvidence": "specs/003-authoring-contract/autonomous-run-gate-evidence.json",
+      "rationale": "Cross-surface compatibility must remain true for all 14 current receipts.",
+      "reevaluationTrigger": "Any ordered target, receipt path, receipt hash, inventory count, or PowerShell validator change."
+    },
+    {
+      "gateId": "ACG-010-ubuntu-real-commands",
+      "applicability": "Applicable",
+      "requiredScope": "The three canonical fixture suites, direct configuration checks, direct META-LH-03 checks, both 14-receipt loops, and additive validator execute on ubuntu-22.04 at the exact reviewed HEAD.",
+      "requiredCommandTokens": [
+        "git rev-parse HEAD",
+        "bash --version",
+        "pwsh --version",
+        "python3 --version",
+        "test-intake-authoring-validator.ps1",
+        "test-intake-authoring-lifecycle.ps1",
+        "test-intake-governance-config.ps1",
+        "validate-authoring-contract"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "ubuntu-22.04",
+        "Bash 5+",
+        "PowerShell Core 7+",
+        "Python 3"
+      ],
+      "owner": "Cross-platform workflow owner",
+      "reviewer": "Cross-platform parity reviewer",
+      "primaryProof": "Raw ubuntu-22.04 command log with exact HEAD and immediate exit code after every domain command.",
+      "supplementalProof": "Current workflow/job result pointing to the Primary raw log.",
+      "plannedEvidence": "specs/003-authoring-contract/cross-platform-parity-evidence.md",
+      "rationale": "Linux support requires actual interpreter execution rather than a status label.",
+      "reevaluationTrigger": "Any command, runner image, interpreter, workflow, validator, or fixture change."
+    },
+    {
+      "gateId": "ACG-011-macos-real-commands",
+      "applicability": "Applicable",
+      "requiredScope": "The three canonical fixture suites, direct configuration checks, direct META-LH-03 checks, both 14-receipt loops, and additive validator execute on macos-14 at the exact reviewed HEAD with Bash 5+ explicitly resolved.",
+      "requiredCommandTokens": [
+        "git rev-parse HEAD",
+        "bash --version",
+        "pwsh --version",
+        "python3 --version",
+        "test-intake-authoring-validator.ps1",
+        "test-intake-authoring-lifecycle.ps1",
+        "test-intake-governance-config.ps1",
+        "validate-authoring-contract"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "macos-14",
+        "Bash 5+",
+        "PowerShell Core 7+",
+        "Python 3"
+      ],
+      "owner": "Cross-platform workflow owner",
+      "reviewer": "Cross-platform parity reviewer",
+      "primaryProof": "Raw macos-14 command log with exact HEAD, resolved Bash 5+ path/version, and immediate exit code after every domain command.",
+      "supplementalProof": "Current workflow/job result pointing to the Primary raw log.",
+      "plannedEvidence": "specs/003-authoring-contract/cross-platform-parity-evidence.md",
+      "rationale": "macOS support requires a real Bash 5+ surface and cannot rely on the older platform shell implicitly.",
+      "reevaluationTrigger": "Any command, runner image, Bash resolution, interpreter, workflow, validator, or fixture change."
+    },
+    {
+      "gateId": "ACG-012-windows-real-commands",
+      "applicability": "Applicable",
+      "requiredScope": "The three canonical fixture suites, direct configuration checks, direct META-LH-03 checks, both 14-receipt loops, and additive validator execute on windows-2022 at the exact reviewed HEAD using validated Git-for-Windows Bash propagated to child processes; WSL is not accepted.",
+      "requiredCommandTokens": [
+        "git rev-parse HEAD",
+        "AOC_GIT_BASH_EXE",
+        "bash --version",
+        "pwsh --version",
+        "python3 --version",
+        "test-intake-authoring-validator.ps1",
+        "test-intake-authoring-lifecycle.ps1",
+        "test-intake-governance-config.ps1",
+        "validate-authoring-contract"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "windows-2022",
+        "Git-for-Windows bash",
+        "PowerShell Core 7+",
+        "Python 3"
+      ],
+      "owner": "Cross-platform workflow owner",
+      "reviewer": "Cross-platform parity reviewer",
+      "primaryProof": "Raw windows-2022 command log with exact HEAD, validated AOC_GIT_BASH_EXE, child PATH propagation, and immediate exit code after every domain command.",
+      "supplementalProof": "Current workflow/job result pointing to the Primary raw log.",
+      "plannedEvidence": "specs/003-authoring-contract/cross-platform-parity-evidence.md",
+      "rationale": "Windows parity depends on the real Git-for-Windows Bash boundary used by nested PowerShell fixtures.",
+      "reevaluationTrigger": "Any command, runner image, Git Bash resolution, PATH propagation, workflow, validator, or fixture change."
+    },
+    {
+      "gateId": "ACG-013-powershell-static-analysis",
+      "applicability": "Applicable",
+      "requiredScope": "Every changed repository-owned PowerShell file passes PSScriptAnalyzer 1.25.0 on the required matrix with no warning or error.",
+      "requiredCommandTokens": [
+        "Invoke-ScriptAnalyzer",
+        "Severity Warning,Error"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022",
+        "PSScriptAnalyzer 1.25.0"
+      ],
+      "owner": "PowerShell surface owner",
+      "reviewer": "Cross-platform parity reviewer",
+      "primaryProof": "Raw matrix analysis log listing changed PowerShell scope, module version, exact HEAD, and immediate exit status on all three runners.",
+      "supplementalProof": "Current PowerShell Static Analysis job status referencing the Primary raw logs.",
+      "plannedEvidence": "specs/003-authoring-contract/cross-platform-parity-evidence.md",
+      "rationale": "PowerShell is a required first-class surface and all tracked repository-owned scripts must pass the shared analyzer.",
+      "reevaluationTrigger": "Any changed PowerShell file, analyzer version, exclusion, or runner change."
+    },
+    {
+      "gateId": "ACG-014-full-secret-scan",
+      "applicability": "Applicable",
+      "requiredScope": "A full repository Gitleaks directory scan covers the exact reviewed HEAD with no active exclusion for Intake Authoring test paths.",
+      "requiredCommandTokens": [
+        "gitleaks dir . --config .gitleaks.toml --no-banner --no-color --redact=100",
+        "intake-authoring-governance/tests"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "local repository",
+        "Gitleaks"
+      ],
+      "owner": "Security evidence owner",
+      "reviewer": "Security reviewer",
+      "primaryProof": "Immediate exit code from the exact full gitleaks dir command at the reviewed HEAD plus an inspected exclusion report showing zero active Authoring-test exclusions.",
+      "supplementalProof": "specs/003-authoring-contract/security-review-evidence.md referencing the Primary scan record.",
+      "plannedEvidence": "specs/003-authoring-contract/autonomous-run-gate-evidence.json",
+      "rationale": "Receipt and review fixtures may resemble credentials or commands, so the complete tree and exclusions need explicit review.",
+      "reevaluationTrigger": "Any repository byte, Gitleaks configuration, allowlist, or Authoring test path change."
+    },
+    {
+      "gateId": "ACG-015-security-source-authority-review",
+      "applicability": "Applicable",
+      "requiredScope": "An independent review covers source trust, public HTTPS constraints, path containment, prompt injection, blocked invocation safety, least authority, secret/privacy handling, NIST SSDF, and CWE Top 25 with findings, owner, evidence, residual risk, and trigger, and proves zero automatically started review, Specify, Autonomous, implementation, or delivery actions.",
+      "requiredCommandTokens": [
+        "security-review-evidence.md",
+        "NIST SSDF",
+        "CWE Top 25",
+        "gitleaks dir"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "independent reviewer",
+        "exact reviewed HEAD"
+      ],
+      "owner": "Security evidence owner",
+      "reviewer": "Independent security reviewer",
+      "primaryProof": "specs/003-authoring-contract/security-review-evidence.md with reviewer identity, exact HEAD, inspected paths, actual commands, findings disposition, and approval status.",
+      "supplementalProof": "Applicable validator and Gitleaks records referencing the Primary review.",
+      "plannedEvidence": "specs/003-authoring-contract/security-review-evidence.md",
+      "rationale": "The feature changes a source and authority contract even though it adds no product runtime.",
+      "reevaluationTrigger": "Any source kind, network policy, path boundary, prompt handling, authority, secret, privacy, or executable validator change."
+    },
+    {
+      "gateId": "ACG-016-architecture-review",
+      "applicability": "Applicable",
+      "requiredScope": "An independent focused architecture review covers contract boundaries, trust layers, fail-safe defaults, separation of portable preset and AOC profile, additive historical/new binding validators, consumer map, and no product runtime expansion.",
+      "requiredCommandTokens": [
+        "architecture-review-evidence.md",
+        "authoring-contract-design.json",
+        "validate_current_evidence_binding.py",
+        "validate_authoring_contract.py"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "independent reviewer",
+        "exact reviewed HEAD"
+      ],
+      "owner": "Contract architecture owner",
+      "reviewer": "Independent architecture reviewer",
+      "primaryProof": "specs/003-authoring-contract/architecture-review-evidence.md with exact HEAD, boundary diagram in text, consumer coverage, findings, and disposition.",
+      "supplementalProof": "The additive validator output referencing the Primary architecture review.",
+      "plannedEvidence": "specs/003-authoring-contract/architecture-review-evidence.md",
+      "rationale": "The feature changes contract architecture and evidence lineage but not product runtime architecture.",
+      "reevaluationTrigger": "Any new consumer, layer, trust boundary, runtime component, or change to the historical/new validator separation."
+    },
+    {
+      "gateId": "ACG-017-accessibility-language-review",
+      "applicability": "Applicable",
+      "requiredScope": "A human-readable review checks every changed user-facing artefact for German first, English second, equivalent meaning, CEFR B2, first-use term explanations, semantic heading order, text-first communication, non-empty text alternatives where applicable, and WCAG 2.2 AA applicability; one target-audience participant without prior Spec Kit knowledge identifies purpose, prerequisites, status, open decisions, non-authority, and exactly one next safe action with 100 percent accuracy.",
+      "requiredCommandTokens": [
+        "accessibility-review-evidence.md",
+        "WCAG 2.2 AA",
+        "CEFR B2",
+        "Deutsch zuerst",
+        "English second"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "accessibility reviewer",
+        "exact reviewed HEAD"
+      ],
+      "owner": "Documentation owner",
+      "reviewer": "Accessibility and language reviewer",
+      "primaryProof": "specs/003-authoring-contract/accessibility-review-evidence.md with exact HEAD, path inventory, criterion-by-criterion result, findings, and disposition.",
+      "supplementalProof": "Markdown structure checks referencing the Primary review.",
+      "plannedEvidence": "specs/003-authoring-contract/accessibility-review-evidence.md",
+      "rationale": "The changed templates and reports are user-facing governance artefacts.",
+      "reevaluationTrigger": "Any user-facing wording, heading, example, status label, language order, visual, or navigation change."
+    },
+    {
+      "gateId": "ACG-018-cross-platform-parity-review",
+      "applicability": "Applicable",
+      "requiredScope": "A consolidated review compares actual command logs for ubuntu-22.04, macos-14, and windows-2022 and confirms equivalent pass/fail semantics across Bash and PowerShell, including Git-for-Windows Bash child resolution.",
+      "requiredCommandTokens": [
+        "cross-platform-parity-evidence.md",
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022",
+        "AOC_GIT_BASH_EXE"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "Bash 5+",
+        "PowerShell Core 7+",
+        "Git-for-Windows bash"
+      ],
+      "owner": "Cross-platform evidence owner",
+      "reviewer": "Independent parity reviewer",
+      "primaryProof": "specs/003-authoring-contract/cross-platform-parity-evidence.md with exact HEAD and a command-by-command three-runner comparison.",
+      "supplementalProof": "Current matrix job results and raw logs referencing the Primary parity review.",
+      "plannedEvidence": "specs/003-authoring-contract/cross-platform-parity-evidence.md",
+      "rationale": "Bash and PowerShell are first-class surfaces on all required platforms.",
+      "reevaluationTrigger": "Any script, fixture, runner, interpreter, shell-resolution, or workflow change."
+    },
+    {
+      "gateId": "ACG-019-meta-lh03-renewal-binding",
+      "applicability": "Applicable",
+      "requiredScope": "After final domain bytes, only META-LH-03 is renewed with stable intake ID, unique new operation/receipt/review IDs, byte-identical immediate predecessor archive, five final source hashes, a full current Ready Single review, and a current-evidence binding in which the other 13 leaves and Series bridge are identical.",
+      "requiredCommandTokens": [
+        "validate-authoring-contract.sh --repo . --json",
+        "validate-authoring-contract.ps1 -Repo . -Json",
+        "validate-intake-authoring-receipt.sh --receipt specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json --repo .",
+        "validate-intake-authoring-receipt.ps1 -Receipt specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json -Repo ."
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "Bash 5+",
+        "PowerShell Core 7+",
+        "Python 3",
+        "independent Single review"
+      ],
+      "owner": "META-LH-03 authoring owner",
+      "reviewer": "Independent Intake Review reviewer",
+      "primaryProof": "The new hash-bound Ready Single review and additive-validator record at the same exact HEAD, identifying exactly one changed binding leaf.",
+      "supplementalProof": "The predecessor binding-repair validation and immutable Series bridge, each referencing the Primary renewal proof.",
+      "plannedEvidence": "specs/003-authoring-contract/autonomous-run-gate-evidence.json",
+      "rationale": "Only META-LH-03 cites all five canonical files and the user explicitly approved its post-change renewal.",
+      "reevaluationTrigger": "Any domain byte, target, operation, receipt, review, archive, binding leaf, other target leaf, or Series bridge drift."
+    },
+    {
+      "gateId": "ACG-020-exact-delivery-checkpoint",
+      "applicability": "Applicable",
+      "requiredScope": "The planned, changed, staged, foreign, and missing path sets are reconciled; only the exact approved feature delivery set is staged; git diff --cached --check passes; foreign changes are untouched; and a normal implementation checkpoint excludes the statistics ledger.",
+      "requiredCommandTokens": [
+        "git status --short",
+        "git diff --name-only",
+        "git diff --cached --name-only",
+        "git diff --cached --check"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "local repository",
+        "exact candidate HEAD"
+      ],
+      "owner": "Feature delivery owner",
+      "reviewer": "Delivery-set reviewer",
+      "primaryProof": "Read-only delivery-set receipt binding planned, changed, staged, foreign, and missing sets to the normal implementation checkpoint commit.",
+      "supplementalProof": "The commit tree and status output referencing the Primary delivery-set receipt.",
+      "plannedEvidence": "specs/003-authoring-contract/autonomous-run-gate-evidence.json",
+      "rationale": "A dirty predecessor worktree and bounded authority require exact staging and preservation of unrelated work.",
+      "reevaluationTrigger": "Any path-set, staging, commit tree, worktree, or allowed-scope change."
+    },
+    {
+      "gateId": "ACG-021-statistics-clean-head",
+      "applicability": "Applicable",
+      "requiredScope": "After the normal implementation checkpoint, the canonical writer runs on a clean real feature branch, Bash and PowerShell check-only JSON checks pass, only docs/project-statistics.md is committed separately if changed, and both checks pass again on the clean final feature HEAD without history projection, restore, or amend.",
+      "requiredCommandTokens": [
+        "bash scripts/render-project-statistics.sh --repo .",
+        "bash scripts/render-project-statistics.sh --repo . --check-only --json",
+        "pwsh -NoProfile -File scripts/render-project-statistics.ps1 -Repo . -CheckOnly -Json",
+        "git status --porcelain"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "clean real feature branch",
+        "Bash 5+",
+        "PowerShell Core 7+"
+      ],
+      "owner": "Project statistics owner",
+      "reviewer": "Statistics evidence reviewer",
+      "primaryProof": "Head-bound statistics receipt showing the clean precondition, writer result, ledger-only diff/commit or truthful no-delta result, and both final check-only outputs.",
+      "supplementalProof": "The final docs/project-statistics.md and clean status output referencing the Primary statistics receipt.",
+      "plannedEvidence": "specs/003-authoring-contract/autonomous-run-gate-evidence.json",
+      "rationale": "The canonical renderer rejects dirty worktrees and Methodology v2 excludes the ledger and its commit.",
+      "reevaluationTrigger": "Any implementation commit, ledger byte, renderer/configuration change, dirty worktree, or failed check-only surface."
+    },
+    {
+      "gateId": "ACG-022-premerge-review-checks-approval",
+      "applicability": "Applicable",
+      "requiredScope": "The temporary premerge-gate-evidence.json runner artefact binds schema 2, final requirements hash, exact feature HEAD, all Primary gates, four review reports, current required checks, zero actionable review threads, and an actually available approval; merge uses normal policy without admin bypass.",
+      "requiredCommandTokens": [
+        "git rev-parse HEAD",
+        "premerge-gate-evidence.json",
+        "gh pr view \"$PR_NUMBER\" --json number,url,baseRefName,headRefName,headRefOid,mergeStateStatus,reviewDecision,statusCheckRollup,reviews",
+        "gh pr checks \"$PR_NUMBER\" --required",
+        "reviewThreads(first:100)",
+        "gh pr merge \"$PR_NUMBER\" --merge"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "GitHub authenticated CLI",
+        "exact reviewed HEAD",
+        "normal merge policy"
+      ],
+      "owner": "Autonomous delivery owner",
+      "reviewer": "Independent PR reviewer and required approver",
+      "primaryProof": "Temporary runner artefact premerge-gate-evidence.json with current API/CLI evidence and exact-head reconciliation; it is explicitly not a repository path.",
+      "supplementalProof": "Current PR checks, review reports, approval record, and thread list, each referencing the Primary runner artefact.",
+      "plannedEvidence": "premerge-gate-evidence.json (runner artefact, not a repository path)",
+      "rationale": "MergeAndSync grants normal delivery but never bypass, stale-check acceptance, or inferred approval.",
+      "reevaluationTrigger": "Any new commit, check rerun, review update, thread, approval change, base drift, or mergeability change."
+    },
+    {
+      "gateId": "ACG-023-lifecycle-rename",
+      "applicability": "Applicable",
+      "requiredScope": "After feature merge, META-LH-03 is renamed once through the existing paired-script contract in a separate normally reviewed PR; feature-local lifecycle evidence maps logical to physical path while the completed Series manifest and META-LH-02 lifecycle remain unchanged.",
+      "requiredCommandTokens": [
+        "bash scripts/rename-lastenheft.sh requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md 003-authoring-contract",
+        "pwsh -NoProfile -File scripts/rename-lastenheft.ps1 -File requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md -BranchName 003-authoring-contract",
+        "specs/003-authoring-contract/intake-lifecycle.json"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "Bash 5+",
+        "PowerShell Core 7+",
+        "normal merge policy"
+      ],
+      "owner": "Feature lifecycle owner",
+      "reviewer": "Independent lifecycle reviewer",
+      "primaryProof": "Merged lifecycle PR evidence binding one actual rename, paired-surface equivalence, logical and physical paths, exact heads, review, checks, and approval.",
+      "supplementalProof": "specs/003-authoring-contract/intake-lifecycle.json and unchanged Series/META-LH-02 hash assertions referencing the Primary lifecycle proof.",
+      "plannedEvidence": "specs/003-authoring-contract/intake-lifecycle.json",
+      "rationale": "Constitutional closeout requires the rename, but completed logical Series identity must not be rewritten.",
+      "reevaluationTrigger": "Any rename-script, logical/physical path, lifecycle record, Series manifest, META-LH-02 lifecycle, PR, or merge change."
+    },
+    {
+      "gateId": "ACG-024-causal-closeout-sync",
+      "applicability": "Applicable",
+      "requiredScope": "PostMerge facts are recorded only after real events; if needed, exactly one evidence-only PR on branch 003-authoring-contract-closeout changes only tasks.md, autonomous-run-state.json, and causal-closeout-evidence.json; every merge uses normal policy and final main synchronization is fast-forward only with clean worktree and ahead/behind 0/0.",
+      "requiredCommandTokens": [
+        "specs/003-authoring-contract/causal-closeout-evidence.json",
+        "003-authoring-contract-closeout",
+        "git merge --ff-only",
+        "git status --porcelain",
+        "0/0"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "GitHub authenticated CLI",
+        "local main",
+        "remote main",
+        "normal merge policy"
+      ],
+      "owner": "Autonomous closeout owner",
+      "reviewer": "Independent closeout reviewer and required approver",
+      "primaryProof": "specs/003-authoring-contract/causal-closeout-evidence.json written after the events and binding merge commits, sync commands, exact final heads, clean status, and 0/0 result.",
+      "supplementalProof": "Merged PR records and remote/local comparisons referencing the Primary causal closeout evidence.",
+      "plannedEvidence": "specs/003-authoring-contract/causal-closeout-evidence.json",
+      "rationale": "Terminal state must follow, not predict, merge and synchronization facts.",
+      "reevaluationTrigger": "Any postmerge commit, PR, run-state/task change, remote/local head drift, dirty worktree, or non-zero ahead/behind count."
+    },
+    {
+      "gateId": "ACG-025-product-release-cloud-ai-regulatory",
+      "applicability": "N/A",
+      "requiredScope": "Product runtime threat model, OWASP ASVS verification, release SBOM/VEX/SLSA, CAPEC catalogue, AI-SBOM, Zero Trust deployment evidence, BSI C3A/C5 assurance, SAMM programme assessment, and NIS2/CRA/EU AI Act/DORA product evidence.",
+      "requiredCommandTokens": [],
+      "requiredRunnerOrPlatformTokens": [],
+      "owner": "Security governance owner",
+      "reviewer": "Security reviewer",
+      "primaryProof": "specs/003-authoring-contract/security-review-evidence.md records and approves the N/A rationale at the exact reviewed HEAD.",
+      "supplementalProof": "specs/003-authoring-contract/architecture-review-evidence.md references the Primary N/A decision.",
+      "plannedEvidence": "specs/003-authoring-contract/security-review-evidence.md",
+      "rationale": "The feature changes documentation contracts and existing read-only validators only; it adds no shipped runtime, dependency, release package, cloud service, AI product component, or regulated processing.",
+      "reevaluationTrigger": "A runtime, dependency, release artefact, cloud boundary, AI component, security mechanism, regulated processing scope, or deployment change enters scope."
+    },
+    {
+      "gateId": "ACG-026-level0-preset-agent-guidance",
+      "applicability": "N/A",
+      "requiredScope": "Level 0 propagation, preset installation/version mutation/promotion, and shared agent-guidance updates.",
+      "requiredCommandTokens": [],
+      "requiredRunnerOrPlatformTokens": [],
+      "owner": "AOC governance owner",
+      "reviewer": "Scope and authority reviewer",
+      "primaryProof": "The exact delivery-set receipt demonstrates no Level 0, preset metadata, or shared agent-guidance path at the reviewed HEAD.",
+      "supplementalProof": "specs/003-authoring-contract/architecture-review-evidence.md references the Primary scope proof.",
+      "plannedEvidence": "specs/003-authoring-contract/autonomous-run-gate-evidence.json",
+      "rationale": "The accepted authority is repository-local and explicitly excludes these changes.",
+      "reevaluationTrigger": "Any request or diff touching Level 0, preset.yml/version/install/promotion state, or one of the five shared agent-guidance surfaces."
+    }
+  ]
+}

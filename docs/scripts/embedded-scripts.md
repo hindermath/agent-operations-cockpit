@@ -82,6 +82,16 @@ Change their respective canonical source first, then propagate the result.*
 | `specs/002-portfolio-ownership/contracts/validate_meta_lh02_snapshot.py` | `specs` |
 | `specs/002-portfolio-ownership/contracts/validate-meta-lh02-snapshot.ps1` | `specs` |
 | `specs/002-portfolio-ownership/contracts/validate-meta-lh02-snapshot.sh` | `specs` |
+| `specs/003-authoring-contract/contracts/test_validate_authoring_contract.py` | `specs` |
+| `specs/003-authoring-contract/contracts/test_validate_current_evidence_binding.py` | `specs` |
+| `specs/003-authoring-contract/contracts/test_validate_gate_evidence_invariants.py` | `specs` |
+| `specs/003-authoring-contract/contracts/validate_authoring_contract.py` | `specs` |
+| `specs/003-authoring-contract/contracts/validate_current_evidence_binding.py` | `specs` |
+| `specs/003-authoring-contract/contracts/validate_gate_evidence_invariants.py` | `specs` |
+| `specs/003-authoring-contract/contracts/validate-authoring-contract.ps1` | `specs` |
+| `specs/003-authoring-contract/contracts/validate-authoring-contract.sh` | `specs` |
+| `specs/003-authoring-contract/contracts/validate-current-evidence-binding.ps1` | `specs` |
+| `specs/003-authoring-contract/contracts/validate-current-evidence-binding.sh` | `specs` |
 | `specs/intake-review-fixtures/meta-lh-02/validate-portfolio.ps1` | `specs` |
 | `specs/intake-review-fixtures/meta-lh-02/validate-portfolio.py` | `specs` |
 | `specs/intake-review-fixtures/meta-lh-02/validate-portfolio.sh` | `specs` |

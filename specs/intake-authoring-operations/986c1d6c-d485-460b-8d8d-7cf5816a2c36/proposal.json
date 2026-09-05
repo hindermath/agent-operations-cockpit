@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeUpdateProposal",
+  "operationId": "986c1d6c-d485-460b-8d8d-7cf5816a2c36",
+  "intakeId": "83b9481e-bc4c-4e3d-b67a-1c6c8d05a681",
+  "type": "Update",
+  "createdAt": "2026-09-05T21:15:24Z",
+  "targetPath": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+  "receiptPath": "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json",
+  "sourceOrder": [
+    "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/7cc121ca-9c7a-4750-85e9-9cf2ebf2aa71/Lastenheft_META-LH-03-Authoring-Contract.md",
+    ".specify/presets/intake-authoring-governance/templates/intake-template.md",
+    ".specify/presets/intake-authoring-governance/templates/intake-authoring-receipt-template.json",
+    ".specify/presets/intake-authoring-governance/templates/project-profile-template.md",
+    "requirements/intake-governance.json",
+    ".specify/presets/intake-authoring-governance/templates/field-validation-summary.md"
+  ],
+  "publicationTargetSet": [
+    "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/7cc121ca-9c7a-4750-85e9-9cf2ebf2aa71/Lastenheft_META-LH-03-Authoring-Contract.md",
+    "specs/intake-authoring-archive/83b9481e-bc4c-4e3d-b67a-1c6c8d05a681/7cc121ca-9c7a-4750-85e9-9cf2ebf2aa71/META-LH-03-Authoring-Contract.json",
+    "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+    "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json"
+  ],
+  "approval": {
+    "approved": true,
+    "approvedBy": "Thorsten Hindermann",
+    "approvedAt": "2026-09-05T21:15:24Z",
+    "evidence": "Current explicit phase instruction: resume META-LH-03 after Analyze R5 and execute T002 through T079."
+  },
+  "boundaries": {
+    "singleUpdateOnly": true,
+    "productImplementation": false,
+    "level0": false,
+    "presetPromotion": false,
+    "providerAdministration": false,
+    "adminBypass": false
+  },
+  "nextAction": "Validate and publish the one approved META-LH-03 R2 transaction"
+}

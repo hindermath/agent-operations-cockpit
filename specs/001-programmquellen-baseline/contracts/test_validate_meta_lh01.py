@@ -570,6 +570,183 @@ class ContractNegativeTests(unittest.TestCase):
             )
         dispatch.assert_called_once_with(self.root)
 
+    def test_global_ready_dispatches_feature003_before_completed_meta02(self) -> None:
+        with mock.patch.object(
+                contract, "qualified_meta03_current_evidence",
+                return_value="current projection proof") as current_dispatch, mock.patch.object(
+                contract, "qualified_completed_meta02_snapshot") as completed_dispatch:
+            self.assertEqual(
+                contract.validate_global_ready(self.root),
+                "qualified Feature-003 current-evidence binding; current projection proof",
+            )
+        current_dispatch.assert_called_once_with(self.root)
+        completed_dispatch.assert_not_called()
+
+    def test_feature003_dispatch_requires_exact_success_output(self) -> None:
+        r2_binding = {
+            "orderedLogicalTargets": [{
+                "logicalTargetId": "META-LH-03",
+                "target": {"path": contract.META03_R2_TARGET, "normalizedSha256": contract.META03_R2_TARGET_SHA256},
+                "authoringReceipt": {
+                    "path": contract.META03_R2_RECEIPT,
+                    "rawSha256": contract.META03_R2_RECEIPT_SHA256,
+                },
+                "readySingleReview": {
+                    "path": contract.META03_R2_REVIEW,
+                    "rawSha256": contract.META03_R2_REVIEW_SHA256,
+                },
+            }],
+            "completedPredecessor": {"completionMergeSha": "3c9a618243fffff187932b1ee431ffbd25d3856e"},
+        }
+        write(self.root / contract.META03_BINDING, json.dumps(r2_binding) + "\n")
+        accepted = subprocess.CompletedProcess(
+            args=[], returncode=0,
+            stdout=json.dumps(
+                contract.META03_ADDITIVE_SUCCESS, ensure_ascii=True, indent=2, sort_keys=True
+            ) + "\n",
+            stderr="",
+        )
+        with mock.patch.object(contract.subprocess, "run", return_value=accepted) as invoked:
+            self.assertIn(
+                "14 current Ready",
+                contract.qualified_meta03_current_evidence(self.root),
+            )
+        self.assertTrue(any(
+            str(item).endswith(contract.META03_ADDITIVE_VALIDATOR)
+            for item in invoked.call_args.args[0]
+        ))
+
+        invalid_results = (
+            subprocess.CompletedProcess(
+                args=[], returncode=0,
+                stdout=json.dumps({**contract.META03_ADDITIVE_SUCCESS, "extra": True}) + "\n", stderr="",
+            ),
+            subprocess.CompletedProcess(
+                args=[], returncode=0,
+                stdout=json.dumps(
+                    contract.META03_ADDITIVE_SUCCESS, ensure_ascii=True, indent=2, sort_keys=True
+                ) + "\nextra\n", stderr="",
+            ),
+            subprocess.CompletedProcess(
+                args=[], returncode=0,
+                stdout=json.dumps(
+                    contract.META03_ADDITIVE_SUCCESS, ensure_ascii=True, indent=2, sort_keys=True
+                ) + "\n", stderr="warning\n",
+            ),
+        )
+        for result in invalid_results:
+            with self.subTest(stdout=result.stdout, stderr=result.stderr), mock.patch.object(
+                    contract.subprocess, "run", return_value=result):
+                self.assert_contract_error(
+                    lambda: contract.qualified_meta03_current_evidence(self.root),
+                    "invalid success result",
+                )
+
+    def test_feature003_frozen_binding_selects_historical_checker(self) -> None:
+        repo = Path(__file__).resolve().parents[3]
+        frozen = subprocess.run(
+            ["git", "-C", str(repo), "show", f"{contract.META03_REPAIR_COMMIT}:{contract.META03_BINDING}"],
+            check=True, stdout=subprocess.PIPE, text=True,
+        ).stdout
+        write(self.root / contract.META03_BINDING, frozen)
+        accepted = subprocess.CompletedProcess(
+            args=[], returncode=0,
+            stdout=f"{contract.META03_PASS_MESSAGE}\n", stderr="",
+        )
+        with mock.patch.object(contract.subprocess, "run", return_value=accepted) as invoked:
+            contract.qualified_meta03_current_evidence(self.root)
+        self.assertTrue(any(
+            str(item).endswith(contract.META03_VALIDATOR)
+            for item in invoked.call_args.args[0]
+        ))
+
+    def test_feature003_unknown_mixed_and_ambiguous_metadata_is_rejected(self) -> None:
+        candidates = (
+            {},
+            {"orderedLogicalTargets": [{
+                "logicalTargetId": "META-LH-03",
+                "target": {"path": contract.META03_R2_TARGET, "normalizedSha256": contract.META03_R2_TARGET_SHA256},
+                "authoringReceipt": {"path": contract.META03_R2_RECEIPT, "rawSha256": "0" * 64},
+                "readySingleReview": {"path": contract.META03_R2_REVIEW, "rawSha256": contract.META03_R2_REVIEW_SHA256},
+            }]},
+            {"orderedLogicalTargets": [
+                {"logicalTargetId": "META-LH-03"}, {"logicalTargetId": "META-LH-03"}
+            ]},
+        )
+        for candidate in candidates:
+            with self.subTest(candidate=candidate):
+                write(self.root / contract.META03_BINDING, json.dumps(candidate) + "\n")
+                self.assert_contract_error(
+                    lambda: contract.qualified_meta03_current_evidence(self.root),
+                    "unknown, mixed, or ambiguous",
+                )
+
+    def test_feature003_workflow_runs_exact_head_focused_matrix(self) -> None:
+        repo = Path(__file__).resolve().parents[3]
+        workflow = (repo / ".github/workflows/powershell-analysis.yml").read_text(
+            encoding="utf-8"
+        )
+        required = (
+            "github.event.pull_request.head.sha",
+            "git rev-parse HEAD",
+            "python --version",
+            "$PSVersionTable.PSVersion",
+            "AOC_GIT_BASH_EXE",
+            "WSL launcher is not an accepted capability",
+            "specs/003-authoring-contract/contracts/test_validate_authoring_contract.py",
+            "specs/003-authoring-contract/contracts/test_validate_gate_evidence_invariants.py",
+            "specs/003-authoring-contract/contracts/validate-authoring-contract.sh",
+            "specs/003-authoring-contract/contracts/validate-authoring-contract.ps1",
+            "test-intake-authoring-validator.ps1",
+            "test-intake-authoring-lifecycle.ps1",
+            "test-intake-governance-config.ps1",
+            "validate-intake-authoring-receipt.sh",
+            "validate-intake-authoring-receipt.ps1",
+            "validate_meta_lh01.py --repo . global-ready",
+        )
+        for token in required:
+            with self.subTest(token=token):
+                self.assertIn(token, workflow)
+
+    def test_feature003_dispatch_absent_manifest_preserves_prior_path(self) -> None:
+        self.assertIsNone(contract.qualified_meta03_current_evidence(self.root))
+
+    def test_feature003_state_or_authority_without_manifest_cannot_fall_back(self) -> None:
+        for relative in (contract.META03_STATE, contract.META03_AUTHORITY):
+            with self.subTest(relative=relative):
+                root = self.root / Path(relative).name
+                root.mkdir(parents=True)
+                write(root / relative, "{}\n")
+                self.assert_contract_error(
+                    lambda root=root: contract.qualified_meta03_current_evidence(root),
+                    "requires its current-evidence binding manifest",
+                )
+
+    def test_feature003_dispatch_rejects_failed_bridge(self) -> None:
+        binding = {
+            "orderedLogicalTargets": [{
+                "logicalTargetId": "META-LH-03",
+                "target": {"path": contract.META03_R2_TARGET, "normalizedSha256": contract.META03_R2_TARGET_SHA256},
+                "authoringReceipt": {
+                    "path": contract.META03_R2_RECEIPT,
+                    "rawSha256": contract.META03_R2_RECEIPT_SHA256,
+                },
+                "readySingleReview": {
+                    "path": contract.META03_R2_REVIEW,
+                    "rawSha256": contract.META03_R2_REVIEW_SHA256,
+                },
+            }]
+        }
+        write(self.root / contract.META03_BINDING, json.dumps(binding) + "\n")
+        rejected = subprocess.CompletedProcess(
+            args=[], returncode=1, stdout="", stderr="ERROR: binding rejected\n",
+        )
+        with mock.patch.object(contract.subprocess, "run", return_value=rejected):
+            self.assert_contract_error(
+                lambda: contract.qualified_meta03_current_evidence(self.root),
+                "binding rejected",
+            )
+
     def test_meta02_dispatch_rejects_unfinished_closeout(self) -> None:
         write(self.root / contract.ARCHIVED_META02, "archived META-LH-02\n")
         state = {
