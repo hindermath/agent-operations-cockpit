@@ -54,18 +54,18 @@ Profil 2 verwendet Git-getrackte Textdateien und sichtbare Git-Aktivitaet. Die W
 
 | Kennzahl / Metric | Wert / Value |
 |---|---:|
-| Textbasis / Text base | 245125 lines |
+| Textbasis / Text base | 245094 lines |
 | Textdateien / Text files | 1621 |
 | Beobachtbarer Zeitraum / Observable period | 2025-09-14..2026-09-06 |
 | Aktivtage / Active days | 13 |
-| Relevante Commits / Relevant commits | 68 |
-| Zeilen je Aktivtag / Lines per active day | 18855.8 |
+| Relevante Commits / Relevant commits | 69 |
+| Zeilen je Aktivtag / Lines per active day | 18853.4 |
 | Peak-Tag im Fenster / Peak day in window | 2026-07-31 / 132656 |
 | Peak-Woche im Fenster / Peak week in window | 2026-07-26 / 135472 |
 | Laengste Serie / Longest streak | 3 days |
 | Speedup vs. 80 lines/day | 235.7x |
 | Speedup vs. 125 lines/day | 150.8x |
-| Methodik / Methodology | v2; source `fc83c6406ce6` |
+| Methodik / Methodology | v2; source `62bc4014524f` |
 
 ### Artefaktmix / Artifact Mix
 
@@ -74,7 +74,7 @@ Produktiv / Production          [#...................]   3.4% | 8450
 Tests                           [#...................]   3.1% | 7650
 Dokumentation / Documentation   [###########.........]  55.8% | 136800
 Skripte / Scripts               [###.................]  17.4% | 42707
-Konfiguration / Configuration   [####................]  20.1% | 49385
+Konfiguration / Configuration   [####................]  20.1% | 49354
 Daten und Medien / Data and media [....................]   0.0% | 0
 Sonstiger Text / Other text     [#...................]   0.1% | 133
 ```
@@ -190,7 +190,7 @@ Die Faktoren vergleichen sichtbare Lieferdichte mit den dokumentierten manuellen
 Scale: 0..20000 lines/day
 Experienced manual [#...................] 80
 Thorsten solo      [#...................] 125
-Visible repository [###################.] 18855.8
+Visible repository [###################.] 18853.4
 ```
 
 Die gemeinsame Skala vergleicht Referenzen und sichtbare Lieferdichte. Sie schreibt die Git-Aktivitaet keiner Person oder KI pauschal zu.
@@ -216,6 +216,6 @@ DE: Das Fenster beginnt am 2025-09-14 und endet am 2026-09-06. Es enthaelt 13 ak
 | 2026-06 | 0 |
 | 2026-07 | 132656 |
 | 2026-08 | 100244 |
-| 2026-09 | 22670 |
+| 2026-09 | 22701 |
 
 <!-- project-statistics-v2:end -->
