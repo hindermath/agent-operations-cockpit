@@ -215,6 +215,35 @@ def _require_file_hash(
         raise ContractViolation(f"{kind} hash drift: {relative}")
 
 
+def _resolve_completed_lifecycle_target(
+    repo: Path, logical_path: str, expected_hash: str,
+) -> str:
+    """Resolve META-LH-03 after its post-feature lifecycle rename."""
+    if (repo / logical_path).is_file():
+        return logical_path
+    lifecycle_path = repo / "specs/003-authoring-contract/intake-lifecycle.json"
+    if not lifecycle_path.is_file():
+        return logical_path
+    lifecycle = load_json(lifecycle_path)
+    records = lifecycle.get("records")
+    matches = [
+        record for record in records or []
+        if isinstance(record, dict) and record.get("originalPath") == logical_path
+    ]
+    if lifecycle.get("schemaVersion") != "1.1" or len(matches) != 1:
+        raise ContractViolation("META-LH-03 lifecycle resolution is invalid")
+    record = matches[0]
+    archived = record.get("archivedPath")
+    if (
+        record.get("originalNormalizedSha256") != expected_hash
+        or not isinstance(archived, str)
+        or not (repo / archived).is_file()
+        or normalized_sha256((repo / archived).read_bytes()) != expected_hash
+    ):
+        raise ContractViolation("META-LH-03 lifecycle target binding drift")
+    return archived
+
+
 def validate_r2_transaction(
     repo: Path,
     current: dict[str, Any],
@@ -333,7 +362,12 @@ def validate_r2_transaction(
     target_hash = "3a5c34b54bdb0b00f78415089cc0b926b33ddeabe44ee7a130ad603acd4a98ba"
     if receipt.get("target") != {"path": active_target, "normalizedSha256": target_hash}:
         raise ContractViolation("active receipt target binding mismatch")
-    _require_file_hash(repo, active_target, target_hash, normalized=True)
+    _require_file_hash(
+        repo,
+        _resolve_completed_lifecycle_target(repo, active_target, target_hash),
+        target_hash,
+        normalized=True,
+    )
 
     r2_result_path = "specs/intake-review-results/meta-lh-03-authoring-contract-2026-09-05-r2.json"
     r2_report_path = "docs/reviews/meta-lh-03-authoring-contract-intake-review-2026-09-05-r2.md"

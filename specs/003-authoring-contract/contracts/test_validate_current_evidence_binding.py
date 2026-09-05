@@ -43,6 +43,7 @@ class CurrentEvidenceBindingTests(unittest.TestCase):
         for relative in (
             contract.MANIFEST,
             contract.AUTHORITY,
+            contract.FEATURE_LIFECYCLE,
             ".specify/presets/intake-authoring-governance/preset.yml",
         ):
             target = self.root / relative
@@ -97,6 +98,14 @@ class CurrentEvidenceBindingTests(unittest.TestCase):
 
     def test_isolated_current_projection_passes(self) -> None:
         self.assertEqual(self.validate_fixture(), contract.PASS_MESSAGE)
+
+    def test_rejects_feature_lifecycle_target_hash_drift(self) -> None:
+        lifecycle = json.loads(
+            (self.root / contract.FEATURE_LIFECYCLE).read_text(encoding="utf-8")
+        )
+        lifecycle["records"][0]["originalNormalizedSha256"] = "0" * 64
+        write_json(self.root / contract.FEATURE_LIFECYCLE, lifecycle)
+        self.assert_rejected("feature lifecycle target hash drift")
 
     def test_rejects_fixed_order_drift(self) -> None:
         manifest = self.manifest()
@@ -192,10 +201,14 @@ class CurrentEvidenceBindingTests(unittest.TestCase):
         self.assert_rejected("not ReadyForReview for the current target")
 
     def test_rejects_unapproved_meta03_target_content(self) -> None:
-        target = self.root / dict(contract.PROGRAMME_TARGETS)["META-LH-03"]
+        lifecycle_path = self.root / contract.FEATURE_LIFECYCLE
+        lifecycle = json.loads(lifecycle_path.read_text(encoding="utf-8"))
+        target = self.root / lifecycle["records"][0]["archivedPath"]
         with target.open("a", encoding="utf-8") as stream:
             stream.write("unapproved\n")
         target_digest = contract.normalized_sha(target)
+        lifecycle["records"][0]["originalNormalizedSha256"] = target_digest
+        write_json(lifecycle_path, lifecycle)
         self.replace_current_binding_hash("META-LH-03", "target", target_digest)
         renewal = next(
             item for item in self.manifest()["renewedLogicalTargets"]
