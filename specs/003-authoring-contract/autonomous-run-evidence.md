@@ -4,11 +4,14 @@
 
 Thorsten hat META-LH-03 mit `MergeAndSync` ausdrücklich beauftragt und nach
 seinem Merge von PR #37 die Fortsetzung bestätigt. Nur dieses Lastenheft wird
-ausgeführt. Kein Admin-Bypass, keine Level-0-Änderung, keine Promotion und kein
+ausgeführt. Der Lauf begann ohne Admin-Bypass; am 2026-09-06 wurde ein enger
+Admin-Bypass ausschließlich für verbleibende menschliche Approval- oder
+Ruleset-Sperren nach grünen technischen Gates und null umsetzbaren
+Review-Threads autorisiert. Keine Level-0-Änderung, keine Promotion und kein
 weiteres Lastenheft sind Teil dieses Laufs. / *Thorsten explicitly authorised
-META-LH-03 with MergeAndSync and confirmed continuation after merging PR #37.
-Only this intake runs. No admin bypass, level-0 change, promotion or next intake
-is included.*
+META-LH-03 with MergeAndSync and later authorised an approval-only admin bypass
+after technical convergence. Only this intake runs; no level-0 change,
+promotion or next intake is included.*
 
 ## Startnachweis / Start evidence
 
@@ -384,3 +387,78 @@ as current R2 proof. The designated Primary contract passed 10/10 tests and
 both adapters; the diff check passed. All 146 feature paths are allowlisted,
 while the two named foreign paths remain byte-identical, untracked and
 unstaged.*
+
+## Feature- und Lifecycle-Lieferung / Feature and lifecycle delivery
+
+Der unveränderliche Feature-Head
+`b04952c2be6da690d80f76773006da733f5dd718` wurde als
+[PR #38](https://github.com/hindermath/agent-operations-cockpit/pull/38)
+geliefert. Alle 18 technischen Jobs waren grün und alle drei umsetzbaren
+Copilot-Threads waren geschlossen. Weil ausschließlich die unabhängige
+Approval fehlte, wurde der genehmigte Admin-Bypass für diese eine
+Repository-Policy-Sperre verwendet. Merge-SHA:
+`1ad53c1107236400722cb980d4efe0cf366bcba8`; anschließend war `main` sauber
+bei `0/0`.
+
+Die paarweise geprüfte Bash-/PowerShell-Rename-Projektion führte genau einmal
+zum R100-Rename. [PR #39](https://github.com/hindermath/agent-operations-cockpit/pull/39)
+band den unveränderten Zielhash, `intake-lifecycle.json`, die R1-zu-R2-Brücke,
+einen Coexistence-Negativtest und die generierte Statistik. Am exakten Head
+`5a30be48d3667e37ab8939ed8eb0c25722746f11` bestanden 18/18 technische
+Jobs und null Review-Threads waren offen. Der Admin-Bypass überbrückte erneut
+nur die fehlende Approval. Merge-SHA:
+`e7c56d0634dab94d620c3449a59b61834198fc27`; `main...origin/main = 0 0`.
+
+*The immutable feature and lifecycle heads were delivered through PRs 38 and
+39. Both had 18 green technical jobs and zero actionable threads. Admin bypass
+was limited to the remaining human approval rule and supplied no technical
+evidence.*
+
+## Externer PreMerge-Beleg / External PreMerge evidence
+
+Der bei der Feature-Entscheidung nicht persistierte runner-externe
+Schema-2.0-Snapshot wurde am 2026-09-06 ausschließlich aus unveränderlicher
+Exact-Head-, PR-, CI- und Review-Evidence rekonstruiert. Er wird ausdrücklich
+nicht als zeitgleiche Vorabaufnahme ausgegeben. Alle 29 Gates sind vorhanden:
+27 `Applicable/Pass`, zwei begründete `N/A`. Feature-lokaler Vorprüfer und
+unveränderter Evidence Core bestanden; normalisierter SHA-256:
+`39f2232bd7660d62af99c9639d626416b9656714e9c58d9157a8ed001f0bbfd6`.
+`acceptedPreMergePath`, `acceptedPreMergeSha256` und `mergeCommit` bleiben im
+PreMerge-Snapshot leer.
+
+*The missing runner snapshot was transparently reconstructed after the merge
+from immutable evidence. Both validators pass all 29 declared gates, and no
+premature merge field is populated.*
+
+## AEPS-Primärdisposition / Primary AEPS disposition
+
+**Primary:** `NoNewEvidence`.
+
+Die Abschluss- und Retrospektivenevidence stärkt bestehende AOC-Themen zur
+historischen-zu-aktuellen Brücke, transaktionalen Receipt-Erneuerung,
+fail-closed Authority und kausalen Runner-Evidence. Sie stammt weiterhin aus
+demselben Level-2-Referenzprojekt und begründet daher weder einen neuen
+projektübergreifenden Kandidaten noch eine Promotion. Das bestehende
+[Findings-Ledger](../../docs/aeps/findings-ledger.md) bleibt unverändert. Die
+beiden lokal geparkten fremden Pfade sind keine Supplemental-Lieferung dieses
+Closeouts. Diese Disposition erteilt keine Preset-, Level-0-, Remote-, Merge-
+oder Bypass-Autorität.
+
+*Completion and retrospective evidence strengthen existing AOC themes but add
+no independent project evidence. The ledger remains unchanged and no new
+preset candidate or authority is created.*
+
+## Transaktionaler Closeout-Kandidat / Transactional closeout candidate
+
+Nach Feature- und Lifecycle-Merge besteht der fachliche Closeout aus genau
+fünf Pfaden: Taskplan, Run-State, kausaler Abschlussbeleg,
+Engineering-Retrospektive und dieser Laufnachweis. Er bindet nur bereits
+eingetretene Tatsachen und behauptet weder seinen eigenen Merge noch den
+späteren finalen Sync oder PostMerge-Snapshot. Falls das verpflichtende
+Homogeneity-Gate nach diesem Text-Commit Statistikdrift meldet, ist genau ein
+generator-eigener `docs/project-statistics.md`-Begleiter zulässig; er erweitert
+den fachlichen Closeout nicht.
+
+*The transactional candidate contains the five named closeout paths and only
+known facts. A generated statistics companion is allowed solely when required
+by the repository-wide homogeneity gate.*
