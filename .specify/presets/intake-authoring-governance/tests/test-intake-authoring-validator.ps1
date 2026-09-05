@@ -56,6 +56,26 @@ function ConvertTo-BashPath {
     return ($Converted -join '').Trim()
 }
 
+function Invoke-BashProcess {
+    [CmdletBinding()]
+    param([Parameter(Mandatory)][string[]]$ArgumentList)
+
+    $StartInfo = [Diagnostics.ProcessStartInfo]::new()
+    $StartInfo.FileName = $BashExecutable
+    $StartInfo.UseShellExecute = $false
+    $StartInfo.RedirectStandardOutput = $true
+    $StartInfo.RedirectStandardError = $true
+    foreach ($Argument in $ArgumentList) { $StartInfo.ArgumentList.Add($Argument) }
+    $Process = [Diagnostics.Process]::Start($StartInfo)
+    $StandardOutput = $Process.StandardOutput.ReadToEndAsync()
+    $StandardError = $Process.StandardError.ReadToEndAsync()
+    $Process.WaitForExit()
+    return [pscustomobject]@{
+        ExitCode = $Process.ExitCode
+        Output = (($StandardOutput.Result, $StandardError.Result) -join "`n").Trim()
+    }
+}
+
 function Invoke-ReceiptValidators {
     [CmdletBinding()]
     param(
@@ -489,9 +509,8 @@ exit "$aggregate"
     Write-Utf8Text -Path $InvalidInventory -Text '{'
     $BashAggregateHarness = ConvertTo-BashPath -Path $AggregateHarness
     $BashInvalidInventory = ConvertTo-BashPath -Path $InvalidInventory
-    $JqOutput = & $BashExecutable $BashAggregateHarness $BashInvalidInventory 2>&1
-    $JqExit = $LASTEXITCODE
-    if ($JqExit -eq 0 -or ($JqOutput -join "`n") -notmatch 'JQ_IMMEDIATE_EXIT: [1-9]') {
+    $JqResult = Invoke-BashProcess -ArgumentList @($BashAggregateHarness, $BashInvalidInventory)
+    if ($JqResult.ExitCode -eq 0 -or $JqResult.Output -notmatch 'JQ_IMMEDIATE_EXIT: [1-9]') {
         throw 'jq failure did not propagate through the Bash aggregate harness'
     }
 
@@ -501,14 +520,13 @@ exit "$aggregate"
     })
     Write-Utf8Text -Path $Inventory -Text ($InventoryRows | ConvertTo-Json -Depth 4)
     $BashInventory = ConvertTo-BashPath -Path $Inventory
-    $AggregateOutput = & $BashExecutable $BashAggregateHarness $BashInventory 2>&1
-    $AggregateExit = $LASTEXITCODE
-    $AggregateText = $AggregateOutput -join "`n"
-    if ($AggregateExit -eq 0 -or
+    $AggregateResult = Invoke-BashProcess -ArgumentList @($BashAggregateHarness, $BashInventory)
+    $AggregateText = $AggregateResult.Output
+    if ($AggregateResult.ExitCode -eq 0 -or
         ([regex]::Matches($AggregateText, 'TARGET_ID: .* IMMEDIATE_EXIT:')).Count -ne 14 -or
         $AggregateText -notmatch 'TARGET_COUNT: 14' -or
         $AggregateText -notmatch 'AGGREGATE_EXIT: 1') {
-        throw 'fourteen-receipt Bash aggregate did not retain the first failure'
+        throw "fourteen-receipt Bash aggregate did not retain the first failure: exit=$($AggregateResult.ExitCode), output=$AggregateText"
     }
     if ((@($InventoryRows.id | Select-Object -Unique)).Count -ne 14) {
         throw 'fourteen-receipt aggregate target IDs are not unique'
