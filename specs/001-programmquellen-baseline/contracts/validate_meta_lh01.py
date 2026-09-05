@@ -99,6 +99,15 @@ PROGRAMME_TARGETS = (
     ("RAW-08", "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md"),
     ("RAW-09", "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md"),
 )
+META02_FEATURE = "specs/002-portfolio-ownership"
+META02_STATE = f"{META02_FEATURE}/autonomous-run-state.json"
+META02_VALIDATOR = f"{META02_FEATURE}/contracts/validate_meta_lh02_snapshot.py"
+ORIGINAL_META02 = PROGRAMME_TARGETS[1][1]
+ARCHIVED_META02 = ORIGINAL_META02.removesuffix(".md") + ".002-portfolio-ownership.md"
+META02_PASS_MESSAGE = (
+    "PASS: post-global-ready: 14 logical Ready targets with archive-aware META-LH-02 "
+    "resolution, immutable programme snapshot, and Bash/PowerShell review surfaces"
+)
 SEMANTIC_CRITERIA = {
     "germanFirst", "englishEquivalent", "cefrB2", "firstUseTerms",
     "domainTruth", "authorityInterpretation",
@@ -197,6 +206,60 @@ def run_checked(command: list[str], root: Path, label: str) -> None:
     lines = [line for line in result.stdout.splitlines() if line.startswith("PASS:")]
     if len(lines) != 1:
         fail(f"{label} must emit exactly one PASS line; found {len(lines)}")
+
+
+def qualified_completed_meta02_snapshot(root: Path) -> str | None:
+    """Dispatch archive-only post-META02 repositories to their stricter snapshot."""
+    original_exists = (root / ORIGINAL_META02).is_file()
+    archived_exists = (root / ARCHIVED_META02).is_file()
+    if original_exists and archived_exists:
+        fail("META-LH-02 original and archived paths are ambiguous")
+    state_path = root / META02_STATE
+    if not state_path.is_file():
+        return None
+
+    state = load_json(state_path, "Feature-002 autonomous run state")
+    if state.get("status") != "Completed":
+        if archived_exists:
+            fail("archived META-LH-02 is not a qualified terminal Completed snapshot")
+        return None
+    required_closeout = {
+        "mergeOrPublication": "Completed",
+        "defaultBranchSync": "Completed",
+        "postMergeActions": "Completed",
+        "finalValidation": "Completed",
+    }
+    tasks = state.get("tasks")
+    if (
+        original_exists
+        or not archived_exists
+        or state.get("stage") != "MergeAndSync"
+        or state.get("nextExactAction") != "N/A"
+        or not isinstance(tasks, dict)
+        or tasks.get("completed") != 93
+        or tasks.get("total") != 93
+        or state.get("closeout") != required_closeout
+    ):
+        fail("archived META-LH-02 is not a qualified terminal Completed snapshot")
+    if not (root / ".git").exists():
+        fail("completed META-LH-02 snapshot dispatch requires Git ancestry proof")
+
+    validator_path = root / META02_VALIDATOR
+    try:
+        result = subprocess.run(
+            [sys.executable, "-B", str(validator_path), "--repo", str(root),
+             "post-global-ready"],
+            cwd=root, text=True, capture_output=True, check=False,
+        )
+    except OSError as exc:
+        fail(f"Feature-002 snapshot validator could not start: {exc}")
+    if result.returncode != 0:
+        detail = (result.stderr or result.stdout).strip().splitlines()
+        diagnostic = detail[0] if detail else "no diagnostic"
+        fail(f"completed META-LH-02 snapshot rejected: {diagnostic}")
+    if result.stdout != f"{META02_PASS_MESSAGE}\n" or result.stderr:
+        fail("Feature-002 snapshot validator returned an invalid success result")
+    return META02_PASS_MESSAGE.removeprefix("PASS: post-global-ready: ")
 
 
 def table_rows(text: str, identifier: re.Pattern[str]) -> list[list[str]]:
@@ -579,6 +642,10 @@ def current_single_reviews(root: Path) -> dict[str, tuple[str, dict[str, Any]]]:
 
 
 def validate_global_ready(root: Path) -> str:
+    completed_meta02 = qualified_completed_meta02_snapshot(root)
+    if completed_meta02 is not None:
+        return f"qualified completed META-LH-02 snapshot; {completed_meta02}"
+
     active_dir = root / "requirements/intakes/active"
     targets = tuple(f"requirements/intakes/active/{name}" for name in EXPECTED_INTAKES)
     state = load_json(root / STATE, "autonomous run state")

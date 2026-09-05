@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import ast
+import hashlib
 import json
 import os
 import shutil
@@ -105,6 +106,32 @@ def no_review_process(command: list[str], root: Path, label: str) -> None:
     del command, root, label
 
 
+def git(root: Path, *arguments: str) -> str:
+    result = subprocess.run(
+        ["git", *arguments], cwd=root, text=True, capture_output=True, check=True,
+    )
+    return result.stdout.strip()
+
+
+def identity_repository() -> tuple[tempfile.TemporaryDirectory[str], Path, str]:
+    temporary = tempfile.TemporaryDirectory(prefix="meta-lh02-git-identity-")
+    root = Path(temporary.name)
+    git(root, "init", "-b", "main")
+    git(root, "config", "user.name", "Contract Test")
+    git(root, "config", "user.email", "contract-test@example.invalid")
+    git(root, "remote", "add", "origin",
+        "https://github.com/hindermath/agent-operations-cockpit.git")
+    for relative, value in (
+        (contract.STATE, {"status": "Completed"}),
+        (contract.LIFECYCLE, {"schemaVersion": "1.1"}),
+    ):
+        (root / relative).parent.mkdir(parents=True, exist_ok=True)
+        store(root / relative, value)
+    git(root, "add", "--", contract.STATE, contract.LIFECYCLE)
+    git(root, "commit", "-m", "fixture: completion merge")
+    return temporary, root, git(root, "rev-parse", "HEAD")
+
+
 class SnapshotContractTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -192,6 +219,12 @@ class SnapshotContractTests(unittest.TestCase):
             physical = original if original.is_file() else archive
             physical.unlink()
             self.assert_contract_error(root, "mutually exclusive; found neither")
+        with projection() as temporary:
+            root = Path(temporary)
+            original = root / contract.ORIGINAL_TARGET
+            archive = root / contract.ARCHIVED_TARGET
+            archive.rename(original)
+            self.assert_contract_error(root, "must resolve exactly the archived target")
 
     def test_05_temporary_target_hash_drift_projection(self) -> None:
         with projection() as temporary:
@@ -317,7 +350,11 @@ class SnapshotContractTests(unittest.TestCase):
         }
         event = {
             "repository": {"full_name": contract.EXPECTED_REPOSITORY},
-            "pull_request": {"head": {"ref": contract.EXPECTED_BRANCH, "sha": head}},
+            "pull_request": {"head": {
+                "ref": contract.EXPECTED_BRANCH,
+                "sha": head,
+                "repo": {"full_name": contract.EXPECTED_REPOSITORY},
+            }},
         }
         self.assertEqual(
             contract.resolve_logical_branch(environment, event, head, ""),
@@ -336,12 +373,16 @@ class SnapshotContractTests(unittest.TestCase):
         event = {
             "repository": {"full_name": contract.EXPECTED_REPOSITORY},
             "pull_request": {
-                "head": {"ref": contract.EXPECTED_BRANCH, "sha": event_head}
+                "head": {
+                    "ref": contract.EXPECTED_BRANCH,
+                    "sha": event_head,
+                    "repo": {"full_name": contract.EXPECTED_REPOSITORY},
+                }
             },
         }
         with self.assertRaisesRegex(contract.ContractError, "event head SHA"):
             contract.resolve_logical_branch(environment, event, synthetic_head, "")
-        with self.assertRaisesRegex(contract.ContractError, "current Git branch"):
+        with self.assertRaisesRegex(contract.ContractError, "detached local HEAD"):
             contract.resolve_logical_branch({}, {}, event_head, "")
 
     def test_13_lf_crlf_equivalence_and_substantive_drift(self) -> None:
@@ -372,6 +413,149 @@ class SnapshotContractTests(unittest.TestCase):
             wsl.write_bytes(b"fixture")
             with self.assertRaisesRegex(contract.ContractError, "WSL launcher"):
                 contract.select_bash_executable([str(wsl)], windows=True)
+
+    def test_15_completed_main_and_descendant_require_completion_ancestry(self) -> None:
+        temporary, root, completion = identity_repository()
+        try:
+            contract.validate_git_identity(
+                root, status="Completed", environment={}, completion_merge=completion
+            )
+            git(root, "switch", "-c", "codex/later-feature")
+            (root / "later.txt").write_text("later\n", encoding="utf-8")
+            git(root, "add", "--", "later.txt")
+            git(root, "commit", "-m", "fixture: later descendant")
+            contract.validate_git_identity(
+                root, status="Completed", environment={}, completion_merge=completion
+            )
+        finally:
+            temporary.cleanup()
+
+    def test_16_completed_identity_rejects_invalid_ancestor(self) -> None:
+        temporary, root, completion = identity_repository()
+        try:
+            git(root, "switch", "-c", "accepted-completion")
+            (root / "completion.txt").write_text("completion\n", encoding="utf-8")
+            git(root, "add", "--", "completion.txt")
+            git(root, "commit", "-m", "fixture: accepted completion")
+            completion = git(root, "rev-parse", "HEAD")
+            git(root, "switch", "main")
+            (root / "unrelated.txt").write_text("unrelated\n", encoding="utf-8")
+            git(root, "add", "--", "unrelated.txt")
+            git(root, "commit", "-m", "fixture: unrelated head")
+            with self.assertRaisesRegex(contract.ContractError, "not a descendant"):
+                contract.validate_git_identity(
+                    root, status="Completed", environment={},
+                    completion_merge=completion,
+                )
+        finally:
+            temporary.cleanup()
+
+    def test_17_completed_identity_rejects_state_or_lifecycle_drift(self) -> None:
+        temporary, root, completion = identity_repository()
+        try:
+            store(root / contract.STATE, {"status": "Completed", "drift": True})
+            git(root, "add", "--", contract.STATE)
+            git(root, "commit", "-m", "fixture: mutate terminal state")
+            with self.assertRaisesRegex(contract.ContractError, "state/lifecycle drift"):
+                contract.validate_git_identity(
+                    root, status="Completed", environment={},
+                    completion_merge=completion,
+                )
+        finally:
+            temporary.cleanup()
+
+    def test_18_completed_ci_requires_exact_event_repository_and_head(self) -> None:
+        head = "1" * 40
+        environment = {
+            "GITHUB_ACTIONS": "true",
+            "GITHUB_EVENT_NAME": "push",
+            "GITHUB_REPOSITORY": contract.EXPECTED_REPOSITORY,
+            "GITHUB_HEAD_REF": "",
+            "GITHUB_REF_TYPE": "branch",
+            "GITHUB_REF_NAME": "codex/later-feature",
+        }
+        event = {
+            "repository": {"full_name": contract.EXPECTED_REPOSITORY},
+            "ref": "refs/heads/codex/later-feature",
+            "after": head,
+        }
+        self.assertEqual(
+            contract.resolve_logical_branch(
+                environment, event, head, "", status="Completed"
+            ),
+            "refs/heads/codex/later-feature",
+        )
+        event["after"] = "2" * 40
+        with self.assertRaisesRegex(contract.ContractError, "event head SHA"):
+            contract.resolve_logical_branch(
+                environment, event, head, "", status="Completed"
+            )
+        event["after"] = head
+        event["repository"]["full_name"] = "foreign/repository"
+        with self.assertRaisesRegex(contract.ContractError, "repository differs"):
+            contract.resolve_logical_branch(
+                environment, event, head, "", status="Completed"
+            )
+
+    def test_19_detached_local_and_foreign_origin_fail_closed(self) -> None:
+        temporary, root, completion = identity_repository()
+        try:
+            git(root, "switch", "--detach")
+            with self.assertRaisesRegex(contract.ContractError, "detached local HEAD"):
+                contract.validate_git_identity(
+                    root, status="Completed", environment={},
+                    completion_merge=completion,
+                )
+            git(root, "switch", "main")
+            git(root, "remote", "set-url", "origin", "https://github.com/foreign/repo.git")
+            with self.assertRaisesRegex(contract.ContractError, "Git origin differs"):
+                contract.validate_git_identity(
+                    root, status="Completed", environment={},
+                    completion_merge=completion,
+                )
+        finally:
+            temporary.cleanup()
+
+    def test_20_worktree_content_is_bound_to_git_blob_with_crlf_equivalence(self) -> None:
+        temporary, root, _ = identity_repository()
+        try:
+            git(root, "config", "core.autocrlf", "true")
+            relative = "requirements/intakes/active/Lastenheft_Test.md"
+            target = root / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(b"alpha\nbeta\n")
+            git(root, "add", "--", relative)
+            git(root, "commit", "-m", "fixture: target")
+            target.unlink()
+            git(root, "checkout", "--", relative)
+            self.assertIn(b"\r\n", target.read_bytes())
+            self.assertEqual(git(root, "status", "--porcelain=v1", "--", relative), "")
+            accepted = contract.normalized_bytes_sha256(
+                contract.git_blob(root, "HEAD", relative), relative
+            )
+            self.assertEqual(contract.immutable_normalized_sha256(root, relative), accepted)
+
+            state = root / contract.STATE
+            state.unlink()
+            git(root, "checkout", "--", contract.STATE)
+            self.assertIn(b"\r\n", state.read_bytes())
+            self.assertEqual(
+                contract.immutable_raw_sha256(root, contract.STATE),
+                hashlib.sha256(contract.git_blob(root, "HEAD", contract.STATE)).hexdigest(),
+            )
+
+            target.write_bytes(b"alpha\ngamma\n")
+            with self.assertRaisesRegex(contract.ContractError, "current Git path"):
+                contract.immutable_normalized_sha256(root, relative)
+        finally:
+            temporary.cleanup()
+
+    def test_21_unexpected_physical_target_inventory_fails_closed(self) -> None:
+        with projection() as temporary:
+            root = Path(temporary)
+            extra = root / "requirements/intakes/active/Lastenheft_Unexpected.md"
+            extra.write_text("unexpected\n", encoding="utf-8")
+            self.assert_contract_error(root, "physical target inventory drift")
 
 
 if __name__ == "__main__":

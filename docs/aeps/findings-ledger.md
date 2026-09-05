@@ -909,6 +909,13 @@ adoption remain separate future decisions.*
 
 ## AEPS-FIND-AOC-018 – Lifecycle-Auflösung muss alle Intake-Konsumenten erreichen
 
+Ergaenzende Evidence vom 2026-09-05: Der nachfolgende Start auf `main` trifft
+dieselbe Konsumentenluecke auch nach META-LH-02. Der
+[hashgebundene Nachweis](receipts/2026-09-05-global-ready-main-transition.md)
+staerkt dieses Finding ohne neue ID oder Reifegradanhebung. / *The subsequent
+start on main encounters the same consumer gap after META-LH-02. The bound
+receipt strengthens this finding without a new ID or maturity change.*
+
 - **Quelle und Lastenheft / Source and intake:**
   `specs/001-programmquellen-baseline/autonomous-run-retrospective.md`;
   `docs/aeps/receipts/2026-08-29-meta-lh-01-autonomous-retrospective.md`.

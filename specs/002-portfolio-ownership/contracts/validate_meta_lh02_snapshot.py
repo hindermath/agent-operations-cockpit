@@ -27,6 +27,7 @@ LIFECYCLE = f"{FEATURE}/intake-lifecycle.json"
 EXPECTED_RUN_ID = "aa60069e-ded5-463f-a737-9b5aa96070c7"
 EXPECTED_BRANCH = "002-portfolio-ownership"
 EXPECTED_REPOSITORY = "hindermath/agent-operations-cockpit"
+EXPECTED_COMPLETION_MERGE = "3c9a618243fffff187932b1ee431ffbd25d3856e"
 LOGICAL_TARGET = "META-LH-02"
 ORIGINAL_TARGET = (
     "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md"
@@ -63,7 +64,7 @@ REVIEW_POWERSHELL = (
     "validate-intake-review-result.ps1"
 )
 PASS_MESSAGE = (
-    "PASS: post-global-ready: 14 logical Ready targets with active META-LH-02 "
+    "PASS: post-global-ready: 14 logical Ready targets with archive-aware META-LH-02 "
     "resolution, immutable programme snapshot, and Bash/PowerShell review surfaces"
 )
 
@@ -93,11 +94,11 @@ def raw_sha256(path: Path) -> str:
         fail(f"cannot hash {path}: {exc}")
 
 
-def git_blob_sha256(root: Path, relative: str) -> str:
-    """Hash the exact blob at checked-out HEAD without shell interpolation."""
+def git_blob(root: Path, revision: str, relative: str) -> bytes:
+    """Read one exact Git blob without shell interpolation."""
     try:
         result = subprocess.run(
-            ["git", "-C", str(root), "cat-file", "blob", f"HEAD:{relative}"],
+            ["git", "-C", str(root), "cat-file", "blob", f"{revision}:{relative}"],
             capture_output=True, check=False,
         )
     except OSError as exc:
@@ -105,13 +106,55 @@ def git_blob_sha256(root: Path, relative: str) -> str:
     if result.returncode != 0:
         diagnostic = result.stderr.decode("utf-8", errors="replace").strip()
         fail(f"cannot read exact Git blob for {relative}: {diagnostic or 'git cat-file failed'}")
-    return hashlib.sha256(result.stdout).hexdigest()
+    return result.stdout
+
+
+def git_blob_sha256(root: Path, relative: str) -> str:
+    """Hash the exact blob at checked-out HEAD without shell interpolation."""
+    return hashlib.sha256(git_blob(root, "HEAD", relative)).hexdigest()
+
+
+def require_clean_git_path(root: Path, relative: str) -> None:
+    """Require index and worktree equality using Git's own EOL-aware rules."""
+    environment = {**os.environ, "GIT_OPTIONAL_LOCKS": "0"}
+    commands = (
+        ["git", "--no-optional-locks", "diff", "--no-ext-diff", "--quiet", "--", relative],
+        ["git", "--no-optional-locks", "diff", "--cached", "--no-ext-diff", "--quiet",
+         "HEAD", "--", relative],
+    )
+    for command in commands:
+        try:
+            result = subprocess.run(
+                command, cwd=root, env=environment, capture_output=True, check=False,
+            )
+        except OSError as exc:
+            fail(f"cannot verify clean Git path {relative}: {exc}")
+        if result.returncode == 1:
+            fail(f"current Git path differs from checked-out HEAD: {relative}")
+        if result.returncode != 0:
+            diagnostic = result.stderr.decode("utf-8", errors="replace").strip()
+            fail(f"cannot verify clean Git path {relative}: {diagnostic or 'git diff failed'}")
+
+
+def clean_checked_out_blob(root: Path, relative: str) -> bytes:
+    """Return canonical HEAD bytes after proving an EOL-aware clean checkout."""
+    require_clean_git_path(root, relative)
+    head = git_blob(root, "HEAD", relative)
+    try:
+        current = (root / relative).read_bytes()
+    except OSError as exc:
+        fail(f"cannot read current file for {relative}: {exc}")
+    current_normalized = normalized_bytes_sha256(current, relative)
+    head_normalized = normalized_bytes_sha256(head, relative)
+    if current_normalized != head_normalized:
+        fail(f"current normalized content differs from checked-out Git blob: {relative}")
+    return head
 
 
 def immutable_raw_sha256(root: Path, relative: str) -> str:
-    """Use immutable Git bytes in repositories and file bytes in projections."""
+    """Hash canonical Git bytes after proving a clean current text checkout."""
     if (root / ".git").exists():
-        return git_blob_sha256(root, relative)
+        return hashlib.sha256(clean_checked_out_blob(root, relative)).hexdigest()
     return raw_sha256(root / relative)
 
 
@@ -130,6 +173,29 @@ def normalized_sha256(path: Path) -> str:
         fail(f"binary NUL in {path}")
     normalized = text.replace("\r\n", "\n").replace("\r", "\n")
     return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+
+
+def normalized_bytes_sha256(raw: bytes, label: str) -> str:
+    if raw.startswith(b"\xef\xbb\xbf"):
+        raw = raw[3:]
+    try:
+        text = raw.decode("utf-8", errors="strict")
+    except UnicodeError as exc:
+        fail(f"{label} is not UTF-8 text: {exc}")
+    if "\x00" in text:
+        fail(f"binary NUL in {label}")
+    normalized = text.replace("\r\n", "\n").replace("\r", "\n")
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+
+
+def immutable_normalized_sha256(root: Path, relative: str) -> str:
+    """Bind normalized worktree content to HEAD while permitting line-ending changes."""
+    current = normalized_sha256(root / relative)
+    if (root / ".git").exists():
+        head = normalized_bytes_sha256(clean_checked_out_blob(root, relative), relative)
+        if current != head:
+            fail(f"current normalized content differs from checked-out Git blob: {relative}")
+    return current
 
 
 def repo_path(root: Path, value: str, label: str) -> Path:
@@ -162,10 +228,13 @@ def run_checked(command: list[str], root: Path, label: str) -> None:
 
 
 def resolve_logical_branch(environment: dict[str, str], event: dict[str, Any],
-                           checked_head: str, current_branch: str) -> str:
+                           checked_head: str, current_branch: str,
+                           status: str = "Active") -> str:
     """Resolve local or CI branch identity only from a complete proof."""
     if environment.get("GITHUB_ACTIONS") != "true":
-        if current_branch != EXPECTED_BRANCH:
+        if not current_branch:
+            fail("detached local HEAD is not an accepted branch identity")
+        if status == "Active" and current_branch != EXPECTED_BRANCH:
             fail("current Git branch differs from the accepted Feature-002 branch")
         return current_branch
 
@@ -187,26 +256,84 @@ def resolve_logical_branch(environment: dict[str, str], event: dict[str, Any],
         head = pull_request.get("head") if isinstance(pull_request, dict) else None
         event_ref = head.get("ref") if isinstance(head, dict) else None
         event_sha = head.get("sha") if isinstance(head, dict) else None
-        if environment.get("GITHUB_HEAD_REF") != EXPECTED_BRANCH or event_ref != EXPECTED_BRANCH:
+        head_repository = head.get("repo") if isinstance(head, dict) else None
+        head_repository_name = (
+            head_repository.get("full_name") if isinstance(head_repository, dict) else None
+        )
+        if (
+            not isinstance(event_ref, str)
+            or not event_ref
+            or environment.get("GITHUB_HEAD_REF") != event_ref
+            or head_repository_name != EXPECTED_REPOSITORY
+            or (status == "Active" and event_ref != EXPECTED_BRANCH)
+        ):
             fail("pull_request head branch differs from the accepted Feature-002 branch")
     else:
         event_ref = event.get("ref")
         event_sha = event.get("after")
+        event_branch = (
+            event_ref.removeprefix("refs/heads/")
+            if isinstance(event_ref, str) and event_ref.startswith("refs/heads/")
+            else ""
+        )
         if (
-            environment.get("GITHUB_HEAD_REF", "") not in {"", EXPECTED_BRANCH}
+            environment.get("GITHUB_HEAD_REF", "") != ""
             or environment.get("GITHUB_REF_TYPE") != "branch"
-            or environment.get("GITHUB_REF_NAME") != EXPECTED_BRANCH
-            or event_ref != f"refs/heads/{EXPECTED_BRANCH}"
+            or not event_branch
+            or environment.get("GITHUB_REF_NAME") != event_branch
+            or (status == "Active" and event_branch != EXPECTED_BRANCH)
         ):
             fail("push branch differs from the accepted Feature-002 branch")
 
     if event_sha != checked_head:
         fail("GitHub event head SHA differs from exact checked-out HEAD")
-    return EXPECTED_BRANCH
+    return str(event_ref)
+
+
+def remote_repository(root: Path) -> str:
+    try:
+        result = subprocess.run(
+            ["git", "config", "--get", "remote.origin.url"], cwd=root,
+            text=True, capture_output=True, check=False,
+        )
+    except OSError as exc:
+        fail(f"Git origin could not be read: {exc}")
+    if result.returncode != 0:
+        fail("Git origin is missing")
+    value = result.stdout.strip()
+    patterns = (
+        r"https://github\.com/([^/]+/[^/]+?)(?:\.git)?$",
+        r"git@github\.com:([^/]+/[^/]+?)(?:\.git)?$",
+        r"ssh://git@github\.com/([^/]+/[^/]+?)(?:\.git)?$",
+    )
+    for pattern in patterns:
+        match = re.fullmatch(pattern, value)
+        if match:
+            return match.group(1).lower()
+    fail("Git origin is not an accepted GitHub repository URL")
+
+
+def validate_completed_ancestry(root: Path, checked_head: str,
+                                completion_merge: str = EXPECTED_COMPLETION_MERGE) -> None:
+    if not re.fullmatch(r"[0-9a-f]{40}", completion_merge):
+        fail("accepted Feature-002 completion merge is not an exact lowercase Git SHA")
+    ancestry = subprocess.run(
+        ["git", "merge-base", "--is-ancestor", completion_merge, checked_head],
+        cwd=root, capture_output=True, check=False,
+    )
+    if ancestry.returncode != 0:
+        fail("checked-out HEAD is not a descendant of the accepted Feature-002 completion merge")
+    for relative in (STATE, LIFECYCLE):
+        head_blob = clean_checked_out_blob(root, relative)
+        completion_blob = git_blob(root, completion_merge, relative)
+        if head_blob != completion_blob:
+            fail(f"completed Feature-002 state/lifecycle drift after accepted merge: {relative}")
 
 
 def validate_git_identity(root: Path,
-                          environment: dict[str, str] | None = None) -> None:
+                          status: str = "Active",
+                          environment: dict[str, str] | None = None,
+                          completion_merge: str = EXPECTED_COMPLETION_MERGE) -> None:
     environment = dict(os.environ if environment is None else environment)
     try:
         head_result = subprocess.run(
@@ -221,15 +348,20 @@ def validate_git_identity(root: Path,
         fail(f"current Git identity could not be read: {exc}")
     if head_result.returncode != 0 or branch_result.returncode != 0:
         fail("current Git identity could not be read")
+    if remote_repository(root) != EXPECTED_REPOSITORY:
+        fail("Git origin differs from the accepted Feature-002 repository")
     event: dict[str, Any] = {}
     if environment.get("GITHUB_ACTIONS") == "true":
         event_path = environment.get("GITHUB_EVENT_PATH", "")
         if not event_path:
             fail("GitHub Actions event payload path is missing")
         event = load_json(Path(event_path), "GitHub Actions event payload")
+    checked_head = head_result.stdout.strip()
     resolve_logical_branch(
-        environment, event, head_result.stdout.strip(), branch_result.stdout.strip()
+        environment, event, checked_head, branch_result.stdout.strip(), status
     )
+    if status == "Completed":
+        validate_completed_ancestry(root, checked_head, completion_merge)
 
 
 def select_bash_executable(candidates: list[str], windows: bool | None = None) -> str:
@@ -361,7 +493,7 @@ def validate_state(root: Path) -> dict[str, Any]:
         if not isinstance(closeout, dict) or closeout != required_closeout:
             fail("terminal Completed state must bind the fully completed MergeAndSync closeout")
     if (root / ".git").exists():
-        validate_git_identity(root)
+        validate_git_identity(root, status=status)
     return state
 
 
@@ -397,9 +529,11 @@ def resolve_lifecycle(root: Path, state: dict[str, Any]) -> tuple[dict[str, Any]
     if original.is_file() == archive.is_file():
         disposition = "both" if original.is_file() else "neither"
         fail(f"META-LH-02 original and archived paths must be mutually exclusive; found {disposition}")
+    if state.get("status") == "Completed" and original.is_file():
+        fail("terminal Completed META-LH-02 must resolve exactly the archived target")
     physical = ORIGINAL_TARGET if original.is_file() else ARCHIVED_TARGET
     physical_path = root / physical
-    if normalized_sha256(physical_path) != normalized_digest:
+    if immutable_normalized_sha256(root, physical) != normalized_digest:
         fail("META-LH-02 physical target normalized SHA-256 drift")
     receipt_binding = record.get("authoringReceipt")
     review_binding = record.get("readySingleReview")
@@ -485,7 +619,7 @@ def resolve_physical_target(root: Path, logical_id: str, logical_path: str,
     archive_path = root / archive
     if immutable_raw_sha256(root, archive) != raw_digest:
         fail(f"{logical_id} archived target raw SHA-256 drift")
-    if normalized_sha256(archive_path) != expected_normalized_sha256:
+    if immutable_normalized_sha256(root, archive) != expected_normalized_sha256:
         fail(f"{logical_id} archived target normalized SHA-256 drift")
     return archive
 
@@ -544,6 +678,7 @@ def validate_snapshot(root: Path, lifecycle: dict[str, Any], state: dict[str, An
 
     receipts = current_receipts(root)
     reviews = current_single_reviews(root)
+    resolved_targets: set[str] = set()
     for index, ((logical_id, expected_target), entry) in enumerate(zip(PROGRAMME_TARGETS, ordered)):
         label = f"programmeEvidenceSnapshot.orderedLogicalTargets[{index}]"
         if not isinstance(entry, dict) or set(entry) != {
@@ -567,7 +702,9 @@ def validate_snapshot(root: Path, lifecycle: dict[str, Any], state: dict[str, An
         physical = resolve_physical_target(
             root, logical_id, expected_target, target_hash, physical_target
         )
-        if normalized_sha256(repo_path(root, physical, f"{label}.target.path")) != target_hash:
+        resolved_targets.add(physical)
+        repo_path(root, physical, f"{label}.target.path")
+        if immutable_normalized_sha256(root, physical) != target_hash:
             fail(f"{label}.target normalized SHA-256 drift")
 
         receipt_path = receipt_binding.get("path")
@@ -603,6 +740,17 @@ def validate_snapshot(root: Path, lifecycle: dict[str, Any], state: dict[str, An
         validate_review_shape(current_review[1], expected_target, target_hash, f"{label}.readySingleReview")
         run_review_surface(root, "Bash", str(review_path), expected_target, physical, runner)
         run_review_surface(root, "PowerShell", str(review_path), expected_target, physical, runner)
+
+    active_dir = root / "requirements/intakes/active"
+    actual_targets = {
+        path.relative_to(root).as_posix()
+        for path in active_dir.glob("Lastenheft_*.md")
+    }
+    if actual_targets != resolved_targets:
+        fail(
+            "programme physical target inventory drift; expected exactly the 14 "
+            f"resolved targets, found {len(actual_targets)} paths"
+        )
 
 
 def validate_post_global_ready(root: Path,
