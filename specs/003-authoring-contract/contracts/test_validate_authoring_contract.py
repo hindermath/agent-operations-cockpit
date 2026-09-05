@@ -6,6 +6,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -14,6 +15,7 @@ from pathlib import Path
 
 CONTRACT_DIR = Path(__file__).resolve().parent
 REPO = CONTRACT_DIR.parents[2]
+BASH_EXECUTABLE = os.environ.get("AOC_GIT_BASH_EXE", "bash")
 sys.path.insert(0, str(CONTRACT_DIR))
 
 from validate_authoring_contract import (  # noqa: E402
@@ -118,7 +120,7 @@ class AuthoringContractAdapterTests(unittest.TestCase):
 
     def _run_pair(self, repo: Path, json_output: bool = False) -> list[subprocess.CompletedProcess[str]]:
         bash_script = self.bash_adapter.relative_to(REPO).as_posix()
-        bash_args = ["bash", bash_script, "--repo", str(repo)]
+        bash_args = [BASH_EXECUTABLE, bash_script, "--repo", str(repo)]
         pwsh_args = [
             "pwsh",
             "-NoProfile",
@@ -156,7 +158,7 @@ class AuthoringContractAdapterTests(unittest.TestCase):
 
     def test_bash_and_powershell_usage_failure_parity(self) -> None:
         commands = [
-            ["bash", self.bash_adapter.relative_to(REPO).as_posix(), "--unknown"],
+            [BASH_EXECUTABLE, self.bash_adapter.relative_to(REPO).as_posix(), "--unknown"],
             ["pwsh", "-NoProfile", "-File", str(self.powershell_adapter), "-Unknown"],
         ]
         results = [

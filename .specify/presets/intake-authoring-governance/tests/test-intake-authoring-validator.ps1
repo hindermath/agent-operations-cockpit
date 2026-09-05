@@ -16,6 +16,11 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $ProjectRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $PresetRoot))
+$BashExecutable = if ([string]::IsNullOrWhiteSpace($env:AOC_GIT_BASH_EXE)) {
+    'bash'
+} else {
+    $env:AOC_GIT_BASH_EXE
+}
 
 function Get-NormalizedHash {
     [CmdletBinding()]
@@ -55,9 +60,9 @@ function Invoke-ReceiptValidators {
         throw "${Case}: PowerShell exit ${PowerShellExit}, expected ${ExpectedExit}: $($PowerShellOutput -join ' | ')"
     }
 
-    if (Get-Command bash -ErrorAction SilentlyContinue) {
+    if (Get-Command $BashExecutable -ErrorAction SilentlyContinue) {
         $BashValidator = Join-Path $PresetRoot 'scripts/validate-intake-authoring-receipt.sh'
-        $BashOutput = & bash $BashValidator --receipt $Receipt --repo $Repo 2>&1
+        $BashOutput = & $BashExecutable $BashValidator --receipt $Receipt --repo $Repo 2>&1
         $BashExit = $LASTEXITCODE
         if ($BashExit -ne $ExpectedExit) {
             throw "${Case}: Bash exit ${BashExit}, expected ${ExpectedExit}: $($BashOutput -join ' | ')"
@@ -470,7 +475,7 @@ exit "$aggregate"
 '@
     $InvalidInventory = Join-Path $TempRoot 'invalid-inventory.json'
     Write-Utf8Text -Path $InvalidInventory -Text '{'
-    $JqOutput = & bash $AggregateHarness $InvalidInventory 2>&1
+    $JqOutput = & $BashExecutable $AggregateHarness $InvalidInventory 2>&1
     $JqExit = $LASTEXITCODE
     if ($JqExit -eq 0 -or ($JqOutput -join "`n") -notmatch 'JQ_IMMEDIATE_EXIT: [1-9]') {
         throw 'jq failure did not propagate through the Bash aggregate harness'
@@ -481,7 +486,7 @@ exit "$aggregate"
         [ordered]@{ id = ('TARGET-{0:D2}' -f $_); path = ('receipt-{0:D2}.json' -f $_) }
     })
     Write-Utf8Text -Path $Inventory -Text ($InventoryRows | ConvertTo-Json -Depth 4)
-    $AggregateOutput = & bash $AggregateHarness $Inventory 2>&1
+    $AggregateOutput = & $BashExecutable $AggregateHarness $Inventory 2>&1
     $AggregateExit = $LASTEXITCODE
     $AggregateText = $AggregateOutput -join "`n"
     if ($AggregateExit -eq 0 -or
