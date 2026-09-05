@@ -14,6 +14,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import subprocess
 import sys
@@ -102,6 +103,7 @@ PROGRAMME_TARGETS = (
 META02_FEATURE = "specs/002-portfolio-ownership"
 META02_STATE = f"{META02_FEATURE}/autonomous-run-state.json"
 META02_VALIDATOR = f"{META02_FEATURE}/contracts/validate_meta_lh02_snapshot.py"
+META02_COMPLETION_MERGE = "3c9a618243fffff187932b1ee431ffbd25d3856e"
 ORIGINAL_META02 = PROGRAMME_TARGETS[1][1]
 ARCHIVED_META02 = ORIGINAL_META02.removesuffix(".md") + ".002-portfolio-ownership.md"
 META02_PASS_MESSAGE = (
@@ -208,21 +210,48 @@ def run_checked(command: list[str], root: Path, label: str) -> None:
         fail(f"{label} must emit exactly one PASS line; found {len(lines)}")
 
 
+def meta02_completion_delivered(root: Path) -> bool:
+    """Prove whether HEAD descends from the accepted META-LH-02 merge."""
+    if not (root / ".git").exists():
+        return False
+    try:
+        result = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", META02_COMPLETION_MERGE, "HEAD"],
+            cwd=root, env={**os.environ, "GIT_OPTIONAL_LOCKS": "0"},
+            text=True, capture_output=True, check=False,
+        )
+    except OSError as exc:
+        fail(f"META-LH-02 completion ancestry could not be read: {exc}")
+    if result.returncode == 0:
+        return True
+    if result.returncode == 1:
+        return False
+    diagnostic = result.stderr.strip() or "git merge-base failed"
+    fail(f"META-LH-02 completion ancestry could not be proven: {diagnostic}")
+
+
 def qualified_completed_meta02_snapshot(root: Path) -> str | None:
     """Dispatch archive-only post-META02 repositories to their stricter snapshot."""
+    delivered = meta02_completion_delivered(root)
     original_exists = (root / ORIGINAL_META02).is_file()
     archived_exists = (root / ARCHIVED_META02).is_file()
     if original_exists and archived_exists:
         fail("META-LH-02 original and archived paths are ambiguous")
     state_path = root / META02_STATE
     if not state_path.is_file():
+        if delivered:
+            fail("delivered META-LH-02 completion requires its terminal state and archived target")
         return None
 
     state = load_json(state_path, "Feature-002 autonomous run state")
     if state.get("status") != "Completed":
+        if delivered:
+            fail("delivered META-LH-02 completion requires its immutable terminal Completed state")
         if archived_exists:
             fail("archived META-LH-02 is not a qualified terminal Completed snapshot")
         return None
+    if not delivered:
+        fail("terminal Completed META-LH-02 state lacks accepted completion ancestry")
     required_closeout = {
         "mergeOrPublication": "Completed",
         "defaultBranchSync": "Completed",

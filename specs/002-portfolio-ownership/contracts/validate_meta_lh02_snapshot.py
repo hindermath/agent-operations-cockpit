@@ -317,12 +317,21 @@ def validate_completed_ancestry(root: Path, checked_head: str,
                                 completion_merge: str = EXPECTED_COMPLETION_MERGE) -> None:
     if not re.fullmatch(r"[0-9a-f]{40}", completion_merge):
         fail("accepted Feature-002 completion merge is not an exact lowercase Git SHA")
-    ancestry = subprocess.run(
-        ["git", "merge-base", "--is-ancestor", completion_merge, checked_head],
-        cwd=root, capture_output=True, check=False,
-    )
-    if ancestry.returncode != 0:
+    try:
+        ancestry = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", completion_merge, checked_head],
+            cwd=root, capture_output=True, check=False,
+        )
+    except OSError as exc:
+        fail(f"Feature-002 completion ancestry could not be checked: {exc}")
+    if ancestry.returncode == 1:
         fail("checked-out HEAD is not a descendant of the accepted Feature-002 completion merge")
+    if ancestry.returncode != 0:
+        diagnostic = ancestry.stderr.decode("utf-8", errors="replace").strip()
+        fail(
+            "Feature-002 completion ancestry could not be checked: "
+            f"{diagnostic or 'git merge-base failed'}"
+        )
     for relative in (STATE, LIFECYCLE):
         head_blob = clean_checked_out_blob(root, relative)
         completion_blob = git_blob(root, completion_merge, relative)

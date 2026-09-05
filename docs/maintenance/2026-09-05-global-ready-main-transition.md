@@ -41,6 +41,9 @@ peers reject main because they still require the former active feature branch.*
 - Der abgeschlossene META-LH-02-Intake muss am Archivpfad verbleiben. Der alte
   Global-Ready-Einstieg darf auch bei fehlendem Archiv nicht auf einen frueheren
   Pruefpfad zurueckfallen. Sein Subprozess muss genau die erwartete PASS-Zeile liefern.
+- Die nachgewiesene Git-Abstammung steuert diesen Uebergang, nicht ein lokal
+  zurueckgesetzter oder fehlender State. Git-Ausfuehrungsfehler werden getrennt
+  von fehlender Abstammung gemeldet; beide Faelle bleiben fail-closed.
 - Kanonische Receipt-/Review-Rohhashes bleiben bytegenau. Zusaetzlich werden
   Index und Arbeitsdateien auf Git-clean geprueft; saubere CRLF-Checkouts bleiben
   moeglich, echte Inhaltsaenderungen werden abgelehnt.
@@ -51,6 +54,8 @@ exclusivity and platform checks remain mandatory. Historical evidence is not
 rewritten, and CI checks exact event heads with full history and immediate exit
 handling. Completed META-LH-02 remains archive-only; a missing archive cannot
 trigger a legacy fallback. The subprocess must return the exact success line.
+Git ancestry controls this transition even if local state is reset or missing;
+execution errors and missing ancestry receive distinct fail-closed diagnostics.
 Canonical raw hashes remain exact, with Git-clean index and worktree proof
 that permits clean CRLF checkouts but rejects content changes.*
 
@@ -59,10 +64,10 @@ that permits clean CRLF checkouts but rejects content changes.*
 Lokal bestanden / *Local passes*:
 
 - `python3 -B specs/001-programmquellen-baseline/contracts/test_validate_meta_lh01.py`:
-  71 Tests / *71 tests*.
+  72 Tests / *72 tests*.
 - `python3 -B specs/002-portfolio-ownership/contracts/test_validate_meta_lh02_snapshot.py`:
-  22 Tests, einschliesslich realer Bash-/PowerShell-Paritaet und sauberem
-  CRLF-Git-Checkout / *22 tests including real Bash/PowerShell parity and clean
+  23 Tests, einschliesslich realer Bash-/PowerShell-Paritaet und sauberem
+  CRLF-Git-Checkout / *23 tests including real Bash/PowerShell parity and clean
   CRLF Git checkout*.
 - `python3 -B specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py --repo . global-ready`:
   Exit 0; 14 gebundene Ready-Ziele / *exit 0; 14 bound Ready targets*.
@@ -102,6 +107,16 @@ die Remote-Matrix ist vor Merge weiterhin nachzuweisen.
 *Independent code review: review_main_gate, 2026-09-05. All three findings were
 fixed and re-reviewed; none remain in scope. The reviewer used the separately
 reported test run, so the remote platform matrix remains mandatory before merge.*
+
+Im anschliessenden Closeout wurde zusaetzlich ein Rueckfall bei entferntem
+oder zurueckgesetztem State isoliert rot reproduziert und gruen behoben.
+Der Copilot-Befund in PR #37 zur Git-Fehlerklassifizierung wurde ebenfalls
+mit Negativtests behoben. Beide Korrekturen bleiben im selben Reparaturumfang;
+die urspruenglich gruene CI wird am aktualisierten Head erneut ausgefuehrt.
+
+*Closeout additionally reproduced and fixed fallback with missing or reset state.
+The Copilot finding in PR #37 on Git error classification was fixed with negative
+tests too. Both remain in the same bounded repair; CI reruns on the updated head.*
 
 ## Dokumentationsauswirkung / Documentation impact
 

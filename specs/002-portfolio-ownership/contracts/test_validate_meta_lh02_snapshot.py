@@ -14,6 +14,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from typing import Any, Callable
+from unittest import mock
 
 import validate_meta_lh02_snapshot as contract
 
@@ -449,6 +450,20 @@ class SnapshotContractTests(unittest.TestCase):
                 )
         finally:
             temporary.cleanup()
+
+    def test_16b_completed_ancestry_distinguishes_git_execution_errors(self) -> None:
+        checked_head = "1" * 40
+        completion = "2" * 40
+        with mock.patch.object(
+                contract.subprocess, "run", side_effect=OSError("git unavailable")):
+            with self.assertRaisesRegex(contract.ContractError, "could not be checked: git unavailable"):
+                contract.validate_completed_ancestry(REPO, checked_head, completion)
+        failed = subprocess.CompletedProcess(
+            args=[], returncode=128, stdout=b"", stderr=b"fatal: corrupt repository\n",
+        )
+        with mock.patch.object(contract.subprocess, "run", return_value=failed):
+            with self.assertRaisesRegex(contract.ContractError, "could not be checked: fatal: corrupt"):
+                contract.validate_completed_ancestry(REPO, checked_head, completion)
 
     def test_17_completed_identity_rejects_state_or_lifecycle_drift(self) -> None:
         temporary, root, completion = identity_repository()
