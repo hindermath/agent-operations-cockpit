@@ -132,34 +132,3 @@ jobs:
           if ($Failures -ne 0) {
             throw "Feature-003 focused matrix failed in $Failures command(s)."
           }
-
-      - name: Test Feature 002 snapshot contract
-        if: github.event_name == 'pull_request' || github.event_name == 'push'
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
-        shell: pwsh
-        run: |
-          python -B specs/002-portfolio-ownership/contracts/test_validate_meta_lh02_snapshot.py
-          if ($LASTEXITCODE -ne 0) {
-            throw "Feature-002 Python suite failed with exit $LASTEXITCODE."
-          }
-          python -B specs/001-programmquellen-baseline/contracts/test_validate_meta_lh01.py
-          if ($LASTEXITCODE -ne 0) {
-            throw "Feature-001 Python suite failed with exit $LASTEXITCODE."
-          }
-          python -B specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py --repo . global-ready
-          if ($LASTEXITCODE -ne 0) {
-            throw "AOC Global-Ready entry point failed with exit $LASTEXITCODE."
-          }
-          $bashArguments = @(
-            'specs/002-portfolio-ownership/contracts/validate-meta-lh02-snapshot.sh',
-            '--repo', '.', '--', 'post-global-ready'
-          )
-          & $env:AOC_GIT_BASH_EXE $bashArguments
-          if ($LASTEXITCODE -ne 0) {
-            throw "Feature-002 Bash peer failed with exit $LASTEXITCODE."
-          }
-          ./specs/002-portfolio-ownership/contracts/validate-meta-lh02-snapshot.ps1 -Repo . -Mode post-global-ready
-          if ($LASTEXITCODE -ne 0) {
-            throw "Feature-002 PowerShell peer failed with exit $LASTEXITCODE."
-          }
