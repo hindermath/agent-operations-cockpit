@@ -110,3 +110,7 @@
 !.release-please-manifest.json
 !CHANGELOG.md
 !version.txt
+
+# --- Python-Bytecode und Cache / Python bytecode and cache ---
+__pycache__/
+*.pyc
