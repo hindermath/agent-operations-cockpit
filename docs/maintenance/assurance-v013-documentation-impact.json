@@ -33,6 +33,40 @@
       "risk": "Technical validation must not imply complete product security or human acceptance.",
       "criticality": "Security",
       "reevaluationTrigger": "Preset, baseline, evidence, product scaffold, scope or authority changes."
+    },
+    {
+      "changeId": "CHG002",
+      "scope": "Generated embedded-script inventory",
+      "decision": "GeneratedUpdate",
+      "rationale": "The thirteenth preset adds embedded scripts; regenerate the catalog-derived inventory.",
+      "documents": [
+        "docs/scripts/embedded-scripts.md"
+      ],
+      "owner": "@hindermath",
+      "audiences": [
+        "Learners",
+        "Maintainers",
+        "Technical reviewers"
+      ],
+      "readerPaths": [
+        "README -> field report -> evidence matrix -> runbooks"
+      ],
+      "canonicalSource": "scripts/config/script-catalog.json",
+      "navigationImpact": "Existing embedded-script reference gains the installed Assurance paths.",
+      "documentClass": "GeneratedReference",
+      "languageStrategy": "German first and English paragraphs in the same files",
+      "languagePartners": [],
+      "platformAndExampleProof": "macOS dual-shell package and context checks, existing AOC authoring and global-ready validation; no product scaffold exists.",
+      "distributionClass": "sourceOnly",
+      "homeSyncRequired": false,
+      "evidence": "docs/scripts/embedded-scripts.md",
+      "risk": "N/A",
+      "criticality": "Normal",
+      "reevaluationTrigger": "Preset, baseline, evidence, product scaffold, scope or authority changes.",
+      "generatedSource": {
+        "path": "scripts/config/script-catalog.json",
+        "renderer": "bash scripts/render-script-reference.sh"
+      }
     }
   ]
 }

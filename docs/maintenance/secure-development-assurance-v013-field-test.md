@@ -88,6 +88,9 @@ evidence requires the actual PR job, not just another shell on macOS.*
 - Spec Kit 0.12.8 lässt beim Entfernen in der temporären Kopie zwei Claude-Skills
   zurück. Daher kein vollständiger Deinstallationsnachweis. Wiederinstallation
   stellt die Oberflächen wieder her. Kein CLI-Patch, keine echte Deinstallation.
+- Die erste CI-Prüfung erkannte eine veraltete generierte Skriptübersicht nach
+  Installation. Der bestehende Renderer aktualisiert ausschließlich die
+  eingebettete Skriptreferenz; der Katalog bleibt unverändert.
 - Der globale 14-Intake-Vertrag, Lastenhefte, Receipts und Quellbaseline bleiben
   unverändert. Ein bestandener global-ready-Preflight startet keinen Produktlauf.
 - AOC, home-baseline, TinyCalc, TinyPl0, InventarWorkerService,
@@ -111,6 +114,9 @@ references for the four IT training occupations, with secure AI-assisted work
 from year one. C5 testing is outside scope; scope review is due 2026-12-31,
 technical review 2027-09-09. Human approvals, legal conclusions and central
 preset acceptance are not inferred.*
+
+*Initial CI also detected the stale embedded-script inventory after installation.
+The existing renderer updates that reference without changing the catalog.*
 
 ## Dokumentation und AEPS / Documentation and AEPS
 
