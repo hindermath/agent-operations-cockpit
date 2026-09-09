@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "SecureDevelopmentGateEvidence",
+  "contextId": "aoc-assurance-v013",
+  "gate": "image-impact",
+  "mode": "training",
+  "createdAt": "2026-09-09T09:58:51+02:00",
+  "review": {
+    "owner": "@hindermath (test owner)",
+    "reviewer": "Codex technical execution; @hindermath designated human technical reviewer",
+    "reviewedAt": "2026-09-09T09:58:51+02:00",
+    "reviewDue": "2027-09-09",
+    "residualRisk": "Governance-only field test; no approved product scaffold, runtime behavior or comprehensive security-control implementation is claimed. Human review remains separate.",
+    "reevaluationTrigger": "Package, baseline document, evidence, scope or authority changes."
+  },
+  "assessments": [
+    {
+      "id": "IMAGE-001",
+      "applicability": "N/A",
+      "implementation": "Not Assessed",
+      "reason": "No image, OCI artifact, container deployment, mounts or network configuration is created or changed by this preset-only rollout.",
+      "reevaluationTrigger": "Image build, container/runtime or infrastructure changes.",
+      "evidence": "docs/security/secure-development/2026-09-09-aoc-assurance-v013/evidence-matrix.md"
+    }
+  ],
+  "outcome": "Ready",
+  "externalComparisonBoundary": "HOSK/GWDG: ExternalComparison only; never local evidence",
+  "imageChecks": {
+    "build": "N/A",
+    "compose": "N/A",
+    "toolchain": "N/A",
+    "ociDigest": "N/A",
+    "sbom": "N/A",
+    "secrets": "N/A",
+    "mounts": "N/A",
+    "network": "N/A",
+    "ci": "N/A"
+  }
+}

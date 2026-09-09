@@ -1,5 +1,16 @@
 # AEPS Findings Ledger – AOC
 
+## Feldtest-Nachtrag 2026-09-09 / Field-test supplement
+
+Der [Assurance-v0.1.3-Review](receipts/2026-09-09-assurance-v013-field-test.md)
+ergibt `NoChange`: CAND-AEPS-08/09/11 und die bekannte CLI-Remove-Grenze
+werden bestätigt, nicht neu dupliziert oder hochgestuft. Historische
+Ledger-Zustände bleiben erhalten.
+
+*The linked review records NoChange: existing patterns and the known CLI
+removal limit are confirmed without new candidates or maturity promotion.
+Historical ledger states are preserved.*
+
 ## Zweck, Leseschlüssel und Ausgangsstand / Purpose, reading key, and baseline
 
 Dieses Ledger enthält die initiale AOC-Bestandsaufnahme vom `2026-08-01`.

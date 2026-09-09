@@ -25,6 +25,16 @@ are intentionally undecided.*
 
 ## Zielgruppe und Barrierefreiheit / Audience and accessibility
 
+AOC ist ein nichtproduktives, nichtkommerzielles Ausbildungs- und
+Referenzprojekt. Die optionale 13-Preset-Installation und ihre technische
+Prüfgrenze stehen im [Assurance-v0.1.3-Feldbericht](docs/maintenance/secure-development-assurance-v013-field-test.md).
+Sie startet keinen Produktlauf und ersetzt keine menschliche Freigabe.
+
+*AOC is a non-production, non-commercial educational/reference project.
+The linked report documents the optional thirteen-preset profile and its
+technical proof boundary; installation starts no product run and grants no
+human approval.*
+
 Die Dokumentation richtet sich an Auszubildende der IHK-IT-Berufe ab dem ersten
 Ausbildungsjahr und an erfahrene Fachkräfte. Inhalte werden auf CEFR-B2-Niveau
 verfasst: Deutsch zuerst, danach terminologisch konsistentes Englisch.

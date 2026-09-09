@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.1",
+  "feature": "assurance-v013-aoc-field-test",
+  "entries": [
+    {
+      "changeId": "CHG001",
+      "scope": "AOC optional thirteenth preset and governance field test",
+      "decision": "UpdateRequired",
+      "rationale": "Add installed commands and a scoped technical evidence package without starting product work.",
+      "documents": [
+        "README.md",
+        "docs/maintenance/secure-development-assurance-v013-field-test.md",
+        "docs/security/secure-development/2026-09-09-aoc-assurance-v013/evidence-matrix.md"
+      ],
+      "owner": "@hindermath",
+      "audiences": [
+        "Learners",
+        "Maintainers",
+        "Technical reviewers"
+      ],
+      "readerPaths": [
+        "README -> field report -> evidence matrix -> runbooks"
+      ],
+      "canonicalSource": "docs/maintenance/secure-development-assurance-v013-field-test.md",
+      "navigationImpact": "Add a discoverable field report, cross-referenced to central tracker; preserve all product-intake and global-review gates.",
+      "documentClass": "ActiveSemantic",
+      "languageStrategy": "German first and English paragraphs in the same files",
+      "languagePartners": [],
+      "platformAndExampleProof": "macOS dual-shell package and context checks, existing AOC authoring and global-ready validation; no product scaffold exists.",
+      "distributionClass": "sourceOnly",
+      "homeSyncRequired": false,
+      "evidence": "docs/maintenance/secure-development-assurance-v013-field-test.md",
+      "risk": "Technical validation must not imply complete product security or human acceptance.",
+      "criticality": "Security",
+      "reevaluationTrigger": "Preset, baseline, evidence, product scaffold, scope or authority changes."
+    }
+  ]
+}

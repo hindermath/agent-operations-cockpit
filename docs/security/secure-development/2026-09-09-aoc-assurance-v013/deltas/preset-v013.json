@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "SecureDevelopmentGateEvidence",
+  "contextId": "aoc-assurance-v013",
+  "gate": "delta",
+  "mode": "training",
+  "createdAt": "2026-09-09T09:58:51+02:00",
+  "review": {
+    "owner": "@hindermath (test owner)",
+    "reviewer": "Codex technical execution; @hindermath designated human technical reviewer",
+    "reviewedAt": "2026-09-09T09:58:51+02:00",
+    "reviewDue": "2027-09-09",
+    "residualRisk": "Governance-only field test; no approved product scaffold, runtime behavior or comprehensive security-control implementation is claimed. Human review remains separate.",
+    "reevaluationTrigger": "Package, baseline document, evidence, scope or authority changes."
+  },
+  "assessments": [
+    {
+      "id": "DELTA-001",
+      "applicability": "Applicable",
+      "implementation": "Fulfilled",
+      "evidence": ".specify/presets/.registry"
+    },
+    {
+      "id": "AUTHORITY-001",
+      "applicability": "Applicable",
+      "implementation": "Fulfilled",
+      "evidence": "requirements/baseline/authority-and-stop-gates.md; global-ready preflight passed on baseline 17df5332f4d4b6923b1596e11ebfb56d2629a5cc. No product run is authorized."
+    }
+  ],
+  "outcome": "Ready",
+  "externalComparisonBoundary": "HOSK/GWDG: ExternalComparison only; never local evidence"
+}

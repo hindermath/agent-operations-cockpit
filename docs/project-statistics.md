@@ -17,6 +17,8 @@
 | 2026-07-31 | 0 — Bootstrap | 1 | — | 1 | Initialer Projekt-Bootstrap via bootstrap-project |
 | 2026-08-02 | 1 — CI-Runnerprofil | — | — | — | Documentation Impact `GeneratedUpdate`: Die generischen Maintenance-TUI- und PowerShell-Analyse-Workflows verwenden die Fleet-Policy; AOC bleibt als öffentliches Referenz-Repository vollständiger Linux-/macOS-/Windows-Canary. Produktcode, API und Bedienung bleiben unverändert. |
 
+| 2026-09-09 | Assurance v0.1.3 Governance-Feldtest / Governance field test | — | — | — | Optionales 13-Preset-Profil, eigener training-Kontext, vier Gates und Runbooks, Rohhash-/Paritaets-/Kompositionsnachweise. Paket- und AOC-Governance-Tests bestanden; keine Produktlaeufe oder menschlichen Freigaben. Ausbildungszweck ab Lehrjahr 1 fuer vier IT-Ausbildungsberufe; AEPS NoChange. / Installed optional profile, scoped evidence and passing technical tests; no product run or human approval. |
+
 ---
 
 ## Gesamtstand des Repositories / Repository Snapshot

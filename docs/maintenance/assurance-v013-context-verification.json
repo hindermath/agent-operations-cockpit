@@ -1,0 +1,73 @@
+{
+  "date": "2026-09-09T10:05:40.3186350+02:00",
+  "repo": "AgentOperationsCockpit",
+  "context": "docs/security/secure-development/2026-09-09-aoc-assurance-v013",
+  "parity": true,
+  "readOnly": true,
+  "before": {
+    "docs/security/secure-development/2026-09-09-aoc-assurance-v013/baseline.json": "ed60cb753ee887ed53206d3eada6bbbf83667687c395162c951516e822b15c4b",
+    "docs/security/secure-development/2026-09-09-aoc-assurance-v013/closure.json": "4d54347aefe96663e048fe8796babea326bff3a3e083139019b3dc6c0157a3df",
+    "docs/security/secure-development/2026-09-09-aoc-assurance-v013/deltas/preset-v013.json": "f16990e7e0687b780f9f94f690b9961e135bc4b2666c9cb94327800a6c85589b",
+    "docs/security/secure-development/2026-09-09-aoc-assurance-v013/evidence-matrix.md": "cf650324a4aec9e7873e5ae57456de35179430b51bc0d85fda2e2ceeed225e2c",
+    "docs/security/secure-development/2026-09-09-aoc-assurance-v013/image-impact.json": "e87e1a2a828977f2ca65fce7e5f90f98d41ef2d10d78d445f2385fe2fe77b3cd"
+  },
+  "after": {
+    "docs/security/secure-development/2026-09-09-aoc-assurance-v013/baseline.json": "ed60cb753ee887ed53206d3eada6bbbf83667687c395162c951516e822b15c4b",
+    "docs/security/secure-development/2026-09-09-aoc-assurance-v013/closure.json": "4d54347aefe96663e048fe8796babea326bff3a3e083139019b3dc6c0157a3df",
+    "docs/security/secure-development/2026-09-09-aoc-assurance-v013/deltas/preset-v013.json": "f16990e7e0687b780f9f94f690b9961e135bc4b2666c9cb94327800a6c85589b",
+    "docs/security/secure-development/2026-09-09-aoc-assurance-v013/evidence-matrix.md": "cf650324a4aec9e7873e5ae57456de35179430b51bc0d85fda2e2ceeed225e2c",
+    "docs/security/secure-development/2026-09-09-aoc-assurance-v013/image-impact.json": "e87e1a2a828977f2ca65fce7e5f90f98d41ef2d10d78d445f2385fe2fe77b3cd"
+  },
+  "checks": [
+    {
+      "command": "bash .specify/presets/secure-development-assurance-governance/scripts/validate-secure-development-assurance.sh status docs/security/secure-development/2026-09-09-aoc-assurance-v013",
+      "exitCode": 0,
+      "output": "Context: docs/security/secure-development/2026-09-09-aoc-assurance-v013\nGate baseline: Ready\nGate delta: Ready\nGate closure: Ready\nGate image-impact: Ready\nOverall: Ready\nDecision technicalValidation: Fulfilled\nDecision pilotAuthorization: Open\nDecision projectAcceptance: Open\nDecision generalRelease: Open\nNext action: Complete AOC-scoped technical field tests and exact-head PR review; do not start product work or infer central preset acceptance."
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/secure-development-assurance-governance/scripts/validate-secure-development-assurance.ps1 -Action Status -EvidenceDirectory docs/security/secure-development/2026-09-09-aoc-assurance-v013",
+      "exitCode": 0,
+      "output": "Context: docs/security/secure-development/2026-09-09-aoc-assurance-v013\nGate baseline: Ready\nGate delta: Ready\nGate closure: Ready\nGate image-impact: Ready\nOverall: Ready\nDecision technicalValidation: Fulfilled\nDecision pilotAuthorization: Open\nDecision projectAcceptance: Open\nDecision generalRelease: Open\nNext action: Complete AOC-scoped technical field tests and exact-head PR review; do not start product work or infer central preset acceptance."
+    },
+    {
+      "command": "bash .specify/presets/secure-development-assurance-governance/scripts/validate-secure-development-assurance.sh review baseline aoc-assurance-v013 training",
+      "exitCode": 0,
+      "output": "Reviewed: gate=baseline context=aoc-assurance-v013 mode=training outcome=Ready"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/secure-development-assurance-governance/scripts/validate-secure-development-assurance.ps1 -Action Review -Gate baseline -ContextId aoc-assurance-v013 -Mode training",
+      "exitCode": 0,
+      "output": "Reviewed: gate=baseline context=aoc-assurance-v013 mode=training outcome=Ready"
+    },
+    {
+      "command": "bash .specify/presets/secure-development-assurance-governance/scripts/validate-secure-development-assurance.sh review delta aoc-assurance-v013 training",
+      "exitCode": 0,
+      "output": "Reviewed: gate=delta context=aoc-assurance-v013 mode=training outcome=Ready"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/secure-development-assurance-governance/scripts/validate-secure-development-assurance.ps1 -Action Review -Gate delta -ContextId aoc-assurance-v013 -Mode training",
+      "exitCode": 0,
+      "output": "Reviewed: gate=delta context=aoc-assurance-v013 mode=training outcome=Ready"
+    },
+    {
+      "command": "bash .specify/presets/secure-development-assurance-governance/scripts/validate-secure-development-assurance.sh review closure aoc-assurance-v013 training",
+      "exitCode": 0,
+      "output": "Reviewed: gate=closure context=aoc-assurance-v013 mode=training outcome=Ready"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/secure-development-assurance-governance/scripts/validate-secure-development-assurance.ps1 -Action Review -Gate closure -ContextId aoc-assurance-v013 -Mode training",
+      "exitCode": 0,
+      "output": "Reviewed: gate=closure context=aoc-assurance-v013 mode=training outcome=Ready"
+    },
+    {
+      "command": "bash .specify/presets/secure-development-assurance-governance/scripts/validate-secure-development-assurance.sh review image-impact aoc-assurance-v013 training",
+      "exitCode": 0,
+      "output": "Reviewed: gate=image-impact context=aoc-assurance-v013 mode=training outcome=Ready"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/secure-development-assurance-governance/scripts/validate-secure-development-assurance.ps1 -Action Review -Gate image-impact -ContextId aoc-assurance-v013 -Mode training",
+      "exitCode": 0,
+      "output": "Reviewed: gate=image-impact context=aoc-assurance-v013 mode=training outcome=Ready"
+    }
+  ]
+}
