@@ -1,0 +1,61 @@
+{
+  "date": "2026-09-09",
+  "platform": "macOS arm64",
+  "specifyVersion": "0.12.8",
+  "passed": true,
+  "orphanedClaudeSkillsAfterRemoval": [
+    ".claude/skills/speckit-secure-development-status/SKILL.md",
+    ".claude/skills/speckit-secure-development-review/SKILL.md"
+  ],
+  "reinstalled": true,
+  "checks": [
+    {
+      "command": "git clone --quiet --local --no-hardlinks <aoc> <temporary-copy>",
+      "exitCode": 0
+    },
+    {
+      "command": "specify preset add --from https://github.com/hindermath/spec-kit-preset-secure-development-assurance-governance/archive/refs/tags/v0.1.3.zip --priority 15",
+      "exitCode": 0
+    },
+    {
+      "command": "bash <level0>/scripts/install-spec-kit-governance-presets.sh --repo <temporary-copy> --preset-config <level0>/scripts/config/spec-kit-secure-development-assurance-governance-presets.json --check-only",
+      "exitCode": 0
+    },
+    {
+      "command": "specify preset disable secure-development-assurance-governance",
+      "exitCode": 0
+    },
+    {
+      "command": "specify check",
+      "exitCode": 0
+    },
+    {
+      "command": "specify preset enable secure-development-assurance-governance",
+      "exitCode": 0
+    },
+    {
+      "command": "bash <level0>/scripts/install-spec-kit-governance-presets.sh --repo <temporary-copy> --preset-config <level0>/scripts/config/spec-kit-secure-development-assurance-governance-presets.json --check-only",
+      "exitCode": 0
+    },
+    {
+      "command": "specify preset remove secure-development-assurance-governance",
+      "exitCode": 0
+    },
+    {
+      "command": "bash <level0>/scripts/install-spec-kit-governance-presets.sh --repo <temporary-copy> --preset-config <level0>/scripts/config/spec-kit-model-routing-governance-presets.json --check-only",
+      "exitCode": 0
+    },
+    {
+      "command": "specify preset add --from https://github.com/hindermath/spec-kit-preset-secure-development-assurance-governance/archive/refs/tags/v0.1.3.zip --priority 15",
+      "exitCode": 0
+    },
+    {
+      "command": "bash <level0>/scripts/install-spec-kit-governance-presets.sh --repo <temporary-copy> --preset-config <level0>/scripts/config/spec-kit-secure-development-assurance-governance-presets.json --check-only",
+      "exitCode": 0
+    },
+    {
+      "command": "specify preset resolve secure-development-evidence-contract",
+      "exitCode": 0
+    }
+  ]
+}

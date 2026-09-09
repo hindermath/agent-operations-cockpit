@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "SecureDevelopmentGateEvidence",
+  "contextId": "aoc-assurance-v013",
+  "gate": "closure",
+  "mode": "training",
+  "createdAt": "2026-09-09T09:58:51+02:00",
+  "review": {
+    "owner": "@hindermath (test owner)",
+    "reviewer": "Codex technical execution; @hindermath designated human technical reviewer",
+    "reviewedAt": "2026-09-09T09:58:51+02:00",
+    "reviewDue": "2027-09-09",
+    "residualRisk": "Governance-only field test; no approved product scaffold, runtime behavior or comprehensive security-control implementation is claimed. Human review remains separate.",
+    "reevaluationTrigger": "Package, baseline document, evidence, scope or authority changes."
+  },
+  "assessments": [
+    {
+      "id": "CLOSE-BOUNDARY",
+      "applicability": "Applicable",
+      "implementation": "Fulfilled",
+      "evidence": "docs/security/secure-development/2026-09-09-aoc-assurance-v013/evidence-matrix.md"
+    }
+  ],
+  "outcome": "Ready",
+  "externalComparisonBoundary": "HOSK/GWDG: ExternalComparison only; never local evidence",
+  "humanDecisions": {
+    "technicalValidation": {
+      "status": "Fulfilled",
+      "authority": "@hindermath",
+      "evidence": "docs/maintenance/secure-development-assurance-v013-field-test.md; successful AOC package suite, actual context and governance checks. Human review remains separate."
+    },
+    "pilotAuthorization": {
+      "status": "Open",
+      "authority": "@hindermath",
+      "evidence": "Separate explicit human decision required; not granted by this field test."
+    },
+    "projectAcceptance": {
+      "status": "Open",
+      "authority": "@hindermath",
+      "evidence": "Separate explicit human decision required; not granted by this field test."
+    },
+    "generalRelease": {
+      "status": "Open",
+      "authority": "@hindermath",
+      "evidence": "Separate explicit human decision required; not granted by this field test."
+    }
+  },
+  "nextAction": "Complete AOC-scoped technical field tests and exact-head PR review; do not start product work or infer central preset acceptance."
+}
