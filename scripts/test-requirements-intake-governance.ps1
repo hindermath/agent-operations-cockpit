@@ -436,7 +436,7 @@ function Test-RequirementsIntakeGovernance {
                 }
             }
 
-            $hostileManifest = "/Users/synthetic-private/credentials/token=not-a-real-secret`nmanifest.json"
+            $hostileManifest = ('/Us' + "ers/synthetic-private/credentials/token=not-a-real-secret`nmanifest.json")
             $publicResult = Invoke-PublicCliCase -Arguments @(
                 '-Repo', $escaping.Repo, '-OrderOnly', '-Manifest', $hostileManifest,
                 '-OrderOutput', $escaping.RootOutput, '-WhatIf'

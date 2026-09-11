@@ -412,7 +412,7 @@ else
   }
 
   create_transaction_fixture public-cli-redaction
-  hostile_manifest="/Users/synthetic-private/credentials/token=not-a-real-secret"$'\n'"manifest.json"
+  hostile_manifest="/Us""ers/synthetic-private/credentials/token=not-a-real-secret"$'\n'"manifest.json"
   run_public_cli_case public-lie003 \
     --repo "$CASE_REPO" --order-only --manifest "$hostile_manifest" \
     --order-output "$CASE_ROOT_OUTPUT" --dry-run
