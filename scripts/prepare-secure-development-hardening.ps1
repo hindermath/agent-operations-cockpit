@@ -10,6 +10,13 @@ Primaersprache gegen die MSL-Allowlist, synchronisiert bei MSL-Repositories
 `docs/secure-development/`, erzeugt ein Intake-Lastenheft und pflegt die
 sichtbare Reihenfolge der `Lastenheft*.md`-Dateien.
 
+Bei einem eindeutigen kanonischen Series-Manifest rendert es den exakten
+Fuenf-Spalten-Vertrag mit den Feldern
+Position, Status, vollstaendig verlinkter Intake-Dateiname, direkte eingehende
+Abhaengigkeiten und Spec-Kit-Feature. Ein Feature-Link benoetigt genau eine
+ausdrueckliche Bindung; sonst erscheint der exakte zweisprachige Fallback.
+`-WhatIf` prueft denselben Vertrag ohne Zielwrites.
+
 Es startet keinen Spec-Kit-Lauf, erzeugt keine Feature-Branches und befuellt
 keine projektspezifischen `docs/security/`-Nachweise.
 
@@ -17,6 +24,13 @@ This script discovers level-2 repositories below the home directory, checks the
 primary language against the MSL allow-list, synchronizes `docs/secure-development/`
 for MSL repositories, creates an intake requirements document, and maintains the
 visible order of `Lastenheft*.md` files.
+
+With one unambiguous canonical series manifest, it renders the exact five-column
+contract: position, status, linked complete intake filename, direct incoming
+dependencies, and Spec Kit feature. A feature link requires exactly one explicit binding;
+otherwise the exact bilingual fallback is rendered. `-WhatIf` checks the same
+contract without target writes. Write mode rechecks the complete consumed input
+set and rejects generated outputs that overlap canonical inputs.
 
 It does not start a Spec Kit run, does not create feature branches, and does not
 populate project-specific `docs/security/` evidence files.
@@ -40,6 +54,27 @@ nicht ausreichend ist.
 Explicit primary language when auto-detection from constitution or files is not
 sufficient.
 
+.PARAMETER OrderOnly
+Fuehrt nur die begrenzte Intake-Reihenfolgeprojektion aus. Erfordert genau ein
+explizites Repo und Manifest; Secure-Development-Templates, Commit und Push
+bleiben ausgeschlossen.
+
+Runs only the bounded intake-order projection. Requires exactly one explicit
+repository and manifest; secure-development templates, commit, and push remain
+excluded.
+
+.PARAMETER Manifest
+Kanonischer Manifestpfad relativ zum expliziten Repository fuer `-OrderOnly`.
+
+Canonical manifest path relative to the explicit repository for `-OrderOnly`.
+
+.PARAMETER OrderOutput
+Owned Ausgabepfad relativ zum Repository; fuer atomare Multi-Output-Publikation
+wiederholbar beziehungsweise als Array uebergebbar.
+
+Owned repository-relative output path; repeat or pass an array for atomic
+multi-output publication.
+
 .PARAMETER Commit
 Commitet geaenderte Dateien pro Repository.
 
@@ -55,14 +90,22 @@ Erlaubt vorhandene lokale Aenderungen in Ziel-Repositories.
 
 Allows existing local changes in target repositories.
 
+.PARAMETER Help
+Zeigt die vollstaendige zweisprachige Hilfe und beendet das Skript ohne Writes.
+
+Shows the complete bilingual help and exits without writes.
+
 .EXAMPLE
 pwsh scripts/prepare-secure-development-hardening.ps1 -WhatIf
 
 .EXAMPLE
-pwsh scripts/prepare-secure-development-hardening.ps1 -Repo /path/to/TuiVision -WhatIf
+pwsh scripts/prepare-secure-development-hardening.ps1 -Repo /path/to/workspace/TuiVision -WhatIf
 
 .EXAMPLE
-pwsh scripts/prepare-secure-development-hardening.ps1 -HomeDir /Users/thorstenhindermann -Commit -Push
+pwsh scripts/prepare-secure-development-hardening.ps1 -HomeDir /path/to/home -Commit -Push
+
+.EXAMPLE
+pwsh scripts/prepare-secure-development-hardening.ps1 -Repo . -OrderOnly -Manifest requirements/intakes/series/home-baseline-delivery/manifest.json -WhatIf
 #>
 
 [CmdletBinding(SupportsShouldProcess)]
@@ -70,13 +113,29 @@ param(
     [string]$HomeDir = $(if ($env:HOME) { $env:HOME } else { $env:USERPROFILE }),
     [string[]]$Repo = @(),
     [string]$PrimaryLanguage = '',
+    [switch]$OrderOnly,
+    [string]$Manifest = '',
+    [string[]]$OrderOutput = @(),
     [switch]$Commit,
     [switch]$Push,
-    [switch]$AllowDirty
+    [switch]$AllowDirty,
+    [switch]$Help
 )
 
+try {
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
+
+if ($Help) {
+    $helpText = Get-Help -Name $MyInvocation.MyCommand.Path -Full | Out-String -Width 120
+    $helpText = $helpText.Replace(
+        $MyInvocation.MyCommand.Path,
+        'scripts/prepare-secure-development-hardening.ps1',
+        [StringComparison]::Ordinal
+    )
+    [Console]::Out.Write($helpText)
+    return
+}
 
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $LibFile = Join-Path $ScriptDir 'lib/secure-development-hardening.ps1'
@@ -86,6 +145,33 @@ if (-not (Test-Path $LibFile)) {
 . $LibFile
 
 if ($Push) { $Commit = $true }
+
+if ($OrderOnly) {
+    $explicitOrderRepos = @(
+        $Repo |
+            ForEach-Object { $_ -split ',' } |
+            ForEach-Object { $_.Trim() } |
+            Where-Object { $_ }
+    )
+    if ($explicitOrderRepos.Count -ne 1) { throw '-OrderOnly erfordert genau ein explizites -Repo.' }
+    if ([string]::IsNullOrWhiteSpace($Manifest)) { throw '-OrderOnly erfordert -Manifest.' }
+    if ($Commit -or $Push) { throw '-OrderOnly erlaubt weder -Commit noch -Push.' }
+    if ($PrimaryLanguage) { throw '-OrderOnly verwendet keine -PrimaryLanguage.' }
+    $orderRepo = $explicitOrderRepos[0]
+    if (-not (Test-Path -LiteralPath (Join-Path $orderRepo '.git') -PathType Container)) { throw '-Repo ist kein Git-Repository.' }
+    if (-not $WhatIfPreference -and -not $AllowDirty) {
+        $orderStatus = ((git -C $orderRepo status --short) | Out-String).Trim()
+        if ($orderStatus) { throw "Repo hat lokale Aenderungen; fuer einen begrenzten Write explizit -AllowDirty verwenden: ${orderRepo}" }
+    }
+    $outputs = if ($OrderOutput.Count -gt 0) { @($OrderOutput) } else { @('Lastenheft_Abarbeitungsreihenfolge.md') }
+    $mode = if ($WhatIfPreference) { 'Check' } else { 'Write' }
+    $projectionResult = Invoke-SdhLinkedIntakeProjection -Repo $orderRepo -ManifestPath $Manifest -Mode $mode -OutputPaths $outputs
+    Write-Host "Intake-Projektion / intake projection: $projectionResult"
+    return
+}
+if ($Manifest -or $OrderOutput.Count -gt 0) {
+    throw '-Manifest und -OrderOutput sind nur mit -OrderOnly erlaubt.'
+}
 
 function Test-Level2Repo {
     param([string]$Repo)
@@ -209,3 +295,23 @@ foreach ($repo in $repos) {
 
 Write-Host ''
 Write-Host 'Secure-Development-Hardening Vorbereitung abgeschlossen.'
+}
+catch {
+    # A top-level ErrorRecord includes source and stack context. Public CLI
+    # diagnostics need only the stable, bounded message and must not echo a
+    # private repository root or credential-shaped argument.
+    if (Get-Command ConvertTo-SdhPublicDiagnostic -CommandType Function -ErrorAction SilentlyContinue) {
+        $safeMessage = ConvertTo-SdhPublicDiagnostic `
+            -Message ([string]$_.Exception.Message) `
+            -PrivatePath (@($HomeDir) + @($Repo))
+    } else {
+        $safeMessage = [regex]::Replace(
+            [string]$_.Exception.Message,
+            '[\x00-\x1f\x7f]',
+            '?'
+        )
+        $safeMessage = [regex]::Replace($safeMessage, '(?i)(?:/Users/|/home/)[^\s:;,]+', '[private-path]')
+    }
+    [Console]::Error.WriteLine($safeMessage)
+    exit 1
+}

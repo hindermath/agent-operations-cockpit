@@ -1,10 +1,10 @@
 <!--
 Sync Impact Report
-Version change: 1.20.0 -> 1.21.0
+Version change: 1.21.0 -> 1.21.1
 Modified principles:
-- VI. Agent Context & Template Synchronization (bind the persisted run-retrospective contract to project templates)
+- XIX. Spec Kit Governance Presets (align the autonomous governance version with the configured and installed release)
 Added sections:
-- XXI. Engineering Run Retrospectives & Learning Feedback
+- None
 Removed sections:
 - None
 Templates requiring updates:
@@ -30,7 +30,7 @@ Follow-up TODOs:
 - None.
 -->
 
-# Constitution v1.21.0
+# Constitution v1.21.1
 
 # home-baseline Constitution
 
@@ -1032,7 +1032,7 @@ workspace family consists of:
 | `a11y-governance` | `v0.4.2` | `40` | WCAG 2.2 AA, bilingual DE/EN, CEFR B2, inclusive artefacts, didactic inline-code-comment review |
 | `cross-platform-governance` | `v0.2.1` | `50` | Bash/PowerShell parity, macOS/Linux/Windows script governance |
 | `agent-parity-governance` | `v0.4.1` | `60` | synchronized agent guidance, fleet-completion evidence, and agent-neutral Spec-Kit model routing |
-| `autonomous-run-governance` | `v0.3.3` | `70` | permission-bounded delivery plus optional policy-driven intake gate |
+| `autonomous-run-governance` | `v0.4.1` | `70` | permission-bounded delivery plus optional policy-driven intake gate |
 | `parallel-autonomous-run-governance` | `v0.2.4` | `80` | isolated bounded campaigns plus optional schema-1.2 campaign intake gate |
 
 `intake-authoring-governance` v0.3.0 at priority `64`,
@@ -1118,7 +1118,7 @@ All eight presets are published as standalone repositories under
 `https://github.com/hindermath/spec-kit-preset-*`. The original six have been
 listed in the `github/spec-kit` community preset catalog since 2026-05-04;
 `autonomous-run-governance` v0.2.2 was verified there on 2026-07-17.
-The current standalone releases are `autonomous-run-governance` v0.3.3,
+The current standalone releases are `autonomous-run-governance` v0.4.1,
 `parallel-autonomous-run-governance` v0.2.4, optional
 `intake-authoring-governance` v0.3.0, optional
 `intake-review-governance` v0.2.0, and optional
@@ -1160,7 +1160,7 @@ Community/catalog coordination is tracked in `github/spec-kit#2362`.
 `.github/copilot-instructions.md` for per-agent operational guidance. This
 constitution is the authoritative policy layer above all agent-specific files.
 
-**Version**: 1.21.0 | **Ratified**: 2026-03-31 | **Last Amended**: 2026-09-05
+**Version**: 1.21.1 | **Ratified**: 2026-03-31 | **Last Amended**: 2026-09-11
 
 <!-- EN: constitution.md placeholder
 [DE-Zusammenfassung: constitution.md beschreibt die Prinzipien und Standards für alle home-baseline Workspaces.]
