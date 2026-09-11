@@ -455,6 +455,53 @@ function Read-SdhStrictUtf8File {
     }
 }
 
+function Assert-SdhLinkedIntakeCompletionProof {
+    param(
+        [string]$Repo,
+        [string]$LogicalPath,
+        [string]$ResolvedPath,
+        [string]$StatePath
+    )
+
+    $stateText = Read-SdhStrictUtf8File -Path (Join-Path $Repo $StatePath) -Subject $StatePath
+    try { $state = $stateText | ConvertFrom-Json } catch {
+        throw "LIE008: ungueltiger Feature-Abschlussnachweis / invalid feature completion proof: ${LogicalPath}"
+    }
+    $stateProperties = @($state.PSObject.Properties.Name)
+    if ('status' -cnotin $stateProperties `
+        -or 'closeout' -cnotin $stateProperties `
+        -or 'acceptedArtifacts' -cnotin $stateProperties `
+        -or $state.status -isnot [string] `
+        -or [string]$state.status -cne 'Completed' `
+        -or $null -eq $state.closeout `
+        -or $state.acceptedArtifacts -isnot [Array]) {
+        throw "LIE008: Feature-Abschlussnachweis ist nicht terminal / feature completion proof is not terminal: ${LogicalPath}"
+    }
+    $closeoutProperties = @($state.closeout.PSObject.Properties.Name)
+    if ('mergeOrPublication' -cnotin $closeoutProperties `
+        -or 'defaultBranchSync' -cnotin $closeoutProperties `
+        -or 'finalValidation' -cnotin $closeoutProperties `
+        -or [string]$state.closeout.mergeOrPublication -cne 'Completed' `
+        -or [string]$state.closeout.defaultBranchSync -cne 'Completed' `
+        -or [string]$state.closeout.finalValidation -cne 'Completed') {
+        throw "LIE008: Feature-Closeout ist nicht terminal / feature closeout is not terminal: ${LogicalPath}"
+    }
+
+    $resolvedHash = (Get-FileHash -LiteralPath (Join-Path $Repo $ResolvedPath) -Algorithm SHA256).Hash.ToLowerInvariant()
+    $accepted = @($state.acceptedArtifacts | Where-Object {
+        $null -ne $_ `
+            -and 'path' -cin @($_.PSObject.Properties.Name) `
+            -and 'sha256' -cin @($_.PSObject.Properties.Name) `
+            -and $_.path -is [string] `
+            -and $_.sha256 -is [string] `
+            -and (([string]$_.path -ceq $LogicalPath) -or ([string]$_.path -ceq $ResolvedPath)) `
+            -and [string]$_.sha256 -ceq $resolvedHash
+    })
+    if ($accepted.Count -ne 1) {
+        throw "LIE008: gestempelter Intake ist nicht durch einen hashgebundenen terminalen Feature-Abschluss belegt / stamped intake is not proven by a hash-bound terminal feature completion: ${LogicalPath}"
+    }
+}
+
 function Resolve-SdhLinkedIntakePath {
     param([string]$Repo, [string]$LogicalPath)
 
@@ -507,14 +554,7 @@ function Resolve-SdhLinkedIntakePath {
         throw "LIE008: gestempelter Intake hat keinen Feature-Nachweis / stamped intake has no feature proof: ${LogicalPath}"
     }
     Assert-SdhSafeRepositoryPath -Repo $Repo -RelativePath $statePath -ExpectedType File
-    $stateText = Read-SdhStrictUtf8File -Path (Join-Path $Repo $statePath) -Subject $statePath
-    try { $state = $stateText | ConvertFrom-Json } catch { throw "LIE008: ungueltiger Feature-Abschlussnachweis / invalid feature completion proof: ${LogicalPath}" }
-    $accepted = @($state.acceptedArtifacts | Where-Object {
-        [string]$_.path -ceq $LogicalPath -or [string]$_.path -ceq $resolved
-    })
-    if ($accepted.Count -eq 0) {
-        throw "LIE008: gestempelter Intake ist nicht durch den Feature-Abschluss belegt / stamped intake is not proven by feature completion: ${LogicalPath}"
-    }
+    Assert-SdhLinkedIntakeCompletionProof -Repo $Repo -LogicalPath $LogicalPath -ResolvedPath $resolved -StatePath $statePath
     return $resolved
 }
 
@@ -535,9 +575,13 @@ function Test-SdhLinkedIntakeManifest {
     foreach ($name in $required) {
         if ($name -cnotin @($manifest.PSObject.Properties.Name)) { throw "LIE002: Pflichtfeld fehlt / required field is missing: ${name}" }
     }
-    if ([string]$manifest.schemaVersion -cne '1.0' `
+    if ($manifest.schemaVersion -isnot [string] `
+        -or [string]$manifest.schemaVersion -cne '1.0' `
+        -or $manifest.documentType -isnot [string] `
         -or [string]$manifest.documentType -cne 'IntakeSeriesManifest' `
+        -or $manifest.seriesId -isnot [string] `
         -or [string]::IsNullOrWhiteSpace([string]$manifest.seriesId) `
+        -or $manifest.status -isnot [string] `
         -or [string]::IsNullOrWhiteSpace([string]$manifest.status) `
         -or $manifest.orderedTargets -isnot [Array] `
         -or @($manifest.orderedTargets).Count -eq 0 `
@@ -555,15 +599,27 @@ function Test-SdhLinkedIntakeManifest {
             -or 'path' -cnotin @($target.PSObject.Properties.Name) `
             -or 'role' -cnotin @($target.PSObject.Properties.Name) `
             -or 'status' -cnotin @($target.PSObject.Properties.Name) `
+            -or 'normalizedSha256' -cnotin @($target.PSObject.Properties.Name) `
+            -or $target.path -isnot [string] `
+            -or $target.role -isnot [string] `
+            -or $target.status -isnot [string] `
+            -or $target.normalizedSha256 -isnot [string] `
             -or [string]::IsNullOrWhiteSpace([string]$target.path) `
             -or [string]::IsNullOrWhiteSpace([string]$target.role) `
-            -or [string]::IsNullOrWhiteSpace([string]$target.status)) {
+            -or [string]::IsNullOrWhiteSpace([string]$target.status) `
+            -or [string]$target.normalizedSha256 -cnotmatch '^[0-9a-f]{64}$') {
             throw 'LIE002: Series-Ziel ist unvollstaendig / series target is incomplete'
         }
         $path = [string]$target.path
         if (-not $knownPaths.Add($path)) { throw 'LIE006: doppelte Intake-Identitaet / duplicate intake identity' }
         $resolvedPath = Resolve-SdhLinkedIntakePath -Repo $Repo -LogicalPath $path
         $null = Read-SdhStrictUtf8File -Path (Join-Path $Repo $resolvedPath) -Subject $resolvedPath
+        $actualHash = (Get-FileHash -LiteralPath (Join-Path $Repo $resolvedPath) -Algorithm SHA256).Hash.ToLowerInvariant()
+        # A terminal stamped successor is bound by its completed run-state.
+        # An unstamped source must still match the manifest directly.
+        if ($resolvedPath -ceq $path -and $actualHash -cne [string]$target.normalizedSha256) {
+            throw "LIE009: Intake-Hash weicht vom Series-Manifest ab / intake hash differs from series manifest: ${path}"
+        }
         $position = Get-SdhDisplayPosition -IntakeFile (Join-Path $Repo $resolvedPath) -ManifestIndex $index
         if ($position -le 0 -or -not $positions.Add($position)) { throw 'LIE006: doppelte oder ungueltige sichtbare Position / duplicate or invalid display position' }
     }
@@ -576,12 +632,16 @@ function Test-SdhLinkedIntakeManifest {
     }
 
     $edges = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    $incomingPaths = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
     foreach ($edge in $manifest.dependencies) {
         if ($null -eq $edge `
             -or 'from' -cnotin @($edge.PSObject.Properties.Name) `
             -or 'to' -cnotin @($edge.PSObject.Properties.Name) `
             -or 'kind' -cnotin @($edge.PSObject.Properties.Name) `
             -or 'binding' -cnotin @($edge.PSObject.Properties.Name) `
+            -or $edge.from -isnot [string] `
+            -or $edge.to -isnot [string] `
+            -or $edge.kind -isnot [string] `
             -or [string]::IsNullOrWhiteSpace([string]$edge.from) `
             -or [string]::IsNullOrWhiteSpace([string]$edge.to) `
             -or [string]::IsNullOrWhiteSpace([string]$edge.kind) `
@@ -590,8 +650,45 @@ function Test-SdhLinkedIntakeManifest {
         }
         if (-not $knownPaths.Contains([string]$edge.from)) { throw "LIE007: unbekannter Dependency-Endpoint / unknown dependency endpoint: $($edge.from)" }
         if (-not $knownPaths.Contains([string]$edge.to)) { throw "LIE007: unbekannter Dependency-Endpoint / unknown dependency endpoint: $($edge.to)" }
+        $expectedBinding = switch ([string]$edge.kind) {
+            'PreferredSerialOrder' { $false }
+            { $_ -in @('HardCompletionGate', 'RequirementsGovernanceGate', 'AssessmentBaseline', 'FinalAuditInput') } { $true }
+            default { throw "LIE007: unbekannte Dependency-Art / unknown dependency kind: $($edge.kind)" }
+        }
+        if ([bool]$edge.binding -ne $expectedBinding) {
+            throw "LIE007: Dependency-Art und Binding widersprechen sich / dependency kind and binding disagree: $($edge.kind)"
+        }
+        if ([string]$edge.from -ceq [string]$edge.to) {
+            throw 'LIE007: Dependency darf keine Selbstkante enthalten / dependency must not contain a self-edge'
+        }
+        $null = $incomingPaths.Add([string]$edge.to)
         $identity = '{0}`0{1}`0{2}`0{3}' -f $edge.from, $edge.to, $edge.kind, $edge.binding
         if (-not $edges.Add($identity)) { throw 'LIE007: doppeltes Dependency-Tupel / duplicate dependency tuple' }
+    }
+
+    $zeroIndegreePaths = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    foreach ($knownPath in $knownPaths) {
+        if (-not $incomingPaths.Contains($knownPath)) { $null = $zeroIndegreePaths.Add($knownPath) }
+    }
+    if (-not $roots.SetEquals($zeroIndegreePaths)) {
+        throw 'LIE007: Root-Menge entspricht nicht exakt den Zielen ohne eingehende Kante / root set does not exactly equal zero-indegree targets'
+    }
+
+    $remainingNodes = [Collections.Generic.HashSet[string]]::new($knownPaths, [StringComparer]::Ordinal)
+    $remainingEdges = [Collections.Generic.List[object]]::new()
+    foreach ($edge in $manifest.dependencies) { $remainingEdges.Add($edge) }
+    while ($remainingNodes.Count -gt 0) {
+        $zeroNodes = @($remainingNodes | Where-Object {
+            $candidate = $_
+            -not ($remainingEdges | Where-Object { [string]$_.to -ceq $candidate } | Select-Object -First 1)
+        })
+        if ($zeroNodes.Count -eq 0) {
+            throw 'LIE007: Dependency-Graph enthaelt einen Zyklus / dependency graph contains a cycle'
+        }
+        foreach ($zeroNode in $zeroNodes) { $null = $remainingNodes.Remove($zeroNode) }
+        $survivingEdges = @($remainingEdges | Where-Object { [string]$_.from -cnotin $zeroNodes })
+        $remainingEdges.Clear()
+        foreach ($edge in $survivingEdges) { $remainingEdges.Add($edge) }
     }
 
     $featureEvidence = @()
@@ -696,7 +793,8 @@ function Get-SdhFeatureCell {
             ForEach-Object {
                 $specFile = Join-Path $_.FullName 'spec.md'
                 if (-not (Test-Path -LiteralPath $specFile -PathType Leaf)) { return }
-                $matched = Get-Content -LiteralPath $specFile -Encoding UTF8 | Where-Object {
+                $specText = Read-SdhStrictUtf8File -Path $specFile -Subject "specs/$($_.Name)/spec.md"
+                $matched = [regex]::Split($specText, '\r?\n') | Where-Object {
                     $_ -match '^\*\*(Binding Input|Bindende Eingabe)( / (Binding Input|Bindende Eingabe))?\*\*:' `
                         -and $_.Contains($needle, [StringComparison]::Ordinal)
                 }
@@ -708,13 +806,12 @@ function Get-SdhFeatureCell {
             $archiveFeature = "specs/$($archiveMatch.Groups[1].Value)"
             $stateFile = Join-Path $Repo "${archiveFeature}/autonomous-run-state.json"
             if (Test-Path -LiteralPath $stateFile -PathType Leaf) {
-                $stateText = Read-SdhStrictUtf8File -Path $stateFile -Subject "${archiveFeature}/autonomous-run-state.json"
-                try { $state = $stateText | ConvertFrom-Json } catch { throw "LIE008: ungueltiger archivierter Feature-Nachweis / invalid archived feature evidence: ${IntakePath}" }
-                if (@($state.acceptedArtifacts | Where-Object {
-                    [string]$_.path -ceq $IntakePath -or [string]$_.path -ceq $ResolvedIntakePath
-                }).Count -gt 0) {
-                    $candidates.Add($archiveFeature)
-                }
+                Assert-SdhLinkedIntakeCompletionProof `
+                    -Repo $Repo `
+                    -LogicalPath $IntakePath `
+                    -ResolvedPath $ResolvedIntakePath `
+                    -StatePath "${archiveFeature}/autonomous-run-state.json"
+                $candidates.Add($archiveFeature)
             }
         }
 
@@ -879,7 +976,9 @@ function Get-SdhLinkedIntakeInputPaths {
     $paths = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
     $null = $paths.Add($ManifestPath)
     foreach ($target in @($manifest.orderedTargets)) {
-        $null = $paths.Add((Resolve-SdhLinkedIntakePath -Repo $Repo -LogicalPath ([string]$target.path)))
+        $logicalPath = [string]$target.path
+        $null = $paths.Add($logicalPath)
+        $null = $paths.Add((Resolve-SdhLinkedIntakePath -Repo $Repo -LogicalPath $logicalPath))
     }
     $specsRoot = Join-Path $Repo 'specs'
     if (Test-Path -LiteralPath $specsRoot -PathType Container) {
@@ -1033,11 +1132,11 @@ function Invoke-SdhLinkedIntakeProjection {
             }
         }
 
-        $null = Test-SdhLinkedIntakeManifest -Repo $Repo -ManifestPath $ManifestPath
         $inputFingerprintAfter = Get-SdhLinkedIntakeInputFingerprint -Repo $Repo -ManifestPath $ManifestPath
         if ($inputFingerprintBefore -cne $inputFingerprintAfter) {
             throw 'LIE010: kanonische Eingabemenge hat sich vor Publication geaendert / canonical input set changed before publication'
         }
+        $null = Test-SdhLinkedIntakeManifest -Repo $Repo -ManifestPath $ManifestPath
         for ($index = 0; $index -lt $OutputPaths.Count; $index++) {
             Assert-SdhSafeOutputPath -Repo $Repo -RelativePath $OutputPaths[$index]
             $recheck = New-SdhOrderFileCandidate -Repo $Repo -ManifestPath $ManifestPath -OutputPath $OutputPaths[$index]

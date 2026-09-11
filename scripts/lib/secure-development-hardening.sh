@@ -596,6 +596,11 @@ sdh_resolve_linked_intake_path() {
 
   directory="${logical_path%/*}"
   base_name="$(basename "${logical_path%.md}")"
+  if [ ! -d "$repo/$directory" ]; then
+    sdh_log "LIE004: Datei fehlt / file is missing: $logical_path" >&2
+    return 1
+  fi
+  sdh_assert_safe_repository_path "$repo" "$directory" directory || return 1
   while IFS= read -r candidate; do
     candidate_name="$(basename "$candidate")"
     case "$candidate_name" in
@@ -635,12 +640,7 @@ sdh_resolve_linked_intake_path() {
   }
   sdh_assert_safe_repository_path "$repo" "$state_path" file || return 1
   sdh_assert_strict_utf8_file "$repo/$state_path" "$state_path" || return 1
-  sdh_jq -e --arg logical "$logical_path" --arg resolved "$resolved" '
-    any(.acceptedArtifacts[]?; .path == $logical or .path == $resolved)
-  ' "$repo/$state_path" >/dev/null 2>&1 || {
-    sdh_log "LIE008: gestempelter Intake ist nicht durch den Feature-Abschluss belegt / stamped intake is not proven by feature completion: $logical_path" >&2
-    return 1
-  }
+  sdh_assert_linked_intake_completion_proof "$repo" "$logical_path" "$resolved" "$state_path" || return 1
   printf '%s\n' "$resolved"
 }
 
@@ -652,7 +652,9 @@ sdh_linked_intake_input_paths() {
 
   printf '%s\n' "$manifest_relative"
   while IFS= read -r intake_path; do
-    sdh_resolve_linked_intake_path "$repo" "$intake_path" || return 1
+    printf '%s\n' "$intake_path"
+    resolved_path="$(sdh_resolve_linked_intake_path "$repo" "$intake_path")" || return 1
+    [ "$resolved_path" = "$intake_path" ] || printf '%s\n' "$resolved_path"
   done < <(sdh_jq -r '.orderedTargets[].path' "$repo/$manifest_relative")
   for spec_file in "$repo"/specs/[0-9][0-9][0-9]-*/spec.md; do
     [ -f "$spec_file" ] || continue
@@ -721,11 +723,41 @@ sdh_markdown_text() {
   printf '%s' "$1" | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/\\/\\\\/g; s/|/\\|/g; s/\[/\\[/g; s/\]/\\]/g; s/(/\\(/g; s/)/\\)/g; s/`/\\`/g'
 }
 
+sdh_assert_linked_intake_completion_proof() {
+  local repo="$1"
+  local logical_path="$2"
+  local resolved_path="$3"
+  local state_path="$4"
+  local resolved_hash
+
+  resolved_hash="$(sdh_sha256_file "$repo/$resolved_path")" || return 1
+  sdh_jq -e \
+    --arg logical "$logical_path" \
+    --arg resolved "$resolved_path" \
+    --arg resolved_hash "$resolved_hash" '
+      .status == "Completed"
+      and (.closeout | type == "object")
+      and .closeout.mergeOrPublication == "Completed"
+      and .closeout.defaultBranchSync == "Completed"
+      and .closeout.finalValidation == "Completed"
+      and (.acceptedArtifacts | type == "array")
+      and ([.acceptedArtifacts[] |
+        select(
+          (.path == $logical or .path == $resolved)
+          and (.sha256 | type == "string")
+          and .sha256 == $resolved_hash
+        )] | length) == 1
+    ' "$repo/$state_path" >/dev/null 2>&1 || {
+    sdh_log "LIE008: gestempelter Intake ist nicht durch einen hashgebundenen terminalen Feature-Abschluss belegt / stamped intake is not proven by a hash-bound terminal feature completion: $logical_path" >&2
+    return 1
+  }
+}
+
 sdh_validate_linked_intake_manifest() {
   local repo="$1"
   local manifest_relative="$2"
   local manifest="$repo/$manifest_relative"
-  local path resolved_path root duplicate_count position positions_file target_count index kind from to
+  local path resolved_path declared_hash actual_hash root duplicate_count position positions_file target_count index kind from to
 
   sdh_assert_safe_repository_path "$repo" "$manifest_relative" file || return 1
   sdh_assert_strict_utf8_file "$manifest" "$manifest_relative" || return 1
@@ -741,14 +773,9 @@ sdh_validate_linked_intake_manifest() {
       (type == "object")
       and (.path | type == "string" and length > 0)
       and (.role | type == "string" and length > 0)
-      and (.status | type == "string" and length > 0))
+      and (.status | type == "string" and length > 0)
+      and (.normalizedSha256 | type == "string" and test("^[0-9a-f]{64}$")))
     and all(.roots[]; type == "string" and length > 0)
-    and all(.dependencies[];
-      (type == "object")
-      and (.from | type == "string" and length > 0)
-      and (.to | type == "string" and length > 0)
-      and (.kind | type == "string" and length > 0)
-      and (.binding | type == "boolean"))
     and ((.featureEvidence // []) | type == "array")
     and all((.featureEvidence // [])[];
       (type == "object")
@@ -761,6 +788,18 @@ sdh_validate_linked_intake_manifest() {
     return 1
   }
 
+  sdh_jq -e '
+    all(.dependencies[];
+      (type == "object")
+      and (.from | type == "string" and length > 0)
+      and (.to | type == "string" and length > 0)
+      and (.kind | type == "string" and length > 0)
+      and (.binding | type == "boolean"))
+  ' "$manifest" >/dev/null 2>&1 || {
+    sdh_log 'LIE007: ungueltiges Dependency-Tupel / invalid dependency tuple' >&2
+    return 1
+  }
+
   duplicate_count="$(sdh_jq '[.orderedTargets[].path] | length - (unique | length)' "$manifest")"
   [ "$duplicate_count" = "0" ] || { sdh_log 'LIE006: doppelte Intake-Identitaet / duplicate intake identity' >&2; return 1; }
   duplicate_count="$(sdh_jq '[.roots[]] | length - (unique | length)' "$manifest")"
@@ -768,10 +807,17 @@ sdh_validate_linked_intake_manifest() {
   duplicate_count="$(sdh_jq '[.dependencies[] | [.from,.to,.kind,.binding]] | length - (unique | length)' "$manifest")"
   [ "$duplicate_count" = "0" ] || { sdh_log 'LIE007: doppeltes Dependency-Tupel / duplicate dependency tuple' >&2; return 1; }
 
-  while IFS= read -r path; do
+  while IFS=$'\t' read -r path declared_hash; do
     resolved_path="$(sdh_resolve_linked_intake_path "$repo" "$path")" || return 1
     sdh_assert_strict_utf8_file "$repo/$resolved_path" "$resolved_path" || return 1
-  done < <(sdh_jq -r '.orderedTargets[].path' "$manifest")
+    actual_hash="$(sdh_sha256_file "$repo/$resolved_path")" || return 1
+    # A terminal stamped successor is bound by its completed run-state. An
+    # unstamped source has no supersession proof and must match the manifest.
+    if [ "$resolved_path" = "$path" ] && [ "$actual_hash" != "$declared_hash" ]; then
+      sdh_log "LIE009: Intake-Hash weicht vom Series-Manifest ab / intake hash differs from series manifest: $path" >&2
+      return 1
+    fi
+  done < <(sdh_jq -r '.orderedTargets[] | [.path,.normalizedSha256] | @tsv' "$manifest")
 
   while IFS= read -r root; do
     sdh_jq -e --arg endpoint "$root" 'any(.orderedTargets[]; .path == $endpoint)' "$manifest" >/dev/null \
@@ -785,6 +831,43 @@ sdh_validate_linked_intake_manifest() {
       || { sdh_log "LIE007: unbekannter Dependency-Endpoint / unknown dependency endpoint: $to" >&2; return 1; }
     case "$kind" in *$'\n'*|*$'\r'*|*$'\t'*) sdh_log 'LIE007: ungueltiger Dependency-Kind / invalid dependency kind' >&2; return 1 ;; esac
   done < <(sdh_jq -r '.dependencies[] | [.from,.to,.kind] | @tsv' "$manifest")
+
+  sdh_jq -e '
+    def acyclic($nodes; $edges):
+      if ($nodes | length) == 0 then true
+      else
+        ([$nodes[] as $node
+          | select(([$edges[] | select(.to == $node)] | length) == 0)
+          | $node]) as $zero
+        | if ($zero | length) == 0 then false
+          else acyclic(
+            [$nodes[] as $node | select(($zero | index($node)) == null) | $node];
+            [$edges[] as $edge | select(($zero | index($edge.from)) == null) | $edge]
+          )
+          end
+      end;
+    (.orderedTargets | map(.path)) as $paths
+    | .dependencies as $dependencies
+    | all($dependencies[];
+        .from != .to
+        and (
+          if .kind == "PreferredSerialOrder" then .binding == false
+          elif (.kind == "HardCompletionGate"
+            or .kind == "RequirementsGovernanceGate"
+            or .kind == "AssessmentBaseline"
+            or .kind == "FinalAuditInput") then .binding == true
+          else false
+          end
+        ))
+    and acyclic($paths; $dependencies)
+    and ((.roots | sort) ==
+      ([$paths[] as $path
+        | select(($dependencies | any(.to == $path)) | not)
+        | $path] | sort))
+  ' "$manifest" >/dev/null 2>&1 || {
+    sdh_log 'LIE007: Dependency-Graph, Kantenart, Binding oder Root-Menge ist ungueltig / dependency graph, edge kind, binding, or root set is invalid' >&2
+    return 1
+  }
 
   while IFS=$'\t' read -r path to; do
     sdh_jq -e --arg endpoint "$path" 'any(.orderedTargets[]; .path == $endpoint)' "$manifest" >/dev/null \
@@ -905,6 +988,7 @@ sdh_feature_cell() {
 
   if [ "$status" = "Completed" ] && [ -d "$repo/specs" ]; then
     while IFS= read -r spec_file; do
+      sdh_assert_strict_utf8_file "$spec_file" "${spec_file#"$repo/"}" || return 1
       if awk -v needle="\`$intake_path\`" '
         /^\*\*(Binding Input|Bindende Eingabe)( \/ (Binding Input|Bindende Eingabe))?\*\*:/ && index($0, needle) { found = 1 }
         END { exit(found ? 0 : 1) }
@@ -920,10 +1004,9 @@ sdh_feature_cell() {
       state_file="$repo/specs/$archive_stamp/autonomous-run-state.json"
       if [ -f "$state_file" ]; then
         sdh_assert_strict_utf8_file "$state_file" "specs/$archive_stamp/autonomous-run-state.json" || return 1
-        if sdh_jq -e --arg intake "$intake_path" --arg resolved "$resolved_intake_path" \
-          'any(.acceptedArtifacts[]?; .path == $intake or .path == $resolved)' "$state_file" >/dev/null 2>&1; then
-          candidates+=("specs/$archive_stamp")
-        fi
+        sdh_assert_linked_intake_completion_proof \
+          "$repo" "$intake_path" "$resolved_intake_path" "specs/$archive_stamp/autonomous-run-state.json" || return 1
+        candidates+=("specs/$archive_stamp")
       fi
     fi
 
@@ -1191,13 +1274,13 @@ sdh_render_linked_intake_views() {
     esac
   fi
 
-  sdh_validate_linked_intake_manifest "$repo" "$manifest_relative" || { rm -rf -- "$work_dir"; return 1; }
   input_fingerprint_after="$(sdh_linked_intake_input_fingerprint "$repo" "$manifest_relative")"
   if [ "$input_fingerprint_before" != "$input_fingerprint_after" ]; then
     rm -rf -- "$work_dir"
     sdh_log 'LIE010: kanonische Eingabemenge hat sich vor Publication geaendert / canonical input set changed before publication' >&2
     return 10
   fi
+  sdh_validate_linked_intake_manifest "$repo" "$manifest_relative" || { rm -rf -- "$work_dir"; return 1; }
   for ((index = 0; index < ${#outputs[@]}; index++)); do
     recheck="$work_dir/recheck-$index.md"
     sdh_assert_safe_output_path "$repo" "${outputs[$index]}" || { rm -rf -- "$work_dir"; return 1; }

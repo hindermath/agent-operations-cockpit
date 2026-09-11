@@ -18,34 +18,21 @@
 | 2026-08-02 | 1 — CI-Runnerprofil | — | — | — | Documentation Impact `GeneratedUpdate`: Die generischen Maintenance-TUI- und PowerShell-Analyse-Workflows verwenden die Fleet-Policy; AOC bleibt als öffentliches Referenz-Repository vollständiger Linux-/macOS-/Windows-Canary. Produktcode, API und Bedienung bleiben unverändert. |
 
 | 2026-09-09 | Assurance v0.1.3 Governance-Feldtest / Governance field test | — | — | — | Optionales 13-Preset-Profil, eigener training-Kontext, vier Gates und Runbooks, Rohhash-/Paritaets-/Kompositionsnachweise. Paket- und AOC-Governance-Tests bestanden; keine Produktlaeufe oder menschlichen Freigaben. Ausbildungszweck ab Lehrjahr 1 fuer vier IT-Ausbildungsberufe; AEPS NoChange. / Installed optional profile, scoped evidence and passing technical tests; no product run or human approval. |
-| 2026-09-11 | Feature 032 AOC-Vertikalscheibe / Feature 032 AOC vertical slice | — | — | — | Documentation Impact `GeneratedUpdate`: Das unveränderte Phase-2-Manifest erzeugt zwei verlinkte Fünf-Felder-Ansichten. Drei historische logische META-LH-Pfade werden nur über jeweils eine featuregestempelte Datei und ihren Abschlussnachweis aufgelöst; Manifest und Lifecycle bleiben unverändert. Gepaarte Bash-/PowerShell-Verträge, `global-ready`, Secret-, PSScriptAnalyzer-, Skriptkatalog-, A11Y-, Security- und Architekturprüfungen sind lokal grün. Constitution und fünf Agentenflächen tragen die installierte Autonomous-Version 0.4.1; Assurance-Kontext, Produktcode, Dependencies und Home-Sync bleiben unverändert. Das fachliche Delta vor Statistikpflege umfasst 3.888 Nettozeilen. / The unchanged phase-2 manifest now generates two linked five-field views with uniquely proven stamped-path resolution. Local paired, programme, security, documentation, and parity gates pass; product and assurance contexts remain unchanged. |
+| 2026-09-11 | Feature 032 AOC-Vertikalscheibe / Feature 032 AOC vertical slice | — | — | — | Documentation Impact `GeneratedUpdate`: Das unveränderte Phase-2-Manifest erzeugt zwei verlinkte Fünf-Felder-Ansichten. Drei historische logische META-LH-Pfade werden nur über jeweils eine featuregestempelte Datei und ihren hashgebundenen terminalen Abschlussnachweis aufgelöst; Manifest und Lifecycle bleiben unverändert. Gepaarte Bash-/PowerShell-Verträge validieren zusätzlich Zielhashes, Graphsemantik, exakte Root-Mengen, fehlende logische Ausgabepfade und echte Cross-Implementation-Parität. `global-ready`, Secret-, PSScriptAnalyzer-, Skriptkatalog-, A11Y-, Security- und Architekturprüfungen sind lokal grün. Constitution und fünf Agentenflächen tragen die installierte Autonomous-Version 0.4.1; Assurance-Kontext, Produktcode, Dependencies und Home-Sync bleiben unverändert. Das fachliche Delta vor Statistikpflege umfasst 4.365 Nettozeilen. / The unchanged phase-2 manifest now generates two linked five-field views with hash-bound terminal stamped-path resolution. Paired Bash/PowerShell contracts additionally validate target hashes, graph semantics, exact roots, missing logical output paths, and real cross-implementation parity. Local programme, security, documentation, and architecture gates pass; product and assurance contexts remain unchanged. |
 
 ---
 
 ## Gesamtstand des Repositories / Repository Snapshot
 
-Stand / As of: 2026-07-31 — *Erste Einträge nach dem initialen Arbeitspaket eintragen.*
+Stand / As of: 2026-09-11. Die kanonischen aktuellen Werte stehen im
+generierten Statistikprofil 2 unter `Gesamtstatistik / Overall Statistics`.
+Der frühere, noch nicht befüllte Profil-1-Platzhalter wurde entfernt, damit
+keine veraltete Momentaufnahme mit der lebenden Statistik konkurriert.
 
-| Kategorie / Category | Dateien / Files | Zeilen / Lines | Anteil / Share |
-|---|---:|---:|---:|
-| Produktionscode / Production code | — | — | — |
-| Tests / Tests | — | — | — |
-| Dokumentation / Documentation (.md) | — | — | — |
-| **Gesamt / Total** | — | — | — |
-
----
-
-## Statistikprofil-1-Archiv / Statistics Profile 1 Archive
-*Wird nach dem ersten dokumentierten Arbeitspaket befüllt.*
-*To be filled after the first documented work package.*
-
-| Kennzahl / Metric | Verdichteter Gesamtblick / Condensed Overview |
-|---|---:|
-| Artefaktbasis gesamt | — |
-| Beobachtbarer Projektzeitraum | 2026-07-31 bis — |
-| Sichtbare Git-Aktivtage | — |
-| Repo-weiter Speedup gg. 80-Zeilen-Referenz | — |
-| Repo-weiter Speedup gg. Thorsten-Referenz | — |
+*As of 2026-09-11. The generated Profile 2 under `Gesamtstatistik / Overall
+Statistics` is the canonical current snapshot. The former unpopulated Profile
+1 placeholder was removed so that no stale snapshot competes with the living
+statistics.*
 
 ## Gesamtstatistik / Overall Statistics
 

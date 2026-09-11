@@ -59,6 +59,20 @@ command -v jq >/dev/null 2>&1 || {
 # shellcheck source=/dev/null
 . "$LIB_FILE"
 
+set_fixture_manifest_hashes() {
+  local repo="$1"
+  local manifest="$2"
+  local intake_path digest
+
+  while IFS= read -r intake_path; do
+    digest="$(sdh_sha256_file "$repo/$intake_path")"
+    sdh_jq --arg intake_path "$intake_path" --arg digest "$digest" \
+      '(.orderedTargets[] | select(.path == $intake_path).normalizedSha256) = $digest' \
+      "$manifest" > "$manifest.tmp"
+    mv "$manifest.tmp" "$manifest"
+  done < <(sdh_jq -r '.orderedTargets[].path' "$manifest")
+}
+
 fixture_repo="$(mktemp -d)"
 cleanup() {
   rm -rf -- "$fixture_repo"
@@ -89,6 +103,7 @@ while IFS=$'\t' read -r intake_path display_position; do
   mkdir -p -- "$(dirname "$intake_file")"
   printf '# Fixture\n\n**Reihenfolge:** sichtbare Position %s\n' "$display_position" > "$intake_file"
 done < <(sdh_jq -r '.entries[] | [.intakePath, (.displayPosition | tostring)] | @tsv' "$cases_file")
+set_fixture_manifest_hashes "$fixture_repo" "$manifest_file"
 
 feature_dir="$fixture_repo/specs/032-linked-intake-evidence"
 mkdir -p -- "$feature_dir"
@@ -235,6 +250,7 @@ create_transaction_fixture() {
     mkdir -p -- "$(dirname "$intake_file")"
     printf '# Fixture\n\n**Reihenfolge:** sichtbare Position %s\n' "$display_position" > "$intake_file"
   done < <(sdh_jq -r '.entries[] | [.intakePath, (.displayPosition | tostring)] | @tsv' "$cases_file")
+  set_fixture_manifest_hashes "$CASE_REPO" "$CASE_MANIFEST"
   mkdir -p -- "$CASE_REPO/specs/032-linked-intake-evidence" "$(dirname "$CASE_REPO/$CASE_SERIES_OUTPUT")"
   printf '# Fixture Feature\n\n**Binding Input / Bindende Eingabe**: `%s`\n' \
     'Lastenheft_Verlinkte-Abarbeitungsreihenfolgen-und-Spec-Kit-Feature-Nachweise.md' \
@@ -323,6 +339,24 @@ else
     failures=$((failures + 1))
   fi
 
+  create_transaction_fixture missing-logical-overlap
+  logical_overlap_path="$(sdh_jq -r '.orderedTargets[1].path' "$CASE_MANIFEST")"
+  stamped_overlap_path="${logical_overlap_path%.md}.123-output-overlap.md"
+  mv "$CASE_REPO/$logical_overlap_path" "$CASE_REPO/$stamped_overlap_path"
+  stamped_overlap_hash="$(sdh_sha256_file "$CASE_REPO/$stamped_overlap_path")"
+  mkdir -p -- "$CASE_REPO/specs/123-output-overlap"
+  sdh_jq -n \
+    --arg accepted_path "$stamped_overlap_path" \
+    --arg accepted_hash "$stamped_overlap_hash" \
+    '{status:"Completed",closeout:{mergeOrPublication:"Completed",defaultBranchSync:"Completed",finalValidation:"Completed"},acceptedArtifacts:[{path:$accepted_path,sha256:$accepted_hash}]}' \
+    > "$CASE_REPO/specs/123-output-overlap/autonomous-run-state.json"
+  run_projection "$CASE_REPO" "$CASE_MANIFEST_REL" write '' '' "$logical_overlap_path"
+  assert_projection 'missing-logical-input-output-overlap' 'LIE006' nonzero 0
+  if [ -e "$CASE_REPO/$logical_overlap_path" ]; then
+    printf '%s\n' 'FEHLER / FAIL: Overlap-Ablehnung erzeugte den fehlenden logischen Intake / overlap rejection created the missing logical intake' >&2
+    failures=$((failures + 1))
+  fi
+
   create_transaction_fixture vanished
   run_projection "$CASE_REPO" "$CASE_MANIFEST_REL" write vanish-target \
     'requirements/intakes/active/Lastenheft_Einzelkante.md' "$CASE_ROOT_OUTPUT"
@@ -362,12 +396,11 @@ else
   assert_projection 'root-series-drift' 'LIE011' nonzero 0
 
   create_transaction_fixture escaping
-  sdh_jq '.orderedTargets[0].status = "<status data-safe=\"yes\">Com|pleted & Ready</status> [x](y)\\z" | .dependencies[0].kind = "<kind>Hard|Gate & advisory</kind> [x](y)\\z"' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp"
+  sdh_jq '.orderedTargets[0].status = "<status data-safe=\"yes\">Com|pleted & Ready</status> [x](y)\\z"' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp"
   mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"
   run_projection "$CASE_REPO" "$CASE_MANIFEST_REL" write '' '' "$CASE_ROOT_OUTPUT" "$CASE_SERIES_OUTPUT"
   assert_projection 'markdown-escaping' '' zero 2
   if ! grep -Fq -- '&lt;status data-safe="yes"&gt;Com\|pleted &amp; Ready&lt;/status&gt; \[x\]\(y\)\\z' "$CASE_REPO/$CASE_ROOT_OUTPUT" \
-    || ! grep -Fq -- '&lt;kind&gt;Hard\|Gate &amp; advisory&lt;/kind&gt; \[x\]\(y\)\\z' "$CASE_REPO/$CASE_ROOT_OUTPUT" \
     || ! grep -Fq -- '<br>' "$CASE_REPO/$CASE_ROOT_OUTPUT" \
     || grep -Fq -- '<status' "$CASE_REPO/$CASE_ROOT_OUTPUT" \
     || grep -Fq -- '<kind>' "$CASE_REPO/$CASE_ROOT_OUTPUT"; then
@@ -452,6 +485,57 @@ else
     failures=$((failures + 1))
   fi
 
+  create_transaction_fixture cross-parity-bash
+  parity_bash_repo="$CASE_REPO"
+  parity_manifest_rel="$CASE_MANIFEST_REL"
+  parity_output="$CASE_ROOT_OUTPUT"
+  create_transaction_fixture cross-parity-powershell
+  parity_pwsh_repo="$CASE_REPO"
+  run_public_cli_case cross-parity-bash-write \
+    --repo "$parity_bash_repo" --order-only --manifest "$parity_manifest_rel" \
+    --order-output "$parity_output" --allow-dirty
+  parity_bash_exit="$PUBLIC_EXIT"
+  parity_pwsh_stdout="$fixture_repo/cross-parity-powershell-write.stdout"
+  parity_pwsh_stderr="$fixture_repo/cross-parity-powershell-write.stderr"
+  set +e
+  pwsh -NoProfile -File "$REPO_ROOT/scripts/prepare-secure-development-hardening.ps1" \
+    -Repo "$parity_pwsh_repo" -OrderOnly -Manifest "$parity_manifest_rel" \
+    -OrderOutput "$parity_output" -AllowDirty \
+    >"$parity_pwsh_stdout" 2>"$parity_pwsh_stderr"
+  parity_pwsh_exit=$?
+  set -e
+  if [ "$parity_bash_exit" -ne 0 ] || [ "$parity_pwsh_exit" -ne 0 ] \
+    || ! cmp -s -- "$parity_bash_repo/$parity_output" "$parity_pwsh_repo/$parity_output"; then
+    printf '%s\n' 'FEHLER / FAIL: Bash-/PowerShell-Erfolgspfad ist nicht exit- und byteidentisch / Bash and PowerShell success path is not exit- and byte-equivalent' >&2
+    failures=$((failures + 1))
+  fi
+
+  for parity_repo in "$parity_bash_repo" "$parity_pwsh_repo"; do
+    parity_manifest="$parity_repo/$parity_manifest_rel"
+    sdh_jq '.dependencies[0].kind = "UnknownGate"' "$parity_manifest" > "$parity_manifest.tmp"
+    mv "$parity_manifest.tmp" "$parity_manifest"
+  done
+  run_public_cli_case cross-parity-bash-diagnostic \
+    --repo "$parity_bash_repo" --order-only --manifest "$parity_manifest_rel" \
+    --order-output "$parity_output" --dry-run
+  parity_bash_exit="$PUBLIC_EXIT"
+  parity_bash_stderr="$PUBLIC_STDERR"
+  parity_pwsh_stdout="$fixture_repo/cross-parity-powershell-diagnostic.stdout"
+  parity_pwsh_stderr="$fixture_repo/cross-parity-powershell-diagnostic.stderr"
+  set +e
+  pwsh -NoProfile -File "$REPO_ROOT/scripts/prepare-secure-development-hardening.ps1" \
+    -Repo "$parity_pwsh_repo" -OrderOnly -Manifest "$parity_manifest_rel" \
+    -OrderOutput "$parity_output" -WhatIf \
+    >"$parity_pwsh_stdout" 2>"$parity_pwsh_stderr"
+  parity_pwsh_exit=$?
+  set -e
+  if [ "$parity_bash_exit" -eq 0 ] || [ "$parity_pwsh_exit" -eq 0 ] \
+    || ! grep -Fq -- 'LIE007' "$parity_bash_stderr" \
+    || ! grep -Fq -- 'LIE007' "$parity_pwsh_stderr"; then
+    printf '%s\n' 'FEHLER / FAIL: Bash-/PowerShell-Negativpfad liefert keine gleiche Exitklasse und Diagnose / Bash and PowerShell negative path lacks matching exit class and diagnostic' >&2
+    failures=$((failures + 1))
+  fi
+
   create_transaction_fixture manual-content
   run_projection "$CASE_REPO" "$CASE_MANIFEST_REL" write '' '' "$CASE_ROOT_OUTPUT"
   assert_projection 'manual-content-baseline' '' zero 1
@@ -514,10 +598,65 @@ else
       duplicate-position)
         create_transaction_fixture "$case_id"
         printf '# Fixture\n\n**Reihenfolge:** sichtbare Position 39\n' > "$CASE_REPO/requirements/intakes/active/Lastenheft_Überblick.md"
+        set_fixture_manifest_hashes "$CASE_REPO" "$CASE_MANIFEST"
         ;;
       unknown-endpoint)
         create_transaction_fixture "$case_id"
         sdh_jq '.dependencies += [{from:"requirements/intakes/active/missing.md",to:.orderedTargets[0].path,kind:"HardCompletionGate",binding:true}]' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"
+        ;;
+      missing-normalized-hash)
+        create_transaction_fixture "$case_id"
+        sdh_jq 'del(.orderedTargets[0].normalizedSha256)' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"
+        ;;
+      target-hash-mismatch)
+        create_transaction_fixture "$case_id"
+        sdh_jq '.orderedTargets[0].normalizedSha256 = ("0" * 64)' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"
+        ;;
+      non-string-target-field)
+        create_transaction_fixture "$case_id"
+        sdh_jq '.orderedTargets[0].status = 7' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"
+        ;;
+      non-string-edge-field)
+        create_transaction_fixture "$case_id"
+        sdh_jq '.dependencies[0].kind = 7' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"
+        ;;
+      unknown-edge-kind)
+        create_transaction_fixture "$case_id"
+        sdh_jq '.dependencies[0].kind = "UnknownGate"' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"
+        ;;
+      binding-mismatch)
+        create_transaction_fixture "$case_id"
+        sdh_jq '(.dependencies[] | select(.kind == "PreferredSerialOrder").binding) = true' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"
+        ;;
+      self-edge)
+        create_transaction_fixture "$case_id"
+        sdh_jq '.dependencies += [{from:.orderedTargets[1].path,to:.orderedTargets[1].path,kind:"HardCompletionGate",binding:true}]' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"
+        ;;
+      dependency-cycle)
+        create_transaction_fixture "$case_id"
+        sdh_jq '.dependencies += [{from:.orderedTargets[0].path,to:.orderedTargets[1].path,kind:"HardCompletionGate",binding:true}]' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"
+        ;;
+      incorrect-root-set)
+        create_transaction_fixture "$case_id"
+        sdh_jq '.roots += [.orderedTargets[0].path]' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"
+        ;;
+      missing-nested-directory)
+        create_transaction_fixture "$case_id"
+        sdh_jq '.orderedTargets[0].path = "requirements/intakes/missing/deep/Lastenheft.md"' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"
+        ;;
+      nonterminal-archive-proof|archive-hash-mismatch)
+        create_transaction_fixture "$case_id"
+        logical_path="$(sdh_jq -r '.orderedTargets[1].path' "$CASE_MANIFEST")"
+        stamped_path="${logical_path%.md}.123-archive-proof.md"
+        mv "$CASE_REPO/$logical_path" "$CASE_REPO/$stamped_path"
+        mkdir -p "$CASE_REPO/specs/123-archive-proof"
+        stamped_hash="$(sdh_sha256_file "$CASE_REPO/$stamped_path")"
+        proof_status='Completed'
+        proof_hash="$stamped_hash"
+        [ "$case_id" != 'nonterminal-archive-proof' ] || proof_status='Active'
+        [ "$case_id" != 'archive-hash-mismatch' ] || proof_hash="$(printf '0%.0s' {1..64})"
+        printf '{"status":"%s","closeout":{"mergeOrPublication":"Completed","defaultBranchSync":"Completed","finalValidation":"Completed"},"acceptedArtifacts":[{"path":"%s","sha256":"%s"}]}\n' \
+          "$proof_status" "$stamped_path" "$proof_hash" > "$CASE_REPO/specs/123-archive-proof/autonomous-run-state.json"
         ;;
       multiple-feature-candidates)
         create_transaction_fixture "$case_id"
@@ -547,11 +686,15 @@ else
       feature-binding) ;;
       archived-closeout-binding)
         rm -rf "$CASE_REPO/specs/032-linked-intake-evidence"
-        archived='requirements/intakes/archive/Lastenheft_Archived.123-archived-proof.md'
-        mkdir -p "$CASE_REPO/requirements/intakes/archive" "$CASE_REPO/specs/123-archived-proof"
-        printf '# Archived\n\n**Reihenfolge:** sichtbare Position 39\n' > "$CASE_REPO/$archived"
-        sdh_jq --arg old "$intake" --arg new "$archived" '(.orderedTargets[] | select(.path == $old).path) = $new | (.dependencies[] | select(.to == $old).to) = $new' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"
-        printf '{"acceptedArtifacts":[{"path":"%s"}]}\n' "$archived" > "$CASE_REPO/specs/123-archived-proof/autonomous-run-state.json"
+        intake='requirements/intakes/active/Lastenheft_Überblick.md'
+        archived="${intake%.md}.123-archived-proof.md"
+        rm -f "$CASE_REPO/$intake"
+        mkdir -p "$CASE_REPO/specs/123-archived-proof"
+        printf '# Fixture\n\n**Reihenfolge:** sichtbare Position 1\n' > "$CASE_REPO/$archived"
+        archived_hash="$(sdh_sha256_file "$CASE_REPO/$archived")"
+        sdh_jq --arg intake "$intake" '(.orderedTargets[] | select(.path == $intake).status) = "Completed"' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"
+        printf '{"status":"Completed","closeout":{"mergeOrPublication":"Completed","defaultBranchSync":"Completed","finalValidation":"Completed"},"acceptedArtifacts":[{"path":"%s","sha256":"%s"}]}\n' \
+          "$archived" "$archived_hash" > "$CASE_REPO/specs/123-archived-proof/autonomous-run-state.json"
         ;;
       reviewed-legacy-mapping)
         rm -rf "$CASE_REPO/specs/032-linked-intake-evidence"

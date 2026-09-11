@@ -48,6 +48,17 @@ function Test-RequirementsIntakeGovernance {
     }
     . $library
 
+    function Set-FixtureManifestHashes {
+        param([string]$Repo, [string]$ManifestPath)
+
+        $value = Get-Content -LiteralPath $ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+        foreach ($target in $value.orderedTargets) {
+            $digest = (Get-FileHash -LiteralPath (Join-Path $Repo ([string]$target.path)) -Algorithm SHA256).Hash.ToLowerInvariant()
+            $target.normalizedSha256 = $digest
+        }
+        [IO.File]::WriteAllText($ManifestPath, (($value | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
+    }
+
     $fixtureRepo = Join-Path ([IO.Path]::GetTempPath()) ("linked-intake-{0}" -f [guid]::NewGuid())
     New-Item -ItemType Directory -Path $fixtureRepo | Out-Null
     try {
@@ -61,7 +72,7 @@ function Test-RequirementsIntakeGovernance {
             seriesId = 'linked-intake-test'
             status = 'Active'
             orderedTargets = @($cases.entries | ForEach-Object {
-                [ordered]@{ path = [string]$_.intakePath; role = [string]$_.role; status = [string]$_.status }
+                [ordered]@{ path = [string]$_.intakePath; role = [string]$_.role; normalizedSha256 = ''; status = [string]$_.status }
             })
             roots = @($cases.entries | Where-Object { @($_.incomingDependencies).Count -eq 0 } | ForEach-Object { [string]$_.intakePath })
             dependencies = @($cases.entries | ForEach-Object { @($_.incomingDependencies) })
@@ -80,6 +91,7 @@ function Test-RequirementsIntakeGovernance {
             $intakeContent = "# Fixture`n`n**Reihenfolge:** sichtbare Position $($entry.displayPosition)`n"
             [IO.File]::WriteAllText($intakeFile, $intakeContent, [Text.UTF8Encoding]::new($false))
         }
+        Set-FixtureManifestHashes -Repo $fixtureRepo -ManifestPath $manifestFile
 
         $featureDirectory = Join-Path $fixtureRepo 'specs/032-linked-intake-evidence'
         New-Item -ItemType Directory -Path $featureDirectory -Force | Out-Null
@@ -220,7 +232,7 @@ function Test-RequirementsIntakeGovernance {
                 seriesId = 'linked-intake-test'
                 status = 'Active'
                 orderedTargets = @($cases.entries | ForEach-Object {
-                    [ordered]@{ path = [string]$_.intakePath; role = [string]$_.role; status = [string]$_.status }
+                    [ordered]@{ path = [string]$_.intakePath; role = [string]$_.role; normalizedSha256 = ''; status = [string]$_.status }
                 })
                 roots = @($cases.entries | Where-Object { @($_.incomingDependencies).Count -eq 0 } | ForEach-Object { [string]$_.intakePath })
                 dependencies = @($cases.entries | ForEach-Object { @($_.incomingDependencies) })
@@ -231,6 +243,7 @@ function Test-RequirementsIntakeGovernance {
                 New-Item -ItemType Directory -Path (Split-Path -Parent $intakePath) -Force | Out-Null
                 [IO.File]::WriteAllText($intakePath, "# Fixture`n`n**Reihenfolge:** sichtbare Position $($entry.displayPosition)`n", [Text.UTF8Encoding]::new($false))
             }
+            Set-FixtureManifestHashes -Repo $caseRepo -ManifestPath $manifestPath
             $featureDirectory = Join-Path $caseRepo 'specs/032-linked-intake-evidence'
             New-Item -ItemType Directory -Path $featureDirectory -Force | Out-Null
             [IO.File]::WriteAllText(
@@ -337,6 +350,30 @@ function Test-RequirementsIntakeGovernance {
                 $failures.Add('Overlap-Ablehnung veraenderte kanonische Eingabe / overlap rejection changed canonical input')
             }
 
+            $missingLogicalOverlap = New-TransactionFixture -CaseId missing-logical-overlap
+            $overlapManifest = Get-Content -LiteralPath $missingLogicalOverlap.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+            $logicalOverlapPath = [string]$overlapManifest.orderedTargets[1].path
+            $stampedOverlapPath = $logicalOverlapPath -replace '\.md$', '.123-output-overlap.md'
+            Move-Item -LiteralPath (Join-Path $missingLogicalOverlap.Repo $logicalOverlapPath) -Destination (Join-Path $missingLogicalOverlap.Repo $stampedOverlapPath)
+            $stampedOverlapHash = (Get-FileHash -LiteralPath (Join-Path $missingLogicalOverlap.Repo $stampedOverlapPath) -Algorithm SHA256).Hash.ToLowerInvariant()
+            $overlapStateDirectory = Join-Path $missingLogicalOverlap.Repo 'specs/123-output-overlap'
+            New-Item -ItemType Directory -Path $overlapStateDirectory -Force | Out-Null
+            $overlapState = [ordered]@{
+                status = 'Completed'
+                closeout = [ordered]@{ mergeOrPublication = 'Completed'; defaultBranchSync = 'Completed'; finalValidation = 'Completed' }
+                acceptedArtifacts = @([ordered]@{ path = $stampedOverlapPath; sha256 = $stampedOverlapHash })
+            }
+            [IO.File]::WriteAllText(
+                (Join-Path $overlapStateDirectory 'autonomous-run-state.json'),
+                (($overlapState | ConvertTo-Json -Depth 8) + "`n"),
+                [Text.UTF8Encoding]::new($false)
+            )
+            $actual = Invoke-ProjectionCase -Fixture $missingLogicalOverlap -Mode Write -Outputs @($logicalOverlapPath)
+            Assert-ProjectionCase -CaseId 'missing-logical-input-output-overlap' -Actual $actual -ExpectedCode LIE006 -ExpectedExitClass nonzero -ExpectedWrites 0
+            if (Test-Path -LiteralPath (Join-Path $missingLogicalOverlap.Repo $logicalOverlapPath)) {
+                $failures.Add('Overlap-Ablehnung erzeugte den fehlenden logischen Intake / overlap rejection created the missing logical intake')
+            }
+
             $vanished = New-TransactionFixture -CaseId vanished
             $actual = Invoke-ProjectionCase -Fixture $vanished -Mode Write -Outputs @($vanished.RootOutput) -Fault vanish-target -VanishPath 'requirements/intakes/active/Lastenheft_Einzelkante.md'
             Assert-ProjectionCase -CaseId 'vanished-target-recheck' -Actual $actual -ExpectedCode LIE004 -ExpectedExitClass nonzero -ExpectedWrites 0
@@ -376,13 +413,11 @@ function Test-RequirementsIntakeGovernance {
             $escaping = New-TransactionFixture -CaseId escaping
             $escapingManifest = Get-Content -LiteralPath $escaping.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
             $escapingManifest.orderedTargets[0].status = '<status data-safe="yes">Com|pleted & Ready</status> [x](y)\z'
-            $escapingManifest.dependencies[0].kind = '<kind>Hard|Gate & advisory</kind> [x](y)\z'
             [IO.File]::WriteAllText($escaping.ManifestPath, (($escapingManifest | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
             $actual = Invoke-ProjectionCase -Fixture $escaping -Mode Write -Outputs @($escaping.RootOutput, $escaping.SeriesOutput)
             Assert-ProjectionCase -CaseId 'markdown-escaping' -Actual $actual -ExpectedCode '' -ExpectedExitClass zero -ExpectedWrites 2
             $escapedRoot = [IO.File]::ReadAllText((Join-Path $escaping.Repo $escaping.RootOutput), [Text.UTF8Encoding]::new($false))
             if (-not $escapedRoot.Contains('&lt;status data-safe="yes"&gt;Com\|pleted &amp; Ready&lt;/status&gt; \[x\]\(y\)\\z', [StringComparison]::Ordinal) `
-                -or -not $escapedRoot.Contains('&lt;kind&gt;Hard\|Gate &amp; advisory&lt;/kind&gt; \[x\]\(y\)\\z', [StringComparison]::Ordinal) `
                 -or -not $escapedRoot.Contains('<br>', [StringComparison]::Ordinal) `
                 -or $escapedRoot.Contains('<status', [StringComparison]::Ordinal) `
                 -or $escapedRoot.Contains('<kind>', [StringComparison]::Ordinal)) {
@@ -551,6 +586,7 @@ function Test-RequirementsIntakeGovernance {
                     [IO.File]::WriteAllText($fixture.ManifestPath, (($value | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
                 } elseif ($caseId -ceq 'duplicate-position') {
                     [IO.File]::WriteAllText((Join-Path $fixture.Repo 'requirements/intakes/active/Lastenheft_Überblick.md'), "# Fixture`n`n**Reihenfolge:** sichtbare Position 39`n", [Text.UTF8Encoding]::new($false))
+                    Set-FixtureManifestHashes -Repo $fixture.Repo -ManifestPath $fixture.ManifestPath
                 } elseif ($caseId -ceq 'unknown-endpoint') {
                     $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
                     $value.dependencies = @($value.dependencies) + @([pscustomobject]@{
@@ -560,6 +596,71 @@ function Test-RequirementsIntakeGovernance {
                         binding = $true
                     })
                     [IO.File]::WriteAllText($fixture.ManifestPath, (($value | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
+                } elseif ($caseId -ceq 'missing-normalized-hash') {
+                    $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+                    $value.orderedTargets[0].PSObject.Properties.Remove('normalizedSha256')
+                    [IO.File]::WriteAllText($fixture.ManifestPath, (($value | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
+                } elseif ($caseId -ceq 'target-hash-mismatch') {
+                    $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+                    $value.orderedTargets[0].normalizedSha256 = ('0' * 64) -join ''
+                    [IO.File]::WriteAllText($fixture.ManifestPath, (($value | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
+                } elseif ($caseId -ceq 'non-string-target-field') {
+                    $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+                    $value.orderedTargets[0].status = 7
+                    [IO.File]::WriteAllText($fixture.ManifestPath, (($value | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
+                } elseif ($caseId -ceq 'non-string-edge-field') {
+                    $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+                    $value.dependencies[0].kind = 7
+                    [IO.File]::WriteAllText($fixture.ManifestPath, (($value | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
+                } elseif ($caseId -ceq 'unknown-edge-kind') {
+                    $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+                    $value.dependencies[0].kind = 'UnknownGate'
+                    [IO.File]::WriteAllText($fixture.ManifestPath, (($value | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
+                } elseif ($caseId -ceq 'binding-mismatch') {
+                    $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+                    foreach ($edge in $value.dependencies) { if ([string]$edge.kind -ceq 'PreferredSerialOrder') { $edge.binding = $true } }
+                    [IO.File]::WriteAllText($fixture.ManifestPath, (($value | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
+                } elseif ($caseId -ceq 'self-edge') {
+                    $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+                    $value.dependencies = @($value.dependencies) + @([pscustomobject]@{
+                        from = [string]$value.orderedTargets[1].path
+                        to = [string]$value.orderedTargets[1].path
+                        kind = 'HardCompletionGate'
+                        binding = $true
+                    })
+                    [IO.File]::WriteAllText($fixture.ManifestPath, (($value | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
+                } elseif ($caseId -ceq 'dependency-cycle') {
+                    $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+                    $value.dependencies = @($value.dependencies) + @([pscustomobject]@{
+                        from = [string]$value.orderedTargets[0].path
+                        to = [string]$value.orderedTargets[1].path
+                        kind = 'HardCompletionGate'
+                        binding = $true
+                    })
+                    [IO.File]::WriteAllText($fixture.ManifestPath, (($value | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
+                } elseif ($caseId -ceq 'incorrect-root-set') {
+                    $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+                    $value.roots = @($value.roots) + @([string]$value.orderedTargets[0].path)
+                    [IO.File]::WriteAllText($fixture.ManifestPath, (($value | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
+                } elseif ($caseId -ceq 'missing-nested-directory') {
+                    $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+                    $value.orderedTargets[0].path = 'requirements/intakes/missing/deep/Lastenheft.md'
+                    [IO.File]::WriteAllText($fixture.ManifestPath, (($value | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
+                } elseif ($caseId -in @('nonterminal-archive-proof', 'archive-hash-mismatch')) {
+                    $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+                    $logicalPath = [string]$value.orderedTargets[1].path
+                    $stampedPath = $logicalPath.Substring(0, $logicalPath.Length - 3) + '.123-archive-proof.md'
+                    Move-Item -LiteralPath (Join-Path $fixture.Repo $logicalPath) -Destination (Join-Path $fixture.Repo $stampedPath)
+                    New-Item -ItemType Directory -Path (Join-Path $fixture.Repo 'specs/123-archive-proof') -Force | Out-Null
+                    $stampedHash = (Get-FileHash -LiteralPath (Join-Path $fixture.Repo $stampedPath) -Algorithm SHA256).Hash.ToLowerInvariant()
+                    $proofStatus = if ($caseId -ceq 'nonterminal-archive-proof') { 'Active' } else { 'Completed' }
+                    $proofHash = if ($caseId -ceq 'archive-hash-mismatch') { ('0' * 64) -join '' } else { $stampedHash }
+                    $state = [ordered]@{
+                        status = $proofStatus
+                        closeout = [ordered]@{ mergeOrPublication = 'Completed'; defaultBranchSync = 'Completed'; finalValidation = 'Completed' }
+                        acceptedArtifacts = @([ordered]@{ path = $stampedPath; sha256 = $proofHash })
+                    }
+                    [IO.File]::WriteAllText((Join-Path $fixture.Repo 'specs/123-archive-proof/autonomous-run-state.json'), (($state | ConvertTo-Json -Depth 6) + "`n"), [Text.UTF8Encoding]::new($false))
                 } elseif ($caseId -ceq 'multiple-feature-candidates') {
                     $second = Join-Path $fixture.Repo 'specs/033-second-proof'
                     New-Item -ItemType Directory -Path $second -Force | Out-Null
@@ -575,15 +676,21 @@ function Test-RequirementsIntakeGovernance {
                 $intake = 'Lastenheft_Verlinkte-Abarbeitungsreihenfolgen-und-Spec-Kit-Feature-Nachweise.md'
                 if ($featureId -ceq 'archived-closeout-binding') {
                     Remove-Item -LiteralPath (Join-Path $fixture.Repo 'specs/032-linked-intake-evidence') -Recurse -Force
-                    $archived = 'requirements/intakes/archive/Lastenheft_Archived.123-archived-proof.md'
-                    New-Item -ItemType Directory -Path (Join-Path $fixture.Repo 'requirements/intakes/archive') -Force | Out-Null
+                    $intake = 'requirements/intakes/active/Lastenheft_Überblick.md'
+                    $archived = 'requirements/intakes/active/Lastenheft_Überblick.123-archived-proof.md'
                     New-Item -ItemType Directory -Path (Join-Path $fixture.Repo 'specs/123-archived-proof') -Force | Out-Null
-                    [IO.File]::WriteAllText((Join-Path $fixture.Repo $archived), "# Archived`n`n**Reihenfolge:** sichtbare Position 39`n", [Text.UTF8Encoding]::new($false))
+                    Remove-Item -LiteralPath (Join-Path $fixture.Repo $intake) -Force
+                    [IO.File]::WriteAllText((Join-Path $fixture.Repo $archived), "# Fixture`n`n**Reihenfolge:** sichtbare Position 1`n", [Text.UTF8Encoding]::new($false))
+                    $archivedHash = (Get-FileHash -LiteralPath (Join-Path $fixture.Repo $archived) -Algorithm SHA256).Hash.ToLowerInvariant()
                     $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
-                    foreach ($target in $value.orderedTargets) { if ([string]$target.path -ceq $intake) { $target.path = $archived } }
-                    foreach ($edge in $value.dependencies) { if ([string]$edge.to -ceq $intake) { $edge.to = $archived } }
+                    foreach ($target in $value.orderedTargets) { if ([string]$target.path -ceq $intake) { $target.status = 'Completed' } }
                     [IO.File]::WriteAllText($fixture.ManifestPath, (($value | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
-                    [IO.File]::WriteAllText((Join-Path $fixture.Repo 'specs/123-archived-proof/autonomous-run-state.json'), (([ordered]@{ acceptedArtifacts = @([ordered]@{ path = $archived }) } | ConvertTo-Json -Depth 4) + "`n"), [Text.UTF8Encoding]::new($false))
+                    $state = [ordered]@{
+                        status = 'Completed'
+                        closeout = [ordered]@{ mergeOrPublication = 'Completed'; defaultBranchSync = 'Completed'; finalValidation = 'Completed' }
+                        acceptedArtifacts = @([ordered]@{ path = $archived; sha256 = $archivedHash })
+                    }
+                    [IO.File]::WriteAllText((Join-Path $fixture.Repo 'specs/123-archived-proof/autonomous-run-state.json'), (($state | ConvertTo-Json -Depth 6) + "`n"), [Text.UTF8Encoding]::new($false))
                 } elseif ($featureId -ceq 'reviewed-legacy-mapping') {
                     Remove-Item -LiteralPath (Join-Path $fixture.Repo 'specs/032-linked-intake-evidence') -Recurse -Force
                     New-Item -ItemType Directory -Path (Join-Path $fixture.Repo 'specs/124-reviewed-legacy') -Force | Out-Null
