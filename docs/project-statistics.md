@@ -18,7 +18,7 @@
 | 2026-08-02 | 1 — CI-Runnerprofil | — | — | — | Documentation Impact `GeneratedUpdate`: Die generischen Maintenance-TUI- und PowerShell-Analyse-Workflows verwenden die Fleet-Policy; AOC bleibt als öffentliches Referenz-Repository vollständiger Linux-/macOS-/Windows-Canary. Produktcode, API und Bedienung bleiben unverändert. |
 
 | 2026-09-09 | Assurance v0.1.3 Governance-Feldtest / Governance field test | — | — | — | Optionales 13-Preset-Profil, eigener training-Kontext, vier Gates und Runbooks, Rohhash-/Paritaets-/Kompositionsnachweise. Paket- und AOC-Governance-Tests bestanden; keine Produktlaeufe oder menschlichen Freigaben. Ausbildungszweck ab Lehrjahr 1 fuer vier IT-Ausbildungsberufe; AEPS NoChange. / Installed optional profile, scoped evidence and passing technical tests; no product run or human approval. |
-| 2026-09-11 | Feature 032 AOC-Vertikalscheibe / Feature 032 AOC vertical slice | — | — | — | Documentation Impact `GeneratedUpdate`: Das unveränderte Phase-2-Manifest erzeugt zwei verlinkte Fünf-Felder-Ansichten. Drei historische logische META-LH-Pfade werden nur über jeweils eine featuregestempelte Datei und ihren Abschlussnachweis aufgelöst; Manifest und Lifecycle bleiben unverändert. Gepaarte Bash-/PowerShell-Verträge, `global-ready`, Secret-, PSScriptAnalyzer-, Skriptkatalog-, A11Y-, Security- und Architekturprüfungen sind lokal grün. Constitution und fünf Agentenflächen tragen die installierte Autonomous-Version 0.4.1; Assurance-Kontext, Produktcode, Dependencies und Home-Sync bleiben unverändert. Das fachliche Delta vor Statistikpflege umfasst 3.763 Nettozeilen. / The unchanged phase-2 manifest now generates two linked five-field views with uniquely proven stamped-path resolution. Local paired, programme, security, documentation, and parity gates pass; product and assurance contexts remain unchanged. |
+| 2026-09-11 | Feature 032 AOC-Vertikalscheibe / Feature 032 AOC vertical slice | — | — | — | Documentation Impact `GeneratedUpdate`: Das unveränderte Phase-2-Manifest erzeugt zwei verlinkte Fünf-Felder-Ansichten. Drei historische logische META-LH-Pfade werden nur über jeweils eine featuregestempelte Datei und ihren Abschlussnachweis aufgelöst; Manifest und Lifecycle bleiben unverändert. Gepaarte Bash-/PowerShell-Verträge, `global-ready`, Secret-, PSScriptAnalyzer-, Skriptkatalog-, A11Y-, Security- und Architekturprüfungen sind lokal grün. Constitution und fünf Agentenflächen tragen die installierte Autonomous-Version 0.4.1; Assurance-Kontext, Produktcode, Dependencies und Home-Sync bleiben unverändert. Das fachliche Delta vor Statistikpflege umfasst 3.888 Nettozeilen. / The unchanged phase-2 manifest now generates two linked five-field views with uniquely proven stamped-path resolution. Local paired, programme, security, documentation, and parity gates pass; product and assurance contexts remain unchanged. |
 
 ---
 
@@ -57,18 +57,18 @@ Profil 2 verwendet Git-getrackte Textdateien und sichtbare Git-Aktivitaet. Die W
 
 | Kennzahl / Metric | Wert / Value |
 |---|---:|
-| Textbasis / Text base | 254904 lines |
-| Textdateien / Text files | 1684 |
+| Textbasis / Text base | 255029 lines |
+| Textdateien / Text files | 1685 |
 | Beobachtbarer Zeitraum / Observable period | 2025-09-14..2026-09-11 |
 | Aktivtage / Active days | 15 |
-| Relevante Commits / Relevant commits | 84 |
-| Zeilen je Aktivtag / Lines per active day | 16993.6 |
+| Relevante Commits / Relevant commits | 85 |
+| Zeilen je Aktivtag / Lines per active day | 17001.9 |
 | Peak-Tag im Fenster / Peak day in window | 2026-07-31 / 132656 |
 | Peak-Woche im Fenster / Peak week in window | 2026-07-26 / 135472 |
 | Laengste Serie / Longest streak | 3 days |
-| Speedup vs. 80 lines/day | 212.4x |
-| Speedup vs. 125 lines/day | 135.9x |
-| Methodik / Methodology | v2; source `d7e4b0924646` |
+| Speedup vs. 80 lines/day | 212.5x |
+| Speedup vs. 125 lines/day | 136.0x |
+| Methodik / Methodology | v2; source `99edb7aea1a8` |
 
 ### Artefaktmix / Artifact Mix
 
@@ -77,7 +77,7 @@ Produktiv / Production          [#...................]   3.4% | 8706
 Tests                           [#...................]   3.1% | 7960
 Dokumentation / Documentation   [###########.........]  56.0% | 142771
 Skripte / Scripts               [####................]  18.0% | 45837
-Konfiguration / Configuration   [####................]  19.4% | 49493
+Konfiguration / Configuration   [####................]  19.5% | 49618
 Daten und Medien / Data and media [....................]   0.0% | 0
 Sonstiger Text / Other text     [#...................]   0.1% | 137
 ```
@@ -174,7 +174,7 @@ Slots 0..0
 
 | Slot | Phase | Nettozeilen / Net lines |
 |---:|---|---:|
-| 0 | Feature 032 AOC-Vertikalscheibe / Feature 032 AOC vertical slice | 3763 |
+| 0 | Feature 032 AOC-Vertikalscheibe / Feature 032 AOC vertical slice | 3888 |
 
 Die festen Slots halten den Phasenvergleich auch bei fehlenden oder spaeter ergaenzten Werten stabil.
 
@@ -184,8 +184,8 @@ Die festen Slots halten den Phasenvergleich auch bei fehlenden oder spaeter erga
 
 ```text
 Scale: 0..500x
-80 lines/day       [########............] 212.4x
-125 lines/day      [#####...............] 135.9x
+80 lines/day       [#########...........] 212.5x
+125 lines/day      [#####...............] 136.0x
 ```
 
 Die Faktoren vergleichen sichtbare Lieferdichte mit den dokumentierten manuellen Referenzen. Sie messen keine Arbeitszeit.
@@ -198,7 +198,7 @@ Die Faktoren vergleichen sichtbare Lieferdichte mit den dokumentierten manuellen
 Scale: 0..20000 lines/day
 Experienced manual [#...................] 80
 Thorsten solo      [#...................] 125
-Visible repository [#################...] 16993.6
+Visible repository [#################...] 17001.9
 ```
 
 Die gemeinsame Skala vergleicht Referenzen und sichtbare Lieferdichte. Sie schreibt die Git-Aktivitaet keiner Person oder KI pauschal zu.
@@ -224,6 +224,6 @@ DE: Das Fenster beginnt am 2025-09-14 und endet am 2026-09-11. Es enthaelt 15 ak
 | 2026-06 | 0 |
 | 2026-07 | 132656 |
 | 2026-08 | 100244 |
-| 2026-09 | 33061 |
+| 2026-09 | 33188 |
 
 <!-- project-statistics-v2:end -->
