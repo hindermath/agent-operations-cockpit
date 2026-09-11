@@ -620,6 +620,12 @@ function Test-RequirementsIntakeGovernance {
                     $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
                     foreach ($edge in $value.dependencies) { if ([string]$edge.kind -ceq 'PreferredSerialOrder') { $edge.binding = $true } }
                     [IO.File]::WriteAllText($fixture.ManifestPath, (($value | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
+                } elseif ($caseId -ceq 'backward-edge') {
+                    $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+                    $value.dependencies[-1].from = [string]$value.orderedTargets[3].path
+                    $value.dependencies[-1].to = [string]$value.orderedTargets[1].path
+                    $value.roots = @([string]$value.orderedTargets[2].path, [string]$value.orderedTargets[3].path)
+                    [IO.File]::WriteAllText($fixture.ManifestPath, (($value | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
                 } elseif ($caseId -ceq 'self-edge') {
                     $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
                     $value.dependencies = @($value.dependencies) + @([pscustomobject]@{

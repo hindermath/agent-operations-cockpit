@@ -758,6 +758,7 @@ sdh_validate_linked_intake_manifest() {
   local manifest_relative="$2"
   local manifest="$repo/$manifest_relative"
   local path resolved_path declared_hash actual_hash root duplicate_count position positions_file target_count index kind from to
+  local from_position to_position
 
   sdh_assert_safe_repository_path "$repo" "$manifest_relative" file || return 1
   sdh_assert_strict_utf8_file "$manifest" "$manifest_relative" || return 1
@@ -884,11 +885,20 @@ sdh_validate_linked_intake_manifest() {
     resolved_path="$(sdh_resolve_linked_intake_path "$repo" "$path")" || { rm -f "$positions_file"; return 1; }
     position="$(sdh_display_position "$repo/$resolved_path" "$index")"
     case "$position" in ''|*[!0-9]*|0) rm -f "$positions_file"; sdh_log "LIE006: ungueltige sichtbare Position / invalid display position: $path" >&2; return 1 ;; esac
-    printf '%s\n' "$position" >> "$positions_file"
+    printf '%s\t%s\n' "$path" "$position" >> "$positions_file"
   done
-  duplicate_count="$(sort "$positions_file" | uniq -d | wc -l | tr -d ' ')"
+  duplicate_count="$(cut -f2 "$positions_file" | sort | uniq -d | wc -l | tr -d ' ')"
+  [ "$duplicate_count" = "0" ] || { rm -f "$positions_file"; sdh_log 'LIE006: doppelte sichtbare Position / duplicate display position' >&2; return 1; }
+  while IFS=$'\t' read -r from to; do
+    from_position="$(awk -F '\t' -v endpoint="$from" '$1 == endpoint { print $2; exit }' "$positions_file")"
+    to_position="$(awk -F '\t' -v endpoint="$to" '$1 == endpoint { print $2; exit }' "$positions_file")"
+    if [ -z "$from_position" ] || [ -z "$to_position" ] || [ "$from_position" -ge "$to_position" ]; then
+      rm -f "$positions_file"
+      sdh_log 'LIE007: Dependency-Kante laeuft gegen die sichtbare Reihenfolge / dependency edge runs backward against visible order' >&2
+      return 1
+    fi
+  done < <(sdh_jq -r '.dependencies[] | [.from,.to] | @tsv' "$manifest")
   rm -f "$positions_file"
-  [ "$duplicate_count" = "0" ] || { sdh_log 'LIE006: doppelte sichtbare Position / duplicate display position' >&2; return 1; }
 }
 
 sdh_relative_repository_path() {

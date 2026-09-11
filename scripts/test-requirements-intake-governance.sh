@@ -628,6 +628,14 @@ else
         create_transaction_fixture "$case_id"
         sdh_jq '(.dependencies[] | select(.kind == "PreferredSerialOrder").binding) = true' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"
         ;;
+      backward-edge)
+        create_transaction_fixture "$case_id"
+        sdh_jq '
+          .dependencies[-1].from = .orderedTargets[3].path
+          | .dependencies[-1].to = .orderedTargets[1].path
+          | .roots = [.orderedTargets[2].path, .orderedTargets[3].path]
+        ' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"
+        ;;
       self-edge)
         create_transaction_fixture "$case_id"
         sdh_jq '.dependencies += [{from:.orderedTargets[1].path,to:.orderedTargets[1].path,kind:"HardCompletionGate",binding:true}]' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"

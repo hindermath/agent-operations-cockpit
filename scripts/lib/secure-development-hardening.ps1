@@ -592,6 +592,7 @@ function Test-SdhLinkedIntakeManifest {
 
     $knownPaths = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
     $positions = [Collections.Generic.HashSet[int]]::new()
+    $positionByPath = [Collections.Generic.Dictionary[string, int]]::new([StringComparer]::Ordinal)
     $index = 0
     foreach ($target in $manifest.orderedTargets) {
         $index++
@@ -622,6 +623,7 @@ function Test-SdhLinkedIntakeManifest {
         }
         $position = Get-SdhDisplayPosition -IntakeFile (Join-Path $Repo $resolvedPath) -ManifestIndex $index
         if ($position -le 0 -or -not $positions.Add($position)) { throw 'LIE006: doppelte oder ungueltige sichtbare Position / duplicate or invalid display position' }
+        $positionByPath.Add($path, $position)
     }
 
     $roots = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
@@ -660,6 +662,9 @@ function Test-SdhLinkedIntakeManifest {
         }
         if ([string]$edge.from -ceq [string]$edge.to) {
             throw 'LIE007: Dependency darf keine Selbstkante enthalten / dependency must not contain a self-edge'
+        }
+        if ($positionByPath.Item([string]$edge.from) -ge $positionByPath.Item([string]$edge.to)) {
+            throw 'LIE007: Dependency-Kante laeuft gegen die sichtbare Reihenfolge / dependency edge runs backward against visible order'
         }
         $null = $incomingPaths.Add([string]$edge.to)
         $identity = '{0}`0{1}`0{2}`0{3}' -f $edge.from, $edge.to, $edge.kind, $edge.binding

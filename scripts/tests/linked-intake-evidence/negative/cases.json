@@ -24,6 +24,7 @@
     {"id":"non-string-edge-field","mutation":"replace dependency kind with a number","expectedDiagnostic":"LIE007","writes":0},
     {"id":"unknown-edge-kind","mutation":"replace dependency kind with an unknown literal","expectedDiagnostic":"LIE007","writes":0},
     {"id":"binding-mismatch","mutation":"set PreferredSerialOrder binding to true","expectedDiagnostic":"LIE007","writes":0},
+    {"id":"backward-edge","mutation":"reverse a dependency against the visible order while preserving a DAG","expectedDiagnostic":"LIE007","writes":0},
     {"id":"self-edge","mutation":"add a dependency from a target to itself","expectedDiagnostic":"LIE007","writes":0},
     {"id":"dependency-cycle","mutation":"add a dependency that closes a cycle","expectedDiagnostic":"LIE007","writes":0},
     {"id":"incorrect-root-set","mutation":"declare a target with an incoming edge as root","expectedDiagnostic":"LIE007","writes":0},
