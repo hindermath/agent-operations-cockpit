@@ -8,22 +8,28 @@ on:
       - '.github/workflows/linked-intake-evidence-native-proof.yml'
       - 'scripts/lib/secure-development-hardening.sh'
       - 'scripts/lib/secure-development-hardening.ps1'
+      - 'scripts/prepare-secure-development-hardening.sh'
+      - 'scripts/prepare-secure-development-hardening.ps1'
       - 'scripts/test-requirements-intake-governance.sh'
       - 'scripts/test-requirements-intake-governance.ps1'
       - 'scripts/tests/linked-intake-evidence/**'
       - 'docs/project-statistics.md'
       - 'docs/project-statistics.config.json'
+      - 'specs/intake-series/aoc-phase-2/manifest.json'
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
       - '.github/workflows/linked-intake-evidence-native-proof.yml'
       - 'scripts/lib/secure-development-hardening.sh'
       - 'scripts/lib/secure-development-hardening.ps1'
+      - 'scripts/prepare-secure-development-hardening.sh'
+      - 'scripts/prepare-secure-development-hardening.ps1'
       - 'scripts/test-requirements-intake-governance.sh'
       - 'scripts/test-requirements-intake-governance.ps1'
       - 'scripts/tests/linked-intake-evidence/**'
       - 'docs/project-statistics.md'
       - 'docs/project-statistics.config.json'
+      - 'specs/intake-series/aoc-phase-2/manifest.json'
 
 permissions:
   contents: read

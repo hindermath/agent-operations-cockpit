@@ -574,21 +574,21 @@ sdh_repository_relative_from_absolute_path() {
 sdh_resolve_linked_intake_path() {
   local repo="$1"
   local logical_path="$2"
-  local directory base_name candidate candidate_name resolved stamp state_path
+  local directory base_name candidate candidate_name resolved stamp state_path is_active_logical=0
   local -a candidates=()
 
-  if [ -f "$repo/$logical_path" ]; then
-    sdh_assert_safe_repository_path "$repo" "$logical_path" file || return 1
-    printf '%s\n' "$logical_path"
-    return 0
-  fi
   case "$logical_path" in
     ""|/*|\\*|[A-Za-z]:*|..|../*|*/../*|*/..|-*|*/-*|*'\'*|*$'\n'*|*$'\r'*|*$'\t'*)
       sdh_log 'LIE003: unsicherer Repositorypfad / unsafe repository path: [redacted]' >&2
       return 1
       ;;
-    requirements/intakes/active/*.md) ;;
+    requirements/intakes/active/*.md) is_active_logical=1 ;;
     *)
+      if [ -f "$repo/$logical_path" ]; then
+        sdh_assert_safe_repository_path "$repo" "$logical_path" file || return 1
+        printf '%s\n' "$logical_path"
+        return 0
+      fi
       sdh_log "LIE004: Datei fehlt / file is missing: $logical_path" >&2
       return 1
       ;;
@@ -604,6 +604,16 @@ sdh_resolve_linked_intake_path() {
         ;;
     esac
   done < <(find "$repo/$directory" -maxdepth 1 -type f -print | LC_ALL=C sort)
+
+  if [ -f "$repo/$logical_path" ]; then
+    sdh_assert_safe_repository_path "$repo" "$logical_path" file || return 1
+    if [ "$is_active_logical" -eq 1 ] && [ "${#candidates[@]}" -gt 0 ]; then
+      sdh_log "LIE006: Original- und gestempelter Intake existieren gleichzeitig / original and stamped intake both exist: $logical_path" >&2
+      return 1
+    fi
+    printf '%s\n' "$logical_path"
+    return 0
+  fi
 
   case "${#candidates[@]}" in
     0)

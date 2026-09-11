@@ -501,6 +501,12 @@ else
         fi
         sdh_jq --arg path "$bad_path" '.orderedTargets[0].path = $path' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"
         ;;
+      logical-and-stamped-both-present)
+        create_transaction_fixture "$case_id"
+        logical_path="$(sdh_jq -r '.orderedTargets[1].path' "$CASE_MANIFEST")"
+        stamped_path="${logical_path%.md}.123-shadow.md"
+        printf '# Stamped shadow\n' > "$CASE_REPO/$stamped_path"
+        ;;
       duplicate-identity)
         create_transaction_fixture "$case_id"
         sdh_jq '.orderedTargets += [.orderedTargets[0]]' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"

@@ -458,11 +458,6 @@ function Read-SdhStrictUtf8File {
 function Resolve-SdhLinkedIntakePath {
     param([string]$Repo, [string]$LogicalPath)
 
-    $logicalTarget = Join-Path $Repo $LogicalPath
-    if (Test-Path -LiteralPath $logicalTarget -PathType Leaf) {
-        Assert-SdhSafeRepositoryPath -Repo $Repo -RelativePath $LogicalPath -ExpectedType File
-        return $LogicalPath
-    }
     if ([string]::IsNullOrWhiteSpace($LogicalPath) `
         -or [IO.Path]::IsPathRooted($LogicalPath) `
         -or $LogicalPath -match '^[A-Za-z]:[/\\]' `
@@ -473,7 +468,13 @@ function Resolve-SdhLinkedIntakePath {
         -or $LogicalPath -match '[\x00-\x1f]') {
         throw 'LIE003: unsicherer Repositorypfad / unsafe repository path: [redacted]'
     }
-    if ($LogicalPath -cnotmatch '^requirements/intakes/active/.+\.md$') {
+    $logicalTarget = Join-Path $Repo $LogicalPath
+    $isActiveLogical = $LogicalPath -cmatch '^requirements/intakes/active/.+\.md$'
+    if (-not $isActiveLogical -and (Test-Path -LiteralPath $logicalTarget -PathType Leaf)) {
+        Assert-SdhSafeRepositoryPath -Repo $Repo -RelativePath $LogicalPath -ExpectedType File
+        return $LogicalPath
+    }
+    if (-not $isActiveLogical) {
         throw "LIE004: Ziel fehlt oder hat den falschen Typ / target is missing or has the wrong type: ${LogicalPath}"
     }
 
@@ -484,6 +485,13 @@ function Resolve-SdhLinkedIntakePath {
     $candidates = @(Get-ChildItem -LiteralPath (Join-Path $Repo $directoryRelative) -File |
         Where-Object { $_.Name -cmatch $pattern } |
         Sort-Object Name)
+    if (Test-Path -LiteralPath $logicalTarget -PathType Leaf) {
+        Assert-SdhSafeRepositoryPath -Repo $Repo -RelativePath $LogicalPath -ExpectedType File
+        if ($candidates.Count -gt 0) {
+            throw "LIE006: Original- und gestempelter Intake existieren gleichzeitig / original and stamped intake both exist: ${LogicalPath}"
+        }
+        return $LogicalPath
+    }
     if ($candidates.Count -eq 0) {
         throw "LIE004: Ziel fehlt oder hat den falschen Typ / target is missing or has the wrong type: ${LogicalPath}"
     }

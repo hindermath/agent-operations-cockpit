@@ -14,6 +14,7 @@
     {"id":"missing-target","path":"requirements/intakes/active/vanished.md","expectedDiagnostic":"LIE004","writes":0},
     {"id":"wrong-filesystem-type","path":"requirements/intakes/active","expectedDiagnostic":"LIE004","writes":0},
     {"id":"symlink-escape","path":"fixtures/link-outside.md","expectedDiagnostic":"LIE005","writes":0},
+    {"id":"logical-and-stamped-both-present","mutation":"create a stamped sibling while the logical intake remains","expectedDiagnostic":"LIE006","writes":0},
     {"id":"duplicate-identity","mutation":"duplicate intakePath","expectedDiagnostic":"LIE006","writes":0},
     {"id":"duplicate-position","mutation":"duplicate displayPosition","expectedDiagnostic":"LIE006","writes":0},
     {"id":"unknown-endpoint","mutation":"dependency to unknown intake","expectedDiagnostic":"LIE007","writes":0},

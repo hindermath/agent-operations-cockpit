@@ -540,6 +540,11 @@ function Test-RequirementsIntakeGovernance {
                     $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
                     $value.orderedTargets[0].path = $badPath
                     [IO.File]::WriteAllText($fixture.ManifestPath, (($value | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
+                } elseif ($caseId -ceq 'logical-and-stamped-both-present') {
+                    $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+                    $logicalPath = [string]$value.orderedTargets[1].path
+                    $stampedPath = $logicalPath.Substring(0, $logicalPath.Length - 3) + '.123-shadow.md'
+                    [IO.File]::WriteAllText((Join-Path $fixture.Repo $stampedPath), "# Stamped shadow`n", [Text.UTF8Encoding]::new($false))
                 } elseif ($caseId -ceq 'duplicate-identity') {
                     $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
                     $value.orderedTargets = @($value.orderedTargets) + @($value.orderedTargets[0])
