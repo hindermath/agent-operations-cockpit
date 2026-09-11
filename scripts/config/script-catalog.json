@@ -40,7 +40,7 @@
       "id": "quality",
       "titleDe": "Qualitaetspruefungen",
       "titleEn": "Quality checks",
-      "patterns": ["check-homogeneity.*", "test-homogeneity-runtime-closure.*", "check-learning-package.*", "install-hooks.*", "hooks/*", "tests/*"],
+      "patterns": ["check-homogeneity.*", "test-homogeneity-runtime-closure.*", "check-learning-package.*", "install-hooks.*", "test-requirements-intake-governance.*", "hooks/*", "tests/*"],
       "purposeDe": "Fuehrt reproduzierbare Repository-, Paket- und Git-Hook-Pruefungen aus.",
       "purposeEn": "Runs reproducible repository, package, and Git-hook checks."
     },

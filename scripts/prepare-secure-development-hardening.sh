@@ -21,11 +21,33 @@ OPT_COMMIT=false
 OPT_PUSH=false
 OPT_ALLOW_DIRTY=false
 OPT_PRIMARY_LANGUAGE=""
+OPT_ORDER_ONLY=false
+OPT_MANIFEST=""
 OPT_REPOS=()
+OPT_ORDER_OUTPUTS=()
 
 usage() {
   cat <<'EOF'
 prepare-secure-development-hardening.sh — Secure-Development-Hardening vorbereiten
+
+Erzeugt bei einem eindeutigen kanonischen Series-Manifest eine fuenfspaltige
+Lastenheft-Reihenfolge: Position, Status, vollstaendig verlinkter Intake-
+Dateiname, direkte eingehende Abhaengigkeiten und Spec-Kit-Feature. Feature-
+Links entstehen nur aus einer ausdruecklichen eindeutigen Bindung; sonst wird
+der exakte zweisprachige Fallback ausgegeben. --dry-run prueft denselben
+Vertrag und schreibt keine Ziel- oder temporaeren Dateien in getrackte Pfade.
+
+With one unambiguous canonical series manifest, generates a five-column
+requirements order: position, status, linked complete intake filename, direct
+incoming dependencies, and Spec Kit feature. Feature links require one explicit
+unique binding; otherwise the exact bilingual fallback is rendered. --dry-run
+checks the same contract without writing targets or temporary files to tracked
+paths. Write mode rechecks the complete consumed input set and rejects any
+generated output that overlaps a canonical input.
+
+--order-only isolates this projection from language detection and secure-
+development preparation. It requires one explicit --repo and --manifest,
+supports repeated --order-output paths, and forbids commit and push.
 
 Usage:
   bash scripts/prepare-secure-development-hardening.sh [options]
@@ -34,11 +56,14 @@ Options:
   --home-dir PATH             Home directory to scan (default: $HOME)
   --repo PATH                 Prepare one explicit Level-2 repo; repeatable
   --primary-language LANG     Override language detection for all discovered repos
+  --order-only               Nur Intake-Projektion; erfordert --repo und --manifest
+  --manifest PATH            Kanonisches Manifest relativ zum expliziten Repo
+  --order-output PATH        Owned Ausgabe relativ zum Repo; wiederholbar
   --commit                    Commit changes in each changed repo
   --push                      Push current branch after commit/check; implies --commit
   --allow-dirty               Continue even if a repo already has local changes
-  --dry-run                   Show targets and actions only
-  -h, --help                  Show this help
+  --dry-run                   Vertrag pruefen, keine Writes / check contract, no writes
+  -h, --help                  Diese Hilfe anzeigen / show this help
 EOF
 }
 
@@ -66,6 +91,20 @@ while [ $# -gt 0 ]; do
     --repo)
       [ $# -ge 2 ] || die "--repo braucht einen Pfad"
       OPT_REPOS+=("$2")
+      shift 2
+      ;;
+    --order-only)
+      OPT_ORDER_ONLY=true
+      shift
+      ;;
+    --manifest)
+      [ $# -ge 2 ] || die "--manifest braucht einen repositoryrelativen Pfad"
+      OPT_MANIFEST="$2"
+      shift 2
+      ;;
+    --order-output)
+      [ $# -ge 2 ] || die "--order-output braucht einen repositoryrelativen Pfad"
+      OPT_ORDER_OUTPUTS+=("$2")
       shift 2
       ;;
     --commit)
@@ -96,6 +135,34 @@ while [ $# -gt 0 ]; do
 done
 
 command -v git >/dev/null 2>&1 || die "git nicht gefunden"
+
+if $OPT_ORDER_ONLY; then
+  [ "${#OPT_REPOS[@]}" -eq 1 ] || die "--order-only erfordert genau ein explizites --repo"
+  [ -n "$OPT_MANIFEST" ] || die "--order-only erfordert --manifest"
+  ! $OPT_COMMIT && ! $OPT_PUSH || die "--order-only erlaubt weder --commit noch --push"
+  [ -z "$OPT_PRIMARY_LANGUAGE" ] || die "--order-only verwendet keine --primary-language"
+  [ "${#OPT_ORDER_OUTPUTS[@]}" -gt 0 ] || OPT_ORDER_OUTPUTS=('Lastenheft_Abarbeitungsreihenfolge.md')
+  order_repo="${OPT_REPOS[0]}"
+  [ -d "$order_repo/.git" ] || die "--repo ist kein Git-Repository"
+  if ! $OPT_DRY_RUN && ! $OPT_ALLOW_DIRTY; then
+    order_status="$(git -C "$order_repo" status --short)"
+    [ -z "$order_status" ] || die "Repo hat lokale Aenderungen; fuer einen begrenzten Write explizit --allow-dirty verwenden: $order_repo"
+  fi
+  order_mode='write'
+  $OPT_DRY_RUN && order_mode='check'
+  if sdh_render_linked_intake_views "$order_repo" "$OPT_MANIFEST" "$order_mode" "${OPT_ORDER_OUTPUTS[@]}"; then
+    :
+  else
+    order_exit=$?
+    exit "$order_exit"
+  fi
+  log "Intake-Projektion / intake projection: $SDH_RENDER_RESULT, writes=$SDH_RENDER_WRITE_COUNT"
+  exit 0
+fi
+
+if [ -n "$OPT_MANIFEST" ] || [ "${#OPT_ORDER_OUTPUTS[@]}" -gt 0 ]; then
+  die "--manifest und --order-output sind nur mit --order-only erlaubt"
+fi
 
 REPOS=()
 

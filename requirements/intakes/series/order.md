@@ -99,3 +99,29 @@ blocker remains. Complete current Series review
 transition therefore also sets the declared Series status to `Completed`.
 This completion starts no downstream work and grants no downstream or
 promotion authority.*
+
+
+<!-- secure-development-hardening-order:start -->
+## Verlinkte Lastenheft-Reihenfolge / Linked Requirements Order
+
+Diese Tabelle wird aus dem kanonischen Series-Manifest und ausdruecklicher Feature-Evidence erzeugt. Vollstaendige Dateinamen, direkte eingehende Kanten und sichtbare Positionen bleiben erhalten. Manuelle Abschnitte ausserhalb dieses Markers bleiben unberuehrt.
+
+*This table is generated from the canonical series manifest and explicit feature evidence. Complete filenames, direct incoming edges, and visible positions are preserved. Manual sections outside this marker remain unchanged.*
+
+| Position | Status | Lastenheft/Intake | Abhängigkeiten / Dependencies | Spec-Kit-Feature |
+|---:|---|---|---|---|
+| 1 | Completed | [Lastenheft_META-LH-01-Programmquellen.001-programmquellen-baseline.md](../active/Lastenheft_META-LH-01-Programmquellen.001-programmquellen-baseline.md) | — (Root / keine direkte Abhängigkeit) | [001-programmquellen-baseline](../../../specs/001-programmquellen-baseline/) |
+| 2 | Completed | [Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md](../active/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md) | [Lastenheft_META-LH-01-Programmquellen.001-programmquellen-baseline.md](../active/Lastenheft_META-LH-01-Programmquellen.001-programmquellen-baseline.md) → current (`RequirementsGovernanceGate`, binding: true) | [002-portfolio-ownership](../../../specs/002-portfolio-ownership/) |
+| 3 | Completed | [Lastenheft_META-LH-03-Authoring-Contract.003-authoring-contract.md](../active/Lastenheft_META-LH-03-Authoring-Contract.003-authoring-contract.md) | [Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md](../active/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md) → current (`RequirementsGovernanceGate`, binding: true) | [003-authoring-contract](../../../specs/003-authoring-contract/) |
+| 4 | Completed | [Lastenheft_META-LH-04-Series-Eligibility.md](../active/Lastenheft_META-LH-04-Series-Eligibility.md) | [Lastenheft_META-LH-03-Authoring-Contract.003-authoring-contract.md](../active/Lastenheft_META-LH-03-Authoring-Contract.003-authoring-contract.md) → current (`HardCompletionGate`, binding: true) | — (kein Spec-Kit-Feature / no Spec Kit feature) |
+| 5 | Completed | [Lastenheft_META-LH-05-Erste-Welle.md](../active/Lastenheft_META-LH-05-Erste-Welle.md) | [Lastenheft_META-LH-04-Series-Eligibility.md](../active/Lastenheft_META-LH-04-Series-Eligibility.md) → current (`HardCompletionGate`, binding: true) | — (kein Spec-Kit-Feature / no Spec Kit feature) |
+| 6 | Completed | [Lastenheft_RAW-01-Reference-Agentic-Workspace.md](../active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md) | [Lastenheft_META-LH-05-Erste-Welle.md](../active/Lastenheft_META-LH-05-Erste-Welle.md) → current (`RequirementsGovernanceGate`, binding: true) | — (kein Spec-Kit-Feature / no Spec Kit feature) |
+| 7 | Completed | [Lastenheft_RAW-03-State-Truthfulness.md](../active/Lastenheft_RAW-03-State-Truthfulness.md) | [Lastenheft_RAW-01-Reference-Agentic-Workspace.md](../active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md) → current (`HardCompletionGate`, binding: true) | — (kein Spec-Kit-Feature / no Spec Kit feature) |
+| 8 | Completed | [Lastenheft_RAW-02-Workspace-Orchestrator.md](../active/Lastenheft_RAW-02-Workspace-Orchestrator.md) | [Lastenheft_RAW-03-State-Truthfulness.md](../active/Lastenheft_RAW-03-State-Truthfulness.md) → current (`HardCompletionGate`, binding: true) | — (kein Spec-Kit-Feature / no Spec Kit feature) |
+| 9 | Completed | [Lastenheft_RAW-04-Presentation-Fabric.md](../active/Lastenheft_RAW-04-Presentation-Fabric.md) | [Lastenheft_RAW-03-State-Truthfulness.md](../active/Lastenheft_RAW-03-State-Truthfulness.md) → current (`HardCompletionGate`, binding: true) | — (kein Spec-Kit-Feature / no Spec Kit feature) |
+| 10 | Completed | [Lastenheft_RAW-05-Execution-Nodes.md](../active/Lastenheft_RAW-05-Execution-Nodes.md) | [Lastenheft_RAW-02-Workspace-Orchestrator.md](../active/Lastenheft_RAW-02-Workspace-Orchestrator.md) → current (`PreferredSerialOrder`, binding: false) | — (kein Spec-Kit-Feature / no Spec Kit feature) |
+| 11 | Completed | [Lastenheft_RAW-06-CLI-Environment-Orchestration.md](../active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md) | [Lastenheft_RAW-05-Execution-Nodes.md](../active/Lastenheft_RAW-05-Execution-Nodes.md) → current (`HardCompletionGate`, binding: true) | — (kein Spec-Kit-Feature / no Spec Kit feature) |
+| 12 | Completed | [Lastenheft_RAW-07-Hardware-Capability-Layer.md](../active/Lastenheft_RAW-07-Hardware-Capability-Layer.md) | [Lastenheft_RAW-04-Presentation-Fabric.md](../active/Lastenheft_RAW-04-Presentation-Fabric.md) → current (`HardCompletionGate`, binding: true) | — (kein Spec-Kit-Feature / no Spec Kit feature) |
+| 13 | Completed | [Lastenheft_RAW-08-Workflow-Engine.md](../active/Lastenheft_RAW-08-Workflow-Engine.md) | [Lastenheft_RAW-05-Execution-Nodes.md](../active/Lastenheft_RAW-05-Execution-Nodes.md) → current (`AssessmentBaseline`, binding: true)<br>[Lastenheft_RAW-06-CLI-Environment-Orchestration.md](../active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md) → current (`HardCompletionGate`, binding: true) | — (kein Spec-Kit-Feature / no Spec Kit feature) |
+| 14 | Completed | [Lastenheft_RAW-09-Preset-Evolution.md](../active/Lastenheft_RAW-09-Preset-Evolution.md) | [Lastenheft_RAW-08-Workflow-Engine.md](../active/Lastenheft_RAW-08-Workflow-Engine.md) → current (`FinalAuditInput`, binding: true) | — (kein Spec-Kit-Feature / no Spec Kit feature) |
+<!-- secure-development-hardening-order:end -->

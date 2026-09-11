@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0",
+  "defaultExpectedWrites": 0,
+  "cases": [
+    {"id":"invalid-utf8","encoding":"base64","payload":"wyg=","expectedDiagnostic":"LIE001","writes":0},
+    {"id":"embedded-nul","encoding":"base64","payload":"ewAifQ==","expectedDiagnostic":"LIE001","writes":0},
+    {"id":"missing-required-field","mutation":"remove schemaVersion","expectedDiagnostic":"LIE002","writes":0},
+    {"id":"wrong-type","mutation":"entries is object","expectedDiagnostic":"LIE002","writes":0},
+    {"id":"absolute-posix","path":"/etc/passwd","expectedDiagnostic":"LIE003","writes":0},
+    {"id":"absolute-drive","path":"C:/Windows/System32","expectedDiagnostic":"LIE003","writes":0},
+    {"id":"absolute-unc","path":"//server/share/file.md","expectedDiagnostic":"LIE003","writes":0},
+    {"id":"parent-traversal","path":"../outside.md","expectedDiagnostic":"LIE003","writes":0},
+    {"id":"option-path","path":"--output","expectedDiagnostic":"LIE003","writes":0},
+    {"id":"missing-target","path":"requirements/intakes/active/vanished.md","expectedDiagnostic":"LIE004","writes":0},
+    {"id":"wrong-filesystem-type","path":"requirements/intakes/active","expectedDiagnostic":"LIE004","writes":0},
+    {"id":"symlink-escape","path":"fixtures/link-outside.md","expectedDiagnostic":"LIE005","writes":0},
+    {"id":"duplicate-identity","mutation":"duplicate intakePath","expectedDiagnostic":"LIE006","writes":0},
+    {"id":"duplicate-position","mutation":"duplicate displayPosition","expectedDiagnostic":"LIE006","writes":0},
+    {"id":"unknown-endpoint","mutation":"dependency to unknown intake","expectedDiagnostic":"LIE007","writes":0},
+    {"id":"multiple-feature-candidates","mutation":"two valid proof paths","expectedDiagnostic":"LIE008","writes":0},
+    {"id":"stale-check-output","mutation":"expected output differs","expectedDiagnostic":"LIE009","writes":0},
+    {"id":"simulated-publish-failure","mutation":"fail after first atomic replacement","expectedDiagnostic":"LIE010","writes":0,"attemptedWrites":1,"rollbackVerified":true},
+    {"id":"root-series-drift","mutation":"semantic row differs between views","expectedDiagnostic":"LIE011","writes":0},
+    {"id":"cross-implementation-parity","mutation":"Bash and PowerShell diagnostics differ","expectedDiagnostic":"LIE012","writes":0}
+  ]
+}

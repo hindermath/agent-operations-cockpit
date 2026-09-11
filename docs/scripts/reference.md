@@ -5,7 +5,7 @@
 > Generated from `scripts/config/script-catalog.json` and the Git index. Do not edit manually.
 
 Stand / Updated: 2026-07-28
-Kanonische Skriptdateien / Canonical script files: 131
+Kanonische Skriptdateien / Canonical script files: 133
 
 ## Workspace-Lebenszyklus / Workspace lifecycle
 
@@ -666,6 +666,30 @@ pwsh -NoProfile -File scripts/test-homogeneity-runtime-closure.ps1 -WhatIf  # fa
 ```text
 bash scripts/test-homogeneity-runtime-closure.sh --help
 bash scripts/test-homogeneity-runtime-closure.sh --dry-run  # falls angeboten / when supported
+```
+
+### `scripts/test-requirements-intake-governance.ps1`
+
+- **Rolle / Role:** oeffentliches Kommando / public command
+- **Kurzbeschreibung / Summary:** Prueft den Vertrag fuer verlinkte Intake-Reihenfolgen.
+- **Voraussetzungen / Prerequisites:** passende Shell; weitere Anforderungen stehen in `--help` oder `Get-Help`.
+- **Nebenwirkungen / Side effects:** zuerst Check-, Dry-Run- oder WhatIf-Modus verwenden, sofern angeboten.
+
+```text
+Get-Help ./scripts/test-requirements-intake-governance.ps1 -Full
+pwsh -NoProfile -File scripts/test-requirements-intake-governance.ps1 -WhatIf  # falls SupportsShouldProcess angeboten wird / when supported
+```
+
+### `scripts/test-requirements-intake-governance.sh`
+
+- **Rolle / Role:** oeffentliches Kommando / public command
+- **Kurzbeschreibung / Summary:** Contract tests for the linked requirements-intake order projection.
+- **Voraussetzungen / Prerequisites:** passende Shell; weitere Anforderungen stehen in `--help` oder `Get-Help`.
+- **Nebenwirkungen / Side effects:** zuerst Check-, Dry-Run- oder WhatIf-Modus verwenden, sofern angeboten.
+
+```text
+bash scripts/test-requirements-intake-governance.sh --help
+bash scripts/test-requirements-intake-governance.sh --dry-run  # falls angeboten / when supported
 ```
 
 ### `scripts/tests/test_agentic_workspace_maintenance.py`
