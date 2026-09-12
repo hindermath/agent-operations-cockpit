@@ -55,18 +55,19 @@ drift closes the gate again. Legacy root intakes are out of scope.*
 | 13 | `Lastenheft_RAW-08-Workflow-Engine.md` | Completed | Knowledge Workflow |
 | 14 | `Lastenheft_RAW-09-Preset-Evolution.md` | Completed | Preset Proposal; IAD901–902 bestätigt |
 
-Alle logischen Pfade liegen unter `requirements/intakes/active/`. Der logische
-Pfad von META-LH-01 wird über den eindeutigen, hashgebundenen Lifecycle-Vertrag
-`specs/001-programmquellen-baseline/intake-lifecycle.json` auf den physischen
-Archivpfad aufgelöst. Die fachliche Nummerierung benennt Owner-Reihen; die
-Verarbeitungsposition folgt dem Abhängigkeitsgraphen und kann deshalb RAW-03
-vor RAW-02 führen.
+Alle logischen Pfade liegen unter `requirements/intakes/active/`. Die logischen
+Pfade von META-LH-01 bis META-LH-03 werden über ihre eindeutigen,
+hashgebundenen Lifecycle-Verträge unter `specs/001-programmquellen-baseline/`,
+`specs/002-portfolio-ownership/` und `specs/003-authoring-contract/` auf die
+jeweiligen physischen Archivpfade aufgelöst. Die fachliche Nummerierung benennt
+Owner-Reihen; die Verarbeitungsposition folgt dem Abhängigkeitsgraphen und kann
+deshalb RAW-03 vor RAW-02 führen.
 
 *All logical paths are below `requirements/intakes/active/`. The logical
-META-LH-01 path is resolved to its physical archive path through the unique,
-hash-bound lifecycle contract. Domain numbering identifies owner series;
-processing order follows dependencies and may therefore place RAW-03 before
-RAW-02.*
+META-LH-01 through META-LH-03 paths are resolved to their physical archive
+paths through the unique, hash-bound lifecycle contracts under the matching
+feature directories. Domain numbering identifies owner series; processing
+order follows dependencies and may therefore place RAW-03 before RAW-02.*
 
 ## Bindende Abhängigkeiten / Binding dependencies
 
@@ -85,20 +86,21 @@ is preferred only, so read-only node research may proceed earlier.*
 
 META-LH-01 bis META-LH-05 sowie RAW-01 bis RAW-09 sind nach aktueller
 `Ready`-Single-Review-Evidence im Manifest `Completed`. Es gibt keinen
-`Eligible`-Kandidaten und keinen Lifecycle-Blocker. Das vollständige aktuelle
-Series Review `ed06821a-bf3d-438a-96ca-d85eb5f8cb8a` ist `Ready`; der
-ausdrücklich autorisierte Statuswechsel setzt deshalb auch den deklarierten
-Serienstatus auf `Completed`. Dieser Abschluss startet keine Folgearbeit und
-erteilt keine Review-, Specify-, Implementierungs-, Remote-, Merge-, Bypass-,
-Preset- oder Promotion-Authority.
+`Eligible`-Kandidaten und keinen Lifecycle-Blocker. Der ausdrücklich
+autorisierte Serienstatus bleibt `Completed`. Das frühere Series Review
+`ed06821a-bf3d-438a-96ca-d85eb5f8cb8a` bleibt als historische Evidence
+erhalten, ist nach der META-LH-03-Lifecycle-Hashkorrektur aber nicht mehr
+aktuell. Diese Korrektur startet keine Folgearbeit und erteilt keine Review-,
+Specify-, Implementierungs-, Remote-, Merge-, Bypass-, Preset- oder
+Promotion-Authority.
 
 *META-LH-01 through META-LH-05 and RAW-01 through RAW-09 are `Completed` after
 current Ready Single-review evidence. No Eligible candidate or lifecycle
-blocker remains. Complete current Series review
-`ed06821a-bf3d-438a-96ca-d85eb5f8cb8a` is `Ready`; the explicitly authorised
-transition therefore also sets the declared Series status to `Completed`.
-This completion starts no downstream work and grants no downstream or
-promotion authority.*
+blocker remains, and the explicitly authorised Series status stays
+`Completed`. Earlier Series review `ed06821a-bf3d-438a-96ca-d85eb5f8cb8a`
+remains historical evidence but is no longer current after the META-LH-03
+lifecycle-hash correction. This correction starts no downstream work and
+grants no downstream or promotion authority.*
 
 
 <!-- secure-development-hardening-order:start -->
