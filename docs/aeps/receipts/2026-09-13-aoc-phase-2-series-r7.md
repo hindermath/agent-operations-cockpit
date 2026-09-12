@@ -45,10 +45,10 @@ new failure class.*
 | `requirements/intake-governance.json` | `e4f3a04e04af10fc64102d6200435d767437bdd4eda7819ba8890194b006a016` |
 | `specs/003-authoring-contract/intake-lifecycle.json` | `9df9ce7e074324546f600927a9dc273aab3d1e2443cc972493240808bc7cb6b8` |
 
-Der Deduplizierungsschlüssel ist das Ergebnisartefakt,
-`07eb974f7374e731ec31be0710b613d89fd0ed9c5d192029e77d593613d21feb`
-und das Datum `2026-09-13`. / *The result artifact, its normalized hash, and
-the date form the deduplication key.*
+Der Deduplizierungsschlüssel lautet
+`a30ccfc4-02a7-40b2-9b18-6bae73499c67 + specs/intake-series/aoc-phase-2/manifest.json + 609ca54b3d12178675bd82dc900cb52e7617ac2026b677883f65e3047d6fab43`.
+Er bindet Review-ID, Zielpfad und normalisierten Zielhash. / *The deduplication
+key binds the review ID, target path, and normalized target hash.*
 
 ## Validierung / Validation
 

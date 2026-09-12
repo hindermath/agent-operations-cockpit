@@ -30,7 +30,7 @@
     ]
   },
   "reviewInvalidation": {
-    "status": "Invalidated",
+    "status": "Superseded",
     "results": [
       "specs/intake-review-results/aoc-phase-2-series-2026-08-30-r6.json"
     ],
