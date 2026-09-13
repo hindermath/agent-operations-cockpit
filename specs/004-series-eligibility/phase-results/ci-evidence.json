@@ -1,0 +1,98 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "8b306e28-51eb-4510-afbc-5056b9aee328",
+  "capturedAt": "2026-09-13T12:01:52Z",
+  "result": "Pass",
+  "tasks": ["T047", "T048", "T049", "T050"],
+  "pullRequest": {
+    "number": 49,
+    "url": "https://github.com/hindermath/agent-operations-cockpit/pull/49",
+    "sourceHead": "02a9399536c46497c34cee840e5ae2c4fc090574",
+    "state": "OPEN",
+    "mergeState": "BLOCKED_BY_HUMAN_APPROVAL_OR_RULESET",
+    "technicalChecks": "Pass"
+  },
+  "nativeMatrix": [
+    {
+      "platform": "ubuntu-22.04",
+      "runId": 34754238229,
+      "jobId": 103715801136,
+      "runner": "Linux / ubuntu22 / ubuntu-22.04",
+      "bash": "/bin/bash",
+      "python": "/opt/hostedtoolcache/Python/3.14.7/x64/bin/python3.14",
+      "powerShell": "7.6.5",
+      "catalogCommands": 36,
+      "immediateExitZero": 36,
+      "result": "Pass"
+    },
+    {
+      "platform": "macos-14",
+      "runId": 34754238229,
+      "jobId": 103715801045,
+      "runner": "macOS / macos14 / macos-14",
+      "bash": "/opt/homebrew/bin/bash",
+      "python": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "powerShell": "7.6.4",
+      "catalogCommands": 36,
+      "immediateExitZero": 36,
+      "result": "Pass"
+    },
+    {
+      "platform": "windows-2022",
+      "runId": 34754238229,
+      "jobId": 103715801117,
+      "runner": "Windows / win22 / windows-2022",
+      "bash": "C:\\Program Files\\Git\\bin\\bash.exe",
+      "python": "C:\\hostedtoolcache\\windows\\Python\\3.14.7\\x64\\python.exe",
+      "powerShell": "7.6.5",
+      "catalogCommands": 36,
+      "immediateExitZero": 36,
+      "result": "Pass"
+    }
+  ],
+  "publicReadiness": {
+    "runId": 34754238183,
+    "headSha": "02a9399536c46497c34cee840e5ae2c4fc090574",
+    "repositoryBaselineJobId": 103715801059,
+    "dotnetJobs": [103715801237, 103715801057, 103715800906],
+    "result": "Pass",
+    "evidence": "specs/004-series-eligibility/phase-results/public-readiness.md"
+  },
+  "homogeneity": {
+    "runId": 34754238340,
+    "jobId": 103715801484,
+    "headSha": "02a9399536c46497c34cee840e5ae2c4fc090574",
+    "command": "bash scripts/check-homogeneity.sh --dry-run --verbose .",
+    "result": "Pass"
+  },
+  "maintenanceTui": {
+    "runId": 34754238186,
+    "headSha": "02a9399536c46497c34cee840e5ae2c4fc090574",
+    "jobIds": [103715801064, 103715800983, 103715801115],
+    "result": "Pass"
+  },
+  "linkedIntakeEvidence": {
+    "runId": 34754238178,
+    "headSha": "02a9399536c46497c34cee840e5ae2c4fc090574",
+    "jobs": [
+      {"platform": "ubuntu-22.04", "jobId": 103716451571, "result": "Pass", "writes": 0},
+      {"platform": "windows-2022", "jobId": 103716451470, "result": "Pass", "writes": 0}
+    ],
+    "note": "Supplemental proof; the Feature-004 exact-head matrix is authoritative for T048."
+  },
+  "preMerge": {
+    "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/premerge-gate-evidence.json",
+    "schemaVersion": "2.0",
+    "requirements": 54,
+    "applicable": 42,
+    "notApplicable": 12,
+    "bashValidator": "Pass",
+    "powerShellValidator": "Pass",
+    "negativeProbe": "AEI202 in both validators after removal of EL-linux-bash-query command token",
+    "normalizedSha256": "9966704c1c216777fdee8ed4e36c47d28b0a0fd08b9c589c345429178b7300fa"
+  },
+  "documentationImpact": {
+    "decision": "UpdateRequired",
+    "evidence": "specs/004-series-eligibility/contracts/documentation-impact.json"
+  }
+}

@@ -7,7 +7,7 @@
   "authorityRevalidationRequired": true,
   "stage": "MergeAndSync",
   "status": "Active",
-  "checkpointCommit": "398327641f69a0245b57f1a563faa2cc41c357e4",
+  "checkpointCommit": "02a9399536c46497c34cee840e5ae2c4fc090574",
   "acceptedArtifacts": [
     {
       "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
@@ -24,8 +24,8 @@
   ],
   "tasks": {
     "path": "specs/004-series-eligibility/tasks.md",
-    "sha256": "596ececd2d624e75cfe859b071dbaf9449472cb3d7bb35acd03a7c2368db779d",
-    "completed": 46,
+    "sha256": "b74af43a88cc1dc5d17ab15bd5990964af8c16c025b5a2de8251ddab85a7d73f",
+    "completed": 50,
     "total": 57
   },
   "routing": {
@@ -410,12 +410,12 @@
       }
     ]
   },
-  "lastPassingGate": "The affected PowerShell status/next suite and repository PSScriptAnalyzer passed after scoping the inner Python core to UTF-8 and restoring the previous process environment; the current exact remote head still requires native CI rerun.",
-  "nextExactAction": "Commit and push the scoped PowerShell-wrapper encoding correction, then collect complete exact-head native CI evidence and finish T047 through T050.",
+  "lastPassingGate": "T047-T050 passed at source head 02a9399536c46497c34cee840e5ae2c4fc090574: PR #49 exists, all three native jobs recorded 36/36 immediate exits zero, Public Readiness and Homogeneity passed, and both gate-evidence validators accepted the schema-2.0 snapshot while rejecting the removed-token probe with AEI202.",
+  "nextExactAction": "Commit and push the T047-T050 evidence checkpoint, wait for all technical checks on its exact new head, regenerate PreMerge evidence for that head, then converge and merge PR #49 under T051.",
   "lastOperation": {
-    "kind": "DeliveryRemediation:windows-python-powershell-utf8-boundary",
+    "kind": "DeliveryEvidence:T047-T050",
     "state": "Completed",
-    "summary": "Bound only the Python core invoked by the PowerShell wrapper to strict UTF-8, restored its prior process environment, retained native Git Bash decoding, and passed the affected suite plus repository PSScriptAnalyzer."
+    "summary": "Bound PR #49, exact-head native matrix, Public Readiness, Homogeneity, and validated schema-2.0 PreMerge evidence; no merge performed."
   },
   "stop": {
     "reason": "N/A",
@@ -428,5 +428,5 @@
     "postMergeActions": "N/A",
     "finalValidation": "Pending"
   },
-  "updatedAt": "2026-09-13T11:16:45Z"
+  "updatedAt": "2026-09-13T12:01:52Z"
 }

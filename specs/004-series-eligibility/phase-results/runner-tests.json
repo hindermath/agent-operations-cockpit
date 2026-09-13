@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0",
   "runId": "8b306e28-51eb-4510-afbc-5056b9aee328",
-  "phaseId": "delivery-remediation-4",
+  "phaseId": "delivery-evidence",
   "attemptId": "1eef6f97-906a-4b65-9bfb-cd34cf67c370",
-  "completedAt": "2026-09-13T11:16:45Z",
+  "completedAt": "2026-09-13T12:01:52Z",
   "result": "Pass",
-  "scope": "T028-T030 local runner proofs; native CI acceptance remains pending",
+  "scope": "T028-T030 local runner proofs and T048 native exact-head acceptance",
   "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
   "sourceHashes": [
     {
@@ -2322,10 +2322,10 @@
     }
   ],
   "providerCapabilityRemediation": {
-    "status": "AuthorizedAndAwaitingExactHeadValidation",
-    "observedHead": "e07c6fee5d405f41e8f24f44ed945e941e7cb5ab",
-    "workflowRunId": 34750365810,
-    "macosJobId": 103705689985,
+    "status": "ValidatedAtExactHead",
+    "observedHead": "02a9399536c46497c34cee840e5ae2c4fc090574",
+    "workflowRunId": 34754238229,
+    "macosJobId": 103715801045,
     "finding": "The GitHub-hosted macos-14 image exposed only Apple Bash 3.2, while the Feature-004 native gate requires Bash 5 or newer.",
     "decision": "Provision Bash 5 ephemerally through Homebrew in the macos-14 Feature-004 job only; retain fail-closed version and child-PATH checks and do not add a Linux or Windows fallback.",
     "authorizedBy": "Repository owner",
@@ -2347,29 +2347,38 @@
       "powerShellWrapperSha256": "b28c0b4175565b92f32085aec4a9b45767043f6db38069aeb70c7d07236a03e0",
       "environmentRestored": true
     },
-    "nextTask": "T048"
+    "exactHeadValidation": {
+      "result": "Pass",
+      "ubuntuJobId": 103715801136,
+      "macosJobId": 103715801045,
+      "windowsJobId": 103715801117,
+      "catalogCommandsPerJob": 36,
+      "immediateExitZeroPerJob": 36,
+      "evidence": "specs/004-series-eligibility/phase-results/ci-evidence.json"
+    },
+    "nextTask": "T051"
   },
   "nativeEvidenceGaps": [
     {
       "platform": "ubuntu-22.04",
-      "status": "Open",
-      "reason": "No native provider job executed in this bounded local phase",
+      "status": "Closed",
+      "reason": "Run 34754238229 job 103715801136 passed all 36 native catalog commands at the exact PR source head",
       "owner": "Coordinating autonomous runner",
-      "nextTask": "T048"
+      "completedTask": "T048"
     },
     {
       "platform": "macos-14",
-      "status": "Open",
-      "reason": "No native provider job executed in this bounded local phase",
+      "status": "Closed",
+      "reason": "Run 34754238229 job 103715801045 passed all 36 native catalog commands with ephemeral Homebrew Bash 5+",
       "owner": "Coordinating autonomous runner",
-      "nextTask": "T048"
+      "completedTask": "T048"
     },
     {
       "platform": "windows-2022",
-      "status": "Open",
-      "reason": "No native provider job executed in this bounded local phase",
+      "status": "Closed",
+      "reason": "Run 34754238229 job 103715801117 passed all 36 native catalog commands with Git-for-Windows Bash and strict PowerShell UTF-8",
       "owner": "Coordinating autonomous runner",
-      "nextTask": "T048"
+      "completedTask": "T048"
     }
   ],
   "legacyWorkflowPrefixSha256": "9f68db38f53524d56a83b87bf8e84a0b41522366ee25d9f098c9ef899e9e5a2e"
