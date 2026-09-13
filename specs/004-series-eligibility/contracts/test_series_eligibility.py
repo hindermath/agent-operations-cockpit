@@ -69,12 +69,28 @@ class EligibilityTests(unittest.TestCase):
             if provider_exit is not None:
                 tools_dir = repo / 'temporary tools'
                 tools_dir.mkdir()
-                interpreter = tools_dir / 'python3'
-                interpreter.write_text('#!/bin/sh\nprintf harmless-private-sentinel'
-                                       + ('\n' if provider_stdout else ' >&2\n') + 'exit '
-                                       + str(provider_exit) + '\n')
-                interpreter.chmod(0o755)
+                if os.name == 'nt' and SHELL == 'pwsh':
+                    interpreter = tools_dir / 'python3.cmd'
+                    redirect = '' if provider_stdout else ' 1>&2'
+                    interpreter.write_text('@echo off\r\necho harmless-private-sentinel'
+                                           + redirect + '\r\nexit /b '
+                                           + str(provider_exit) + '\r\n')
+                else:
+                    interpreter = tools_dir / 'python3'
+                    interpreter.write_text('#!/bin/sh\nprintf harmless-private-sentinel'
+                                           + ('\n' if provider_stdout else ' >&2\n') + 'exit '
+                                           + str(provider_exit) + '\n')
+                    interpreter.chmod(0o755)
                 environment['PATH'] = str(tools_dir) + os.pathsep + environment['PATH']
+                if SHELL == 'bash':
+                    provider_path = str(interpreter)
+                    if os.name == 'nt':
+                        bash_executable = os.environ.get('AOC_GIT_BASH_EXE', 'bash')
+                        converted = subprocess.run(
+                            [bash_executable, '-lc', 'cygpath -u "$1"', '_', provider_path],
+                            capture_output=True, text=True, check=True)
+                        provider_path = converted.stdout.strip()
+                    environment['AOC_PYTHON_EXECUTABLE'] = provider_path
             before = snapshot(repo)
             if SHELL == "bash":
                 args = [os.environ.get("AOC_GIT_BASH_EXE", "bash"),
