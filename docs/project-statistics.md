@@ -24,6 +24,7 @@
 
 | 2026-09-13 | Intake-Lifecycle-Preset-Rollout / Intake lifecycle preset rollout | N/A | N/A | N/A | Vorhandene Authoring-/Review-/Sequencing-Presets auf 0.3.2/0.2.2/0.2.4 aktualisiert; optionale Profile und Dokumentation nachgefuehrt. Pruefnachweise in docs/maintenance/intake-lifecycle-fleet-rollout.json. / Update existing presets and profile references; preserve other presets and project extensions. |
 | 2026-09-13 | META-LH-04 Series Eligibility | — | — | — | Documentation Impact `UpdateRequired`: Neun typisierte Eligibility-Kriterien, sechs Auswertungsmodi, Bash-/PowerShell-Paritaet, positive und negative Fixtures sowie kausale Feature-, Lifecycle- und Closeout-Evidence geliefert. T001–T057 sind abgeschlossen; PR #49, #52 und #53 wurden an geprueften Heads gemergt und `main` auf `0 0` synchronisiert. / Nine typed eligibility criteria, six assessment modes, Bash/PowerShell parity, positive and negative fixtures, and causal feature, lifecycle and closeout evidence delivered. T001-T057 are complete; PRs #49, #52 and #53 merged at reviewed heads and main synchronized at zero divergence. |
+| 2026-09-13 | Mermaid und Abschlussberichte | N/A | N/A | N/A | Neue textbasierte Diagrammregel, Berichtsvorlage, Agent-Paritaet und versionierte Governance; kein Produktcode. / Text-first diagram and completion-report governance; no product code. |
 
 ## Gesamtstand des Repositories / Repository Snapshot
 
