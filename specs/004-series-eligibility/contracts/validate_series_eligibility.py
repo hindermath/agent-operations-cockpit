@@ -4,7 +4,9 @@
 from __future__ import annotations
 
 import argparse
-import importlib.util
+import os
+import stat
+import types
 import json
 import sys
 from pathlib import Path
@@ -24,6 +26,127 @@ VALUES = {
 }
 CRITERION_FLAGS = dict(zip(("authority", "writeScope", "decisions", "review", "abort", "recovery"), FLAGS))
 
+class ReadBoundary:
+    """Eine Wurzel für Datenzugriffe / One root for data access."""
+
+    def __init__(self, repo):
+        self.root = Path(repo).resolve(strict=True)
+        if not self.root.is_dir():
+            raise ValueError("repository")
+
+    @staticmethod
+    def relative(value):
+        # Windows-Formen auch auf POSIX ablehnen. / Reject Windows forms on POSIX too.
+        if (not isinstance(value, str) or not value or '\x00' in value
+                or '\\' in value or ':' in value or value.startswith('/')
+                or any(part in ('', '.', '..') for part in value.split('/'))):
+            raise ValueError("relative path")
+        return value
+
+    def resolve(self, value, *, missing=False, directory=False):
+        value = self.relative(value)
+        pending, current, links = value.split('/'), self.root, 0
+        while pending:
+            current = current / pending.pop(0)
+            # lstat liest den Link selbst; sein Ziel erst nach Containment prüfen.
+            # lstat inspects the link itself; check target containment before following.
+            try:
+                metadata = os.lstat(current)
+                mode = metadata.st_mode
+            except FileNotFoundError:
+                if missing:
+                    return None
+                raise ValueError("missing file") from None
+            if stat.S_ISLNK(mode):
+                links += 1
+                if links > 40:
+                    raise ValueError("symlink loop")
+                link = os.readlink(current)
+                target = Path(os.path.normpath(os.path.join(current.parent, link)))
+                try:
+                    relative = target.relative_to(self.root)
+                except ValueError:
+                    raise ValueError("symlink escape") from None
+                pending = list(relative.parts) + pending
+                current = self.root
+            elif (getattr(metadata, 'st_file_attributes', 0)
+                  & getattr(stat, 'FILE_ATTRIBUTE_REPARSE_POINT', 0)):
+                # Unbekannte Windows-Umleitungen nicht verfolgen. / Reject other reparse points.
+                raise ValueError("unsupported reparse point")
+            elif pending:
+                if not stat.S_ISDIR(mode):
+                    raise ValueError("parent is not directory")
+            elif not (stat.S_ISDIR(mode) if directory else stat.S_ISREG(mode)):
+                raise ValueError("not a regular file" if not directory else "not a directory")
+        if current == self.root and not directory:
+            raise ValueError("not a regular file")
+        return current
+
+    def file(self, value):
+        return GuardedPath(self, self.relative(value))
+
+    def read_bytes(self, value):
+        path = self.resolve(value)
+        # Der letzte Link darf zwischen Prüfung und Öffnen nicht ausgetauscht werden.
+        # Refuse a substituted final symlink between validation and opening.
+        descriptor = os.open(path, os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0))
+        with os.fdopen(descriptor, 'rb') as stream:
+            if not stat.S_ISREG(os.fstat(stream.fileno()).st_mode):
+                raise ValueError("not a regular file")
+            return stream.read()
+
+
+class GuardedPath:
+    """Begrenzte Path-Fläche für die Engine / Bounded engine Path surface."""
+
+    def __init__(self, boundary, value=''):
+        self.boundary, self.value = boundary, value
+
+    def __truediv__(self, value):
+        value = self.boundary.relative(value)
+        return GuardedPath(self.boundary, self.value + '/' + value if self.value else value)
+
+    def __str__(self):
+        return self.value
+
+    def __lt__(self, other):
+        return self.value < other.value
+
+    def relative_to(self, root):
+        if root.boundary is not self.boundary:
+            raise ValueError("different boundary")
+        return self.value
+
+    def is_file(self):
+        # Ein fehlendes Original ist für historische Archivbindung zulässig.
+        # A missing original is allowed only as metadata for historical resolution.
+        return self.boundary.resolve(self.value, missing=True) is not None
+
+    def read_bytes(self):
+        return self.boundary.read_bytes(self.value)
+
+    def read_text(self, encoding='utf-8'):
+        return self.read_bytes().decode(encoding)
+
+    def glob(self, pattern):
+        # Die unveränderte Engine entdeckt nur specs/*/intake-lifecycle.json.
+        # Only the unchanged engine's lifecycle discovery pattern is supported.
+        if self.value != 'specs' or pattern != '*/intake-lifecycle.json':
+            raise ValueError("unsupported discovery")
+        directory = self.boundary.resolve(self.value, missing=True, directory=True)
+        if directory is None:
+            return
+        for name in sorted(os.listdir(directory)):
+            child = self / name
+            mode = os.lstat(directory / name).st_mode
+            if not (stat.S_ISDIR(mode) or stat.S_ISLNK(mode)):
+                continue
+            folder = self.boundary.resolve(child.value, directory=True)
+            if folder is not None:
+                candidate = child / 'intake-lifecycle.json'
+                if candidate.is_file():
+                    yield candidate
+
 
 def unique_object(pairs):
     # Vor dem Dictionary darf kein Schlüssel verloren gehen. / Reject before loss.
@@ -35,9 +158,13 @@ def unique_object(pairs):
     return result
 
 
-def load_json(path: Path):
-    def reject_constant(value):
-        raise ValueError("non-JSON number")
+def reject_constant(value):
+    raise ValueError("non-JSON number")
+
+
+def load_json(path):
+    if not isinstance(path, GuardedPath):
+        raise ValueError("unguarded JSON path")
     return json.loads(path.read_text(encoding="utf-8-sig"), object_pairs_hook=unique_object,
                       parse_constant=reject_constant)
 
@@ -94,16 +221,81 @@ class SafeParser(argparse.ArgumentParser):
         raise ValueError("arguments")
 
 
-def load_legacy():
-    spec = importlib.util.spec_from_file_location("aoc_eligibility_legacy", SOURCE_REPO / LEGACY)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+def load_source_module(relative, name):
+    # Kompilieren erzeugt keinen Importcache. / Compile without an import cache.
+    path = ReadBoundary(SOURCE_REPO).file(relative)
+    module = types.ModuleType(name)
+    module.__file__ = str(SOURCE_REPO / relative)
+    exec(compile(path.read_bytes(), module.__file__, "exec"), module.__dict__)
     return module
 
 
+def load_legacy():
+    return load_source_module(LEGACY, "aoc_eligibility_legacy")
+
+
+def load_series_engine(repo):
+    boundary = ReadBoundary(repo)
+    root = GuardedPath(boundary)
+    engine = load_source_module(
+        ".specify/presets/intake-sequencing-governance/scripts/validate-intake-series.py",
+        "aoc_series_isolated")
+    normalizer = engine.normalized_bytes
+
+    def guarded(path):
+        if not isinstance(path, GuardedPath) or path.boundary is not boundary:
+            raise ValueError("unbound path")
+        return path
+
+    def normalized(path):
+        # Normalisierung wiederverwenden, Zugriff davor begrenzen.
+        # Reuse normalization after enforcing the read boundary.
+        return normalizer(guarded(path))
+
+    def json_reader(path):
+        data = json.loads(normalized(path).decode("utf-8"), object_pairs_hook=unique_object,
+                          parse_constant=reject_constant)
+        if not isinstance(data, dict):
+            raise ValueError("JSON root")
+        return data
+
+    def relative(value):
+        try:
+            boundary.relative(value)
+            return True
+        except ValueError:
+            return False
+
+    # Nur diese Modulinstanz binden; Graph-, Hash- und Lifecycle-Regeln bleiben.
+    # Bind only this module instance; retain graph, hash and lifecycle rules.
+    engine.normalized_bytes = normalized
+    engine.load_json = json_reader
+    engine.relative_path = relative
+    return engine, root
+
+
+def assess_series(repo, series_path):
+    engine, root = load_series_engine(repo)
+    try:
+        _, summary = engine.validate_manifest(root / series_path, root)
+    except engine.ValidationError as error:
+        result = failed_input()
+        result['reasons'] = [reason(error.code, None,
+            "Der Seriennachweis ist ungültig; Eingaben erneut prüfen.",
+            "The series evidence is invalid; reassess the inputs.")]
+        return result, 2
+    except (OSError, ValueError, KeyError, TypeError, IndexError, AttributeError):
+        return failed_input(), 2
+    result = diagnostic(None)
+    result['outcome'] = 'Eligible'
+    result['summary'] = summary
+    return result, 0
+
+
 def assess(repo: Path, fixture_path: str) -> tuple[dict, int]:
-    contract = load_json(repo / CONTRACT)
-    fixture = load_json(repo / fixture_path)
+    boundary = ReadBoundary(repo)
+    contract = load_json(boundary.file(CONTRACT))
+    fixture = load_json(boundary.file(fixture_path))
     keys = validate_schema(contract, fixture)
     mode = fixture["mode"]
     result = diagnostic(None)

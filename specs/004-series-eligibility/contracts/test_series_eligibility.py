@@ -319,13 +319,363 @@ class EligibilityTests(unittest.TestCase):
         self.assertFalse(result["authorityGranted"])
 
 
+# Nur Testprozesse beobachten; Sentineldateien enthalten keine echten Secrets.
+# Observe test processes only; sentinel files contain no actual secrets.
+PROBE = r'''
+import json, os, runpy, sys
+from pathlib import Path
+from unittest.mock import patch
+sys.dont_write_bytecode = True
+request = json.loads(Path(sys.argv[1]).read_text())
+repo = Path(request['repo']).resolve()
+core = runpy.run_path(request['core'])
+external = Path(request['external']).resolve()
+reads, metadata = [], []
+observing = False
+def outside(path, follow=True):
+    global observing
+    if observing:
+        return False
+    observing = True
+    try:
+        value = os.path.realpath(os.fspath(path)) if follow else os.path.abspath(os.fspath(path))
+        return Path(value).is_relative_to(external)
+    except (TypeError, ValueError):
+        return False
+    finally:
+        observing = False
+def audit(event, args):
+    if event == 'open' and outside(args[0]):
+        reads.append('external-open')
+sys.addaudithook(audit)
+original_stat, original_lstat = os.stat, os.lstat
+def observed_stat(path, *args, **kwargs):
+    if outside(path, kwargs.get('follow_symlinks', True)):
+        metadata.append('external-stat')
+    return original_stat(path, *args, **kwargs)
+def observed_lstat(path, *args, **kwargs):
+    if outside(path, False):
+        metadata.append('external-lstat')
+    return original_lstat(path, *args, **kwargs)
+engine = None
+try:
+    with patch.object(os, 'stat', observed_stat), patch.object(os, 'lstat', observed_lstat):
+        if request['operation'] == 'fixture':
+            result, code = core['assess'](repo, request['path'])
+        else:
+            if request['binding'] == 'legacy':
+                import types
+                engine = types.SimpleNamespace(**runpy.run_path(request['engine']))
+                # Functions retain their original globals in this baseline module.
+                root, path = repo, repo / request['path']
+            else:
+                engine, root = core['load_series_engine'](repo)
+                path = root / request['path']
+            op = request['operation']
+            if op == 'series':
+                if request['binding'] == 'feature':
+                    result, code = core['assess_series'](repo, request['path'])
+                    summary = result.get('summary', {})
+                else:
+                    _, summary = engine.validate_manifest(path, root)
+            elif op == 'receipt':
+                summary = engine.validate_receipt(path, root)
+            elif op == 'json':
+                engine.load_json(path)
+                summary = {}
+            elif op == 'isolation':
+                other, _ = core['load_series_engine'](repo)
+                assert engine is not other and engine.load_json is not other.load_json
+                assert engine.normalized_bytes is not other.normalized_bytes
+                summary = {}
+            if op != 'series' or request['binding'] != 'feature':
+                result, code = core['diagnostic'](None), 0
+                result['outcome'], result['summary'] = 'Eligible', summary
+except Exception as error:
+    # Known engine errors keep only their stable class, never their raw message.
+    result, code = core['failed_input'](), 2
+    result['reasons'][0]['code'] = getattr(error, 'code', 'EL_INPUT')
+print(json.dumps({'result': result, 'externalReads': reads, 'externalMetadata': metadata,
+                  'binding': request['binding']}, ensure_ascii=False))
+sys.exit(code)
+'''
+
+ENGINE = '.specify/presets/intake-sequencing-governance/scripts/validate-intake-series.py'
+BINDING = 'feature'
+
+
+def series_fixture(repo):
+    targets = []
+    for index, name in enumerate(['a', 'b', 'c', 'd']):
+        path = 'intakes/' + name + '.md'
+        (repo / path).parent.mkdir(exist_ok=True)
+        content = ('# ' + name + '\n').encode()
+        (repo / path).write_bytes(content)
+        targets.append(dict(path=path, role='Primary' if index == 0 else 'OrderedMember',
+                            normalizedSha256=hashlib.sha256(content).hexdigest(),
+                            status='Completed' if index < 3 else 'Pending'))
+    paths = [t['path'] for t in targets]
+    return dict(schemaVersion='1.0', documentType='IntakeSeriesManifest',
+                seriesId='11111111-1111-4111-8111-111111111111', title='Test / Test',
+                policy='fixture', status='Ready', orderedTargets=targets, roots=[paths[0]],
+                dependencies=[dict(**{'from': paths[i], 'to': paths[i+1]},
+                                   kind='HardCompletionGate', binding=True) for i in range(3)],
+                evidencePaths=[])
+
+
+class SeriesTests(unittest.TestCase):
+    def probe(self, mutation=None, *, operation='series', path='manifest.json', label='valid'):
+        with tempfile.TemporaryDirectory(prefix='aoc series ') as temporary:
+            base = Path(temporary)
+            repo, external = base / 'repo', base / 'external'
+            repo.mkdir(); external.mkdir()
+            manifest = series_fixture(repo)
+            (repo / CONTRACT).parent.mkdir(parents=True)
+            shutil.copyfile(REPO / CONTRACT, repo / CONTRACT)
+            (repo / 'fixture.json').write_text(json.dumps(valid_fixture()))
+            (external / 'target.md').write_text('# a\n')
+            (external / 'sentinel.json').write_text('{"harmless-private-sentinel":true}')
+            shutil.copyfile(REPO / CONTRACT, external / 'contract.json')
+            shutil.copyfile(repo / 'fixture.json', external / 'fixture.json')
+            if mutation:
+                mutation(repo, external, manifest)
+            if not (repo / 'manifest.json').exists():
+                (repo / 'manifest.json').write_text(json.dumps(manifest))
+            probe = base / 'probe.py'
+            probe.write_text(PROBE)
+            request = base / 'request.json'
+            request.write_text(json.dumps(dict(repo=str(repo), external=str(external),
+                core=str(REPO / CONTRACTS / 'validate_series_eligibility.py'),
+                engine=str(REPO / ENGINE), operation=operation, path=path, binding=BINDING)))
+            if SHELL == 'bash':
+                command = [os.environ.get('AOC_GIT_BASH_EXE', 'bash'), '-c',
+                           'exec python3 -B "$1" "$2"', 'probe', str(probe), str(request)]
+            else:
+                launcher = base / 'probe.ps1'
+                launcher.write_text('param([string]$Probe,[string]$Request)\n'
+                                    '& python3 -B $Probe $Request\nexit $LASTEXITCODE\n')
+                command = ['pwsh', '-NoProfile', '-File', str(launcher), str(probe), str(request)]
+            before = snapshot(base)
+            child = subprocess.run(command, cwd=REPO, capture_output=True, text=True)
+            record = json.loads(child.stdout)
+            print(json.dumps(dict(shell=SHELL, test=self.id(), case=label, childExit=child.returncode,
+                                  **record, stderr=child.stderr), ensure_ascii=False), flush=True)
+            self.assertEqual(before, snapshot(base), 'query wrote files or bytecode')
+            self.assertNotIn('harmless-private-sentinel', child.stdout + child.stderr)
+            self.assertNotIn('Traceback', child.stdout + child.stderr)
+            return record, child.returncode
+
+    def assert_blocked(self, record, code, expected=None):
+        self.assertEqual([], record['externalReads'], 'external content was opened')
+        self.assertEqual([], record['externalMetadata'], 'external metadata was queried')
+        self.assertEqual(2, code)
+        result = record['result']
+        self.assertEqual('Blocked', result['outcome'])
+        self.assertEqual('ProductFailure', result['failureClass'])
+        self.assertFalse(result['authorityGranted'])
+        self.assertEqual({'de', 'en'}, set(result['nextAction']))
+        if expected:
+            self.assertIn(expected, [r['code'] for r in result['reasons']])
+
+    def test_transitive_paths(self):
+        # Establish a runnable semantic baseline before any negative assertion.
+        record, code = self.probe()
+        self.assertEqual(0, code)
+        forms = ['/absolute.json', 'C:/outside.json', 'C:\\outside.json',
+                 '\\\\host\\share\\outside.json', '//host/share/outside.json',
+                 'C:outside.json', '../external/sentinel.json', '..\\external\\sentinel.json',
+                 'bad\x00.json', '.', 'intakes', 'missing.json']
+        for operation in ['fixture', 'series', 'json']:
+            for value in forms:
+                with self.subTest(operation=operation, path=value):
+                    self.assert_blocked(*self.probe(operation=operation, path=value,
+                                                   label=operation + '-unsafe-path'))
+        for location in ['target', 'archive']:
+            for value in forms:
+                def mutate(repo, external, manifest, value=value, location=location):
+                    if location == 'target':
+                        manifest['orderedTargets'][0]['path'] = value
+                    else:
+                        self.lifecycle(repo, manifest, value)
+                        if value == 'missing.json':
+                            (repo / 'intakes/a.md').unlink()
+                with self.subTest(location=location, path=value):
+                    self.assert_blocked(*self.probe(mutate, label=location + '-unsafe-path'))
+        for location in ['fixture', 'contract', 'target', 'archive', 'lifecycle', 'specs-directory',
+                         'receipt', 'review', 'evidence']:
+            def link(repo, external, manifest, location=location):
+                if location == 'fixture':
+                    target, source = repo / 'fixture.json', external / 'fixture.json'
+                elif location == 'contract':
+                    target, source = repo / CONTRACT, external / 'contract.json'
+                elif location == 'target':
+                    target, source = repo / 'intakes/a.md', external / 'target.md'
+                elif location == 'archive':
+                    self.lifecycle(repo, manifest, 'archive.md')
+                    (repo / 'intakes/a.md').unlink()
+                    target, source = repo / 'archive.md', external / 'target.md'
+                elif location in ['lifecycle', 'specs-directory']:
+                    source = external / 'intake-lifecycle.json'
+                    source.write_text('{"schemaVersion":"1.1","records":[]}')
+                    if location == 'specs-directory':
+                        (repo / 'specs').symlink_to(external, target_is_directory=True)
+                        return
+                    target = repo / 'specs/history/intake-lifecycle.json'
+                    target.parent.mkdir(parents=True)
+                else:
+                    target, source = repo / (location + '.json'), external / 'sentinel.json'
+                if target.exists():
+                    target.unlink()
+                target.symlink_to(source)
+            operation = 'fixture' if location in ['fixture', 'contract'] else 'series'
+            path = 'fixture.json' if operation == 'fixture' else 'manifest.json'
+            if location in ['receipt', 'review', 'evidence']:
+                operation, path = 'json', location + '.json'
+            with self.subTest(symlink=location):
+                # Failure to create native links is a test failure/Open, never a passing skip.
+                self.assert_blocked(*self.probe(link, operation=operation, path=path,
+                                               label=location + '-symlink'))
+        for location in ['manifest', 'lifecycle', 'receipt', 'review', 'evidence', 'contract']:
+            def duplicate(repo, external, manifest, location=location):
+                if location == 'manifest':
+                    raw = json.dumps(manifest).replace('"role":', '"role":"Primary","role":', 1)
+                    target = repo / 'manifest.json'
+                elif location == 'contract':
+                    target = repo / CONTRACT
+                    raw = target.read_text().replace('"criteria":', '"criteria":[],"criteria":', 1)
+                else:
+                    target = repo / ('specs/history/intake-lifecycle.json' if location == 'lifecycle'
+                                     else location + '.json')
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    raw = '{"schemaVersion":"1.1","records":[],"nested":{"x":1,"x":2}}'
+                target.write_text(raw)
+            operation = 'fixture' if location == 'contract' else 'series'
+            path = 'fixture.json' if operation == 'fixture' else 'manifest.json'
+            if location in ['receipt', 'review', 'evidence']:
+                operation, path = 'json', location + '.json'
+            with self.subTest(duplicate=location):
+                self.assert_blocked(*self.probe(duplicate, operation=operation, path=path,
+                                               label=location + '-duplicate'))
+
+    @staticmethod
+    def lifecycle(repo, manifest, archived='archive.md'):
+        target = manifest['orderedTargets'][0]
+        path = repo / 'specs/history/intake-lifecycle.json'
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(dict(schemaVersion='1.1', records=[dict(
+            originalPath=target['path'], archivedPath=archived,
+            originalNormalizedSha256=target['normalizedSha256'])])))
+
+    def test_series_negatives(self):
+        for label, mutation, expected in [
+            ('cycle', lambda r, e, m: m['dependencies'].append(dict(
+                **{'from': 'intakes/d.md', 'to': 'intakes/a.md'}, kind='FinalAuditInput', binding=True)), 'ISG007'),
+            ('hash', lambda r, e, m: m['orderedTargets'][0].update(normalizedSha256='0'*64), 'ISG004'),
+            ('missing-root-no-cycle', lambda r, e, m: m.update(roots=[]), 'ISG008'),
+            ('multiple-eligible', lambda r, e, m: [t.update(status='Eligible') for t in m['orderedTargets'][:2]], 'ISG009'),
+            ('order', lambda r, e, m: m['orderedTargets'].reverse(), 'ISG007'),
+            ('unknown-edge', lambda r, e, m: m['dependencies'][0].update(kind='unknown'), 'ISG006'),
+            ('binding', lambda r, e, m: m['dependencies'][0].update(binding=False), 'ISG006'),
+            ('unknown-target', lambda r, e, m: m['dependencies'][0].update(to='missing'), 'ISG005'),
+            ('self-edge', lambda r, e, m: m['dependencies'][0].update(to='intakes/a.md'), 'ISG005'),
+            ('duplicate-edge', lambda r, e, m: m['dependencies'].append(m['dependencies'][0].copy()), 'ISG006'),
+            ('duplicate-target', lambda r, e, m: m['orderedTargets'].append(m['orderedTargets'][0].copy()), 'ISG003'),
+            ('unknown-lifecycle', lambda r, e, m: m['orderedTargets'][0].update(status='unknown'), 'ISG009'),
+            ('archive-both-physical', lambda r, e, m: (self.lifecycle(r, m), (r/'archive.md').write_text('# a\n')), 'ISG004'),
+            ('archive-neither-physical', lambda r, e, m: (self.lifecycle(r, m), (r/'intakes/a.md').unlink()), 'ISG004'),
+            ('archive-hash-drift', lambda r, e, m: (self.lifecycle(r, m), (r/'intakes/a.md').unlink(), (r/'archive.md').write_text('drift')), 'ISG004'),
+            ('invalid-lifecycle-schema', lambda r, e, m: (self.lifecycle(r, m), (r/'specs/history/intake-lifecycle.json').write_text('{}')), 'ISG004'),
+            ('ambiguous-lifecycle', lambda r, e, m: (self.lifecycle(r, m), (r/'specs/other').mkdir(), shutil.copyfile(r/'specs/history/intake-lifecycle.json', r/'specs/other/intake-lifecycle.json')), 'ISG004'),
+        ]:
+            with self.subTest(case=label):
+                self.assert_blocked(*self.probe(mutation, label=label), expected=expected)
+        for label in ['valid', 'bom-crlf', 'historical-archive', 'historical-original']:
+            def valid(repo, external, manifest, label=label):
+                if label == 'bom-crlf':
+                    for target in manifest['orderedTargets']:
+                        path = repo / target['path']
+                        path.write_bytes(b'\xef\xbb\xbf' + path.read_bytes().replace(b'\n', b'\r\n'))
+                    (repo/'manifest.json').write_bytes(b'\xef\xbb\xbf' + json.dumps(manifest, indent=2).replace('\n','\r\n').encode())
+                elif label.startswith('historical'):
+                    self.lifecycle(repo, manifest)
+                    if label == 'historical-archive':
+                        (repo/'intakes/a.md').rename(repo/'archive.md')
+            with self.subTest(case=label):
+                record, code = self.probe(valid, label=label)
+                self.assertEqual(0, code)
+                self.assertEqual(['intakes/d.md'], record['result']['summary']['eligible'])
+                self.assertEqual([], record['externalReads'])
+        # The real programme's first three binding predecessors are immutable facts.
+        canonical = json.loads((REPO/'specs/intake-series/aoc-phase-2/manifest.json').read_text())
+        first = canonical['orderedTargets'][:4]
+        for number, target in enumerate(first[:3], 1):
+            self.assertIn('META-LH-0' + str(number), target['path'])
+            self.assertEqual('Completed', target['status'])
+            self.assertTrue(any(edge['from'] == target['path'] and edge['to'] == first[number]['path']
+                                and edge['binding'] is True for edge in canonical['dependencies']))
+        for predecessor in range(3):
+            def incomplete(repo, external, manifest, predecessor=predecessor):
+                paths = [t['path'] for t in manifest['orderedTargets']]
+                manifest['dependencies'] = [dict(**{'from': p, 'to': paths[3]},
+                    kind='HardCompletionGate', binding=True) for p in paths[:3]]
+                manifest['roots'] = paths[:3]
+                manifest['orderedTargets'][predecessor]['status'] = 'Pending'
+            record, code = self.probe(incomplete, label='required-predecessor-' + str(predecessor+1))
+            self.assertEqual(0, code)
+            self.assertNotIn('intakes/d.md', record['result']['summary']['eligible'])
+            self.assertEqual(['intakes/' + 'abc'[predecessor] + '.md'],
+                             record['result']['summary']['blockers']['intakes/d.md'])
+
+    def test_transitive_readers(self):
+        def receipt(repo, external, manifest):
+            raw = json.dumps(manifest).encode()
+            (repo/'manifest.json').write_bytes(raw)
+            (repo/'prior-receipt.json').write_text('{}')
+            (repo/'prior-manifest.json').write_text('{}')
+            (repo/'tombstone.json').write_text('{}')
+            digest = hashlib.sha256(b'{}').hexdigest()
+            value = dict(schemaVersion='1.0', documentType='IntakeSeriesReceipt',
+                receiptId='22222222-2222-4222-8222-222222222222', seriesId=manifest['seriesId'],
+                operation=dict(operationId='33333333-3333-4333-8333-333333333333', type='Delete',
+                               authorityEvidence='Fixture only'), status='Deleted',
+                manifest=dict(path='manifest.json', normalizedSha256=hashlib.sha256(raw).hexdigest()),
+                supersedes=dict(receiptPath='prior-receipt.json', receiptNormalizedSha256=digest,
+                                manifestArchivePath='prior-manifest.json', manifestArchiveSha256=digest),
+                tombstone=dict(path='tombstone.json', normalizedSha256=digest))
+            (repo/'receipt.json').write_text(json.dumps(value))
+        record, code = self.probe(receipt, operation='receipt', path='receipt.json', label='valid-receipt-chain')
+        self.assertEqual(0, code)
+        for group, field in [('manifest', 'path'), ('supersedes', 'receiptPath'),
+                             ('supersedes', 'manifestArchivePath'), ('tombstone', 'path')]:
+            for form in ['../external/sentinel.json', 'C:relative.json', '\\\\host\\share\\file',
+                         '/absolute.json', 'bad\x00.json', 'intakes', 'missing.json', 'symlink']:
+                def mutate(repo, external, manifest, group=group, field=field, form=form):
+                    receipt(repo, external, manifest)
+                    value = json.loads((repo/'receipt.json').read_text())
+                    if form == 'symlink':
+                        target = repo / value[group][field]
+                        target.unlink()
+                        target.symlink_to(external/'sentinel.json')
+                    else:
+                        value[group][field] = form
+                        (repo/'receipt.json').write_text(json.dumps(value))
+                with self.subTest(group=group, field=field, form=form):
+                    self.assert_blocked(*self.probe(mutate, operation='receipt', path='receipt.json',
+                                                   label=group + '-' + field + '-' + form.replace('\x00','NUL')))
+        if BINDING == 'feature':
+            record, code = self.probe(operation='isolation', label='separate-module-instances')
+            self.assertEqual(0, code)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo", type=Path, default=REPO)
     parser.add_argument("--shell", choices=["bash", "pwsh"], default="bash")
-    parser.add_argument("--case", choices=["surface", "empty-integration", "criteria-cardinality", "modes", "failure-taxonomy", "all"], default="all")
+    parser.add_argument("--case", choices=["surface", "empty-integration", "criteria-cardinality", "modes", "failure-taxonomy", "transitive-paths", "transitive-readers", "series-negatives", "all"], default="all")
+    parser.add_argument("--binding", choices=["feature", "legacy"], default="feature")
     args = parser.parse_args()
+    BINDING = args.binding
     REPO, SHELL = args.repo.resolve(), args.shell
-    names = ["surface", "empty_integration", "criteria_cardinality", "modes", "failure_taxonomy"] if args.case == "all" else [args.case.replace("-", "_")]
-    suite = unittest.TestSuite(EligibilityTests("test_" + name) for name in names)
+    names = ["surface", "empty_integration", "criteria_cardinality", "modes", "failure_taxonomy", "transitive_paths", "transitive_readers", "series_negatives"] if args.case == "all" else [args.case.replace("-", "_")]
+    suite = unittest.TestSuite((SeriesTests if name in ["transitive_paths", "transitive_readers", "series_negatives"] else EligibilityTests)("test_" + name) for name in names)
     raise SystemExit(0 if unittest.TextTestRunner(verbosity=2).run(suite).wasSuccessful() else 1)
