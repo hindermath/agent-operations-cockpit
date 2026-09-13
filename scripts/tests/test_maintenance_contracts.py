@@ -44,6 +44,7 @@ def preset_helper_source() -> str:
 
 
 class MaintenanceContractTests(unittest.TestCase):
+    @unittest.skipIf(os.name == "nt", "Native Windows uses PowerShell 7")
     def test_required_bash_contract_and_probe(self) -> None:
         registry = read_json(CONFIG / "brew-apps-registry.json")
         formula = next(t for t in registry["formulae"] if t["name"] == "bash")
@@ -68,6 +69,7 @@ class MaintenanceContractTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertEqual(json.loads(result.stdout)["status"], "Missing")
 
+    @unittest.skipIf(os.name == "nt", "Native Windows uses PowerShell 7")
     def test_bash_link_drift_is_reported_without_relinking(self) -> None:
         shell = shutil.which("bash")
         if shell is None:
