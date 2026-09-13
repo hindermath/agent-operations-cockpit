@@ -2322,7 +2322,7 @@
     }
   ],
   "providerCapabilityRemediation": {
-    "status": "AuthorizedAndPendingValidation",
+    "status": "AuthorizedAndPartiallyValidated",
     "observedHead": "e07c6fee5d405f41e8f24f44ed945e941e7cb5ab",
     "workflowRunId": 34750365810,
     "macosJobId": 103705689985,
@@ -2330,6 +2330,8 @@
     "decision": "Provision Bash 5 ephemerally through Homebrew in the macos-14 Feature-004 job only; retain fail-closed version and child-PATH checks and do not add a Linux or Windows fallback.",
     "authorizedBy": "Repository owner",
     "authorizedAt": "2026-09-13",
+    "validation": "Run 34751212746 job 103707972407 passed the new macOS provisioning step. Jobs 103707972094 and 103707972342 then exceeded the pre-existing ten-minute job limit while executing the full native matrix.",
+    "timingDecision": "Raise only this existing workflow job timeout from 10 to 20 minutes; do not skip, split, or weaken any native gate.",
     "nextTask": "T048"
   },
   "nativeEvidenceGaps": [

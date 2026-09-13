@@ -935,6 +935,8 @@ class RunnerTests(unittest.TestCase):
             return child
 
     def test_runner_cardinality(self):
+        workflow = (REPO/'.github/workflows/powershell-analysis.yml').read_text()
+        self.assertIn('timeout-minutes: 20', workflow)
         legacy = self.workflow_block('        run: |\n          if ($IsWindows)',
             '      - name: Test Feature 003 authoring contract matrix')
         legacy = 'if ($IsWindows)' + legacy

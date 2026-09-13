@@ -7,7 +7,7 @@
   "authorityRevalidationRequired": true,
   "stage": "MergeAndSync",
   "status": "Active",
-  "checkpointCommit": "e07c6fee5d405f41e8f24f44ed945e941e7cb5ab",
+  "checkpointCommit": "57ae2c7b482c019f38b0fa472e1b22e8c88de8bf",
   "acceptedArtifacts": [
     {
       "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
@@ -410,12 +410,12 @@
       }
     ]
   },
-  "lastPassingGate": "Authorized macOS Bash 5 CI remediation passes the complete Feature 004 contract suite for Bash and PowerShell, workflow YAML parsing, JSON parsing, and git diff checks.",
-  "nextExactAction": "Commit and push the bounded macOS Bash 5 remediation, then collect exact-head CI evidence and complete T047 through T050.",
+  "lastPassingGate": "The exact PR head passed the authorized macOS Bash 5 provisioning step; Linux and Windows reached the complete Feature 004 matrix before the pre-existing ten-minute job timeout stopped them.",
+  "nextExactAction": "Commit and push the bounded workflow timeout correction, then collect complete exact-head CI evidence and finish T047 through T050.",
   "lastOperation": {
-    "kind": "DeliveryRemediation:macos-bash5",
+    "kind": "DeliveryRemediation:native-matrix-timeout",
     "state": "Completed",
-    "summary": "Added the explicitly authorized ephemeral Homebrew Bash 5 provisioning step for the macOS CI runner and aligned the bounded plan, task, contract, evidence, and retrospective surfaces."
+    "summary": "Raised only the PowerShell Static Analysis job timeout from ten to twenty minutes after exact-head provider evidence showed the unchanged full native matrix exceeded the former budget."
   },
   "stop": {
     "reason": "N/A",
@@ -428,5 +428,5 @@
     "postMergeActions": "N/A",
     "finalValidation": "Pending"
   },
-  "updatedAt": "2026-09-13T10:08:44Z"
+  "updatedAt": "2026-09-13T10:26:15Z"
 }
