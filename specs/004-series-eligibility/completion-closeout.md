@@ -34,12 +34,11 @@ Die Snapshots liegen getrennt unter `.specify/runtime/autonomous-routing/8b306e2
 
 ## Nächste kausale Schritte / Next causal steps
 
-1. Das T055-Quelldelta in beiden Delivery-Set-Oberflächen exakt prüfen, gezielt stagen, erneut prüfen und committen.
-2. Statistik nach dem sauberen Quellencommit mit gepaarter Vorschau und genau einem Renderer aktualisieren; nur eine tatsächliche Änderung separat committen.
-3. Closeout-PR liefern, exakten Head technisch und unabhängig prüfen, PreMerge-Evidence erstellen, erst dann zusammenführen und PostMerge prüfen.
-4. `main` per Fast-forward synchronisieren und anschließend T056/T057 sowie den terminalen Run-State in einem kausalen letzten Persistenzschritt binden.
+1. Den bereits eröffneten Closeout-PR #53 nach den begrenzten Review-Reparaturen an seinem neuen exakten Head technisch und unabhängig prüfen und PreMerge-Evidence erstellen.
+2. PR #53 erst bei grünen technischen Gates und null offenen umsetzbaren Review-Threads zusammenführen und PostMerge prüfen.
+3. `main` per Fast-forward synchronisieren und anschließend T056/T057 sowie den terminalen Run-State in einem kausalen letzten Persistenzschritt binden.
 
-*Validate and commit the exact T055 source delta, then render statistics once after paired previews. Deliver one reviewed, technically green closeout PR with pre/postmerge evidence. Finally fast-forward main and persist T056/T057 and terminal run state in a causal last step.*
+*Revalidate the already opened closeout PR #53 at its exact repaired head, capture premerge evidence, merge only after green gates and zero actionable threads, then validate postmerge. Finally fast-forward main and persist T056/T057 and terminal run state in a causal last step.*
 
 Stop bei Authority-, Head-, Review-, Input-, Pfad-/Index- oder Evidence-Drift. Die einzige Dokumentationsentscheidung bleibt [CHG004 / UpdateRequired](contracts/documentation-impact.json).
 *Stop on authority, head, review, input, path/index or evidence drift. CHG004 / UpdateRequired remains the sole documentation-impact decision.*

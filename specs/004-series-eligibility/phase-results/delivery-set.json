@@ -1726,52 +1726,5 @@
       "limits": "This is the coordinator-validated pre-amendment unstaged candidate. Causal evidence/task edits below are not a staged validation or freeze; T046 must revalidate the resulting exact residual candidate in both shells before any staging/commit. No remote/native gate is satisfied by this evidence."
     }
   },
-  "closeoutCheckpoint": {
-    "status": "SourceAndStatisticsFrozen",
-    "branch": "004-series-eligibility-closeout",
-    "baseHead": "6cd6b408f3546c40e4d5e216af1b4115e73bdfa9",
-    "sourceCommit": "e49fe6dbb43d83bf77de0e82bf0c8458bec4e4dc",
-    "statisticsCommit": "98f0555b5b83bbb4e7405000d0081163b7b2cb1e",
-    "sourcePaths": [
-      "docs/aeps/findings-ledger.md",
-      "docs/aeps/receipts/2026-09-13-series-eligibility-completion.md",
-      "specs/004-series-eligibility/completion-closeout.md",
-      "specs/004-series-eligibility/engineering-retrospective.md",
-      "specs/004-series-eligibility/phase-results/lifecycle-validation.json",
-      "specs/004-series-eligibility/tasks.md"
-    ],
-    "sourceValidation": {
-      "worktreeBash": "Pass",
-      "worktreePowerShell": "Pass",
-      "worktreeStatusSha256": "9a1ae24c39c206254c61102a4c7b3f904bbb3059767b5c6492aec18e4ede46f4",
-      "stagedBash": "Pass",
-      "stagedPowerShell": "Pass",
-      "stagedIndexTree": "be58d7a8203ca1d1da39f6d76608b510e1b8a6fb"
-    },
-    "statisticsValidation": {
-      "pairedPreview": "Pass",
-      "previewSha256": "e17976e1f6f222f761053a2921d4b17ee3e54e7abb09a0545d2558de9f7ceaf1",
-      "renderer": "PowerShell",
-      "sourceRevision": "e49fe6dbb43d83bf77de0e82bf0c8458bec4e4dc",
-      "worktreeBash": "Pass",
-      "worktreePowerShell": "Pass",
-      "stagedBash": "Pass",
-      "stagedPowerShell": "Pass",
-      "stagedIndexTree": "ad84202da951276f9bd9d9fafb8f563262130c10",
-      "checkOnlyBash": "Pass",
-      "checkOnlyPowerShell": "Pass"
-    },
-    "selfReferenceBoundary": "This record binds already completed source/statistics commits only. Its own container commit, closeout PR, merge and postmerge facts are not claimed here.",
-    "pending": [
-      "push",
-      "closeout-pr",
-      "exact-head-ci",
-      "independent-review",
-      "premerge",
-      "merge",
-      "postmerge",
-      "terminal-state"
-    ]
-  },
-  "statisticsDisposition": "Six mandatory checkpoint boundaries are audited. T055 source and statistics are frozen in separate commits; closeout delivery and terminal state remain pending."
+  "statisticsDisposition": "Five checkpoint boundaries audited; six source commits and six separate ledger-only commits. Current residual needs a new full T046 checkpoint; no renderer invoked in implement-7."
 }
