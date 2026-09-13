@@ -46,27 +46,27 @@ Profil 2 verwendet Git-getrackte Textdateien und sichtbare Git-Aktivitaet. Die W
 
 | Kennzahl / Metric | Wert / Value |
 |---|---:|
-| Textbasis / Text base | 260331 lines |
-| Textdateien / Text files | 1708 |
+| Textbasis / Text base | 350287 lines |
+| Textdateien / Text files | 1818 |
 | Beobachtbarer Zeitraum / Observable period | 2025-09-21..2026-09-13 |
 | Aktivtage / Active days | 17 |
-| Relevante Commits / Relevant commits | 100 |
-| Zeilen je Aktivtag / Lines per active day | 15313.6 |
+| Relevante Commits / Relevant commits | 116 |
+| Zeilen je Aktivtag / Lines per active day | 20605.1 |
 | Peak-Tag im Fenster / Peak day in window | 2026-07-31 / 132656 |
 | Peak-Woche im Fenster / Peak week in window | 2026-07-26 / 135472 |
 | Laengste Serie / Longest streak | 3 days |
-| Speedup vs. 80 lines/day | 191.4x |
-| Speedup vs. 125 lines/day | 122.5x |
-| Methodik / Methodology | v2; source `9786e92cfa5b` |
+| Speedup vs. 80 lines/day | 257.6x |
+| Speedup vs. 125 lines/day | 164.8x |
+| Methodik / Methodology | v2; source `2d2c14c350c6` |
 
 ### Artefaktmix / Artifact Mix
 
 ```text
-Produktiv / Production          [#...................]   3.3% | 8706
-Tests                           [#...................]   3.1% | 7974
-Dokumentation / Documentation   [###########.........]  56.4% | 146703
-Skripte / Scripts               [####................]  17.9% | 46676
-Konfiguration / Configuration   [####................]  19.3% | 50135
+Produktiv / Production          [#...................]   2.9% | 10215
+Tests                           [###.................]  13.6% | 47760
+Dokumentation / Documentation   [#########...........]  42.6% | 149353
+Skripte / Scripts               [###.................]  13.4% | 46934
+Konfiguration / Configuration   [#####...............]  27.4% | 95882
 Daten und Medien / Data and media [....................]   0.0% | 0
 Sonstiger Text / Other text     [#...................]   0.0% | 143
 ```
@@ -172,9 +172,9 @@ Die festen Slots halten den Phasenvergleich auch bei fehlenden oder spaeter erga
 ### Beschleunigungsfaktoren / Acceleration Factors
 
 ```text
-Scale: 0..200x
-80 lines/day       [###################.] 191.4x
-125 lines/day      [############........] 122.5x
+Scale: 0..500x
+80 lines/day       [##########..........] 257.6x
+125 lines/day      [#######.............] 164.8x
 ```
 
 Die Faktoren vergleichen sichtbare Lieferdichte mit den dokumentierten manuellen Referenzen. Sie messen keine Arbeitszeit.
@@ -187,7 +187,7 @@ Die Faktoren vergleichen sichtbare Lieferdichte mit den dokumentierten manuellen
 Scale: 0..50000 lines/day
 Experienced manual [#...................] 80
 Thorsten solo      [#...................] 125
-Visible repository [###############.....] 15313.6
+Visible repository [########............] 20605.1
 ```
 
 Die gemeinsame Skala vergleicht Referenzen und sichtbare Lieferdichte. Sie schreibt die Git-Aktivitaet keiner Person oder KI pauschal zu.
@@ -213,6 +213,6 @@ DE: Das Fenster beginnt am 2025-09-21 und endet am 2026-09-13. Es enthaelt 17 ak
 | 2026-06 | 0 |
 | 2026-07 | 132656 |
 | 2026-08 | 100244 |
-| 2026-09 | 42280 |
+| 2026-09 | 133048 |
 
 <!-- project-statistics-v2:end -->
