@@ -1,0 +1,322 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "atomic-surface-remediation",
+  "planningOutcome": "Completed",
+  "findingDisposition": {
+    "id": "C005",
+    "sourceReport": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/analyze-3-audit/report.md",
+    "sourceReportSha256": "7cfc562fcbae0ef7f0904c9562a47505e9a38849deae897e401f6403761775e0",
+    "originalSeverity": "Critical",
+    "planning": "Repaired",
+    "implementation": "Pending",
+    "firstSourceCheckpoint": "T008",
+    "laterExpansionOnly": [
+      "T027",
+      "T036"
+    ],
+    "independentAnalysisRequired": "analyze-4",
+    "noHistoricalPassReclassification": true
+  },
+  "checks": [
+    {
+      "name": "task IDs and checkbox states",
+      "passed": true,
+      "detail": "57 unique ordered tasks; exactly T001-T007 [X], T008-T057 unchecked"
+    },
+    {
+      "name": "T001-T007 exact text and state",
+      "passed": true,
+      "detail": "All seven full task lines byte-identical"
+    },
+    {
+      "name": "bounded task edits",
+      "passed": true,
+      "detail": "Only three pending task definitions changed; heading/current phase and C005 coverage row updated"
+    },
+    {
+      "name": "all pre-existing protected files",
+      "passed": true,
+      "detail": {
+        "count": 1802,
+        "drift": [],
+        "includes": "code/tests, all historical blocked evidence, accepted sources, constitution mirrors, installed validators/presets, run state, physical .git/index and HEAD"
+      }
+    },
+    {
+      "name": "current phase and prior binding",
+      "passed": true,
+      "detail": "Coordinator state is unchanged; prior task hash matches captured input and new binding is handed off"
+    },
+    {
+      "name": "accepted source hashes",
+      "passed": true,
+      "detail": [
+        {
+          "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+          "sha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce"
+        },
+        {
+          "path": "specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json",
+          "sha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b"
+        },
+        {
+          "path": "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json",
+          "sha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07"
+        }
+      ]
+    },
+    {
+      "name": "same feature and checkpoint",
+      "passed": true,
+      "detail": "Feature branch and HEAD match unchanged coordinator state"
+    },
+    {
+      "name": "six clean-tree boundaries",
+      "passed": true,
+      "detail": "All six boundary IDs unchanged; later five boundary records byte-semantically identical"
+    },
+    {
+      "name": "original checkpoint transaction preserved",
+      "passed": true,
+      "detail": "Every original ordered step, exact index/delivery rule, receipt field, statistics-only path, trailer, causal publication and final delivery rule unchanged"
+    },
+    {
+      "name": "atomic first-commit precondition",
+      "passed": true,
+      "detail": "Complete verified minimal unit is a precondition before validation/staging/first source commit, without moving the statistics boundary"
+    },
+    {
+      "name": "exact atomic delivery paths",
+      "passed": true,
+      "detail": "Same first T008 source commit includes both shells, core, unchanged tests, manual, quickstart and new verification"
+    },
+    {
+      "name": "later expansion only",
+      "passed": true,
+      "detail": "T027 extends existing help/function; T036 extends existing manual/reader path for final six-mode interface"
+    },
+    {
+      "name": "minimal functional and verification scope",
+      "passed": true,
+      "detail": "All required minimal current surfaces and observed precommit verification explicitly planned; no broad story implementation pulled forward"
+    },
+    {
+      "name": "coordinator and sandbox separation",
+      "passed": true,
+      "detail": "Outer coordinator owns unchanged script-only Git transactions with current authority; ENV001 remains and no sandbox/validator edits occur"
+    },
+    {
+      "name": "one documentation decision and evidence mapping",
+      "passed": true,
+      "detail": "Retain CHG004 UpdateRequired; first delivery/verification mapped to T008, expanded docs to T027/T036"
+    },
+    {
+      "name": "no implementation evidence fabricated",
+      "passed": true,
+      "detail": "Future surfaces/verification deliberately remain absent; actual completion is not claimed"
+    },
+    {
+      "name": "all executed planning prerequisite validators",
+      "passed": true,
+      "detail": "11 actual paired/state/global-ready/receipt/review/manifest/documentation checks passed; state schema validation is separate from pending task rebind"
+    },
+    {
+      "name": "new repository files bounded",
+      "passed": true,
+      "detail": [
+        "specs/004-series-eligibility/phase-results/atomic-surface-remediation-aeps-receipt.md",
+        "specs/004-series-eligibility/phase-results/atomic-surface-remediation-execution.json",
+        "specs/004-series-eligibility/phase-results/atomic-surface-remediation-report.md"
+      ]
+    },
+    {
+      "name": "hooks and setup",
+      "passed": true,
+      "detail": "setup-plan --help and --json selected the existing feature without template overwrite; no before/after hooks"
+    },
+    {
+      "name": "no new whitespace or control defects: specs/004-series-eligibility/plan.md",
+      "passed": true,
+      "detail": "No trailing whitespace or ANSI; newline at EOF"
+    },
+    {
+      "name": "no new whitespace or control defects: specs/004-series-eligibility/tasks.md",
+      "passed": true,
+      "detail": "No trailing whitespace or ANSI; newline at EOF"
+    },
+    {
+      "name": "no new whitespace or control defects: specs/004-series-eligibility/quickstart.md",
+      "passed": true,
+      "detail": "No trailing whitespace or ANSI; newline at EOF"
+    },
+    {
+      "name": "no new whitespace or control defects: specs/004-series-eligibility/contracts/statistics-checkpoints.json",
+      "passed": true,
+      "detail": "No trailing whitespace or ANSI; newline at EOF"
+    },
+    {
+      "name": "no new whitespace or control defects: specs/004-series-eligibility/contracts/documentation-impact.json",
+      "passed": true,
+      "detail": "No trailing whitespace or ANSI; newline at EOF"
+    },
+    {
+      "name": "no new whitespace or control defects: specs/004-series-eligibility/phase-results/atomic-surface-remediation-report.md",
+      "passed": true,
+      "detail": "No trailing whitespace or ANSI; newline at EOF"
+    },
+    {
+      "name": "no new whitespace or control defects: specs/004-series-eligibility/phase-results/atomic-surface-remediation-execution.json",
+      "passed": true,
+      "detail": "No trailing whitespace or ANSI; newline at EOF"
+    },
+    {
+      "name": "no new whitespace or control defects: specs/004-series-eligibility/phase-results/atomic-surface-remediation-aeps-receipt.md",
+      "passed": true,
+      "detail": "No trailing whitespace or ANSI; newline at EOF"
+    },
+    {
+      "name": "heading hierarchy: specs/004-series-eligibility/plan.md",
+      "passed": true,
+      "detail": "No skipped heading levels outside code fences"
+    },
+    {
+      "name": "bilingual reader structure: specs/004-series-eligibility/plan.md",
+      "passed": true,
+      "detail": "DE-first and immediate EN counterparts checked semantically for every new normative paragraph/table row; no color-only navigation"
+    },
+    {
+      "name": "heading hierarchy: specs/004-series-eligibility/tasks.md",
+      "passed": true,
+      "detail": "No skipped heading levels outside code fences"
+    },
+    {
+      "name": "bilingual reader structure: specs/004-series-eligibility/tasks.md",
+      "passed": true,
+      "detail": "DE-first and immediate EN counterparts checked semantically for every new normative paragraph/table row; no color-only navigation"
+    },
+    {
+      "name": "heading hierarchy: specs/004-series-eligibility/quickstart.md",
+      "passed": true,
+      "detail": "No skipped heading levels outside code fences"
+    },
+    {
+      "name": "bilingual reader structure: specs/004-series-eligibility/quickstart.md",
+      "passed": true,
+      "detail": "DE-first and immediate EN counterparts checked semantically for every new normative paragraph/table row; no color-only navigation"
+    },
+    {
+      "name": "heading hierarchy: specs/004-series-eligibility/phase-results/atomic-surface-remediation-report.md",
+      "passed": true,
+      "detail": "No skipped heading levels outside code fences"
+    },
+    {
+      "name": "bilingual reader structure: specs/004-series-eligibility/phase-results/atomic-surface-remediation-report.md",
+      "passed": true,
+      "detail": "DE-first and immediate EN counterparts checked semantically for every new normative paragraph/table row; no color-only navigation"
+    },
+    {
+      "name": "heading hierarchy: specs/004-series-eligibility/phase-results/atomic-surface-remediation-aeps-receipt.md",
+      "passed": true,
+      "detail": "No skipped heading levels outside code fences"
+    },
+    {
+      "name": "bilingual reader structure: specs/004-series-eligibility/phase-results/atomic-surface-remediation-aeps-receipt.md",
+      "passed": true,
+      "detail": "DE-first and immediate EN counterparts checked semantically for every new normative paragraph/table row; no color-only navigation"
+    },
+    {
+      "name": "semantic C005 consistency review",
+      "passed": true,
+      "detail": "Reviewed plan I2/I5 and precedence section, T008 before commit, T027/T036 expansion, minimal quickstart, exact JSON path/evidence mapping together; no first-creation deferral remains. All earlier C001-C004/EL-STOP histories preserved; independent analyze-4 still required."
+    },
+    {
+      "name": "historical C005 blocked result",
+      "passed": true,
+      "detail": "Historical analyze-3 result remains Blocked with original bytes"
+    },
+    {
+      "name": "active Markdown links",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "inputSnapshot": {
+    "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/atomic-surface-remediation-audit/input-snapshot.json",
+    "sha256": "8a5e736b138820903ea5b9d565347bcd5f21f83abc6c5608caa7abdddf6be4ff",
+    "files": 1807
+  },
+  "changedExistingPaths": [
+    "specs/004-series-eligibility/contracts/documentation-impact.json",
+    "specs/004-series-eligibility/contracts/statistics-checkpoints.json",
+    "specs/004-series-eligibility/plan.md",
+    "specs/004-series-eligibility/quickstart.md",
+    "specs/004-series-eligibility/tasks.md"
+  ],
+  "artifactBindings": [
+    {
+      "path": "specs/004-series-eligibility/plan.md",
+      "sha256": "05952faedd745f279c9b4d5b3311e4b5700e99c58178eb2729677879ff812d23"
+    },
+    {
+      "path": "specs/004-series-eligibility/tasks.md",
+      "sha256": "043a6d1084dece3f13b3f5c15155c0b1494577bd5a802a15468a8bff6566f0ad"
+    },
+    {
+      "path": "specs/004-series-eligibility/quickstart.md",
+      "sha256": "3e88e907932c74bf8d4a5481ec42374aa9eb87f0e6333c0ec9eef8abb7ad51ef"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/statistics-checkpoints.json",
+      "sha256": "4b14151d72a6344b4f91a712d31052d36d5792f489c6d553e4fc78caf912d879"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/documentation-impact.json",
+      "sha256": "ec50ed248065cf3b0825c63f86f6d1f839a6637a993932640cca91ea33a86491"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/atomic-surface-remediation-report.md",
+      "sha256": "e8f30387a04fd843c66a448add23ca1b3d993d253c28c2ecc2dcce018fe45f35"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/atomic-surface-remediation-execution.json",
+      "sha256": "a61d1aac3c9c826fe3828e681d10f8c036757c4c4f56776dfd2f533fe14f718c"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/atomic-surface-remediation-aeps-receipt.md",
+      "sha256": "eff757911b14280c313fca5731866a486cad61f6c56c7cf2feb1c154530ac50b"
+    }
+  ],
+  "protectedFiles": {
+    "count": 1802,
+    "rawHashDrift": [],
+    "historicalEvidencePreserved": true,
+    "codeTestsPreserved": true,
+    "gitIndexAndHeadPreserved": true
+  },
+  "completedTaskTextSha256": "9b5378dc8ef2b6dddcc4fbd479bbb61168489bc02a534151c643ee9278dff58b",
+  "runnerHandoff": {
+    "statePath": "specs/004-series-eligibility/autonomous-run-state.json",
+    "stateModifiedByThisPhase": false,
+    "previousTasksBinding": {
+      "path": "specs/004-series-eligibility/tasks.md",
+      "sha256": "4441c43e14e34a8fe25f0a110dc417c9244ab6028d9b91192eb3f79baa53c8f8",
+      "completed": 7,
+      "total": 57
+    },
+    "proposedTasksBinding": {
+      "path": "specs/004-series-eligibility/tasks.md",
+      "sha256": "043a6d1084dece3f13b3f5c15155c0b1494577bd5a802a15468a8bff6566f0ad",
+      "completed": 7,
+      "total": 57
+    },
+    "nextExactAction": "Coordinator validates this phase result in both shells, binds payload and new tasks hash/count, then requires fresh analyze-4 before authorized implement-3/T008 in the same run. No automatic continuation.",
+    "gitCheckpointOwner": "outer autonomous coordinator; script-only; current authority; model sandboxes may not write .git"
+  },
+  "phaseResultOutput": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/atomic-surface-remediation.result.json",
+  "proofLimits": [
+    "Planning only: no implementation, source checkpoint, render, push, merge, rename or new run.",
+    "Actual minimal surface and T008 verification remain pending; no native/remote acceptance claimed.",
+    "All historical blocked evidence retained; EL-STOP-002 remains open; ENV001 is a sandbox limitation, not an exception.",
+    "AEPS phase receipt is bounded handoff; canonical ledger capture remains coordinator-owned before acceptance."
+  ]
+}

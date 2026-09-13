@@ -1,0 +1,857 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "implementation-sequence-remediation",
+  "outcome": "Completed",
+  "expectedTasks": 1,
+  "completedTasks": 1,
+  "gatesSatisfied": true,
+  "scope": "One bounded planning task: repair EL-STOP-001; not implementation completion.",
+  "checks": [
+    {
+      "id": "SEQ-01",
+      "status": "Pass",
+      "description": "57 stable unique sequential IDs; exactly T001-T007 completed."
+    },
+    {
+      "id": "SEQ-02",
+      "status": "Pass",
+      "description": "Completed T001-T007 task lines preserved byte-for-byte."
+    },
+    {
+      "id": "SEQ-03",
+      "status": "Pass",
+      "description": "All six mandatory boundaries bind the complete checkpoint contract."
+    },
+    {
+      "id": "SEQ-04",
+      "status": "Pass",
+      "description": "Required source validation/commit/clean/render/statistics-only ordering is exact."
+    },
+    {
+      "id": "SEQ-05",
+      "status": "Pass",
+      "description": "Exact constitutional trailer, statistics-only path and shell array procedure bound."
+    },
+    {
+      "id": "SEQ-T008",
+      "status": "Pass",
+      "description": "Mandatory task explicitly states required checkpoint steps in causal order."
+    },
+    {
+      "id": "SEQ-T016",
+      "status": "Pass",
+      "description": "Mandatory task explicitly states required checkpoint steps in causal order."
+    },
+    {
+      "id": "SEQ-T022",
+      "status": "Pass",
+      "description": "Mandatory task explicitly states required checkpoint steps in causal order."
+    },
+    {
+      "id": "SEQ-T031",
+      "status": "Pass",
+      "description": "Mandatory task explicitly states required checkpoint steps in causal order."
+    },
+    {
+      "id": "SEQ-T040",
+      "status": "Pass",
+      "description": "Mandatory task explicitly states required checkpoint steps in causal order."
+    },
+    {
+      "id": "SEQ-T055",
+      "status": "Pass",
+      "description": "Mandatory task explicitly states required checkpoint steps in causal order."
+    },
+    {
+      "id": "SEQ-06",
+      "status": "Pass",
+      "description": "Later tasks audit/freeze/push accumulated history and refresh residual source statistics."
+    },
+    {
+      "id": "SEQ-07",
+      "status": "Pass",
+      "description": "Closeout uses actual feature branch and ignored causal receipts."
+    },
+    {
+      "id": "SEQ-08",
+      "status": "Pass",
+      "description": "Dependency section unchanged; no backward T045 dependency introduced."
+    },
+    {
+      "id": "SEQ-09",
+      "status": "Pass",
+      "description": "All dependency edges resolve to earlier stable IDs; graph acyclic."
+    },
+    {
+      "id": "SEQ-10",
+      "status": "Pass",
+      "description": "Only six approved existing files changed; all other inventoried bytes preserved."
+    },
+    {
+      "id": "SEQ-11",
+      "status": "Pass",
+      "description": "Git HEAD and physical index unchanged; no commit or staging."
+    },
+    {
+      "id": "SEQ-12",
+      "status": "Pass",
+      "description": "Existing requirements parser accepts unchanged 54 gates: 41 Applicable, 13 N/A."
+    },
+    {
+      "id": "SEQ-13",
+      "status": "Pass",
+      "description": "All gate tokens retain catalog coverage or existing public-readiness Git prefixes."
+    },
+    {
+      "id": "SEQ-14",
+      "status": "Pass",
+      "description": "Statistics commands retain mandatory tasks and explicit conditional source refresh; no matrix render."
+    },
+    {
+      "id": "SEQ-15",
+      "status": "Pass",
+      "description": "Exactly one UpdateRequired decision."
+    },
+    {
+      "id": "SEQ-16",
+      "status": "Pass",
+      "description": "All remote gates, three PR deliveries, bounded human bypass and no META-LH-05 preserved."
+    },
+    {
+      "id": "SEQ-17",
+      "status": "Pass",
+      "description": "Coordinator state unchanged at 7/57 with explicit new hash handoff required."
+    },
+    {
+      "id": "INPUT-1",
+      "status": "Pass",
+      "description": "Accepted normalized input hash: requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md"
+    },
+    {
+      "id": "INPUT-2",
+      "status": "Pass",
+      "description": "Accepted normalized input hash: specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json"
+    },
+    {
+      "id": "INPUT-3",
+      "status": "Pass",
+      "description": "Accepted normalized input hash: specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json"
+    },
+    {
+      "id": "SEQ-18",
+      "status": "Pass",
+      "description": "All 15 actual read-only execution checks passed."
+    },
+    {
+      "id": "LINK-plan",
+      "status": "Pass",
+      "description": "All relative navigation links resolve in plan.md"
+    },
+    {
+      "id": "LINK-tasks",
+      "status": "Pass",
+      "description": "All relative navigation links resolve in tasks.md"
+    },
+    {
+      "id": "LINK-quickstart",
+      "status": "Pass",
+      "description": "All relative navigation links resolve in quickstart.md"
+    },
+    {
+      "id": "SEQ-19",
+      "status": "Pass",
+      "description": "No extension hooks; existing plan preserved by setup-plan."
+    }
+  ],
+  "localCheckDiagnostic": "An initial text-order assertion matched an introductory statistics evidence path before the actual checkpoint procedure; the corrected assertion scopes to the procedure. No product failure or task completion resulted.",
+  "changedExistingPaths": [
+    "docs/aeps/findings-ledger.md",
+    "specs/004-series-eligibility/contracts/documentation-impact.json",
+    "specs/004-series-eligibility/contracts/validation-commands.json",
+    "specs/004-series-eligibility/plan.md",
+    "specs/004-series-eligibility/quickstart.md",
+    "specs/004-series-eligibility/tasks.md"
+  ],
+  "protectedInventoryCount": 1769,
+  "protectedFiles": [
+    {
+      "path": ".specify/memory/constitution.md",
+      "rawSha256Before": "37b42aef7201b851edda3c94974379860f4ff11fd37201df6b114210c48b87c9",
+      "rawSha256After": "37b42aef7201b851edda3c94974379860f4ff11fd37201df6b114210c48b87c9"
+    },
+    {
+      "path": "constitution.md",
+      "rawSha256Before": "37b42aef7201b851edda3c94974379860f4ff11fd37201df6b114210c48b87c9",
+      "rawSha256After": "37b42aef7201b851edda3c94974379860f4ff11fd37201df6b114210c48b87c9"
+    },
+    {
+      "path": "docs/project-statistics.config.json",
+      "rawSha256Before": "1a26daeae93cf4c717b1450ce1fcaa0c25dcdf19a1529d8e15bb272a1a0f5269",
+      "rawSha256After": "1a26daeae93cf4c717b1450ce1fcaa0c25dcdf19a1529d8e15bb272a1a0f5269"
+    },
+    {
+      "path": "docs/project-statistics.md",
+      "rawSha256Before": "57d9378db9fa534a915e450065daa5937fc75de843e7e11b98bb38effd7fd0d0",
+      "rawSha256After": "57d9378db9fa534a915e450065daa5937fc75de843e7e11b98bb38effd7fd0d0"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "rawSha256Before": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+      "rawSha256After": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce"
+    },
+    {
+      "path": "scripts/render-project-statistics.ps1",
+      "rawSha256Before": "53bef2515ad48ce13db2b8792ccb506cbf72c367e0eb4e4c3a935ded41048b3a",
+      "rawSha256After": "53bef2515ad48ce13db2b8792ccb506cbf72c367e0eb4e4c3a935ded41048b3a"
+    },
+    {
+      "path": "scripts/render-project-statistics.sh",
+      "rawSha256Before": "2abd9614be59dd36d0635a1de4226b3f71f83fdc4012e0e6e315a5fdd889899e",
+      "rawSha256After": "2abd9614be59dd36d0635a1de4226b3f71f83fdc4012e0e6e315a5fdd889899e"
+    },
+    {
+      "path": "specs/004-series-eligibility/autonomous-run-state.json",
+      "rawSha256Before": "b2a578e3aa28eb1076021486c4eb9ee34c395da224d884faad451292aee106fd",
+      "rawSha256After": "b2a578e3aa28eb1076021486c4eb9ee34c395da224d884faad451292aee106fd"
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/analysis-remediation.md",
+      "rawSha256Before": "444fd765b235603197be92eb51d0acf26a3830845fe38baffde988f59ad7b0c1",
+      "rawSha256After": "444fd765b235603197be92eb51d0acf26a3830845fe38baffde988f59ad7b0c1"
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/plan-review.md",
+      "rawSha256Before": "bd64986e9c6bd3d34b3a9ea792f6a07920608b89041873c6e0563b8f9f029a24",
+      "rawSha256After": "bd64986e9c6bd3d34b3a9ea792f6a07920608b89041873c6e0563b8f9f029a24"
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/requirements.md",
+      "rawSha256Before": "1f9bd80458a76835f80ab6f67f95ddfd1e11e8730964c833b5f6136e6672195b",
+      "rawSha256After": "1f9bd80458a76835f80ab6f67f95ddfd1e11e8730964c833b5f6136e6672195b"
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/series-eligibility.md",
+      "rawSha256Before": "e311478d29de33d054ffba9ff9d09498e69c562fe3cfa3f82157de76d45a6b3d",
+      "rawSha256After": "e311478d29de33d054ffba9ff9d09498e69c562fe3cfa3f82157de76d45a6b3d"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json",
+      "rawSha256Before": "f0e49efeb0fd052a34fd1175818af487bd67488cee425e84512bfdd81a36d7fa",
+      "rawSha256After": "f0e49efeb0fd052a34fd1175818af487bd67488cee425e84512bfdd81a36d7fa"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/series-eligibility-interface.md",
+      "rawSha256Before": "b0ee4fffce5b16c6b059730b31fe499b67fc9ec10dda70112e71ed341f0a95e3",
+      "rawSha256After": "b0ee4fffce5b16c6b059730b31fe499b67fc9ec10dda70112e71ed341f0a95e3"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+      "rawSha256Before": "9b68771e24a7a46093c2b8288c3af808f79259286d5b957e0b776157ce6ba719",
+      "rawSha256After": "9b68771e24a7a46093c2b8288c3af808f79259286d5b957e0b776157ce6ba719"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+      "rawSha256Before": "e7735d4e98cc8e5cefa1df3c3679ca00c7d11240e9341d17da870e94e2897d82",
+      "rawSha256After": "e7735d4e98cc8e5cefa1df3c3679ca00c7d11240e9341d17da870e94e2897d82"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+      "rawSha256Before": "46bd0e90c8c7163a648dc280f8188470d4c6b8e8f36d7eb40e0f61277881531d",
+      "rawSha256After": "46bd0e90c8c7163a648dc280f8188470d4c6b8e8f36d7eb40e0f61277881531d"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+      "rawSha256Before": "20c8ba399a95b9e468b4b14252a606f65e358f411c35f72612d6610ae992d556",
+      "rawSha256After": "20c8ba399a95b9e468b4b14252a606f65e358f411c35f72612d6610ae992d556"
+    },
+    {
+      "path": "specs/004-series-eligibility/data-model.md",
+      "rawSha256Before": "be3435e2350e93545577fc59bd4dc22c8723a432245139f92d963e4d20a47e58",
+      "rawSha256After": "be3435e2350e93545577fc59bd4dc22c8723a432245139f92d963e4d20a47e58"
+    },
+    {
+      "path": "specs/004-series-eligibility/engineering-retrospective.md",
+      "rawSha256Before": "61cd7731d05085834b24aed4f88c65131e6bd98abda930000d1c56f7790ecd5f",
+      "rawSha256After": "61cd7731d05085834b24aed4f88c65131e6bd98abda930000d1c56f7790ecd5f"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analysis-remediation-aeps-receipt.md",
+      "rawSha256Before": "f81af031deb37f9c005aef9732cb12c66e7bdc7a80132ce9f8f0ad6af72dafa6",
+      "rawSha256After": "f81af031deb37f9c005aef9732cb12c66e7bdc7a80132ce9f8f0ad6af72dafa6"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analysis-remediation-execution.json",
+      "rawSha256Before": "764bd4d3d85db97610a1d0852b9df915e3e2699a85fbc0fb4d5c4fbef08c7ff7",
+      "rawSha256After": "764bd4d3d85db97610a1d0852b9df915e3e2699a85fbc0fb4d5c4fbef08c7ff7"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analysis-remediation-report.md",
+      "rawSha256Before": "94de239ecb860f84eb51f5c0115b5eb558945a0b4f9aa72ee44ee12c5495e1da",
+      "rawSha256After": "94de239ecb860f84eb51f5c0115b5eb558945a0b4f9aa72ee44ee12c5495e1da"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analysis-remediation-result-validation.json",
+      "rawSha256Before": "ec1833919a4ead3156e5d17b22053c9ca0a7f093dfe894abcce77a3bfa4b43e7",
+      "rawSha256After": "ec1833919a4ead3156e5d17b22053c9ca0a7f093dfe894abcce77a3bfa4b43e7"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analysis-remediation-validation.json",
+      "rawSha256Before": "ead59a25f7ff98d660feae009936ccbbb8446a17a30c9037e4a9fade041ba7c8",
+      "rawSha256After": "ead59a25f7ff98d660feae009936ccbbb8446a17a30c9037e4a9fade041ba7c8"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-2-aeps-receipt.md",
+      "rawSha256Before": "49f98f5046433f3c02aeceb8d10641b14f072354f5f259ea6829207f8403c26b",
+      "rawSha256After": "49f98f5046433f3c02aeceb8d10641b14f072354f5f259ea6829207f8403c26b"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-2-coverage.json",
+      "rawSha256Before": "bc682e9905bbb080839875fb80ed25ce3a0ec5298d17036a391b63f59d0282a7",
+      "rawSha256After": "bc682e9905bbb080839875fb80ed25ce3a0ec5298d17036a391b63f59d0282a7"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-2-execution.json",
+      "rawSha256Before": "2de52c93620b22fb97c1ece1ae6c67d51fb358b5fb1728374437076c7eaa80eb",
+      "rawSha256After": "2de52c93620b22fb97c1ece1ae6c67d51fb358b5fb1728374437076c7eaa80eb"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-2-homogeneity.json",
+      "rawSha256Before": "f48b7f262d608a0ca99a4e84c72901a9753a65485a40bc8b0ac59481512c8914",
+      "rawSha256After": "f48b7f262d608a0ca99a4e84c72901a9753a65485a40bc8b0ac59481512c8914"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-2-input-snapshot.json",
+      "rawSha256Before": "d6e4736e988732a94c446006e335b94f6eb1a788509f6ec763ee7e527a53a9c7",
+      "rawSha256After": "d6e4736e988732a94c446006e335b94f6eb1a788509f6ec763ee7e527a53a9c7"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-2-report.md",
+      "rawSha256Before": "3982e032053b192513df05e9a036c169ace4207d5b688c6c8ab1d6c0d0a94c29",
+      "rawSha256After": "3982e032053b192513df05e9a036c169ace4207d5b688c6c8ab1d6c0d0a94c29"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-2-result-validation.json",
+      "rawSha256Before": "3899bf7857f4c7aaa51ae950efe711b133058f0f4c94f2637601e1f04d20d21e",
+      "rawSha256After": "3899bf7857f4c7aaa51ae950efe711b133058f0f4c94f2637601e1f04d20d21e"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-2-secrets.json",
+      "rawSha256Before": "646519af6650ef5e4e71d309e23e0100f78c656f02e0c7e620727721e999125e",
+      "rawSha256After": "646519af6650ef5e4e71d309e23e0100f78c656f02e0c7e620727721e999125e"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-2.result.json",
+      "rawSha256Before": "5c4f33cfc65dab1f37c30da2971a31b71e9eb79da62316659c632dfcc2d2ede0",
+      "rawSha256After": "5c4f33cfc65dab1f37c30da2971a31b71e9eb79da62316659c632dfcc2d2ede0"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-coverage.json",
+      "rawSha256Before": "20bb14c90cdb61cb59992d5484a34243b695573c8f7bab7453816d593860cf60",
+      "rawSha256After": "20bb14c90cdb61cb59992d5484a34243b695573c8f7bab7453816d593860cf60"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-execution.json",
+      "rawSha256Before": "6e75e46c38874da21c3e7a730c034697b238e8242709d4bb21269ccafba5b75c",
+      "rawSha256After": "6e75e46c38874da21c3e7a730c034697b238e8242709d4bb21269ccafba5b75c"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-input-snapshot.json",
+      "rawSha256Before": "0f75aad33597fdad516db95149c5f8501387dfc792cf16cc8634293c9eeed74b",
+      "rawSha256After": "0f75aad33597fdad516db95149c5f8501387dfc792cf16cc8634293c9eeed74b"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-report.md",
+      "rawSha256Before": "4db9f7f478ec1a08446fa5fdd7b7b6fa810629d9d30ef8264d9442de4da768e2",
+      "rawSha256After": "4db9f7f478ec1a08446fa5fdd7b7b6fa810629d9d30ef8264d9442de4da768e2"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-result-validation.json",
+      "rawSha256Before": "7aea2ffbff422bcaf214f518962611d1244d50cf7b8ca72748d28c591d58ebc9",
+      "rawSha256After": "7aea2ffbff422bcaf214f518962611d1244d50cf7b8ca72748d28c591d58ebc9"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-secret-scan.json",
+      "rawSha256Before": "902b5b05f8868f26aa75cf373a47ccd15014b3878c60d0b62730276be2c93670",
+      "rawSha256After": "902b5b05f8868f26aa75cf373a47ccd15014b3878c60d0b62730276be2c93670"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-validation.json",
+      "rawSha256Before": "76f85f49dfa8480ac472c92cde21fd2d48966030ab6da252ffaf66326ea7dc56",
+      "rawSha256After": "76f85f49dfa8480ac472c92cde21fd2d48966030ab6da252ffaf66326ea7dc56"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze.result.json",
+      "rawSha256Before": "c30c277a02b63ca3dabf08858db2d97cb08ac65ebf63571a99295e798c414de1",
+      "rawSha256After": "c30c277a02b63ca3dabf08858db2d97cb08ac65ebf63571a99295e798c414de1"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/checklist-report.md",
+      "rawSha256Before": "ed94d7b858c73ea16dfb1018ccc4fa653eeba0a6c16be775d645705e34727b5f",
+      "rawSha256After": "ed94d7b858c73ea16dfb1018ccc4fa653eeba0a6c16be775d645705e34727b5f"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/checklist-result-validation.json",
+      "rawSha256Before": "d7e2ec6f06c65bd1febf60617e6603490bf4f504534d063b2dd31d2391d1edf5",
+      "rawSha256After": "d7e2ec6f06c65bd1febf60617e6603490bf4f504534d063b2dd31d2391d1edf5"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/checklist-validation.json",
+      "rawSha256Before": "36645e33cd732cc82a45d034c9cc878da3cab15b19e426781807a38d837b29e1",
+      "rawSha256After": "36645e33cd732cc82a45d034c9cc878da3cab15b19e426781807a38d837b29e1"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/clarify-report.md",
+      "rawSha256Before": "749d6e440eb2d70ce1b6261c837503a250969ffd5db28f77dc735afd10d070c5",
+      "rawSha256After": "749d6e440eb2d70ce1b6261c837503a250969ffd5db28f77dc735afd10d070c5"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/clarify-result-validation.json",
+      "rawSha256Before": "e4345f0de553c5f7a7fdd9b018a9e9cf27b510fc19aa56a97a326e9f5d504a34",
+      "rawSha256After": "e4345f0de553c5f7a7fdd9b018a9e9cf27b510fc19aa56a97a326e9f5d504a34"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/clarify-validation.json",
+      "rawSha256Before": "ed58835da587410e368ef18f0560f2c2e01e265b64038d95ac3c51c988f3bdc5",
+      "rawSha256After": "ed58835da587410e368ef18f0560f2c2e01e265b64038d95ac3c51c988f3bdc5"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/implementation-blocked.md",
+      "rawSha256Before": "92e519c958f79e311c3e7e54e6fdc3c1f0496045536d770c440f74ebbf95e225",
+      "rawSha256After": "92e519c958f79e311c3e7e54e6fdc3c1f0496045536d770c440f74ebbf95e225"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/implementation-preflight.json",
+      "rawSha256Before": "9dfcc624f6e96bb63a3de0294a9d83d0ad7fdc2f04b51201ed33eda826aef0df",
+      "rawSha256After": "9dfcc624f6e96bb63a3de0294a9d83d0ad7fdc2f04b51201ed33eda826aef0df"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/implementation-provider-check.json",
+      "rawSha256Before": "a913a2bf32115a73c18d08f47fa2b3a9fba0e37973d566b769ab9bd89c6548d0",
+      "rawSha256After": "a913a2bf32115a73c18d08f47fa2b3a9fba0e37973d566b769ab9bd89c6548d0"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/implementation-red-green.md",
+      "rawSha256Before": "7a5da9ebd90d043021149ea50a627b899249c0a4fca81ca0c4fa1f67ae33f762",
+      "rawSha256After": "7a5da9ebd90d043021149ea50a627b899249c0a4fca81ca0c4fa1f67ae33f762"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/implementation-result-validation.json",
+      "rawSha256Before": "65f84b63d4adee8648791a61deb696d449f606726ebe666594935dd5dbaa3802",
+      "rawSha256After": "65f84b63d4adee8648791a61deb696d449f606726ebe666594935dd5dbaa3802"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/implementation-scope.json",
+      "rawSha256Before": "c8f079b5e4f3d8eda8a8fc129e441f47786aa1cb44a53d952c6a4460044b9962",
+      "rawSha256After": "c8f079b5e4f3d8eda8a8fc129e441f47786aa1cb44a53d952c6a4460044b9962"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/implementation-stop-validation.json",
+      "rawSha256Before": "bdf34b85aadfed2ccbfd73c41532dcf997963d3fb1376def2c5024d6d3f45f95",
+      "rawSha256After": "bdf34b85aadfed2ccbfd73c41532dcf997963d3fb1376def2c5024d6d3f45f95"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/implementation-trend.json",
+      "rawSha256Before": "b6578ca15e348cedcfc06fb8bc5e8009af17c648eaffe0d1503a12f17a0225da",
+      "rawSha256After": "b6578ca15e348cedcfc06fb8bc5e8009af17c648eaffe0d1503a12f17a0225da"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/plan-baseline.json",
+      "rawSha256Before": "b5aafa505715732ce1f95f91010c70314dd408c9e73dcd86efd99cb6e0b94e8d",
+      "rawSha256After": "b5aafa505715732ce1f95f91010c70314dd408c9e73dcd86efd99cb6e0b94e8d"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/plan-quality-checks.json",
+      "rawSha256Before": "a6dcfe9a9f76fb5ce70609f42f5bbc804fdef880e8c02473d068dce393de63a9",
+      "rawSha256After": "a6dcfe9a9f76fb5ce70609f42f5bbc804fdef880e8c02473d068dce393de63a9"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/plan-report.md",
+      "rawSha256Before": "60d21a6b5e379caffceecf74b848c6853c2c6f34f5dfbe62ff136d7bfbd7efaa",
+      "rawSha256After": "60d21a6b5e379caffceecf74b848c6853c2c6f34f5dfbe62ff136d7bfbd7efaa"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/plan-result-validation.json",
+      "rawSha256Before": "93d5fb293e72e3fd08b1b61ce5535e851dcd5c55d14ec8ab92c62c25ceec9d67",
+      "rawSha256After": "93d5fb293e72e3fd08b1b61ce5535e851dcd5c55d14ec8ab92c62c25ceec9d67"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/plan-review-aeps-receipt.md",
+      "rawSha256Before": "a181a7930ff9a0123da29144f8d5dc24c4353c427060556d24fde66473e8e506",
+      "rawSha256After": "a181a7930ff9a0123da29144f8d5dc24c4353c427060556d24fde66473e8e506"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/plan-review-design-validation.json",
+      "rawSha256Before": "843e8791a76307eb08294fd07efffd081fea92732c131e33e17de5960002cac6",
+      "rawSha256After": "843e8791a76307eb08294fd07efffd081fea92732c131e33e17de5960002cac6"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/plan-review-execution.json",
+      "rawSha256Before": "58d637efe0e750a7d8332984942196ce9815c7cdc9d93c37a97b738cadf3be71",
+      "rawSha256After": "58d637efe0e750a7d8332984942196ce9815c7cdc9d93c37a97b738cadf3be71"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/plan-review-report.md",
+      "rawSha256Before": "15ad36ca03bef69f95e3f9bedb826ae26964ff0bf0eda350c7f02a386a58dc66",
+      "rawSha256After": "15ad36ca03bef69f95e3f9bedb826ae26964ff0bf0eda350c7f02a386a58dc66"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/plan-review-result-validation.json",
+      "rawSha256Before": "6c88b58381c222c73ee326a204d8a9346747a8b92b8b28891b0e265d02023eda",
+      "rawSha256After": "6c88b58381c222c73ee326a204d8a9346747a8b92b8b28891b0e265d02023eda"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/plan-review-validation.json",
+      "rawSha256Before": "8644cc365bf468c4e4eff17da2bbab26466544108d2ab4962195382442330d2b",
+      "rawSha256After": "8644cc365bf468c4e4eff17da2bbab26466544108d2ab4962195382442330d2b"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/plan-validation.json",
+      "rawSha256Before": "3dbadbdc7956ae2831e04b3e870c16d3341d3d17f275ca1c01c2f8f9c432ca9f",
+      "rawSha256After": "3dbadbdc7956ae2831e04b3e870c16d3341d3d17f275ca1c01c2f8f9c432ca9f"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/red-green.json",
+      "rawSha256Before": "8399c811e75c4d19cac2de17471c28171904c1f934cebc36868218aa1d4aca8b",
+      "rawSha256After": "8399c811e75c4d19cac2de17471c28171904c1f934cebc36868218aa1d4aca8b"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/specify-report.md",
+      "rawSha256Before": "bdb54c26a9509562fee2beebdfd744d372d99f42f2df18d29e620a207f66ac0e",
+      "rawSha256After": "bdb54c26a9509562fee2beebdfd744d372d99f42f2df18d29e620a207f66ac0e"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/specify-validation.json",
+      "rawSha256Before": "8dbd018b80bbb44802c0b21abe95a565fdca45a8899e328a1f6be2c56a2c6d73",
+      "rawSha256After": "8dbd018b80bbb44802c0b21abe95a565fdca45a8899e328a1f6be2c56a2c6d73"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/statistics-review.md",
+      "rawSha256Before": "5736d73ac3674339b594f6493fa3674850e2fe3dbfc10d2d9f3067c703d54128",
+      "rawSha256After": "5736d73ac3674339b594f6493fa3674850e2fe3dbfc10d2d9f3067c703d54128"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/statistics-t008.json",
+      "rawSha256Before": "f840544e534542883bf2832823f75e6fba19b31e2b5e24bf220b7e3d35001f05",
+      "rawSha256After": "f840544e534542883bf2832823f75e6fba19b31e2b5e24bf220b7e3d35001f05"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/tasks-aeps-receipt.md",
+      "rawSha256Before": "f66c9f590821d61d34723299574beac6d1fd95aeb17a40d656ff490e7865e6e9",
+      "rawSha256After": "f66c9f590821d61d34723299574beac6d1fd95aeb17a40d656ff490e7865e6e9"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/tasks-report.md",
+      "rawSha256Before": "feacce931acd5cf9d85c09df3d9fd4a46d364ba38ce3934daa28bfad3bd50efa",
+      "rawSha256After": "feacce931acd5cf9d85c09df3d9fd4a46d364ba38ce3934daa28bfad3bd50efa"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/tasks-result-validation.json",
+      "rawSha256Before": "3b73e46422f51919597b15166a22b1b95ac287b8482f2dbd68ecc97a76fd51e2",
+      "rawSha256After": "3b73e46422f51919597b15166a22b1b95ac287b8482f2dbd68ecc97a76fd51e2"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/tasks-validation.json",
+      "rawSha256Before": "91a77550e1f28896ec863b57c2c5215c3dfcce419419d9f94f8e952770ea3e62",
+      "rawSha256After": "91a77550e1f28896ec863b57c2c5215c3dfcce419419d9f94f8e952770ea3e62"
+    },
+    {
+      "path": "specs/004-series-eligibility/research.md",
+      "rawSha256Before": "f94516bbd35de291b4b691dca3f1e94b110d356be309beed522bb285e259d5df",
+      "rawSha256After": "f94516bbd35de291b4b691dca3f1e94b110d356be309beed522bb285e259d5df"
+    },
+    {
+      "path": "specs/004-series-eligibility/spec.md",
+      "rawSha256Before": "e3fb2b5c08fe848f7790968e7b3944d8a5e16f9a74b7a2acfa092ac96bc979c3",
+      "rawSha256After": "e3fb2b5c08fe848f7790968e7b3944d8a5e16f9a74b7a2acfa092ac96bc979c3"
+    },
+    {
+      "path": "specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json",
+      "rawSha256Before": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b",
+      "rawSha256After": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b"
+    },
+    {
+      "path": "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json",
+      "rawSha256Before": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07",
+      "rawSha256After": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07"
+    }
+  ],
+  "artifactBindings": [
+    {
+      "path": "specs/004-series-eligibility/plan.md",
+      "sha256": "a4c35bcfe1423a47fe314231a672e650c63bc9a06ff88e96cf7f8a8c2e27ed18"
+    },
+    {
+      "path": "specs/004-series-eligibility/tasks.md",
+      "sha256": "4441c43e14e34a8fe25f0a110dc417c9244ab6028d9b91192eb3f79baa53c8f8"
+    },
+    {
+      "path": "specs/004-series-eligibility/quickstart.md",
+      "sha256": "55975ad2be657164c574282d5d3553deeb31238f0a4720b70ed82ae518d1e652"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/statistics-checkpoints.json",
+      "sha256": "5b657ed8dc4609174e911d31939a6823ebe412c9325abbea85636cada03603d3"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/validation-commands.json",
+      "sha256": "a89aa6e0edb047e9882f230a9b03890d54ff0c1a511cfb544c265d8ea14216ca"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/documentation-impact.json",
+      "sha256": "0dc8f8859cd5e87e7860db9af62676064bcea4658699d44d03d41ab8112ba32d"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/implementation-sequence-remediation-report.md",
+      "sha256": "70280bafa0cba5eff7a9b0da37dc505f57d6ba7386670196db42c2e69607ce36"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/implementation-sequence-remediation-execution.json",
+      "sha256": "ec80b96a241a4d80abf0aeeda026e24ad8bca86a86ffdd353d714b797c9b3705"
+    }
+  ],
+  "dependencyGraph": {
+    "T001": [],
+    "T002": [
+      "T001"
+    ],
+    "T003": [
+      "T002"
+    ],
+    "T004": [
+      "T003"
+    ],
+    "T005": [
+      "T004"
+    ],
+    "T006": [
+      "T005"
+    ],
+    "T007": [
+      "T006"
+    ],
+    "T008": [
+      "T007"
+    ],
+    "T009": [
+      "T008"
+    ],
+    "T010": [
+      "T009"
+    ],
+    "T011": [
+      "T010"
+    ],
+    "T012": [
+      "T011"
+    ],
+    "T013": [
+      "T012"
+    ],
+    "T014": [
+      "T013"
+    ],
+    "T015": [
+      "T014"
+    ],
+    "T016": [
+      "T015"
+    ],
+    "T017": [
+      "T016"
+    ],
+    "T018": [
+      "T017"
+    ],
+    "T019": [
+      "T018"
+    ],
+    "T020": [
+      "T019"
+    ],
+    "T021": [
+      "T020"
+    ],
+    "T022": [
+      "T021"
+    ],
+    "T023": [
+      "T022"
+    ],
+    "T024": [
+      "T023"
+    ],
+    "T025": [
+      "T024"
+    ],
+    "T026": [
+      "T025"
+    ],
+    "T027": [
+      "T026"
+    ],
+    "T028": [
+      "T027"
+    ],
+    "T029": [
+      "T028"
+    ],
+    "T030": [
+      "T029"
+    ],
+    "T031": [
+      "T030"
+    ],
+    "T032": [
+      "T031"
+    ],
+    "T033": [
+      "T031"
+    ],
+    "T034": [
+      "T031"
+    ],
+    "T035": [
+      "T031"
+    ],
+    "T036": [
+      "T032",
+      "T033",
+      "T034",
+      "T035"
+    ],
+    "T037": [
+      "T036"
+    ],
+    "T038": [
+      "T037"
+    ],
+    "T039": [
+      "T038"
+    ],
+    "T040": [
+      "T039"
+    ],
+    "T041": [
+      "T040"
+    ],
+    "T042": [
+      "T041"
+    ],
+    "T043": [
+      "T042"
+    ],
+    "T044": [
+      "T043"
+    ],
+    "T045": [
+      "T044"
+    ],
+    "T046": [
+      "T045"
+    ],
+    "T047": [
+      "T046"
+    ],
+    "T048": [
+      "T047"
+    ],
+    "T049": [
+      "T048"
+    ],
+    "T050": [
+      "T049"
+    ],
+    "T051": [
+      "T050"
+    ],
+    "T052": [
+      "T051"
+    ],
+    "T053": [
+      "T052"
+    ],
+    "T054": [
+      "T053"
+    ],
+    "T055": [
+      "T054"
+    ],
+    "T056": [
+      "T055"
+    ],
+    "T057": [
+      "T056"
+    ]
+  },
+  "blockedEvidenceDisposition": {
+    "EL-STOP-001": {
+      "planning": "Repaired",
+      "execution": "Pending",
+      "task": "T008",
+      "taskMarkedComplete": false,
+      "historicalEvidence": "Preserved byte-for-byte; never superseded as a pass; retry in fresh runtime attempt after analyze-3."
+    },
+    "EL-STOP-002": {
+      "status": "Open",
+      "failureClass": "ProviderFailure",
+      "rechecked": false
+    }
+  },
+  "runnerHandoff": {
+    "statePath": "specs/004-series-eligibility/autonomous-run-state.json",
+    "stateOwner": "coordinator",
+    "stateModifiedByThisPhase": false,
+    "priorTasksBinding": {
+      "path": "specs/004-series-eligibility/tasks.md",
+      "sha256": "c0a2931e314a0da87459c53aab2981f10a5067b2572f216a508b9ab1cd84a2c2",
+      "completed": 7,
+      "total": 57
+    },
+    "proposedTasksBinding": {
+      "path": "specs/004-series-eligibility/tasks.md",
+      "sha256": "4441c43e14e34a8fe25f0a110dc417c9244ab6028d9b91192eb3f79baa53c8f8",
+      "completed": 7,
+      "total": 57
+    },
+    "requiredActions": [
+      "Validate this phase result in both shells and bind its payload.",
+      "Adopt proposed task hash and unchanged 7/57 count using this coordinator evidence before analyze-3.",
+      "Run analyze-3 against amended artifacts; do not reuse historical analyze-2 as acceptance of changed tasks.",
+      "Before authorized implement-2, revalidate inputs, authority, checkpoints and new Analyze result; resume at T008 with fresh attempt, preserving T001-T007."
+    ],
+    "noAutomaticStart": "META-LH-05 remains unstarted."
+  },
+  "proofLimits": [
+    "No renderer command, actual checkpoint commit, push, merge, intake rename or provider check executed.",
+    "Feature implementation remains 7/57; no actual native/remote gates or T008 pass claimed.",
+    "Historical blocked evidence and existing code/tests/marks unchanged."
+  ],
+  "phaseResultOutput": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implementation-sequence-remediation.result.json",
+  "runnerOutputMechanism": "codex-frontier-auto --output-last-message {outputFile}; invoke-autonomous-model-phase.ps1 resolves default directory plus phase ID; final assistant message must remain exact structured JSON.",
+  "finalQualityEvidence": {
+    "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implementation-sequence-remediation-final-quality.json",
+    "sha256": "6b75000fc08af05cfadd4a9e7f876c662c4b5224254bf34f425d6dcc8de154cc"
+  },
+  "aepsBindings": [
+    {
+      "path": "docs/aeps/receipts/2026-09-13-series-eligibility-sequence-remediation.md",
+      "sha256": "fd15046f27703aacf2cd0b9bf0ca280e524a0b0eb30a1e5090d43fcb407f6762"
+    },
+    {
+      "path": "docs/aeps/findings-ledger.md",
+      "sha256": "ae685990142dc1a56f4d99eae5b7623ac8eddf992e367cbb004a88afa8fd494b"
+    }
+  ],
+  "historicalBlockedResult": {
+    "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement.result.json",
+    "sha256": "230e528cc78a93926ab9941c5e6fadebe78d5946957097bd0b8b1054bf463d81",
+    "disposition": "Historical Blocked result remains unchanged; new planning result does not complete implement."
+  },
+  "newArtifactPaths": [
+    "docs/aeps/receipts/2026-09-13-series-eligibility-sequence-remediation.md",
+    "specs/004-series-eligibility/contracts/statistics-checkpoints.json",
+    "specs/004-series-eligibility/phase-results/implementation-sequence-remediation-execution.json",
+    "specs/004-series-eligibility/phase-results/implementation-sequence-remediation-report.md",
+    "specs/004-series-eligibility/phase-results/implementation-sequence-remediation-validation.json"
+  ]
+}

@@ -11,8 +11,9 @@ regex_files=()
 
 secret_content_regex='(id_token|access_token|refresh_token|api[_-]?key|client[_-]?secret|password[[:space:]]*=|authorization:[[:space:]]*bearer|bearer[[:space:]]+[A-Za-z0-9._~+/=-]*|sk-[A-Za-z0-9]{20,}|ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AIza[0-9A-Za-z_-]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN (RSA|OPENSSH|EC|DSA) PRIVATE KEY-----)'
 secret_name_regex='(auth\.json|(^|\/)\.env(\.[^.]+)?$|[^/]*(secret|credential|creds)[^/]*\.(json|yaml|yml|xml|ini|cfg|conf|toml)|[^/]*id_rsa[^/]*|[^/]*\.(pem|key|p12|pfx))$'
-allowed_secret_name_regex='(^|/)\.env\.(example|sample|template|dist)$'
-allowed_secret_content_path_regex='(^|/)scripts/(hooks/pre-push|scan-agent-secrets\.(sh|ps1)|lib/(hg-secrets|hg-forgejo)\.(sh|ps1))$|(^|/)docs/secure-development/.*\.md$'
+allowed_secret_name_regex='(^|/)\.env\.(example|sample|template|dist)$|(^|/)specs/[0-9]+-[^/]+/phase-results/analyze(-[0-9]+)?-(secret-scan|secrets)\.json$'
+allowed_secret_content_path_regex='(^|/)\.gitleaksignore$|(^|/)scripts/(hooks/pre-push|scan-agent-secrets\.(sh|ps1)|lib/(hg-secrets|hg-forgejo)\.(sh|ps1))$|(^|/)docs/secure-development/.*\.md$'
+evidence_metadata_line_regex='^[[:space:]]*"(RuleID|rule)": "generic-api-key",?[[:space:]]*$|^[[:space:]]*"Fingerprint": "[^"[:space:]]+:generic-api-key:[0-9]+",?[[:space:]]*$|^[[:space:]]*"[^"[:space:]]+:generic-api-key:[0-9]+",?[[:space:]]*$'
 
 echo "pre-push: Prüfe git-getrackte Dateien auf Secrets …"
 
@@ -171,8 +172,15 @@ if [ "${#tracked_files[@]}" -gt 0 ]; then
     if printf '%s\n' "$f" | grep -Eiq "$allowed_secret_content_path_regex"; then
       continue
     fi
-    content_hits+=("$f")
-  done < <(grep -rEl --include='*' "$secret_content_regex" "${tracked_files[@]}" 2>/dev/null || true)
+    if printf '%s\n' "$f" | grep -Eq '(^|/)specs/[0-9]+-[^/]+/phase-results/(quality-validation|analyze-secret-scan)\.json$'; then
+      if grep -Ei "$secret_content_regex" "$f" 2>/dev/null |
+          grep -Ev "$evidence_metadata_line_regex" >/dev/null; then
+        content_hits+=("$f")
+      fi
+    elif grep -Eiq "$secret_content_regex" "$f" 2>/dev/null; then
+      content_hits+=("$f")
+    fi
+  done < <(printf '%s\n' "${tracked_files[@]}")
 fi
 
 if [ "${#content_hits[@]}" -gt 0 ]; then

@@ -1,0 +1,1730 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "8b306e28-51eb-4510-afbc-5056b9aee328",
+  "phaseId": "implement-7",
+  "baseHead": "e5083c82d80099901774518b3987f47a1a628572",
+  "auditedHead": "e0172f6dd4aad214cfaa40ec66cf268514a04b23",
+  "historyResult": "PassWithDocumentedMetadataDefect",
+  "commitCount": 12,
+  "commits": [
+    {
+      "commit": "a357ef6815c9175da74c65e0999a676e90759a05",
+      "parent": "e5083c82d80099901774518b3987f47a1a628572",
+      "tree": "97c82dbd4945ff3fcf7686f21a49a27fd85da4f6",
+      "subject": "feat: establish series eligibility core",
+      "requiredTrailerPresent": true,
+      "kind": "Source",
+      "paths": [
+        {
+          "path": ".specify/memory/constitution.md",
+          "gitBlob": "873f89ca5f61f2c25f086ff639349dfd46da45b2",
+          "rawSha256": "37b42aef7201b851edda3c94974379860f4ff11fd37201df6b114210c48b87c9"
+        },
+        {
+          "path": "constitution.md",
+          "gitBlob": "873f89ca5f61f2c25f086ff639349dfd46da45b2",
+          "rawSha256": "37b42aef7201b851edda3c94974379860f4ff11fd37201df6b114210c48b87c9"
+        },
+        {
+          "path": "docs/aeps/finding-to-preset-candidate-matrix.md",
+          "gitBlob": "2331c62afff05bda8d56b2366aff267a1f282d9b",
+          "rawSha256": "98f006d42f338f5fcdcdbea5b3dc3542ff7554493da5dd91c3fdfddf1b3ee2b3"
+        },
+        {
+          "path": "docs/aeps/findings-ledger.md",
+          "gitBlob": "5ae9c1605a1ed0d4d25e498a6a0a42b980882b7d",
+          "rawSha256": "ae685990142dc1a56f4d99eae5b7623ac8eddf992e367cbb004a88afa8fd494b"
+        },
+        {
+          "path": "docs/aeps/preset-gap-analysis.md",
+          "gitBlob": "69e10bc840e6e643e18a7de391a45aca2daec833",
+          "rawSha256": "b75b44701aa4ad6f0ed0de9ebabea5cf71eccf1f51c808a1f60e5d78ed875e27"
+        },
+        {
+          "path": "docs/aeps/receipts/2026-09-13-series-eligibility-checklist.md",
+          "gitBlob": "7e3945de63bbf6b59f466ff29aa0fea17a0648aa",
+          "rawSha256": "5d06b7ce7f7a86b4aa0dd4ea654f9c28ae5d87eae2f7d48267ccd4d2c93f0bcb"
+        },
+        {
+          "path": "docs/aeps/receipts/2026-09-13-series-eligibility-implementation-blocked.md",
+          "gitBlob": "7ac526f02030a68f681201b617c262f0eeac2b44",
+          "rawSha256": "3c81c8d9b6cf8664b676a9631100c7d60a6fd88089c6678018697c8ffb3838d0"
+        },
+        {
+          "path": "docs/aeps/receipts/2026-09-13-series-eligibility-plan.md",
+          "gitBlob": "fb30d12dbe70d701da07c77370df4456d052f67a",
+          "rawSha256": "e0ad9851274b5ec86539cd1d06dd2abbf024781e167c47d663cfa8d784e29b18"
+        },
+        {
+          "path": "docs/aeps/receipts/2026-09-13-series-eligibility-sequence-remediation.md",
+          "gitBlob": "e93db2bd79709fe9f3177c78f91b028b45b01c0a",
+          "rawSha256": "fd15046f27703aacf2cd0b9bf0ca280e524a0b0eb30a1e5090d43fcb407f6762"
+        },
+        {
+          "path": "docs/aeps/upstream-handoff.md",
+          "gitBlob": "dd567a83f88c11a6138bac73c99b62ec54d93f54",
+          "rawSha256": "a9307b2bc48207fcdd55039be8600174033df38ea39949a6625fd29343aa6e11"
+        },
+        {
+          "path": "docs/man/validate-series-eligibility.1",
+          "gitBlob": "65bd6cbfbe3861b854fd353e6205343252a67eb9",
+          "rawSha256": "f84a83329b6a00583bdc76f10130394632fe78c5118ca2a33adaaca0d96732c0"
+        },
+        {
+          "path": "specs/004-series-eligibility/autonomous-run-state.json",
+          "gitBlob": "22f17d8a66a8b21fd5a04b877cb2faf03511c0cf",
+          "rawSha256": "74f752fde34c2addc674405bf7ba5dad1e2bd682581ab0f930ee5701a3b2570f"
+        },
+        {
+          "path": "specs/004-series-eligibility/checklists/analysis-remediation.md",
+          "gitBlob": "526b4714e22a5eb1cfa280c736589596f9bad652",
+          "rawSha256": "444fd765b235603197be92eb51d0acf26a3830845fe38baffde988f59ad7b0c1"
+        },
+        {
+          "path": "specs/004-series-eligibility/checklists/plan-review.md",
+          "gitBlob": "9992b0974b5c5131434d5fe4945ad8e228d8a576",
+          "rawSha256": "bd64986e9c6bd3d34b3a9ea792f6a07920608b89041873c6e0563b8f9f029a24"
+        },
+        {
+          "path": "specs/004-series-eligibility/checklists/requirements.md",
+          "gitBlob": "16644b37be32d40d08a9f2c28272d348c5f1b07a",
+          "rawSha256": "a056ab95bd76e7157db7c7843dc5f2c74226337254cc071c7469033b4b956099"
+        },
+        {
+          "path": "specs/004-series-eligibility/checklists/series-eligibility.md",
+          "gitBlob": "66260597ca0d7b14bd58605bf3a6171c404e2f97",
+          "rawSha256": "e311478d29de33d054ffba9ff9d09498e69c562fe3cfa3f82157de76d45a6b3d"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json",
+          "gitBlob": "992679c625a2b4ca98fbe774db91bdd8a8265362",
+          "rawSha256": "f0e49efeb0fd052a34fd1175818af487bd67488cee425e84512bfdd81a36d7fa"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/documentation-impact.json",
+          "gitBlob": "a2d5d3adcbfad9dc823e1a7da51d00818f35ec81",
+          "rawSha256": "ec50ed248065cf3b0825c63f86f6d1f839a6637a993932640cca91ea33a86491"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/series-eligibility-interface.md",
+          "gitBlob": "8e2dfd6368f9fbf06a533f2ecab9da2361210cb5",
+          "rawSha256": "b0ee4fffce5b16c6b059730b31fe499b67fc9ec10dda70112e71ed341f0a95e3"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/statistics-checkpoints.json",
+          "gitBlob": "c464294cb61aedfe8b7c91d981cbdb3391965b88",
+          "rawSha256": "4b14151d72a6344b4f91a712d31052d36d5792f489c6d553e4fc78caf912d879"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "gitBlob": "59dfeb23cd4e25532c4f94f50de8511155590699",
+          "rawSha256": "9b68771e24a7a46093c2b8288c3af808f79259286d5b957e0b776157ce6ba719"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "gitBlob": "e32e5a9e1d90bdd1c1452f65c0e6a5b16407362a",
+          "rawSha256": "23a284866685b95fbaebac178c0d98e8de018b9e9ccadf0dcd7683423933d3f6"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "gitBlob": "438b8c23cc17b5a5c2119cc27252940833664240",
+          "rawSha256": "5be6ef6eae6fdc7f288823b0bad6fcf3e1af5e7a02de780a4d9e78776c6f4d4a"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "gitBlob": "083cf4d7fb9cd3ffe3b85010946ec4cc47e84125",
+          "rawSha256": "20c8ba399a95b9e468b4b14252a606f65e358f411c35f72612d6610ae992d556"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validation-commands.json",
+          "gitBlob": "32560324badcf9457dbef03088448c5aaa537050",
+          "rawSha256": "a89aa6e0edb047e9882f230a9b03890d54ff0c1a511cfb544c265d8ea14216ca"
+        },
+        {
+          "path": "specs/004-series-eligibility/data-model.md",
+          "gitBlob": "5d76556abe6ed0a3b5b95b4f406f3f72f8c99cbd",
+          "rawSha256": "be3435e2350e93545577fc59bd4dc22c8723a432245139f92d963e4d20a47e58"
+        },
+        {
+          "path": "specs/004-series-eligibility/engineering-retrospective.md",
+          "gitBlob": "7dfb0e59ec47812428f91e36ec48d7b2da42b142",
+          "rawSha256": "61cd7731d05085834b24aed4f88c65131e6bd98abda930000d1c56f7790ecd5f"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analysis-remediation-aeps-receipt.md",
+          "gitBlob": "628713eab4b838e606eb1713be4bd828f4114038",
+          "rawSha256": "f81af031deb37f9c005aef9732cb12c66e7bdc7a80132ce9f8f0ad6af72dafa6"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analysis-remediation-execution.json",
+          "gitBlob": "533e239952aec0bf25aff055889a7aa6611d199c",
+          "rawSha256": "764bd4d3d85db97610a1d0852b9df915e3e2699a85fbc0fb4d5c4fbef08c7ff7"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analysis-remediation-report.md",
+          "gitBlob": "203caebfd3128fa0a68bbe39df696bff29454662",
+          "rawSha256": "94de239ecb860f84eb51f5c0115b5eb558945a0b4f9aa72ee44ee12c5495e1da"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analysis-remediation-result-validation.json",
+          "gitBlob": "390d2be39f3efd5ccadd746037e838c98c4d4cc1",
+          "rawSha256": "ec1833919a4ead3156e5d17b22053c9ca0a7f093dfe894abcce77a3bfa4b43e7"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analysis-remediation-validation.json",
+          "gitBlob": "e5e8419a13cbe7b50c284c41e321e13b988bff74",
+          "rawSha256": "ead59a25f7ff98d660feae009936ccbbb8446a17a30c9037e4a9fade041ba7c8"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analyze-2-aeps-receipt.md",
+          "gitBlob": "87b2bc4b24949a423965ca6f09a05567390ca1e0",
+          "rawSha256": "49f98f5046433f3c02aeceb8d10641b14f072354f5f259ea6829207f8403c26b"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analyze-2-coverage.json",
+          "gitBlob": "071dbd3b1e0b1f71355e9ac0cd3f0f44ead74b35",
+          "rawSha256": "bc682e9905bbb080839875fb80ed25ce3a0ec5298d17036a391b63f59d0282a7"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analyze-2-execution.json",
+          "gitBlob": "e50f36a4f240c1d4630e672d87f391af6a407d51",
+          "rawSha256": "2de52c93620b22fb97c1ece1ae6c67d51fb358b5fb1728374437076c7eaa80eb"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analyze-2-homogeneity.json",
+          "gitBlob": "e67e9146f6176093b309b07dd61e9aa808bf8e40",
+          "rawSha256": "f48b7f262d608a0ca99a4e84c72901a9753a65485a40bc8b0ac59481512c8914"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analyze-2-input-snapshot.json",
+          "gitBlob": "a7b1b11734805195ee43bbcdfa4837bc2fe22d8d",
+          "rawSha256": "d6e4736e988732a94c446006e335b94f6eb1a788509f6ec763ee7e527a53a9c7"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analyze-2-report.md",
+          "gitBlob": "b85d9fcf15e9c15b83bc93a13198a92def42bbfa",
+          "rawSha256": "3982e032053b192513df05e9a036c169ace4207d5b688c6c8ab1d6c0d0a94c29"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analyze-2-result-validation.json",
+          "gitBlob": "ae51c8b0f750bba64b411478c2d072aef9400020",
+          "rawSha256": "3899bf7857f4c7aaa51ae950efe711b133058f0f4c94f2637601e1f04d20d21e"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analyze-2-secrets.json",
+          "gitBlob": "6be44e7d2ddee27849d7e0aa6f4868686be680e7",
+          "rawSha256": "646519af6650ef5e4e71d309e23e0100f78c656f02e0c7e620727721e999125e"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analyze-2.result.json",
+          "gitBlob": "65e456e3675c31ba3e599819c1a633ef8636a7bd",
+          "rawSha256": "5c4f33cfc65dab1f37c30da2971a31b71e9eb79da62316659c632dfcc2d2ede0"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analyze-coverage.json",
+          "gitBlob": "59a14d59609cbacae8799a83549e301eab39333d",
+          "rawSha256": "20bb14c90cdb61cb59992d5484a34243b695573c8f7bab7453816d593860cf60"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analyze-execution.json",
+          "gitBlob": "efd8b1c860a84457810308170697939463a08b90",
+          "rawSha256": "6e75e46c38874da21c3e7a730c034697b238e8242709d4bb21269ccafba5b75c"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analyze-input-snapshot.json",
+          "gitBlob": "58724f0c86c1b5637255c299f6db687dd0f33cf9",
+          "rawSha256": "0f75aad33597fdad516db95149c5f8501387dfc792cf16cc8634293c9eeed74b"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analyze-report.md",
+          "gitBlob": "504e7dc668803f257b51e6703daf0dd102a667fc",
+          "rawSha256": "4db9f7f478ec1a08446fa5fdd7b7b6fa810629d9d30ef8264d9442de4da768e2"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analyze-result-validation.json",
+          "gitBlob": "1f27ca1cb9cd7d90a6abc0a3db3e9d5713e36e03",
+          "rawSha256": "7aea2ffbff422bcaf214f518962611d1244d50cf7b8ca72748d28c591d58ebc9"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analyze-secret-scan.json",
+          "gitBlob": "1bcd778fedc63ecca1c45f308138726cf7b44af2",
+          "rawSha256": "902b5b05f8868f26aa75cf373a47ccd15014b3878c60d0b62730276be2c93670"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analyze-validation.json",
+          "gitBlob": "a31a21b7e77f99f2c7b9df23a436fc7b2559651a",
+          "rawSha256": "76f85f49dfa8480ac472c92cde21fd2d48966030ab6da252ffaf66326ea7dc56"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/analyze.result.json",
+          "gitBlob": "b2fca5c9f88e0e289fbf19da2cbc3bf09307db90",
+          "rawSha256": "c30c277a02b63ca3dabf08858db2d97cb08ac65ebf63571a99295e798c414de1"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/atomic-surface-remediation-aeps-receipt.md",
+          "gitBlob": "2bab404bba46075e14cf1d6c4cc64c34f7e2fb6a",
+          "rawSha256": "eff757911b14280c313fca5731866a486cad61f6c56c7cf2feb1c154530ac50b"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/atomic-surface-remediation-execution.json",
+          "gitBlob": "4629caa48463f8968eee967fe32daf7fea10e530",
+          "rawSha256": "a61d1aac3c9c826fe3828e681d10f8c036757c4c4f56776dfd2f533fe14f718c"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/atomic-surface-remediation-report.md",
+          "gitBlob": "2c821333dc154f3de514ba59a07e3178133d5d91",
+          "rawSha256": "e8f30387a04fd843c66a448add23ca1b3d993d253c28c2ecc2dcce018fe45f35"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/atomic-surface-remediation-validation.json",
+          "gitBlob": "f4233bc8c7608abb34466367b95e64df8a26eda5",
+          "rawSha256": "5d15ea6b8a899bb3256474315fb5cb5d44c446d32a94f6333dcb00483f205517"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/atomic-surface-t008-verification.json",
+          "gitBlob": "7457bb129f9cb9cdcc886c02efb46dce5b2dde84",
+          "rawSha256": "0adcd306269c19845d1a0257590709ac0379e0e2cd8a6c0ba3744b714d2d1464"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/checklist-report.md",
+          "gitBlob": "2f52a2953f1eed3f026d32540619b40289cbcac3",
+          "rawSha256": "ed94d7b858c73ea16dfb1018ccc4fa653eeba0a6c16be775d645705e34727b5f"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/checklist-result-validation.json",
+          "gitBlob": "cb7c09af32134a49d20a03aeca1f6edecda60eae",
+          "rawSha256": "d7e2ec6f06c65bd1febf60617e6603490bf4f504534d063b2dd31d2391d1edf5"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/checklist-validation.json",
+          "gitBlob": "570e52f98d472631eb88aee16fccf18220a6b1bb",
+          "rawSha256": "36645e33cd732cc82a45d034c9cc878da3cab15b19e426781807a38d837b29e1"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/clarify-report.md",
+          "gitBlob": "c923d2b6a4aca319ad84fffcf089a0de541ffaa1",
+          "rawSha256": "400cee093bcc35f1b67fddbaaa3b40c19a94cdbb48c4c23cddf484ae164368c0"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/clarify-result-validation.json",
+          "gitBlob": "c75e899b452437426337e9b3e58c13f675501414",
+          "rawSha256": "e4345f0de553c5f7a7fdd9b018a9e9cf27b510fc19aa56a97a326e9f5d504a34"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/clarify-validation.json",
+          "gitBlob": "d7189df70b9919b4779784fc02c5ed213d2b43b6",
+          "rawSha256": "ed58835da587410e368ef18f0560f2c2e01e265b64038d95ac3c51c988f3bdc5"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/implementation-blocked.md",
+          "gitBlob": "c492dcd595475401ae02267e1ec75135461871f2",
+          "rawSha256": "92e519c958f79e311c3e7e54e6fdc3c1f0496045536d770c440f74ebbf95e225"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/implementation-preflight.json",
+          "gitBlob": "5298bb4ff21899c3efa0598c0c8a4a15a19b5f0f",
+          "rawSha256": "9dfcc624f6e96bb63a3de0294a9d83d0ad7fdc2f04b51201ed33eda826aef0df"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/implementation-provider-check.json",
+          "gitBlob": "a84a76e8a67fafa3964e0a20e06b75d0e4279693",
+          "rawSha256": "a913a2bf32115a73c18d08f47fa2b3a9fba0e37973d566b769ab9bd89c6548d0"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/implementation-red-green.md",
+          "gitBlob": "d29f315906aaa0d841f20d3c75480d013f7afce7",
+          "rawSha256": "7a5da9ebd90d043021149ea50a627b899249c0a4fca81ca0c4fa1f67ae33f762"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/implementation-result-validation.json",
+          "gitBlob": "9cb3a6788b607097e59873658461475ee4298c54",
+          "rawSha256": "65f84b63d4adee8648791a61deb696d449f606726ebe666594935dd5dbaa3802"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/implementation-scope.json",
+          "gitBlob": "0d31a206253bc35e6a6585140e04f2aa6a20c0e9",
+          "rawSha256": "c8f079b5e4f3d8eda8a8fc129e441f47786aa1cb44a53d952c6a4460044b9962"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/implementation-sequence-remediation-execution.json",
+          "gitBlob": "bc7704a2fd9414c643145a369c9e1bbbf91973e4",
+          "rawSha256": "ec80b96a241a4d80abf0aeeda026e24ad8bca86a86ffdd353d714b797c9b3705"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/implementation-sequence-remediation-report.md",
+          "gitBlob": "c36093afce87afa15319470f6e5c012424effa91",
+          "rawSha256": "70280bafa0cba5eff7a9b0da37dc505f57d6ba7386670196db42c2e69607ce36"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/implementation-sequence-remediation-validation.json",
+          "gitBlob": "f9cc6095d46dae2573972ecc1d09c1aa7d834f45",
+          "rawSha256": "9a24a43883ff04c1b97b121c7439c52d38ea11d44dfe2942799b83fe6e52f3d3"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/implementation-stop-validation.json",
+          "gitBlob": "caa3e36eeafbc0f27f4a716af22b3354a313f09b",
+          "rawSha256": "bdf34b85aadfed2ccbfd73c41532dcf997963d3fb1376def2c5024d6d3f45f95"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/implementation-trend.json",
+          "gitBlob": "2376d4259d442129457a0b8aa0dd4f266070a5d3",
+          "rawSha256": "b6578ca15e348cedcfc06fb8bc5e8009af17c648eaffe0d1503a12f17a0225da"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/plan-baseline.json",
+          "gitBlob": "c825eef3b0d61e3077d495a5203b8945f9e01790",
+          "rawSha256": "b5aafa505715732ce1f95f91010c70314dd408c9e73dcd86efd99cb6e0b94e8d"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/plan-quality-checks.json",
+          "gitBlob": "77991b6d4deb441be45ff84d1367294c7eb7ed2e",
+          "rawSha256": "a6dcfe9a9f76fb5ce70609f42f5bbc804fdef880e8c02473d068dce393de63a9"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/plan-report.md",
+          "gitBlob": "a94cb97f061a6ab8582518ad6086197da967421b",
+          "rawSha256": "60d21a6b5e379caffceecf74b848c6853c2c6f34f5dfbe62ff136d7bfbd7efaa"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/plan-result-validation.json",
+          "gitBlob": "28a75cc931929bbfaa552bd20a675d67848e90cd",
+          "rawSha256": "93d5fb293e72e3fd08b1b61ce5535e851dcd5c55d14ec8ab92c62c25ceec9d67"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/plan-review-aeps-receipt.md",
+          "gitBlob": "972c84cb212f46ab9ba9d5859a6d02a03e3a7782",
+          "rawSha256": "a181a7930ff9a0123da29144f8d5dc24c4353c427060556d24fde66473e8e506"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/plan-review-design-validation.json",
+          "gitBlob": "b2e7c17f229cc076acf6f4f9c2bbee86608e446d",
+          "rawSha256": "843e8791a76307eb08294fd07efffd081fea92732c131e33e17de5960002cac6"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/plan-review-execution.json",
+          "gitBlob": "2ceb2e2912d767a28748a067206de2d812422972",
+          "rawSha256": "58d637efe0e750a7d8332984942196ce9815c7cdc9d93c37a97b738cadf3be71"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/plan-review-report.md",
+          "gitBlob": "1172688b6b4eca055dd77e37c38b7a3ce5cf1a50",
+          "rawSha256": "15ad36ca03bef69f95e3f9bedb826ae26964ff0bf0eda350c7f02a386a58dc66"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/plan-review-result-validation.json",
+          "gitBlob": "4bb268b2b1aac30886097f27dc3df2fb046a0832",
+          "rawSha256": "6c88b58381c222c73ee326a204d8a9346747a8b92b8b28891b0e265d02023eda"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/plan-review-validation.json",
+          "gitBlob": "9995313e16dbc6b8d8c627393ca31791de492215",
+          "rawSha256": "8644cc365bf468c4e4eff17da2bbab26466544108d2ab4962195382442330d2b"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/plan-validation.json",
+          "gitBlob": "c5f5f24f145a7cb32ca4aaf33a5aefb0c09a7cf2",
+          "rawSha256": "3dbadbdc7956ae2831e04b3e870c16d3341d3d17f275ca1c01c2f8f9c432ca9f"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/red-green.json",
+          "gitBlob": "8e0c0e8c71d8c3fc9dda8da689ff366e424083e2",
+          "rawSha256": "8399c811e75c4d19cac2de17471c28171904c1f934cebc36868218aa1d4aca8b"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/specify-report.md",
+          "gitBlob": "1c3f409a7b6416c4a4f79f65ee7f96889f8758bb",
+          "rawSha256": "f9cd6411af53ab20bea5f1d8bc16810005c4e48324110b9e6de05d727a97ea0f"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/specify-validation.json",
+          "gitBlob": "7b519d717a0eaf24a4a37ed9053f7b52161d0284",
+          "rawSha256": "8dbd018b80bbb44802c0b21abe95a565fdca45a8899e328a1f6be2c56a2c6d73"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/statistics-review.md",
+          "gitBlob": "dd163bc38977c2c09fbc9ffcd03a590f7710e2ab",
+          "rawSha256": "5736d73ac3674339b594f6493fa3674850e2fe3dbfc10d2d9f3067c703d54128"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/statistics-t008.json",
+          "gitBlob": "7be422cf3ae2a9e958437b0e2e727c45bad3757e",
+          "rawSha256": "f840544e534542883bf2832823f75e6fba19b31e2b5e24bf220b7e3d35001f05"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/tasks-aeps-receipt.md",
+          "gitBlob": "119b8337afbb00f7f37b9424c96d28f6d26c23b5",
+          "rawSha256": "f66c9f590821d61d34723299574beac6d1fd95aeb17a40d656ff490e7865e6e9"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/tasks-report.md",
+          "gitBlob": "1d330f54e50e7047f7dc5cef1fa5d96e27e5569f",
+          "rawSha256": "feacce931acd5cf9d85c09df3d9fd4a46d364ba38ce3934daa28bfad3bd50efa"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/tasks-result-validation.json",
+          "gitBlob": "d2f52663ad66ac2d4a434e318c20ffb8dd6dc3ad",
+          "rawSha256": "3b73e46422f51919597b15166a22b1b95ac287b8482f2dbd68ecc97a76fd51e2"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/tasks-validation.json",
+          "gitBlob": "d241908bc0147706677e4389d06afd7a3a52bd9b",
+          "rawSha256": "91a77550e1f28896ec863b57c2c5215c3dfcce419419d9f94f8e952770ea3e62"
+        },
+        {
+          "path": "specs/004-series-eligibility/plan.md",
+          "gitBlob": "a497bbe5b00b4aaa86ee784b70bbcfe352ee4771",
+          "rawSha256": "05952faedd745f279c9b4d5b3311e4b5700e99c58178eb2729677879ff812d23"
+        },
+        {
+          "path": "specs/004-series-eligibility/quickstart.md",
+          "gitBlob": "4157899c0d440ac6c10d5e4490a883413fc65209",
+          "rawSha256": "169a40525b47c76071bfcf7c9c4be50f4fa5e4c900a0f85d5e892aa633469c4e"
+        },
+        {
+          "path": "specs/004-series-eligibility/research.md",
+          "gitBlob": "f6e9e9d9cdb67ec5c58fa6a6d45a6720bde53df9",
+          "rawSha256": "f94516bbd35de291b4b691dca3f1e94b110d356be309beed522bb285e259d5df"
+        },
+        {
+          "path": "specs/004-series-eligibility/spec.md",
+          "gitBlob": "7b375243d242265a9849a5fa0081acdc279f89e8",
+          "rawSha256": "61027fb8e2f7b6e8a0e579c56f0bbc404a29c8446a61f548c2617459c4ef1f3b"
+        },
+        {
+          "path": "specs/004-series-eligibility/tasks.md",
+          "gitBlob": "b4f25b4b65c9cd012b6f3c1d13b0be29cccbed2b",
+          "rawSha256": "043a6d1084dece3f13b3f5c15155c0b1494577bd5a802a15468a8bff6566f0ad"
+        }
+      ]
+    },
+    {
+      "commit": "73d9ff4aff16135ed39c980ddb3a633a4c16bbaf",
+      "parent": "a357ef6815c9175da74c65e0999a676e90759a05",
+      "tree": "ea6df0618bdd00516e765273de35c950f40ab4a6",
+      "subject": "docs: render series eligibility checkpoint statistics",
+      "requiredTrailerPresent": true,
+      "kind": "StatisticsOnly",
+      "paths": [
+        {
+          "path": "docs/project-statistics.md",
+          "gitBlob": "7accddb0e56f355d78bcd5e60d3cfe0e0e09791f",
+          "rawSha256": "d00f4353c5af4d7a92d90c7aec8e038fd17654ff3ad3002762dfc4794b647d7f"
+        }
+      ]
+    },
+    {
+      "commit": "3e5a79f997004e585defa47cbca66a389c142246",
+      "parent": "73d9ff4aff16135ed39c980ddb3a633a4c16bbaf",
+      "tree": "019fab91d4e03b7f643abafc8fa3fd056b496fab",
+      "subject": "feat: validate series eligibility modes",
+      "requiredTrailerPresent": true,
+      "kind": "Source",
+      "paths": [
+        {
+          "path": "specs/004-series-eligibility/autonomous-run-state.json",
+          "gitBlob": "8577ed93bab80788b1289b80905794a6f679a83f",
+          "rawSha256": "d277c32234e3a6cab13d9173ef10e71184841bf63eca3b2065d50798ebf0f88a"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "gitBlob": "2588ce54742eb34839dc416c88c21572e9b9b5ba",
+          "rawSha256": "c9bc8e921c1ca273c38613ae09557dbd16074a4a879c6e3d1f6085f039ba938f"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "gitBlob": "bd6e47a89c300ab04595724f2ade383ccd00d15e",
+          "rawSha256": "fb24f107f4f77c9781546fa25318975af320a98d045295d1bb2f195c4c7d0edd"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "gitBlob": "8527cdc5fe6e8449bf16b112731e7e2e36a69812",
+          "rawSha256": "ac21880313c213327510cb8b2629460b5337661d5690a2dcb720958e037730bc"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "gitBlob": "f5add9465c09b312bdb843d6e8fe7124c9a6563f",
+          "rawSha256": "33471ffa49ebfb84e3627b27a634ce050eee3d178f348dfc10ef2aa9d2096f92"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/us1-tests.json",
+          "gitBlob": "680b046e196968e21db5fa802ce768d641e9ba9b",
+          "rawSha256": "a65a9d4d3b6b820a4591e1801b05c50b7d0affe912c2ab899450b3a6539afa15"
+        },
+        {
+          "path": "specs/004-series-eligibility/tasks.md",
+          "gitBlob": "b170a0d05c47d6b7cdd41db602cf1b6b9b1a2cc8",
+          "rawSha256": "edbef14a40f7c5acf5d6ec0bbab42a2bb5e0b1978353a31b617f90421161b3d9"
+        }
+      ]
+    },
+    {
+      "commit": "f7ea346012ed346e5e4f42f81e8ece19ce245610",
+      "parent": "3e5a79f997004e585defa47cbca66a389c142246",
+      "tree": "cf79a9a510af878123133e0abc37ea318f3a994a",
+      "subject": "docs: render series eligibility US1 statistics",
+      "requiredTrailerPresent": true,
+      "kind": "StatisticsOnly",
+      "paths": [
+        {
+          "path": "docs/project-statistics.md",
+          "gitBlob": "df1e7c5cfb6c62a692c1b12007688e9243fcd57e",
+          "rawSha256": "a3bc0e9dc181a8bb104a2dca7034501c3c53983ed807e4f9f710f14acf350dda"
+        }
+      ]
+    },
+    {
+      "commit": "44c15bdb3735dd146c9fcc1240f64470cb302091",
+      "parent": "f7ea346012ed346e5e4f42f81e8ece19ce245610",
+      "tree": "602208cd435e46339ee552cf2b9d431560957ebb",
+      "subject": "feat: guard series eligibility reads",
+      "requiredTrailerPresent": true,
+      "kind": "Source",
+      "paths": [
+        {
+          "path": "specs/004-series-eligibility/autonomous-run-state.json",
+          "gitBlob": "2ec9ab5fa334ce6ae9599e3b6f6283b1a1072258",
+          "rawSha256": "afd90620748ecf7b1c45dd7d90e8d243cd067f0b0a172d222cf182b3e22855d8"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "gitBlob": "29fd916fce285ffa7b94cfa683e785b2f5909d51",
+          "rawSha256": "d60f888fa924dc97c50bbfe0d257deb2b11c51e4337276021efec5a6f54e7150"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "gitBlob": "00b9b8eec23f7c8568af129435430de9bfda194a",
+          "rawSha256": "50e4a91080e62c6cba487b8005306292d802c10d5e6a6d38475c1b1663140d1b"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/us2-tests.json",
+          "gitBlob": "7e49f35bc0bc194832593d2d0aac1ace89426bf5",
+          "rawSha256": "8931e2fd768e665e5642b210793cd9fc405a917a328a6ff26847507bf3a721a4"
+        },
+        {
+          "path": "specs/004-series-eligibility/tasks.md",
+          "gitBlob": "ca8c701ba567a4b1bb28d29bdf748ca479d96964",
+          "rawSha256": "1c790e9a4171d6341d0aa42c72a73e5a9c18a04bda9403f53ae3d95122be72a2"
+        }
+      ]
+    },
+    {
+      "commit": "c82f3423398af2a3cbab80cec2b9e0b933ccef48",
+      "parent": "44c15bdb3735dd146c9fcc1240f64470cb302091",
+      "tree": "3939ae7b294f1c4955ef82b0133000f948b3560f",
+      "subject": "docs: render series eligibility US2 statistics",
+      "requiredTrailerPresent": true,
+      "kind": "StatisticsOnly",
+      "paths": [
+        {
+          "path": "docs/project-statistics.md",
+          "gitBlob": "a54c64e30d7fd705dc8c5ef838aeb0a8c5d2ec97",
+          "rawSha256": "464854e85eef2373be4bfc482600fd044880205c3740a169523d232e7b0b8b0a"
+        }
+      ]
+    },
+    {
+      "commit": "c91e1fea324e6d5d9f4ba2ea9b3b1c115a2ae052",
+      "parent": "c82f3423398af2a3cbab80cec2b9e0b933ccef48",
+      "tree": "ffce169c50787217fc395223a96ae0431203683b",
+      "subject": "feat: expose deterministic series eligibility queries",
+      "requiredTrailerPresent": true,
+      "kind": "Source",
+      "paths": [
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "gitBlob": "5c409d607a81566d11f002ebd1256e03cfd28ccc",
+          "rawSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558"
+        },
+        {
+          "path": "specs/004-series-eligibility/autonomous-run-state.json",
+          "gitBlob": "662bc345f2715572de2676458dafaef47c5f9c97",
+          "rawSha256": "5306d6cc0445c594052ab4cdb4311b881387dc7cae24b12c1e085859499a2ecb"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "gitBlob": "a2ebbfb534dff4a1f194d9c17bfb69ae5cdf95e4",
+          "rawSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "gitBlob": "c784c413aba44b3e57306c1156396fbb7b117166",
+          "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "gitBlob": "8a2fd34e2cc5bb1500d6786d48904608f60cc908",
+          "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "gitBlob": "0010b27aaf622e0f29ddfb9f695e7a18d93c759d",
+          "rawSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/runner-tests.json",
+          "gitBlob": "d86a27878c571f5741246585a8eb9086e08cd2a7",
+          "rawSha256": "376182327f7baf06742b974ffb5d5cbd2059c5933f666a5d1fbbe7aa47c40d3e"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/us3-tests.json",
+          "gitBlob": "ed73d693bfa57d00b9b7d0f8e5f1bf496a5b5fcf",
+          "rawSha256": "93c24b485f6aa8468a49a388a9ac6ca3ea47787732062e7d186fb99434f10235"
+        },
+        {
+          "path": "specs/004-series-eligibility/tasks.md",
+          "gitBlob": "ff398440741d7b8f9cb377e1ddd9ab93f3b4cd9e",
+          "rawSha256": "824034272e99073cb30580ef395c60c173bcf266b1b6a8342ffd158eec586d32"
+        }
+      ]
+    },
+    {
+      "commit": "a2744207469934f7817d0d2652c09a1c545b6918",
+      "parent": "c91e1fea324e6d5d9f4ba2ea9b3b1c115a2ae052",
+      "tree": "c79ef6633bc2bd096b6e598c2cbbb6bc73f9c36a",
+      "subject": "docs: render series eligibility US3 statistics",
+      "requiredTrailerPresent": true,
+      "kind": "StatisticsOnly",
+      "paths": [
+        {
+          "path": "docs/project-statistics.md",
+          "gitBlob": "957994255e005c0b42924b7c575aae081b4cf054",
+          "rawSha256": "da8f093575945c53e3dc2486b0d0753997241d8c628e710da12ee3f2c827c38c"
+        }
+      ]
+    },
+    {
+      "commit": "6eb95be6f89309a40d2c38aae6746ecf8e8e6563",
+      "parent": "a2744207469934f7817d0d2652c09a1c545b6918",
+      "tree": "19d458fabe7f9bad833228028e281369826793f4",
+      "subject": "docs: validate series eligibility quality",
+      "requiredTrailerPresent": true,
+      "kind": "Source",
+      "paths": [
+        {
+          "path": ".gitignore",
+          "gitBlob": "5a4f1c1a7e2f5c7f016d142259306cf5dd7db989",
+          "rawSha256": "2e73a36839440e59f949b0800d8f83713f5840a3206b7ecd5d074c3246c84015"
+        },
+        {
+          "path": ".gitleaksignore",
+          "gitBlob": "1dfbd5901b58f5eeebbf3a6f397f45fbb20acc54",
+          "rawSha256": "074942053c73f177ab982bdee73ad3a3e29977d8657405dc3bbfddedc7af65b1"
+        },
+        {
+          "path": "docs/accessibility/series-eligibility.md",
+          "gitBlob": "75b70b0147da5e509723d501d74fe4db9c4c45b8",
+          "rawSha256": "b48d83877ca58d77b8e3b1931708e858acb979698df98c23e15d1ead7d21eb74"
+        },
+        {
+          "path": "docs/architecture/series-eligibility.md",
+          "gitBlob": "318fe0eff4cee0c02ddd54500c76883ef9f77f8f",
+          "rawSha256": "4e38ced959ee46fbe84063a1df3665f1d5a2bbf633c8921e806251e993fc6a18"
+        },
+        {
+          "path": "docs/man/validate-series-eligibility.1",
+          "gitBlob": "e4e7cdbfef2d42a80841b2e6ac996d918ecb5ce3",
+          "rawSha256": "629a11a05bf176cfc555f697967f9f6bb4970da446291df9ba41ffcc2dfe1953"
+        },
+        {
+          "path": "docs/security/linked-intake-evidence.md",
+          "gitBlob": "5311e880d198d4a47b29af001964b10cd01f9094",
+          "rawSha256": "26ce947983d8b85bcefd52e4c2a0df5a9859cc831478f5342b6f71417b356fb3"
+        },
+        {
+          "path": "docs/security/series-eligibility.md",
+          "gitBlob": "b807d9fb70bf669aa416d70847f23aeee977997d",
+          "rawSha256": "80225f38e4da87d9c3403eeab907173988ce230c9ce424d09550c6176d684bd9"
+        },
+        {
+          "path": "specs/004-series-eligibility/autonomous-run-state.json",
+          "gitBlob": "160ee3cbab8dc6f2e0ecfde359894552a42fbf54",
+          "rawSha256": "0ee0ee09841cd57fef126b9669dbea2b162c92de6e109f1cf95330ddf3d95368"
+        },
+        {
+          "path": "specs/004-series-eligibility/checklists/cross-platform.md",
+          "gitBlob": "734feb6bdb524226470ee4adbdbc9190c51708ca",
+          "rawSha256": "f455ee89410cf787c8308ffe12100309d72fea5a1b7f6e5ccdf1c5e0c682ba78"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/documentation-impact.json",
+          "gitBlob": "b7801cb2ceb91804a74ad15e490e7d955c4614db",
+          "rawSha256": "49a3ce27786ba5794e63f9f47e532fcd99f7ee2b8dba48b0fb228e4468b0a484"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/documentation-review.md",
+          "gitBlob": "860fc9113649d780a0131a8fd2c9ecff88108bab",
+          "rawSha256": "5647085cd1820456b849da1635d399da5c990658162ebad9ec8a70969851f7b5"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/documentation-validation.json",
+          "gitBlob": "4d4bd27a664e0462c45eeebedb9d596a36932bfe",
+          "rawSha256": "76bde06a36b317cfc69e44e4898a15e0a6362ac48190c4d664addeb149b2e1bc"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/quality-validation.json",
+          "gitBlob": "583f7d2617d7658f4aeb978d49f5c37554492b45",
+          "rawSha256": "87ea4b2415bc0149376ad1bb3e789fd4b6cca6597a8e090b157dd343088eff25"
+        },
+        {
+          "path": "specs/004-series-eligibility/quickstart.md",
+          "gitBlob": "e81da483cbce3ed0f138e607a3b3d2f9b1d08a1d",
+          "rawSha256": "5f47a663a7d3a8af094a2a2779c8c4d1e5f0b571d34c066a26547092593409ba"
+        },
+        {
+          "path": "specs/004-series-eligibility/tasks.md",
+          "gitBlob": "b0ec670a0154e38dcb4cace581e6ffadb22de128",
+          "rawSha256": "18d1bd94deb81cb61c909e80ec3187064b8627b6e4df238c293ebc566b2e1b18"
+        }
+      ]
+    },
+    {
+      "commit": "c00736f4d7ff9ca1f88a4d9d3a831ed8ba422ed1",
+      "parent": "6eb95be6f89309a40d2c38aae6746ecf8e8e6563",
+      "tree": "c4efe1bc39a2384362f95345cc1c807c9aa9e0f9",
+      "subject": "docs: render series eligibility quality statistics",
+      "requiredTrailerPresent": true,
+      "kind": "StatisticsOnly",
+      "paths": [
+        {
+          "path": "docs/project-statistics.md",
+          "gitBlob": "2d34a24cc687bf14dbb2daa2b6afb53547af327c",
+          "rawSha256": "42ca89125ca415ece562464f1281d49bf8040cbe230c72537ba6e41c1598b009"
+        }
+      ]
+    },
+    {
+      "commit": "0372f899d24e282d3ec552cb7d818f7ee4db1534",
+      "parent": "c00736f4d7ff9ca1f88a4d9d3a831ed8ba422ed1",
+      "tree": "d4d72764f5a59bc08af190e00972c57815110a24",
+      "subject": "docs: refresh embedded script inventory",
+      "requiredTrailerPresent": true,
+      "kind": "Source",
+      "paths": [
+        {
+          "path": "docs/scripts/embedded-scripts.md",
+          "gitBlob": "c20f8b9d005038a4bd35d4306e35236565bde547",
+          "rawSha256": "fd53d0aa2df6875631dc1e30c7cd7d4ea2a2fdc21b85d2585e4dc3f9c853c5cc"
+        }
+      ]
+    },
+    {
+      "commit": "e0172f6dd4aad214cfaa40ec66cf268514a04b23",
+      "parent": "0372f899d24e282d3ec552cb7d818f7ee4db1534",
+      "tree": "42963a5bafef39c2ee712c50179c2ec2eaa19b02",
+      "subject": "docs: render refreshed script statistics",
+      "requiredTrailerPresent": true,
+      "kind": "StatisticsOnly",
+      "paths": [
+        {
+          "path": "docs/project-statistics.md",
+          "gitBlob": "f006a7a23115ea5ea9e88159a85e558c63aa05c9",
+          "rawSha256": "b1eb6f79b9c2930d181cb8a31a7b28ea5a585e6a8ad1b2162a758581e679a4cf"
+        }
+      ]
+    }
+  ],
+  "checkpoints": [
+    {
+      "binding": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/checkpoints/t008-273a148c-3d86-4170-af3e-f9679beaf1a3.json",
+        "rawSha256": "e5f8b9107c3e98f40c06f68d3217581ff43ed243503478d1b45de0862a26b215",
+        "normalizedSha256": "e5f8b9107c3e98f40c06f68d3217581ff43ed243503478d1b45de0862a26b215"
+      },
+      "facts": {
+        "schemaVersion": "1.0",
+        "taskId": "T008",
+        "attemptId": "273a148c-3d86-4170-af3e-f9679beaf1a3",
+        "completedAt": "2026-09-13T09:00:52+02:00",
+        "authorityEvidence": "User-authorized META-LH-04 autonomous run with MergeAndSync and limited Admin-Bypass; local checkpoints and statistics rendering are in scope.",
+        "branch": "004-series-eligibility",
+        "previousCheckpoint": "e5083c82d80099901774518b3987f47a1a628572",
+        "parentHead": "e5083c82d80099901774518b3987f47a1a628572",
+        "sourceCommit": "a357ef6815c9175da74c65e0999a676e90759a05",
+        "sourceRevision": "a357ef6815c9175da74c65e0999a676e90759a05",
+        "intendedPaths": {
+          "sourceRange": "e5083c82d80099901774518b3987f47a1a628572..a357ef6815c9175da74c65e0999a676e90759a05",
+          "sourcePathCount": 96,
+          "sourcePathListSha256": "e9d5d2d0aeb9decb0784e1ff105821234f7307a13e8ba942233ba33877689dd8",
+          "statisticsOnly": [
+            "docs/project-statistics.md"
+          ]
+        },
+        "unstagedValidation": {
+          "sourceBashOutputSha256": "b10c5c88865f59f24e0d69f744e580030f394d257d30ebd3606900becb743e5c",
+          "sourcePowerShellOutputSha256": "b10c5c88865f59f24e0d69f744e580030f394d257d30ebd3606900becb743e5c",
+          "statisticsBashOutputSha256": "d46d7cf3ff5d5ea8ccd9b33637e69acbcbd9e22a946d42857b7041f4d0c9ee9f",
+          "statisticsPowerShellOutputSha256": "d46d7cf3ff5d5ea8ccd9b33637e69acbcbd9e22a946d42857b7041f4d0c9ee9f",
+          "result": "Pass"
+        },
+        "stagedValidation": {
+          "sourceBashOutputSha256": "a429271293676ac6a79af6d6a871463f82e17790dd4b72092047a9750e7134cd",
+          "sourcePowerShellOutputSha256": "a429271293676ac6a79af6d6a871463f82e17790dd4b72092047a9750e7134cd",
+          "statisticsBashOutputSha256": "21b61d729802014cffcc5eb3250d405ad07bbb9571d242ddb3e16aa88525e073",
+          "statisticsPowerShellOutputSha256": "21b61d729802014cffcc5eb3250d405ad07bbb9571d242ddb3e16aa88525e073",
+          "result": "Pass"
+        },
+        "indexHashes": {
+          "sourceTree": "97c82dbd4945ff3fcf7686f21a49a27fd85da4f6",
+          "sourceCommitTree": "97c82dbd4945ff3fcf7686f21a49a27fd85da4f6",
+          "statisticsTree": "ea6df0618bdd00516e765273de35c950f40ab4a6",
+          "statisticsCommitTree": "ea6df0618bdd00516e765273de35c950f40ab4a6"
+        },
+        "commandsWithImmediateExits": [
+          {
+            "command": "validate-autonomous-delivery-set.sh --repo . <96 exact paths>",
+            "exitCode": 0
+          },
+          {
+            "command": "validate-autonomous-delivery-set.ps1 -Repo . -Intended <96 exact paths>",
+            "exitCode": 0
+          },
+          {
+            "command": "validate-autonomous-delivery-set.sh --repo . --staged <96 exact paths>",
+            "exitCode": 0
+          },
+          {
+            "command": "validate-autonomous-delivery-set.ps1 -Repo . -Staged -Intended <96 exact paths>",
+            "exitCode": 0
+          },
+          {
+            "command": "git commit feat: establish series eligibility core",
+            "exitCode": 0
+          },
+          {
+            "command": "render-project-statistics.sh --help",
+            "exitCode": 0
+          },
+          {
+            "command": "Get-Help render-project-statistics.ps1 -Full",
+            "exitCode": 0
+          },
+          {
+            "command": "render-project-statistics.sh --repo . --dry-run",
+            "exitCode": 0
+          },
+          {
+            "command": "render-project-statistics.ps1 -Repo . -WhatIf",
+            "exitCode": 0
+          },
+          {
+            "command": "render-project-statistics.ps1 -Repo .",
+            "exitCode": 0
+          },
+          {
+            "command": "render-project-statistics.sh --repo . --check-only",
+            "exitCode": 0
+          },
+          {
+            "command": "render-project-statistics.ps1 -Repo . -CheckOnly",
+            "exitCode": 0
+          },
+          {
+            "command": "statistics-only unstaged and staged validation in Bash and PowerShell",
+            "exitCode": 0
+          },
+          {
+            "command": "git commit docs: render series eligibility checkpoint statistics",
+            "exitCode": 0
+          }
+        ],
+        "cleanBeforeRender": true,
+        "previewParity": {
+          "equal": true,
+          "outputSha256": "edb165d92da5615730d53a1e1a71b627b32b4bb201f607a74e87046f8df9d6a8"
+        },
+        "ledgerBeforeHash": "57d9378db9fa534a915e450065daa5937fc75de843e7e11b98bb38effd7fd0d0",
+        "ledgerAfterHash": "d00f4353c5af4d7a92d90c7aec8e038fd17654ff3ad3002762dfc4794b647d7f",
+        "statisticsCommitOrUnchanged": "73d9ff4aff16135ed39c980ddb3a633a4c16bbaf",
+        "finalHead": "73d9ff4aff16135ed39c980ddb3a633a4c16bbaf",
+        "cleanAfterCheckpoint": {
+          "value": true,
+          "statusSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bashCheckOnly": "Pass",
+          "powerShellCheckOnly": "Pass"
+        },
+        "taskCompletionEvidence": {
+          "surface": "specs/004-series-eligibility/phase-results/atomic-surface-t008-verification.json",
+          "redGreen": "specs/004-series-eligibility/phase-results/implementation-red-green.md",
+          "checkpoint": "Pass",
+          "trackedCheckboxDeferredTo": "T016 causal source checkpoint"
+        }
+      },
+      "expandedIntendedPaths": [
+        ".specify/memory/constitution.md",
+        "constitution.md",
+        "docs/aeps/finding-to-preset-candidate-matrix.md",
+        "docs/aeps/findings-ledger.md",
+        "docs/aeps/preset-gap-analysis.md",
+        "docs/aeps/receipts/2026-09-13-series-eligibility-checklist.md",
+        "docs/aeps/receipts/2026-09-13-series-eligibility-implementation-blocked.md",
+        "docs/aeps/receipts/2026-09-13-series-eligibility-plan.md",
+        "docs/aeps/receipts/2026-09-13-series-eligibility-sequence-remediation.md",
+        "docs/aeps/upstream-handoff.md",
+        "docs/man/validate-series-eligibility.1",
+        "specs/004-series-eligibility/autonomous-run-state.json",
+        "specs/004-series-eligibility/checklists/analysis-remediation.md",
+        "specs/004-series-eligibility/checklists/plan-review.md",
+        "specs/004-series-eligibility/checklists/requirements.md",
+        "specs/004-series-eligibility/checklists/series-eligibility.md",
+        "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json",
+        "specs/004-series-eligibility/contracts/documentation-impact.json",
+        "specs/004-series-eligibility/contracts/series-eligibility-interface.md",
+        "specs/004-series-eligibility/contracts/statistics-checkpoints.json",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+        "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+        "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+        "specs/004-series-eligibility/contracts/validation-commands.json",
+        "specs/004-series-eligibility/data-model.md",
+        "specs/004-series-eligibility/engineering-retrospective.md",
+        "specs/004-series-eligibility/phase-results/analysis-remediation-aeps-receipt.md",
+        "specs/004-series-eligibility/phase-results/analysis-remediation-execution.json",
+        "specs/004-series-eligibility/phase-results/analysis-remediation-report.md",
+        "specs/004-series-eligibility/phase-results/analysis-remediation-result-validation.json",
+        "specs/004-series-eligibility/phase-results/analysis-remediation-validation.json",
+        "specs/004-series-eligibility/phase-results/analyze-2-aeps-receipt.md",
+        "specs/004-series-eligibility/phase-results/analyze-2-coverage.json",
+        "specs/004-series-eligibility/phase-results/analyze-2-execution.json",
+        "specs/004-series-eligibility/phase-results/analyze-2-homogeneity.json",
+        "specs/004-series-eligibility/phase-results/analyze-2-input-snapshot.json",
+        "specs/004-series-eligibility/phase-results/analyze-2-report.md",
+        "specs/004-series-eligibility/phase-results/analyze-2-result-validation.json",
+        "specs/004-series-eligibility/phase-results/analyze-2-secrets.json",
+        "specs/004-series-eligibility/phase-results/analyze-2.result.json",
+        "specs/004-series-eligibility/phase-results/analyze-coverage.json",
+        "specs/004-series-eligibility/phase-results/analyze-execution.json",
+        "specs/004-series-eligibility/phase-results/analyze-input-snapshot.json",
+        "specs/004-series-eligibility/phase-results/analyze-report.md",
+        "specs/004-series-eligibility/phase-results/analyze-result-validation.json",
+        "specs/004-series-eligibility/phase-results/analyze-secret-scan.json",
+        "specs/004-series-eligibility/phase-results/analyze-validation.json",
+        "specs/004-series-eligibility/phase-results/analyze.result.json",
+        "specs/004-series-eligibility/phase-results/atomic-surface-remediation-aeps-receipt.md",
+        "specs/004-series-eligibility/phase-results/atomic-surface-remediation-execution.json",
+        "specs/004-series-eligibility/phase-results/atomic-surface-remediation-report.md",
+        "specs/004-series-eligibility/phase-results/atomic-surface-remediation-validation.json",
+        "specs/004-series-eligibility/phase-results/atomic-surface-t008-verification.json",
+        "specs/004-series-eligibility/phase-results/checklist-report.md",
+        "specs/004-series-eligibility/phase-results/checklist-result-validation.json",
+        "specs/004-series-eligibility/phase-results/checklist-validation.json",
+        "specs/004-series-eligibility/phase-results/clarify-report.md",
+        "specs/004-series-eligibility/phase-results/clarify-result-validation.json",
+        "specs/004-series-eligibility/phase-results/clarify-validation.json",
+        "specs/004-series-eligibility/phase-results/implementation-blocked.md",
+        "specs/004-series-eligibility/phase-results/implementation-preflight.json",
+        "specs/004-series-eligibility/phase-results/implementation-provider-check.json",
+        "specs/004-series-eligibility/phase-results/implementation-red-green.md",
+        "specs/004-series-eligibility/phase-results/implementation-result-validation.json",
+        "specs/004-series-eligibility/phase-results/implementation-scope.json",
+        "specs/004-series-eligibility/phase-results/implementation-sequence-remediation-execution.json",
+        "specs/004-series-eligibility/phase-results/implementation-sequence-remediation-report.md",
+        "specs/004-series-eligibility/phase-results/implementation-sequence-remediation-validation.json",
+        "specs/004-series-eligibility/phase-results/implementation-stop-validation.json",
+        "specs/004-series-eligibility/phase-results/implementation-trend.json",
+        "specs/004-series-eligibility/phase-results/plan-baseline.json",
+        "specs/004-series-eligibility/phase-results/plan-quality-checks.json",
+        "specs/004-series-eligibility/phase-results/plan-report.md",
+        "specs/004-series-eligibility/phase-results/plan-result-validation.json",
+        "specs/004-series-eligibility/phase-results/plan-review-aeps-receipt.md",
+        "specs/004-series-eligibility/phase-results/plan-review-design-validation.json",
+        "specs/004-series-eligibility/phase-results/plan-review-execution.json",
+        "specs/004-series-eligibility/phase-results/plan-review-report.md",
+        "specs/004-series-eligibility/phase-results/plan-review-result-validation.json",
+        "specs/004-series-eligibility/phase-results/plan-review-validation.json",
+        "specs/004-series-eligibility/phase-results/plan-validation.json",
+        "specs/004-series-eligibility/phase-results/red-green.json",
+        "specs/004-series-eligibility/phase-results/specify-report.md",
+        "specs/004-series-eligibility/phase-results/specify-validation.json",
+        "specs/004-series-eligibility/phase-results/statistics-review.md",
+        "specs/004-series-eligibility/phase-results/statistics-t008.json",
+        "specs/004-series-eligibility/phase-results/tasks-aeps-receipt.md",
+        "specs/004-series-eligibility/phase-results/tasks-report.md",
+        "specs/004-series-eligibility/phase-results/tasks-result-validation.json",
+        "specs/004-series-eligibility/phase-results/tasks-validation.json",
+        "specs/004-series-eligibility/plan.md",
+        "specs/004-series-eligibility/quickstart.md",
+        "specs/004-series-eligibility/research.md",
+        "specs/004-series-eligibility/spec.md",
+        "specs/004-series-eligibility/tasks.md"
+      ],
+      "audit": {
+        "parentChain": "Pass",
+        "exactSourcePaths": "Pass",
+        "indexCommitBinding": "Pass",
+        "ledgerBeforeAfterBinding": "Pass",
+        "previousCheckpointField": "Pass",
+        "actualPreviousCheckpoint": "e5083c82d80099901774518b3987f47a1a628572",
+        "receiptPreserved": true
+      }
+    },
+    {
+      "binding": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/checkpoints/t016-bfce2723-93a4-4122-aebe-e47cf0b4a369.json",
+        "rawSha256": "22f650b3156224fcecb48f1712a084f9c5514f049f89563239b4835a3fe90132",
+        "normalizedSha256": "22f650b3156224fcecb48f1712a084f9c5514f049f89563239b4835a3fe90132"
+      },
+      "facts": {
+        "schemaVersion": "1.0",
+        "taskId": "T016",
+        "attemptId": "bfce2723-93a4-4122-aebe-e47cf0b4a369",
+        "authorityEvidence": "Explicit autonomous META-LH-04 MergeAndSync instruction with bounded admin bypass; local checkpoint authority inherited from the accepted run plan.",
+        "branch": "004-series-eligibility",
+        "previousCheckpoint": "f7ea346012ed346e5e4f42f81e8ece19ce245610",
+        "parentHead": "73d9ff4aff16135ed39c980ddb3a633a4c16bbaf",
+        "sourceCommit": "3e5a79f997004e585defa47cbca66a389c142246",
+        "sourceRevision": "3e5a79f997004e585defa47cbca66a389c142246",
+        "intendedPaths": [
+          "specs/004-series-eligibility/autonomous-run-state.json",
+          "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "specs/004-series-eligibility/phase-results/us1-tests.json",
+          "specs/004-series-eligibility/tasks.md"
+        ],
+        "unstagedValidation": {
+          "bash": "Pass",
+          "pwsh": "Pass",
+          "worktreeStatusSha256": "9175230d08ffa26a5dfaa596974450a4c8e45f7dbf058d7f153cb0ba5d3cb324"
+        },
+        "stagedValidation": {
+          "bash": "Pass",
+          "pwsh": "Pass",
+          "indexTree": "019fab91d4e03b7f643abafc8fa3fd056b496fab"
+        },
+        "indexHashes": {
+          "specs/004-series-eligibility/autonomous-run-state.json": "8577ed93bab80788b1289b80905794a6f679a83f",
+          "specs/004-series-eligibility/contracts/test_series_eligibility.py": "2588ce54742eb34839dc416c88c21572e9b9b5ba",
+          "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1": "bd6e47a89c300ab04595724f2ade383ccd00d15e",
+          "specs/004-series-eligibility/contracts/validate-series-eligibility.sh": "8527cdc5fe6e8449bf16b112731e7e2e36a69812",
+          "specs/004-series-eligibility/contracts/validate_series_eligibility.py": "f5add9465c09b312bdb843d6e8fe7124c9a6563f",
+          "specs/004-series-eligibility/phase-results/us1-tests.json": "680b046e196968e21db5fa802ce768d641e9ba9b",
+          "specs/004-series-eligibility/tasks.md": "b170a0d05c47d6b7cdd41db602cf1b6b9b1a2cc8"
+        },
+        "commandsWithImmediateExits": [
+          {
+            "command": "both-shell exact worktree delivery-set validation",
+            "exitCode": 0
+          },
+          {
+            "command": "both-shell exact staged delivery-set validation",
+            "exitCode": 0
+          },
+          {
+            "command": "git diff --cached --check",
+            "exitCode": 0
+          },
+          {
+            "command": "paired Bash/Pwsh statistics preview comparison",
+            "exitCode": 0
+          },
+          {
+            "command": "single PowerShell statistics render",
+            "exitCode": 0
+          },
+          {
+            "command": "both-shell statistics check-only",
+            "exitCode": 0
+          },
+          {
+            "command": "both-shell statistics-only worktree and staged validation",
+            "exitCode": 0
+          }
+        ],
+        "cleanBeforeRender": true,
+        "previewParity": "Pass",
+        "ledgerBeforeHash": "d00f4353c5af4d7a92d90c7aec8e038fd17654ff3ad3002762dfc4794b647d7f",
+        "ledgerAfterHash": "a3bc0e9dc181a8bb104a2dca7034501c3c53983ed807e4f9f710f14acf350dda",
+        "statisticsCommitOrUnchanged": "f7ea346012ed346e5e4f42f81e8ece19ce245610",
+        "finalHead": "f7ea346012ed346e5e4f42f81e8ece19ce245610",
+        "cleanAfterCheckpoint": true,
+        "taskCompletionEvidence": {
+          "result": "Pass",
+          "tasksClosed": [
+            "T009",
+            "T010",
+            "T011",
+            "T012",
+            "T013",
+            "T014",
+            "T015"
+          ],
+          "acceptance": [
+            "FR-001",
+            "FR-002",
+            "FR-003",
+            "FR-005",
+            "FR-008",
+            "FR-009",
+            "AC-002",
+            "AC-003",
+            "SC-001"
+          ],
+          "evidence": "specs/004-series-eligibility/phase-results/us1-tests.json",
+          "currentBoundaryPublishedAtNextSourceCheckpoint": "T016"
+        }
+      },
+      "audit": {
+        "parentChain": "Pass",
+        "exactSourcePaths": "Pass",
+        "indexCommitBinding": "Pass",
+        "ledgerBeforeAfterBinding": "Pass",
+        "previousCheckpointField": "HistoricalMetadataDefect",
+        "actualPreviousCheckpoint": "73d9ff4aff16135ed39c980ddb3a633a4c16bbaf",
+        "receiptPreserved": true
+      }
+    },
+    {
+      "binding": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/checkpoints/t022-53bb2556-b865-4b67-ac52-b7960cefeede.json",
+        "rawSha256": "4d4dfec2f5a84687be2b55a40e2810487935deaa327d0cb48a17b3d52ac78fc1",
+        "normalizedSha256": "4d4dfec2f5a84687be2b55a40e2810487935deaa327d0cb48a17b3d52ac78fc1"
+      },
+      "facts": {
+        "schemaVersion": "1.0",
+        "taskId": "T022",
+        "attemptId": "53bb2556-b865-4b67-ac52-b7960cefeede",
+        "authorityEvidence": "Active authorized META-LH-04 autonomous run; coordinator checkpoint under accepted MergeAndSync scope.",
+        "branch": "004-series-eligibility",
+        "previousCheckpoint": "f7ea346012ed346e5e4f42f81e8ece19ce245610",
+        "parentHead": "f7ea346012ed346e5e4f42f81e8ece19ce245610",
+        "sourceCommit": "44c15bdb3735dd146c9fcc1240f64470cb302091",
+        "sourceRevision": "44c15bdb3735dd146c9fcc1240f64470cb302091",
+        "intendedPaths": [
+          "specs/004-series-eligibility/autonomous-run-state.json",
+          "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "specs/004-series-eligibility/phase-results/us2-tests.json",
+          "specs/004-series-eligibility/tasks.md"
+        ],
+        "unstagedValidation": {
+          "bash": "Pass",
+          "pwsh": "Pass",
+          "worktreeStatusSha256": "8a081d73413221abd7c0c6fe47cb096e0588c0c13ca691de49489d0a84703ca1"
+        },
+        "stagedValidation": {
+          "bash": "Pass",
+          "pwsh": "Pass",
+          "indexTree": "602208cd435e46339ee552cf2b9d431560957ebb"
+        },
+        "indexHashes": {
+          "specs/004-series-eligibility/autonomous-run-state.json": "2ec9ab5fa334ce6ae9599e3b6f6283b1a1072258",
+          "specs/004-series-eligibility/contracts/test_series_eligibility.py": "29fd916fce285ffa7b94cfa683e785b2f5909d51",
+          "specs/004-series-eligibility/contracts/validate_series_eligibility.py": "00b9b8eec23f7c8568af129435430de9bfda194a",
+          "specs/004-series-eligibility/phase-results/us2-tests.json": "7e49f35bc0bc194832593d2d0aac1ace89426bf5",
+          "specs/004-series-eligibility/tasks.md": "ca8c701ba567a4b1bb28d29bdf748ca479d96964"
+        },
+        "commandsWithImmediateExits": [
+          {
+            "command": "both-shell exact worktree delivery-set validation",
+            "exitCode": 0
+          },
+          {
+            "command": "both-shell exact staged delivery-set validation",
+            "exitCode": 0
+          },
+          {
+            "command": "git diff --cached --check",
+            "exitCode": 0
+          },
+          {
+            "command": "both renderer helps and paired preview",
+            "exitCode": 0
+          },
+          {
+            "command": "single PowerShell statistics render",
+            "exitCode": 0
+          },
+          {
+            "command": "both-shell statistics check-only",
+            "exitCode": 0
+          },
+          {
+            "command": "both-shell statistics-only worktree and staged validation",
+            "exitCode": 0
+          }
+        ],
+        "cleanBeforeRender": true,
+        "previewParity": "Pass",
+        "ledgerBeforeHash": "a3bc0e9dc181a8bb104a2dca7034501c3c53983ed807e4f9f710f14acf350dda",
+        "ledgerAfterHash": "464854e85eef2373be4bfc482600fd044880205c3740a169523d232e7b0b8b0a",
+        "statisticsCommitOrUnchanged": "c82f3423398af2a3cbab80cec2b9e0b933ccef48",
+        "finalHead": "c82f3423398af2a3cbab80cec2b9e0b933ccef48",
+        "cleanAfterCheckpoint": true,
+        "taskCompletionEvidence": {
+          "result": "Pass",
+          "tasksClosed": [
+            "T017",
+            "T018",
+            "T019",
+            "T020",
+            "T021"
+          ],
+          "acceptance": [
+            "FR-004",
+            "FR-005",
+            "AC-001",
+            "AC-002",
+            "SC-002"
+          ],
+          "evidence": "specs/004-series-eligibility/phase-results/us2-tests.json",
+          "currentBoundaryPublishedAtNextSourceCheckpoint": "T022"
+        }
+      },
+      "audit": {
+        "parentChain": "Pass",
+        "exactSourcePaths": "Pass",
+        "indexCommitBinding": "Pass",
+        "ledgerBeforeAfterBinding": "Pass",
+        "previousCheckpointField": "Pass",
+        "actualPreviousCheckpoint": "f7ea346012ed346e5e4f42f81e8ece19ce245610",
+        "receiptPreserved": true
+      }
+    },
+    {
+      "binding": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/checkpoints/t031-85b85504-4614-4224-82d8-5e7a2b6fd0d7.json",
+        "rawSha256": "7d536be00235063ae13b22bdbfbd51238a64143e3ec55fd68d312dc7d696e466",
+        "normalizedSha256": "7d536be00235063ae13b22bdbfbd51238a64143e3ec55fd68d312dc7d696e466"
+      },
+      "facts": {
+        "schemaVersion": "1.0",
+        "taskId": "T031",
+        "attemptId": "85b85504-4614-4224-82d8-5e7a2b6fd0d7",
+        "authorityEvidence": "Active authorized META-LH-04 autonomous run; coordinator checkpoint under accepted MergeAndSync scope.",
+        "branch": "004-series-eligibility",
+        "previousCheckpoint": "c82f3423398af2a3cbab80cec2b9e0b933ccef48",
+        "parentHead": "c82f3423398af2a3cbab80cec2b9e0b933ccef48",
+        "sourceCommit": "c91e1fea324e6d5d9f4ba2ea9b3b1c115a2ae052",
+        "sourceRevision": "c91e1fea324e6d5d9f4ba2ea9b3b1c115a2ae052",
+        "intendedPaths": [
+          ".github/workflows/powershell-analysis.yml",
+          "specs/004-series-eligibility/autonomous-run-state.json",
+          "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "specs/004-series-eligibility/phase-results/runner-tests.json",
+          "specs/004-series-eligibility/phase-results/us3-tests.json",
+          "specs/004-series-eligibility/tasks.md"
+        ],
+        "unstagedValidation": {
+          "bash": "Pass",
+          "pwsh": "Pass",
+          "worktreeStatusSha256": "5b05f93edc5e19f21b2960e606f0ded0962856f163e687e3f46cbb998e98a4c8"
+        },
+        "stagedValidation": {
+          "bash": "Pass",
+          "pwsh": "Pass",
+          "indexTree": "ffce169c50787217fc395223a96ae0431203683b"
+        },
+        "indexHashes": {
+          ".github/workflows/powershell-analysis.yml": "5c409d607a81566d11f002ebd1256e03cfd28ccc",
+          "specs/004-series-eligibility/autonomous-run-state.json": "662bc345f2715572de2676458dafaef47c5f9c97",
+          "specs/004-series-eligibility/contracts/test_series_eligibility.py": "a2ebbfb534dff4a1f194d9c17bfb69ae5cdf95e4",
+          "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1": "c784c413aba44b3e57306c1156396fbb7b117166",
+          "specs/004-series-eligibility/contracts/validate-series-eligibility.sh": "8a2fd34e2cc5bb1500d6786d48904608f60cc908",
+          "specs/004-series-eligibility/contracts/validate_series_eligibility.py": "0010b27aaf622e0f29ddfb9f695e7a18d93c759d",
+          "specs/004-series-eligibility/phase-results/runner-tests.json": "d86a27878c571f5741246585a8eb9086e08cd2a7",
+          "specs/004-series-eligibility/phase-results/us3-tests.json": "ed73d693bfa57d00b9b7d0f8e5f1bf496a5b5fcf",
+          "specs/004-series-eligibility/tasks.md": "ff398440741d7b8f9cb377e1ddd9ab93f3b4cd9e"
+        },
+        "commandsWithImmediateExits": [
+          {
+            "command": "both-shell exact worktree and staged delivery-set validation",
+            "exitCode": 0
+          },
+          {
+            "command": "git diff --cached --check",
+            "exitCode": 0
+          },
+          {
+            "command": "both renderer helps and paired preview",
+            "exitCode": 0
+          },
+          {
+            "command": "single PowerShell statistics render",
+            "exitCode": 0
+          },
+          {
+            "command": "both-shell statistics validation and check-only",
+            "exitCode": 0
+          }
+        ],
+        "cleanBeforeRender": true,
+        "previewParity": "Pass",
+        "ledgerBeforeHash": "464854e85eef2373be4bfc482600fd044880205c3740a169523d232e7b0b8b0a",
+        "ledgerAfterHash": "da8f093575945c53e3dc2486b0d0753997241d8c628e710da12ee3f2c827c38c",
+        "statisticsCommitOrUnchanged": "a2744207469934f7817d0d2652c09a1c545b6918",
+        "finalHead": "a2744207469934f7817d0d2652c09a1c545b6918",
+        "cleanAfterCheckpoint": true,
+        "taskCompletionEvidence": {
+          "result": "Pass",
+          "tasksClosed": [
+            "T023",
+            "T024",
+            "T025",
+            "T026",
+            "T027",
+            "T028",
+            "T029",
+            "T030"
+          ],
+          "acceptance": [
+            "FR-006",
+            "FR-007",
+            "FR-008",
+            "FR-009",
+            "NFR-001",
+            "NFR-002",
+            "NFR-003",
+            "AC-004",
+            "AC-005",
+            "SC-003",
+            "SC-004",
+            "SC-005"
+          ],
+          "nativeLinuxWindowsAcceptance": "Open until T048",
+          "evidence": [
+            "specs/004-series-eligibility/phase-results/us3-tests.json",
+            "specs/004-series-eligibility/phase-results/runner-tests.json"
+          ],
+          "currentBoundaryPublishedAtNextSourceCheckpoint": "T031"
+        }
+      },
+      "audit": {
+        "parentChain": "Pass",
+        "exactSourcePaths": "Pass",
+        "indexCommitBinding": "Pass",
+        "ledgerBeforeAfterBinding": "Pass",
+        "previousCheckpointField": "Pass",
+        "actualPreviousCheckpoint": "c82f3423398af2a3cbab80cec2b9e0b933ccef48",
+        "receiptPreserved": true
+      }
+    },
+    {
+      "binding": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/checkpoints/t040-c56d4636-736c-4218-9c46-72b63803b550.json",
+        "rawSha256": "79af89dbe190f1038779f9e3433955b03c9236b7117e73a926e34d608fcf6f51",
+        "normalizedSha256": "79af89dbe190f1038779f9e3433955b03c9236b7117e73a926e34d608fcf6f51"
+      },
+      "facts": {
+        "schemaVersion": "1.0",
+        "taskId": "T040",
+        "attemptId": "c56d4636-736c-4218-9c46-72b63803b550",
+        "authorityEvidence": "Active authorized META-LH-04 autonomous run; T040 quality/statistics checkpoint and one causal generated script-catalog correction.",
+        "branch": "004-series-eligibility",
+        "previousCheckpoint": "a2744207469934f7817d0d2652c09a1c545b6918",
+        "parentHead": "a2744207469934f7817d0d2652c09a1c545b6918",
+        "sourceCommit": "6eb95be6f89309a40d2c38aae6746ecf8e8e6563",
+        "sourceRevision": "0372f899d24e282d3ec552cb7d818f7ee4db1534",
+        "intendedPaths": [
+          ".gitignore",
+          ".gitleaksignore",
+          "docs/accessibility/series-eligibility.md",
+          "docs/architecture/series-eligibility.md",
+          "docs/man/validate-series-eligibility.1",
+          "docs/scripts/embedded-scripts.md",
+          "docs/security/linked-intake-evidence.md",
+          "docs/security/series-eligibility.md",
+          "specs/004-series-eligibility/autonomous-run-state.json",
+          "specs/004-series-eligibility/checklists/cross-platform.md",
+          "specs/004-series-eligibility/contracts/documentation-impact.json",
+          "specs/004-series-eligibility/phase-results/documentation-review.md",
+          "specs/004-series-eligibility/phase-results/documentation-validation.json",
+          "specs/004-series-eligibility/phase-results/quality-validation.json",
+          "specs/004-series-eligibility/quickstart.md",
+          "specs/004-series-eligibility/tasks.md"
+        ],
+        "unstagedValidation": {
+          "bash": "Pass",
+          "pwsh": "Pass",
+          "primaryWorktreeStatusSha256": "946965e6734e773de79631eb1bf683d51b3f6447fd92dcfd9d30f570f23ded19",
+          "catalogWorktreeStatusSha256": "cc013ac48dfa06dfc4063dc31968899644b9a1e838b86c140a96e8a8e6367acc"
+        },
+        "stagedValidation": {
+          "bash": "Pass",
+          "pwsh": "Pass",
+          "primaryIndexTree": "19d458fabe7f9bad833228028e281369826793f4",
+          "catalogIndexTree": "d4d72764f5a59bc08af190e00972c57815110a24"
+        },
+        "indexHashes": {
+          "primarySourceTree": "19d458fabe7f9bad833228028e281369826793f4",
+          "primaryStatisticsTree": "c4efe1bc39a2384362f95345cc1c807c9aa9e0f9",
+          "catalogSourceTree": "d4d72764f5a59bc08af190e00972c57815110a24",
+          "finalStatisticsTree": "42963a5bafef39c2ee712c50179c2ec2eaa19b02"
+        },
+        "commandsWithImmediateExits": [
+          {
+            "command": "exact Gitleaks feature-directory scan with fingerprint-only suppressions",
+            "exitCode": 0
+          },
+          {
+            "command": "both-shell source and staged delivery-set validation",
+            "exitCode": 0
+          },
+          {
+            "command": "both renderer helps, paired previews, one write and both check-only",
+            "exitCode": 0
+          },
+          {
+            "command": "script-reference paired preview, one write and both check-only",
+            "exitCode": 0
+          },
+          {
+            "command": "both-shell generated catalog and statistics delivery validation",
+            "exitCode": 0
+          },
+          {
+            "command": "Bash homogeneity after final statistics",
+            "exitCode": 0
+          },
+          {
+            "command": "PowerShell homogeneity after final statistics",
+            "exitCode": 0
+          }
+        ],
+        "cleanBeforeRender": true,
+        "previewParity": "Pass for project statistics and script-reference renderers",
+        "ledgerBeforeHash": "da8f093575945c53e3dc2486b0d0753997241d8c628e710da12ee3f2c827c38c",
+        "ledgerAfterHash": "b1eb6f79b9c2930d181cb8a31a7b28ea5a585e6a8ad1b2162a758581e679a4cf",
+        "statisticsCommitOrUnchanged": [
+          "c00736f4d7ff9ca1f88a4d9d3a831ed8ba422ed1",
+          "e0172f6dd4aad214cfaa40ec66cf268514a04b23"
+        ],
+        "additionalSourceCommit": "0372f899d24e282d3ec552cb7d818f7ee4db1534",
+        "finalHead": "e0172f6dd4aad214cfaa40ec66cf268514a04b23",
+        "cleanAfterCheckpoint": true,
+        "taskCompletionEvidence": {
+          "result": "Pass",
+          "tasksClosed": [
+            "T032",
+            "T033",
+            "T034",
+            "T035",
+            "T036",
+            "T037",
+            "T038",
+            "T039"
+          ],
+          "gitleaksFalsePositiveHandling": "Three exact fingerprints only; no path-wide or rule-wide allowlist; historical evidence unchanged.",
+          "homogeneity": {
+            "bash": "100%",
+            "pwsh": "100%"
+          },
+          "evidence": "specs/004-series-eligibility/phase-results/quality-validation.json",
+          "currentBoundaryPublishedAtNextSourceCheckpoint": "T040"
+        }
+      },
+      "audit": {
+        "parentChain": "Pass",
+        "exactSourcePaths": "Pass",
+        "indexCommitBinding": "Pass",
+        "ledgerBeforeAfterBinding": "Pass",
+        "previousCheckpointField": "Pass",
+        "actualPreviousCheckpoint": "a2744207469934f7817d0d2652c09a1c545b6918",
+        "receiptPreserved": true
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "EL-AUDIT-T016-PREVIOUS",
+      "severity": "Low",
+      "status": "ResolvedByImmutableAncestry",
+      "observation": "T016 previousCheckpoint equals its own finalHead; parentHead correctly points to T008 finalHead. Actual commit parent and index tree independently prove continuity. No historical receipt modified.",
+      "owner": "AOC Repository Owner",
+      "followUp": "Use audited actualPreviousCheckpoint for T046; do not infer ancestry from the defective field.",
+      "reevaluationTrigger": "Receipt or commit ancestry drift"
+    }
+  ],
+  "residual": {
+    "mode": "UnstagedReadOnly",
+    "base": "T040 finalHead",
+    "exactPaths": [
+      "docs/aeps/finding-to-preset-candidate-matrix.md",
+      "docs/aeps/findings-ledger.md",
+      "docs/aeps/preset-gap-analysis.md",
+      "docs/aeps/receipts/2026-09-13-series-eligibility-completion.md",
+      "docs/aeps/upstream-handoff.md",
+      "specs/004-series-eligibility/autonomous-run-state.json",
+      "specs/004-series-eligibility/completion-closeout.md",
+      "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json",
+      "specs/004-series-eligibility/contracts/documentation-impact.json",
+      "specs/004-series-eligibility/engineering-retrospective.md",
+      "specs/004-series-eligibility/phase-results/delivery-authority.json",
+      "specs/004-series-eligibility/phase-results/delivery-set.json",
+      "specs/004-series-eligibility/phase-results/implementation-trend.json",
+      "specs/004-series-eligibility/phase-results/implementation-validation.json",
+      "specs/004-series-eligibility/phase-results/statistics-review.md",
+      "specs/004-series-eligibility/quickstart.md",
+      "specs/004-series-eligibility/tasks.md"
+    ],
+    "actualValidation": "Pass: authoritative outer coordinator ran both unchanged exact residual Worktree validators with exit 0 at the bound head/index/status; 17 checked paths, no unrelated untracked paths.",
+    "stagedValidation": "NotExecuted; T046 coordinator duty",
+    "freezeHead": "NotCaptured; T046",
+    "attribution": [
+      {
+        "path": "docs/aeps/finding-to-preset-candidate-matrix.md",
+        "owner": "Current T041-T045 phase",
+        "reason": "Exactly T041-T045 evidence and completed T040 checkbox; no technical implementation edit."
+      },
+      {
+        "path": "docs/aeps/findings-ledger.md",
+        "owner": "Current T041-T045 phase",
+        "reason": "Exactly T041-T045 evidence and completed T040 checkbox; no technical implementation edit."
+      },
+      {
+        "path": "docs/aeps/preset-gap-analysis.md",
+        "owner": "Current T041-T045 phase",
+        "reason": "Exactly T041-T045 evidence and completed T040 checkbox; no technical implementation edit."
+      },
+      {
+        "path": "docs/aeps/receipts/2026-09-13-series-eligibility-completion.md",
+        "owner": "Current T041-T045 phase",
+        "reason": "Exactly T041-T045 evidence and completed T040 checkbox; no technical implementation edit."
+      },
+      {
+        "path": "docs/aeps/upstream-handoff.md",
+        "owner": "Current T041-T045 phase",
+        "reason": "Exactly T041-T045 evidence and completed T040 checkbox; no technical implementation edit."
+      },
+      {
+        "path": "specs/004-series-eligibility/autonomous-run-state.json",
+        "owner": "Outer autonomous coordinator",
+        "reason": "Pre-existing implement-7 Running state; preserved byte-identically, causal same-run handoff."
+      },
+      {
+        "path": "specs/004-series-eligibility/completion-closeout.md",
+        "owner": "Current T041-T045 phase",
+        "reason": "Exactly T041-T045 evidence and completed T040 checkbox; no technical implementation edit."
+      },
+      {
+        "path": "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json",
+        "owner": "Current T041-T045 phase",
+        "reason": "Exactly T041-T045 evidence and completed T040 checkbox; no technical implementation edit."
+      },
+      {
+        "path": "specs/004-series-eligibility/contracts/documentation-impact.json",
+        "owner": "Current T041-T045 phase",
+        "reason": "Exactly T041-T045 evidence and completed T040 checkbox; no technical implementation edit."
+      },
+      {
+        "path": "specs/004-series-eligibility/engineering-retrospective.md",
+        "owner": "Current T041-T045 phase",
+        "reason": "Exactly T041-T045 evidence and completed T040 checkbox; no technical implementation edit."
+      },
+      {
+        "path": "specs/004-series-eligibility/phase-results/delivery-authority.json",
+        "owner": "Current T041-T045 phase",
+        "reason": "Exactly T041-T045 evidence and completed T040 checkbox; no technical implementation edit."
+      },
+      {
+        "path": "specs/004-series-eligibility/phase-results/delivery-set.json",
+        "owner": "Current T041-T045 phase",
+        "reason": "Exactly T041-T045 evidence and completed T040 checkbox; no technical implementation edit."
+      },
+      {
+        "path": "specs/004-series-eligibility/phase-results/implementation-trend.json",
+        "owner": "Current T041-T045 phase",
+        "reason": "Exactly T041-T045 evidence and completed T040 checkbox; no technical implementation edit."
+      },
+      {
+        "path": "specs/004-series-eligibility/phase-results/implementation-validation.json",
+        "owner": "Current T041-T045 phase",
+        "reason": "Exactly T041-T045 evidence and completed T040 checkbox; no technical implementation edit."
+      },
+      {
+        "path": "specs/004-series-eligibility/phase-results/statistics-review.md",
+        "owner": "Current T041-T045 phase",
+        "reason": "Exactly T041-T045 evidence and completed T040 checkbox; no technical implementation edit."
+      },
+      {
+        "path": "specs/004-series-eligibility/quickstart.md",
+        "owner": "Current T041-T045 phase",
+        "reason": "Exactly T041-T045 evidence and completed T040 checkbox; no technical implementation edit."
+      },
+      {
+        "path": "specs/004-series-eligibility/tasks.md",
+        "owner": "Current T041-T045 phase",
+        "reason": "Exactly T041-T045 evidence and completed T040 checkbox; no technical implementation edit."
+      }
+    ],
+    "historicalScopeExclusion": "Do not re-stage the 96-path T008 increment or any already committed checkpoint paths unless present in this exact residual set.",
+    "result": "Pass",
+    "blocker": "",
+    "validationExecutions": [
+      {
+        "id": "delivery-bash",
+        "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-delivery-set.sh --repo . --intended docs/aeps/finding-to-preset-candidate-matrix.md --intended docs/aeps/findings-ledger.md --intended docs/aeps/preset-gap-analysis.md --intended docs/aeps/receipts/2026-09-13-series-eligibility-completion.md --intended docs/aeps/upstream-handoff.md --intended specs/004-series-eligibility/autonomous-run-state.json --intended specs/004-series-eligibility/completion-closeout.md --intended specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json --intended specs/004-series-eligibility/contracts/documentation-impact.json --intended specs/004-series-eligibility/engineering-retrospective.md --intended specs/004-series-eligibility/phase-results/delivery-authority.json --intended specs/004-series-eligibility/phase-results/delivery-set.json --intended specs/004-series-eligibility/phase-results/implementation-trend.json --intended specs/004-series-eligibility/phase-results/implementation-validation.json --intended specs/004-series-eligibility/phase-results/statistics-review.md --intended specs/004-series-eligibility/quickstart.md --intended specs/004-series-eligibility/tasks.md",
+        "startedAt": "2026-09-13T09:19:45.157799+00:00",
+        "completedAt": "2026-09-13T09:19:45.572867+00:00",
+        "exitCode": 2,
+        "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+        "output": {
+          "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-7-audit/delivery-bash.log",
+          "rawSha256": "834a0056c3d1c99eaf2753bc10c3ec4f67e7145fbe72a80c9ed8042f94697f90",
+          "normalizedSha256": "834a0056c3d1c99eaf2753bc10c3ec4f67e7145fbe72a80c9ed8042f94697f90"
+        }
+      },
+      {
+        "id": "delivery-pwsh",
+        "command": "pwsh -NoProfile -Command '& '\"'\"'./.specify/presets/autonomous-run-governance/scripts/validate-autonomous-delivery-set.ps1'\"'\"' -Repo '\"'\"'.'\"'\"' -Intended @('\"'\"'docs/aeps/finding-to-preset-candidate-matrix.md'\"'\"','\"'\"'docs/aeps/findings-ledger.md'\"'\"','\"'\"'docs/aeps/preset-gap-analysis.md'\"'\"','\"'\"'docs/aeps/receipts/2026-09-13-series-eligibility-completion.md'\"'\"','\"'\"'docs/aeps/upstream-handoff.md'\"'\"','\"'\"'specs/004-series-eligibility/autonomous-run-state.json'\"'\"','\"'\"'specs/004-series-eligibility/completion-closeout.md'\"'\"','\"'\"'specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json'\"'\"','\"'\"'specs/004-series-eligibility/contracts/documentation-impact.json'\"'\"','\"'\"'specs/004-series-eligibility/engineering-retrospective.md'\"'\"','\"'\"'specs/004-series-eligibility/phase-results/delivery-authority.json'\"'\"','\"'\"'specs/004-series-eligibility/phase-results/delivery-set.json'\"'\"','\"'\"'specs/004-series-eligibility/phase-results/implementation-trend.json'\"'\"','\"'\"'specs/004-series-eligibility/phase-results/implementation-validation.json'\"'\"','\"'\"'specs/004-series-eligibility/phase-results/statistics-review.md'\"'\"','\"'\"'specs/004-series-eligibility/quickstart.md'\"'\"','\"'\"'specs/004-series-eligibility/tasks.md'\"'\"'); exit $LASTEXITCODE'",
+        "startedAt": "2026-09-13T09:19:45.582385+00:00",
+        "completedAt": "2026-09-13T09:19:46.231091+00:00",
+        "exitCode": 2,
+        "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+        "output": {
+          "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-7-audit/delivery-pwsh.log",
+          "rawSha256": "834a0056c3d1c99eaf2753bc10c3ec4f67e7145fbe72a80c9ed8042f94697f90",
+          "normalizedSha256": "834a0056c3d1c99eaf2753bc10c3ec4f67e7145fbe72a80c9ed8042f94697f90"
+        }
+      }
+    ],
+    "nextExactAction": "Outer coordinator validates implement-7-remediation result and adopts 45/57 task binding. This phase stops before T046; any later T046 checkpoint requires fresh exact unstaged/staged validation and current authority.",
+    "historicalDisposition": {
+      "actualValidation": "Blocked: both unchanged unstaged validators exit 2 / AEI004 at git write-tree (.git/index.lock denied). Historical ancestry is independently audited; no current delivery-set Pass.",
+      "result": "Blocked",
+      "blocker": "EL-DELIVERY-044-ENV001: both unchanged unstaged Delivery-Set validators exit 2 / AEI004 because git write-tree cannot create .git/index.lock in the model sandbox. No staged check, stage, commit, render, push, PR or merge executed. Outer coordinator must validate the exact residual set in its authorized real Git context; no synthetic index or guard override.",
+      "nextExactAction": "Outer coordinator runs both unchanged unstaged validators for exactPaths in authorized real Git context, no synthetic index or guard override; stop before T046."
+    },
+    "coordinatorResolution": {
+      "phaseId": "implement-7-remediation",
+      "attemptId": "c5d57974-f166-4787-bb97-c0c2f80ef2a8",
+      "recordedAt": "2026-09-13T09:31:27.452876+00:00",
+      "result": "Pass",
+      "authority": "Current explicit user instruction to consume this authoritative outer-coordinator evidence for T044/T045 only.",
+      "coordinatorEvidence": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-7-audit/coordinator-delivery-validation-summary.json",
+        "rawSha256": "42568098947bdb6e998a244702251611199c1dfbcdd1a50c8e3876b5bf6591e4",
+        "normalizedSha256": "42568098947bdb6e998a244702251611199c1dfbcdd1a50c8e3876b5bf6591e4"
+      },
+      "observed": {
+        "schemaVersion": "1.0",
+        "result": "Pass",
+        "executor": "outer-autonomous-coordinator",
+        "branch": "004-series-eligibility",
+        "head": "e0172f6dd4aad214cfaa40ec66cf268514a04b23",
+        "candidateMode": "Worktree",
+        "bash": "Pass",
+        "pwsh": "Pass",
+        "exitCode": 0,
+        "indexTree": "42963a5bafef39c2ee712c50179c2ec2eaa19b02",
+        "worktreeStatusSha256": "63dbd127193e14f20fadd04dc105c71a3335da35d6058a91e0357e007e41b47f",
+        "checkedPathCount": 17,
+        "unrelatedUntrackedPaths": [],
+        "staged": false,
+        "scope": "Exact residual T041-T045 delivery set; no synthetic index, no override, no write beyond this ignored runtime evidence."
+      },
+      "entryVerification": {
+        "head": "e0172f6dd4aad214cfaa40ec66cf268514a04b23",
+        "indexTree": "42963a5bafef39c2ee712c50179c2ec2eaa19b02",
+        "indexSha256": "cd9d3ce1b16c05e9794b0dfae8d96b80f9d3fa2f3cf612e3f06070787cc453c4",
+        "statusSha256": "6af00b12fd84ae67a0a20cf31500f81b9e9854689cceeee30846150e6abb9ed4",
+        "statusDifference": "Only the ignored coordinator summary file itself; removing its status entry reproduces the coordinator status hash. No candidate path difference."
+      },
+      "limits": "This is the coordinator-validated pre-amendment unstaged candidate. Causal evidence/task edits below are not a staged validation or freeze; T046 must revalidate the resulting exact residual candidate in both shells before any staging/commit. No remote/native gate is satisfied by this evidence."
+    }
+  },
+  "statisticsDisposition": "Five checkpoint boundaries audited; six source commits and six separate ledger-only commits. Current residual needs a new full T046 checkpoint; no renderer invoked in implement-7."
+}

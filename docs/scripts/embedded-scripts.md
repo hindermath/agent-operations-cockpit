@@ -100,6 +100,10 @@ Change their respective canonical source first, then propagate the result.*
 | `specs/003-authoring-contract/contracts/validate-authoring-contract.sh` | `specs` |
 | `specs/003-authoring-contract/contracts/validate-current-evidence-binding.ps1` | `specs` |
 | `specs/003-authoring-contract/contracts/validate-current-evidence-binding.sh` | `specs` |
+| `specs/004-series-eligibility/contracts/test_series_eligibility.py` | `specs` |
+| `specs/004-series-eligibility/contracts/validate_series_eligibility.py` | `specs` |
+| `specs/004-series-eligibility/contracts/validate-series-eligibility.ps1` | `specs` |
+| `specs/004-series-eligibility/contracts/validate-series-eligibility.sh` | `specs` |
 | `specs/intake-review-fixtures/meta-lh-02/validate-portfolio.ps1` | `specs` |
 | `specs/intake-review-fixtures/meta-lh-02/validate-portfolio.py` | `specs` |
 | `specs/intake-review-fixtures/meta-lh-02/validate-portfolio.sh` | `specs` |

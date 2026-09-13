@@ -1,0 +1,95 @@
+{
+  "sourceRevision": "e5083c82d80099901774518b3987f47a1a628572",
+  "phase": "T004-T007",
+  "records": [
+    {
+      "command": [
+        "bash",
+        "scripts/render-project-statistics.sh",
+        "--help"
+      ],
+      "exitCode": 0,
+      "stdout": "Verwendung / Usage: render-project-statistics.sh [OPTIONEN]\n\n  --repo PFAD     Zielrepository / target repository\n  --check-only    Drift pruefen, keine Dateien schreiben / check drift, do not write\n  --dry-run       Generierten Block anzeigen / show the generated block\n  --json          Maschinenlesbaren Status ausgeben / emit machine-readable status\n  --help, -h      Hilfe anzeigen / show help\n\nExitcodes: 0 = aktuell/erfolgreich, 1 = Drift, 2 = Aufruf- oder Toolingfehler.\nExit codes: 0 = current/success, 1 = drift, 2 = usage or tooling error.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-Command",
+        "Get-Help ./scripts/render-project-statistics.ps1 -Full"
+      ],
+      "exitCode": 0,
+      "stdout": "render-project-statistics.ps1 [[-Repo] <string>] [-CheckOnly] [-Json] [-WhatIf] [-Confirm] [<CommonParameters>]\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bash",
+        "scripts/render-project-statistics.sh",
+        "--repo",
+        ".",
+        "--dry-run"
+      ],
+      "exitCode": 0,
+      "stdout": "<!-- project-statistics-v2:begin -->\n\nProfil 2 verwendet Git-getrackte Textdateien und sichtbare Git-Aktivitaet. Die Werte beschreiben Lieferdichte, keine persoenliche Arbeitszeit.\n\n*Profile 2 uses Git-tracked text files and visible Git activity. The values describe delivery density, not personal working time.*\n\n| Kennzahl / Metric | Wert / Value |\n|---|---:|\n| Textbasis / Text base | 256686 lines |\n| Textdateien / Text files | 1693 |\n| Beobachtbarer Zeitraum / Observable period | 2025-09-21..2026-09-13 |\n| Aktivtage / Active days | 17 |\n| Relevante Commits / Relevant commits | 95 |\n| Zeilen je Aktivtag / Lines per active day | 15099.2 |\n| Peak-Tag im Fenster / Peak day in window | 2026-07-31 / 132656 |\n| Peak-Woche im Fenster / Peak week in window | 2026-07-26 / 135472 |\n| Laengste Serie / Longest streak | 3 days |\n| Speedup vs. 80 lines/day | 188.7x |\n| Speedup vs. 125 lines/day | 120.8x |\n| Methodik / Methodology | v2; source `f33f161a24d5` |\n\n### Artefaktmix / Artifact Mix\n\n```text\nProduktiv / Production          [#...................]   3.4% | 8706\nTests                           [#...................]   3.1% | 7974\nDokumentation / Documentation   [###########.........]  55.9% | 143388\nSkripte / Scripts               [####................]  18.1% | 46346\nKonfiguration / Configuration   [####................]  19.5% | 50135\nDaten und Medien / Data and media [....................]   0.0% | 0\nSonstiger Text / Other text     [#...................]   0.1% | 137\n```\n\nDie Balken teilen die aktuelle getrackte Textbasis in stabile Kategorien. Prozent und Zeilenwert sind die genaue, textorientierte Aussage.\n\n*The bars split the current tracked text base into stable categories. Percentages and line counts provide the exact text-first result.*\n\n### Tagesaktivitaet / Daily Activity\n\n```text\nWochen / Weeks 01..26 | 2025-09-21..2026-03-21\nSo/Su  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\nMo/Mo  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\nDi/Tu  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\nMi/We  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\nDo/Th  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\nFr/Fr  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\nSa/Sa  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n```\n\n```text\nWochen / Weeks 27..52 | 2026-03-22..2026-09-19\nSo/Su  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 4 4 0 4 4 3\nMo/Mo  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 -\nDi/Tu  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -\nMi/We  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 4 -\nDo/Th  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 -\nFr/Fr  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 4 -\nSa/Sa  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 2 0 3 4 3 -\n```\n\nDE: 0 = keine Aenderung; 1 = 1..79; 2 = 80..399; 3 = 400..1599; 4 = 1600+ geaenderte Textzeilen; - = noch nicht abgelaufen.\n\n*EN: 0 = no change; 1 = 1..79; 2 = 80..399; 3 = 400..1599; 4 = 1600+ changed text lines; - = not elapsed.*\n\n### Wochenvolumen / Weekly Volume\n\n```text\nWochen / Weeks 01..26 | 2025-09-21..2026-03-21\nKeine Aktivitaet / No activity\n```\n\n```text\nWochen / Weeks 27..52 | 2026-03-22..2026-09-19\n  cap 200000 | . . . . . . . . . . . . . . . . . . . . . . . . . .\n      166667 | . . . . . . . . . . . . . . . . . . . . . . . . . .\n      133333 | . . . . . . . . . . . . . . . . . . # . . . . . . .\n      100000 | . . . . . . . . . . . . . . . . . . # . . . . . . .\n       66667 | . . . . . . . . . . . . . . . . . . # . . . . . . .\n       33333 | . . . . . . . . . . . . . . . . . . # . # . . . . .\n           0 +-----------------------------------------------------\n```\n\nDas Wochenvolumen zeigt Additionen plus Loeschungen. Es ist Aenderungsaktivitaet, nicht die aktuelle Groesse des Repositories.\n\n*Weekly volume shows additions plus deletions. It represents change activity, not the current repository size.*\n\n### Kumulative Entwicklung / Cumulative Development\n\n```text\nWochen / Weeks 01..26 | 2025-09-21..2026-03-21\nKeine Aktivitaet / No activity\n```\n\n```text\nWochen / Weeks 27..52 | 2026-03-22..2026-09-19\n  cap 500000 | . . . . . . . . . . . . . . . . . . . . . . . . . .\n      416667 | . . . . . . . . . . . . . . . . . . . . . . . . . .\n      333333 | . . . . . . . . . . . . . . . . . . . . . . . . . .\n      250000 | . . . . . . . . . . . . . . . . . . . . . . . . # #\n      166667 | . . . . . . . . . . . . . . . . . . . . # # # # # #\n       83333 | . . . . . . . . . . . . . . . . . . # # # # # # # #\n           0 +-----------------------------------------------------\n```\n\nDie kumulative Kurve summiert nur das Brutto-Aenderungsvolumen im Fenster. Sie darf nicht als aktuelle Codebasis gelesen werden.\n\n*The cumulative curve sums gross change volume within the window only. It must not be read as the current code base.*\n\n### Phasenvolumen / Phase Volume\n\n```text\nSlots 0..0\n    cap 5000 | .\n        4167 | #\n        3333 | #\n        2500 | #\n        1667 | #\n         833 | #\n           0 +---\n             00\n```\n\n| Slot | Phase | Nettozeilen / Net lines |\n|---:|---|---:|\n| 0 | Feature 032 AOC-Vertikalscheibe / Feature 032 AOC vertical slice | 4395 |\n\nDie festen Slots halten den Phasenvergleich auch bei fehlenden oder spaeter ergaenzten Werten stabil.\n\n*Stable slots keep the phase comparison consistent when values are missing or added later.*\n\n### Beschleunigungsfaktoren / Acceleration Factors\n\n```text\nScale: 0..200x\n80 lines/day       [###################.] 188.7x\n125 lines/day      [############........] 120.8x\n```\n\nDie Faktoren vergleichen sichtbare Lieferdichte mit den dokumentierten manuellen Referenzen. Sie messen keine Arbeitszeit.\n\n*The factors compare visible delivery density with documented manual references. They do not measure working time.*\n\n### Durchsatzvergleich / Throughput Comparison\n\n```text\nScale: 0..20000 lines/day\nExperienced manual [#...................] 80\nThorsten solo      [#...................] 125\nVisible repository [###############.....] 15099.2\n```\n\nDie gemeinsame Skala vergleicht Referenzen und sichtbare Lieferdichte. Sie schreibt die Git-Aktivitaet keiner Person oder KI pauschal zu.\n\n*The common scale compares references with visible delivery density. It does not attribute Git activity to a person or AI by default.*\n\n### Textalternative / Text Alternative\n\nDE: Das Fenster beginnt am 2025-09-21 und endet am 2026-09-13. Es enthaelt 17 aktive und 341 inaktive vergangene Tage. Peak-Tag: 2026-07-31 / 132656. Peak-Woche: 2026-07-26 / 135472. Laengste Serie: 3 Tage (2026-07-31..2026-08-02).\n\n*EN: The window starts on 2025-09-21 and ends on 2026-09-13. It contains 17 active and 341 inactive elapsed days. Peak day: 2026-07-31 / 132656. Peak week: 2026-07-26 / 135472. Longest streak: 3 days (2026-07-31..2026-08-02).*\n\n| Monat / Month | Geaenderte Textzeilen / Changed text lines |\n|---|---:|\n| 2025-10 | 0 |\n| 2025-11 | 0 |\n| 2025-12 | 0 |\n| 2026-01 | 0 |\n| 2026-02 | 0 |\n| 2026-03 | 0 |\n| 2026-04 | 0 |\n| 2026-05 | 0 |\n| 2026-06 | 0 |\n| 2026-07 | 132656 |\n| 2026-08 | 100244 |\n| 2026-09 | 35893 |\n\n<!-- project-statistics-v2:end -->\n\n[DRY_RUN] <repo>/docs/project-statistics.md\n  Source / Quelle: f33f161a24d5\n  Text lines / Textzeilen: 256686\n  Active days / Aktivtage: 17\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "scripts/render-project-statistics.ps1",
+        "-Repo",
+        ".",
+        "-WhatIf"
+      ],
+      "exitCode": 0,
+      "stdout": "<!-- project-statistics-v2:begin -->\n\nProfil 2 verwendet Git-getrackte Textdateien und sichtbare Git-Aktivitaet. Die Werte beschreiben Lieferdichte, keine persoenliche Arbeitszeit.\n\n*Profile 2 uses Git-tracked text files and visible Git activity. The values describe delivery density, not personal working time.*\n\n| Kennzahl / Metric | Wert / Value |\n|---|---:|\n| Textbasis / Text base | 256686 lines |\n| Textdateien / Text files | 1693 |\n| Beobachtbarer Zeitraum / Observable period | 2025-09-21..2026-09-13 |\n| Aktivtage / Active days | 17 |\n| Relevante Commits / Relevant commits | 95 |\n| Zeilen je Aktivtag / Lines per active day | 15099.2 |\n| Peak-Tag im Fenster / Peak day in window | 2026-07-31 / 132656 |\n| Peak-Woche im Fenster / Peak week in window | 2026-07-26 / 135472 |\n| Laengste Serie / Longest streak | 3 days |\n| Speedup vs. 80 lines/day | 188.7x |\n| Speedup vs. 125 lines/day | 120.8x |\n| Methodik / Methodology | v2; source `f33f161a24d5` |\n\n### Artefaktmix / Artifact Mix\n\n```text\nProduktiv / Production          [#...................]   3.4% | 8706\nTests                           [#...................]   3.1% | 7974\nDokumentation / Documentation   [###########.........]  55.9% | 143388\nSkripte / Scripts               [####................]  18.1% | 46346\nKonfiguration / Configuration   [####................]  19.5% | 50135\nDaten und Medien / Data and media [....................]   0.0% | 0\nSonstiger Text / Other text     [#...................]   0.1% | 137\n```\n\nDie Balken teilen die aktuelle getrackte Textbasis in stabile Kategorien. Prozent und Zeilenwert sind die genaue, textorientierte Aussage.\n\n*The bars split the current tracked text base into stable categories. Percentages and line counts provide the exact text-first result.*\n\n### Tagesaktivitaet / Daily Activity\n\n```text\nWochen / Weeks 01..26 | 2025-09-21..2026-03-21\nSo/Su  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\nMo/Mo  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\nDi/Tu  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\nMi/We  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\nDo/Th  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\nFr/Fr  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\nSa/Sa  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n```\n\n```text\nWochen / Weeks 27..52 | 2026-03-22..2026-09-19\nSo/Su  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 4 4 0 4 4 3\nMo/Mo  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 -\nDi/Tu  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -\nMi/We  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 4 -\nDo/Th  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 -\nFr/Fr  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 4 -\nSa/Sa  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 2 0 3 4 3 -\n```\n\nDE: 0 = keine Aenderung; 1 = 1..79; 2 = 80..399; 3 = 400..1599; 4 = 1600+ geaenderte Textzeilen; - = noch nicht abgelaufen.\n\n*EN: 0 = no change; 1 = 1..79; 2 = 80..399; 3 = 400..1599; 4 = 1600+ changed text lines; - = not elapsed.*\n\n### Wochenvolumen / Weekly Volume\n\n```text\nWochen / Weeks 01..26 | 2025-09-21..2026-03-21\nKeine Aktivitaet / No activity\n```\n\n```text\nWochen / Weeks 27..52 | 2026-03-22..2026-09-19\n  cap 200000 | . . . . . . . . . . . . . . . . . . . . . . . . . .\n      166667 | . . . . . . . . . . . . . . . . . . . . . . . . . .\n      133333 | . . . . . . . . . . . . . . . . . . # . . . . . . .\n      100000 | . . . . . . . . . . . . . . . . . . # . . . . . . .\n       66667 | . . . . . . . . . . . . . . . . . . # . . . . . . .\n       33333 | . . . . . . . . . . . . . . . . . . # . # . . . . .\n           0 +-----------------------------------------------------\n```\n\nDas Wochenvolumen zeigt Additionen plus Loeschungen. Es ist Aenderungsaktivitaet, nicht die aktuelle Groesse des Repositories.\n\n*Weekly volume shows additions plus deletions. It represents change activity, not the current repository size.*\n\n### Kumulative Entwicklung / Cumulative Development\n\n```text\nWochen / Weeks 01..26 | 2025-09-21..2026-03-21\nKeine Aktivitaet / No activity\n```\n\n```text\nWochen / Weeks 27..52 | 2026-03-22..2026-09-19\n  cap 500000 | . . . . . . . . . . . . . . . . . . . . . . . . . .\n      416667 | . . . . . . . . . . . . . . . . . . . . . . . . . .\n      333333 | . . . . . . . . . . . . . . . . . . . . . . . . . .\n      250000 | . . . . . . . . . . . . . . . . . . . . . . . . # #\n      166667 | . . . . . . . . . . . . . . . . . . . . # # # # # #\n       83333 | . . . . . . . . . . . . . . . . . . # # # # # # # #\n           0 +-----------------------------------------------------\n```\n\nDie kumulative Kurve summiert nur das Brutto-Aenderungsvolumen im Fenster. Sie darf nicht als aktuelle Codebasis gelesen werden.\n\n*The cumulative curve sums gross change volume within the window only. It must not be read as the current code base.*\n\n### Phasenvolumen / Phase Volume\n\n```text\nSlots 0..0\n    cap 5000 | .\n        4167 | #\n        3333 | #\n        2500 | #\n        1667 | #\n         833 | #\n           0 +---\n             00\n```\n\n| Slot | Phase | Nettozeilen / Net lines |\n|---:|---|---:|\n| 0 | Feature 032 AOC-Vertikalscheibe / Feature 032 AOC vertical slice | 4395 |\n\nDie festen Slots halten den Phasenvergleich auch bei fehlenden oder spaeter ergaenzten Werten stabil.\n\n*Stable slots keep the phase comparison consistent when values are missing or added later.*\n\n### Beschleunigungsfaktoren / Acceleration Factors\n\n```text\nScale: 0..200x\n80 lines/day       [###################.] 188.7x\n125 lines/day      [############........] 120.8x\n```\n\nDie Faktoren vergleichen sichtbare Lieferdichte mit den dokumentierten manuellen Referenzen. Sie messen keine Arbeitszeit.\n\n*The factors compare visible delivery density with documented manual references. They do not measure working time.*\n\n### Durchsatzvergleich / Throughput Comparison\n\n```text\nScale: 0..20000 lines/day\nExperienced manual [#...................] 80\nThorsten solo      [#...................] 125\nVisible repository [###############.....] 15099.2\n```\n\nDie gemeinsame Skala vergleicht Referenzen und sichtbare Lieferdichte. Sie schreibt die Git-Aktivitaet keiner Person oder KI pauschal zu.\n\n*The common scale compares references with visible delivery density. It does not attribute Git activity to a person or AI by default.*\n\n### Textalternative / Text Alternative\n\nDE: Das Fenster beginnt am 2025-09-21 und endet am 2026-09-13. Es enthaelt 17 aktive und 341 inaktive vergangene Tage. Peak-Tag: 2026-07-31 / 132656. Peak-Woche: 2026-07-26 / 135472. Laengste Serie: 3 Tage (2026-07-31..2026-08-02).\n\n*EN: The window starts on 2025-09-21 and ends on 2026-09-13. It contains 17 active and 341 inactive elapsed days. Peak day: 2026-07-31 / 132656. Peak week: 2026-07-26 / 135472. Longest streak: 3 days (2026-07-31..2026-08-02).*\n\n| Monat / Month | Geaenderte Textzeilen / Changed text lines |\n|---|---:|\n| 2025-10 | 0 |\n| 2025-11 | 0 |\n| 2025-12 | 0 |\n| 2026-01 | 0 |\n| 2026-02 | 0 |\n| 2026-03 | 0 |\n| 2026-04 | 0 |\n| 2026-05 | 0 |\n| 2026-06 | 0 |\n| 2026-07 | 132656 |\n| 2026-08 | 100244 |\n| 2026-09 | 35893 |\n\n<!-- project-statistics-v2:end -->\n\n[DRY_RUN] <repo>/docs/project-statistics.md\n  Source / Quelle: f33f161a24d5\n  Text lines / Textzeilen: 256686\n  Active days / Aktivtage: 17\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "scripts/render-project-statistics.ps1",
+        "-Repo",
+        "."
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Write-Error: <repo>/scripts/render-project-statistics.ps1:1268\nLine |\n1268 |          Write-Error $_.Exception.Message\n     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n     | Writing requires a clean working tree. Commit or stash existing changes\n     | first.\n"
+    },
+    {
+      "command": [
+        "bash",
+        "scripts/render-project-statistics.sh",
+        "--repo",
+        ".",
+        "--check-only"
+      ],
+      "exitCode": 1,
+      "stdout": "[DRIFT] <repo>/docs/project-statistics.md\n  Source / Quelle: f33f161a24d5\n  Text lines / Textzeilen: 256686\n  Active days / Aktivtage: 17\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "scripts/render-project-statistics.ps1",
+        "-Repo",
+        ".",
+        "-CheckOnly"
+      ],
+      "exitCode": 1,
+      "stdout": "[DRIFT] <repo>/docs/project-statistics.md\n  Source / Quelle: f33f161a24d5\n  Text lines / Textzeilen: 256686\n  Active days / Aktivtage: 17\n",
+      "stderr": ""
+    }
+  ],
+  "pairedPreviewReviewed": true,
+  "outcome": "Blocked",
+  "ledgerRawSha256": "57d9378db9fa534a915e450065daa5937fc75de843e7e11b98bb38effd7fd0d0"
+}

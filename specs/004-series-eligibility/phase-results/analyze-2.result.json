@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "analyze-2",
+  "attemptId": "329006d2-8368-4935-9c4c-4b100e0319a1",
+  "outcome": "Completed",
+  "expectedTasks": 1,
+  "completedTasks": 1,
+  "blockedReason": "",
+  "gatesSatisfied": true,
+  "payloadPath": "specs/004-series-eligibility/phase-results/analyze-2-report.md",
+  "payloadSha256": "3982e032053b192513df05e9a036c169ace4207d5b688c6c8ab1d6c0d0a94c29"
+}

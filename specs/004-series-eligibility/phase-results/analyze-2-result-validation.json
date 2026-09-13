@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "analyze-2",
+  "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/analyze-2.result.json",
+  "resultSha256": "5c4f33cfc65dab1f37c30da2971a31b71e9eb79da62316659c632dfcc2d2ede0",
+  "payloadSha256": "3982e032053b192513df05e9a036c169ace4207d5b688c6c8ab1d6c0d0a94c29",
+  "checks": [
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.sh --repo . --result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/analyze-2.result.json --phase-id analyze-2 --exit-code 0",
+      "exitCode": 0,
+      "stdout": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"analyze-2\",\n  \"normalizedSha256\": \"5c4f33cfc65dab1f37c30da2971a31b71e9eb79da62316659c632dfcc2d2ede0\",\n  \"payloadSha256\": \"3982e032053b192513df05e9a036c169ace4207d5b688c6c8ab1d6c0d0a94c29\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.ps1 -Repo . -Result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/analyze-2.result.json -PhaseId analyze-2 -ExitCode 0",
+      "exitCode": 0,
+      "stdout": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"analyze-2\",\n  \"normalizedSha256\": \"5c4f33cfc65dab1f37c30da2971a31b71e9eb79da62316659c632dfcc2d2ede0\",\n  \"payloadSha256\": \"3982e032053b192513df05e9a036c169ace4207d5b688c6c8ab1d6c0d0a94c29\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "gitleaks dir specs/004-series-eligibility --no-banner --no-color --redact",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "3:15AM INF scanned ~1614131 bytes (1.61 MB) in 304ms\n3:15AM INF no leaks found\n"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "protectedArtifactDrift": [],
+  "headAndIndexUnchanged": true,
+  "boundArtifactHashesMatch": true,
+  "reportEvidenceHashesMatch": true,
+  "historicalBlockedReportUnchanged": true,
+  "onlyNewFeaturePaths": [
+    "specs/004-series-eligibility/phase-results/analyze-2-aeps-receipt.md",
+    "specs/004-series-eligibility/phase-results/analyze-2-coverage.json",
+    "specs/004-series-eligibility/phase-results/analyze-2-homogeneity.json",
+    "specs/004-series-eligibility/phase-results/analyze-2-input-snapshot.json",
+    "specs/004-series-eligibility/phase-results/analyze-2-report.md",
+    "specs/004-series-eligibility/phase-results/analyze-2-secrets.json",
+    "specs/004-series-eligibility/phase-results/analyze-2.result.json"
+  ],
+  "implementationCompletedTasks": 0,
+  "implementationTotalTasks": 57,
+  "finalResult": "Completed",
+  "validatedAt": "2026-09-13T01:15:55.259269+00:00"
+}

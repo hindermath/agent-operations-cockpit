@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "plan",
+  "platform": "macOS",
+  "checks": [
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-run-state.sh --state specs/004-series-eligibility/autonomous-run-state.json",
+      "exitCode": 0,
+      "output": "PASS: run 8b306e28-51eb-4510-afbc-5056b9aee328, feature specs/004-series-eligibility, stage Plan, status Active, tasks 0/0\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/autonomous-run-governance/scripts/validate-autonomous-run-state.ps1 -State specs/004-series-eligibility/autonomous-run-state.json",
+      "exitCode": 0,
+      "output": "PASS: run 8b306e28-51eb-4510-afbc-5056b9aee328, feature specs/004-series-eligibility, stage Plan, status Active, tasks 0/0\n"
+    },
+    {
+      "command": "python3 -B specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py --repo . global-ready",
+      "exitCode": 0,
+      "output": "PASS: global-ready: qualified Feature-003 current-evidence binding; immutable META-LH-02 history and 14 current Ready receipt/review bindings\n"
+    },
+    {
+      "command": "bash .specify/presets/intake-review-governance/scripts/validate-intake-review-result.sh --result specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json --repo .",
+      "exitCode": 0,
+      "output": "PASS: intake review 4c0ffc79-22fd-422e-a691-624e24ae444f is current (Single, Ready, 1 targets)\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/intake-review-governance/scripts/validate-intake-review-result.ps1 -Result specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json -Repo .",
+      "exitCode": 0,
+      "output": "PASS: intake review 4c0ffc79-22fd-422e-a691-624e24ae444f is current (Single, Ready, 1 targets)\n"
+    },
+    {
+      "command": "bash .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.sh --receipt specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json --repo .",
+      "exitCode": 0,
+      "output": "PASS: intake authoring e6eea4e9-88de-4434-8305-97424374ca7c is current (ReadyForReview, 12 sources, requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md)\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.ps1 -Receipt specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json -Repo .",
+      "exitCode": 0,
+      "output": "PASS: intake authoring e6eea4e9-88de-4434-8305-97424374ca7c is current (ReadyForReview, 12 sources, requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md)\n"
+    },
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.sh --repo . --result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/checklist.result.json --phase-id checklist --exit-code 0",
+      "exitCode": 0,
+      "output": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"checklist\",\n  \"normalizedSha256\": \"e0de4e8ddb3cf82f267d851df1b266e3d25f7e3d532c5628d7358bbe049f77dc\",\n  \"payloadSha256\": \"ed94d7b858c73ea16dfb1018ccc4fa653eeba0a6c16be775d645705e34727b5f\"\n}\n"
+    }
+  ],
+  "acceptedArtifacts": "3/3 match",
+  "previousPhaseResults": "3/3 match",
+  "predecessors": "META-LH-01/02/03 Completed",
+  "specSha256": "083e34398e86472673ff202d1d841d179118070d0c71124d2d90b11b6b4b014f",
+  "runStateSha256": "e5585156072a1c8931503637996168a3607dbe34d7e2feb48228770036d4638b",
+  "templatePath": ".specify/templates/plan-template.md",
+  "templateSha256": "4a87ae1b0dbb0593b7303030ca09738da5894813b0b62cc2b94bd113dd69f151",
+  "installedPresets": {
+    "security-governance": "0.6.2",
+    "architecture-governance": "0.5.2",
+    "isaqb-architecture-governance": "0.2.2",
+    "a11y-governance": "0.4.3",
+    "cross-platform-governance": "0.2.2",
+    "agent-parity-governance": "0.4.2",
+    "intake-authoring-governance": "0.3.1",
+    "intake-review-governance": "0.2.1",
+    "intake-sequencing-governance": "0.2.3",
+    "model-routing-governance": "0.1.4",
+    "parallel-autonomous-run-governance": "0.2.6",
+    "secure-development-assurance-governance": "0.1.3",
+    "autonomous-run-governance": "0.4.4"
+  },
+  "designValidation": {
+    "canonicalRequirementsValidator": "autonomous-evidence-core.py:validate_requirements",
+    "gateCount": 54,
+    "applicable": 41,
+    "notApplicable": 13,
+    "requirementsSha256": "ce35a1853cff60eedfbd2cc49f2b00a4d0739f6c4fe48b362ceca6e25b242ca4",
+    "authoredArtifactChecks": "Pass: JSON, headings, placeholder removal, personal paths, ANSI, whitespace",
+    "documentationImpact": "CHG004: exactly one UpdateRequired entry; both validators exit 0",
+    "localRuntimes": {
+      "Bash": "5.3.15",
+      "Python": "3.14.7",
+      "PowerShell": "7.6.5"
+    },
+    "laterGateDiagnostic": "Homogeneity 29/30; statistics Profile 2 drift remains a planned I6 delivery gate, not a planning artifact failure.",
+    "semanticReview": "Pass: accepted requirements, nine criteria/six modes, source-preserving smallest delta, red/green order, distinct authority/review/lifecycle/delivery axes, no implementation, bilingual text, manual proof boundaries.",
+    "untrackedSecretScans": "gitleaks dir feature and new AEPS plan receipt: exit 0, no leaks; repository diff scan: exit 0."
+  },
+  "artifacts": [
+    {
+      "path": "specs/004-series-eligibility/plan.md",
+      "sha256": "e88bf56458174099149028deb51992f68bb2af5f03b6701dbb5fdf2737c82d65"
+    },
+    {
+      "path": "specs/004-series-eligibility/research.md",
+      "sha256": "ca1d97be79eec3dd8d4325a719e026c4a66bc3bb5d7a36e9aad7af380dce0836"
+    },
+    {
+      "path": "specs/004-series-eligibility/data-model.md",
+      "sha256": "7593df9a762e5efd89d063833da14ddef64672864017f5b527f6c982e0df301b"
+    },
+    {
+      "path": "specs/004-series-eligibility/quickstart.md",
+      "sha256": "91346b353ef12957c8785c53b671912319e7ea2ae21a976bc8d11e6ad3873c15"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json",
+      "sha256": "ce35a1853cff60eedfbd2cc49f2b00a4d0739f6c4fe48b362ceca6e25b242ca4"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/documentation-impact.json",
+      "sha256": "20e04887eb789abc0f4908233907078956cda19284792af2d091eb2fbacd689e"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/series-eligibility-interface.md",
+      "sha256": "fec37b62e475a590fb13f111de86af0dc38fd8b08bef0989fb3e1f55f8f33c75"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/validation-commands.json",
+      "sha256": "a6dc4010953acbafa80548dd15abac7094b5254d3a9d78d822b0a0f616957601"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/plan-baseline.json",
+      "sha256": "b5aafa505715732ce1f95f91010c70314dd408c9e73dcd86efd99cb6e0b94e8d"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/plan-quality-checks.json",
+      "sha256": "a6dcfe9a9f76fb5ce70609f42f5bbc804fdef880e8c02473d068dce393de63a9"
+    }
+  ]
+}

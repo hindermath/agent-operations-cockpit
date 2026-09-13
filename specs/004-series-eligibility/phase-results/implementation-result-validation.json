@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "1.0",
+  "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement.result.json",
+  "resultSha256": "4fdd51ccf315e391fd36b4451a05367bcfcddf5e9646a10c809425a26e325f36",
+  "payloadSha256": "92e519c958f79e311c3e7e54e6fdc3c1f0496045536d770c440f74ebbf95e225",
+  "checks": [
+    {
+      "command": [
+        "bash",
+        ".specify/presets/autonomous-run-governance/scripts/validate-autonomous-run-state.sh",
+        "--state",
+        "specs/004-series-eligibility/autonomous-run-state.json"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "stdout": "PASS: run 8b306e28-51eb-4510-afbc-5056b9aee328, feature specs/004-series-eligibility, stage Implement, status Blocked, tasks 7/57\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        ".specify/presets/autonomous-run-governance/scripts/validate-autonomous-run-state.ps1",
+        "-State",
+        "specs/004-series-eligibility/autonomous-run-state.json"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "stdout": "PASS: run 8b306e28-51eb-4510-afbc-5056b9aee328, feature specs/004-series-eligibility, stage Implement, status Blocked, tasks 7/57\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bash",
+        "scripts/validate-documentation-impact.sh",
+        "--evidence",
+        "specs/004-series-eligibility/contracts/documentation-impact.json"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "stdout": "PASS: Documentation Impact evidence is current (1 entries).\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "scripts/validate-documentation-impact.ps1",
+        "-Evidence",
+        "specs/004-series-eligibility/contracts/documentation-impact.json"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "stdout": "PASS: Documentation Impact evidence is current (1 entries).\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bash",
+        ".specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.sh",
+        "--repo",
+        ".",
+        "--result",
+        ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement.result.json",
+        "--phase-id",
+        "implement",
+        "--exit-code",
+        "0"
+      ],
+      "exitCode": 3,
+      "expectedExit": 3,
+      "stdout": "",
+      "stderr": "ERROR AEI104: phase result is Blocked\n"
+    },
+    {
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        ".specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.ps1",
+        "-Repo",
+        ".",
+        "-Result",
+        ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement.result.json",
+        "-PhaseId",
+        "implement",
+        "-ExitCode",
+        "0"
+      ],
+      "exitCode": 3,
+      "expectedExit": 3,
+      "stdout": "",
+      "stderr": "ERROR AEI104: phase result is Blocked\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "gitleaks",
+        "dir",
+        "specs/004-series-eligibility",
+        "--no-banner",
+        "--no-color",
+        "--redact"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "stdout": "",
+      "stderr": "4:01AM INF scanned ~2041339 bytes (2.04 MB) in 318ms\n4:01AM INF no leaks found\n"
+    },
+    {
+      "command": "Independent blocked-result attempt/task/payload binding check",
+      "exitCode": 0,
+      "note": "Installed phase validator intentionally returns AEI104/3 for Blocked before payload validation; payload and task hashes independently verified."
+    }
+  ],
+  "completionAccepted": false,
+  "expectedFailClosedCode": "AEI104",
+  "stateAndDocumentationValid": true
+}

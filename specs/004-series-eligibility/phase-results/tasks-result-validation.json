@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "tasks",
+  "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/tasks.result.json",
+  "resultSha256": "06342691769161f9dbc92aab69c01ee69dfb034b552ba85e634fae5f24bfc310",
+  "payloadPath": "specs/004-series-eligibility/phase-results/tasks-report.md",
+  "payloadSha256": "feacce931acd5cf9d85c09df3d9fd4a46d364ba38ce3934daa28bfad3bd50efa",
+  "checks": [
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.sh --repo . --result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/tasks.result.json --phase-id tasks --exit-code 0",
+      "exitCode": 0,
+      "output": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"tasks\",\n  \"normalizedSha256\": \"06342691769161f9dbc92aab69c01ee69dfb034b552ba85e634fae5f24bfc310\",\n  \"payloadSha256\": \"feacce931acd5cf9d85c09df3d9fd4a46d364ba38ce3934daa28bfad3bd50efa\"\n}\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.ps1 -Repo . -Result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/tasks.result.json -PhaseId tasks -ExitCode 0",
+      "exitCode": 0,
+      "output": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"tasks\",\n  \"normalizedSha256\": \"06342691769161f9dbc92aab69c01ee69dfb034b552ba85e634fae5f24bfc310\",\n  \"payloadSha256\": \"feacce931acd5cf9d85c09df3d9fd4a46d364ba38ce3934daa28bfad3bd50efa\"\n}\n"
+    }
+  ],
+  "finalArtifactScan": {
+    "command": "gitleaks dir specs/004-series-eligibility --no-banner --no-color --redact",
+    "exitCode": 0,
+    "output": "2:18AM INF scanned ~449975 bytes (449.98 KB) in 44.9ms\n2:18AM INF no leaks found\n"
+  },
+  "scopeProtection": {
+    "existingFilesCompared": 1730,
+    "changedExistingFiles": [],
+    "newFiles": [
+      "specs/004-series-eligibility/phase-results/tasks-aeps-receipt.md",
+      "specs/004-series-eligibility/phase-results/tasks-report.md",
+      "specs/004-series-eligibility/phase-results/tasks-validation.json",
+      "specs/004-series-eligibility/tasks.md"
+    ],
+    "allowedNewFiles": [
+      "specs/004-series-eligibility/tasks.md",
+      "specs/004-series-eligibility/phase-results/tasks-validation.json",
+      "specs/004-series-eligibility/phase-results/tasks-report.md",
+      "specs/004-series-eligibility/phase-results/tasks-aeps-receipt.md",
+      "specs/004-series-eligibility/phase-results/tasks-result-validation.json"
+    ],
+    "indexUnchanged": true,
+    "branchUnchanged": true,
+    "acceptedArtifactsAndRunStateUnchanged": true
+  },
+  "actualProcessExitBinding": "Outer runner records actual process exit after this phase returns; supplied validator exit code 0 verifies the success result contract, not an observed outer-process exit."
+}

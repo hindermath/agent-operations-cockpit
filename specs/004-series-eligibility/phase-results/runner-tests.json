@@ -1,0 +1,2385 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "8b306e28-51eb-4510-afbc-5056b9aee328",
+  "phaseId": "delivery-evidence",
+  "attemptId": "1eef6f97-906a-4b65-9bfb-cd34cf67c370",
+  "completedAt": "2026-09-13T12:01:52Z",
+  "result": "Pass",
+  "scope": "T028-T030 local runner proofs and T048 native exact-head acceptance",
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "sourceHashes": [
+    {
+      "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+      "rawSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e",
+      "normalizedSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+      "rawSha256": "8cff0edd1772f3e8afce1bea92e316396dd8d4b19a1c39b7c014f9d6ecc6eea6",
+      "normalizedSha256": "8cff0edd1772f3e8afce1bea92e316396dd8d4b19a1c39b7c014f9d6ecc6eea6"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+      "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+      "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+      "rawSha256": "b28c0b4175565b92f32085aec4a9b45767043f6db38069aeb70c7d07236a03e0",
+      "normalizedSha256": "b28c0b4175565b92f32085aec4a9b45767043f6db38069aeb70c7d07236a03e0"
+    },
+    {
+      "path": ".github/workflows/powershell-analysis.yml",
+      "rawSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558",
+      "normalizedSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558"
+    }
+  ],
+  "legacyResolver": {
+    "result": "Pass",
+    "cardinalities": [
+      0,
+      1,
+      3
+    ],
+    "zeroExpectedChildExit": 1,
+    "oneAndMultipleExpectedChildExit": 0,
+    "unchangedFeature003Prefix": true,
+    "minimumVersionClaim": false
+  },
+  "feature004": {
+    "result": "Pass",
+    "versionPolicy": "Bash >=5; fail closed without install fallback",
+    "mockedCases": [
+      "zero candidates",
+      "Bash 3 only",
+      "Bash 5",
+      "3 then 5",
+      "duplicate alias references",
+      "missing file",
+      "Git Bash accepted",
+      "WSL rejected",
+      "wrong Windows executable rejected",
+      "paths with spaces"
+    ],
+    "actualLocalProofs": [
+      "fresh Python child resolves the selected python3 and bash files",
+      "fresh Bash child resolves same Python executable",
+      "PowerShell-only alias does not satisfy child PATH",
+      "full workflow PowerShell parses"
+    ],
+    "catalogSelection": {
+      "ubuntu-22.04": [
+        {
+          "id": "series-bash",
+          "command": "bash .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.sh --file specs/intake-series/aoc-phase-2/manifest.json --repo .",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "series-pwsh",
+          "command": "pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.ps1 -File specs/intake-series/aoc-phase-2/manifest.json -Repo .",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "sequencing",
+          "command": "pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/tests/test-intake-sequencing-validator.ps1",
+          "existingAtPlan": true,
+          "expected": "Exit 0; children reject cycle ISG007, hash drift ISG004, roots ISG008, multiple declared Eligible ISG009 with exit 2",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "legacy-valid-parallel-bash",
+          "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/valid-parallel.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0; Eligible",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "legacy-valid-parallel-pwsh",
+          "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/valid-parallel.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0; Eligible",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "legacy-shared-write-bash",
+          "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/shared-write.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0; Blocked",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "legacy-shared-write-pwsh",
+          "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/shared-write.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0; Blocked",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "legacy-shared-decision-bash",
+          "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/shared-decision.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0; Blocked",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "legacy-shared-decision-pwsh",
+          "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/shared-decision.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0; Blocked",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "surface-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case surface",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "empty-integration-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case empty-integration",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "all-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case all",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "criteria-cardinality-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case criteria-cardinality",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "runner-cardinality-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case runner-cardinality",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "series-negatives-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case series-negatives",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "status-next-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case status-next",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "failure-taxonomy-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case failure-taxonomy",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "status-bash",
+          "command": "bash specs/004-series-eligibility/contracts/validate-series-eligibility.sh --repo . --series specs/intake-series/aoc-phase-2/manifest.json --action status --json",
+          "existingAtPlan": false,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "next-bash",
+          "command": "bash specs/004-series-eligibility/contracts/validate-series-eligibility.sh --repo . --series specs/intake-series/aoc-phase-2/manifest.json --action next --json",
+          "existingAtPlan": false,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "surface-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case surface",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "empty-integration-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case empty-integration",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "all-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case all",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "criteria-cardinality-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case criteria-cardinality",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "runner-cardinality-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case runner-cardinality",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "series-negatives-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case series-negatives",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "status-next-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case status-next",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "failure-taxonomy-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case failure-taxonomy",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "status-pwsh",
+          "command": "pwsh -NoProfile -File specs/004-series-eligibility/contracts/validate-series-eligibility.ps1 -Repo . -Series specs/intake-series/aoc-phase-2/manifest.json -Action status -Json",
+          "existingAtPlan": false,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "next-pwsh",
+          "command": "pwsh -NoProfile -File specs/004-series-eligibility/contracts/validate-series-eligibility.ps1 -Repo . -Series specs/intake-series/aoc-phase-2/manifest.json -Action next -Json",
+          "existingAtPlan": false,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "global-ready",
+          "command": "python3 -B specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py --repo . global-ready",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "pssa",
+          "command": "pwsh -NoProfile -File scripts/invoke-psscriptanalyzer.ps1 -RepositoryRoot .",
+          "existingAtPlan": true,
+          "expected": "Exit 0; PSScriptAnalyzer 1.25.0, complete tracked repository-owned PowerShell set",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "whitespace",
+          "command": "git diff --check",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "documentation-bash",
+          "command": "bash scripts/validate-documentation-impact.sh --evidence specs/004-series-eligibility/contracts/documentation-impact.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "documentation-pwsh",
+          "command": "pwsh -NoProfile -File scripts/validate-documentation-impact.ps1 -Evidence specs/004-series-eligibility/contracts/documentation-impact.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "stats-bash",
+          "command": "bash scripts/render-project-statistics.sh --repo . --check-only",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T008",
+            "T016",
+            "T022",
+            "T031",
+            "T040",
+            "T055",
+            "T048"
+          ],
+          "executionPhase": "Read-only statistics checks at statistics boundaries and exact-head native acceptance; never render in the matrix",
+          "conditionalRefreshTasks": [
+            "T046",
+            "T051",
+            "T054",
+            "T056"
+          ],
+          "conditionalRefreshTrigger": "Only if later authorized source/evidence/task changes require the complete statistics-checkpoints.json protocol before freeze/push/head gates; never substitute for an earlier mandatory boundary."
+        },
+        {
+          "id": "stats-pwsh",
+          "command": "pwsh -NoProfile -File scripts/render-project-statistics.ps1 -Repo . -CheckOnly",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T008",
+            "T016",
+            "T022",
+            "T031",
+            "T040",
+            "T055",
+            "T048"
+          ],
+          "executionPhase": "Read-only statistics checks at statistics boundaries and exact-head native acceptance; never render in the matrix",
+          "conditionalRefreshTasks": [
+            "T046",
+            "T051",
+            "T054",
+            "T056"
+          ],
+          "conditionalRefreshTrigger": "Only if later authorized source/evidence/task changes require the complete statistics-checkpoints.json protocol before freeze/push/head gates; never substitute for an earlier mandatory boundary."
+        }
+      ],
+      "macos-14": [
+        {
+          "id": "series-bash",
+          "command": "bash .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.sh --file specs/intake-series/aoc-phase-2/manifest.json --repo .",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "series-pwsh",
+          "command": "pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.ps1 -File specs/intake-series/aoc-phase-2/manifest.json -Repo .",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "sequencing",
+          "command": "pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/tests/test-intake-sequencing-validator.ps1",
+          "existingAtPlan": true,
+          "expected": "Exit 0; children reject cycle ISG007, hash drift ISG004, roots ISG008, multiple declared Eligible ISG009 with exit 2",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "legacy-valid-parallel-bash",
+          "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/valid-parallel.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0; Eligible",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "legacy-valid-parallel-pwsh",
+          "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/valid-parallel.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0; Eligible",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "legacy-shared-write-bash",
+          "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/shared-write.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0; Blocked",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "legacy-shared-write-pwsh",
+          "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/shared-write.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0; Blocked",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "legacy-shared-decision-bash",
+          "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/shared-decision.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0; Blocked",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "legacy-shared-decision-pwsh",
+          "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/shared-decision.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0; Blocked",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "surface-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case surface",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "empty-integration-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case empty-integration",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "all-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case all",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "criteria-cardinality-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case criteria-cardinality",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "runner-cardinality-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case runner-cardinality",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "series-negatives-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case series-negatives",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "status-next-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case status-next",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "failure-taxonomy-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case failure-taxonomy",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "status-bash",
+          "command": "bash specs/004-series-eligibility/contracts/validate-series-eligibility.sh --repo . --series specs/intake-series/aoc-phase-2/manifest.json --action status --json",
+          "existingAtPlan": false,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "next-bash",
+          "command": "bash specs/004-series-eligibility/contracts/validate-series-eligibility.sh --repo . --series specs/intake-series/aoc-phase-2/manifest.json --action next --json",
+          "existingAtPlan": false,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "surface-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case surface",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "empty-integration-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case empty-integration",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "all-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case all",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "criteria-cardinality-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case criteria-cardinality",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "runner-cardinality-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case runner-cardinality",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "series-negatives-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case series-negatives",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "status-next-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case status-next",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "failure-taxonomy-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case failure-taxonomy",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "status-pwsh",
+          "command": "pwsh -NoProfile -File specs/004-series-eligibility/contracts/validate-series-eligibility.ps1 -Repo . -Series specs/intake-series/aoc-phase-2/manifest.json -Action status -Json",
+          "existingAtPlan": false,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "next-pwsh",
+          "command": "pwsh -NoProfile -File specs/004-series-eligibility/contracts/validate-series-eligibility.ps1 -Repo . -Series specs/intake-series/aoc-phase-2/manifest.json -Action next -Json",
+          "existingAtPlan": false,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "global-ready",
+          "command": "python3 -B specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py --repo . global-ready",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "pssa",
+          "command": "pwsh -NoProfile -File scripts/invoke-psscriptanalyzer.ps1 -RepositoryRoot .",
+          "existingAtPlan": true,
+          "expected": "Exit 0; PSScriptAnalyzer 1.25.0, complete tracked repository-owned PowerShell set",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "whitespace",
+          "command": "git diff --check",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "documentation-bash",
+          "command": "bash scripts/validate-documentation-impact.sh --evidence specs/004-series-eligibility/contracts/documentation-impact.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "documentation-pwsh",
+          "command": "pwsh -NoProfile -File scripts/validate-documentation-impact.ps1 -Evidence specs/004-series-eligibility/contracts/documentation-impact.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "stats-bash",
+          "command": "bash scripts/render-project-statistics.sh --repo . --check-only",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T008",
+            "T016",
+            "T022",
+            "T031",
+            "T040",
+            "T055",
+            "T048"
+          ],
+          "executionPhase": "Read-only statistics checks at statistics boundaries and exact-head native acceptance; never render in the matrix",
+          "conditionalRefreshTasks": [
+            "T046",
+            "T051",
+            "T054",
+            "T056"
+          ],
+          "conditionalRefreshTrigger": "Only if later authorized source/evidence/task changes require the complete statistics-checkpoints.json protocol before freeze/push/head gates; never substitute for an earlier mandatory boundary."
+        },
+        {
+          "id": "stats-pwsh",
+          "command": "pwsh -NoProfile -File scripts/render-project-statistics.ps1 -Repo . -CheckOnly",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T008",
+            "T016",
+            "T022",
+            "T031",
+            "T040",
+            "T055",
+            "T048"
+          ],
+          "executionPhase": "Read-only statistics checks at statistics boundaries and exact-head native acceptance; never render in the matrix",
+          "conditionalRefreshTasks": [
+            "T046",
+            "T051",
+            "T054",
+            "T056"
+          ],
+          "conditionalRefreshTrigger": "Only if later authorized source/evidence/task changes require the complete statistics-checkpoints.json protocol before freeze/push/head gates; never substitute for an earlier mandatory boundary."
+        }
+      ],
+      "windows-2022": [
+        {
+          "id": "series-bash",
+          "command": "bash .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.sh --file specs/intake-series/aoc-phase-2/manifest.json --repo .",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "series-pwsh",
+          "command": "pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.ps1 -File specs/intake-series/aoc-phase-2/manifest.json -Repo .",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "sequencing",
+          "command": "pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/tests/test-intake-sequencing-validator.ps1",
+          "existingAtPlan": true,
+          "expected": "Exit 0; children reject cycle ISG007, hash drift ISG004, roots ISG008, multiple declared Eligible ISG009 with exit 2",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "legacy-valid-parallel-bash",
+          "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/valid-parallel.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0; Eligible",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "legacy-valid-parallel-pwsh",
+          "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/valid-parallel.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0; Eligible",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "legacy-shared-write-bash",
+          "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/shared-write.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0; Blocked",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "legacy-shared-write-pwsh",
+          "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/shared-write.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0; Blocked",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "legacy-shared-decision-bash",
+          "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/shared-decision.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0; Blocked",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "legacy-shared-decision-pwsh",
+          "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/shared-decision.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0; Blocked",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "surface-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case surface",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "empty-integration-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case empty-integration",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "all-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case all",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "criteria-cardinality-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case criteria-cardinality",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "runner-cardinality-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case runner-cardinality",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "series-negatives-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case series-negatives",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "status-next-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case status-next",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "failure-taxonomy-bash",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case failure-taxonomy",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "status-bash",
+          "command": "bash specs/004-series-eligibility/contracts/validate-series-eligibility.sh --repo . --series specs/intake-series/aoc-phase-2/manifest.json --action status --json",
+          "existingAtPlan": false,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "next-bash",
+          "command": "bash specs/004-series-eligibility/contracts/validate-series-eligibility.sh --repo . --series specs/intake-series/aoc-phase-2/manifest.json --action next --json",
+          "existingAtPlan": false,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "surface-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case surface",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "empty-integration-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case empty-integration",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "all-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case all",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "criteria-cardinality-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case criteria-cardinality",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "runner-cardinality-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case runner-cardinality",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "series-negatives-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case series-negatives",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "status-next-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case status-next",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "failure-taxonomy-pwsh",
+          "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case failure-taxonomy",
+          "existingAtPlan": false,
+          "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "status-pwsh",
+          "command": "pwsh -NoProfile -File specs/004-series-eligibility/contracts/validate-series-eligibility.ps1 -Repo . -Series specs/intake-series/aoc-phase-2/manifest.json -Action status -Json",
+          "existingAtPlan": false,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "next-pwsh",
+          "command": "pwsh -NoProfile -File specs/004-series-eligibility/contracts/validate-series-eligibility.ps1 -Repo . -Series specs/intake-series/aoc-phase-2/manifest.json -Action next -Json",
+          "existingAtPlan": false,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "global-ready",
+          "command": "python3 -B specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py --repo . global-ready",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "pssa",
+          "command": "pwsh -NoProfile -File scripts/invoke-psscriptanalyzer.ps1 -RepositoryRoot .",
+          "existingAtPlan": true,
+          "expected": "Exit 0; PSScriptAnalyzer 1.25.0, complete tracked repository-owned PowerShell set",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "whitespace",
+          "command": "git diff --check",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "documentation-bash",
+          "command": "bash scripts/validate-documentation-impact.sh --evidence specs/004-series-eligibility/contracts/documentation-impact.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "documentation-pwsh",
+          "command": "pwsh -NoProfile -File scripts/validate-documentation-impact.ps1 -Evidence specs/004-series-eligibility/contracts/documentation-impact.json",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T029",
+            "T048"
+          ],
+          "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+        },
+        {
+          "id": "stats-bash",
+          "command": "bash scripts/render-project-statistics.sh --repo . --check-only",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T008",
+            "T016",
+            "T022",
+            "T031",
+            "T040",
+            "T055",
+            "T048"
+          ],
+          "executionPhase": "Read-only statistics checks at statistics boundaries and exact-head native acceptance; never render in the matrix",
+          "conditionalRefreshTasks": [
+            "T046",
+            "T051",
+            "T054",
+            "T056"
+          ],
+          "conditionalRefreshTrigger": "Only if later authorized source/evidence/task changes require the complete statistics-checkpoints.json protocol before freeze/push/head gates; never substitute for an earlier mandatory boundary."
+        },
+        {
+          "id": "stats-pwsh",
+          "command": "pwsh -NoProfile -File scripts/render-project-statistics.ps1 -Repo . -CheckOnly",
+          "existingAtPlan": true,
+          "expected": "Exit 0",
+          "platforms": [
+            "ubuntu-22.04",
+            "macos-14",
+            "windows-2022"
+          ],
+          "executionClass": "native-automated-gate",
+          "executionTasks": [
+            "T008",
+            "T016",
+            "T022",
+            "T031",
+            "T040",
+            "T055",
+            "T048"
+          ],
+          "executionPhase": "Read-only statistics checks at statistics boundaries and exact-head native acceptance; never render in the matrix",
+          "conditionalRefreshTasks": [
+            "T046",
+            "T051",
+            "T054",
+            "T056"
+          ],
+          "conditionalRefreshTrigger": "Only if later authorized source/evidence/task changes require the complete statistics-checkpoints.json protocol before freeze/push/head gates; never substitute for an earlier mandatory boundary."
+        }
+      ]
+    },
+    "statisticsWritesExecuted": false,
+    "providerLogRetrievalExecuted": false
+  },
+  "red": [
+    {
+      "label": "red-t028-bash",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "bash",
+        "--case",
+        "runner-cardinality"
+      ],
+      "startedAt": "2026-09-13T08:13:40.114751+00:00",
+      "exitCode": 1,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "b06f5f18dcf849685439bfaa7530e2ba809d213aa21941bf4f6553b63ff16053",
+          "normalizedSha256": "b06f5f18dcf849685439bfaa7530e2ba809d213aa21941bf4f6553b63ff16053"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "73d0845094cc7903f006a8b07d813a4ea95e135d14b73eb361e32bd959465997",
+          "normalizedSha256": "73d0845094cc7903f006a8b07d813a4ea95e135d14b73eb361e32bd959465997"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+          "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+          "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "9f68db38f53524d56a83b87bf8e84a0b41522366ee25d9f098c9ef899e9e5a2e",
+          "normalizedSha256": "9f68db38f53524d56a83b87bf8e84a0b41522366ee25d9f098c9ef899e9e5a2e"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/red-t028-bash.log",
+        "rawSha256": "63ff79a8ed536244820e6be10fc312238f150ba7ab55ebd74d72e5e8a6908823",
+        "normalizedSha256": "63ff79a8ed536244820e6be10fc312238f150ba7ab55ebd74d72e5e8a6908823"
+      }
+    },
+    {
+      "label": "red-t028-pwsh",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "pwsh",
+        "--case",
+        "runner-cardinality"
+      ],
+      "startedAt": "2026-09-13T08:14:58.511002+00:00",
+      "exitCode": 1,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "b06f5f18dcf849685439bfaa7530e2ba809d213aa21941bf4f6553b63ff16053",
+          "normalizedSha256": "b06f5f18dcf849685439bfaa7530e2ba809d213aa21941bf4f6553b63ff16053"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "73d0845094cc7903f006a8b07d813a4ea95e135d14b73eb361e32bd959465997",
+          "normalizedSha256": "73d0845094cc7903f006a8b07d813a4ea95e135d14b73eb361e32bd959465997"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+          "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+          "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "9f68db38f53524d56a83b87bf8e84a0b41522366ee25d9f098c9ef899e9e5a2e",
+          "normalizedSha256": "9f68db38f53524d56a83b87bf8e84a0b41522366ee25d9f098c9ef899e9e5a2e"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/red-t028-pwsh.log",
+        "rawSha256": "4e26e533ebcc075e6563868c0ee650051b9620da3e9b0488b78278c0e3e09860",
+        "normalizedSha256": "4e26e533ebcc075e6563868c0ee650051b9620da3e9b0488b78278c0e3e09860"
+      }
+    }
+  ],
+  "green": [
+    {
+      "label": "verified-runner-bash",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "bash",
+        "--case",
+        "runner-cardinality"
+      ],
+      "startedAt": "2026-09-13T08:20:54.457751+00:00",
+      "exitCode": 0,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e",
+          "normalizedSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6",
+          "normalizedSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+          "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+          "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558",
+          "normalizedSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/verified-runner-bash.log",
+        "rawSha256": "4063b9d8e967d03d2804967878c27791ade3a1a44bcef584ce6a18544fa1e84f",
+        "normalizedSha256": "4063b9d8e967d03d2804967878c27791ade3a1a44bcef584ce6a18544fa1e84f"
+      }
+    },
+    {
+      "label": "verified-runner-pwsh",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "pwsh",
+        "--case",
+        "runner-cardinality"
+      ],
+      "startedAt": "2026-09-13T08:20:54.291443+00:00",
+      "exitCode": 0,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e",
+          "normalizedSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6",
+          "normalizedSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+          "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+          "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558",
+          "normalizedSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/verified-runner-pwsh.log",
+        "rawSha256": "34c3a22cbe5b8334e9c7c6b605a52b31a88fda7585cd1b025e0dafaee827cade",
+        "normalizedSha256": "34c3a22cbe5b8334e9c7c6b605a52b31a88fda7585cd1b025e0dafaee827cade"
+      }
+    },
+    {
+      "label": "final-workflow-parser",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "/private/tmp/aoc-workflow-parse.ps1"
+      ],
+      "startedAt": "2026-09-13T08:19:25.032629+00:00",
+      "exitCode": 0,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e",
+          "normalizedSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6",
+          "normalizedSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+          "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+          "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558",
+          "normalizedSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/final-workflow-parser.log",
+        "rawSha256": "b66d0a2644a00f6444139ce74fde8ea2fbbb0fab4f988f6ee4f329705eea775d",
+        "normalizedSha256": "b66d0a2644a00f6444139ce74fde8ea2fbbb0fab4f988f6ee4f329705eea775d"
+      }
+    },
+    {
+      "label": "final-all-bash",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "bash",
+        "--case",
+        "all"
+      ],
+      "startedAt": "2026-09-13T08:18:45.879752+00:00",
+      "exitCode": 0,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e",
+          "normalizedSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6",
+          "normalizedSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+          "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+          "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558",
+          "normalizedSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/final-all-bash.log",
+        "rawSha256": "ba4f798c4432c8a052a937fcaf7497140bb9ae76443f03534d9fe38f24aa341c",
+        "normalizedSha256": "ba4f798c4432c8a052a937fcaf7497140bb9ae76443f03534d9fe38f24aa341c"
+      }
+    },
+    {
+      "label": "final-all-pwsh",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "pwsh",
+        "--case",
+        "all"
+      ],
+      "startedAt": "2026-09-13T08:18:44.849342+00:00",
+      "exitCode": 0,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e",
+          "normalizedSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6",
+          "normalizedSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+          "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+          "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558",
+          "normalizedSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/final-all-pwsh.log",
+        "rawSha256": "a64dc03a5f3345322b891008392a2c9c1bf5585e43365d93a02f8c8f099f227c",
+        "normalizedSha256": "a64dc03a5f3345322b891008392a2c9c1bf5585e43365d93a02f8c8f099f227c"
+      }
+    }
+  ],
+  "providerCapabilityRemediation": {
+    "status": "ValidatedAtExactHead",
+    "observedHead": "02a9399536c46497c34cee840e5ae2c4fc090574",
+    "workflowRunId": 34754238229,
+    "macosJobId": 103715801045,
+    "finding": "The GitHub-hosted macos-14 image exposed only Apple Bash 3.2, while the Feature-004 native gate requires Bash 5 or newer.",
+    "decision": "Provision Bash 5 ephemerally through Homebrew in the macos-14 Feature-004 job only; retain fail-closed version and child-PATH checks and do not add a Linux or Windows fallback.",
+    "authorizedBy": "Repository owner",
+    "authorizedAt": "2026-09-13",
+    "validation": "Run 34751212746 job 103707972407 passed the new macOS provisioning step. Jobs 103707972094 and 103707972342 then exceeded the pre-existing ten-minute job limit while executing the full native matrix.",
+    "timingDecision": "Raise only this existing workflow job timeout from 10 to 20 minutes; do not skip, split, or weaken any native gate.",
+    "windowsEncodingFinding": "Run 34751919837 proved the twenty-minute budget on Ubuntu and macOS. Windows job 103709798761 reached the status/next suite, but Python decoded redirected PowerShell UTF-8 output through the Windows locale and replaced the German umlaut in the required bilingual heading.",
+    "encodingDecision": "Keep strict UTF-8 decoding for the PowerShell child in the outer Python harness and bind the inner Python core invoked by the PowerShell wrapper to UTF-8 through a scoped PYTHONIOENCODING value. Restore the previous environment value afterward. Retain the native platform decoder for Git Bash and preserve every bilingual assertion and gate.",
+    "windowsBashEncodingFinding": "Run 34752736325, Windows job 103711893897, showed that applying UTF-8 to both surfaces is invalid: Git Bash emitted byte 0xfc through the Windows native code page and the strict UTF-8 reader rejected it. This finding narrows the correction to the PowerShell surface.",
+    "windowsPowerShellEncodingFinding": "Run 34753204293, Windows job 103713108561, passed all-bash but reproduced the required-heading failure in all-pwsh. The outer strict decoder received valid UTF-8 containing U+FFFD, proving that the inner Python-to-PowerShell native boundary had already replaced the umlaut. The scoped wrapper encoding fixes that boundary without changing the assertion.",
+    "encodingLocalValidation": {
+      "completedAt": "2026-09-13T11:16:45Z",
+      "result": "Pass",
+      "commands": [
+        "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case status-next",
+        "pwsh -NoProfile -File scripts/invoke-psscriptanalyzer.ps1"
+      ],
+      "testHarnessSha256": "8cff0edd1772f3e8afce1bea92e316396dd8d4b19a1c39b7c014f9d6ecc6eea6",
+      "powerShellWrapperSha256": "b28c0b4175565b92f32085aec4a9b45767043f6db38069aeb70c7d07236a03e0",
+      "environmentRestored": true
+    },
+    "exactHeadValidation": {
+      "result": "Pass",
+      "ubuntuJobId": 103715801136,
+      "macosJobId": 103715801045,
+      "windowsJobId": 103715801117,
+      "catalogCommandsPerJob": 36,
+      "immediateExitZeroPerJob": 36,
+      "evidence": "specs/004-series-eligibility/phase-results/ci-evidence.json"
+    },
+    "nextTask": "T051"
+  },
+  "nativeEvidenceGaps": [
+    {
+      "platform": "ubuntu-22.04",
+      "status": "Closed",
+      "reason": "Run 34754238229 job 103715801136 passed all 36 native catalog commands at the exact PR source head",
+      "owner": "Coordinating autonomous runner",
+      "completedTask": "T048"
+    },
+    {
+      "platform": "macos-14",
+      "status": "Closed",
+      "reason": "Run 34754238229 job 103715801045 passed all 36 native catalog commands with ephemeral Homebrew Bash 5+",
+      "owner": "Coordinating autonomous runner",
+      "completedTask": "T048"
+    },
+    {
+      "platform": "windows-2022",
+      "status": "Closed",
+      "reason": "Run 34754238229 job 103715801117 passed all 36 native catalog commands with Git-for-Windows Bash and strict PowerShell UTF-8",
+      "owner": "Coordinating autonomous runner",
+      "completedTask": "T048"
+    }
+  ],
+  "legacyWorkflowPrefixSha256": "9f68db38f53524d56a83b87bf8e84a0b41522366ee25d9f098c9ef899e9e5a2e"
+}

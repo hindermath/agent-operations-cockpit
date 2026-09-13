@@ -1,0 +1,172 @@
+{
+  "schemaVersion": "1.0",
+  "feature": "004-series-eligibility",
+  "purpose": "Plan-only EL-STOP-001 ordering correction; this file grants no execution authority. C005 adds the complete verified minimal Principle-II unit before the first T008 source checkpoint.",
+  "mandatoryBoundaries": [
+    {
+      "taskId": "T008",
+      "previousCheckpoint": "coordinator-bound base HEAD",
+      "completedWork": "Accepted preparation and T001-T007, preserving historical evidence; complete verified minimal T004-T007 adapter/help/advanced-function/manpage/quickstart unit in the same first T008 source commit"
+    },
+    {
+      "taskId": "T016",
+      "previousCheckpoint": "T008",
+      "completedWork": "T009-T015 and actual US1 verification"
+    },
+    {
+      "taskId": "T022",
+      "previousCheckpoint": "T016",
+      "completedWork": "T017-T021 and actual US2 verification"
+    },
+    {
+      "taskId": "T031",
+      "previousCheckpoint": "T022",
+      "completedWork": "T023-T030 and actual US3 verification"
+    },
+    {
+      "taskId": "T040",
+      "previousCheckpoint": "T031",
+      "completedWork": "T032-T039 and actual local quality evidence"
+    },
+    {
+      "taskId": "T055",
+      "previousCheckpoint": "T040 via T046, feature merge and T054 lifecycle delivery",
+      "completedWork": "Actual post-lifecycle causal closeout, retrospective and AEPS; audit intervening validated history"
+    }
+  ],
+  "orderedSteps": [
+    "revalidate-authority-inputs-and-increment",
+    "validate-unstaged-bash-pwsh",
+    "stage-exact-approved-paths",
+    "validate-staged-bash-pwsh-and-index-hashes",
+    "commit-source-conventional-with-trailer",
+    "prove-clean-real-feature-worktree",
+    "help-bash-pwsh",
+    "paired-preview-bash-pwsh",
+    "render-once",
+    "check-only-bash-pwsh",
+    "if-ledger-changed-validate-unstaged-stage-exact-validate-staged-bash-pwsh",
+    "if-ledger-changed-commit-statistics-only-with-trailer",
+    "prove-clean-and-check-only-bash-pwsh",
+    "record-runtime-completion"
+  ],
+  "requiredTrailer": "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>",
+  "statisticsOnlyPaths": [
+    "docs/project-statistics.md"
+  ],
+  "branchRule": "T008-T040: 004-series-eligibility; T055: actual authorized closeout feature branch from synchronized lifecycle merge in the same real worktree; never main, detached HEAD or synthetic state.",
+  "rendererCommandsFrom": "specs/004-series-eligibility/contracts/validation-commands.json",
+  "runtimeEvidenceRoot": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/checkpoints",
+  "receiptNaming": "<task-id-lowercase>-<fresh-attempt-uuid>.json; coordinator reserves exact path before execution",
+  "requiredReceiptFields": [
+    "taskId",
+    "attemptId",
+    "authorityEvidence",
+    "branch",
+    "previousCheckpoint",
+    "parentHead",
+    "sourceCommit",
+    "sourceRevision",
+    "intendedPaths",
+    "unstagedValidation",
+    "stagedValidation",
+    "indexHashes",
+    "commandsWithImmediateExits",
+    "cleanBeforeRender",
+    "previewParity",
+    "ledgerBeforeHash",
+    "ledgerAfterHash",
+    "statisticsCommitOrUnchanged",
+    "finalHead",
+    "cleanAfterCheckpoint",
+    "taskCompletionEvidence"
+  ],
+  "exactScopeRules": [
+    "Worktree validators include all changed tracked files plus named untracked files; compare their full union exactly to the authorized completed increment.",
+    "Staged validators require every intended path and physical index hashes; reject unexpected staged or leftover unstaged/untracked files. Use only the real index.",
+    "Explicitly attribute and authorize all accepted preparation needed to clean T008; existing edits grant no blanket authority. Foreign changes that prevent clean rendering block execution.",
+    "Historical whitespace allowances require explicit existing authority and exact immutable raw hashes; never edit blocked history to pass.",
+    "Any candidate drift invalidates validation; revalidate before commit and compare committed bytes against validated index hashes."
+  ],
+  "causalEvidenceRules": [
+    "Before the source commit publish only already observed facts/completed task marks; the current boundary remains unchecked until its actual pass.",
+    "After source commit write own commit hashes, renderer logs and current completion only to the existing ignored runtime area; do not dirty the tree before rendering or mix evidence into the statistics-only commit.",
+    "Publish a just-completed checkbox and its canonical evidence at the next authorized source checkpoint; coordinator retains immediate runtime completion and reconciles task count/hash against real marks. Never invent completion for cleanliness.",
+    "Any later versioned task/state/evidence write, including a prior statistics receipt, is a new source delta requiring this full protocol before freeze/push; final self-container facts remain runtime-only.",
+    "Check both surfaces again after the statistics-only commit; record actual renderer sourceRevision separately from HEAD."
+  ],
+  "deliveryFreezeTasks": [
+    "T046",
+    "T056"
+  ],
+  "additionalRefreshTrigger": "Later source delta before push/CI/merge, including review repair and lifecycle delivery; mandatory earlier statistics boundaries cannot be deferred.",
+  "preservedDeliverySequence": [
+    "T047 feature PR",
+    "T048-T050 exact-head native CI and schema-2.0 PreMerge",
+    "T051 feature merge",
+    "T052 PostMerge",
+    "T053-T054 one lifecycle PR",
+    "T055 closeout checkpoint",
+    "T056 closeout PR and PostMerge",
+    "T057 main sync"
+  ],
+  "forbidden": [
+    "renderer mutation",
+    "dirty-tree override",
+    "stash",
+    "synthetic worktree",
+    "synthetic index",
+    "copy preview output",
+    "defer mandatory boundary",
+    "rewrite checkpoint history",
+    "implicit remote authority",
+    "META-LH-05 start"
+  ],
+  "documentationDecision": "UpdateRequired",
+  "completionScope": "Planning only; T008-T057 remain incomplete until actual execution evidence exists.",
+  "checkpointExecutor": {
+    "owner": "outer autonomous coordinator",
+    "mode": "script-only Git checkpoints under current authority",
+    "modelSandboxConstraint": "Model sandboxes may not write .git; ENV001 is an execution limit, not a validator exception.",
+    "requiredTransaction": "All existing orderedSteps, exact Delivery-Set unstaged/staged checks, real index hashes, source commit, clean-tree render and separately validated changed-only statistics commit remain mandatory.",
+    "configurationChangesPermitted": false
+  },
+  "firstSourceCheckpointPrerequisite": {
+    "taskId": "T008",
+    "principle": "Constitution Principle II",
+    "requiredBefore": "validate-unstaged-bash-pwsh; stage-exact-approved-paths; commit-source-conventional-with-trailer",
+    "sameSourceCommitRequired": true,
+    "requiredPaths": [
+      "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+      "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+      "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+      "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+      "docs/man/validate-series-eligibility.1",
+      "specs/004-series-eligibility/quickstart.md",
+      "specs/004-series-eligibility/phase-results/atomic-surface-t008-verification.json"
+    ],
+    "requiredSurfaces": [
+      "Bash --help/-h without mandatory arguments, exit 0",
+      "PowerShell -Help without mandatory arguments, exit 0",
+      "Advanced function Test-AocSeriesEligibility with complete DE-first/EN-second comment-based help",
+      "Safe argument-free dot-sourcing: load only, no prompt, output, caller exit, query, child processes or writes",
+      "DE-first/EN-second CEFR-B2 manpage and minimal quickstart reader path"
+    ],
+    "scope": "Current T004-T007 only: Repo/Fixture/Json, delegated valid assessment, integration value check, current output/exit/failure semantics, no writes or starts; no broader story implementation.",
+    "verification": [
+      "Manual verification of both variants on at least one actual target OS per variant",
+      "Help completeness and rendered manpage/reader review",
+      "Bash syntax/quoting/strict mode and PowerShell parser/strict mode/PSScriptAnalyzer",
+      "Safe dot-sourcing and advanced-function/CLI parity",
+      "Unchanged surface and empty-integration tests pass in both shells",
+      "Observed no-write/no-start snapshots; actual reviewer, OS/runtime, commands, immediate exits, outputs and source/test hashes matching validated index bytes"
+    ],
+    "evidencePath": "specs/004-series-eligibility/phase-results/atomic-surface-t008-verification.json",
+    "missingOrFailedEvidence": "Block before first source commit; preserve T008 unchecked and historical blocked evidence.",
+    "currentExecutionStatus": "Pending; planning remediation creates no surfaces or implementation verification.",
+    "laterExpansionOnly": {
+      "T027": "Expand existing shell/help/advanced-function unit to six modes and final fixture/series interface; no first creation.",
+      "T036": "Expand existing manpage and quickstart for final six-mode interface; no first creation."
+    }
+  }
+}

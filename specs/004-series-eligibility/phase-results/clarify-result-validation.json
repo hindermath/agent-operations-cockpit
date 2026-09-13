@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "clarify",
+  "scope": "Local structured-result validation; actual phase process exit remains runner-owned.",
+  "checks": [
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.sh --repo . --result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/clarify.result.json --phase-id clarify --exit-code 0",
+      "exitCode": 0,
+      "output": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"clarify\",\n  \"normalizedSha256\": \"f69325aeced4509718eae9c26cdb566d28d42f7bc6f92345bb17142981501dff\",\n  \"payloadSha256\": \"749d6e440eb2d70ce1b6261c837503a250969ffd5db28f77dc735afd10d070c5\"\n}\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.ps1 -Repo . -Result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/clarify.result.json -PhaseId clarify -ExitCode 0",
+      "exitCode": 0,
+      "output": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"clarify\",\n  \"normalizedSha256\": \"f69325aeced4509718eae9c26cdb566d28d42f7bc6f92345bb17142981501dff\",\n  \"payloadSha256\": \"749d6e440eb2d70ce1b6261c837503a250969ffd5db28f77dc735afd10d070c5\"\n}\n"
+    },
+    {
+      "command": "git diff --check; git status --short",
+      "exitCode": 0,
+      "output": "?? specs/004-series-eligibility/\n"
+    }
+  ]
+}

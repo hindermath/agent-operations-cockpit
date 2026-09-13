@@ -1,0 +1,220 @@
+{
+  "schemaVersion": "1.0",
+  "records": [
+    {
+      "command": "python3 AST specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+      "exitCode": 0
+    },
+    {
+      "command": "python3 AST specs/004-series-eligibility/contracts/test_series_eligibility.py",
+      "exitCode": 0
+    },
+    {
+      "command": "python3 AST specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.py",
+      "exitCode": 0
+    },
+    {
+      "command": "python3 AST .specify/presets/intake-sequencing-governance/scripts/validate-intake-series.py",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bash",
+        "-n",
+        "specs/004-series-eligibility/contracts/validate-series-eligibility.sh"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-Command",
+        "$ParseTokens=$null; $ParseErrors=$null; [void][System.Management.Automation.Language.Parser]::ParseFile('specs/004-series-eligibility/contracts/validate-series-eligibility.ps1',[ref]$ParseTokens,[ref]$ParseErrors); if ($ParseErrors.Count) { $ParseErrors; exit 1 }"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "stage": "red",
+      "case": "surface",
+      "shell": "bash",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "bash",
+        "--case",
+        "surface"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"shell\": \"bash\", \"test\": \"__main__.EligibilityTests.test_surface\", \"childExit\": 0, \"stdout\": \"{\\\"schemaVersion\\\": \\\"1.0\\\", \\\"mode\\\": \\\"parallel-autonomous\\\", \\\"criteria\\\": {\\\"authority\\\": \\\"current-and-explicit\\\", \\\"sideEffects\\\": \\\"bounded\\\", \\\"reversibility\\\": \\\"recoverable\\\", \\\"writeScope\\\": \\\"disjoint\\\", \\\"decisions\\\": \\\"no-shared-open-decisions\\\", \\\"integration\\\": \\\"planned\\\", \\\"review\\\": \\\"consolidation-review-planned\\\", \\\"abort\\\": \\\"defined\\\", \\\"recovery\\\": \\\"defined\\\"}, \\\"outcome\\\": \\\"Eligible\\\", \\\"reasons\\\": [], \\\"failureClass\\\": null, \\\"authorityGranted\\\": false, \\\"nextAction\\\": {\\\"de\\\": \\\"Eingaben und Nachweise erneut prüfen; nichts starten.\\\", \\\"en\\\": \\\"Reassess inputs and evidence; start nothing.\\\"}}\\n\", \"stderr\": \"\"}\n",
+      "stderr": "test_surface (__main__.EligibilityTests.test_surface) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.375s\n\nOK\n"
+    },
+    {
+      "stage": "red",
+      "case": "surface",
+      "shell": "pwsh",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "pwsh",
+        "--case",
+        "surface"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"shell\": \"pwsh\", \"test\": \"__main__.EligibilityTests.test_surface\", \"childExit\": 0, \"stdout\": \"{\\\"schemaVersion\\\": \\\"1.0\\\", \\\"mode\\\": \\\"parallel-autonomous\\\", \\\"criteria\\\": {\\\"authority\\\": \\\"current-and-explicit\\\", \\\"sideEffects\\\": \\\"bounded\\\", \\\"reversibility\\\": \\\"recoverable\\\", \\\"writeScope\\\": \\\"disjoint\\\", \\\"decisions\\\": \\\"no-shared-open-decisions\\\", \\\"integration\\\": \\\"planned\\\", \\\"review\\\": \\\"consolidation-review-planned\\\", \\\"abort\\\": \\\"defined\\\", \\\"recovery\\\": \\\"defined\\\"}, \\\"outcome\\\": \\\"Eligible\\\", \\\"reasons\\\": [], \\\"failureClass\\\": null, \\\"authorityGranted\\\": false, \\\"nextAction\\\": {\\\"de\\\": \\\"Eingaben und Nachweise erneut prüfen; nichts starten.\\\", \\\"en\\\": \\\"Reassess inputs and evidence; start nothing.\\\"}}\\n\", \"stderr\": \"\"}\n",
+      "stderr": "test_surface (__main__.EligibilityTests.test_surface) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.679s\n\nOK\n"
+    },
+    {
+      "stage": "red",
+      "case": "empty-integration",
+      "shell": "bash",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "bash",
+        "--case",
+        "empty-integration"
+      ],
+      "exitCode": 1,
+      "stdout": "{\"shell\": \"bash\", \"test\": \"__main__.EligibilityTests.test_empty_integration\", \"childExit\": 2, \"stdout\": \"{\\\"schemaVersion\\\": \\\"1.0\\\", \\\"mode\\\": \\\"parallel-autonomous\\\", \\\"criteria\\\": {\\\"authority\\\": \\\"current-and-explicit\\\", \\\"sideEffects\\\": \\\"bounded\\\", \\\"reversibility\\\": \\\"recoverable\\\", \\\"writeScope\\\": \\\"disjoint\\\", \\\"decisions\\\": \\\"no-shared-open-decisions\\\", \\\"integration\\\": \\\"\\\", \\\"review\\\": \\\"consolidation-review-planned\\\", \\\"abort\\\": \\\"defined\\\", \\\"recovery\\\": \\\"defined\\\"}, \\\"outcome\\\": \\\"Eligible\\\", \\\"reasons\\\": [{\\\"code\\\": \\\"EL_EXPECTATION\\\", \\\"criterion\\\": null, \\\"de\\\": \\\"Die Fixture-Erwartung weicht vom berechneten Ergebnis ab.\\\", \\\"en\\\": \\\"The fixture expectation differs from the calculated outcome.\\\"}], \\\"failureClass\\\": \\\"ProductFailure\\\", \\\"authorityGranted\\\": false, \\\"nextAction\\\": {\\\"de\\\": \\\"Eingaben und Nachweise erneut prüfen; nichts starten.\\\", \\\"en\\\": \\\"Reassess inputs and evidence; start nothing.\\\"}}\\n\", \"stderr\": \"\"}\n",
+      "stderr": "test_empty_integration (__main__.EligibilityTests.test_empty_integration) ... FAIL\n\n======================================================================\nFAIL: test_empty_integration (__main__.EligibilityTests.test_empty_integration)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<repo>/specs/004-series-eligibility/contracts/test_series_eligibility.py\", line 67, in test_empty_integration\n    self.assertEqual(\"Blocked\", result[\"outcome\"])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'Blocked' != 'Eligible'\n- Blocked\n+ Eligible\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.388s\n\nFAILED (failures=1)\n"
+    },
+    {
+      "stage": "red",
+      "case": "empty-integration",
+      "shell": "pwsh",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "pwsh",
+        "--case",
+        "empty-integration"
+      ],
+      "exitCode": 1,
+      "stdout": "{\"shell\": \"pwsh\", \"test\": \"__main__.EligibilityTests.test_empty_integration\", \"childExit\": 2, \"stdout\": \"{\\\"schemaVersion\\\": \\\"1.0\\\", \\\"mode\\\": \\\"parallel-autonomous\\\", \\\"criteria\\\": {\\\"authority\\\": \\\"current-and-explicit\\\", \\\"sideEffects\\\": \\\"bounded\\\", \\\"reversibility\\\": \\\"recoverable\\\", \\\"writeScope\\\": \\\"disjoint\\\", \\\"decisions\\\": \\\"no-shared-open-decisions\\\", \\\"integration\\\": \\\"\\\", \\\"review\\\": \\\"consolidation-review-planned\\\", \\\"abort\\\": \\\"defined\\\", \\\"recovery\\\": \\\"defined\\\"}, \\\"outcome\\\": \\\"Eligible\\\", \\\"reasons\\\": [{\\\"code\\\": \\\"EL_EXPECTATION\\\", \\\"criterion\\\": null, \\\"de\\\": \\\"Die Fixture-Erwartung weicht vom berechneten Ergebnis ab.\\\", \\\"en\\\": \\\"The fixture expectation differs from the calculated outcome.\\\"}], \\\"failureClass\\\": \\\"ProductFailure\\\", \\\"authorityGranted\\\": false, \\\"nextAction\\\": {\\\"de\\\": \\\"Eingaben und Nachweise erneut prüfen; nichts starten.\\\", \\\"en\\\": \\\"Reassess inputs and evidence; start nothing.\\\"}}\\n\", \"stderr\": \"\"}\n",
+      "stderr": "test_empty_integration (__main__.EligibilityTests.test_empty_integration) ... FAIL\n\n======================================================================\nFAIL: test_empty_integration (__main__.EligibilityTests.test_empty_integration)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<repo>/specs/004-series-eligibility/contracts/test_series_eligibility.py\", line 67, in test_empty_integration\n    self.assertEqual(\"Blocked\", result[\"outcome\"])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'Blocked' != 'Eligible'\n- Blocked\n+ Eligible\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.690s\n\nFAILED (failures=1)\n"
+    },
+    {
+      "stage": "green",
+      "case": "empty-integration",
+      "shell": "bash",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "bash",
+        "--case",
+        "empty-integration"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"shell\": \"bash\", \"test\": \"__main__.EligibilityTests.test_empty_integration\", \"childExit\": 0, \"stdout\": \"{\\\"schemaVersion\\\": \\\"1.0\\\", \\\"mode\\\": \\\"parallel-autonomous\\\", \\\"criteria\\\": {\\\"authority\\\": \\\"current-and-explicit\\\", \\\"sideEffects\\\": \\\"bounded\\\", \\\"reversibility\\\": \\\"recoverable\\\", \\\"writeScope\\\": \\\"disjoint\\\", \\\"decisions\\\": \\\"no-shared-open-decisions\\\", \\\"integration\\\": \\\"\\\", \\\"review\\\": \\\"consolidation-review-planned\\\", \\\"abort\\\": \\\"defined\\\", \\\"recovery\\\": \\\"defined\\\"}, \\\"outcome\\\": \\\"Blocked\\\", \\\"reasons\\\": [{\\\"code\\\": \\\"EL_CRITERION\\\", \\\"criterion\\\": \\\"integration\\\", \\\"de\\\": \\\"Ein gültiger Integrationsplan fehlt.\\\", \\\"en\\\": \\\"A valid integration plan is missing.\\\"}], \\\"failureClass\\\": \\\"ProductFailure\\\", \\\"authorityGranted\\\": false, \\\"nextAction\\\": {\\\"de\\\": \\\"Eingaben und Nachweise erneut prüfen; nichts starten.\\\", \\\"en\\\": \\\"Reassess inputs and evidence; start nothing.\\\"}}\\n\", \"stderr\": \"\"}\n",
+      "stderr": "test_empty_integration (__main__.EligibilityTests.test_empty_integration) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.386s\n\nOK\n"
+    },
+    {
+      "stage": "green",
+      "case": "empty-integration",
+      "shell": "pwsh",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "pwsh",
+        "--case",
+        "empty-integration"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"shell\": \"pwsh\", \"test\": \"__main__.EligibilityTests.test_empty_integration\", \"childExit\": 0, \"stdout\": \"{\\\"schemaVersion\\\": \\\"1.0\\\", \\\"mode\\\": \\\"parallel-autonomous\\\", \\\"criteria\\\": {\\\"authority\\\": \\\"current-and-explicit\\\", \\\"sideEffects\\\": \\\"bounded\\\", \\\"reversibility\\\": \\\"recoverable\\\", \\\"writeScope\\\": \\\"disjoint\\\", \\\"decisions\\\": \\\"no-shared-open-decisions\\\", \\\"integration\\\": \\\"\\\", \\\"review\\\": \\\"consolidation-review-planned\\\", \\\"abort\\\": \\\"defined\\\", \\\"recovery\\\": \\\"defined\\\"}, \\\"outcome\\\": \\\"Blocked\\\", \\\"reasons\\\": [{\\\"code\\\": \\\"EL_CRITERION\\\", \\\"criterion\\\": \\\"integration\\\", \\\"de\\\": \\\"Ein gültiger Integrationsplan fehlt.\\\", \\\"en\\\": \\\"A valid integration plan is missing.\\\"}], \\\"failureClass\\\": \\\"ProductFailure\\\", \\\"authorityGranted\\\": false, \\\"nextAction\\\": {\\\"de\\\": \\\"Eingaben und Nachweise erneut prüfen; nichts starten.\\\", \\\"en\\\": \\\"Reassess inputs and evidence; start nothing.\\\"}}\\n\", \"stderr\": \"\"}\n",
+      "stderr": "test_empty_integration (__main__.EligibilityTests.test_empty_integration) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.672s\n\nOK\n"
+    },
+    {
+      "stage": "green",
+      "case": "surface",
+      "shell": "bash",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "bash",
+        "--case",
+        "surface"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"shell\": \"bash\", \"test\": \"__main__.EligibilityTests.test_surface\", \"childExit\": 0, \"stdout\": \"{\\\"schemaVersion\\\": \\\"1.0\\\", \\\"mode\\\": \\\"parallel-autonomous\\\", \\\"criteria\\\": {\\\"authority\\\": \\\"current-and-explicit\\\", \\\"sideEffects\\\": \\\"bounded\\\", \\\"reversibility\\\": \\\"recoverable\\\", \\\"writeScope\\\": \\\"disjoint\\\", \\\"decisions\\\": \\\"no-shared-open-decisions\\\", \\\"integration\\\": \\\"planned\\\", \\\"review\\\": \\\"consolidation-review-planned\\\", \\\"abort\\\": \\\"defined\\\", \\\"recovery\\\": \\\"defined\\\"}, \\\"outcome\\\": \\\"Eligible\\\", \\\"reasons\\\": [], \\\"failureClass\\\": null, \\\"authorityGranted\\\": false, \\\"nextAction\\\": {\\\"de\\\": \\\"Eingaben und Nachweise erneut prüfen; nichts starten.\\\", \\\"en\\\": \\\"Reassess inputs and evidence; start nothing.\\\"}}\\n\", \"stderr\": \"\"}\n",
+      "stderr": "test_surface (__main__.EligibilityTests.test_surface) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.383s\n\nOK\n"
+    },
+    {
+      "stage": "green",
+      "case": "surface",
+      "shell": "pwsh",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "pwsh",
+        "--case",
+        "surface"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"shell\": \"pwsh\", \"test\": \"__main__.EligibilityTests.test_surface\", \"childExit\": 0, \"stdout\": \"{\\\"schemaVersion\\\": \\\"1.0\\\", \\\"mode\\\": \\\"parallel-autonomous\\\", \\\"criteria\\\": {\\\"authority\\\": \\\"current-and-explicit\\\", \\\"sideEffects\\\": \\\"bounded\\\", \\\"reversibility\\\": \\\"recoverable\\\", \\\"writeScope\\\": \\\"disjoint\\\", \\\"decisions\\\": \\\"no-shared-open-decisions\\\", \\\"integration\\\": \\\"planned\\\", \\\"review\\\": \\\"consolidation-review-planned\\\", \\\"abort\\\": \\\"defined\\\", \\\"recovery\\\": \\\"defined\\\"}, \\\"outcome\\\": \\\"Eligible\\\", \\\"reasons\\\": [], \\\"failureClass\\\": null, \\\"authorityGranted\\\": false, \\\"nextAction\\\": {\\\"de\\\": \\\"Eingaben und Nachweise erneut prüfen; nichts starten.\\\", \\\"en\\\": \\\"Reassess inputs and evidence; start nothing.\\\"}}\\n\", \"stderr\": \"\"}\n",
+      "stderr": "test_surface (__main__.EligibilityTests.test_surface) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.673s\n\nOK\n"
+    }
+  ],
+  "redSources": {
+    "specs/004-series-eligibility/contracts/validate_series_eligibility.py": {
+      "rawSha256": "0ac3c4a678f826fa6bd237c25d4bb09611dd93450e6f0db7d8e927f32f23b9f8",
+      "content": "#!/usr/bin/env python3\n\"\"\"Lesende Eignungsprüfung / Read-only eligibility assessment.\"\"\"\n\nfrom __future__ import annotations\n\nimport argparse\nimport importlib.util\nimport json\nimport sys\nfrom pathlib import Path\n\nsys.dont_write_bytecode = True\nSOURCE_REPO = Path(__file__).resolve().parents[3]\nCONTRACT = \"requirements/baseline/series-eligibility-contract.json\"\nLEGACY = \"specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.py\"\n\n\ndef pair(de: str, en: str) -> dict:\n    return {\"de\": de, \"en\": en}\n\n\ndef reason(code: str, criterion: str | None, de: str, en: str) -> dict:\n    return {\"code\": code, \"criterion\": criterion, **pair(de, en)}\n\n\ndef diagnostic(failure: str = \"ProductFailure\") -> dict:\n    return {\n        \"schemaVersion\": \"1.0\", \"mode\": None, \"criteria\": {},\n        \"outcome\": \"Blocked\", \"reasons\": [], \"failureClass\": failure,\n        \"authorityGranted\": False,\n        \"nextAction\": pair(\"Eingaben und Nachweise erneut prüfen; nichts starten.\",\n                           \"Reassess inputs and evidence; start nothing.\"),\n    }\n\n\ndef load_legacy():\n    spec = importlib.util.spec_from_file_location(\"aoc_eligibility_legacy\", SOURCE_REPO / LEGACY)\n    module = importlib.util.module_from_spec(spec)\n    spec.loader.exec_module(module)\n    return module\n\n\ndef assess(repo: Path, fixture_path: str) -> tuple[dict, int]:\n    contract = json.loads((repo / CONTRACT).read_text(encoding=\"utf-8-sig\"))\n    fixture = json.loads((repo / fixture_path).read_text(encoding=\"utf-8-sig\"))\n    keys = contract[\"criteria\"]\n    if len(keys) != 9 or len(set(keys)) != 9 or set(fixture[\"criteria\"]) != set(keys):\n        raise ValueError(\"criteria\")\n    mode = fixture[\"mode\"]\n    if mode not in contract[\"modes\"]:\n        raise ValueError(\"mode\")\n    result = diagnostic(None)\n    result.update(mode=mode, criteria={key: fixture[\"criteria\"][key] for key in keys})\n    eligible = mode != \"blocked\"\n    if mode == \"parallel-autonomous\":\n        eligible = load_legacy().meets_parallel_eligibility(contract, fixture)\n    elif not fixture.get(\"currentAuthority\", False):\n        eligible = False\n    result[\"outcome\"] = \"Eligible\" if eligible else \"Blocked\"\n    # Erst berechnen, danach die Fixture-Erwartung prüfen. / Compute before assertion.\n    exit_code = 0\n    if result[\"outcome\"] != fixture.get(\"expectedOutcome\"):\n        result[\"failureClass\"] = \"ProductFailure\"\n        result[\"reasons\"].append(reason(\"EL_EXPECTATION\", None,\n            \"Die Fixture-Erwartung weicht vom berechneten Ergebnis ab.\",\n            \"The fixture expectation differs from the calculated outcome.\"))\n        exit_code = 2\n    return result, exit_code\n\n\ndef main() -> int:\n    parser = argparse.ArgumentParser(description=\"Eignung prüfen / Assess eligibility\")\n    parser.add_argument(\"--repo\", required=True, type=Path)\n    parser.add_argument(\"--fixture\", required=True)\n    parser.add_argument(\"--json\", action=\"store_true\")\n    args = parser.parse_args()\n    try:\n        result, exit_code = assess(args.repo.resolve(), args.fixture)\n    except (OSError, ValueError, KeyError, TypeError):\n        result, exit_code = diagnostic(), 2\n        result[\"reasons\"] = [reason(\"EL_INPUT\", None,\n            \"Eingabe ist nicht sicher prüfbar.\", \"Input cannot be assessed safely.\")]\n    if args.json:\n        print(json.dumps(result, ensure_ascii=False))\n    else:\n        print(\"Ergebnis / Outcome: \" + result[\"outcome\"])\n        for item in result[\"reasons\"]:\n            print(item[\"de\"] + \" / \" + item[\"en\"])\n        print(result[\"nextAction\"][\"de\"] + \" / \" + result[\"nextAction\"][\"en\"])\n        print(\"Keine Startfreigabe. / No start authority granted.\")\n    return exit_code\n\n\nif __name__ == \"__main__\":\n    raise SystemExit(main())\n"
+    },
+    "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1": {
+      "rawSha256": "e7735d4e98cc8e5cefa1df3c3679ca00c7d11240e9341d17da870e94e2897d82",
+      "content": "<#\n.SYNOPSIS\nPrüft die Eignung ohne Startfreigabe. / Assesses eligibility without start authority.\n.PARAMETER Repo\nRepository-Wurzel. / Repository root.\n.PARAMETER Fixture\nRelativer Fixture-Pfad. / Relative fixture path.\n.PARAMETER Json\nMaschinenlesbare Ausgabe. / Machine-readable output.\n#>\n[CmdletBinding()]\nparam(\n    [Parameter(Mandatory)][string]$Repo,\n    [Parameter(Mandatory)][string]$Fixture,\n    [switch]$Json\n)\nSet-StrictMode -Version Latest\n$ErrorActionPreference = 'Stop'\n$Core = Join-Path $PSScriptRoot 'validate_series_eligibility.py'\n$CoreArguments = @('-B', $Core, '--repo', $Repo, '--fixture', $Fixture)\nif ($Json) { $CoreArguments += '--json' }\n& python3 @CoreArguments\n$CoreExit = $LASTEXITCODE\nexit $CoreExit\n"
+    },
+    "specs/004-series-eligibility/contracts/validate-series-eligibility.sh": {
+      "rawSha256": "46bd0e90c8c7163a648dc280f8188470d4c6b8e8f36d7eb40e0f61277881531d",
+      "content": "#!/usr/bin/env bash\n# Strikte lesende Delegation / Strict read-only delegation.\nset -euo pipefail\nscript_dir=\"$(cd -- \"$(dirname -- \"${BASH_SOURCE[0]}\")\" && pwd -P)\"\nexec python3 -B \"$script_dir/validate_series_eligibility.py\" \"$@\"\n"
+    },
+    "specs/004-series-eligibility/contracts/test_series_eligibility.py": {
+      "rawSha256": "9b68771e24a7a46093c2b8288c3af808f79259286d5b957e0b776157ce6ba719",
+      "content": "#!/usr/bin/env python3\n\"\"\"Zusätzliche unittest-Fälle / Additional established unittest cases.\"\"\"\nfrom __future__ import annotations\n\nimport argparse\nimport hashlib\nimport json\nimport os\nimport shutil\nimport subprocess\nimport sys\nimport tempfile\nimport unittest\nfrom pathlib import Path\n\nsys.dont_write_bytecode = True\nREPO = Path(__file__).resolve().parents[3]\nCONTRACTS = \"specs/004-series-eligibility/contracts\"\nFIXTURE = \"specs/intake-review-fixtures/meta-lh-04/valid-parallel.json\"\nCONTRACT = \"requirements/baseline/series-eligibility-contract.json\"\nSHELL = \"bash\"\n\n\ndef snapshot(repo: Path) -> dict:\n    return {str(p.relative_to(repo)): hashlib.sha256(p.read_bytes()).hexdigest()\n            for p in repo.rglob(\"*\") if p.is_file()}\n\n\nclass EligibilityTests(unittest.TestCase):\n    def run_fixture(self, fixture: dict) -> tuple[dict, int]:\n        # Testaufbau ist getrennt von der lesenden Abfrage. / Separate setup from query.\n        with tempfile.TemporaryDirectory(prefix=\"aoc eligibility \") as temporary:\n            repo = Path(temporary)\n            target = repo / CONTRACT\n            target.parent.mkdir(parents=True)\n            shutil.copyfile(REPO / CONTRACT, target)\n            (repo / \"fixture.json\").write_text(json.dumps(fixture), encoding=\"utf-8\")\n            before = snapshot(repo)\n            if SHELL == \"bash\":\n                args = [os.environ.get(\"AOC_GIT_BASH_EXE\", \"bash\"),\n                        f\"{CONTRACTS}/validate-series-eligibility.sh\", \"--repo\", str(repo),\n                        \"--fixture\", \"fixture.json\", \"--json\"]\n            else:\n                args = [\"pwsh\", \"-NoProfile\", \"-File\",\n                        f\"{CONTRACTS}/validate-series-eligibility.ps1\", \"-Repo\", str(repo),\n                        \"-Fixture\", \"fixture.json\", \"-Json\"]\n            child = subprocess.run(args, cwd=REPO, capture_output=True, text=True)\n            # Child-Exits bleiben sichtbar, auch wenn der Negativtest besteht.\n            # Preserve actual child exits even when a negative test passes.\n            print(json.dumps({\"shell\": SHELL, \"test\": self.id(),\n                              \"childExit\": child.returncode, \"stdout\": child.stdout,\n                              \"stderr\": child.stderr}, ensure_ascii=False), flush=True)\n            self.assertEqual(before, snapshot(repo), \"query wrote files\")\n            return json.loads(child.stdout), child.returncode\n\n    def test_surface(self):\n        result, code = self.run_fixture(json.loads((REPO / FIXTURE).read_text()))\n        self.assertEqual(0, code)\n        self.assertEqual(\"Eligible\", result[\"outcome\"])\n        self.assertFalse(result[\"authorityGranted\"])\n\n    def test_empty_integration(self):\n        fixture = json.loads((REPO / FIXTURE).read_text())\n        fixture[\"criteria\"][\"integration\"] = \"\"\n        fixture[\"expectedOutcome\"] = \"Blocked\"\n        result, code = self.run_fixture(fixture)\n        self.assertEqual(\"Blocked\", result[\"outcome\"])\n        self.assertEqual(\"ProductFailure\", result[\"failureClass\"])\n        self.assertEqual(0, code)\n        self.assertTrue(any(r[\"criterion\"] == \"integration\" for r in result[\"reasons\"]))\n        self.assertEqual({\"de\", \"en\"}, set(result[\"nextAction\"]))\n        self.assertFalse(result[\"authorityGranted\"])\n\n\nif __name__ == \"__main__\":\n    parser = argparse.ArgumentParser()\n    parser.add_argument(\"--repo\", type=Path, default=REPO)\n    parser.add_argument(\"--shell\", choices=[\"bash\", \"pwsh\"], default=\"bash\")\n    parser.add_argument(\"--case\", choices=[\"surface\", \"empty-integration\", \"all\"], default=\"all\")\n    args = parser.parse_args()\n    REPO, SHELL = args.repo.resolve(), args.shell\n    names = [\"surface\", \"empty_integration\"] if args.case == \"all\" else [args.case.replace(\"-\", \"_\")]\n    suite = unittest.TestSuite(EligibilityTests(\"test_\" + name) for name in names)\n    raise SystemExit(0 if unittest.TextTestRunner(verbosity=2).run(suite).wasSuccessful() else 1)\n"
+    }
+  },
+  "greenSources": {
+    "specs/004-series-eligibility/contracts/validate_series_eligibility.py": "20c8ba399a95b9e468b4b14252a606f65e358f411c35f72612d6610ae992d556",
+    "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1": "e7735d4e98cc8e5cefa1df3c3679ca00c7d11240e9341d17da870e94e2897d82",
+    "specs/004-series-eligibility/contracts/validate-series-eligibility.sh": "46bd0e90c8c7163a648dc280f8188470d4c6b8e8f36d7eb40e0f61277881531d",
+    "specs/004-series-eligibility/contracts/test_series_eligibility.py": "9b68771e24a7a46093c2b8288c3af808f79259286d5b957e0b776157ce6ba719"
+  },
+  "testBytesUnchanged": true,
+  "redaction": "Only the absolute workspace prefix in unittest tracebacks is replaced with <repo>; assertion, child output and exits are preserved."
+}

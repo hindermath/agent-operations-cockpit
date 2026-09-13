@@ -1,0 +1,1354 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "8b306e28-51eb-4510-afbc-5056b9aee328",
+  "phaseId": "implement-6-remediation",
+  "attemptId": "5e7f31ef-36df-4e8d-afec-fa66f04d8cbd",
+  "completedAt": "2026-09-13T08:57:37.755071+00:00",
+  "result": "Completed",
+  "gatesSatisfied": true,
+  "blockedReason": "",
+  "scope": {
+    "implementedTasks": [
+      "T039"
+    ],
+    "preservedCompletedTasks": [
+      "T032",
+      "T033",
+      "T034",
+      "T035",
+      "T036",
+      "T037",
+      "T038"
+    ],
+    "expectedTasks": 1,
+    "completedTasks": 1,
+    "blockedTask": null,
+    "stopBefore": "T040",
+    "featureCompleted": false
+  },
+  "baseHead": "a2744207469934f7817d0d2652c09a1c545b6918",
+  "branch": "004-series-eligibility",
+  "reviewer": "Codex local implementation review role; not an independent human/native-provider review",
+  "owner": "AOC Repository Owner",
+  "platform": {
+    "actual": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "bash": "5.3.15",
+    "powerShell": "7.6.5",
+    "python": "3.14.7",
+    "psscriptanalyzer": "1.25.0",
+    "gitleaks": "8.30.1",
+    "pandoc": "3.10.2",
+    "nativeProviderClaimed": false
+  },
+  "checkpoint": {
+    "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/checkpoints/t031-85b85504-4614-4224-82d8-5e7a2b6fd0d7.json",
+    "rawSha256": "7d536be00235063ae13b22bdbfbd51238a64143e3ec55fd68d312dc7d696e466",
+    "normalizedSha256": "7d536be00235063ae13b22bdbfbd51238a64143e3ec55fd68d312dc7d696e466"
+  },
+  "checkpointFacts": {
+    "schemaVersion": "1.0",
+    "taskId": "T031",
+    "attemptId": "85b85504-4614-4224-82d8-5e7a2b6fd0d7",
+    "authorityEvidence": "Active authorized META-LH-04 autonomous run; coordinator checkpoint under accepted MergeAndSync scope.",
+    "branch": "004-series-eligibility",
+    "previousCheckpoint": "c82f3423398af2a3cbab80cec2b9e0b933ccef48",
+    "parentHead": "c82f3423398af2a3cbab80cec2b9e0b933ccef48",
+    "sourceCommit": "c91e1fea324e6d5d9f4ba2ea9b3b1c115a2ae052",
+    "sourceRevision": "c91e1fea324e6d5d9f4ba2ea9b3b1c115a2ae052",
+    "intendedPaths": [
+      ".github/workflows/powershell-analysis.yml",
+      "specs/004-series-eligibility/autonomous-run-state.json",
+      "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+      "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+      "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+      "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+      "specs/004-series-eligibility/phase-results/runner-tests.json",
+      "specs/004-series-eligibility/phase-results/us3-tests.json",
+      "specs/004-series-eligibility/tasks.md"
+    ],
+    "unstagedValidation": {
+      "bash": "Pass",
+      "pwsh": "Pass",
+      "worktreeStatusSha256": "5b05f93edc5e19f21b2960e606f0ded0962856f163e687e3f46cbb998e98a4c8"
+    },
+    "stagedValidation": {
+      "bash": "Pass",
+      "pwsh": "Pass",
+      "indexTree": "ffce169c50787217fc395223a96ae0431203683b"
+    },
+    "indexHashes": {
+      ".github/workflows/powershell-analysis.yml": "5c409d607a81566d11f002ebd1256e03cfd28ccc",
+      "specs/004-series-eligibility/autonomous-run-state.json": "662bc345f2715572de2676458dafaef47c5f9c97",
+      "specs/004-series-eligibility/contracts/test_series_eligibility.py": "a2ebbfb534dff4a1f194d9c17bfb69ae5cdf95e4",
+      "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1": "c784c413aba44b3e57306c1156396fbb7b117166",
+      "specs/004-series-eligibility/contracts/validate-series-eligibility.sh": "8a2fd34e2cc5bb1500d6786d48904608f60cc908",
+      "specs/004-series-eligibility/contracts/validate_series_eligibility.py": "0010b27aaf622e0f29ddfb9f695e7a18d93c759d",
+      "specs/004-series-eligibility/phase-results/runner-tests.json": "d86a27878c571f5741246585a8eb9086e08cd2a7",
+      "specs/004-series-eligibility/phase-results/us3-tests.json": "ed73d693bfa57d00b9b7d0f8e5f1bf496a5b5fcf",
+      "specs/004-series-eligibility/tasks.md": "ff398440741d7b8f9cb377e1ddd9ab93f3b4cd9e"
+    },
+    "commandsWithImmediateExits": [
+      {
+        "command": "both-shell exact worktree and staged delivery-set validation",
+        "exitCode": 0
+      },
+      {
+        "command": "git diff --cached --check",
+        "exitCode": 0
+      },
+      {
+        "command": "both renderer helps and paired preview",
+        "exitCode": 0
+      },
+      {
+        "command": "single PowerShell statistics render",
+        "exitCode": 0
+      },
+      {
+        "command": "both-shell statistics validation and check-only",
+        "exitCode": 0
+      }
+    ],
+    "cleanBeforeRender": true,
+    "previewParity": "Pass",
+    "ledgerBeforeHash": "464854e85eef2373be4bfc482600fd044880205c3740a169523d232e7b0b8b0a",
+    "ledgerAfterHash": "da8f093575945c53e3dc2486b0d0753997241d8c628e710da12ee3f2c827c38c",
+    "statisticsCommitOrUnchanged": "a2744207469934f7817d0d2652c09a1c545b6918",
+    "finalHead": "a2744207469934f7817d0d2652c09a1c545b6918",
+    "cleanAfterCheckpoint": true,
+    "taskCompletionEvidence": {
+      "result": "Pass",
+      "tasksClosed": [
+        "T023",
+        "T024",
+        "T025",
+        "T026",
+        "T027",
+        "T028",
+        "T029",
+        "T030"
+      ],
+      "acceptance": [
+        "FR-006",
+        "FR-007",
+        "FR-008",
+        "FR-009",
+        "NFR-001",
+        "NFR-002",
+        "NFR-003",
+        "AC-004",
+        "AC-005",
+        "SC-003",
+        "SC-004",
+        "SC-005"
+      ],
+      "nativeLinuxWindowsAcceptance": "Open until T048",
+      "evidence": [
+        "specs/004-series-eligibility/phase-results/us3-tests.json",
+        "specs/004-series-eligibility/phase-results/runner-tests.json"
+      ],
+      "currentBoundaryPublishedAtNextSourceCheckpoint": "T031"
+    }
+  },
+  "taskEvidence": {
+    "T032": {
+      "result": "Pass",
+      "manualToken": "manual:security",
+      "evidence": {
+        "path": "docs/security/series-eligibility.md",
+        "rawSha256": "80225f38e4da87d9c3403eeab907173988ce230c9ce424d09550c6176d684bd9",
+        "normalizedSha256": "80225f38e4da87d9c3403eeab907173988ce230c9ce424d09550c6176d684bd9"
+      }
+    },
+    "T033": {
+      "result": "Pass",
+      "manualToken": "manual:architecture",
+      "evidence": {
+        "path": "docs/architecture/series-eligibility.md",
+        "rawSha256": "4e38ced959ee46fbe84063a1df3665f1d5a2bbf633c8921e806251e993fc6a18",
+        "normalizedSha256": "4e38ced959ee46fbe84063a1df3665f1d5a2bbf633c8921e806251e993fc6a18"
+      }
+    },
+    "T034": {
+      "result": "Pass",
+      "manualToken": "manual:accessibility",
+      "evidence": {
+        "path": "docs/accessibility/series-eligibility.md",
+        "rawSha256": "b48d83877ca58d77b8e3b1931708e858acb979698df98c23e15d1ead7d21eb74",
+        "normalizedSha256": "b48d83877ca58d77b8e3b1931708e858acb979698df98c23e15d1ead7d21eb74"
+      }
+    },
+    "T035": {
+      "result": "Pass",
+      "manualToken": "manual:parity",
+      "evidence": {
+        "path": "specs/004-series-eligibility/checklists/cross-platform.md",
+        "rawSha256": "f455ee89410cf787c8308ffe12100309d72fea5a1b7f6e5ccdf1c5e0c682ba78",
+        "normalizedSha256": "f455ee89410cf787c8308ffe12100309d72fea5a1b7f6e5ccdf1c5e0c682ba78"
+      }
+    },
+    "T036": {
+      "result": "Pass",
+      "evidence": [
+        {
+          "path": "docs/man/validate-series-eligibility.1",
+          "rawSha256": "629a11a05bf176cfc555f697967f9f6bb4970da446291df9ba41ffcc2dfe1953",
+          "normalizedSha256": "629a11a05bf176cfc555f697967f9f6bb4970da446291df9ba41ffcc2dfe1953"
+        },
+        {
+          "path": "specs/004-series-eligibility/quickstart.md",
+          "rawSha256": "5f47a663a7d3a8af094a2a2779c8c4d1e5f0b571d34c066a26547092593409ba",
+          "normalizedSha256": "5f47a663a7d3a8af094a2a2779c8c4d1e5f0b571d34c066a26547092593409ba"
+        }
+      ],
+      "proof": "Existing T008 surfaces expanded; six modes, nine criteria, fixture/series/status/next, exits and safe action explained; actual mandoc/Pandoc text read."
+    },
+    "T037": {
+      "result": "Pass",
+      "evidence": [
+        {
+          "path": "specs/004-series-eligibility/checklists/cross-platform.md",
+          "rawSha256": "f455ee89410cf787c8308ffe12100309d72fea5a1b7f6e5ccdf1c5e0c682ba78",
+          "normalizedSha256": "f455ee89410cf787c8308ffe12100309d72fea5a1b7f6e5ccdf1c5e0c682ba78"
+        },
+        {
+          "path": "docs/accessibility/series-eligibility.md",
+          "rawSha256": "b48d83877ca58d77b8e3b1931708e858acb979698df98c23e15d1ead7d21eb74",
+          "normalizedSha256": "b48d83877ca58d77b8e3b1931708e858acb979698df98c23e15d1ead7d21eb74"
+        }
+      ],
+      "proof": "Actual local Bash/PowerShell help and silent advanced-function loading; exact function/CLI text parity. Actual installed agent status/next instruction semantics reviewed; no agent invoked. All six provider combinations remain Open."
+    },
+    "T038": {
+      "result": "Pass",
+      "evidence": [
+        {
+          "path": "specs/004-series-eligibility/contracts/documentation-impact.json",
+          "rawSha256": "49a3ce27786ba5794e63f9f47e532fcd99f7ee2b8dba48b0fb228e4468b0a484",
+          "normalizedSha256": "49a3ce27786ba5794e63f9f47e532fcd99f7ee2b8dba48b0fb228e4468b0a484"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/documentation-validation.json",
+          "rawSha256": "76bde06a36b317cfc69e44e4898a15e0a6362ac48190c4d664addeb149b2e1bc",
+          "normalizedSha256": "76bde06a36b317cfc69e44e4898a15e0a6362ac48190c4d664addeb149b2e1bc"
+        },
+        {
+          "path": "specs/004-series-eligibility/phase-results/documentation-review.md",
+          "rawSha256": "5647085cd1820456b849da1635d399da5c990658162ebad9ec8a70969851f7b5",
+          "normalizedSha256": "5647085cd1820456b849da1635d399da5c990658162ebad9ec8a70969851f7b5"
+        }
+      ],
+      "proof": "Exactly one existing CHG004 UpdateRequired; both documentation validators exit 0; actual semantic review and git diff --check."
+    },
+    "T039": {
+      "result": "Pass",
+      "resolvedBlockerId": "EL-QUALITY-039-GITLEAKS",
+      "passing": [
+        "python-ast-corrected",
+        "bash-parser",
+        "pwsh-parser",
+        "direct-pssa",
+        "tracked-pssa",
+        "secret-scan",
+        "gitleaks-1",
+        "gitleaks-2",
+        "gitleaks-3",
+        "gitleaks-4",
+        "gitleaks-5",
+        "public-paths",
+        "gitleaks-fingerprint-remediation"
+      ],
+      "failing": null,
+      "proof": "Inherited parser/analyzer/secret/public-path evidence and bound inputs verified unchanged. Exact required directory scan now exits 0 using only the three authorized fingerprints; previous failed executions remain historical."
+    }
+  },
+  "completedRepositoryTasks": 39,
+  "totalRepositoryTasks": 57,
+  "taskBinding": {
+    "path": "specs/004-series-eligibility/tasks.md",
+    "rawSha256": "18d1bd94deb81cb61c909e80ec3187064b8627b6e4df238c293ebc566b2e1b18",
+    "normalizedSha256": "18d1bd94deb81cb61c909e80ec3187064b8627b6e4df238c293ebc566b2e1b18"
+  },
+  "documentationImpact": {
+    "decision": "UpdateRequired",
+    "entryCount": 1,
+    "changeId": "CHG004",
+    "contract": {
+      "path": "specs/004-series-eligibility/contracts/documentation-impact.json",
+      "rawSha256": "49a3ce27786ba5794e63f9f47e532fcd99f7ee2b8dba48b0fb228e4468b0a484",
+      "normalizedSha256": "49a3ce27786ba5794e63f9f47e532fcd99f7ee2b8dba48b0fb228e4468b0a484"
+    }
+  },
+  "sourceBindings": [
+    {
+      "path": "specs/004-series-eligibility/spec.md",
+      "rawSha256": "61027fb8e2f7b6e8a0e579c56f0bbc404a29c8446a61f548c2617459c4ef1f3b",
+      "normalizedSha256": "61027fb8e2f7b6e8a0e579c56f0bbc404a29c8446a61f548c2617459c4ef1f3b"
+    },
+    {
+      "path": "specs/004-series-eligibility/plan.md",
+      "rawSha256": "05952faedd745f279c9b4d5b3311e4b5700e99c58178eb2729677879ff812d23",
+      "normalizedSha256": "05952faedd745f279c9b4d5b3311e4b5700e99c58178eb2729677879ff812d23"
+    },
+    {
+      "path": "specs/004-series-eligibility/research.md",
+      "rawSha256": "f94516bbd35de291b4b691dca3f1e94b110d356be309beed522bb285e259d5df",
+      "normalizedSha256": "f94516bbd35de291b4b691dca3f1e94b110d356be309beed522bb285e259d5df"
+    },
+    {
+      "path": "specs/004-series-eligibility/data-model.md",
+      "rawSha256": "be3435e2350e93545577fc59bd4dc22c8723a432245139f92d963e4d20a47e58",
+      "normalizedSha256": "be3435e2350e93545577fc59bd4dc22c8723a432245139f92d963e4d20a47e58"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/series-eligibility-interface.md",
+      "rawSha256": "b0ee4fffce5b16c6b059730b31fe499b67fc9ec10dda70112e71ed341f0a95e3",
+      "normalizedSha256": "b0ee4fffce5b16c6b059730b31fe499b67fc9ec10dda70112e71ed341f0a95e3"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/validation-commands.json",
+      "rawSha256": "a89aa6e0edb047e9882f230a9b03890d54ff0c1a511cfb544c265d8ea14216ca",
+      "normalizedSha256": "a89aa6e0edb047e9882f230a9b03890d54ff0c1a511cfb544c265d8ea14216ca"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json",
+      "rawSha256": "f0e49efeb0fd052a34fd1175818af487bd67488cee425e84512bfdd81a36d7fa",
+      "normalizedSha256": "f0e49efeb0fd052a34fd1175818af487bd67488cee425e84512bfdd81a36d7fa"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+      "rawSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e",
+      "normalizedSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+      "rawSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6",
+      "normalizedSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+      "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+      "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+      "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+      "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/us1-tests.json",
+      "rawSha256": "a65a9d4d3b6b820a4591e1801b05c50b7d0affe912c2ab899450b3a6539afa15",
+      "normalizedSha256": "a65a9d4d3b6b820a4591e1801b05c50b7d0affe912c2ab899450b3a6539afa15"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/us2-tests.json",
+      "rawSha256": "8931e2fd768e665e5642b210793cd9fc405a917a328a6ff26847507bf3a721a4",
+      "normalizedSha256": "8931e2fd768e665e5642b210793cd9fc405a917a328a6ff26847507bf3a721a4"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/us3-tests.json",
+      "rawSha256": "93c24b485f6aa8468a49a388a9ac6ca3ea47787732062e7d186fb99434f10235",
+      "normalizedSha256": "93c24b485f6aa8468a49a388a9ac6ca3ea47787732062e7d186fb99434f10235"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/runner-tests.json",
+      "rawSha256": "376182327f7baf06742b974ffb5d5cbd2059c5933f666a5d1fbbe7aa47c40d3e",
+      "normalizedSha256": "376182327f7baf06742b974ffb5d5cbd2059c5933f666a5d1fbbe7aa47c40d3e"
+    },
+    {
+      "path": "AGENTS.md",
+      "rawSha256": "efa2a8b800a4d860401dd6f5e165c4f69ddd9ad5e192d98e9022cc6987bd921d",
+      "normalizedSha256": "efa2a8b800a4d860401dd6f5e165c4f69ddd9ad5e192d98e9022cc6987bd921d"
+    },
+    {
+      "path": "CLAUDE.md",
+      "rawSha256": "ae5acd5e09c7db453975540a3c49bc121527320b17170f4a84edddd618099fc3",
+      "normalizedSha256": "ae5acd5e09c7db453975540a3c49bc121527320b17170f4a84edddd618099fc3"
+    },
+    {
+      "path": "GEMINI.md",
+      "rawSha256": "2d117a1dfad895976187f2b470621dccde292f6758509c296ccdfe27f777942f",
+      "normalizedSha256": "2d117a1dfad895976187f2b470621dccde292f6758509c296ccdfe27f777942f"
+    },
+    {
+      "path": ".github/copilot-instructions.md",
+      "rawSha256": "3519d525333bf6d1790915bafc6ed6100ace48b54caa6a305be79d3e11b8c552",
+      "normalizedSha256": "3519d525333bf6d1790915bafc6ed6100ace48b54caa6a305be79d3e11b8c552"
+    },
+    {
+      "path": ".github/agents/copilot-instructions.md",
+      "rawSha256": "3519d525333bf6d1790915bafc6ed6100ace48b54caa6a305be79d3e11b8c552",
+      "normalizedSha256": "3519d525333bf6d1790915bafc6ed6100ace48b54caa6a305be79d3e11b8c552"
+    },
+    {
+      "path": ".specify/presets/intake-sequencing-governance/commands/speckit.intake-series-status.md",
+      "rawSha256": "89da998fafd86ce923d8c0278743fbe9a414bb9dcaffff4ff6ad514caf3926f8",
+      "normalizedSha256": "89da998fafd86ce923d8c0278743fbe9a414bb9dcaffff4ff6ad514caf3926f8"
+    },
+    {
+      "path": ".specify/presets/intake-sequencing-governance/commands/speckit.intake-series-next.md",
+      "rawSha256": "1616cde6881295d852040a2a4a207f84e65b683e7771ff162be267b2c5b5fb07",
+      "normalizedSha256": "1616cde6881295d852040a2a4a207f84e65b683e7771ff162be267b2c5b5fb07"
+    },
+    {
+      "path": ".specify/presets/intake-sequencing-governance/scripts/validate-intake-series.py",
+      "rawSha256": "f7f7988e6ca966406f60f849f0511f413d82a049c7eb8e7798804bdd355ae453",
+      "normalizedSha256": "f7f7988e6ca966406f60f849f0511f413d82a049c7eb8e7798804bdd355ae453"
+    },
+    {
+      "path": ".specify/templates/tasks-template.md",
+      "rawSha256": "85108d7da57c31be169ad3b22aa3904e1c256389821e9174fbbad6a557a73055",
+      "normalizedSha256": "85108d7da57c31be169ad3b22aa3904e1c256389821e9174fbbad6a557a73055"
+    },
+    {
+      "path": ".specify/memory/constitution.md",
+      "rawSha256": "37b42aef7201b851edda3c94974379860f4ff11fd37201df6b114210c48b87c9",
+      "normalizedSha256": "37b42aef7201b851edda3c94974379860f4ff11fd37201df6b114210c48b87c9"
+    },
+    {
+      "path": "constitution.md",
+      "rawSha256": "37b42aef7201b851edda3c94974379860f4ff11fd37201df6b114210c48b87c9",
+      "normalizedSha256": "37b42aef7201b851edda3c94974379860f4ff11fd37201df6b114210c48b87c9"
+    },
+    {
+      "path": "scripts/invoke-psscriptanalyzer.ps1",
+      "rawSha256": "ab38fe33e9d654659a67dfb2edce625bee4466641df610bbb418c8e534163711",
+      "normalizedSha256": "ab38fe33e9d654659a67dfb2edce625bee4466641df610bbb418c8e534163711"
+    },
+    {
+      "path": "scripts/config/PSScriptAnalyzerSettings.psd1",
+      "rawSha256": "dc0a6cff8618ad0f66432d90a50fc4777cc30f8f32a18cf5734dfbfcdfd7092d",
+      "normalizedSha256": "dc0a6cff8618ad0f66432d90a50fc4777cc30f8f32a18cf5734dfbfcdfd7092d"
+    },
+    {
+      "path": "scripts/config/powershell-modules-registry.json",
+      "rawSha256": "fde94bf0aa5a15018590858e51842bea130144d8ecaa4378917d36c6c6507a79",
+      "normalizedSha256": "fde94bf0aa5a15018590858e51842bea130144d8ecaa4378917d36c6c6507a79"
+    },
+    {
+      "path": "scripts/scan-agent-secrets.sh",
+      "rawSha256": "cfa8caa4652d6b223dc91dfde644c40271a424f426bd3e34b5ee6baa4ca3b925",
+      "normalizedSha256": "cfa8caa4652d6b223dc91dfde644c40271a424f426bd3e34b5ee6baa4ca3b925"
+    },
+    {
+      "path": ".gitleaks.toml",
+      "rawSha256": "838df49067a509d29e20083b2040880b63b82487ffb500e87f29acb65f4068d8",
+      "normalizedSha256": "838df49067a509d29e20083b2040880b63b82487ffb500e87f29acb65f4068d8"
+    },
+    {
+      "path": "LICENSE",
+      "rawSha256": "15d6155002ae45c30bf0add2d236ac02421024f8b1674a1449f4d7a292bc29dd",
+      "normalizedSha256": "15d6155002ae45c30bf0add2d236ac02421024f8b1674a1449f4d7a292bc29dd"
+    },
+    {
+      "path": "docs/aeps/findings-ledger.md",
+      "rawSha256": "ae685990142dc1a56f4d99eae5b7623ac8eddf992e367cbb004a88afa8fd494b",
+      "normalizedSha256": "ae685990142dc1a56f4d99eae5b7623ac8eddf992e367cbb004a88afa8fd494b"
+    },
+    {
+      "path": "docs/aeps/README.md",
+      "rawSha256": "1de14c4faaf5c46223260a7581b42989262cc7bbf1bb3c1e124fa91529c07f93",
+      "normalizedSha256": "1de14c4faaf5c46223260a7581b42989262cc7bbf1bb3c1e124fa91529c07f93"
+    },
+    {
+      "path": ".specify/presets/a11y-governance/LICENSE",
+      "rawSha256": "77354094dc58ff9932cc830b84044307b80c547d7d7f7a4c0b5d52110b10de4f",
+      "normalizedSha256": "77354094dc58ff9932cc830b84044307b80c547d7d7f7a4c0b5d52110b10de4f"
+    },
+    {
+      "path": ".specify/presets/cross-platform-governance/LICENSE",
+      "rawSha256": "77354094dc58ff9932cc830b84044307b80c547d7d7f7a4c0b5d52110b10de4f",
+      "normalizedSha256": "77354094dc58ff9932cc830b84044307b80c547d7d7f7a4c0b5d52110b10de4f"
+    },
+    {
+      "path": ".specify/presets/secure-development-assurance-governance/LICENSE",
+      "rawSha256": "15d6155002ae45c30bf0add2d236ac02421024f8b1674a1449f4d7a292bc29dd",
+      "normalizedSha256": "15d6155002ae45c30bf0add2d236ac02421024f8b1674a1449f4d7a292bc29dd"
+    },
+    {
+      "path": ".specify/presets/isaqb-architecture-governance/LICENSE",
+      "rawSha256": "77354094dc58ff9932cc830b84044307b80c547d7d7f7a4c0b5d52110b10de4f",
+      "normalizedSha256": "77354094dc58ff9932cc830b84044307b80c547d7d7f7a4c0b5d52110b10de4f"
+    },
+    {
+      "path": ".specify/presets/security-governance/LICENSE",
+      "rawSha256": "77354094dc58ff9932cc830b84044307b80c547d7d7f7a4c0b5d52110b10de4f",
+      "normalizedSha256": "77354094dc58ff9932cc830b84044307b80c547d7d7f7a4c0b5d52110b10de4f"
+    },
+    {
+      "path": ".specify/presets/autonomous-run-governance/LICENSE",
+      "rawSha256": "15d6155002ae45c30bf0add2d236ac02421024f8b1674a1449f4d7a292bc29dd",
+      "normalizedSha256": "15d6155002ae45c30bf0add2d236ac02421024f8b1674a1449f4d7a292bc29dd"
+    },
+    {
+      "path": ".specify/presets/intake-review-governance/LICENSE",
+      "rawSha256": "15d6155002ae45c30bf0add2d236ac02421024f8b1674a1449f4d7a292bc29dd",
+      "normalizedSha256": "15d6155002ae45c30bf0add2d236ac02421024f8b1674a1449f4d7a292bc29dd"
+    },
+    {
+      "path": ".specify/presets/intake-authoring-governance/LICENSE",
+      "rawSha256": "15d6155002ae45c30bf0add2d236ac02421024f8b1674a1449f4d7a292bc29dd",
+      "normalizedSha256": "15d6155002ae45c30bf0add2d236ac02421024f8b1674a1449f4d7a292bc29dd"
+    },
+    {
+      "path": ".specify/presets/model-routing-governance/LICENSE",
+      "rawSha256": "15d6155002ae45c30bf0add2d236ac02421024f8b1674a1449f4d7a292bc29dd",
+      "normalizedSha256": "15d6155002ae45c30bf0add2d236ac02421024f8b1674a1449f4d7a292bc29dd"
+    },
+    {
+      "path": ".specify/presets/parallel-autonomous-run-governance/LICENSE",
+      "rawSha256": "15d6155002ae45c30bf0add2d236ac02421024f8b1674a1449f4d7a292bc29dd",
+      "normalizedSha256": "15d6155002ae45c30bf0add2d236ac02421024f8b1674a1449f4d7a292bc29dd"
+    },
+    {
+      "path": ".specify/presets/intake-sequencing-governance/LICENSE",
+      "rawSha256": "15d6155002ae45c30bf0add2d236ac02421024f8b1674a1449f4d7a292bc29dd",
+      "normalizedSha256": "15d6155002ae45c30bf0add2d236ac02421024f8b1674a1449f4d7a292bc29dd"
+    },
+    {
+      "path": ".specify/presets/architecture-governance/LICENSE",
+      "rawSha256": "77354094dc58ff9932cc830b84044307b80c547d7d7f7a4c0b5d52110b10de4f",
+      "normalizedSha256": "77354094dc58ff9932cc830b84044307b80c547d7d7f7a4c0b5d52110b10de4f"
+    },
+    {
+      "path": ".specify/presets/agent-parity-governance/LICENSE",
+      "rawSha256": "77354094dc58ff9932cc830b84044307b80c547d7d7f7a4c0b5d52110b10de4f",
+      "normalizedSha256": "77354094dc58ff9932cc830b84044307b80c547d7d7f7a4c0b5d52110b10de4f"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "rawSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+      "normalizedSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce"
+    },
+    {
+      "path": "specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json",
+      "rawSha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b",
+      "normalizedSha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b"
+    },
+    {
+      "path": "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json",
+      "rawSha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07",
+      "normalizedSha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07"
+    }
+  ],
+  "executions": [
+    {
+      "label": "runtime-versions",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-Command",
+        "$PSVersionTable.PSVersion.ToString(); bash --version; python3 --version; Get-Module -ListAvailable PSScriptAnalyzer | Select-Object Name,Version; gitleaks version; pandoc --version"
+      ],
+      "startedAt": "2026-09-13T08:36:18.909711+00:00",
+      "exitCode": 0,
+      "stdout": "7.6.5\nGNU bash, version 5.3.15(1)-release (aarch64-apple-darwin25.4.0)\nCopyright (C) 2025 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n\nThis is free software; you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\nPython 3.14.7\n\n8.30.1\npandoc 3.10.2\nFeatures: +server +lua\nScripting engine: Lua 5.4\nUser data directory: <home>/.local/share/pandoc\nCopyright (C) 2006-2025 John MacFarlane. Web:  https://pandoc.org\nThis is free software; see the source for copying conditions. There is no\nwarranty, not even for merchantability or fitness for a particular purpose.\nName             Version\n----             -------\nPSScriptAnalyzer 1.25.0\n\n",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/runtime-versions.log",
+      "logSha256": "574e553029b9a8c9f4db0858fc1eb112e46749d787e5ca75aed7e84822903acc",
+      "stdoutSha256": "8cebaa84b07f71eee1283ca8cc3b430b61ad38c2f12523bd4bcdd2e155d466e1",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "bash-help",
+      "command": [
+        "bash",
+        "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+        "--help"
+      ],
+      "startedAt": "2026-09-13T08:38:53.199492+00:00",
+      "exitCode": 0,
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/bash-help.log",
+      "logSha256": "3ed063df3d99b86f41a12abc53ac944b710d5c2f8cd306b14b87c4f7308d513a",
+      "stdoutSha256": "54d43381493c9a4118fa23f47f07be6f18aefa00a3182aca74a82679eb3c3c9e",
+      "stdoutExcerpt": "Series Eligibility pruefen / Assess Series Eligibility\n\nVERWENDUNG / USAGE\n  validate-series-eligibility.sh --repo PATH --fixture PATH [--json]\n  validate-series-eligibility.sh --repo PATH --series PATH [--action status|next] [--json]\n  validate-series-eligibility.sh --help | -h\n\nOPTIONEN / OPTIONS\n  --repo PATH     Repository-Wurzel. / Repository root.\n  --fixture PATH  Fixture relativ zum Repository. / Fixture relative to the repository.\n  --se",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrExcerpt": ""
+    },
+    {
+      "label": "bash-short-help",
+      "command": [
+        "bash",
+        "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+        "-h"
+      ],
+      "startedAt": "2026-09-13T08:38:53.381030+00:00",
+      "exitCode": 0,
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/bash-short-help.log",
+      "logSha256": "3ed063df3d99b86f41a12abc53ac944b710d5c2f8cd306b14b87c4f7308d513a",
+      "stdoutSha256": "54d43381493c9a4118fa23f47f07be6f18aefa00a3182aca74a82679eb3c3c9e",
+      "stdoutExcerpt": "Series Eligibility pruefen / Assess Series Eligibility\n\nVERWENDUNG / USAGE\n  validate-series-eligibility.sh --repo PATH --fixture PATH [--json]\n  validate-series-eligibility.sh --repo PATH --series PATH [--action status|next] [--json]\n  validate-series-eligibility.sh --help | -h\n\nOPTIONEN / OPTIONS\n  --repo PATH     Repository-Wurzel. / Repository root.\n  --fixture PATH  Fixture relativ zum Repository. / Fixture relative to the repository.\n  --se",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrExcerpt": ""
+    },
+    {
+      "label": "pwsh-help",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+        "-Help"
+      ],
+      "startedAt": "2026-09-13T08:38:53.558276+00:00",
+      "exitCode": 0,
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/pwsh-help.log",
+      "logSha256": "265a74e45d10431f74b0fc06e948fede8fde4b13ce8dc5fdf827a6d9044268c4",
+      "stdoutSha256": "39cde6599979ac84d2297a1879b0c925784d62ebe5bdcdb2056ddc7e44b4fec3",
+      "stdoutExcerpt": "\nNAME\n    <repo>/specs/004-se\n    ries-eligibility/contracts/validate-series-eligibility.ps1\n    \nSYNOPSIS\n    Prüft die Eignung einer Series ohne Startfreigabe.\n    \n    Assesses Series eligibility without granting authority to start.\n    \n    \nSYNTAX\n    <repo>/specs/004-se\n    ries-eligibility/contracts/validate-series-eligibility.ps1 [[-Repo] \n    <String>] [[-Fixture] <String>] [[-Series] <String>] [[-Action] <String>] \n    [-Json] [-Help] [",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrExcerpt": ""
+    },
+    {
+      "label": "dot-source",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-Command",
+        "$loaded = @(. ./specs/004-series-eligibility/contracts/validate-series-eligibility.ps1); if ($loaded.Count -ne 0) { throw 'Unexpected import output' }; $c=Get-Command Test-AocSeriesEligibility; if (-not $c.CmdletBinding) { throw 'Not advanced' }; 'Silent load; caller alive; CmdletBinding=True'; Get-Help Test-AocSeriesEligibility -Full"
+      ],
+      "startedAt": "2026-09-13T08:38:54.013511+00:00",
+      "exitCode": 0,
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/dot-source.log",
+      "logSha256": "3b14c6cd99f18aaac15c0131daf7255b37aaad8b4b40eef572a158280f9e5181",
+      "stdoutSha256": "00267c229a8b08ad274f304b0ecda27d0109c83d1b3c39f9ab88368addd21956",
+      "stdoutExcerpt": "Silent load; caller alive; CmdletBinding=True\n\nNAME\n    Test-AocSeriesEligibility\n    \nSYNOPSIS\n    Prüft die Eignung einer Series ohne Startfreigabe.\n    \n    Assesses Series eligibility without granting authority to start.\n    \n    \nSYNTAX\n    Test-AocSeriesEligibility [[-Repo] <String>] [[-Fixture] <String>] \n    [[-Series] <String>] [[-Action] <String>] [-Help] [-Json] \n    [<CommonParameters>]\n    \n    \nDESCRIPTION\n    Test-AocSeriesEligibil",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrExcerpt": ""
+    },
+    {
+      "label": "fixture-text",
+      "command": [
+        "bash",
+        "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+        "--repo",
+        ".",
+        "--fixture",
+        "specs/intake-review-fixtures/meta-lh-04/valid-parallel.json"
+      ],
+      "startedAt": "2026-09-13T08:38:54.506007+00:00",
+      "exitCode": 0,
+      "stdout": "Modus / Mode: parallel-autonomous\nauthority: current-and-explicit\nsideEffects: bounded\nreversibility: recoverable\nwriteScope: disjoint\ndecisions: no-shared-open-decisions\nintegration: planned\nreview: consolidation-review-planned\nabort: defined\nrecovery: defined\nErgebnis / Outcome: Eligible\nNächste Aktion / Next action: Eingaben und Nachweise erneut prüfen; nichts starten. / Reassess inputs and evidence; start nothing.\nKeine Startfreigabe. / No start authority granted.\n",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/fixture-text.log",
+      "logSha256": "b07f2a5f3c75ef1b1518c2d44119376e5185c45887af137454c07e183c1f34d7",
+      "stdoutSha256": "6106d384bfc6c04320d38d6303c5736d5806eebbfa5992e67de08b49c65cbb5c",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "blocked-text",
+      "command": [
+        "bash",
+        "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+        "--repo",
+        ".",
+        "--fixture",
+        "specs/intake-review-fixtures/meta-lh-04/shared-write.json"
+      ],
+      "startedAt": "2026-09-13T08:38:54.935614+00:00",
+      "exitCode": 0,
+      "stdout": "Modus / Mode: parallel-autonomous\nauthority: current-and-explicit\nsideEffects: bounded\nreversibility: recoverable\nwriteScope: shared\ndecisions: no-shared-open-decisions\nintegration: planned\nreview: consolidation-review-planned\nabort: defined\nrecovery: defined\nErgebnis / Outcome: Blocked\nGemeinsame Änderungen oder offene Entscheidungen verhindern Parallelität. / Shared writes or open decisions prevent parallel execution.\nNächste Aktion / Next action: Eingaben und Nachweise erneut prüfen; nichts starten. / Reassess inputs and evidence; start nothing.\nKeine Startfreigabe. / No start authority granted.\n",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/blocked-text.log",
+      "logSha256": "08dd16bbf3b45e27ea812b10461ee3c42d38456df26cf811dac55b62702a20e9",
+      "stdoutSha256": "153d13596e92c6aeadb94a831e4f260e9c9b6ca1ca69b970b5e7dfe9d64d0c07",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "query-text",
+      "command": [
+        "bash",
+        "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+        "--repo",
+        ".",
+        "--series",
+        "specs/intake-series/aoc-phase-2/manifest.json",
+        "--action",
+        "next"
+      ],
+      "startedAt": "2026-09-13T08:38:55.323914+00:00",
+      "exitCode": 0,
+      "stdout": "Modus / Mode: NotAssessed\nErgebnis / Outcome: Blocked\nLifecycle / Lifecycle: {\"series\": \"Completed\", \"targets\": {\"requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md\": \"Completed\"}}\nReview / Review: \"NotAssessed\"\nKandidaten / Candidates: []\nPräferenz / Preference: null\nBlocker / Blockers: {}\nLiefermodus / Delivery mode: \"NotAssessed\"\nStartautorität / Start authority: \"NotGrantedByQuery\"\nHistorische Receipt-Herkunft / Historical receipt provenance: [{\"path\": \"specs/intake-series-receipts/aoc-phase-2.json\", \"receiptId\": \"0b248b17-1585-4302-87ee-a91c76552b33\", \"operation\": \"Update\", \"authorityContext\": \"HistoricalOnly\"}]\nNächste Aktion / Next action: Manifest und Nachweise mit einer verantwortlichen Person erneut prüfen; nichts starten. / Reassess manifest and evidence with a responsible person; start nothing.\nKeine Startfreigabe. / No start authority granted.\n",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/query-text.log",
+      "logSha256": "dfb461588f312a6944ed0b86ac60f6cc9e689961d16ac3da4561ac34f348012e",
+      "stdoutSha256": "f0922225eb6eda1022c95a57eafef80e2ab009388dbb397cff9b15ed9cdda020",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "function-query",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-Command",
+        ". ./specs/004-series-eligibility/contracts/validate-series-eligibility.ps1; Test-AocSeriesEligibility -Repo . -Series specs/intake-series/aoc-phase-2/manifest.json -Action next; exit $LASTEXITCODE"
+      ],
+      "startedAt": "2026-09-13T08:38:55.750547+00:00",
+      "exitCode": 0,
+      "stdout": "Modus / Mode: NotAssessed\nErgebnis / Outcome: Blocked\nLifecycle / Lifecycle: {\"series\": \"Completed\", \"targets\": {\"requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md\": \"Completed\"}}\nReview / Review: \"NotAssessed\"\nKandidaten / Candidates: []\nPräferenz / Preference: null\nBlocker / Blockers: {}\nLiefermodus / Delivery mode: \"NotAssessed\"\nStartautorität / Start authority: \"NotGrantedByQuery\"\nHistorische Receipt-Herkunft / Historical receipt provenance: [{\"path\": \"specs/intake-series-receipts/aoc-phase-2.json\", \"receiptId\": \"0b248b17-1585-4302-87ee-a91c76552b33\", \"operation\": \"Update\", \"authorityContext\": \"HistoricalOnly\"}]\nNächste Aktion / Next action: Manifest und Nachweise mit einer verantwortlichen Person erneut prüfen; nichts starten. / Reassess manifest and evidence with a responsible person; start nothing.\nKeine Startfreigabe. / No start authority granted.\n",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/function-query.log",
+      "logSha256": "dfb461588f312a6944ed0b86ac60f6cc9e689961d16ac3da4561ac34f348012e",
+      "stdoutSha256": "f0922225eb6eda1022c95a57eafef80e2ab009388dbb397cff9b15ed9cdda020",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "manual-render",
+      "command": [
+        "mandoc",
+        "-T",
+        "utf8",
+        "docs/man/validate-series-eligibility.1"
+      ],
+      "startedAt": "2026-09-13T08:38:56.447736+00:00",
+      "exitCode": 0,
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/manual-render.log",
+      "logSha256": "52ee3ca158de0dd2b5687c0f29065ad416c1e19ce5b46b2a31c4dcaad4bab2bb",
+      "stdoutSha256": "e0b35e34171a2dc8e59daca8c5d421982604244a78dbd336a539fb0864ad3820",
+      "stdoutExcerpt": "VALIDATE-SERIES-ELIGIBILITY(1)   User Commands  VALIDATE-SERIES-ELIGIBILITY(1)\n\nN\bNA\bAM\bME\bE\n       validate-series-eligibility - Eignung einer Series read-only pruefen\n       assess Series eligibility read-only\n\nS\bSY\bYN\bNO\bOP\bPS\bSI\bIS\bS\n       v\bva\bal\bli\bid\bda\bat\bte\be-\b-s\bse\ber\bri\bie\bes\bs-\b-e\bel\bli\big\bgi\bib\bbi\bil\bli\bit\bty\by.\b.s\bsh\bh -\b--\b-r\bre\bep\bpo\bo _\bP_\bA_\bT_\bH -\b--\b-f\bfi\bix\bxt\btu\bur\bre\be _\bP_\bA_\bT_\bH [_\b-_\b-_\bj_\bs_\bo_\bn]\n\n       v\bva\bal\bli\bi",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrExcerpt": ""
+    },
+    {
+      "label": "quickstart-render",
+      "command": [
+        "pandoc",
+        "-f",
+        "gfm",
+        "-t",
+        "plain",
+        "--wrap=auto",
+        "--columns=88",
+        "specs/004-series-eligibility/quickstart.md"
+      ],
+      "startedAt": "2026-09-13T08:38:56.454653+00:00",
+      "exitCode": 0,
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/quickstart-render.log",
+      "logSha256": "9531bdedcbf09ad25f468a744e00a0d99ef4069dd99d8e45c5a3ef48a867758c",
+      "stdoutSha256": "f870c8601c0e7decdea591338bc52b03c06b59155f694cd2d5932a2cc5c6c7f3",
+      "stdoutExcerpt": "Validierungsanleitung / Quickstart Validation Guide\n\nZweck und Voraussetzungen / Purpose and prerequisites\n\nDiese Anleitung beschreibt den implementierten lesenden META-LH-04-Prüfadapter mit sechs\nModi und den Abfragen status/next. Sie ist für Lernende ab Jahr 1 und Maintainer\ngedacht. Eignung bedeutet geprüfte Passung, keine Startfreigabe. Die Abschnitte zu\nfrüheren Implementierungs- und späteren Liefergates sind Referenzverfahren, kein\nAuftrag,",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrExcerpt": ""
+    },
+    {
+      "label": "quickstart-html",
+      "command": [
+        "pandoc",
+        "-f",
+        "gfm",
+        "-t",
+        "html5",
+        "--standalone",
+        "--metadata",
+        "title=Series Eligibility Review",
+        "--metadata",
+        "lang=de",
+        "-o",
+        "/private/tmp/aoc-phase6-quickstart.html",
+        "specs/004-series-eligibility/quickstart.md"
+      ],
+      "startedAt": "2026-09-13T08:39:30.608388+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/quickstart-html.log",
+      "logSha256": "a3680b6601c39b586ea892ad2bbaa58a7f72b62a64f73917b09aa8c5f188110e",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "python-ast",
+      "command": [
+        "python3",
+        "-B",
+        "-c",
+        "import ast,pathlib; names=['specs/004-series-eligibility/contracts/validate_series_eligibility.py','specs/004-series-eligibility/contracts/test_series_eligibility.py','specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.py','.specify/presets/intake-sequencing-governance/scripts/intake-sequencing-core.py']; [(ast.parse(pathlib.Path(p).read_text(),filename=p),print('PASS',p)) for p in names]"
+      ],
+      "startedAt": "2026-09-13T08:43:16.299966+00:00",
+      "exitCode": 1,
+      "stdout": "PASS specs/004-series-eligibility/contracts/validate_series_eligibility.py\nPASS specs/004-series-eligibility/contracts/test_series_eligibility.py\nPASS specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.py\n",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import ast,pathlib; names=['specs/004-series-eligibility/contracts/validate_series_eligibility.py','specs/004-series-eligibility/contracts/test_series_eligibility.py','specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.py','.specify/presets/intake-sequencing-governance/scripts/intake-sequencing-core.py']; [(ast.parse(pathlib.Path(p).read_text(),filename=p),print('PASS',p)) for p in names]\n                                                                                                                                                                                                                                                                                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py\", line 787, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:\n         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py\", line 771, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '.specify/presets/intake-sequencing-governance/scripts/intake-sequencing-core.py'\n",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/python-ast.log",
+      "logSha256": "f6cb5242e60df1e68a0af1250f3d80694a23e54072c50165d2cceb2df858c067",
+      "stdoutSha256": "d93d54210fa58defe74f734c8b4bc9a366a77fde3135ff44c62a3c5bb0242c0e",
+      "stderrSha256": "a4d2d211ac446582ea6dfebbcf24cf420c6f34129ba1ffd21aa8b4d17907e355"
+    },
+    {
+      "label": "python-ast-corrected",
+      "command": [
+        "python3",
+        "-B",
+        "-c",
+        "import ast,pathlib; names=['specs/004-series-eligibility/contracts/validate_series_eligibility.py','specs/004-series-eligibility/contracts/test_series_eligibility.py','specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.py','.specify/presets/intake-sequencing-governance/scripts/validate-intake-series.py']; [(ast.parse(pathlib.Path(p).read_text(),filename=p),print('PASS',p)) for p in names]"
+      ],
+      "startedAt": "2026-09-13T08:43:38.557430+00:00",
+      "exitCode": 0,
+      "stdout": "PASS specs/004-series-eligibility/contracts/validate_series_eligibility.py\nPASS specs/004-series-eligibility/contracts/test_series_eligibility.py\nPASS specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.py\nPASS .specify/presets/intake-sequencing-governance/scripts/validate-intake-series.py\n",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/python-ast-corrected.log",
+      "logSha256": "16ee6cea2173eeb9a2e36c12feb3a28182127fa4dd26175af42e4ccd94d285a6",
+      "stdoutSha256": "8a4deeffad89e2028bc368eacdb6907624bc409bffaa1b1ff4910120816548f4",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "bash-parser",
+      "command": [
+        "bash",
+        "-n",
+        "specs/004-series-eligibility/contracts/validate-series-eligibility.sh"
+      ],
+      "startedAt": "2026-09-13T08:43:16.431549+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/bash-parser.log",
+      "logSha256": "a3680b6601c39b586ea892ad2bbaa58a7f72b62a64f73917b09aa8c5f188110e",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "pwsh-parser",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-Command",
+        "$t=$null; $e=$null; [void][System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path 'specs/004-series-eligibility/contracts/validate-series-eligibility.ps1'),[ref]$t,[ref]$e); if ($e.Count) { $e; exit 1 }; 'PASS: feature PowerShell parser'"
+      ],
+      "startedAt": "2026-09-13T08:43:16.600336+00:00",
+      "exitCode": 0,
+      "stdout": "PASS: feature PowerShell parser\n",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/pwsh-parser.log",
+      "logSha256": "6c1543d033c3ef7aaf22fdbfac50ee1473deca2631b8a14e333c6c4cf00cdbba",
+      "stdoutSha256": "8bcfa2216b3ac91de1525fa388304d5e7b106c197a29b80ebbcd4beed988e9fa",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "direct-pssa",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-Command",
+        "Import-Module PSScriptAnalyzer -RequiredVersion 1.25.0 -Force -ErrorAction Stop; $f=@(Invoke-ScriptAnalyzer -Path specs/004-series-eligibility/contracts/validate-series-eligibility.ps1 -Settings scripts/config/PSScriptAnalyzerSettings.psd1); if ($f.Count) { $f; exit 1 }; 'PSScriptAnalyzer 1.25.0: direct feature file, zero Error/Warning findings'"
+      ],
+      "startedAt": "2026-09-13T08:43:17.026602+00:00",
+      "exitCode": 0,
+      "stdout": "PSScriptAnalyzer 1.25.0: direct feature file, zero Error/Warning findings\n",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/direct-pssa.log",
+      "logSha256": "8b328cc72f14732280e388fc1c34999f6cfc944f74df824d6b6966f4ff78d09b",
+      "stdoutSha256": "0560c30432d93005b945b4606800d19d1a1533c193df6220ba5e0d897a2657ec",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "tracked-pssa",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "scripts/invoke-psscriptanalyzer.ps1",
+        "-RepositoryRoot",
+        "."
+      ],
+      "startedAt": "2026-09-13T08:36:23.289637+00:00",
+      "exitCode": 0,
+      "stdout": "PSScriptAnalyzer 1.25.0: 115 Dateien / files\nOK: keine Error-/Warning-Befunde / no Error or Warning findings\n",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/tracked-pssa.log",
+      "logSha256": "96d1d1596a65f3dc13f5efcf48e49dee21ebb91151ff9af03129e1981a243176",
+      "stdoutSha256": "7211582626f146619e515f8ec2fec398286948fc8749be059824af0a96473f3c",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "secret-scan",
+      "command": [
+        "bash",
+        "scripts/scan-agent-secrets.sh",
+        "--fail-on-high",
+        "."
+      ],
+      "startedAt": "2026-09-13T08:44:40.098999+00:00",
+      "exitCode": 0,
+      "stdout": "OK     | gitleaks | no secrets in current git diff\nlow    | .agents | empty agent directory\nlow    | .claude | prompt, command, or template files only\nlow    | .github/agents | prompt, command, or template files only\nlow    | .github/prompts | prompt, command, or template files only\nlow    | .opencode | prompt, command, or template files only\n\nSummary: high=0 medium=0 low=5 total_agent_dirs=5 gitleaks_high=0\n",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/secret-scan.log",
+      "logSha256": "9983b8e7cd97278863f98bc0076d942a025cad5f094cdfc4ceeec776f1ca55e4",
+      "stdoutSha256": "4a34b4090ecd2a1b7ff23c00f209ffe02194fe1fb2e83e5a9380c205bd61e9e7",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "gitleaks-0",
+      "command": [
+        "gitleaks",
+        "dir",
+        "specs/004-series-eligibility",
+        "--no-banner",
+        "--no-color",
+        "--redact"
+      ],
+      "startedAt": "2026-09-13T08:45:14.041795+00:00",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "10:45AM INF scanned ~3873633 bytes (3.87 MB) in 602ms\n10:45AM WRN leaks found: 3\n",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/gitleaks-0.log",
+      "logSha256": "3cffdf8dd326f33f44a8fb2499d6c42a2dbe82c39353d698f3e090c579c916ae",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "3da0154ea6dd6e4d2568f794b41e84413a054eb3caad8d2fa1020e6dfb0c4af6"
+    },
+    {
+      "label": "gitleaks-1",
+      "command": [
+        "gitleaks",
+        "dir",
+        "docs/security/series-eligibility.md",
+        "--no-banner",
+        "--no-color",
+        "--redact"
+      ],
+      "startedAt": "2026-09-13T08:45:14.665213+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "10:45AM INF scanned ~11528 bytes (11.53 KB) in 3.94ms\n10:45AM INF no leaks found\n",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/gitleaks-1.log",
+      "logSha256": "3d81087c91c9f807530dac25d03814bc89e7fe484883afde9a90d7d3b92753ac",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "9851f3f0dc3a97e3e9fbeca77b4a0807a4405513cd1f436896d06ca64253e01f"
+    },
+    {
+      "label": "gitleaks-2",
+      "command": [
+        "gitleaks",
+        "dir",
+        "docs/security/linked-intake-evidence.md",
+        "--no-banner",
+        "--no-color",
+        "--redact"
+      ],
+      "startedAt": "2026-09-13T08:45:14.685980+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "10:45AM INF scanned ~4941 bytes (4.94 KB) in 2.12ms\n10:45AM INF no leaks found\n",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/gitleaks-2.log",
+      "logSha256": "8dd7438875e7e7b2c1a15cf1a21733a2cd082c1b5bea9072d310e1d11fc4ac5c",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "ea1eccf15ad2cd1db7482ec5caa2566563c084c95175a586405f76179cd110f2"
+    },
+    {
+      "label": "gitleaks-3",
+      "command": [
+        "gitleaks",
+        "dir",
+        "docs/architecture/series-eligibility.md",
+        "--no-banner",
+        "--no-color",
+        "--redact"
+      ],
+      "startedAt": "2026-09-13T08:45:14.705868+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "10:45AM INF scanned ~7922 bytes (7.92 KB) in 3.03ms\n10:45AM INF no leaks found\n",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/gitleaks-3.log",
+      "logSha256": "e774ce6dfd2ce83c53c213a8194689cff8e90fcbf80d67b5fb58e75c83b0207a",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "fbb32aed130ba1841cbdb8c7f91a5463f620d5cd21c4a44b81e5d45fe18f2f09"
+    },
+    {
+      "label": "gitleaks-4",
+      "command": [
+        "gitleaks",
+        "dir",
+        "docs/accessibility/series-eligibility.md",
+        "--no-banner",
+        "--no-color",
+        "--redact"
+      ],
+      "startedAt": "2026-09-13T08:45:14.726460+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "10:45AM INF scanned ~8473 bytes (8.47 KB) in 4.89ms\n10:45AM INF no leaks found\n",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/gitleaks-4.log",
+      "logSha256": "e01dfb6229d5fbd8a1e263a0b9f1a30ea21a670e98abe2665878299dc8756fd2",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "97414ec2af4e7b15bee9f96baa19d2e9f62013b71aa5897470409c52ab698cb4"
+    },
+    {
+      "label": "gitleaks-5",
+      "command": [
+        "gitleaks",
+        "dir",
+        "docs/man/validate-series-eligibility.1",
+        "--no-banner",
+        "--no-color",
+        "--redact"
+      ],
+      "startedAt": "2026-09-13T08:45:14.748162+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "10:45AM INF scanned ~8613 bytes (8.61 KB) in 2.91ms\n10:45AM INF no leaks found\n",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/gitleaks-5.log",
+      "logSha256": "9b1230e704dc98d10b46024ae778cfe305cafc907a48d948c4d729dc4a71dc9c",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "303b05310ca85fae5f4df111485a5672a241bcdf5f10d67fa9a4bbea1d3ab63e"
+    },
+    {
+      "label": "gitleaks-diagnostic",
+      "command": [
+        "gitleaks",
+        "dir",
+        "specs/004-series-eligibility",
+        "--no-banner",
+        "--no-color",
+        "--redact",
+        "--report-format",
+        "json",
+        "--report-path",
+        ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/gitleaks-findings.json"
+      ],
+      "startedAt": "2026-09-13T08:45:34.523429+00:00",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "10:45AM INF scanned ~3873633 bytes (3.87 MB) in 560ms\n10:45AM WRN leaks found: 3\n",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/gitleaks-diagnostic.log",
+      "logSha256": "ccf37d8acb71a1e27016ff812e3425ea0c1cf680065c8b36abe7389734828fe9",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "9b19fad28f0cba1fd80ce4da85f8d73958be73c631cbcf79cc85dd20e128a9e4"
+    },
+    {
+      "label": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "startedAt": "2026-09-13T08:44:39.698720+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/whitespace.log",
+      "logSha256": "a3680b6601c39b586ea892ad2bbaa58a7f72b62a64f73917b09aa8c5f188110e",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "final-whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "startedAt": "2026-09-13T08:49:48.109986+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/final-whitespace.log",
+      "logSha256": "a3680b6601c39b586ea892ad2bbaa58a7f72b62a64f73917b09aa8c5f188110e"
+    },
+    {
+      "label": "gitleaks-fingerprint-remediation",
+      "command": [
+        "gitleaks",
+        "dir",
+        "specs/004-series-eligibility",
+        "--no-banner",
+        "--no-color",
+        "--redact"
+      ],
+      "startedAt": "2026-09-13T08:56:27.346552+00:00",
+      "completedAt": "2026-09-13T08:56:27.914857+00:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "10:56AM INF scanned ~3944715 bytes (3.94 MB) in 546ms\n10:56AM INF no leaks found\n",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "01b8cba1bf0a174c0e7e0f5f478257b534d1254472ab8ad90bea7888d2c66127"
+    }
+  ],
+  "gitleaksFindings": [
+    {
+      "findingFile": "specs/004-series-eligibility/phase-results/us1-tests.json",
+      "line": 185,
+      "rule": "generic-api-key",
+      "classification": "VerifiedFalsePositive",
+      "referencedFile": {
+        "path": "specs/004-series-eligibility/phase-results/analyze-secret-scan.json",
+        "rawSha256": "902b5b05f8868f26aa75cf373a47ccd15014b3878c60d0b62730276be2c93670",
+        "normalizedSha256": "902b5b05f8868f26aa75cf373a47ccd15014b3878c60d0b62730276be2c93670"
+      },
+      "matchesActualRawHash": true,
+      "historicalEvidenceUnchanged": true
+    },
+    {
+      "findingFile": "specs/004-series-eligibility/phase-results/us1-tests.json",
+      "line": 195,
+      "rule": "generic-api-key",
+      "classification": "VerifiedFalsePositive",
+      "referencedFile": {
+        "path": "specs/004-series-eligibility/phase-results/analyze-2-secrets.json",
+        "rawSha256": "646519af6650ef5e4e71d309e23e0100f78c656f02e0c7e620727721e999125e",
+        "normalizedSha256": "646519af6650ef5e4e71d309e23e0100f78c656f02e0c7e620727721e999125e"
+      },
+      "matchesActualRawHash": true,
+      "historicalEvidenceUnchanged": true
+    },
+    {
+      "findingFile": "specs/004-series-eligibility/phase-results/us2-tests.json",
+      "line": 684,
+      "rule": "generic-api-key",
+      "classification": "VerifiedFalsePositive",
+      "referencedFile": {
+        "path": "specs/intake-review-fixtures/raw-06/negative-secret-material.json",
+        "rawSha256": "66dd07be6b5d868070e87aadfe9a2d036b793aef0f29c4f976085e9e005bdb08",
+        "normalizedSha256": "66dd07be6b5d868070e87aadfe9a2d036b793aef0f29c4f976085e9e005bdb08"
+      },
+      "matchesActualRawHash": true,
+      "historicalEvidenceUnchanged": true
+    }
+  ],
+  "publicPathGate": {
+    "status": "Pass",
+    "execution": {
+      "label": "public-paths",
+      "command": [
+        "python3",
+        "-B",
+        "/private/tmp/aoc-phase6-public-check.py"
+      ],
+      "startedAt": "2026-09-13T08:49:47.707849+00:00",
+      "exitCode": 0,
+      "stdout": "{\n  \"result\": \"Pass\",\n  \"candidateFiles\": [\n    \"docs/man/validate-series-eligibility.1\",\n    \"docs/security/linked-intake-evidence.md\",\n    \"docs/security/series-eligibility.md\",\n    \"docs/architecture/series-eligibility.md\",\n    \"docs/accessibility/series-eligibility.md\",\n    \"specs/004-series-eligibility/quickstart.md\",\n    \"specs/004-series-eligibility/tasks.md\",\n    \"specs/004-series-eligibility/contracts/documentation-impact.json\",\n    \"specs/004-series-eligibility/checklists/cross-platform.md\",\n    \"specs/004-series-eligibility/phase-results/documentation-validation.json\",\n    \"specs/004-series-eligibility/phase-results/documentation-review.md\",\n    \"specs/004-series-eligibility/phase-results/quality-validation.json\"\n  ],\n  \"issues\": []\n}\n",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/public-paths.log",
+      "logSha256": "bf60e90b1d25f9e496d7c9c4f4ee21d1334f9703b045e2b279b695bd830ecb51"
+    },
+    "checkerSource": {
+      "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/public-path-check.py",
+      "rawSha256": "5a46d61501ae3387292c771bbb4dc985aa72a6d225d989f76b111f7c80162ef1"
+    },
+    "scope": "12 exact changed/named new text files, including phase payload; private paths, ANSI, trailing whitespace and local Markdown link targets. No unrelated homogeneity execution."
+  },
+  "preservation": {
+    "result": "Pass",
+    "unchangedTrackedFiles": 1785,
+    "allOtherTrackedFilesUnchanged": true,
+    "protectedSnapshot": {
+      "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/start.json",
+      "rawSha256": "f0d468a24aaabb3e055a3f7f6f9f6869ba61eb6407a1800c62ee49db0abaeafa",
+      "normalizedSha256": "f0d468a24aaabb3e055a3f7f6f9f6869ba61eb6407a1800c62ee49db0abaeafa"
+    },
+    "guidancePresetTemplateConstitutionMutation": false,
+    "constitutionMirrorIdentical": true,
+    "runStateUnchangedFromPhaseStart": true,
+    "headUnchanged": true,
+    "indexEntriesUnchanged": true,
+    "statisticsUnchanged": true,
+    "currentFunctionAndCliTextIdentical": true
+  },
+  "renderReview": {
+    "result": "CompletedForRenderedText",
+    "formats": [
+      "Pandoc plain text from GFM",
+      "mandoc UTF-8 text"
+    ],
+    "observations": [
+      "DE-first/EN-second paired semantics",
+      "Defined terms and prerequisites",
+      "Nine canonical criteria in actual fixture text",
+      "Six modes and final interface documented",
+      "Exactly one nextAction per actual output",
+      "Explicit authority/provenance/review/delivery axes"
+    ],
+    "browser": "NotAssessed: file protocol blocked, localhost binding denied, HTML content evaluation rejected by automatic approval policy (never). No browser pass claimed.",
+    "assistiveTechnology": "NotAssessed; no VoiceOver/NVDA/JAWS or keyboard/reflow pass",
+    "HTMLLanguage": "Preview lang=de generated; English language-part switching unverified; raw Markdown is not a browser-language guarantee."
+  },
+  "nativeEvidenceGaps": [
+    {
+      "platform": "ubuntu-22.04",
+      "shell": "Bash 5+",
+      "status": "Closed",
+      "owner": "Coordinating autonomous runner / AOC Repository Owner",
+      "followUp": "Completed by run 34754238229 job 103715801136",
+      "risk": "Re-evaluate on source or runner drift",
+      "trigger": "Delivery or source/runtime drift"
+    },
+    {
+      "platform": "ubuntu-22.04",
+      "shell": "PowerShell Core 7+",
+      "status": "Closed",
+      "owner": "Coordinating autonomous runner / AOC Repository Owner",
+      "followUp": "Completed by run 34754238229 job 103715801136",
+      "risk": "Re-evaluate on source or runner drift",
+      "trigger": "Delivery or source/runtime drift"
+    },
+    {
+      "platform": "macos-14",
+      "shell": "Bash 5+",
+      "status": "Closed",
+      "owner": "Coordinating autonomous runner / AOC Repository Owner",
+      "followUp": "Completed by run 34754238229 job 103715801045",
+      "risk": "Re-evaluate on source or runner drift",
+      "trigger": "Delivery or source/runtime drift"
+    },
+    {
+      "platform": "macos-14",
+      "shell": "PowerShell Core 7+",
+      "status": "Closed",
+      "owner": "Coordinating autonomous runner / AOC Repository Owner",
+      "followUp": "Completed by run 34754238229 job 103715801045",
+      "risk": "Re-evaluate on source or runner drift",
+      "trigger": "Delivery or source/runtime drift"
+    },
+    {
+      "platform": "windows-2022",
+      "shell": "Bash 5+",
+      "status": "Closed",
+      "owner": "Coordinating autonomous runner / AOC Repository Owner",
+      "followUp": "Completed by run 34754238229 job 103715801117",
+      "risk": "Re-evaluate on source or runner drift",
+      "trigger": "Delivery or source/runtime drift"
+    },
+    {
+      "platform": "windows-2022",
+      "shell": "PowerShell Core 7+",
+      "status": "Closed",
+      "owner": "Coordinating autonomous runner / AOC Repository Owner",
+      "followUp": "Completed by run 34754238229 job 103715801117",
+      "risk": "Re-evaluate on source or runner drift",
+      "trigger": "Delivery or source/runtime drift"
+    }
+  ],
+  "exactHeadDeliveryAcceptance": {
+    "result": "Pass",
+    "reviewedHead": "02a9399536c46497c34cee840e5ae2c4fc090574",
+    "nativeMatrixRunId": 34754238229,
+    "publicReadinessRunId": 34754238183,
+    "homogeneityRunId": 34754238340,
+    "evidence": "specs/004-series-eligibility/phase-results/ci-evidence.json"
+  },
+  "executionCorrections": [
+    {
+      "label": "python-ast",
+      "exitCode": 1,
+      "cause": "Review command named intake-sequencing-core.py, which does not exist; actual imported engine is validate-intake-series.py. Corrected command passes; no code or gate rule changed."
+    },
+    {
+      "cause": "Initial local helper import used underscore instead of hyphen filename; no review command ran; corrected via runpy."
+    },
+    {
+      "cause": "Preservation helper initially attempted UTF-8 normalization on tracked binaries. Corrected to raw byte hashing for the whole tracked inventory; no tracked input changed."
+    }
+  ],
+  "aepsAssessment": {
+    "result": "No new transferable AEPS finding",
+    "reviewedLedger": {
+      "path": "docs/aeps/findings-ledger.md",
+      "rawSha256": "ae685990142dc1a56f4d99eae5b7623ac8eddf992e367cbb004a88afa8fd494b",
+      "normalizedSha256": "ae685990142dc1a56f4d99eae5b7623ac8eddf992e367cbb004a88afa8fd494b"
+    },
+    "existingFindings": [
+      "AEPS-FIND-AOC-007",
+      "AEPS-FIND-AOC-013"
+    ],
+    "reason": "Local review confirms accepted input/authority boundaries and records operational proof limits. Historical hash false positives are fully attributed, without secret exposure, generalization or promotion. This failed-gate observation is preserved for the canonical capture task.",
+    "canonicalCapture": "T042 remains pending under the accepted explicit T032-T039 boundary; no ledger, upstream or retrospective task executed."
+  },
+  "extensions": {
+    "filePresent": false,
+    "beforeImplement": "No hooks",
+    "afterImplement": "No hooks"
+  },
+  "notExecuted": [
+    "feature merge",
+    "post-merge validation",
+    "lifecycle rename delivery",
+    "retrospective closeout delivery",
+    "final main synchronization",
+    "Level 0/preset changes",
+    "shared guidance/consumer writes",
+    "another feature",
+    "unrelated repeat suites"
+  ],
+  "nextExactAction": "Revalidate the final evidence checkpoint head, converge PR #49 review, then perform T051 only if every technical gate remains green.",
+  "previousPhaseResult": {
+    "phaseId": "implement-6",
+    "attemptId": "9fc067ea-90a2-48a6-b627-d1041de66c09",
+    "result": "Blocked",
+    "gatesSatisfied": false,
+    "blockedReason": "T039 named gitleaks directory scan exited 1 for three verified historical evidence SHA-256 false positives (US1 lines 185/195; US2 line 684). T032-T038 complete; T031 checkbox carried forward; no exception, historical rewrite or T040 action.\n\nAutomatic approval review rejected browser_evaluate HTML loading because the tool required approval under approval_policy=never. Review evidence is limited to actual rendered text; browser/AT validation remains unclaimed.",
+    "scope": {
+      "implementedTasks": [
+        "T032",
+        "T033",
+        "T034",
+        "T035",
+        "T036",
+        "T037",
+        "T038"
+      ],
+      "inheritedCheckboxPublished": "T031",
+      "expectedTasks": 8,
+      "completedTasks": 7,
+      "blockedTask": "T039",
+      "stopBefore": "T040",
+      "featureCompleted": false
+    },
+    "completedAt": "2026-09-13T08:49:17.925121+00:00",
+    "payloadSnapshot": {
+      "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-remediation-audit/quality-validation.before.json",
+      "rawSha256": "7108081ca13083cb056836d0184f4a0a023dff480fa6a2bf92977c458d0d3009",
+      "normalizedSha256": "7108081ca13083cb056836d0184f4a0a023dff480fa6a2bf92977c458d0d3009"
+    },
+    "runnerResult": {
+      "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6.result.json",
+      "rawSha256": "e14d75c7445f700274223a548f8b1ebfdfbc9542d6d19a864f71847a34826d62",
+      "normalizedSha256": "e14d75c7445f700274223a548f8b1ebfdfbc9542d6d19a864f71847a34826d62"
+    }
+  },
+  "remediation": {
+    "blockerId": "EL-QUALITY-039-GITLEAKS",
+    "result": "Resolved",
+    "authority": "Current explicit user instruction: fingerprint-only local repair, T039 evidence checks, preserve T032-T038 and historical evidence, stop before T040.",
+    "suppression": {
+      "path": ".gitleaksignore",
+      "rawSha256": "074942053c73f177ab982bdee73ad3a3e29977d8657405dc3bbfddedc7af65b1",
+      "normalizedSha256": "074942053c73f177ab982bdee73ad3a3e29977d8657405dc3bbfddedc7af65b1"
+    },
+    "fingerprints": [
+      "specs/004-series-eligibility/phase-results/us1-tests.json:generic-api-key:185",
+      "specs/004-series-eligibility/phase-results/us1-tests.json:generic-api-key:195",
+      "specs/004-series-eligibility/phase-results/us2-tests.json:generic-api-key:684"
+    ],
+    "rationaleDE": "Verifizierte SHA-256-Evidence-Hashes sind keine Geheimnisse; die Ausnahme bindet jeweils Datei, Regel und Zeile.",
+    "rationaleEN": "Verified SHA-256 evidence hashes are not secrets; each exception binds file, rule and line.",
+    "toolVersion": "8.30.1",
+    "mechanism": "Repository-root .gitleaksignore, default --gitleaks-ignore-path .; installed README documents exact fingerprint exclusions.",
+    "scanEvidence": {
+      "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-remediation-audit/gitleaks.json",
+      "rawSha256": "332ccf2f703f513ebe69505a4b8f351c5d1643b464a0120d827faf11d74a0819",
+      "normalizedSha256": "332ccf2f703f513ebe69505a4b8f351c5d1643b464a0120d827faf11d74a0819"
+    },
+    "scanInputPayload": {
+      "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-remediation-audit/quality-validation.before.json",
+      "rawSha256": "7108081ca13083cb056836d0184f4a0a023dff480fa6a2bf92977c458d0d3009",
+      "normalizedSha256": "7108081ca13083cb056836d0184f4a0a023dff480fa6a2bf92977c458d0d3009"
+    },
+    "preservationSnapshot": {
+      "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-remediation-audit/start.json",
+      "rawSha256": "9ff02a20327a8d0edb899985814f26783b20c9993f8c7efa2b2847b642a719f1",
+      "normalizedSha256": "9ff02a20327a8d0edb899985814f26783b20c9993f8c7efa2b2847b642a719f1"
+    },
+    "inheritedT032T038EvidenceHashes": "Pass",
+    "inheritedT039ExecutionLogHashes": "Pass",
+    "falsePositiveHashAttribution": "Pass",
+    "historicalFailures": "Retained verbatim in executions and previous payload snapshot; causally resolved by gitleaks-fingerprint-remediation exit 0.",
+    "documentationImpact": "Continue the single existing CHG004 UpdateRequired decision; current tasks/payload and DE/EN suppression comments updated; T038 artifacts unchanged.",
+    "runStateOwnership": "Unchanged; coordinator rebinds task/result hashes after this bounded phase.",
+    "remainingEvidenceLimits": "Existing browser/assistive-technology and native-provider gaps remain unchanged; no new pass claimed.",
+    "affectedEvidenceChecks": {
+      "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-remediation-audit/affected-evidence-checks.json",
+      "rawSha256": "05cb1b9ce1ad05a97c89eade9b21d3285c651ccfcc37c66f0c037ca864a71e1c",
+      "result": "Pass"
+    },
+    "finalScanEvidencePath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-remediation-audit/final-gitleaks.json",
+    "finalScanBinding": "The final exact-command scan record binds the completed payload hash externally to avoid a self-hash cycle; phase completion requires its exit 0."
+  }
+}

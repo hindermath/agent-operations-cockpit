@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+# Strikte lesende Delegation / Strict read-only delegation.
+set -euo pipefail
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+
+show_help() {
+  cat <<'EOF'
+Series Eligibility pruefen / Assess Series Eligibility
+
+VERWENDUNG / USAGE
+  validate-series-eligibility.sh --repo PATH --fixture PATH [--json]
+  validate-series-eligibility.sh --repo PATH --series PATH [--action status|next] [--json]
+  validate-series-eligibility.sh --help | -h
+
+OPTIONEN / OPTIONS
+  --repo PATH     Repository-Wurzel. / Repository root.
+  --fixture PATH  Fixture relativ zum Repository. / Fixture relative to the repository.
+  --series PATH   Series-Manifest statt Fixture. / Series manifest instead of fixture.
+  --action MODE   status (Standard) oder next, nur Series. / status (default) or next, series only.
+  --json          Maschinenlesbare Ausgabe. / Machine-readable output.
+  --help, -h      Diese Hilfe anzeigen. / Show this help.
+
+MODI / MODES
+  manual-assisted, single-autonomous, serial-autonomous, parallel-autonomous,
+  research-only, blocked. Der Modus stammt aus der Fixture. / Mode comes from the fixture.
+  Fixture und Series schliessen sich aus. / Fixture and series are mutually exclusive.
+  Ohne --json: DE/EN-Klartext. / Without --json: bilingual plain text.
+
+BEISPIELE / EXAMPLES
+  validate-series-eligibility.sh --repo . --fixture specs/intake-review-fixtures/meta-lh-04/valid-parallel.json --json
+  validate-series-eligibility.sh --repo . --series specs/intake-series/aoc-phase-2/manifest.json --action next
+
+AUSGABE UND EXITS / OUTPUT AND EXITS
+  Lifecycle, Review, Kandidaten, Praeferenz, Blocker, Lieferung und Authority sind getrennt.
+  Lifecycle, review, candidates, preference, blockers, delivery and authority are separate.
+  Historische Receipt-Herkunft ist keine aktuelle Authority. / Historical provenance is not current authority.
+  0: Gueltiges Assessment, auch Blocked. / Valid assessment, including Blocked.
+  2: ProductFailure, ungueltige Eingabe/Erwartung. / Invalid input or expectation.
+  3: ProviderFailure, Laufzeitfehler. / Runtime failure.
+
+Die Pruefung liest nur und erteilt keine Startfreigabe.
+The assessment is read-only and grants no authority to start.
+
+Handbuch / Manual: docs/man/validate-series-eligibility.1
+EOF
+}
+
+if [[ $# -eq 1 && ( "$1" == "--help" || "$1" == "-h" ) ]]; then
+  show_help
+  exit 0
+fi
+
+# Kinddiagnosen bleiben privat; nur definierte Ergebnisse passieren die Grenze.
+# Keep child diagnostics private; only defined results cross the boundary.
+python_executable="${AOC_PYTHON_EXECUTABLE:-}"
+if [[ -z "$python_executable" ]]; then
+  python_executable="$(type -P python3 || type -P python || true)"
+fi
+if [[ -z "$python_executable" || ! -f "$python_executable" || ! -x "$python_executable" ]]; then
+  python_executable=""
+fi
+core_exit=0
+if [[ -n "$python_executable" ]]; then
+  core_output="$("$python_executable" -B "$script_dir/validate_series_eligibility.py" "$@" 2>/dev/null)" || core_exit=$?
+else
+  core_output=""
+  core_exit=3
+fi
+if [[ ( "$core_exit" -eq 0 || "$core_exit" -eq 2 ) &&
+      ( "$core_output" == '{"schemaVersion": "1.0", "mode": '* ||
+        "$core_output" == 'Modus / Mode: '* ) ]]; then
+  printf '%s\n' "$core_output"
+  exit "$core_exit"
+fi
+json_output=false
+for argument in "$@"; do
+  if [[ "$argument" == "--json" ]]; then json_output=true; fi
+done
+if "$json_output"; then
+  cat <<'EOF'
+{"schemaVersion":"1.0","mode":null,"criteria":{},"outcome":"Blocked","reasons":[{"code":"EL_PROVIDER","criterion":null,"de":"Die Laufzeitprüfung ist fehlgeschlagen.","en":"The runtime check failed."}],"failureClass":"ProviderFailure","authorityGranted":false,"nextAction":{"de":"Eingaben und Nachweise erneut prüfen; nichts starten.","en":"Reassess inputs and evidence; start nothing."}}
+EOF
+else
+  cat <<'EOF'
+Modus / Mode: NotAssessed
+Ergebnis / Outcome: Blocked
+Die Laufzeitprüfung ist fehlgeschlagen. / The runtime check failed.
+Nächste Aktion / Next action: Eingaben und Nachweise erneut prüfen; nichts starten. / Reassess inputs and evidence; start nothing.
+Keine Startfreigabe. / No start authority granted.
+EOF
+fi
+exit 3

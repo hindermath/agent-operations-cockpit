@@ -1,0 +1,868 @@
+{
+  "schemaVersion": "1.0",
+  "feature": "specs/004-series-eligibility",
+  "commands": [
+    {
+      "id": "series-bash",
+      "command": "bash .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.sh --file specs/intake-series/aoc-phase-2/manifest.json --repo .",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "series-pwsh",
+      "command": "pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.ps1 -File specs/intake-series/aoc-phase-2/manifest.json -Repo .",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "sequencing",
+      "command": "pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/tests/test-intake-sequencing-validator.ps1",
+      "existingAtPlan": true,
+      "expected": "Exit 0; children reject cycle ISG007, hash drift ISG004, roots ISG008, multiple declared Eligible ISG009 with exit 2",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "legacy-valid-parallel-bash",
+      "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/valid-parallel.json",
+      "existingAtPlan": true,
+      "expected": "Exit 0; Eligible",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "legacy-valid-parallel-pwsh",
+      "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/valid-parallel.json",
+      "existingAtPlan": true,
+      "expected": "Exit 0; Eligible",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "legacy-shared-write-bash",
+      "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/shared-write.json",
+      "existingAtPlan": true,
+      "expected": "Exit 0; Blocked",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "legacy-shared-write-pwsh",
+      "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/shared-write.json",
+      "existingAtPlan": true,
+      "expected": "Exit 0; Blocked",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "legacy-shared-decision-bash",
+      "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/shared-decision.json",
+      "existingAtPlan": true,
+      "expected": "Exit 0; Blocked",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "legacy-shared-decision-pwsh",
+      "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/shared-decision.json",
+      "existingAtPlan": true,
+      "expected": "Exit 0; Blocked",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "surface-bash",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case surface",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "empty-integration-bash",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case empty-integration",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "all-bash",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case all",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "criteria-cardinality-bash",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case criteria-cardinality",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "runner-cardinality-bash",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case runner-cardinality",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "series-negatives-bash",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case series-negatives",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "status-next-bash",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case status-next",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "failure-taxonomy-bash",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case failure-taxonomy",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "status-bash",
+      "command": "bash specs/004-series-eligibility/contracts/validate-series-eligibility.sh --repo . --series specs/intake-series/aoc-phase-2/manifest.json --action status --json",
+      "existingAtPlan": false,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "next-bash",
+      "command": "bash specs/004-series-eligibility/contracts/validate-series-eligibility.sh --repo . --series specs/intake-series/aoc-phase-2/manifest.json --action next --json",
+      "existingAtPlan": false,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "surface-pwsh",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case surface",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "empty-integration-pwsh",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case empty-integration",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "all-pwsh",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case all",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "criteria-cardinality-pwsh",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case criteria-cardinality",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "runner-cardinality-pwsh",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case runner-cardinality",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "series-negatives-pwsh",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case series-negatives",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "status-next-pwsh",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case status-next",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "failure-taxonomy-pwsh",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case failure-taxonomy",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "status-pwsh",
+      "command": "pwsh -NoProfile -File specs/004-series-eligibility/contracts/validate-series-eligibility.ps1 -Repo . -Series specs/intake-series/aoc-phase-2/manifest.json -Action status -Json",
+      "existingAtPlan": false,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "next-pwsh",
+      "command": "pwsh -NoProfile -File specs/004-series-eligibility/contracts/validate-series-eligibility.ps1 -Repo . -Series specs/intake-series/aoc-phase-2/manifest.json -Action next -Json",
+      "existingAtPlan": false,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "global-ready",
+      "command": "python3 -B specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py --repo . global-ready",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "pssa",
+      "command": "pwsh -NoProfile -File scripts/invoke-psscriptanalyzer.ps1 -RepositoryRoot .",
+      "existingAtPlan": true,
+      "expected": "Exit 0; PSScriptAnalyzer 1.25.0, complete tracked repository-owned PowerShell set",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "homogeneity-bash",
+      "command": "bash scripts/check-homogeneity.sh --dry-run --verbose .",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-latest",
+        "macos-14"
+      ],
+      "executionClass": "quality-automated-gate",
+      "executionTasks": [
+        "T039",
+        "T040",
+        "T049"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "homogeneity-pwsh",
+      "command": "pwsh -NoProfile -File scripts/check-homogeneity.ps1 -TargetDir . -DryRun -Verbose",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "windows-2022"
+      ],
+      "executionClass": "quality-automated-gate",
+      "executionTasks": [
+        "T039",
+        "T040",
+        "T049"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "secret-scan",
+      "command": "bash scripts/scan-agent-secrets.sh --fail-on-high .",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-latest",
+        "macos-14"
+      ],
+      "executionClass": "quality-automated-gate",
+      "executionTasks": [
+        "T039",
+        "T040",
+        "T049"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "whitespace",
+      "command": "git diff --check",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "documentation-bash",
+      "command": "bash scripts/validate-documentation-impact.sh --evidence specs/004-series-eligibility/contracts/documentation-impact.json",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "documentation-pwsh",
+      "command": "pwsh -NoProfile -File scripts/validate-documentation-impact.ps1 -Evidence specs/004-series-eligibility/contracts/documentation-impact.json",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "stats-preview",
+      "command": "bash scripts/render-project-statistics.sh --repo . --dry-run",
+      "existingAtPlan": true,
+      "expected": "Exit 0; preview only",
+      "platforms": [
+        "macos-14",
+        "ubuntu-latest"
+      ],
+      "executionClass": "statistics-boundary",
+      "executionTasks": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055"
+      ],
+      "executionPhase": "After exact both-shell unstaged and staged Delivery-Set validation, authorized source Conventional Commit with required trailer and proof of a clean real feature worktree: both helps, paired preview, one render, both check-only modes; separately validate and commit only changed statistics. See statistics-checkpoints.json; later source drift requires an additional full checkpoint before freeze/push.",
+      "conditionalRefreshTasks": [
+        "T046",
+        "T051",
+        "T054",
+        "T056"
+      ],
+      "conditionalRefreshTrigger": "Only if later authorized source/evidence/task changes require the complete statistics-checkpoints.json protocol before freeze/push/head gates; never substitute for an earlier mandatory boundary."
+    },
+    {
+      "id": "stats-render",
+      "command": "pwsh -NoProfile -File scripts/render-project-statistics.ps1 -Repo .",
+      "existingAtPlan": true,
+      "expected": "Exit 0; implementation closeout only; generated write after preview",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "statistics-boundary",
+      "executionTasks": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055"
+      ],
+      "executionPhase": "After exact both-shell unstaged and staged Delivery-Set validation, authorized source Conventional Commit with required trailer and proof of a clean real feature worktree: both helps, paired preview, one render, both check-only modes; separately validate and commit only changed statistics. See statistics-checkpoints.json; later source drift requires an additional full checkpoint before freeze/push.",
+      "conditionalRefreshTasks": [
+        "T046",
+        "T051",
+        "T054",
+        "T056"
+      ],
+      "conditionalRefreshTrigger": "Only if later authorized source/evidence/task changes require the complete statistics-checkpoints.json protocol before freeze/push/head gates; never substitute for an earlier mandatory boundary."
+    },
+    {
+      "id": "stats-bash",
+      "command": "bash scripts/render-project-statistics.sh --repo . --check-only",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055",
+        "T048"
+      ],
+      "executionPhase": "Read-only statistics checks at statistics boundaries and exact-head native acceptance; never render in the matrix",
+      "conditionalRefreshTasks": [
+        "T046",
+        "T051",
+        "T054",
+        "T056"
+      ],
+      "conditionalRefreshTrigger": "Only if later authorized source/evidence/task changes require the complete statistics-checkpoints.json protocol before freeze/push/head gates; never substitute for an earlier mandatory boundary."
+    },
+    {
+      "id": "stats-pwsh",
+      "command": "pwsh -NoProfile -File scripts/render-project-statistics.ps1 -Repo . -CheckOnly",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055",
+        "T048"
+      ],
+      "executionPhase": "Read-only statistics checks at statistics boundaries and exact-head native acceptance; never render in the matrix",
+      "conditionalRefreshTasks": [
+        "T046",
+        "T051",
+        "T054",
+        "T056"
+      ],
+      "conditionalRefreshTrigger": "Only if later authorized source/evidence/task changes require the complete statistics-checkpoints.json protocol before freeze/push/head gates; never substitute for an earlier mandatory boundary."
+    },
+    {
+      "id": "public-readiness",
+      "command": "gh run view RUN_ID --job JOB_ID --log",
+      "existingAtPlan": true,
+      "expected": "Read-only evidence retrieval at authorized delivery: exact-head Repository baseline log proves both steps from .github/workflows/public-readiness.yml; replace IDs with observed IDs",
+      "platforms": [
+        "ubuntu-latest"
+      ],
+      "executionClass": "delivery-evidence-retrieval",
+      "executionTasks": [
+        "T049"
+      ],
+      "executionPhase": "Authorized delivery only; observed RUN_ID/JOB_ID and exact PR head; client retrieval is not a native matrix test",
+      "observedProviderPlatform": "ubuntu-latest",
+      "clientPlatforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ]
+    },
+    {
+      "id": "untracked-secret-scan",
+      "command": "gitleaks dir specs/004-series-eligibility --no-banner --no-color --redact",
+      "existingAtPlan": true,
+      "expected": "Exit 0; includes named untracked feature files",
+      "platforms": [
+        "ubuntu-latest",
+        "macos-14"
+      ],
+      "executionClass": "quality-automated-gate",
+      "executionTasks": [
+        "T039",
+        "T040",
+        "T049"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "stats-help-bash",
+      "command": "bash scripts/render-project-statistics.sh --help",
+      "existingAtPlan": true,
+      "expected": "Exit 0; help or preview only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "statistics-boundary",
+      "executionTasks": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055"
+      ],
+      "executionPhase": "After exact both-shell unstaged and staged Delivery-Set validation, authorized source Conventional Commit with required trailer and proof of a clean real feature worktree: both helps, paired preview, one render, both check-only modes; separately validate and commit only changed statistics. See statistics-checkpoints.json; later source drift requires an additional full checkpoint before freeze/push.",
+      "conditionalRefreshTasks": [
+        "T046",
+        "T051",
+        "T054",
+        "T056"
+      ],
+      "conditionalRefreshTrigger": "Only if later authorized source/evidence/task changes require the complete statistics-checkpoints.json protocol before freeze/push/head gates; never substitute for an earlier mandatory boundary."
+    },
+    {
+      "id": "stats-help-pwsh",
+      "command": "pwsh -NoProfile -Command \"Get-Help ./scripts/render-project-statistics.ps1 -Full\"",
+      "existingAtPlan": true,
+      "expected": "Exit 0; help or preview only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "statistics-boundary",
+      "executionTasks": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055"
+      ],
+      "executionPhase": "After exact both-shell unstaged and staged Delivery-Set validation, authorized source Conventional Commit with required trailer and proof of a clean real feature worktree: both helps, paired preview, one render, both check-only modes; separately validate and commit only changed statistics. See statistics-checkpoints.json; later source drift requires an additional full checkpoint before freeze/push.",
+      "conditionalRefreshTasks": [
+        "T046",
+        "T051",
+        "T054",
+        "T056"
+      ],
+      "conditionalRefreshTrigger": "Only if later authorized source/evidence/task changes require the complete statistics-checkpoints.json protocol before freeze/push/head gates; never substitute for an earlier mandatory boundary."
+    },
+    {
+      "id": "stats-preview-pwsh",
+      "command": "pwsh -NoProfile -File scripts/render-project-statistics.ps1 -Repo . -WhatIf",
+      "existingAtPlan": true,
+      "expected": "Exit 0; help or preview only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "statistics-boundary",
+      "executionTasks": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055"
+      ],
+      "executionPhase": "After exact both-shell unstaged and staged Delivery-Set validation, authorized source Conventional Commit with required trailer and proof of a clean real feature worktree: both helps, paired preview, one render, both check-only modes; separately validate and commit only changed statistics. See statistics-checkpoints.json; later source drift requires an additional full checkpoint before freeze/push.",
+      "conditionalRefreshTasks": [
+        "T046",
+        "T051",
+        "T054",
+        "T056"
+      ],
+      "conditionalRefreshTrigger": "Only if later authorized source/evidence/task changes require the complete statistics-checkpoints.json protocol before freeze/push/head gates; never substitute for an earlier mandatory boundary."
+    }
+  ]
+}

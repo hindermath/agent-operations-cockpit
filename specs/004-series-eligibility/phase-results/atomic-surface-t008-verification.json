@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "1.0",
+  "feature": "004-series-eligibility",
+  "task": "T008",
+  "observedAt": "2026-09-13T08:15:19+02:00",
+  "platform": {
+    "os": "macOS 26.6.2 (25G83), arm64",
+    "bash": "GNU bash 5.3.15",
+    "python": "Python 3.14.7",
+    "powershell": "PowerShell 7.6.5",
+    "psScriptAnalyzer": "1.25.0"
+  },
+  "reviewer": "Codex autonomous coordinator",
+  "sourceHashes": {
+    "specs/004-series-eligibility/contracts/validate_series_eligibility.py": "20c8ba399a95b9e468b4b14252a606f65e358f411c35f72612d6610ae992d556",
+    "specs/004-series-eligibility/contracts/validate-series-eligibility.sh": "5be6ef6eae6fdc7f288823b0bad6fcf3e1af5e7a02de780a4d9e78776c6f4d4a",
+    "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1": "23a284866685b95fbaebac178c0d98e8de018b9e9ccadf0dcd7683423933d3f6",
+    "specs/004-series-eligibility/contracts/test_series_eligibility.py": "9b68771e24a7a46093c2b8288c3af808f79259286d5b957e0b776157ce6ba719",
+    "specs/004-series-eligibility/quickstart.md": "169a40525b47c76071bfcf7c9c4be50f4fa5e4c900a0f85d5e892aa633469c4e",
+    "docs/man/validate-series-eligibility.1": "f84a83329b6a00583bdc76f10130394632fe78c5118ca2a33adaaca0d96732c0"
+  },
+  "inputHashes": {
+    "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+    "requirements/baseline/series-eligibility-contract.json": "b054ad672b02fc472f25f3587191a3829fe5edbb20138beb827c6e630f38184b",
+    "specs/intake-review-fixtures/meta-lh-04/valid-parallel.json": "15a64b0a27a5c812cc8d3f4d3441ff352049f5e80bee9fc7f911551196c4853f",
+    "specs/intake-review-fixtures/meta-lh-04/shared-write.json": "0906a558a438673570336a9be3dbc463fd2774a0a56c4492ab13cd917e196b5c",
+    "specs/intake-review-fixtures/meta-lh-04/shared-decision.json": "6dddd2e8fbf6efe490de49e1af9becb04b155d5c4744ecce752206907eb0fac9"
+  },
+  "commands": [
+    {
+      "command": "bash -n specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+      "exitCode": 0,
+      "observed": "Bash syntax and strict-mode surface accepted."
+    },
+    {
+      "command": "PowerShell Parser.ParseFile(validate-series-eligibility.ps1)",
+      "exitCode": 0,
+      "observed": "No parser errors."
+    },
+    {
+      "command": "Invoke-ScriptAnalyzer -Path validate-series-eligibility.ps1 -Settings scripts/config/PSScriptAnalyzerSettings.psd1",
+      "exitCode": 0,
+      "observed": "No findings."
+    },
+    {
+      "command": "bash specs/004-series-eligibility/contracts/validate-series-eligibility.sh --help",
+      "exitCode": 0,
+      "stdoutSha256": "a30a73b63db125d0a34898edd6404ec2262935592b617efb559211bdc5973153",
+      "observed": "DE-first/EN-second usage, Repo, Fixture, Json, help, read-only boundary and manual path."
+    },
+    {
+      "command": "bash specs/004-series-eligibility/contracts/validate-series-eligibility.sh -h",
+      "exitCode": 0,
+      "stdoutSha256": "a30a73b63db125d0a34898edd6404ec2262935592b617efb559211bdc5973153",
+      "observed": "Short and long help switches are byte-equivalent."
+    },
+    {
+      "command": "pwsh -NoProfile -File specs/004-series-eligibility/contracts/validate-series-eligibility.ps1 -Help",
+      "exitCode": 0,
+      "stdoutSha256": "ae8150395b5ea8aa4be5115c47c00972d150100ebdc07151e21b6da7df4f9ffc",
+      "observed": "Complete script help covers every parameter and the non-authority boundary."
+    },
+    {
+      "command": "pwsh -NoProfile: dot-source, Get-Command, Get-Help, function/script parity",
+      "exitCode": 0,
+      "stdoutSha256": "65c4764aa2536555a796b6870cf3335179b3f151becdc45e837a52591f47994d",
+      "observed": "Silent import; advanced function with CmdletBinding; complete help sections; function and CLI both exit 0 with identical Eligible JSON and authorityGranted=false."
+    },
+    {
+      "command": "MANPAGER=cat man ./docs/man/validate-series-eligibility.1",
+      "exitCode": 0,
+      "stdoutSha256": "04ae886f78bf53c2f1c03166c036b9677af33a8d9f01c6beec364705884309cc",
+      "observed": "Rendered DE-first/EN-second manual is readable and contains the current T004-T007 scope, outcome/exit distinction and one safe next action.",
+      "platformNote": "macOS man does not implement GNU man -l; its supported equivalent is man ./PATH. The attempted -l form returned usage exit 1 before the equivalent path form passed."
+    },
+    {
+      "command": "test_series_eligibility.py --shell bash --case surface",
+      "exitCode": 0,
+      "observed": "Eligible, no reasons, authorityGranted=false, no writes."
+    },
+    {
+      "command": "test_series_eligibility.py --shell pwsh --case surface",
+      "exitCode": 0,
+      "observed": "Eligible, no reasons, authorityGranted=false, no writes."
+    },
+    {
+      "command": "test_series_eligibility.py --shell bash --case empty-integration",
+      "exitCode": 0,
+      "observed": "Blocked/ProductFailure with EL_CRITERION for integration, one DE/EN next action and no writes."
+    },
+    {
+      "command": "test_series_eligibility.py --shell pwsh --case empty-integration",
+      "exitCode": 0,
+      "observed": "Blocked/ProductFailure with EL_CRITERION for integration, one DE/EN next action and no writes."
+    }
+  ],
+  "immutability": {
+    "gitStatusBeforeSha256": "5647fc2858a2805a636be7420ca7d0e2533e016eafd9f868db2ea2f50640106f",
+    "gitStatusAfterSha256": "5647fc2858a2805a636be7420ca7d0e2533e016eafd9f868db2ea2f50640106f",
+    "intakeBeforeAfterSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+    "runStateBeforeAfterSha256": "74f752fde34c2addc674405bf7ba5dad1e2bd682581ab0f930ee5701a3b2570f",
+    "unchanged": true
+  },
+  "manualReview": {
+    "deFirstEnSecond": "Pass",
+    "cefRB2": "Pass",
+    "textNavigation": "Pass",
+    "helpCompleteness": "Pass",
+    "manpageScope": "Pass",
+    "dotSourceSafety": "Pass"
+  },
+  "noWrites": true,
+  "noSpecKitStart": true,
+  "authorityGranted": false,
+  "outcome": "Pass"
+}

@@ -1,0 +1,432 @@
+{
+  "schemaVersion": "1.1",
+  "runId": "8b306e28-51eb-4510-afbc-5056b9aee328",
+  "featurePath": "specs/004-series-eligibility",
+  "branch": "004-series-eligibility",
+  "deliveryMode": "MergeAndSync",
+  "authorityRevalidationRequired": true,
+  "stage": "MergeAndSync",
+  "status": "Active",
+  "checkpointCommit": "02a9399536c46497c34cee840e5ae2c4fc090574",
+  "acceptedArtifacts": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "sha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce"
+    },
+    {
+      "path": "specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json",
+      "sha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b"
+    },
+    {
+      "path": "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json",
+      "sha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07"
+    }
+  ],
+  "tasks": {
+    "path": "specs/004-series-eligibility/tasks.md",
+    "sha256": "b74af43a88cc1dc5d17ab15bd5990964af8c16c025b5a2de8251ddab85a7d73f",
+    "completed": 50,
+    "total": 57
+  },
+  "routing": {
+    "policy": "balanced-v1",
+    "fallbackPolicy": "fail-closed",
+    "phases": [
+      {
+        "phaseId": "specify",
+        "command": "speckit.specify",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-12T23:13:22.252294Z",
+        "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/specify.result.json",
+        "resultSha256": "a10a5d2963282baf0fe1ce0a7c0adc3a88db46b03edbe3e3f9857a3d71180a4f"
+      },
+      {
+        "phaseId": "clarify",
+        "command": "speckit.clarify",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "specify"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-12T23:18:51.369051Z",
+        "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/clarify.result.json",
+        "resultSha256": "7b207cbfa27c497a5ade36cd936bb020326335d37d6c6399afdde38650f15f97"
+      },
+      {
+        "phaseId": "checklist",
+        "command": "speckit.checklist",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "clarify"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-12T23:29:19.794915Z",
+        "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/checklist.result.json",
+        "resultSha256": "e0de4e8ddb3cf82f267d851df1b266e3d25f7e3d532c5628d7358bbe049f77dc"
+      },
+      {
+        "phaseId": "plan",
+        "command": "speckit.plan",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "checklist"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-12T23:52:42.675015Z",
+        "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/plan.result.json",
+        "resultSha256": "d8d3e19e1f568b4429b78d70b263b2eb05604e4bc7688c4ac32d91a79e72d65c"
+      },
+      {
+        "phaseId": "plan-review",
+        "command": "speckit.plan",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "plan"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T00:05:01.962059Z",
+        "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/plan-review.result.json",
+        "resultSha256": "0b1b07c6534f99a6dd78dffb06b519288c1376d5d4098e54e35d1511bf9a3a33"
+      },
+      {
+        "phaseId": "tasks",
+        "command": "speckit.tasks",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "plan-review"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T00:18:57.097257Z",
+        "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/tasks.result.json",
+        "resultSha256": "760d034bc505845b95fba932c2438cc7cfd165b51cc90484b8ab3066005e0711"
+      },
+      {
+        "phaseId": "analyze",
+        "command": "speckit.analyze",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "tasks"
+        ],
+        "status": "Blocked",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T00:32:48.269349Z"
+      },
+      {
+        "phaseId": "analysis-remediation",
+        "command": "speckit.plan",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "tasks"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T00:58:10.814935Z",
+        "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/analysis-remediation.result.json",
+        "resultSha256": "fa5261e8ca6f693f874de067e3a01d8dd1e45c126df7a11693f56952a50d09d7"
+      },
+      {
+        "phaseId": "analyze-2",
+        "command": "speckit.analyze",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "analysis-remediation"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T01:16:38.497895Z",
+        "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/analyze-2.result.json",
+        "resultSha256": "00584e19021152b4e38c48bea7894548337d17598aeb50bcf660e5879eebad86"
+      },
+      {
+        "phaseId": "implement",
+        "command": "speckit.implement",
+        "routingRole": "long-running-implementation",
+        "runnerProfile": "codex-implementation-auto",
+        "dependsOn": [
+          "analyze-2"
+        ],
+        "status": "Blocked",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T02:02:25.834116Z"
+      },
+      {
+        "phaseId": "implementation-sequence-remediation",
+        "command": "speckit.plan",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "analyze-2"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T02:49:17.962104Z",
+        "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implementation-sequence-remediation.result.json",
+        "resultSha256": "351d6fb9c8c382a64643b3931456722432086fa2c9b34c0caa27fefb4007063a"
+      },
+      {
+        "phaseId": "analyze-3",
+        "command": "speckit.analyze",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "implementation-sequence-remediation"
+        ],
+        "status": "Blocked",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T03:37:43.229275Z"
+      },
+      {
+        "phaseId": "implement-2",
+        "command": "speckit.implement",
+        "routingRole": "long-running-implementation",
+        "runnerProfile": "codex-implementation-auto",
+        "dependsOn": [
+          "analyze-3"
+        ],
+        "status": "Pending"
+      },
+      {
+        "phaseId": "atomic-surface-remediation",
+        "command": "speckit.plan",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "implementation-sequence-remediation"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T05:23:12.720435Z",
+        "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/atomic-surface-remediation.result.json",
+        "resultSha256": "e783081d989760d4f1ba9b4105a87ec0725a0a694a7f326b3434023203f0d0bb"
+      },
+      {
+        "phaseId": "analyze-4",
+        "command": "speckit.analyze",
+        "routingRole": "frontier-reasoning",
+        "runnerProfile": "codex-frontier-auto",
+        "dependsOn": [
+          "atomic-surface-remediation"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T05:52:52.384925Z",
+        "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/analyze-4.result.json",
+        "resultSha256": "1bbf231202bdb1b4478e9286679465fae5dea17c1eda464aec07b4c38d594d5f"
+      },
+      {
+        "phaseId": "implement-3",
+        "command": "speckit.implement",
+        "routingRole": "long-running-implementation",
+        "runnerProfile": "codex-implementation-auto",
+        "dependsOn": [
+          "analyze-4"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T07:37:01.741903Z",
+        "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-3.result.json",
+        "resultSha256": "bb2614d51904e1dbee911b1bdf3edf59b2adc02d76a8f2b8e6f1e824eaa2e667"
+      },
+      {
+        "phaseId": "implement-4",
+        "command": "speckit.implement",
+        "routingRole": "long-running-implementation",
+        "runnerProfile": "codex-implementation-auto",
+        "dependsOn": [
+          "implement-3"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T08:02:20.914272Z",
+        "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-4.result.json",
+        "resultSha256": "73443a9d99cfcd759598f542034abafa9dbb694ec777ac2caab0157230085483"
+      },
+      {
+        "phaseId": "implement-5",
+        "command": "speckit.implement",
+        "routingRole": "long-running-implementation",
+        "runnerProfile": "codex-implementation-auto",
+        "dependsOn": [
+          "implement-4"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T08:28:22.19462Z",
+        "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5.result.json",
+        "resultSha256": "6535b5035b933b9903c076c33d4598d2a0342af19b6d9383ec9908b7fc94a282"
+      },
+      {
+        "phaseId": "implement-6",
+        "command": "speckit.implement",
+        "routingRole": "long-running-implementation",
+        "runnerProfile": "codex-implementation-auto",
+        "dependsOn": [
+          "implement-5"
+        ],
+        "status": "Blocked",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T08:52:02.7545Z"
+      },
+      {
+        "phaseId": "implement-6-remediation",
+        "command": "speckit.implement",
+        "routingRole": "long-running-implementation",
+        "runnerProfile": "codex-implementation-auto",
+        "dependsOn": [
+          "implement-5"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T08:59:33.114937Z",
+        "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-remediation.result.json",
+        "resultSha256": "2860a3bb2bd30187ad3b0a96e61431eb9949dd39f6026520132925dc2829c857"
+      },
+      {
+        "phaseId": "implement-7",
+        "command": "speckit.implement",
+        "routingRole": "long-running-implementation",
+        "runnerProfile": "codex-implementation-auto",
+        "dependsOn": [
+          "implement-6-remediation"
+        ],
+        "status": "Blocked",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T09:24:22.975813Z"
+      },
+      {
+        "phaseId": "implement-7-remediation",
+        "command": "speckit.implement",
+        "routingRole": "long-running-implementation",
+        "runnerProfile": "codex-implementation-auto",
+        "dependsOn": [
+          "implement-6-remediation"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T09:33:45.2979100Z",
+        "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-7-remediation.result.json",
+        "resultSha256": "0fe31f1ea40e921013843b645d20fcd241bfc8e08113466952b667afbe50404f"
+      }
+    ]
+  },
+  "lastPassingGate": "T047-T050 passed at source head 02a9399536c46497c34cee840e5ae2c4fc090574: PR #49 exists, all three native jobs recorded 36/36 immediate exits zero, Public Readiness and Homogeneity passed, and both gate-evidence validators accepted the schema-2.0 snapshot while rejecting the removed-token probe with AEI202.",
+  "nextExactAction": "Commit and push the T047-T050 evidence checkpoint, wait for all technical checks on its exact new head, regenerate PreMerge evidence for that head, then converge and merge PR #49 under T051.",
+  "lastOperation": {
+    "kind": "DeliveryEvidence:T047-T050",
+    "state": "Completed",
+    "summary": "Bound PR #49, exact-head native matrix, Public Readiness, Homogeneity, and validated schema-2.0 PreMerge evidence; no merge performed."
+  },
+  "stop": {
+    "reason": "N/A",
+    "requestedAt": "N/A",
+    "safeBoundary": "N/A"
+  },
+  "closeout": {
+    "mergeOrPublication": "N/A",
+    "defaultBranchSync": "N/A",
+    "postMergeActions": "N/A",
+    "finalValidation": "Pending"
+  },
+  "updatedAt": "2026-09-13T12:01:52Z"
+}

@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "checklist",
+  "platform": "macOS",
+  "checks": [
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-run-state.sh --state specs/004-series-eligibility/autonomous-run-state.json",
+      "exitCode": 0,
+      "output": "PASS: run 8b306e28-51eb-4510-afbc-5056b9aee328, feature specs/004-series-eligibility, stage Checklists, status Active, tasks 0/0\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/autonomous-run-governance/scripts/validate-autonomous-run-state.ps1 -State specs/004-series-eligibility/autonomous-run-state.json",
+      "exitCode": 0,
+      "output": "PASS: run 8b306e28-51eb-4510-afbc-5056b9aee328, feature specs/004-series-eligibility, stage Checklists, status Active, tasks 0/0\n"
+    },
+    {
+      "command": "python3 -B specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py --repo . global-ready",
+      "exitCode": 0,
+      "output": "PASS: global-ready: qualified Feature-003 current-evidence binding; immutable META-LH-02 history and 14 current Ready receipt/review bindings\n"
+    },
+    {
+      "command": "bash .specify/presets/intake-review-governance/scripts/validate-intake-review-result.sh --result specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json --repo .",
+      "exitCode": 0,
+      "output": "PASS: intake review 4c0ffc79-22fd-422e-a691-624e24ae444f is current (Single, Ready, 1 targets)\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/intake-review-governance/scripts/validate-intake-review-result.ps1 -Result specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json -Repo .",
+      "exitCode": 0,
+      "output": "PASS: intake review 4c0ffc79-22fd-422e-a691-624e24ae444f is current (Single, Ready, 1 targets)\n"
+    },
+    {
+      "command": "bash .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.sh --receipt specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json --repo .",
+      "exitCode": 0,
+      "output": "PASS: intake authoring e6eea4e9-88de-4434-8305-97424374ca7c is current (ReadyForReview, 12 sources, requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md)\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.ps1 -Receipt specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json -Repo .",
+      "exitCode": 0,
+      "output": "PASS: intake authoring e6eea4e9-88de-4434-8305-97424374ca7c is current (ReadyForReview, 12 sources, requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md)\n"
+    },
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.sh --repo . --result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/clarify.result.json --phase-id clarify --exit-code 0",
+      "exitCode": 0,
+      "output": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"clarify\",\n  \"normalizedSha256\": \"7b207cbfa27c497a5ade36cd936bb020326335d37d6c6399afdde38650f15f97\",\n  \"payloadSha256\": \"749d6e440eb2d70ce1b6261c837503a250969ffd5db28f77dc735afd10d070c5\"\n}\n"
+    }
+  ],
+  "prerequisite": {
+    "standardCommand": "bash .specify/scripts/bash/check-prerequisites.sh --json",
+    "exitCode": 1,
+    "output": "ERROR: plan.md not found in specs/004-series-eligibility\nRun /speckit-plan first to create the implementation plan.",
+    "disposition": "Expected pre-plan mismatch; explicit user instruction takes precedence. Read-only --json --paths-only resolved the current branch and feature; no plan created.",
+    "resolvedFeatureDirectory": "specs/004-series-eligibility",
+    "availablePlanningDocuments": []
+  },
+  "artifactChecks": {
+    "acceptedArtifactHashes": "3/3 match",
+    "completedRoutingResultHashes": "2/2 match",
+    "completedPredecessors": [
+      "META-LH-01",
+      "META-LH-02",
+      "META-LH-03"
+    ],
+    "specSha256": "083e34398e86472673ff202d1d841d179118070d0c71124d2d90b11b6b4b014f",
+    "requirementsChecklistSha256": "1f9bd80458a76835f80ab6f67f95ddfd1e11e8730964c833b5f6136e6672195b",
+    "runStateSha256": "700d900e86f35bcc2297c0ba85f62b53ff49033e0a22a890da11a178876af6a2",
+    "criteriaCount": 9,
+    "modeCount": 6,
+    "documentStructure": "Pass: sequential IDs, 36 assessment reasons, DE/EN pairs, exact ID references, current source links, no trailing whitespace or ANSI escapes."
+  },
+  "checklist": {
+    "path": "specs/004-series-eligibility/checklists/series-eligibility.md",
+    "created": true,
+    "total": 36,
+    "assessed": 36,
+    "passed": 36,
+    "failed": 0,
+    "open": 0,
+    "traced": 36,
+    "traceabilityPercent": 100,
+    "method": "Semantic assessment of requirements writing against the accepted spec; each item carries a bilingual reason and exact Spec section references. No implementation acceptance claim.",
+    "sha256": "e311478d29de33d054ffba9ff9d09498e69c562fe3cfa3f82157de76d45a6b3d"
+  }
+}

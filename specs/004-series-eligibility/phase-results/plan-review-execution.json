@@ -1,0 +1,184 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "plan-review",
+  "platform": "macOS only",
+  "checks": [
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-run-state.sh --state specs/004-series-eligibility/autonomous-run-state.json",
+      "expectedExitCode": 0,
+      "exitCode": 0,
+      "passed": true,
+      "output": "PASS: run 8b306e28-51eb-4510-afbc-5056b9aee328, feature specs/004-series-eligibility, stage PlanReview, status Active, tasks 0/0\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/autonomous-run-governance/scripts/validate-autonomous-run-state.ps1 -State specs/004-series-eligibility/autonomous-run-state.json",
+      "expectedExitCode": 0,
+      "exitCode": 0,
+      "passed": true,
+      "output": "PASS: run 8b306e28-51eb-4510-afbc-5056b9aee328, feature specs/004-series-eligibility, stage PlanReview, status Active, tasks 0/0\n"
+    },
+    {
+      "command": "python3 -B specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py --repo . global-ready",
+      "expectedExitCode": 0,
+      "exitCode": 0,
+      "passed": true,
+      "output": "PASS: global-ready: qualified Feature-003 current-evidence binding; immutable META-LH-02 history and 14 current Ready receipt/review bindings\n"
+    },
+    {
+      "command": "bash .specify/presets/intake-review-governance/scripts/validate-intake-review-result.sh --result specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json --repo .",
+      "expectedExitCode": 0,
+      "exitCode": 0,
+      "passed": true,
+      "output": "PASS: intake review 4c0ffc79-22fd-422e-a691-624e24ae444f is current (Single, Ready, 1 targets)\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/intake-review-governance/scripts/validate-intake-review-result.ps1 -Result specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json -Repo .",
+      "expectedExitCode": 0,
+      "exitCode": 0,
+      "passed": true,
+      "output": "PASS: intake review 4c0ffc79-22fd-422e-a691-624e24ae444f is current (Single, Ready, 1 targets)\n"
+    },
+    {
+      "command": "bash .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.sh --receipt specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json --repo .",
+      "expectedExitCode": 0,
+      "exitCode": 0,
+      "passed": true,
+      "output": "PASS: intake authoring e6eea4e9-88de-4434-8305-97424374ca7c is current (ReadyForReview, 12 sources, requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md)\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.ps1 -Receipt specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json -Repo .",
+      "expectedExitCode": 0,
+      "exitCode": 0,
+      "passed": true,
+      "output": "PASS: intake authoring e6eea4e9-88de-4434-8305-97424374ca7c is current (ReadyForReview, 12 sources, requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md)\n"
+    },
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.sh --repo . --result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/plan.result.json --phase-id plan --exit-code 0",
+      "expectedExitCode": 0,
+      "exitCode": 0,
+      "passed": true,
+      "output": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"plan\",\n  \"normalizedSha256\": \"d8d3e19e1f568b4429b78d70b263b2eb05604e4bc7688c4ac32d91a79e72d65c\",\n  \"payloadSha256\": \"60d21a6b5e379caffceecf74b848c6853c2c6f34f5dfbe62ff136d7bfbd7efaa\"\n}\n"
+    },
+    {
+      "command": "bash .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.sh --file specs/intake-series/aoc-phase-2/manifest.json --repo .",
+      "expectedExitCode": 0,
+      "exitCode": 0,
+      "passed": true,
+      "output": "PASS: d51e831c-24fb-4a71-b316-f7ad1bfe99d0 (14 targets, 1 roots, 14 dependencies)\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.ps1 -File specs/intake-series/aoc-phase-2/manifest.json -Repo .",
+      "expectedExitCode": 0,
+      "exitCode": 0,
+      "passed": true,
+      "output": "PASS: d51e831c-24fb-4a71-b316-f7ad1bfe99d0 (14 targets, 1 roots, 14 dependencies)\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/tests/test-intake-sequencing-validator.ps1",
+      "expectedExitCode": 0,
+      "exitCode": 0,
+      "passed": true,
+      "output": "PASS: intake sequencing validator parity and negative cases\n"
+    },
+    {
+      "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/valid-parallel.json",
+      "expectedExitCode": 0,
+      "exitCode": 0,
+      "passed": true,
+      "output": "META04-FX-VALID-PARALLEL: Eligible\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/valid-parallel.json",
+      "expectedExitCode": 0,
+      "exitCode": 0,
+      "passed": true,
+      "output": "META04-FX-VALID-PARALLEL: Eligible\n"
+    },
+    {
+      "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/shared-write.json",
+      "expectedExitCode": 0,
+      "exitCode": 0,
+      "passed": true,
+      "output": "META04-FX-SHARED-WRITE: Blocked\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/shared-write.json",
+      "expectedExitCode": 0,
+      "exitCode": 0,
+      "passed": true,
+      "output": "META04-FX-SHARED-WRITE: Blocked\n"
+    },
+    {
+      "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/shared-decision.json",
+      "expectedExitCode": 0,
+      "exitCode": 0,
+      "passed": true,
+      "output": "META04-FX-SHARED-DECISION: Blocked\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/shared-decision.json",
+      "expectedExitCode": 0,
+      "exitCode": 0,
+      "passed": true,
+      "output": "META04-FX-SHARED-DECISION: Blocked\n"
+    }
+  ],
+  "legacyDefectProbes": [
+    {
+      "case": "empty-integration",
+      "shell": "bash",
+      "exitCode": 0,
+      "output": "META04-FX-VALID-PARALLEL: Eligible\n",
+      "defectReproduced": true
+    },
+    {
+      "case": "empty-integration",
+      "shell": "pwsh",
+      "exitCode": 0,
+      "output": "META04-FX-VALID-PARALLEL: Eligible\n",
+      "defectReproduced": true
+    },
+    {
+      "case": "string-authority",
+      "shell": "bash",
+      "exitCode": 0,
+      "output": "META04-FX-VALID-PARALLEL: Eligible\n",
+      "defectReproduced": true
+    },
+    {
+      "case": "string-authority",
+      "shell": "pwsh",
+      "exitCode": 0,
+      "output": "META04-FX-VALID-PARALLEL: Eligible\n",
+      "defectReproduced": true
+    },
+    {
+      "case": "duplicate-authority",
+      "shell": "bash",
+      "exitCode": 0,
+      "output": "META04-FX-VALID-PARALLEL: Eligible\n",
+      "defectReproduced": true
+    },
+    {
+      "case": "duplicate-authority",
+      "shell": "pwsh",
+      "exitCode": 0,
+      "output": "META04-FX-VALID-PARALLEL: Eligible\n",
+      "defectReproduced": true
+    }
+  ],
+  "syntax": [
+    {
+      "path": "specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.py",
+      "ast": "Pass"
+    },
+    {
+      "path": ".specify/presets/intake-sequencing-governance/scripts/validate-intake-series.py",
+      "ast": "Pass"
+    },
+    {
+      "path": ".specify/presets/autonomous-run-governance/scripts/autonomous-evidence-core.py",
+      "ast": "Pass"
+    }
+  ]
+}

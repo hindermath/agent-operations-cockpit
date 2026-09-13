@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "analysis-remediation",
+  "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/analysis-remediation.result.json",
+  "checks": [
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.sh --repo . --result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/analysis-remediation.result.json --phase-id analysis-remediation --exit-code 0",
+      "exitCode": 0,
+      "output": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"analysis-remediation\",\n  \"normalizedSha256\": \"5feaac2a64f0858c7e9a935d221259cf9d1b5e0b918f262c7b6663f9b60d9761\",\n  \"payloadSha256\": \"ead59a25f7ff98d660feae009936ccbbb8446a17a30c9037e4a9fade041ba7c8\"\n}\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.ps1 -Repo . -Result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/analysis-remediation.result.json -PhaseId analysis-remediation -ExitCode 0",
+      "exitCode": 0,
+      "output": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"analysis-remediation\",\n  \"normalizedSha256\": \"5feaac2a64f0858c7e9a935d221259cf9d1b5e0b918f262c7b6663f9b60d9761\",\n  \"payloadSha256\": \"ead59a25f7ff98d660feae009936ccbbb8446a17a30c9037e4a9fade041ba7c8\"\n}\n"
+    }
+  ],
+  "limit": "The outer runner owns binding the actual completed phase-process exit and adopting the updated task hash. No implementation acceptance is claimed."
+}

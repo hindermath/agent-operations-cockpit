@@ -1,0 +1,232 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "implement",
+  "checkedAt": "2026-09-13T01:20:55.351169+00:00",
+  "checks": [
+    {
+      "id": "V001",
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-run-state.sh --state specs/004-series-eligibility/autonomous-run-state.json",
+      "exitCode": 0,
+      "stdout": "PASS: run 8b306e28-51eb-4510-afbc-5056b9aee328, feature specs/004-series-eligibility, stage Implement, status Active, tasks 0/57\n",
+      "stderr": ""
+    },
+    {
+      "id": "V002",
+      "command": "pwsh -NoProfile -File .specify/presets/autonomous-run-governance/scripts/validate-autonomous-run-state.ps1 -State specs/004-series-eligibility/autonomous-run-state.json",
+      "exitCode": 0,
+      "stdout": "PASS: run 8b306e28-51eb-4510-afbc-5056b9aee328, feature specs/004-series-eligibility, stage Implement, status Active, tasks 0/57\n",
+      "stderr": ""
+    },
+    {
+      "id": "V003",
+      "command": "python3 -B specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py --repo . global-ready",
+      "exitCode": 0,
+      "stdout": "PASS: global-ready: qualified Feature-003 current-evidence binding; immutable META-LH-02 history and 14 current Ready receipt/review bindings\n",
+      "stderr": ""
+    },
+    {
+      "id": "V004",
+      "command": "bash .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.sh --receipt specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json --repo .",
+      "exitCode": 0,
+      "stdout": "PASS: intake authoring e6eea4e9-88de-4434-8305-97424374ca7c is current (ReadyForReview, 12 sources, requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md)\n",
+      "stderr": ""
+    },
+    {
+      "id": "V005",
+      "command": "pwsh -NoProfile -File .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.ps1 -Receipt specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json -Repo .",
+      "exitCode": 0,
+      "stdout": "PASS: intake authoring e6eea4e9-88de-4434-8305-97424374ca7c is current (ReadyForReview, 12 sources, requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md)\n",
+      "stderr": ""
+    },
+    {
+      "id": "V006",
+      "command": "bash .specify/presets/intake-review-governance/scripts/validate-intake-review-result.sh --result specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json --repo .",
+      "exitCode": 0,
+      "stdout": "PASS: intake review 4c0ffc79-22fd-422e-a691-624e24ae444f is current (Single, Ready, 1 targets)\n",
+      "stderr": ""
+    },
+    {
+      "id": "V007",
+      "command": "pwsh -NoProfile -File .specify/presets/intake-review-governance/scripts/validate-intake-review-result.ps1 -Result specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json -Repo .",
+      "exitCode": 0,
+      "stdout": "PASS: intake review 4c0ffc79-22fd-422e-a691-624e24ae444f is current (Single, Ready, 1 targets)\n",
+      "stderr": ""
+    },
+    {
+      "id": "V008",
+      "command": "bash .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.sh --file specs/intake-series/aoc-phase-2/manifest.json --repo .",
+      "exitCode": 0,
+      "stdout": "PASS: d51e831c-24fb-4a71-b316-f7ad1bfe99d0 (14 targets, 1 roots, 14 dependencies)\n",
+      "stderr": ""
+    },
+    {
+      "id": "V009",
+      "command": "pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.ps1 -File specs/intake-series/aoc-phase-2/manifest.json -Repo .",
+      "exitCode": 0,
+      "stdout": "PASS: d51e831c-24fb-4a71-b316-f7ad1bfe99d0 (14 targets, 1 roots, 14 dependencies)\n",
+      "stderr": ""
+    },
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.sh --help",
+      "exitCode": 0,
+      "stdout": "Usage: validate-autonomous-phase-result.sh --repo PATH --result FILE --phase-id ID --exit-code N\n",
+      "stderr": ""
+    },
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-run-state.sh --help",
+      "exitCode": 0,
+      "stdout": "validate-autonomous-run-state.sh - validate resumable autonomous-run state\n\nUsage:\n  bash validate-autonomous-run-state.sh --state FILE\n\nOptions:\n  --state FILE   Feature-local autonomous-run-state.json.\n  -h, --help     Show this help.\n\nThe command is read-only. A successful result does not start, stop, resume,\ncommit, push, merge, or grant remote authority to an autonomous run.\n",
+      "stderr": ""
+    },
+    {
+      "command": "bash .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.sh --help",
+      "exitCode": 0,
+      "stdout": "Usage: validate-intake-authoring-receipt.sh --receipt FILE [--repo PATH]\n",
+      "stderr": ""
+    },
+    {
+      "command": "bash .specify/presets/intake-review-governance/scripts/validate-intake-review-result.sh --help",
+      "exitCode": 0,
+      "stdout": "Usage: validate-intake-review-result.sh --result FILE [--repo PATH]\n",
+      "stderr": ""
+    },
+    {
+      "command": "bash .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.sh --help",
+      "exitCode": 0,
+      "stdout": "usage: validate-intake-series.py [-h] --kind {manifest,receipt} --file FILE\n                                 [--repo REPO] [--json]\n\noptions:\n  -h, --help            show this help message and exit\n  --kind {manifest,receipt}\n  --file FILE\n  --repo REPO\n  --json\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 --version",
+      "exitCode": 0,
+      "stdout": "Python 3.14.7\n",
+      "stderr": ""
+    },
+    {
+      "command": "bash --version",
+      "exitCode": 0,
+      "stdout": "GNU bash, version 5.3.15(1)-release (aarch64-apple-darwin25.4.0)\nCopyright (C) 2025 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n\nThis is free software; you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n",
+      "stderr": ""
+    },
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.sh --repo . --result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/analyze-2.result.json --phase-id analyze-2 --exit-code 0",
+      "exitCode": 0,
+      "stdout": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"analyze-2\",\n  \"normalizedSha256\": \"00584e19021152b4e38c48bea7894548337d17598aeb50bcf660e5879eebad86\",\n  \"payloadSha256\": \"3982e032053b192513df05e9a036c169ace4207d5b688c6c8ab1d6c0d0a94c29\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.ps1 -Repo . -Result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/analyze-2.result.json -PhaseId analyze-2 -ExitCode 0",
+      "exitCode": 0,
+      "stdout": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"analyze-2\",\n  \"normalizedSha256\": \"00584e19021152b4e38c48bea7894548337d17598aeb50bcf660e5879eebad86\",\n  \"payloadSha256\": \"3982e032053b192513df05e9a036c169ace4207d5b688c6c8ab1d6c0d0a94c29\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "pwsh -NoProfile -Command <query PowerShell and installed PSScriptAnalyzer versions>",
+      "exitCode": 0,
+      "stdout": "{\n  \"PowerShell\": \"7.6.5\",\n  \"PSScriptAnalyzer\": [\n    \"1.25.0\"\n  ]\n}\n",
+      "stderr": ""
+    }
+  ],
+  "outcome": "Passed",
+  "acceptedBindings": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "sha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+      "actualSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce"
+    },
+    {
+      "path": "specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json",
+      "sha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b",
+      "actualSha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b"
+    },
+    {
+      "path": "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json",
+      "sha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07",
+      "actualSha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07"
+    },
+    {
+      "path": "specs/004-series-eligibility/tasks.md",
+      "sha256": "042f2687fe13db74a0547745a5ac7dd6a9cd624551a16ae8d99ad55c6588a125",
+      "completed": 0,
+      "total": 57,
+      "actualSha256": "042f2687fe13db74a0547745a5ac7dd6a9cd624551a16ae8d99ad55c6588a125"
+    }
+  ],
+  "predecessors": [
+    {
+      "path": "specs/001-programmquellen-baseline/autonomous-run-state.json",
+      "status": "Completed",
+      "closeout": {
+        "mergeOrPublication": "Completed",
+        "defaultBranchSync": "Completed",
+        "postMergeActions": "N/A",
+        "finalValidation": "Completed"
+      }
+    },
+    {
+      "path": "specs/002-portfolio-ownership/autonomous-run-state.json",
+      "status": "Completed",
+      "closeout": {
+        "mergeOrPublication": "Completed",
+        "defaultBranchSync": "Completed",
+        "postMergeActions": "Completed",
+        "finalValidation": "Completed"
+      }
+    },
+    {
+      "path": "specs/003-authoring-contract/autonomous-run-state.json",
+      "status": "Completed",
+      "closeout": {
+        "mergeOrPublication": "Completed",
+        "defaultBranchSync": "Completed",
+        "postMergeActions": "Completed",
+        "finalValidation": "Completed"
+      }
+    }
+  ],
+  "branch": "004-series-eligibility",
+  "constitution": {
+    "version": "1.21.4",
+    "rawSha256": "37b42aef7201b851edda3c94974379860f4ff11fd37201df6b114210c48b87c9",
+    "mirrorsByteIdentical": true,
+    "registryRow": "RiderProjects/AgentOperationsCockpit",
+    "sharedRulesChanged": false
+  },
+  "runtimes": {
+    "PowerShell": "7.6.5",
+    "PSScriptAnalyzer": [
+      "1.25.0"
+    ]
+  },
+  "checklists": [
+    {
+      "path": "specs/004-series-eligibility/checklists/analysis-remediation.md",
+      "completed": 8,
+      "incomplete": 0
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/plan-review.md",
+      "completed": 12,
+      "incomplete": 0
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/requirements.md",
+      "completed": 16,
+      "incomplete": 0
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/series-eligibility.md",
+      "completed": 36,
+      "incomplete": 0
+    }
+  ],
+  "inputSnapshotDriftDisposition": {
+    "autonomous-run-state.json": "Expected runner transition to Implement/Running; current accepted and task bindings independently verified.",
+    "analyze-2-execution.json": "Analysis execution evidence completed after initial input capture; current report binds final evidence."
+  },
+  "completedTasks": [
+    "T001",
+    "T002",
+    "T003"
+  ]
+}

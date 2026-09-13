@@ -1,0 +1,1899 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "analysis-remediation",
+  "runId": "8b306e28-51eb-4510-afbc-5056b9aee328",
+  "outcome": "Completed",
+  "baseHead": "e5083c82d80099901774518b3987f47a1a628572",
+  "findings": [
+    "C001",
+    "C002",
+    "C003",
+    "C004",
+    "I001",
+    "I002",
+    "O001",
+    "L001"
+  ],
+  "checks": [
+    {
+      "check": "Constitution copies byte-identical",
+      "result": "Pass"
+    },
+    {
+      "check": "Every shared policy byte and existing registry row preserved outside local row and metadata",
+      "result": "Pass"
+    },
+    {
+      "check": "Principle X local row covers all required facts",
+      "result": "Pass"
+    },
+    {
+      "check": "Patch metadata does not invent PR merge date",
+      "result": "Pass"
+    },
+    {
+      "check": "57 sequential unchecked tasks",
+      "result": "Pass"
+    },
+    {
+      "check": "All active task references resolve",
+      "result": "Pass"
+    },
+    {
+      "check": "Mandatory narrow red/green and immediate statistics order",
+      "result": "Pass"
+    },
+    {
+      "check": "Existing unittest reuse and no framework expansion",
+      "result": "Pass"
+    },
+    {
+      "check": "Analyze preflight binds exact report and current passing result",
+      "result": "Pass"
+    },
+    {
+      "check": "Lifecycle order and strict content/lineage boundary",
+      "result": "Pass"
+    },
+    {
+      "check": "Full CR-001-014 coverage",
+      "result": "Pass"
+    },
+    {
+      "check": "Every existing gate and required token unchanged",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-red-green canonical plannedEvidence has explicit producer",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-public-readiness canonical plannedEvidence has explicit producer",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-documentation canonical plannedEvidence has explicit producer",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-statistics canonical plannedEvidence has explicit producer",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-aeps canonical plannedEvidence has explicit producer",
+      "result": "Pass"
+    },
+    {
+      "check": "All five I002 destinations bound",
+      "result": "Pass"
+    },
+    {
+      "check": "All 43 original commands and platform declarations unchanged",
+      "result": "Pass"
+    },
+    {
+      "check": "Every command has unique ID and execution placement",
+      "result": "Pass"
+    },
+    {
+      "check": "Render confined to six statistics boundaries",
+      "result": "Pass"
+    },
+    {
+      "check": "Provider retrieval only at T049 with observed IDs",
+      "result": "Pass"
+    },
+    {
+      "check": "Native matrix explicitly automated only",
+      "result": "Pass"
+    },
+    {
+      "check": "spec.md no contradictory missing registry claim",
+      "result": "Pass"
+    },
+    {
+      "check": "plan.md no contradictory missing registry claim",
+      "result": "Pass"
+    },
+    {
+      "check": "research.md no contradictory missing registry claim",
+      "result": "Pass"
+    },
+    {
+      "check": "quickstart.md no contradictory missing registry claim",
+      "result": "Pass"
+    },
+    {
+      "check": "tasks.md no contradictory missing registry claim",
+      "result": "Pass"
+    },
+    {
+      "check": "Accepted spec preserved except authorized CR-001 environment correction",
+      "result": "Pass"
+    },
+    {
+      "check": "Same run, delivery mode and untouched runner state",
+      "result": "Pass"
+    },
+    {
+      "check": "Accepted artifact requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "result": "Pass"
+    },
+    {
+      "check": "Accepted artifact specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Accepted artifact specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: checklist-validation.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: plan-result-validation.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: plan-report.md",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: plan-validation.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: plan-review-design-validation.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: specify-validation.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: specify-report.md",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: plan-review-validation.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: plan-review-execution.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: checklist-result-validation.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: plan-baseline.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: tasks-report.md",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: plan-review-report.md",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: clarify-validation.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: analyze-validation.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: analyze-coverage.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: tasks-aeps-receipt.md",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: plan-quality-checks.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: analyze-input-snapshot.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: tasks-result-validation.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: analyze-execution.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: analyze-secret-scan.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: clarify-report.md",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: analyze.result.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: analyze-report.md",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: plan-review-aeps-receipt.md",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: checklist-report.md",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: plan-review-result-validation.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: tasks-validation.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: clarify-result-validation.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Historical phase evidence preserved: analyze-result-validation.json",
+      "result": "Pass"
+    },
+    {
+      "check": "Unchanged domain contract data-model.md",
+      "result": "Pass"
+    },
+    {
+      "check": "Unchanged domain contract contracts/series-eligibility-interface.md",
+      "result": "Pass"
+    },
+    {
+      "check": "Installed requirements validator",
+      "result": "Pass"
+    },
+    {
+      "check": "In-memory schema feasibility: complete primary rows accepted; no native pass claimed",
+      "result": "Pass"
+    },
+    {
+      "check": "In-memory missing executedCommand token rejected as AEI202",
+      "result": "Pass"
+    },
+    {
+      "check": "In-memory missing runnerOrPlatform token rejected as AEI202",
+      "result": "Pass"
+    },
+    {
+      "check": "Requirements count and applicability unchanged",
+      "result": "Pass"
+    },
+    {
+      "check": "All changed preexisting files within authorized planning scope",
+      "result": "Pass"
+    },
+    {
+      "check": "Implementation code, shared guidance, source intakes, AEPS edits and Git index preserved",
+      "result": "Pass"
+    },
+    {
+      "check": "Exactly one UpdateRequired decision",
+      "result": "Pass"
+    },
+    {
+      "check": "All changed JSON contracts parse without duplicate keys",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/checklists/plan-review.md no introduced trailing whitespace",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/checklists/plan-review.md relative link ../phase-results/plan-review-report.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/checklists/plan-review.md relative link analysis-remediation.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/plan.md no introduced trailing whitespace",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/plan.md relative link spec.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/plan.md relative link phase-results/plan-validation.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/plan.md relative link spec.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/plan.md relative link quickstart.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/plan.md relative link contracts/series-eligibility-interface.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/plan.md relative link data-model.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/plan.md relative link phase-results/plan-baseline.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/plan.md relative link contracts/autonomous-run-gate-requirements.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/plan.md relative link contracts/validation-commands.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/plan.md relative link quickstart.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/plan.md relative link contracts/documentation-impact.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/plan.md relative link phase-results/plan-review-report.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/plan.md relative link phase-results/analyze-report.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/plan.md relative link phase-results/analysis-remediation-report.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/quickstart.md no introduced trailing whitespace",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/quickstart.md relative link contracts/validation-commands.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/research.md no introduced trailing whitespace",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/research.md relative link spec.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/research.md relative link phase-results/plan-baseline.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/research.md relative link phase-results/plan-quality-checks.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/research.md relative link phase-results/plan-review-report.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/research.md relative link quickstart.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/spec.md no introduced trailing whitespace",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/spec.md relative link ../../requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/spec.md relative link ../intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/spec.md relative link autonomous-run-state.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/spec.md relative link checklists/requirements.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/spec.md relative link ../../requirements/baseline/series-eligibility-contract.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/spec.md relative link ../intake-series/aoc-phase-2/manifest.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/spec.md relative link ../../requirements/intakes/series/order.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/tasks.md no introduced trailing whitespace",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/tasks.md relative link spec.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/tasks.md relative link plan.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/tasks.md relative link research.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/tasks.md relative link data-model.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/tasks.md relative link contracts/series-eligibility-interface.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/tasks.md relative link contracts/validation-commands.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/tasks.md relative link contracts/autonomous-run-gate-requirements.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/tasks.md relative link quickstart.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/tasks.md relative link phase-results/plan-review-report.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/tasks.md relative link contracts/autonomous-run-gate-requirements.json",
+      "result": "Pass"
+    },
+    {
+      "check": ".specify/memory/constitution.md no introduced trailing whitespace",
+      "result": "Pass"
+    },
+    {
+      "check": "constitution.md no introduced trailing whitespace",
+      "result": "Pass"
+    },
+    {
+      "check": "T001 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T002 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T003 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T004 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T005 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T006 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T007 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T008 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T009 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T010 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T011 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T012 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T013 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T014 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T015 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T016 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T017 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T018 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T019 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T020 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T021 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T022 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T023 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T024 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T025 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T026 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T027 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T028 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T029 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T030 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T031 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T032 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T033 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T034 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T035 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T036 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T037 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T038 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T039 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T040 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T041 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T042 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T043 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T044 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T045 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T046 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T047 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T048 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T049 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T050 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T051 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T052 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T053 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T054 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T055 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T056 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "T057 dependencies precede task",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-linux-bash-baseline task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-linux-bash-strict task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-linux-bash-query task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-linux-pwsh-baseline task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-linux-pwsh-strict task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-linux-pwsh-query task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-linux-sequencing task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-linux-runner-cardinality task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-linux-pssa task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-macos-bash-baseline task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-macos-bash-strict task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-macos-bash-query task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-macos-pwsh-baseline task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-macos-pwsh-strict task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-macos-pwsh-query task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-macos-sequencing task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-macos-runner-cardinality task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-macos-pssa task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-windows-bash-baseline task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-windows-bash-strict task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-windows-bash-query task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-windows-pwsh-baseline task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-windows-pwsh-strict task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-windows-pwsh-query task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-windows-sequencing task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-windows-runner-cardinality task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-windows-pssa task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-ready task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-red-green task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-homogeneity-linux task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-homogeneity-windows task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-secrets task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-public-readiness task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-documentation task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-statistics task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-security task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-architecture task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-accessibility task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-parity task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-retrospective task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "EL-aeps task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "NA-product-build task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "NA-asvs task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "NA-release-supply-chain task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "NA-ai-sbom task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "NA-cloud task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "NA-regulatory task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "NA-privacy-publication task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "NA-new-adr task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "NA-visual-media task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "NA-write-preview task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "NA-shared-guidance task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "NA-remote-delivery task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "NA-parallel-provider-level0 task coverage resolves",
+      "result": "Pass"
+    },
+    {
+      "check": "All recorded readiness/tooling/quality commands exit zero",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/checklists/analysis-remediation.md no introduced whitespace",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/checklists/analysis-remediation.md relative link ../phase-results/analysis-remediation-execution.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/checklists/analysis-remediation.md relative link ../phase-results/analysis-remediation-validation.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/phase-results/analysis-remediation-report.md no introduced whitespace",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/phase-results/analysis-remediation-report.md relative link analyze-report.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/phase-results/analysis-remediation-report.md relative link analysis-remediation-execution.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/phase-results/analysis-remediation-report.md relative link analysis-remediation-validation.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/phase-results/analysis-remediation-report.md relative link ../checklists/analysis-remediation.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/phase-results/analysis-remediation-report.md relative link ../contracts/documentation-impact.json",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/phase-results/analysis-remediation-report.md relative link analysis-remediation-aeps-receipt.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/phase-results/analysis-remediation-aeps-receipt.md no introduced whitespace",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/phase-results/analysis-remediation-aeps-receipt.md relative link analyze-report.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/phase-results/analysis-remediation-aeps-receipt.md relative link analysis-remediation-report.md",
+      "result": "Pass"
+    },
+    {
+      "check": "specs/004-series-eligibility/phase-results/analysis-remediation-aeps-receipt.md relative link analysis-remediation-validation.json",
+      "result": "Pass"
+    }
+  ],
+  "gateRequirementsSha256": "f0e49efeb0fd052a34fd1175818af487bd67488cee425e84512bfdd81a36d7fa",
+  "evidenceProducers": {
+    "EL-red-green": {
+      "plannedEvidence": "specs/004-series-eligibility/phase-results/implementation-red-green.md",
+      "producingTasks": [
+        "T007"
+      ],
+      "plannedTasks": [
+        "T007",
+        "T050"
+      ]
+    },
+    "EL-public-readiness": {
+      "plannedEvidence": "specs/004-series-eligibility/phase-results/public-readiness.md",
+      "producingTasks": [
+        "T049"
+      ],
+      "plannedTasks": [
+        "T049"
+      ]
+    },
+    "EL-documentation": {
+      "plannedEvidence": "specs/004-series-eligibility/phase-results/documentation-review.md",
+      "producingTasks": [
+        "T038"
+      ],
+      "plannedTasks": [
+        "T038"
+      ]
+    },
+    "EL-statistics": {
+      "plannedEvidence": "specs/004-series-eligibility/phase-results/statistics-review.md",
+      "producingTasks": [
+        "T008",
+        "T040"
+      ],
+      "plannedTasks": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055"
+      ]
+    },
+    "EL-aeps": {
+      "plannedEvidence": "docs/aeps/receipts/2026-09-13-series-eligibility-completion.md",
+      "producingTasks": [
+        "T042",
+        "T055"
+      ],
+      "plannedTasks": [
+        "T042",
+        "T055"
+      ]
+    }
+  },
+  "gateCoverage": [
+    {
+      "gateId": "EL-linux-bash-baseline",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-bash-strict",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-bash-query",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-pwsh-baseline",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-pwsh-strict",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-pwsh-query",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-sequencing",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-runner-cardinality",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-pssa",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-bash-baseline",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-bash-strict",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-bash-query",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-pwsh-baseline",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-pwsh-strict",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-pwsh-query",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-sequencing",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-runner-cardinality",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-pssa",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-bash-baseline",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-bash-strict",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-bash-query",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-pwsh-baseline",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-pwsh-strict",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-pwsh-query",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-sequencing",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-runner-cardinality",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-pssa",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-ready",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T001",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-red-green",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T007",
+        "T050"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-homogeneity-linux",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T040",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-homogeneity-windows",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T040",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-secrets",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T039",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-public-readiness",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-documentation",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T038"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-statistics",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-security",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T032"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-architecture",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T033"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-accessibility",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T034",
+        "T037"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-parity",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T035",
+        "T037",
+        "T048"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-retrospective",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T041",
+        "T055"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-aeps",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T042",
+        "T055"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-product-build",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T043",
+        "T045"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-asvs",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T043",
+        "T045"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-release-supply-chain",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T043",
+        "T045"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-ai-sbom",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T043",
+        "T045"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-cloud",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T043",
+        "T045"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-regulatory",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T043",
+        "T045"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-privacy-publication",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T043",
+        "T045"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-new-adr",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T043",
+        "T045"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-visual-media",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T043",
+        "T045"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-write-preview",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T043",
+        "T045"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-shared-guidance",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T043",
+        "T045"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-remote-delivery",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T043",
+        "T045"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-parallel-provider-level0",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T043",
+        "T045"
+      ],
+      "executionStatus": "Not Assessed"
+    }
+  ],
+  "taskDependencyEdges": {
+    "T001": [],
+    "T002": [
+      "T001"
+    ],
+    "T003": [
+      "T002"
+    ],
+    "T004": [
+      "T003"
+    ],
+    "T005": [
+      "T004"
+    ],
+    "T006": [
+      "T005"
+    ],
+    "T007": [
+      "T006"
+    ],
+    "T008": [
+      "T007"
+    ],
+    "T009": [
+      "T008"
+    ],
+    "T010": [
+      "T009"
+    ],
+    "T011": [
+      "T010"
+    ],
+    "T012": [
+      "T011"
+    ],
+    "T013": [
+      "T012"
+    ],
+    "T014": [
+      "T013"
+    ],
+    "T015": [
+      "T014"
+    ],
+    "T016": [
+      "T015"
+    ],
+    "T017": [
+      "T016"
+    ],
+    "T018": [
+      "T017"
+    ],
+    "T019": [
+      "T018"
+    ],
+    "T020": [
+      "T019"
+    ],
+    "T021": [
+      "T020"
+    ],
+    "T022": [
+      "T021"
+    ],
+    "T023": [
+      "T022"
+    ],
+    "T024": [
+      "T023"
+    ],
+    "T025": [
+      "T024"
+    ],
+    "T026": [
+      "T025"
+    ],
+    "T027": [
+      "T026"
+    ],
+    "T028": [
+      "T027"
+    ],
+    "T029": [
+      "T028"
+    ],
+    "T030": [
+      "T029"
+    ],
+    "T031": [
+      "T030"
+    ],
+    "T032": [
+      "T031"
+    ],
+    "T033": [
+      "T031"
+    ],
+    "T034": [
+      "T031"
+    ],
+    "T035": [
+      "T031"
+    ],
+    "T036": [
+      "T032",
+      "T033",
+      "T034",
+      "T035"
+    ],
+    "T037": [
+      "T036"
+    ],
+    "T038": [
+      "T037"
+    ],
+    "T039": [
+      "T038"
+    ],
+    "T040": [
+      "T039"
+    ],
+    "T041": [
+      "T040"
+    ],
+    "T042": [
+      "T041"
+    ],
+    "T043": [
+      "T042"
+    ],
+    "T044": [
+      "T043"
+    ],
+    "T045": [
+      "T044"
+    ],
+    "T046": [
+      "T045"
+    ],
+    "T047": [
+      "T046"
+    ],
+    "T048": [
+      "T047"
+    ],
+    "T049": [
+      "T048"
+    ],
+    "T050": [
+      "T049"
+    ],
+    "T051": [
+      "T050"
+    ],
+    "T052": [
+      "T051"
+    ],
+    "T053": [
+      "T052"
+    ],
+    "T054": [
+      "T053"
+    ],
+    "T055": [
+      "T054"
+    ],
+    "T056": [
+      "T055"
+    ],
+    "T057": [
+      "T056"
+    ]
+  },
+  "runnerHandoff": {
+    "tasks": {
+      "path": "specs/004-series-eligibility/tasks.md",
+      "sha256": "042f2687fe13db74a0547745a5ac7dd6a9cd624551a16ae8d99ad55c6588a125",
+      "completed": 0,
+      "total": 57
+    },
+    "stateMutationPerformed": false,
+    "nextPhase": "analyze-2",
+    "analysisStillRequired": true
+  },
+  "changedExistingPaths": [
+    "specs/004-series-eligibility/checklists/plan-review.md",
+    "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json",
+    "specs/004-series-eligibility/contracts/documentation-impact.json",
+    "specs/004-series-eligibility/contracts/validation-commands.json",
+    "specs/004-series-eligibility/plan.md",
+    "specs/004-series-eligibility/quickstart.md",
+    "specs/004-series-eligibility/research.md",
+    "specs/004-series-eligibility/spec.md",
+    "specs/004-series-eligibility/tasks.md",
+    ".specify/memory/constitution.md",
+    "constitution.md"
+  ],
+  "newPhaseEvidencePaths": [
+    "specs/004-series-eligibility/checklists/analysis-remediation.md",
+    "specs/004-series-eligibility/phase-results/analysis-remediation-report.md",
+    "specs/004-series-eligibility/phase-results/analysis-remediation-aeps-receipt.md",
+    "specs/004-series-eligibility/phase-results/analysis-remediation-execution.json"
+  ],
+  "artifacts": [
+    {
+      "path": "specs/004-series-eligibility/checklists/plan-review.md",
+      "rawSha256": "bd64986e9c6bd3d34b3a9ea792f6a07920608b89041873c6e0563b8f9f029a24",
+      "normalizedSha256": "bd64986e9c6bd3d34b3a9ea792f6a07920608b89041873c6e0563b8f9f029a24"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json",
+      "rawSha256": "f0e49efeb0fd052a34fd1175818af487bd67488cee425e84512bfdd81a36d7fa",
+      "normalizedSha256": "f0e49efeb0fd052a34fd1175818af487bd67488cee425e84512bfdd81a36d7fa"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/documentation-impact.json",
+      "rawSha256": "50cf98aff369e741f693da41428d1954444073274bf4fbef824dedc9dcd8d585",
+      "normalizedSha256": "50cf98aff369e741f693da41428d1954444073274bf4fbef824dedc9dcd8d585"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/validation-commands.json",
+      "rawSha256": "4f067497ccb497f3f24da071793738f01099e5a6fc537d7b11f2a012f838e3eb",
+      "normalizedSha256": "4f067497ccb497f3f24da071793738f01099e5a6fc537d7b11f2a012f838e3eb"
+    },
+    {
+      "path": "specs/004-series-eligibility/plan.md",
+      "rawSha256": "66bcb2d07bb4e5c3087e7db7dba5e2b0f3219bc2f5cdba58f729711d1798479e",
+      "normalizedSha256": "66bcb2d07bb4e5c3087e7db7dba5e2b0f3219bc2f5cdba58f729711d1798479e"
+    },
+    {
+      "path": "specs/004-series-eligibility/quickstart.md",
+      "rawSha256": "d73586fd12beb1db650e56beba946eef79feac2e92c424ce840d1f4f7c55b667",
+      "normalizedSha256": "d73586fd12beb1db650e56beba946eef79feac2e92c424ce840d1f4f7c55b667"
+    },
+    {
+      "path": "specs/004-series-eligibility/research.md",
+      "rawSha256": "f94516bbd35de291b4b691dca3f1e94b110d356be309beed522bb285e259d5df",
+      "normalizedSha256": "f94516bbd35de291b4b691dca3f1e94b110d356be309beed522bb285e259d5df"
+    },
+    {
+      "path": "specs/004-series-eligibility/spec.md",
+      "rawSha256": "e3fb2b5c08fe848f7790968e7b3944d8a5e16f9a74b7a2acfa092ac96bc979c3",
+      "normalizedSha256": "e3fb2b5c08fe848f7790968e7b3944d8a5e16f9a74b7a2acfa092ac96bc979c3"
+    },
+    {
+      "path": "specs/004-series-eligibility/tasks.md",
+      "rawSha256": "042f2687fe13db74a0547745a5ac7dd6a9cd624551a16ae8d99ad55c6588a125",
+      "normalizedSha256": "042f2687fe13db74a0547745a5ac7dd6a9cd624551a16ae8d99ad55c6588a125"
+    },
+    {
+      "path": ".specify/memory/constitution.md",
+      "rawSha256": "37b42aef7201b851edda3c94974379860f4ff11fd37201df6b114210c48b87c9",
+      "normalizedSha256": "37b42aef7201b851edda3c94974379860f4ff11fd37201df6b114210c48b87c9"
+    },
+    {
+      "path": "constitution.md",
+      "rawSha256": "37b42aef7201b851edda3c94974379860f4ff11fd37201df6b114210c48b87c9",
+      "normalizedSha256": "37b42aef7201b851edda3c94974379860f4ff11fd37201df6b114210c48b87c9"
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/analysis-remediation.md",
+      "rawSha256": "444fd765b235603197be92eb51d0acf26a3830845fe38baffde988f59ad7b0c1",
+      "normalizedSha256": "444fd765b235603197be92eb51d0acf26a3830845fe38baffde988f59ad7b0c1"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analysis-remediation-report.md",
+      "rawSha256": "94de239ecb860f84eb51f5c0115b5eb558945a0b4f9aa72ee44ee12c5495e1da",
+      "normalizedSha256": "94de239ecb860f84eb51f5c0115b5eb558945a0b4f9aa72ee44ee12c5495e1da"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analysis-remediation-aeps-receipt.md",
+      "rawSha256": "f81af031deb37f9c005aef9732cb12c66e7bdc7a80132ce9f8f0ad6af72dafa6",
+      "normalizedSha256": "f81af031deb37f9c005aef9732cb12c66e7bdc7a80132ce9f8f0ad6af72dafa6"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analysis-remediation-execution.json",
+      "rawSha256": "764bd4d3d85db97610a1d0852b9df915e3e2699a85fbc0fb4d5c4fbef08c7ff7",
+      "normalizedSha256": "764bd4d3d85db97610a1d0852b9df915e3e2699a85fbc0fb4d5c4fbef08c7ff7"
+    }
+  ],
+  "protectedSnapshotFiles": 1743,
+  "limits": [
+    "Planning contracts only; all 57 implementation/delivery tasks remain unchecked.",
+    "Existing run-state schema passes do not verify the changed task binding; runner must adopt runnerHandoff.",
+    "No statistics render or native hosted-runner acceptance.",
+    "Current report preserves original blocked Analyze findings; analyze-2 remains required."
+  ]
+}
