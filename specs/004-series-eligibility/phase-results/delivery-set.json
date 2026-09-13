@@ -34,7 +34,7 @@
     },
     "statistics": {
       "status": "Completed",
-      "provenanceClass": "PublishedCausalCheckpointBeforeTerminalContainer",
+      "provenanceClass": "HistoricalPublishedCausalCheckpointBeforeTerminalContainer",
       "sourceHead": "ea16591b28cf5b68c5cf4a906f45c0a30f05950c",
       "sourceRevision": "ea16591b28cf",
       "statisticsOnlyCommit": "d56fcd4928cdfa03ae2792859ef02a28497d99c4",
@@ -42,7 +42,22 @@
       "activeDays": 17,
       "bashCheckOnly": "CURRENT",
       "powerShellCheckOnly": "CURRENT",
-      "selfReferenceBoundary": "The current terminal evidence container cannot bind its own future commit SHA; its immediate completion remains runtime-only until a later causal checkpoint."
+      "selfReferenceBoundary": "This is the last versioned causal checkpoint before the terminal evidence container. It is historical, not the current generated-ledger binding."
+    },
+    "currentStatisticsBinding": {
+      "status": "RuntimeBoundAfterImmutableFinalHead",
+      "canonicalLedger": "docs/project-statistics.md",
+      "runtimeEvidencePath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/terminal-state/statistics-binding.json",
+      "requiredFields": [
+        "sourceHead",
+        "sourceRevision",
+        "statisticsOnlyCommit",
+        "totalTextLines",
+        "activeDays",
+        "bashCheckOnly",
+        "powerShellCheckOnly"
+      ],
+      "selfReferenceBoundary": "The exact final-head binding is generated only after the statistics-only commit and remains ignored runtime evidence; versioning that commit SHA in its own ancestry would create an endless self-reference loop."
     },
     "nextAction": "N/A",
     "limits": "Causal terminal facts end at the observed closeout merge and synchronization. The later terminal-state container PR is not claimed by this checkpoint and META-LH-05 was not started."
@@ -1767,5 +1782,5 @@
       "limits": "This is the coordinator-validated pre-amendment unstaged candidate. Causal evidence/task edits below are not a staged validation or freeze; T046 must revalidate the resulting exact residual candidate in both shells before any staging/commit. No remote/native gate is satisfied by this evidence."
     }
   },
-  "statisticsDisposition": "Historical implement-7 audit only: five checkpoint boundaries, six source commits and six separate statistics-only commits were audited before T046. Superseded for current status by terminalCheckpoint.statistics, which records the completed causal renderer checkpoint and its self-reference boundary."
+  "statisticsDisposition": "Historical implement-7 audit only: five checkpoint boundaries, six source commits and six separate statistics-only commits were audited before T046. terminalCheckpoint.statistics is explicitly historical. Current generated values are authoritative in docs/project-statistics.md and are bound after the immutable final head by terminalCheckpoint.currentStatisticsBinding at its ignored runtimeEvidencePath."
 }
