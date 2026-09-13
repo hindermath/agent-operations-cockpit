@@ -148,6 +148,51 @@ class AuthoringContractBridgeTests(unittest.TestCase):
                 physical.write_bytes(content)
             _validate_current_target_projection(repo, binding)
 
+    def test_completed_lifecycle_rejects_absolute_archived_path(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            repo = root / "repo"
+            repo.mkdir()
+            logical = "requirements/intakes/active/Lastenheft_META-LH-04.md"
+            outside = root / "outside.md"
+            content = b"Deutsch zuerst / English second\n"
+            outside.write_bytes(content)
+            expected = normalized_sha256(content)
+            lifecycle = repo / "specs/004-series-eligibility/intake-lifecycle.json"
+            lifecycle.parent.mkdir(parents=True, exist_ok=True)
+            lifecycle.write_text(json.dumps({
+                "schemaVersion": "1.1",
+                "records": [{
+                    "originalPath": logical,
+                    "archivedPath": outside.as_posix(),
+                    "originalNormalizedSha256": expected,
+                }],
+            }), encoding="utf-8")
+            with self.assertRaisesRegex(ContractViolation, "repository-relative path"):
+                _resolve_completed_lifecycle_target(repo, logical, expected)
+
+    def test_completed_lifecycle_rejects_parent_traversal(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            repo = root / "repo"
+            repo.mkdir()
+            logical = "requirements/intakes/active/Lastenheft_META-LH-04.md"
+            content = b"Deutsch zuerst / English second\n"
+            (root / "outside.md").write_bytes(content)
+            expected = normalized_sha256(content)
+            lifecycle = repo / "specs/004-series-eligibility/intake-lifecycle.json"
+            lifecycle.parent.mkdir(parents=True, exist_ok=True)
+            lifecycle.write_text(json.dumps({
+                "schemaVersion": "1.1",
+                "records": [{
+                    "originalPath": logical,
+                    "archivedPath": "../outside.md",
+                    "originalNormalizedSha256": expected,
+                }],
+            }), encoding="utf-8")
+            with self.assertRaisesRegex(ContractViolation, "repository-relative path"):
+                _resolve_completed_lifecycle_target(repo, logical, expected)
+
     def test_wrong_reserved_ids_are_rejected(self) -> None:
         candidate = copy.deepcopy(self.binding)
         leaf = next(

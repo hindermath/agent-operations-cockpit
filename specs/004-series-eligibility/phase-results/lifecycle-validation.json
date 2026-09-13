@@ -31,6 +31,26 @@
     "manifestChanged": false,
     "rationale": "The stable logical path and normalized content hash remain unchanged. The lifecycle record and current-evidence projection resolve the renamed physical file without rewriting immutable receipt, review, or completed-series evidence."
   },
+  "reviewRepairs": {
+    "repositoryBoundary": {
+      "status": "Pass",
+      "behavior": "Lifecycle contracts, logical targets, and archived targets reject absolute paths, parent traversal, and symlink components before hashing.",
+      "negativeTests": [
+        "absolute archivedPath",
+        "parent-traversing archivedPath"
+      ]
+    },
+    "linkedOrderProjection": {
+      "status": "Pass",
+      "outputs": [
+        "Lastenheft_Abarbeitungsreihenfolge.md",
+        "requirements/intakes/series/order.md"
+      ],
+      "resolvedPhysicalPath": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.004-series-eligibility.md",
+      "semanticParity": true,
+      "terminalFeatureProof": "Deferred to T055 because the autonomous run state remains Active until lifecycle delivery completes."
+    }
+  },
   "validation": {
     "local": {
       "status": "Pass",
