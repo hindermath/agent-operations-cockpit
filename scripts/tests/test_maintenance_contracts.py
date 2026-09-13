@@ -44,6 +44,53 @@ def preset_helper_source() -> str:
 
 
 class MaintenanceContractTests(unittest.TestCase):
+    def test_required_bash_contract_and_probe(self) -> None:
+        registry = read_json(CONFIG / "brew-apps-registry.json")
+        formula = next(t for t in registry["formulae"] if t["name"] == "bash")
+        self.assertEqual(formula["scope"], "required")
+        self.assertIs(formula["ensureLinked"], True)
+        self.assertEqual(formula["linkCommands"], ["bash"])
+        self.assertTrue(any(t["name"] == "bash" and t["scope"] == "required" for t in registry["aptFallback"]["packages"]))
+        tool = next(t for t in read_json(CONFIG / "required-cli-tools-registry.json")["tools"] if t["id"] == "bash")
+        self.assertEqual(tool["platforms"], ["Darwin", "Linux"])
+        shell = shutil.which("bash")
+        if shell is None:
+            self.skipTest("Bash unavailable")
+        for candidate in dict.fromkeys([shell, "/bin/bash"]):
+            if not Path(candidate).exists():
+                continue
+            version = subprocess.check_output([candidate, "-c", "printf '%s' \"$BASH_VERSION\""], text=True)
+            result = subprocess.run([candidate, *tool["args"]], capture_output=True, text=True)
+            self.assertEqual(result.returncode == 0, int(version.split(".")[0]) >= 5)
+            self.assertEqual(result.stdout.strip(), version)
+        with tempfile.TemporaryDirectory() as temporary:
+            result = subprocess.run(["python3", str(REPOSITORY / "scripts/lib/linux-maintenance-hardening.py"), "probe", "--tool-id", "bash", "--timeout-seconds", "5", "--", str(Path(temporary) / "missing-bash")], capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertEqual(json.loads(result.stdout)["status"], "Missing")
+
+    def test_bash_link_drift_is_reported_without_relinking(self) -> None:
+        shell = shutil.which("bash")
+        if shell is None:
+            self.skipTest("Bash unavailable")
+        source = (REPOSITORY / "scripts/maintain-agentic-brew-apps.sh").read_text()
+        start = source.index("ensure_brew_formula_links() {")
+        end = source.index("\n}\n", start) + 3
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "formulae").write_text("bash\n")
+            (root / "commands").write_text("bash\n")
+            # Deliberately point Homebrew elsewhere than the resolved Bash.
+            setup = '''set -euo pipefail
+COMPARE_ONLY=1
+validate_item_id() { [ "$1" = bash ]; }
+brew() { if [ "$1" = --prefix ]; then printf '%s/mockbrew\\n' "$FIXTURE"; elif [ "$1" = list ]; then return 0; else return 99; fi; }
+snapshot_registry() { if [ "$1" = linked-formulae.tsv ]; then printf '%s/formulae\\n' "$FIXTURE"; else printf '%s/commands\\n' "$FIXTURE"; fi; }
+log() { printf '%s\\n' "$*"; }
+'''
+            result = subprocess.run([shell, "-c", setup + source[start:end] + "\nensure_brew_formula_links\n"], env={**os.environ, "FIXTURE": str(root)}, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("LINK-DRIFT formula: bash", result.stdout)
+
     def test_network_attempt_contract_distinguishes_success_failure_and_timeout(self) -> None:
         specification = importlib.util.spec_from_file_location(
             "fleet_engine_attempts", FLEET_ENGINE
