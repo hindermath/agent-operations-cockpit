@@ -15,17 +15,23 @@ than replaces, technical receipts and AEPS evidence. Previously completed runs
 are not retrospectively reassessed without a new request.*
 
 Speichere genau einen lesbaren Bericht je Feature unter
-`specs/<feature>/engineering-retrospective.md`. Gib beim Abschluss eine kurze
-Zusammenfassung mit Link aus. Bei einem sicheren Zwischenstopp dokumentiere
-`Zwischenstand` statt eines angeblichen Abschlusses und aktualisiere denselben
-Bericht nach Fortsetzung. Der Bericht nennt Feature, Run-ID falls vorhanden,
-Standdatum, tatsächlichen Lauf-/Lieferstatus und Beweisgrenzen.
+`specs/<feature>/engineering-retrospective.md`. Zeige nach jedem Feature-Lauf
+den Abschlussbericht zusätzlich direkt in der Abschlussantwort: kompakt, aber
+mit allen sechs Perspektiven sowie der Completion- und
+Retrospective-Evidence und einem Link auf den gespeicherten Bericht. Ein bloßer
+Dateilink genügt nicht. Bei einem sicheren Zwischenstopp zeige und dokumentiere
+stattdessen einen klar gekennzeichneten `Zwischenstand` und aktualisiere
+denselben Bericht nach Fortsetzung. Der Bericht nennt Feature, Run-ID falls
+vorhanden, Standdatum, tatsächlichen Lauf-/Lieferstatus und Beweisgrenzen.
 
 *Save one readable report per feature at
-`specs/<feature>/engineering-retrospective.md`. Deliver a short summary and link
-at closeout. At a safe intermediate stop, label it an interim report rather than
-claiming completion, and update the same report after resuming. State the feature,
-run ID where available, reporting date, actual run/delivery status, and evidence
+`specs/<feature>/engineering-retrospective.md`. After every feature run, also
+show the completion report directly in the final response: concise, but covering
+all six perspectives, completion and retrospective evidence, and a link to the
+saved report. A file link alone is insufficient. At a safe intermediate stop,
+show and record a clearly labelled interim report instead of claiming
+completion, and update the same report after resuming. State the feature, run ID
+where available, reporting date, actual run/delivery status, and evidence
 limits.*
 
 ## Die sechs Perspektiven / The six perspectives
@@ -107,6 +113,51 @@ findings, interventions, confirmed presets, and new error classes. Separate
 scope differences from actual improvement. Show missing or non-comparable data
 and define counting rules before comparing numbers. Do not start retrospective
 reviews, invent timings, or promote a canonical rule from three AOC runs alone.*
+
+## Effizienzleitlinien für Folgeläufe / Efficiency guardrails for subsequent runs
+
+- Bündele fachlich zusammengehörige Quelländerungen zu einem reviewbaren
+  Inkrement, bevor du erneut eine exakte Head-Validierung startest. Vermeide
+  sowohl kleinteilige Selbst-Revalidierungsschleifen als auch unprüfbare
+  Großpakete.
+- Prüfe Provider-, Runner-, Betriebssystem-, Shell-, Encoding-, Pfad- und
+  Zeitbudgetgrenzen am frühesten anwendbaren Kontrollpunkt. Eine unklare oder
+  unerreichbare Providergrenze bleibt fail-closed.
+- Verwende bereits bestandene Evidence nur dann wieder, wenn Eingaben,
+  betroffene Pfade, Anforderungen, Prüfkommandos, Plattform und die Beziehung
+  zum reviewten Head nachweislich unverändert sind. Tatsächliche Drift erzwingt
+  die passende erneute Prüfung.
+- Trenne Statistik- und laufzeitbezogene Evidence soweit möglich vom
+  selbstreferenziellen Feature-Head. Binde kausale Quell-, Pre-Merge- und
+  Post-Merge-Nachweise ausdrücklich, ohne neue Selbsthash-Schleifen zu erzeugen.
+- Wiederhole vollständige Plattform- oder Testmatrizen nur, wenn ihre
+  konsumierte Oberfläche geändert wurde oder eine verbindliche Exact-Head-Regel
+  dies verlangt. Andernfalls genügen die betroffenen Prüfungen zusammen mit den
+  weiterhin vorgeschriebenen aktuellen Head-Gates.
+- Erfasse durch eigene kleine Nachbesserungen ausgelöste Wiederholungen als
+  Effizienzbeobachtung und bündele die nächste Änderung vor einem weiteren
+  Exact-Head-Zyklus.
+
+Diese Leitlinien schwächen keine technischen Pflichtgates. Sicherheitsbefunde,
+offene umsetzbare Review-Findings, fehlende Evidence, unklare Authority und
+tatsächliche Drift dürfen weder übersprungen noch abgeleitet oder per Bypass
+verdeckt werden.
+
+*Bundle related source changes into one reviewable increment before starting
+another exact-head validation. Check provider, runner, operating-system, shell,
+encoding, path, and time-budget boundaries at the earliest applicable point.
+Reuse passing evidence only when its inputs, affected paths, requirements,
+commands, platform, and relationship to the reviewed head are demonstrably
+unchanged; real drift requires the matching rerun. Keep statistics and runtime
+evidence separate from a self-referential feature head where possible and bind
+causal source, pre-merge, and post-merge evidence without creating self-hash
+loops. Repeat a full platform or test matrix only when its consumed surface
+changed or an exact-head rule requires it; otherwise run the affected checks
+plus all mandatory current-head gates. Record loops caused by small follow-up
+edits as efficiency observations and group the next change before another
+exact-head cycle. These guardrails never weaken mandatory technical gates and
+never permit bypassing security findings, actionable review findings, missing
+evidence, unclear authority, or actual drift.*
 
 ## Qualitäts- und Authority-Grenzen / Quality and authority boundaries
 
