@@ -11,9 +11,10 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import subprocess
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import Any
 
 
@@ -73,6 +74,32 @@ def normalized_sha256(raw: bytes) -> str:
         raise ContractViolation("binary NUL in text input")
     normalized = text.replace("\r\n", "\n").replace("\r", "\n")
     return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+
+
+def _repository_path(
+    repo: Path, relative: str, label: str, *, require_file: bool = True,
+) -> Path:
+    """Resolve a repository-local path without absolute, traversal, or symlink escape."""
+    if not isinstance(relative, str) or not relative or "\\" in relative:
+        raise ContractViolation(f"{label} must be a repository-relative path")
+    pure = PurePosixPath(relative)
+    if pure.is_absolute() or PureWindowsPath(relative).drive or ".." in pure.parts:
+        raise ContractViolation(f"{label} must be a repository-relative path")
+    root = repo.resolve()
+    candidate = repo / pure
+    current = repo
+    for part in pure.parts:
+        current = current / part
+        if current.is_symlink():
+            raise ContractViolation(f"{label} must not contain symlink components")
+    try:
+        if not candidate.resolve().is_relative_to(root):
+            raise ContractViolation(f"{label} escapes the repository root")
+    except OSError as exc:
+        raise ContractViolation(f"{label} cannot be resolved: {exc}") from exc
+    if require_file and not candidate.is_file():
+        raise ContractViolation(f"{label} must identify an existing regular file")
+    return candidate
 
 
 def _git(repo: Path, *arguments: str, binary: bool = False) -> bytes | str:
@@ -181,7 +208,7 @@ def validate_leaf_replacement(
 
 def _canonical_raw_sha256(repo: Path, relative: str) -> str:
     """Bind tracked text to its Git blob while accepting checkout-only EOL conversion."""
-    path = repo / relative
+    path = _repository_path(repo, relative, "canonical transaction file")
     try:
         worktree = path.read_bytes()
     except OSError as exc:
@@ -202,9 +229,7 @@ def _canonical_raw_sha256(repo: Path, relative: str) -> str:
 def _require_file_hash(
     repo: Path, relative: str, expected: str, *, normalized: bool = False
 ) -> None:
-    path = repo / relative
-    if not path.is_file():
-        raise ContractViolation(f"required transaction file is missing: {relative}")
+    path = _repository_path(repo, relative, "required transaction file")
     actual = (
         normalized_sha256(path.read_bytes())
         if normalized
@@ -218,30 +243,71 @@ def _require_file_hash(
 def _resolve_completed_lifecycle_target(
     repo: Path, logical_path: str, expected_hash: str,
 ) -> str:
-    """Resolve META-LH-03 after its post-feature lifecycle rename."""
-    lifecycle_path = repo / "specs/003-authoring-contract/intake-lifecycle.json"
-    if not lifecycle_path.is_file():
+    """Resolve one logical target through exactly one feature lifecycle record."""
+    logical_file = _repository_path(
+        repo, logical_path, "logical lifecycle target", require_file=False
+    )
+    matches: list[dict[str, Any]] = []
+    for discovered_path in sorted((repo / "specs").glob("*/intake-lifecycle.json")):
+        lifecycle_relative = discovered_path.relative_to(repo).as_posix()
+        lifecycle_path = _repository_path(
+            repo, lifecycle_relative, "lifecycle contract"
+        )
+        lifecycle = load_json(lifecycle_path)
+        records = lifecycle.get("records")
+        if lifecycle.get("schemaVersion") != "1.1" or not isinstance(records, list):
+            raise ContractViolation(
+                f"lifecycle resolution is invalid: {lifecycle_path.relative_to(repo)}"
+            )
+        matches.extend(
+            record for record in records
+            if isinstance(record, dict) and record.get("originalPath") == logical_path
+        )
+
+    logical_exists = logical_file.is_file()
+    if not matches:
+        if not logical_exists:
+            raise ContractViolation(f"logical target has no physical file: {logical_path}")
         return logical_path
-    lifecycle = load_json(lifecycle_path)
-    records = lifecycle.get("records")
-    matches = [
-        record for record in records or []
-        if isinstance(record, dict) and record.get("originalPath") == logical_path
-    ]
-    if lifecycle.get("schemaVersion") != "1.1" or len(matches) != 1:
-        raise ContractViolation("META-LH-03 lifecycle resolution is invalid")
+    if len(matches) != 1:
+        raise ContractViolation(f"lifecycle resolution is ambiguous: {logical_path}")
     record = matches[0]
     archived = record.get("archivedPath")
+    if not isinstance(archived, str):
+        raise ContractViolation(f"lifecycle target binding drift: {logical_path}")
+    archived_file = _repository_path(
+        repo, archived, f"lifecycle archived target for {logical_path}"
+    )
     if (
         record.get("originalNormalizedSha256") != expected_hash
-        or not isinstance(archived, str)
-        or not (repo / archived).is_file()
-        or normalized_sha256((repo / archived).read_bytes()) != expected_hash
+        or normalized_sha256(archived_file.read_bytes()) != expected_hash
     ):
-        raise ContractViolation("META-LH-03 lifecycle target binding drift")
-    if (repo / logical_path).is_file():
-        raise ContractViolation("META-LH-03 lifecycle requires the logical target to be absent")
+        raise ContractViolation(f"lifecycle target binding drift: {logical_path}")
+    if logical_exists:
+        raise ContractViolation(
+            f"lifecycle requires the logical target to be absent: {logical_path}"
+        )
     return archived
+
+
+def _validate_current_target_projection(repo: Path, current: dict[str, Any]) -> None:
+    """Prove that every current logical leaf resolves to exactly one physical file."""
+    for logical_id, leaf in _leaf_map(current).items():
+        target = leaf.get("target")
+        if not isinstance(target, dict) or set(target) != {"path", "normalizedSha256"}:
+            raise ContractViolation(f"{logical_id} target binding is incomplete")
+        logical_path = target.get("path")
+        expected_hash = target.get("normalizedSha256")
+        if not isinstance(logical_path, str) or not re.fullmatch(
+            r"[0-9a-f]{64}", str(expected_hash)
+        ):
+            raise ContractViolation(f"{logical_id} target binding is invalid")
+        _require_file_hash(
+            repo,
+            _resolve_completed_lifecycle_target(repo, logical_path, str(expected_hash)),
+            str(expected_hash),
+            normalized=True,
+        )
 
 
 def validate_r2_transaction(
@@ -260,6 +326,7 @@ def validate_r2_transaction(
     assert isinstance(baseline_raw, bytes)
     historical = load_json_bytes(baseline_raw, f"{checkpoint}:{binding_path}")
     leaf_summary = validate_leaf_replacement(historical, current)
+    _validate_current_target_projection(repo, current)
 
     before_renewed = {
         item["logicalTargetId"]: item

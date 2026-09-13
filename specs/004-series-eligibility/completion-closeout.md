@@ -2,8 +2,8 @@
 
 ## Aktueller Stand / Current state
 
-Dies ist genau der vorab benannte kausale Closeout-Pfad für Run `8b306e28-51eb-4510-afbc-5056b9aee328`: `specs/004-series-eligibility/completion-closeout.md`. Stand 2026-09-13: **PendingFeatureMerge**, T001–T050 abgeschlossen (50/57 Tasks). Die autorisierte Review-Reparatur für PR #49 wird am finalen PR-Head validiert; der Merge bleibt T051. Der getrennte Runtime-PreMerge-Nachweis bindet erst nach grünem CI den unveränderten finalen Head. Kein Feature-, Lifecycle- oder Closeout-Merge und kein finaler Sync werden hier behauptet. Das Dokument bindet niemals seinen eigenen späteren Container-Commit oder Merge-Hash.
-*This is the sole declared causal closeout path. Current status is PendingFeatureMerge with T001-T050 complete (50/57 tasks). The authorized review remediation for PR #49 is being validated at the final PR head; merge remains T051. Separate runtime PreMerge evidence binds that unchanged head only after green CI. No feature, lifecycle or closeout merge or final sync is claimed.*
+Dies ist genau der vorab benannte kausale Closeout-Pfad für Run `8b306e28-51eb-4510-afbc-5056b9aee328`: `specs/004-series-eligibility/completion-closeout.md`. Stand 2026-09-13: **PendingLifecycleDelivery**, T001–T053 abgeschlossen (53/57 Tasks). PR #49 wurde nach grünem technischem Head `955ec4ad2a6c2fb94a3d0e275947e861e3174398` als Merge-Commit `d95c2ff87c4ac0f6d137bc96a129464365416780` zusammengeführt. Die Feature-PreMerge- und PostMerge-Snapshots bestehen in beiden Shells. Der bytegleiche Lifecycle-Rename ist vorbereitet; Lifecycle-PR, Closeout-PR und finaler Sync bleiben offen. Das Dokument bindet niemals seinen eigenen späteren Container-Commit oder Merge-Hash.
+*This is the sole declared causal closeout path. Current status is PendingLifecycleDelivery with T001-T053 complete (53/57 tasks). PR #49 merged the technically green head as the stated merge commit, and both feature PreMerge/PostMerge snapshots pass in both shells. The byte-identical lifecycle rename is prepared; lifecycle delivery, closeout delivery and final sync remain open.*
 
 ## Autorität und Reihenfolge / Authority and sequence
 
@@ -25,7 +25,7 @@ Unter `.specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/
 
 | Lieferung / Delivery | PreMerge | PostMerge | Status |
 |---|---|---|---|
-| Feature | `premerge-gate-evidence.json` | `postmerge-gate-evidence.json` | PreMerge validated for the T050 source head; final checkpoint revalidation required |
+| Feature | `premerge-gate-evidence.json` | `postmerge-gate-evidence.json` | Completed: PreMerge `a7ef78957b9030ff4c9ea4d23afd220225d33ae68a87a47e9b09aa26d5459e95`; PostMerge `1700e3a7d27631f562a975d1f46eb1a3e0e6eb33c39f8c70aaa8b4d44b13e465` |
 | Lifecycle | `lifecycle/premerge-gate-evidence.json` | `lifecycle/postmerge-gate-evidence.json` | NotCaptured |
 | Closeout | `closeout/premerge-gate-evidence.json` | `closeout/postmerge-gate-evidence.json` | NotCaptured |
 

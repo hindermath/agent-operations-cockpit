@@ -21,6 +21,7 @@ sys.path.insert(0, str(CONTRACT_DIR))
 from validate_authoring_contract import (  # noqa: E402
     _canonical_raw_sha256,
     _resolve_completed_lifecycle_target,
+    _validate_current_target_projection,
     ContractViolation,
     normalized_sha256,
     validate_checkpoint,
@@ -106,6 +107,90 @@ class AuthoringContractBridgeTests(unittest.TestCase):
                 }],
             }), encoding="utf-8")
             with self.assertRaisesRegex(ContractViolation, "logical target to be absent"):
+                _resolve_completed_lifecycle_target(repo, logical, expected)
+
+    def test_newer_feature_lifecycle_resolves_current_projection(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            repo = Path(temporary)
+            logical = "requirements/intakes/active/Lastenheft_META-LH-04.md"
+            archived = "requirements/intakes/active/Lastenheft_META-LH-04.004.md"
+            content = b"Deutsch zuerst / English second\n"
+            expected = normalized_sha256(content)
+            target = repo / archived
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(content)
+            lifecycle = repo / "specs/004-series-eligibility/intake-lifecycle.json"
+            lifecycle.parent.mkdir(parents=True, exist_ok=True)
+            lifecycle.write_text(json.dumps({
+                "schemaVersion": "1.1",
+                "records": [{
+                    "originalPath": logical,
+                    "archivedPath": archived,
+                    "originalNormalizedSha256": expected,
+                }],
+            }), encoding="utf-8")
+            binding = {"orderedLogicalTargets": [
+                {
+                    "logicalTargetId": f"TARGET-{index:02d}",
+                    "target": {
+                        "path": logical if index == 4 else f"intakes/target-{index:02d}.md",
+                        "normalizedSha256": expected,
+                    },
+                }
+                for index in range(1, 15)
+            ]}
+            for leaf in binding["orderedLogicalTargets"]:
+                leaf_path = leaf["target"]["path"]
+                if leaf_path == logical:
+                    continue
+                physical = repo / leaf_path
+                physical.parent.mkdir(parents=True, exist_ok=True)
+                physical.write_bytes(content)
+            _validate_current_target_projection(repo, binding)
+
+    def test_completed_lifecycle_rejects_absolute_archived_path(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            repo = root / "repo"
+            repo.mkdir()
+            logical = "requirements/intakes/active/Lastenheft_META-LH-04.md"
+            outside = root / "outside.md"
+            content = b"Deutsch zuerst / English second\n"
+            outside.write_bytes(content)
+            expected = normalized_sha256(content)
+            lifecycle = repo / "specs/004-series-eligibility/intake-lifecycle.json"
+            lifecycle.parent.mkdir(parents=True, exist_ok=True)
+            lifecycle.write_text(json.dumps({
+                "schemaVersion": "1.1",
+                "records": [{
+                    "originalPath": logical,
+                    "archivedPath": outside.as_posix(),
+                    "originalNormalizedSha256": expected,
+                }],
+            }), encoding="utf-8")
+            with self.assertRaisesRegex(ContractViolation, "repository-relative path"):
+                _resolve_completed_lifecycle_target(repo, logical, expected)
+
+    def test_completed_lifecycle_rejects_parent_traversal(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            repo = root / "repo"
+            repo.mkdir()
+            logical = "requirements/intakes/active/Lastenheft_META-LH-04.md"
+            content = b"Deutsch zuerst / English second\n"
+            (root / "outside.md").write_bytes(content)
+            expected = normalized_sha256(content)
+            lifecycle = repo / "specs/004-series-eligibility/intake-lifecycle.json"
+            lifecycle.parent.mkdir(parents=True, exist_ok=True)
+            lifecycle.write_text(json.dumps({
+                "schemaVersion": "1.1",
+                "records": [{
+                    "originalPath": logical,
+                    "archivedPath": "../outside.md",
+                    "originalNormalizedSha256": expected,
+                }],
+            }), encoding="utf-8")
+            with self.assertRaisesRegex(ContractViolation, "repository-relative path"):
                 _resolve_completed_lifecycle_target(repo, logical, expected)
 
     def test_wrong_reserved_ids_are_rejected(self) -> None:

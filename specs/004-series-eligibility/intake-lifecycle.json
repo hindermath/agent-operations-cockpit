@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.1",
+  "records": [
+    {
+      "recordVersion": "1.0",
+      "logicalTargetId": "META-LH-04",
+      "originalPath": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "archivedPath": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.004-series-eligibility.md",
+      "originalRawSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+      "originalNormalizedSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json",
+        "rawSha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b"
+      },
+      "readySingleReview": {
+        "path": "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json",
+        "rawSha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07"
+      },
+      "runId": "8b306e28-51eb-4510-afbc-5056b9aee328",
+      "branch": "004-series-eligibility"
+    }
+  ]
+}

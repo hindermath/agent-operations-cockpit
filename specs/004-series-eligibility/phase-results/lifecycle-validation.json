@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "LifecycleValidationEvidence",
+  "evidenceId": "886a02d3-d832-4d7f-b2b8-10acc2493dfa",
+  "runId": "8b306e28-51eb-4510-afbc-5056b9aee328",
+  "capturedAt": "2026-09-13T14:15:22Z",
+  "status": "SourceDeliveryValidated",
+  "featureMerge": {
+    "pullRequest": 49,
+    "mergeCommit": "d95c2ff87c4ac0f6d137bc96a129464365416780",
+    "mergedAt": "2026-09-13T14:00:41Z"
+  },
+  "rename": {
+    "logicalPath": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+    "physicalPath": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.004-series-eligibility.md",
+    "rawSha256Before": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+    "rawSha256After": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+    "normalizedSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+    "contentPreserved": true,
+    "actualRenameCount": 1
+  },
+  "pairedFixturePreview": {
+    "bash": "Pass",
+    "powerShell": "Pass",
+    "sameTargetBytes": true,
+    "renameDetection": "100%"
+  },
+  "bindingDecision": {
+    "renewedReceiptIds": [],
+    "renewedReviewIds": [],
+    "manifestChanged": false,
+    "rationale": "The stable logical path and normalized content hash remain unchanged. The lifecycle record and current-evidence projection resolve the renamed physical file without rewriting immutable receipt, review, or completed-series evidence."
+  },
+  "reviewRepairs": {
+    "repositoryBoundary": {
+      "status": "Pass",
+      "behavior": "Lifecycle contracts, logical targets, and archived targets reject absolute paths, parent traversal, and symlink components before hashing.",
+      "negativeTests": [
+        "absolute archivedPath",
+        "parent-traversing archivedPath"
+      ]
+    },
+    "linkedOrderProjection": {
+      "status": "Pass",
+      "outputs": [
+        "Lastenheft_Abarbeitungsreihenfolge.md",
+        "requirements/intakes/series/order.md"
+      ],
+      "resolvedPhysicalPath": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.004-series-eligibility.md",
+      "semanticParity": true,
+      "terminalFeatureProof": "Deferred to T055 because the autonomous run state remains Active until lifecycle delivery completes."
+    }
+  },
+  "validation": {
+    "local": {
+      "status": "Pass",
+      "authoringContractTests": "13 tests passed",
+      "seriesEligibilityTests": "passed",
+      "globalReady": "14 current Ready bindings passed",
+      "manifestSurfaces": "Bash and PowerShell passed with byte-equivalent normalized JSON",
+      "statusSurfaces": "Bash and PowerShell passed with byte-equivalent normalized JSON; terminal Completed series is correctly Blocked for further eligibility",
+      "nextSurfaces": "Bash and PowerShell passed with byte-equivalent normalized JSON; no successor was started",
+      "receiptReviewBinding": "Existing receipt and Ready review remain current through the lifecycle projection"
+    },
+    "deliverySet": {
+      "status": "Pass",
+      "pathCount": 12,
+      "unrelatedUntrackedPaths": 0,
+      "bashPowerShellParity": true,
+      "candidateModes": [
+        "Worktree",
+        "Staged"
+      ]
+    },
+    "continuousIntegration": "Pending",
+    "reviewThreads": "Pending",
+    "preMerge": "Pending",
+    "postMerge": "Pending"
+  },
+  "delivery": {
+    "branch": "004-series-eligibility-lifecycle",
+    "pullRequest": null,
+    "reviewedHead": null,
+    "mergeCommit": null,
+    "mainSynchronized": false
+  },
+  "scope": {
+    "seriesSemanticsChanged": false,
+    "intakeContentChanged": false,
+    "metaLh05Started": false,
+    "level0Changed": false,
+    "presetPromoted": false
+  }
+}
