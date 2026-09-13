@@ -30,3 +30,21 @@
 
 Profilbindung / profile binding: Kein lokales Authoring-Profil konfiguriert; Agent-Guidance sowie Spec-/Plan-/Tasks-Vorlagen binden die Regel. / No local authoring profile configured; agent guidance and spec/plan/tasks templates bind the rule.
 Bootstrap-Quellen / bootstrap sources: alle vorhandenen lokalen Agent-Templates tragen dieselbe Regel; lokale Erweiterungen erhalten. / Existing local agent source templates contain the same rule; extensions preserved.
+
+## AOC-Ablagevertrag / AOC storage contract
+
+In AOC bleibt genau ein kanonischer Feature-Bericht unter
+`specs/<feature>/engineering-retrospective.md`. Die gemeinsame Completion-Vorlage
+liefert dessen Ergebnis-, Prüfungs-, Dokumentations-, Umfangs-, Verlaufs- und
+Abschlussabschnitte. Die sechs bestehenden Perspektiven Output, Findings,
+Bestätigung, Intervention, Effizienz und AEPS-Relevanz bleiben zusätzlich
+vollständig enthalten; fehlende AEPS-Evidence wird ausdrücklich benannt.
+Keine zweite `completion-report.md` erzeugen. Dies ist die beabsichtigte lokale
+Pfadabweichung bei unveränderter Chat-Berichtspflicht.
+
+*AOC retains one canonical report at engineering-retrospective.md. Apply the
+shared completion template inside that report and preserve all six existing
+perspectives: output, findings, confirmation, intervention, efficiency and AEPS
+relevance. Explicitly state missing AEPS evidence. Do not create a second
+completion-report.md. This intentional local path override preserves the full
+chat-report requirement.*

@@ -76,7 +76,7 @@ workflow, state transition or dependency; the acceptance sentence is sufficient.
 
 Nach jedem vollständig abgeschlossenen Spec-Kit-Feature-Lauf MUSS der Agent
 einen vollständigen, verständlichen Ergebnisbericht in seiner finalen Antwort
-anzeigen und im Feature-Verzeichnis als `completion-report.md` versionieren.
+anzeigen und im Feature-Verzeichnis als `engineering-retrospective.md` versionieren.
 Die Vorlage liegt unter `.specify/templates/completion-report-template.md`.
 Die Chat-Ausgabe ist kein bloßer Link und keine Liste von Commit-IDs. Deutsche
 Ausgabe zuerst, englischer Sprachpartner nach Repository-Vertrag; Zahlen und
@@ -89,7 +89,7 @@ Bei mehreren Liefer-PRs entsteht ein zusammenhängender Feature-Bericht. Die
 Berichtspflicht startet weder den nächsten Intake noch einen zusätzlichen Lauf.
 
 *After every completed feature run, show the complete readable report in the
-final response and version it as completion-report.md in the feature directory.
+final response and version it as engineering-retrospective.md in the feature directory.
 Use the shared template, not merely a link or commit list. Follow repository
 language rules. Individual planning/status/review commands do not trigger a
 feature report. Paused or blocked runs receive a clearly labeled interim report.
@@ -157,3 +157,21 @@ Diagrammquelle, Agent-Oberflächen oder des Update-Verhaltens.
 Preserve project extensions and local templates across Spec Kit updates. Agent
 instructions and intake/report templates bind this rule; preset packages are
 unchanged. Reevaluate on source, reporting, agent-surface or updater changes.*
+
+## AOC-Ablagevertrag / AOC storage contract
+
+In AOC bleibt genau ein kanonischer Feature-Bericht unter
+`specs/<feature>/engineering-retrospective.md`. Die gemeinsame Completion-Vorlage
+liefert dessen Ergebnis-, Prüfungs-, Dokumentations-, Umfangs-, Verlaufs- und
+Abschlussabschnitte. Die sechs bestehenden Perspektiven Output, Findings,
+Bestätigung, Intervention, Effizienz und AEPS-Relevanz bleiben zusätzlich
+vollständig enthalten; fehlende AEPS-Evidence wird ausdrücklich benannt.
+Keine zweite `completion-report.md` erzeugen. Dies ist die beabsichtigte lokale
+Pfadabweichung bei unveränderter Chat-Berichtspflicht.
+
+*AOC retains one canonical report at engineering-retrospective.md. Apply the
+shared completion template inside that report and preserve all six existing
+perspectives: output, findings, confirmation, intervention, efficiency and AEPS
+relevance. Explicitly state missing AEPS evidence. Do not create a second
+completion-report.md. This intentional local path override preserves the full
+chat-report requirement.*
