@@ -2,7 +2,7 @@
   "schemaVersion": "1.1",
   "runId": "8b306e28-51eb-4510-afbc-5056b9aee328",
   "featurePath": "specs/004-series-eligibility",
-  "branch": "004-series-eligibility-terminal-state",
+  "branch": "004-series-eligibility",
   "deliveryMode": "MergeAndSync",
   "authorityRevalidationRequired": false,
   "stage": "MergeAndSync",

@@ -1,7 +1,7 @@
 # AEPS-Capture META-LH-04 / META-LH-04 AEPS Capture
 
-Datum / Date: 2026-09-13. Run `8b306e28-51eb-4510-afbc-5056b9aee328`. Reviewer: Codex in der Implementierungsrolle; unabhängige technische Reviews der Liefer-Heads sind separat gebunden. Owner: AOC Repository Owner. Die AOC-lokale Completion-Evidence ist durch Closeout-Merge `7e53a8b327410ba241d90a9c60bc286b16f7bc44` veröffentlicht; der AEPS-Upstream-Status bleibt **PendingPublication**. Feature, Lifecycle und Closeout sind ausgeliefert, der terminale Run-State bindet diese bereits beobachteten Fakten kausal.
-*Date 2026-09-13. Run `8b306e28-51eb-4510-afbc-5056b9aee328`. Reviewer: Codex in the implementation role; independent technical reviews of delivery heads are bound separately. Owner: AOC Repository Owner. AOC-local completion evidence was published by closeout merge `7e53a8b327410ba241d90a9c60bc286b16f7bc44`; AEPS upstream status remains PendingPublication. Feature, lifecycle and closeout are delivered, and terminal run state causally binds those observed facts.*
+Datum / Date: 2026-09-13. Run `8b306e28-51eb-4510-afbc-5056b9aee328`. Reviewer: Codex in der Implementierungsrolle; unabhängige technische Reviews der Liefer-Heads sind separat gebunden. Owner: AOC Repository Owner. Dieses aktualisierte AOC-lokale Receipt basiert auf dem Closeout-Merge `7e53a8b327410ba241d90a9c60bc286b16f7bc44` und wird durch die terminale Zustandslieferung veröffentlicht; der AEPS-Upstream-Status bleibt **PendingPublication**. Feature, Lifecycle und Closeout sind ausgeliefert, der terminale Run-State bindet diese bereits beobachteten Fakten kausal.
+*Date 2026-09-13. Run `8b306e28-51eb-4510-afbc-5056b9aee328`. Reviewer: Codex in the implementation role; independent technical reviews of delivery heads are bound separately. Owner: AOC Repository Owner. This updated AOC-local receipt is based on closeout merge `7e53a8b327410ba241d90a9c60bc286b16f7bc44` and is published by the terminal-state delivery; AEPS upstream status remains PendingPublication. Feature, lifecycle and closeout are delivered, and terminal run state causally binds those observed facts.*
 
 ## Trigger, Methode und Quellen / Trigger, method and sources
 
@@ -15,7 +15,13 @@ Der Abschluss von Feature-PR #49, Lifecycle-PR #52 und Closeout-PR #53 löst die
 | `specs/004-series-eligibility/phase-results/delivery-report.md` | `406e56e21ac7e39334a993dd96ba249e2df49a2864ffd17b0bc22c87a74c2aa3` |
 | `specs/004-series-eligibility/phase-results/lifecycle-validation.json` | `525ec8135457947f2eedd5b6b9366765b0d621d938d499dfba7aa751236d7eb8` |
 | `specs/004-series-eligibility/phase-results/implementation-trend.json` | `59bfa33a73f1ac8ecd7b6f406f8d6a9178a0580e5e4bf45041d977098f81095c` |
-| `specs/004-series-eligibility/engineering-retrospective.md` | `efefc31ca7641daee9083c74e9ceb7a4d87bee2d64257b97a64fcd2ca175cb1c` |
+| `specs/004-series-eligibility/phase-results/red-green.json` | `8399c811e75c4d19cac2de17471c28171904c1f934cebc36868218aa1d4aca8b` |
+| `specs/004-series-eligibility/phase-results/us1-tests.json` | `a65a9d4d3b6b820a4591e1801b05c50b7d0affe912c2ab899450b3a6539afa15` |
+| `specs/004-series-eligibility/phase-results/us2-tests.json` | `8931e2fd768e665e5642b210793cd9fc405a917a328a6ff26847507bf3a721a4` |
+| `specs/004-series-eligibility/phase-results/us3-tests.json` | `93c24b485f6aa8468a49a388a9ac6ca3ea47787732062e7d186fb99434f10235` |
+| `specs/004-series-eligibility/phase-results/runner-tests.json` | `f6ee2a3093d94718e28ba305ab5d6aff74ebda5ae4b256d48424ce932b0f7590` |
+| `specs/004-series-eligibility/phase-results/quality-validation.json` | `4746b93ed4dcc0900914c4bedf7a0e6a05da0eaa9952356963d095b4dc243db3` |
+| `specs/004-series-eligibility/engineering-retrospective.md` | `939d5c9ac388c5fc8f280bd2ae9995bd67bd05c8a73493760ba0c4abe0d12919` |
 | `specs/004-series-eligibility/completion-closeout.md` | `4e76ce26fc11bfc0451d7b78d86265370ed963655efbe356a66d1fe0998c8672` |
 
 Die Runtime-Pre/PostMerge-Nachweise sind absichtlich nicht als versionierte Quellen aufgenommen. Closeout-PreMerge `6e53d0c45048dcb78bd76193b0bf5039931eba2fbe5d0bca4ce23e09b143dfee` und PostMerge `22bf0f6ea82dab2bccb96165c2d23d36ba097e97894893c3ccd234e664cb285d` bestanden in beiden Shells und sind im kausalen Closeout dokumentiert.

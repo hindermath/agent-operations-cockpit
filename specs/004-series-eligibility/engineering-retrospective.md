@@ -1,7 +1,7 @@
 # Engineering-Retrospektive META-LH-04 / META-LH-04 Engineering Retrospective
 
-Feature `004-series-eligibility`, Run `8b306e28-51eb-4510-afbc-5056b9aee328`, abgeschlossen am 2026-09-13. Diese Retrospektive folgt dem repository-persistenten Sieben-Perspektiven-Schema für Spec-Kit-Läufe. Feature, Lifecycle und Closeout sind geliefert; T001–T057 und der terminale Run-State sind kausal gebunden.
-*Feature `004-series-eligibility`, run `8b306e28-51eb-4510-afbc-5056b9aee328`, completed on 2026-09-13. This retrospective follows the repository-persistent seven-perspective schema. Feature, lifecycle and closeout are delivered; T001-T057 and terminal run state are causally bound.*
+Feature `004-series-eligibility`, Run `8b306e28-51eb-4510-afbc-5056b9aee328`, abgeschlossen am 2026-09-13. Diese Retrospektive folgt dem repository-persistenten Sechs-Perspektiven-Schema für Spec-Kit-Läufe und ergänzt die getrennte Completion-/Retrospective-Evidence. Feature, Lifecycle und Closeout sind geliefert; T001–T057 und der terminale Run-State sind kausal gebunden.
+*Feature `004-series-eligibility`, run `8b306e28-51eb-4510-afbc-5056b9aee328`, completed on 2026-09-13. This retrospective follows the repository-persistent six-perspective schema and adds the separate completion/retrospective evidence. Feature, lifecycle and closeout are delivered; T001-T057 and terminal run state are causally bound.*
 
 ## 1. Output / Output
 
