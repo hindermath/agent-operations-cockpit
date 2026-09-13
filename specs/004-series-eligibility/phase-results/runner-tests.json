@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
   "runId": "8b306e28-51eb-4510-afbc-5056b9aee328",
-  "phaseId": "implement-5",
-  "attemptId": "c13297af-dc6b-41f5-bb5e-ca1de9b75140",
-  "completedAt": "2026-09-13T08:27:41.547881+00:00",
+  "phaseId": "delivery-remediation-4",
+  "attemptId": "1eef6f97-906a-4b65-9bfb-cd34cf67c370",
+  "completedAt": "2026-09-13T11:16:45Z",
   "result": "Pass",
   "scope": "T028-T030 local runner proofs; native CI acceptance remains pending",
   "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
@@ -15,8 +15,8 @@
     },
     {
       "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
-      "rawSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6",
-      "normalizedSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6"
+      "rawSha256": "8cff0edd1772f3e8afce1bea92e316396dd8d4b19a1c39b7c014f9d6ecc6eea6",
+      "normalizedSha256": "8cff0edd1772f3e8afce1bea92e316396dd8d4b19a1c39b7c014f9d6ecc6eea6"
     },
     {
       "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
@@ -25,8 +25,8 @@
     },
     {
       "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
-      "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
-      "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+      "rawSha256": "b28c0b4175565b92f32085aec4a9b45767043f6db38069aeb70c7d07236a03e0",
+      "normalizedSha256": "b28c0b4175565b92f32085aec4a9b45767043f6db38069aeb70c7d07236a03e0"
     },
     {
       "path": ".github/workflows/powershell-analysis.yml",
@@ -2333,16 +2333,19 @@
     "validation": "Run 34751212746 job 103707972407 passed the new macOS provisioning step. Jobs 103707972094 and 103707972342 then exceeded the pre-existing ten-minute job limit while executing the full native matrix.",
     "timingDecision": "Raise only this existing workflow job timeout from 10 to 20 minutes; do not skip, split, or weaken any native gate.",
     "windowsEncodingFinding": "Run 34751919837 proved the twenty-minute budget on Ubuntu and macOS. Windows job 103709798761 reached the status/next suite, but Python decoded redirected PowerShell UTF-8 output through the Windows locale and replaced the German umlaut in the required bilingual heading.",
-    "encodingDecision": "Decode only the PowerShell child process explicitly as strict UTF-8 in the Python contract harness. Retain the native platform decoder for Git Bash, and preserve the bilingual heading assertion, query behavior, and every native gate.",
+    "encodingDecision": "Keep strict UTF-8 decoding for the PowerShell child in the outer Python harness and bind the inner Python core invoked by the PowerShell wrapper to UTF-8 through a scoped PYTHONIOENCODING value. Restore the previous environment value afterward. Retain the native platform decoder for Git Bash and preserve every bilingual assertion and gate.",
     "windowsBashEncodingFinding": "Run 34752736325, Windows job 103711893897, showed that applying UTF-8 to both surfaces is invalid: Git Bash emitted byte 0xfc through the Windows native code page and the strict UTF-8 reader rejected it. This finding narrows the correction to the PowerShell surface.",
+    "windowsPowerShellEncodingFinding": "Run 34753204293, Windows job 103713108561, passed all-bash but reproduced the required-heading failure in all-pwsh. The outer strict decoder received valid UTF-8 containing U+FFFD, proving that the inner Python-to-PowerShell native boundary had already replaced the umlaut. The scoped wrapper encoding fixes that boundary without changing the assertion.",
     "encodingLocalValidation": {
-      "completedAt": "2026-09-13T10:56:50Z",
+      "completedAt": "2026-09-13T11:16:45Z",
       "result": "Pass",
       "commands": [
-        "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case status-next",
-        "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case status-next"
+        "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case status-next",
+        "pwsh -NoProfile -File scripts/invoke-psscriptanalyzer.ps1"
       ],
-      "testHarnessSha256": "4b03bf76fec19c1642e8e8f5a26de7c0dbd84f71255dd02999bd4109eee533d4"
+      "testHarnessSha256": "8cff0edd1772f3e8afce1bea92e316396dd8d4b19a1c39b7c014f9d6ecc6eea6",
+      "powerShellWrapperSha256": "b28c0b4175565b92f32085aec4a9b45767043f6db38069aeb70c7d07236a03e0",
+      "environmentRestored": true
     },
     "nextTask": "T048"
   },

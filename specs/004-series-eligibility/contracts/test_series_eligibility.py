@@ -708,7 +708,7 @@ class QueryTests(unittest.TestCase):
         protected_before = {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in protected}
         git_before = subprocess.check_output(['git', '--no-optional-locks', 'status', '--porcelain=v1',
                                              '--untracked-files=all'], cwd=REPO)
-        # PowerShell 7 redirects as UTF-8; Git Bash on Windows uses its native code page.
+        # The PowerShell wrapper binds its Python core to UTF-8; Git Bash uses its native code page.
         decoding = {'encoding': 'utf-8', 'errors': 'strict'} if SHELL == 'pwsh' else {}
         child = subprocess.run(command + list(extra), capture_output=True, text=True, **decoding,
             env={**os.environ, 'PYTHONHASHSEED': str(seed), 'PYTHONDONTWRITEBYTECODE': '1'})

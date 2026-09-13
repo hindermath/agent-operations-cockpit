@@ -7,7 +7,7 @@
   "authorityRevalidationRequired": true,
   "stage": "MergeAndSync",
   "status": "Active",
-  "checkpointCommit": "ef7d9ea629899795c1d6c42cc86c89c1bab14484",
+  "checkpointCommit": "398327641f69a0245b57f1a563faa2cc41c357e4",
   "acceptedArtifacts": [
     {
       "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
@@ -410,12 +410,12 @@
       }
     ]
   },
-  "lastPassingGate": "Run 34752736325 isolated different Windows encodings by surface: Git Bash uses the native code page, while the prior PowerShell query output requires explicit UTF-8 decoding; no domain assertion or gate is weakened.",
-  "nextExactAction": "Validate, commit, and push the surface-specific child-process decoding correction, then collect complete exact-head CI evidence and finish T047 through T050.",
+  "lastPassingGate": "The affected PowerShell status/next suite and repository PSScriptAnalyzer passed after scoping the inner Python core to UTF-8 and restoring the previous process environment; the current exact remote head still requires native CI rerun.",
+  "nextExactAction": "Commit and push the scoped PowerShell-wrapper encoding correction, then collect complete exact-head native CI evidence and finish T047 through T050.",
   "lastOperation": {
-    "kind": "DeliveryRemediation:windows-utf8",
+    "kind": "DeliveryRemediation:windows-python-powershell-utf8-boundary",
     "state": "Completed",
-    "summary": "Decode redirected PowerShell output explicitly as strict UTF-8 while retaining native Windows decoding for Git Bash, based on two exact-head Windows provider logs."
+    "summary": "Bound only the Python core invoked by the PowerShell wrapper to strict UTF-8, restored its prior process environment, retained native Git Bash decoding, and passed the affected suite plus repository PSScriptAnalyzer."
   },
   "stop": {
     "reason": "N/A",
@@ -428,5 +428,5 @@
     "postMergeActions": "N/A",
     "finalValidation": "Pending"
   },
-  "updatedAt": "2026-09-13T10:52:58Z"
+  "updatedAt": "2026-09-13T11:16:45Z"
 }

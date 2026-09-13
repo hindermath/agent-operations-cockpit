@@ -129,12 +129,19 @@ function Test-AocSeriesEligibility {
     # Keine Rohdiagnosen des Interpreters ausgeben. / Do not emit raw interpreter diagnostics.
     $CoreExit = 3
     $CoreOutput = @()
+    $PreviousPythonIoEncoding = [Environment]::GetEnvironmentVariable('PYTHONIOENCODING', 'Process')
     try {
+        # Native Python-Ausgabe ist an dieser PowerShell-Grenze immer UTF-8.
+        # Native Python output is always UTF-8 at this PowerShell boundary.
+        [Environment]::SetEnvironmentVariable('PYTHONIOENCODING', 'utf-8:strict', 'Process')
         $CoreOutput = @(& python3 @CoreArguments 2>$null)
         $CoreExit = $LASTEXITCODE
     }
     catch {
         $CoreExit = 3
+    }
+    finally {
+        [Environment]::SetEnvironmentVariable('PYTHONIOENCODING', $PreviousPythonIoEncoding, 'Process')
     }
     $OutputText = $CoreOutput -join "`n"
     $KnownOutput = $OutputText.StartsWith('{"schemaVersion": "1.0", "mode": ') -or
