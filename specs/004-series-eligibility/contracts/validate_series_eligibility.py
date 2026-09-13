@@ -274,10 +274,52 @@ def load_series_engine(repo):
     return engine, root
 
 
-def assess_series(repo, series_path):
+def receipt_provenance(engine, root, series_path, manifest):
+    # Nur gebundene bestehende Receipts lesen; freie Authority-Texte nicht ausgeben.
+    # Read only bound existing receipts; never display free-form authority text.
+    references = manifest.get('evidencePaths', [])
+    if not isinstance(references, list):
+        raise ValueError("evidence paths")
+    references = list(references)
+    parts = series_path.split('/')
+    if len(parts) == 4 and parts[:2] == ['specs', 'intake-series'] and parts[3] == 'manifest.json':
+        conventional = 'specs/intake-series-receipts/' + parts[2] + '.json'
+        if (root / conventional).is_file() and conventional not in references:
+            references.append(conventional)
+    records = []
+    for relative in references:
+        path = root / relative
+        # Metadaten wie Inhalt gehen durch denselben Guard. / Guard metadata and content.
+        if not path.is_file():
+            raise ValueError("missing evidence")
+        if not relative.endswith('.json'):
+            continue
+        evidence = engine.load_json(path)
+        if evidence.get('documentType') != 'IntakeSeriesReceipt':
+            continue
+        receipt_summary = engine.validate_receipt(path, root)
+        if (evidence['seriesId'] != manifest['seriesId']
+                or evidence['manifest']['path'] != series_path):
+            raise ValueError("receipt binding")
+        records.append(dict(path=relative, receiptId=receipt_summary['receiptId'],
+            operation=evidence['operation']['type'], authorityContext='HistoricalOnly'))
+    return records
+
+
+def assess_series(repo, series_path, action="status"):
     engine, root = load_series_engine(repo)
     try:
-        _, summary = engine.validate_manifest(root / series_path, root)
+        if action not in ('status', 'next'):
+            raise ValueError("query action")
+        data, summary = engine.validate_manifest(root / series_path, root)
+        paths = [target['path'] for target in data['orderedTargets']]
+        order = {path: index for index, path in enumerate(paths)}
+        for key in ['eligible', 'declaredEligible']:
+            summary[key] = sorted(summary[key], key=order.__getitem__)
+        summary['blockers'] = {path: sorted(summary['blockers'][path], key=order.__getitem__)
+                               for path in paths if path in summary['blockers']}
+        provenance = receipt_provenance(engine, root, series_path, data)
+
     except engine.ValidationError as error:
         result = failed_input()
         result['reasons'] = [reason(error.code, None,
@@ -289,6 +331,35 @@ def assess_series(repo, series_path):
     result = diagnostic(None)
     result['outcome'] = 'Eligible'
     result['summary'] = summary
+    result['outcome'] = 'Eligible' if summary['eligible'] else 'Blocked'
+    result.update(
+        declaredLifecycle=dict(series=summary['status'], targets={
+            target['path']: target['status'] for target in data['orderedTargets']}),
+        reviewState='NotAssessed', eligibleCandidates=summary['eligible'],
+        preferredCandidate=next(iter(summary['declaredEligible']), None),
+        blockers=summary['blockers'], deliveryMode='NotAssessed',
+        currentStartAuthority='NotGrantedByQuery', historicalReceiptProvenance=provenance)
+    for target, predecessors in result['blockers'].items():
+        for predecessor in predecessors:
+            item = reason('EL_PREDECESSOR', None,
+                'Ein verbindlicher Vorgänger ist noch nicht abgeschlossen.',
+                'A binding predecessor is not yet completed.')
+            item.update(target=target, predecessor=predecessor)
+            result['reasons'].append(item)
+    # Eignung ist keine Autorität; auch Stop/Recovery starten keine fremden Prozesse.
+    # Eligibility grants no authority, including cancellation or recovery of others.
+    if summary['status'] in ('Active', 'NeedsClarification', 'Deleted'):
+        result['nextAction'] = pair(
+            'Manifest und Eignung erneut prüfen; nichts starten oder teilweise mergen; fremde Prozesse nur mit gesonderter Autorität stoppen oder wiederanlaufen lassen.',
+            'Reassess manifest and eligibility; start nothing and do not partially merge; stop or restart other processes only with separate authority.')
+    elif summary['eligible']:
+        result['nextAction'] = pair(
+            'Kandidaten mit einer verantwortlichen Person prüfen und auswählen; vor jedem Start aktuelle Reviews und gesonderte Startautorität prüfen.',
+            'Review and select candidates with a responsible person; verify current reviews and separate start authority before any start.')
+    else:
+        result['nextAction'] = pair(
+            'Manifest und Nachweise mit einer verantwortlichen Person erneut prüfen; nichts starten.',
+            'Reassess manifest and evidence with a responsible person; start nothing.')
     return result, 0
 
 
@@ -353,12 +424,20 @@ def assess(repo: Path, fixture_path: str) -> tuple[dict, int]:
 def main() -> int:
     parser = SafeParser(description="Eignung prüfen / Assess eligibility")
     parser.add_argument("--repo", required=True, type=Path)
-    parser.add_argument("--fixture", required=True)
+    source = parser.add_mutually_exclusive_group(required=True)
+    source.add_argument("--fixture")
+    source.add_argument("--series")
+    parser.add_argument("--action", choices=['status', 'next'])
     parser.add_argument("--json", action="store_true")
     emit_json = "--json" in sys.argv[1:]
     try:
         args = parser.parse_args()
-        result, exit_code = assess(args.repo.resolve(), args.fixture)
+        if args.fixture:
+            if args.action is not None:
+                raise ValueError("fixture action")
+            result, exit_code = assess(args.repo.resolve(), args.fixture)
+        else:
+            result, exit_code = assess_series(args.repo.resolve(), args.series, args.action or 'status')
     except (OSError, ValueError, KeyError, TypeError, IndexError, AttributeError):
         result, exit_code = failed_input(), 2
     except Exception:
@@ -371,6 +450,14 @@ def main() -> int:
         for key, value in result["criteria"].items():
             print(key + ": " + (value or "NotAssessed"))
         print("Ergebnis / Outcome: " + result["outcome"])
+        if 'declaredLifecycle' in result:
+            for label, key in [
+                ('Lifecycle / Lifecycle', 'declaredLifecycle'), ('Review / Review', 'reviewState'),
+                ('Kandidaten / Candidates', 'eligibleCandidates'), ('Präferenz / Preference', 'preferredCandidate'),
+                ('Blocker / Blockers', 'blockers'), ('Liefermodus / Delivery mode', 'deliveryMode'),
+                ('Startautorität / Start authority', 'currentStartAuthority'),
+                ('Historische Receipt-Herkunft / Historical receipt provenance', 'historicalReceiptProvenance')]:
+                print(label + ': ' + json.dumps(result[key], ensure_ascii=False))
         for item in result["reasons"]:
             print(item["de"] + " / " + item["en"])
         print("Nächste Aktion / Next action: " + result["nextAction"]["de"] + " / " + result["nextAction"]["en"])

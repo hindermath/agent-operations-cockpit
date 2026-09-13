@@ -1,0 +1,1274 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "8b306e28-51eb-4510-afbc-5056b9aee328",
+  "phaseId": "implement-5",
+  "attemptId": "c13297af-dc6b-41f5-bb5e-ca1de9b75140",
+  "completedAt": "2026-09-13T08:27:41.547881+00:00",
+  "scope": {
+    "implementedTasks": [
+      "T023",
+      "T024",
+      "T025",
+      "T026",
+      "T027",
+      "T028",
+      "T029",
+      "T030"
+    ],
+    "inheritedCheckboxPublished": "T022",
+    "stopBefore": "T031",
+    "featureCompleted": false,
+    "expectedTasks": 8,
+    "completedTasks": 8
+  },
+  "result": "Pass",
+  "gatesSatisfied": true,
+  "gatesScope": "Only authorized T023-T030 local phase gates; not feature acceptance or delivery",
+  "checkpoint": {
+    "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/checkpoints/t022-53bb2556-b865-4b67-ac52-b7960cefeede.json",
+    "rawSha256": "4d4dfec2f5a84687be2b55a40e2810487935deaa327d0cb48a17b3d52ac78fc1",
+    "normalizedSha256": "4d4dfec2f5a84687be2b55a40e2810487935deaa327d0cb48a17b3d52ac78fc1"
+  },
+  "checkpointFacts": {
+    "schemaVersion": "1.0",
+    "taskId": "T022",
+    "attemptId": "53bb2556-b865-4b67-ac52-b7960cefeede",
+    "authorityEvidence": "Active authorized META-LH-04 autonomous run; coordinator checkpoint under accepted MergeAndSync scope.",
+    "branch": "004-series-eligibility",
+    "previousCheckpoint": "f7ea346012ed346e5e4f42f81e8ece19ce245610",
+    "parentHead": "f7ea346012ed346e5e4f42f81e8ece19ce245610",
+    "sourceCommit": "44c15bdb3735dd146c9fcc1240f64470cb302091",
+    "sourceRevision": "44c15bdb3735dd146c9fcc1240f64470cb302091",
+    "intendedPaths": [
+      "specs/004-series-eligibility/autonomous-run-state.json",
+      "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+      "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+      "specs/004-series-eligibility/phase-results/us2-tests.json",
+      "specs/004-series-eligibility/tasks.md"
+    ],
+    "unstagedValidation": {
+      "bash": "Pass",
+      "pwsh": "Pass",
+      "worktreeStatusSha256": "8a081d73413221abd7c0c6fe47cb096e0588c0c13ca691de49489d0a84703ca1"
+    },
+    "stagedValidation": {
+      "bash": "Pass",
+      "pwsh": "Pass",
+      "indexTree": "602208cd435e46339ee552cf2b9d431560957ebb"
+    },
+    "indexHashes": {
+      "specs/004-series-eligibility/autonomous-run-state.json": "2ec9ab5fa334ce6ae9599e3b6f6283b1a1072258",
+      "specs/004-series-eligibility/contracts/test_series_eligibility.py": "29fd916fce285ffa7b94cfa683e785b2f5909d51",
+      "specs/004-series-eligibility/contracts/validate_series_eligibility.py": "00b9b8eec23f7c8568af129435430de9bfda194a",
+      "specs/004-series-eligibility/phase-results/us2-tests.json": "7e49f35bc0bc194832593d2d0aac1ace89426bf5",
+      "specs/004-series-eligibility/tasks.md": "ca8c701ba567a4b1bb28d29bdf748ca479d96964"
+    },
+    "commandsWithImmediateExits": [
+      {
+        "command": "both-shell exact worktree delivery-set validation",
+        "exitCode": 0
+      },
+      {
+        "command": "both-shell exact staged delivery-set validation",
+        "exitCode": 0
+      },
+      {
+        "command": "git diff --cached --check",
+        "exitCode": 0
+      },
+      {
+        "command": "both renderer helps and paired preview",
+        "exitCode": 0
+      },
+      {
+        "command": "single PowerShell statistics render",
+        "exitCode": 0
+      },
+      {
+        "command": "both-shell statistics check-only",
+        "exitCode": 0
+      },
+      {
+        "command": "both-shell statistics-only worktree and staged validation",
+        "exitCode": 0
+      }
+    ],
+    "cleanBeforeRender": true,
+    "previewParity": "Pass",
+    "ledgerBeforeHash": "a3bc0e9dc181a8bb104a2dca7034501c3c53983ed807e4f9f710f14acf350dda",
+    "ledgerAfterHash": "464854e85eef2373be4bfc482600fd044880205c3740a169523d232e7b0b8b0a",
+    "statisticsCommitOrUnchanged": "c82f3423398af2a3cbab80cec2b9e0b933ccef48",
+    "finalHead": "c82f3423398af2a3cbab80cec2b9e0b933ccef48",
+    "cleanAfterCheckpoint": true,
+    "taskCompletionEvidence": {
+      "result": "Pass",
+      "tasksClosed": [
+        "T017",
+        "T018",
+        "T019",
+        "T020",
+        "T021"
+      ],
+      "acceptance": [
+        "FR-004",
+        "FR-005",
+        "AC-001",
+        "AC-002",
+        "SC-002"
+      ],
+      "evidence": "specs/004-series-eligibility/phase-results/us2-tests.json",
+      "currentBoundaryPublishedAtNextSourceCheckpoint": "T022"
+    }
+  },
+  "documentationImpact": {
+    "decision": "UpdateRequired",
+    "existingContract": {
+      "path": "specs/004-series-eligibility/contracts/documentation-impact.json",
+      "rawSha256": "ec50ed248065cf3b0825c63f86f6d1f839a6637a993932640cca91ea33a86491",
+      "normalizedSha256": "ec50ed248065cf3b0825c63f86f6d1f839a6637a993932640cca91ea33a86491"
+    },
+    "owner": "AOC Repository Owner",
+    "laterDocumentationTask": "T038",
+    "reason": "Bestehende einzige Entscheidung unverändert weitergeführt. / Preserve the sole existing decision."
+  },
+  "taskEvidence": {
+    "T023": {
+      "result": "Pass",
+      "red": [
+        "red-t023-t024-bash",
+        "red-t023-t024-pwsh"
+      ],
+      "green": [
+        "final-status-bash",
+        "final-status-pwsh"
+      ],
+      "proof": "Idle empty series; Completed/Ready/Active/NeedsClarification; zero/one/multiple/preferred candidates; two incomplete predecessors; seeds 1,7,42; stable JSON/text and all candidates retained"
+    },
+    "T024": {
+      "result": "Pass",
+      "green": [
+        "final-status-bash",
+        "final-status-pwsh",
+        "final-direct-queries"
+      ],
+      "proof": "Harness fixtures separated; complete temporary file snapshots, protected canonical hashes and Git status unchanged; core audit observes zero writes/process launches on success and hash-drift failure; shell children limited to validator delegation"
+    },
+    "T025": {
+      "result": "Pass",
+      "green": [
+        "final-status-bash",
+        "final-status-pwsh",
+        "final-direct-queries"
+      ],
+      "proof": "Separate lifecycle/review/eligibility/preference/blockers/delivery/authority/provenance; review and unbound delivery NotAssessed; bound existing receipt provenance HistoricalOnly; invalid receipt hash fails closed"
+    },
+    "T026": {
+      "result": "Pass",
+      "green": [
+        "final-status-bash",
+        "final-status-pwsh"
+      ],
+      "proof": "Manifest target and blocker order; canonical criterion order preserved; exactly one equivalent DE/EN safe action; no authority to start/stop/restart other processes or partially merge"
+    },
+    "T027": {
+      "result": "Pass",
+      "green": [
+        "final-status-bash",
+        "final-status-pwsh",
+        "pssa",
+        "final-bash-syntax"
+      ],
+      "proof": "Six modes documented in expanded existing help; fixture/series exclusivity and invalid-action diagnostics; Help without required args; no execution/output/exit on dot-source; advanced function/CLI equality"
+    },
+    "T028": {
+      "result": "Pass",
+      "red": [
+        "red-t028-bash",
+        "red-t028-pwsh"
+      ],
+      "green": [
+        "verified-runner-bash",
+        "verified-runner-pwsh"
+      ],
+      "evidence": "specs/004-series-eligibility/phase-results/runner-tests.json"
+    },
+    "T029": {
+      "result": "Pass",
+      "green": [
+        "final-workflow-parser",
+        "verified-runner-bash",
+        "verified-runner-pwsh"
+      ],
+      "evidence": "specs/004-series-eligibility/phase-results/runner-tests.json",
+      "proof": "Only Feature-004 step appended; catalog execution class/task/platform filters; exact command labels, immediate exits, runtime identity/version logs; full native execution remains T048"
+    },
+    "T030": {
+      "result": "Pass",
+      "green": [
+        "final-status-bash",
+        "final-status-pwsh",
+        "verified-runner-bash",
+        "verified-runner-pwsh",
+        "final-all-bash",
+        "final-all-pwsh",
+        "final-direct-queries",
+        "final-workflow-parser",
+        "final-bash-syntax",
+        "pssa"
+      ],
+      "proof": "Targeted local query/runner/all in both shells; eight direct JSON/text queries; full tracked PowerShell analysis; native acceptance remains open"
+    }
+  },
+  "inputBindings": [
+    {
+      "path": "specs/004-series-eligibility/spec.md",
+      "rawSha256": "61027fb8e2f7b6e8a0e579c56f0bbc404a29c8446a61f548c2617459c4ef1f3b",
+      "normalizedSha256": "61027fb8e2f7b6e8a0e579c56f0bbc404a29c8446a61f548c2617459c4ef1f3b"
+    },
+    {
+      "path": "specs/004-series-eligibility/plan.md",
+      "rawSha256": "05952faedd745f279c9b4d5b3311e4b5700e99c58178eb2729677879ff812d23",
+      "normalizedSha256": "05952faedd745f279c9b4d5b3311e4b5700e99c58178eb2729677879ff812d23"
+    },
+    {
+      "path": "specs/004-series-eligibility/research.md",
+      "rawSha256": "f94516bbd35de291b4b691dca3f1e94b110d356be309beed522bb285e259d5df",
+      "normalizedSha256": "f94516bbd35de291b4b691dca3f1e94b110d356be309beed522bb285e259d5df"
+    },
+    {
+      "path": "specs/004-series-eligibility/data-model.md",
+      "rawSha256": "be3435e2350e93545577fc59bd4dc22c8723a432245139f92d963e4d20a47e58",
+      "normalizedSha256": "be3435e2350e93545577fc59bd4dc22c8723a432245139f92d963e4d20a47e58"
+    },
+    {
+      "path": "specs/004-series-eligibility/tasks.md",
+      "rawSha256": "1c790e9a4171d6341d0aa42c72a73e5a9c18a04bda9403f53ae3d95122be72a2",
+      "normalizedSha256": "1c790e9a4171d6341d0aa42c72a73e5a9c18a04bda9403f53ae3d95122be72a2"
+    },
+    {
+      "path": "specs/004-series-eligibility/autonomous-run-state.json",
+      "rawSha256": "39101f100eef31e642d233650cb8168d27c72e79c28fb9fef23bf011c7710128",
+      "normalizedSha256": "39101f100eef31e642d233650cb8168d27c72e79c28fb9fef23bf011c7710128"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/validation-commands.json",
+      "rawSha256": "a89aa6e0edb047e9882f230a9b03890d54ff0c1a511cfb544c265d8ea14216ca",
+      "normalizedSha256": "a89aa6e0edb047e9882f230a9b03890d54ff0c1a511cfb544c265d8ea14216ca"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/documentation-impact.json",
+      "rawSha256": "ec50ed248065cf3b0825c63f86f6d1f839a6637a993932640cca91ea33a86491",
+      "normalizedSha256": "ec50ed248065cf3b0825c63f86f6d1f839a6637a993932640cca91ea33a86491"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/series-eligibility-interface.md",
+      "rawSha256": "b0ee4fffce5b16c6b059730b31fe499b67fc9ec10dda70112e71ed341f0a95e3",
+      "normalizedSha256": "b0ee4fffce5b16c6b059730b31fe499b67fc9ec10dda70112e71ed341f0a95e3"
+    }
+  ],
+  "sourceHashes": [
+    {
+      "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+      "rawSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e",
+      "normalizedSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+      "rawSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6",
+      "normalizedSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+      "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+      "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+      "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+      "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+    },
+    {
+      "path": ".github/workflows/powershell-analysis.yml",
+      "rawSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558",
+      "normalizedSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558"
+    }
+  ],
+  "taskBinding": {
+    "path": "specs/004-series-eligibility/tasks.md",
+    "rawSha256": "824034272e99073cb30580ef395c60c173bcf266b1b6a8342ffd158eec586d32",
+    "normalizedSha256": "824034272e99073cb30580ef395c60c173bcf266b1b6a8342ffd158eec586d32"
+  },
+  "completedRepositoryTasks": 30,
+  "totalRepositoryTasks": 57,
+  "historicalRed": [
+    {
+      "label": "red-t023-t024-bash",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "bash",
+        "--case",
+        "status-next"
+      ],
+      "startedAt": "2026-09-13T08:09:31.761089+00:00",
+      "exitCode": 1,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "50e4a91080e62c6cba487b8005306292d802c10d5e6a6d38475c1b1663140d1b",
+          "normalizedSha256": "50e4a91080e62c6cba487b8005306292d802c10d5e6a6d38475c1b1663140d1b"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "3e1520cd0c5c1216dd0c6a388905d0f11df0806c9438b2125a2dcc7ba21a072f",
+          "normalizedSha256": "3e1520cd0c5c1216dd0c6a388905d0f11df0806c9438b2125a2dcc7ba21a072f"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "ac21880313c213327510cb8b2629460b5337661d5690a2dcb720958e037730bc",
+          "normalizedSha256": "ac21880313c213327510cb8b2629460b5337661d5690a2dcb720958e037730bc"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "fb24f107f4f77c9781546fa25318975af320a98d045295d1bb2f195c4c7d0edd",
+          "normalizedSha256": "fb24f107f4f77c9781546fa25318975af320a98d045295d1bb2f195c4c7d0edd"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "9f68db38f53524d56a83b87bf8e84a0b41522366ee25d9f098c9ef899e9e5a2e",
+          "normalizedSha256": "9f68db38f53524d56a83b87bf8e84a0b41522366ee25d9f098c9ef899e9e5a2e"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/red-t023-t024-bash.log",
+        "rawSha256": "9834f688c97ab610deec62ce5d312d6abf5ff970cb74e3e4c8a0afaf6ce50e37",
+        "normalizedSha256": "9834f688c97ab610deec62ce5d312d6abf5ff970cb74e3e4c8a0afaf6ce50e37"
+      }
+    },
+    {
+      "label": "red-t023-t024-pwsh",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "pwsh",
+        "--case",
+        "status-next"
+      ],
+      "startedAt": "2026-09-13T08:09:44.456257+00:00",
+      "exitCode": 1,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "50e4a91080e62c6cba487b8005306292d802c10d5e6a6d38475c1b1663140d1b",
+          "normalizedSha256": "50e4a91080e62c6cba487b8005306292d802c10d5e6a6d38475c1b1663140d1b"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "3e1520cd0c5c1216dd0c6a388905d0f11df0806c9438b2125a2dcc7ba21a072f",
+          "normalizedSha256": "3e1520cd0c5c1216dd0c6a388905d0f11df0806c9438b2125a2dcc7ba21a072f"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "ac21880313c213327510cb8b2629460b5337661d5690a2dcb720958e037730bc",
+          "normalizedSha256": "ac21880313c213327510cb8b2629460b5337661d5690a2dcb720958e037730bc"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "fb24f107f4f77c9781546fa25318975af320a98d045295d1bb2f195c4c7d0edd",
+          "normalizedSha256": "fb24f107f4f77c9781546fa25318975af320a98d045295d1bb2f195c4c7d0edd"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "9f68db38f53524d56a83b87bf8e84a0b41522366ee25d9f098c9ef899e9e5a2e",
+          "normalizedSha256": "9f68db38f53524d56a83b87bf8e84a0b41522366ee25d9f098c9ef899e9e5a2e"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/red-t023-t024-pwsh.log",
+        "rawSha256": "060ad4df8710f412590d32438fb39ebc248ad5ed4f596168bd9a6bc740a41e10",
+        "normalizedSha256": "060ad4df8710f412590d32438fb39ebc248ad5ed4f596168bd9a6bc740a41e10"
+      }
+    }
+  ],
+  "historicalCorrections": {
+    "records": [
+      {
+        "label": "green-query-bash",
+        "command": [
+          "python3",
+          "-B",
+          "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "--repo",
+          ".",
+          "--shell",
+          "bash",
+          "--case",
+          "status-next"
+        ],
+        "startedAt": "2026-09-13T08:11:19.624208+00:00",
+        "exitCode": 1,
+        "sourceHashes": [
+          {
+            "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+            "rawSha256": "b06f5f18dcf849685439bfaa7530e2ba809d213aa21941bf4f6553b63ff16053",
+            "normalizedSha256": "b06f5f18dcf849685439bfaa7530e2ba809d213aa21941bf4f6553b63ff16053"
+          },
+          {
+            "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+            "rawSha256": "3e1520cd0c5c1216dd0c6a388905d0f11df0806c9438b2125a2dcc7ba21a072f",
+            "normalizedSha256": "3e1520cd0c5c1216dd0c6a388905d0f11df0806c9438b2125a2dcc7ba21a072f"
+          },
+          {
+            "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+            "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+            "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+          },
+          {
+            "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+            "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+            "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+          },
+          {
+            "path": ".github/workflows/powershell-analysis.yml",
+            "rawSha256": "9f68db38f53524d56a83b87bf8e84a0b41522366ee25d9f098c9ef899e9e5a2e",
+            "normalizedSha256": "9f68db38f53524d56a83b87bf8e84a0b41522366ee25d9f098c9ef899e9e5a2e"
+          }
+        ],
+        "log": {
+          "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/green-query-bash.log",
+          "rawSha256": "b67c46625374ccce020f525f55a4bdf7c1ec7022e78d9bb38073625a7518f5f4",
+          "normalizedSha256": "b67c46625374ccce020f525f55a4bdf7c1ec7022e78d9bb38073625a7518f5f4"
+        }
+      },
+      {
+        "label": "green-query-pwsh",
+        "command": [
+          "python3",
+          "-B",
+          "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "--repo",
+          ".",
+          "--shell",
+          "pwsh",
+          "--case",
+          "status-next"
+        ],
+        "startedAt": "2026-09-13T08:11:52.181742+00:00",
+        "exitCode": 1,
+        "sourceHashes": [
+          {
+            "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+            "rawSha256": "b06f5f18dcf849685439bfaa7530e2ba809d213aa21941bf4f6553b63ff16053",
+            "normalizedSha256": "b06f5f18dcf849685439bfaa7530e2ba809d213aa21941bf4f6553b63ff16053"
+          },
+          {
+            "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+            "rawSha256": "3e1520cd0c5c1216dd0c6a388905d0f11df0806c9438b2125a2dcc7ba21a072f",
+            "normalizedSha256": "3e1520cd0c5c1216dd0c6a388905d0f11df0806c9438b2125a2dcc7ba21a072f"
+          },
+          {
+            "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+            "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+            "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+          },
+          {
+            "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+            "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+            "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+          },
+          {
+            "path": ".github/workflows/powershell-analysis.yml",
+            "rawSha256": "9f68db38f53524d56a83b87bf8e84a0b41522366ee25d9f098c9ef899e9e5a2e",
+            "normalizedSha256": "9f68db38f53524d56a83b87bf8e84a0b41522366ee25d9f098c9ef899e9e5a2e"
+          }
+        ],
+        "log": {
+          "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/green-query-pwsh.log",
+          "rawSha256": "ffdf2e8aa64264bc902fbae6c44065b1bc39d9dbf502518d8d1da99b4aa88c64",
+          "normalizedSha256": "ffdf2e8aa64264bc902fbae6c44065b1bc39d9dbf502518d8d1da99b4aa88c64"
+        }
+      },
+      {
+        "label": "surface-proof-pwsh",
+        "command": [
+          "python3",
+          "-B",
+          "-c",
+          "import runpy,unittest; m=runpy.run_path(\"specs/004-series-eligibility/contracts/test_series_eligibility.py\"); m[\"QueryTests\"].query.__globals__[\"SHELL\"]=\"pwsh\"; r=unittest.TextTestRunner(verbosity=2).run(unittest.TestSuite([m[\"QueryTests\"](\"test_query_shell_surface\")])); raise SystemExit(0 if r.wasSuccessful() else 1)"
+        ],
+        "startedAt": "2026-09-13T08:16:22.868199+00:00",
+        "exitCode": 1,
+        "sourceHashes": [
+          {
+            "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+            "rawSha256": "b06f5f18dcf849685439bfaa7530e2ba809d213aa21941bf4f6553b63ff16053",
+            "normalizedSha256": "b06f5f18dcf849685439bfaa7530e2ba809d213aa21941bf4f6553b63ff16053"
+          },
+          {
+            "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+            "rawSha256": "6f5472c2ddb68922f1aea9748903c86917fb271145aef1ff256523edbfa71091",
+            "normalizedSha256": "6f5472c2ddb68922f1aea9748903c86917fb271145aef1ff256523edbfa71091"
+          },
+          {
+            "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+            "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+            "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+          },
+          {
+            "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+            "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+            "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+          },
+          {
+            "path": ".github/workflows/powershell-analysis.yml",
+            "rawSha256": "87ed03007fdffd1f4403fea90667b4a68a2f9b6ae66a6c403cb457d5b9f8ab20",
+            "normalizedSha256": "87ed03007fdffd1f4403fea90667b4a68a2f9b6ae66a6c403cb457d5b9f8ab20"
+          }
+        ],
+        "log": {
+          "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/surface-proof-pwsh.log",
+          "rawSha256": "2a4d427319595a6cfdda8c5e54d645f4eaa1378f3c338e5513fdbb0de22f873c",
+          "normalizedSha256": "2a4d427319595a6cfdda8c5e54d645f4eaa1378f3c338e5513fdbb0de22f873c"
+        }
+      },
+      {
+        "label": "diagnose-surface-pwsh",
+        "command": [
+          "python3",
+          "-B",
+          "-c",
+          "import runpy,unittest; m=runpy.run_path(\"specs/004-series-eligibility/contracts/test_series_eligibility.py\"); m[\"QueryTests\"].query.__globals__[\"SHELL\"]=\"pwsh\"; r=unittest.TextTestRunner(verbosity=2).run(unittest.TestSuite([m[\"QueryTests\"](\"test_query_shell_surface\")])); raise SystemExit(0 if r.wasSuccessful() else 1)"
+        ],
+        "startedAt": "2026-09-13T08:16:57.830712+00:00",
+        "exitCode": 1,
+        "sourceHashes": [
+          {
+            "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+            "rawSha256": "b06f5f18dcf849685439bfaa7530e2ba809d213aa21941bf4f6553b63ff16053",
+            "normalizedSha256": "b06f5f18dcf849685439bfaa7530e2ba809d213aa21941bf4f6553b63ff16053"
+          },
+          {
+            "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+            "rawSha256": "9da628b28ccf083f50f580580a208668fe26d830695d29d9fbcecb823bff017f",
+            "normalizedSha256": "9da628b28ccf083f50f580580a208668fe26d830695d29d9fbcecb823bff017f"
+          },
+          {
+            "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+            "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+            "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+          },
+          {
+            "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+            "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+            "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+          },
+          {
+            "path": ".github/workflows/powershell-analysis.yml",
+            "rawSha256": "87ed03007fdffd1f4403fea90667b4a68a2f9b6ae66a6c403cb457d5b9f8ab20",
+            "normalizedSha256": "87ed03007fdffd1f4403fea90667b4a68a2f9b6ae66a6c403cb457d5b9f8ab20"
+          }
+        ],
+        "log": {
+          "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/diagnose-surface-pwsh.log",
+          "rawSha256": "a0abfbff1d9eac433a5331cfc727af92884dd6f437105791ef3d60fd98661f22",
+          "normalizedSha256": "a0abfbff1d9eac433a5331cfc727af92884dd6f437105791ef3d60fd98661f22"
+        }
+      }
+    ],
+    "explanation": "Initial Idle fixture incorrectly contained targets and was corrected to the unchanged engine contract. One concurrent harness source edit changed Git status, correctly detected by the assertion. PowerShell probe renamed its caller Repo variable to avoid normal dot-source parameter shadowing. These historical failing runs are not passing evidence; final frozen-source runs pass."
+  },
+  "executions": [
+    {
+      "label": "final-status-bash",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "bash",
+        "--case",
+        "status-next"
+      ],
+      "startedAt": "2026-09-13T08:18:09.827989+00:00",
+      "exitCode": 0,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e",
+          "normalizedSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6",
+          "normalizedSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+          "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+          "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558",
+          "normalizedSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/final-status-bash.log",
+        "rawSha256": "be3cbd268f47747a8a7f3d0a60af39227360509b7e39361cfeb08448591bfbea",
+        "normalizedSha256": "be3cbd268f47747a8a7f3d0a60af39227360509b7e39361cfeb08448591bfbea"
+      }
+    },
+    {
+      "label": "final-status-pwsh",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "pwsh",
+        "--case",
+        "status-next"
+      ],
+      "startedAt": "2026-09-13T08:18:10.918583+00:00",
+      "exitCode": 0,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e",
+          "normalizedSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6",
+          "normalizedSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+          "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+          "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558",
+          "normalizedSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/final-status-pwsh.log",
+        "rawSha256": "9a44a5d3a24cfa00a7b991ba5749d08e1e6a6da884c39f5c30b9455ba89a2257",
+        "normalizedSha256": "9a44a5d3a24cfa00a7b991ba5749d08e1e6a6da884c39f5c30b9455ba89a2257"
+      }
+    },
+    {
+      "label": "verified-runner-bash",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "bash",
+        "--case",
+        "runner-cardinality"
+      ],
+      "startedAt": "2026-09-13T08:20:54.457751+00:00",
+      "exitCode": 0,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e",
+          "normalizedSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6",
+          "normalizedSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+          "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+          "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558",
+          "normalizedSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/verified-runner-bash.log",
+        "rawSha256": "4063b9d8e967d03d2804967878c27791ade3a1a44bcef584ce6a18544fa1e84f",
+        "normalizedSha256": "4063b9d8e967d03d2804967878c27791ade3a1a44bcef584ce6a18544fa1e84f"
+      }
+    },
+    {
+      "label": "verified-runner-pwsh",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "pwsh",
+        "--case",
+        "runner-cardinality"
+      ],
+      "startedAt": "2026-09-13T08:20:54.291443+00:00",
+      "exitCode": 0,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e",
+          "normalizedSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6",
+          "normalizedSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+          "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+          "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558",
+          "normalizedSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/verified-runner-pwsh.log",
+        "rawSha256": "34c3a22cbe5b8334e9c7c6b605a52b31a88fda7585cd1b025e0dafaee827cade",
+        "normalizedSha256": "34c3a22cbe5b8334e9c7c6b605a52b31a88fda7585cd1b025e0dafaee827cade"
+      }
+    },
+    {
+      "label": "final-all-bash",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "bash",
+        "--case",
+        "all"
+      ],
+      "startedAt": "2026-09-13T08:18:45.879752+00:00",
+      "exitCode": 0,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e",
+          "normalizedSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6",
+          "normalizedSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+          "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+          "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558",
+          "normalizedSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/final-all-bash.log",
+        "rawSha256": "ba4f798c4432c8a052a937fcaf7497140bb9ae76443f03534d9fe38f24aa341c",
+        "normalizedSha256": "ba4f798c4432c8a052a937fcaf7497140bb9ae76443f03534d9fe38f24aa341c"
+      }
+    },
+    {
+      "label": "final-all-pwsh",
+      "command": [
+        "python3",
+        "-B",
+        "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+        "--repo",
+        ".",
+        "--shell",
+        "pwsh",
+        "--case",
+        "all"
+      ],
+      "startedAt": "2026-09-13T08:18:44.849342+00:00",
+      "exitCode": 0,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e",
+          "normalizedSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6",
+          "normalizedSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+          "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+          "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558",
+          "normalizedSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/final-all-pwsh.log",
+        "rawSha256": "a64dc03a5f3345322b891008392a2c9c1bf5585e43365d93a02f8c8f099f227c",
+        "normalizedSha256": "a64dc03a5f3345322b891008392a2c9c1bf5585e43365d93a02f8c8f099f227c"
+      }
+    },
+    {
+      "label": "final-direct-queries",
+      "command": [
+        "python3",
+        "-B",
+        "/private/tmp/aoc-direct-queries.py"
+      ],
+      "startedAt": "2026-09-13T08:18:46.830366+00:00",
+      "exitCode": 0,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e",
+          "normalizedSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6",
+          "normalizedSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+          "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+          "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558",
+          "normalizedSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/final-direct-queries.log",
+        "rawSha256": "03f8b28cbd2b5c8b3f492351b0905462ef3ac65b9f920035a546013ace9d888c",
+        "normalizedSha256": "03f8b28cbd2b5c8b3f492351b0905462ef3ac65b9f920035a546013ace9d888c"
+      }
+    },
+    {
+      "label": "final-workflow-parser",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "/private/tmp/aoc-workflow-parse.ps1"
+      ],
+      "startedAt": "2026-09-13T08:19:25.032629+00:00",
+      "exitCode": 0,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e",
+          "normalizedSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6",
+          "normalizedSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+          "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+          "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558",
+          "normalizedSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/final-workflow-parser.log",
+        "rawSha256": "b66d0a2644a00f6444139ce74fde8ea2fbbb0fab4f988f6ee4f329705eea775d",
+        "normalizedSha256": "b66d0a2644a00f6444139ce74fde8ea2fbbb0fab4f988f6ee4f329705eea775d"
+      }
+    },
+    {
+      "label": "final-bash-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "specs/004-series-eligibility/contracts/validate-series-eligibility.sh"
+      ],
+      "startedAt": "2026-09-13T08:19:26.250015+00:00",
+      "exitCode": 0,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e",
+          "normalizedSha256": "ce433eedb01f81b94d05ce2ad0b0a0fe4d05fb751e0dc886e8f965ebff389d3e"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6",
+          "normalizedSha256": "381c3fc6c5601aa39b6edc8811c5d389263e39f4ee832f9224375e8d574d48f6"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+          "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+          "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558",
+          "normalizedSha256": "06f1fd2fe46e8bc25637920b13b6574d7ad328c8eba8b492bc2936207e4e0558"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/final-bash-syntax.log",
+        "rawSha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "normalizedSha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+      }
+    },
+    {
+      "label": "pssa",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "scripts/invoke-psscriptanalyzer.ps1",
+        "-RepositoryRoot",
+        "."
+      ],
+      "startedAt": "2026-09-13T08:16:25.205594+00:00",
+      "exitCode": 0,
+      "sourceHashes": [
+        {
+          "path": "specs/004-series-eligibility/contracts/validate_series_eligibility.py",
+          "rawSha256": "b06f5f18dcf849685439bfaa7530e2ba809d213aa21941bf4f6553b63ff16053",
+          "normalizedSha256": "b06f5f18dcf849685439bfaa7530e2ba809d213aa21941bf4f6553b63ff16053"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/test_series_eligibility.py",
+          "rawSha256": "6f5472c2ddb68922f1aea9748903c86917fb271145aef1ff256523edbfa71091",
+          "normalizedSha256": "6f5472c2ddb68922f1aea9748903c86917fb271145aef1ff256523edbfa71091"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "rawSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf",
+          "normalizedSha256": "865023b5cc8e0744fdbefb054f251c5e632e183fd40b377d6f9443733b0177cf"
+        },
+        {
+          "path": "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "rawSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398",
+          "normalizedSha256": "507ff8243be091b9cbaf23a958f0d6af78d384d6f8b94cbe6b425b34f81ac398"
+        },
+        {
+          "path": ".github/workflows/powershell-analysis.yml",
+          "rawSha256": "87ed03007fdffd1f4403fea90667b4a68a2f9b6ae66a6c403cb457d5b9f8ab20",
+          "normalizedSha256": "87ed03007fdffd1f4403fea90667b4a68a2f9b6ae66a6c403cb457d5b9f8ab20"
+        }
+      ],
+      "log": {
+        "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/pssa.log",
+        "rawSha256": "d17f538510158ad07f6e7d0df4e27a87864d6aa54e7a7d5082af5955c4fd0a03",
+        "normalizedSha256": "d17f538510158ad07f6e7d0df4e27a87864d6aa54e7a7d5082af5955c4fd0a03"
+      }
+    }
+  ],
+  "runnerEvidence": {
+    "path": "specs/004-series-eligibility/phase-results/runner-tests.json",
+    "rawSha256": "376182327f7baf06742b974ffb5d5cbd2059c5933f666a5d1fbbe7aa47c40d3e",
+    "normalizedSha256": "376182327f7baf06742b974ffb5d5cbd2059c5933f666a5d1fbbe7aa47c40d3e"
+  },
+  "directQueryEvidence": {
+    "result": "Pass",
+    "commands": [
+      {
+        "command": [
+          "bash",
+          "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "--repo",
+          ".",
+          "--series",
+          "specs/intake-series/aoc-phase-2/manifest.json",
+          "--action",
+          "status",
+          "--json"
+        ],
+        "exitCode": 0,
+        "stdout": "{\"schemaVersion\": \"1.0\", \"mode\": null, \"criteria\": {}, \"outcome\": \"Blocked\", \"reasons\": [], \"failureClass\": null, \"authorityGranted\": false, \"nextAction\": {\"de\": \"Manifest und Nachweise mit einer verantwortlichen Person erneut prüfen; nichts starten.\", \"en\": \"Reassess manifest and evidence with a responsible person; start nothing.\"}, \"summary\": {\"seriesId\": \"d51e831c-24fb-4a71-b316-f7ad1bfe99d0\", \"status\": \"Completed\", \"targets\": 14, \"roots\": 1, \"dependencies\": 14, \"eligible\": [], \"declaredEligible\": [], \"blockers\": {}}, \"declaredLifecycle\": {\"series\": \"Completed\", \"targets\": {\"requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md\": \"Completed\"}}, \"reviewState\": \"NotAssessed\", \"eligibleCandidates\": [], \"preferredCandidate\": null, \"blockers\": {}, \"deliveryMode\": \"NotAssessed\", \"currentStartAuthority\": \"NotGrantedByQuery\", \"historicalReceiptProvenance\": [{\"path\": \"specs/intake-series-receipts/aoc-phase-2.json\", \"receiptId\": \"0b248b17-1585-4302-87ee-a91c76552b33\", \"operation\": \"Update\", \"authorityContext\": \"HistoricalOnly\"}]}\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "bash",
+          "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "--repo",
+          ".",
+          "--series",
+          "specs/intake-series/aoc-phase-2/manifest.json",
+          "--action",
+          "status"
+        ],
+        "exitCode": 0,
+        "stdout": "Modus / Mode: NotAssessed\nErgebnis / Outcome: Blocked\nLifecycle / Lifecycle: {\"series\": \"Completed\", \"targets\": {\"requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md\": \"Completed\"}}\nReview / Review: \"NotAssessed\"\nKandidaten / Candidates: []\nPräferenz / Preference: null\nBlocker / Blockers: {}\nLiefermodus / Delivery mode: \"NotAssessed\"\nStartautorität / Start authority: \"NotGrantedByQuery\"\nHistorische Receipt-Herkunft / Historical receipt provenance: [{\"path\": \"specs/intake-series-receipts/aoc-phase-2.json\", \"receiptId\": \"0b248b17-1585-4302-87ee-a91c76552b33\", \"operation\": \"Update\", \"authorityContext\": \"HistoricalOnly\"}]\nNächste Aktion / Next action: Manifest und Nachweise mit einer verantwortlichen Person erneut prüfen; nichts starten. / Reassess manifest and evidence with a responsible person; start nothing.\nKeine Startfreigabe. / No start authority granted.\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "bash",
+          "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "--repo",
+          ".",
+          "--series",
+          "specs/intake-series/aoc-phase-2/manifest.json",
+          "--action",
+          "next",
+          "--json"
+        ],
+        "exitCode": 0,
+        "stdout": "{\"schemaVersion\": \"1.0\", \"mode\": null, \"criteria\": {}, \"outcome\": \"Blocked\", \"reasons\": [], \"failureClass\": null, \"authorityGranted\": false, \"nextAction\": {\"de\": \"Manifest und Nachweise mit einer verantwortlichen Person erneut prüfen; nichts starten.\", \"en\": \"Reassess manifest and evidence with a responsible person; start nothing.\"}, \"summary\": {\"seriesId\": \"d51e831c-24fb-4a71-b316-f7ad1bfe99d0\", \"status\": \"Completed\", \"targets\": 14, \"roots\": 1, \"dependencies\": 14, \"eligible\": [], \"declaredEligible\": [], \"blockers\": {}}, \"declaredLifecycle\": {\"series\": \"Completed\", \"targets\": {\"requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md\": \"Completed\"}}, \"reviewState\": \"NotAssessed\", \"eligibleCandidates\": [], \"preferredCandidate\": null, \"blockers\": {}, \"deliveryMode\": \"NotAssessed\", \"currentStartAuthority\": \"NotGrantedByQuery\", \"historicalReceiptProvenance\": [{\"path\": \"specs/intake-series-receipts/aoc-phase-2.json\", \"receiptId\": \"0b248b17-1585-4302-87ee-a91c76552b33\", \"operation\": \"Update\", \"authorityContext\": \"HistoricalOnly\"}]}\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "bash",
+          "specs/004-series-eligibility/contracts/validate-series-eligibility.sh",
+          "--repo",
+          ".",
+          "--series",
+          "specs/intake-series/aoc-phase-2/manifest.json",
+          "--action",
+          "next"
+        ],
+        "exitCode": 0,
+        "stdout": "Modus / Mode: NotAssessed\nErgebnis / Outcome: Blocked\nLifecycle / Lifecycle: {\"series\": \"Completed\", \"targets\": {\"requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md\": \"Completed\"}}\nReview / Review: \"NotAssessed\"\nKandidaten / Candidates: []\nPräferenz / Preference: null\nBlocker / Blockers: {}\nLiefermodus / Delivery mode: \"NotAssessed\"\nStartautorität / Start authority: \"NotGrantedByQuery\"\nHistorische Receipt-Herkunft / Historical receipt provenance: [{\"path\": \"specs/intake-series-receipts/aoc-phase-2.json\", \"receiptId\": \"0b248b17-1585-4302-87ee-a91c76552b33\", \"operation\": \"Update\", \"authorityContext\": \"HistoricalOnly\"}]\nNächste Aktion / Next action: Manifest und Nachweise mit einer verantwortlichen Person erneut prüfen; nichts starten. / Reassess manifest and evidence with a responsible person; start nothing.\nKeine Startfreigabe. / No start authority granted.\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "pwsh",
+          "-NoProfile",
+          "-File",
+          "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "-Repo",
+          ".",
+          "-Series",
+          "specs/intake-series/aoc-phase-2/manifest.json",
+          "-Action",
+          "status",
+          "-Json"
+        ],
+        "exitCode": 0,
+        "stdout": "{\"schemaVersion\": \"1.0\", \"mode\": null, \"criteria\": {}, \"outcome\": \"Blocked\", \"reasons\": [], \"failureClass\": null, \"authorityGranted\": false, \"nextAction\": {\"de\": \"Manifest und Nachweise mit einer verantwortlichen Person erneut prüfen; nichts starten.\", \"en\": \"Reassess manifest and evidence with a responsible person; start nothing.\"}, \"summary\": {\"seriesId\": \"d51e831c-24fb-4a71-b316-f7ad1bfe99d0\", \"status\": \"Completed\", \"targets\": 14, \"roots\": 1, \"dependencies\": 14, \"eligible\": [], \"declaredEligible\": [], \"blockers\": {}}, \"declaredLifecycle\": {\"series\": \"Completed\", \"targets\": {\"requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md\": \"Completed\"}}, \"reviewState\": \"NotAssessed\", \"eligibleCandidates\": [], \"preferredCandidate\": null, \"blockers\": {}, \"deliveryMode\": \"NotAssessed\", \"currentStartAuthority\": \"NotGrantedByQuery\", \"historicalReceiptProvenance\": [{\"path\": \"specs/intake-series-receipts/aoc-phase-2.json\", \"receiptId\": \"0b248b17-1585-4302-87ee-a91c76552b33\", \"operation\": \"Update\", \"authorityContext\": \"HistoricalOnly\"}]}\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "pwsh",
+          "-NoProfile",
+          "-File",
+          "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "-Repo",
+          ".",
+          "-Series",
+          "specs/intake-series/aoc-phase-2/manifest.json",
+          "-Action",
+          "status"
+        ],
+        "exitCode": 0,
+        "stdout": "Modus / Mode: NotAssessed\nErgebnis / Outcome: Blocked\nLifecycle / Lifecycle: {\"series\": \"Completed\", \"targets\": {\"requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md\": \"Completed\"}}\nReview / Review: \"NotAssessed\"\nKandidaten / Candidates: []\nPräferenz / Preference: null\nBlocker / Blockers: {}\nLiefermodus / Delivery mode: \"NotAssessed\"\nStartautorität / Start authority: \"NotGrantedByQuery\"\nHistorische Receipt-Herkunft / Historical receipt provenance: [{\"path\": \"specs/intake-series-receipts/aoc-phase-2.json\", \"receiptId\": \"0b248b17-1585-4302-87ee-a91c76552b33\", \"operation\": \"Update\", \"authorityContext\": \"HistoricalOnly\"}]\nNächste Aktion / Next action: Manifest und Nachweise mit einer verantwortlichen Person erneut prüfen; nichts starten. / Reassess manifest and evidence with a responsible person; start nothing.\nKeine Startfreigabe. / No start authority granted.\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "pwsh",
+          "-NoProfile",
+          "-File",
+          "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "-Repo",
+          ".",
+          "-Series",
+          "specs/intake-series/aoc-phase-2/manifest.json",
+          "-Action",
+          "next",
+          "-Json"
+        ],
+        "exitCode": 0,
+        "stdout": "{\"schemaVersion\": \"1.0\", \"mode\": null, \"criteria\": {}, \"outcome\": \"Blocked\", \"reasons\": [], \"failureClass\": null, \"authorityGranted\": false, \"nextAction\": {\"de\": \"Manifest und Nachweise mit einer verantwortlichen Person erneut prüfen; nichts starten.\", \"en\": \"Reassess manifest and evidence with a responsible person; start nothing.\"}, \"summary\": {\"seriesId\": \"d51e831c-24fb-4a71-b316-f7ad1bfe99d0\", \"status\": \"Completed\", \"targets\": 14, \"roots\": 1, \"dependencies\": 14, \"eligible\": [], \"declaredEligible\": [], \"blockers\": {}}, \"declaredLifecycle\": {\"series\": \"Completed\", \"targets\": {\"requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md\": \"Completed\"}}, \"reviewState\": \"NotAssessed\", \"eligibleCandidates\": [], \"preferredCandidate\": null, \"blockers\": {}, \"deliveryMode\": \"NotAssessed\", \"currentStartAuthority\": \"NotGrantedByQuery\", \"historicalReceiptProvenance\": [{\"path\": \"specs/intake-series-receipts/aoc-phase-2.json\", \"receiptId\": \"0b248b17-1585-4302-87ee-a91c76552b33\", \"operation\": \"Update\", \"authorityContext\": \"HistoricalOnly\"}]}\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "pwsh",
+          "-NoProfile",
+          "-File",
+          "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1",
+          "-Repo",
+          ".",
+          "-Series",
+          "specs/intake-series/aoc-phase-2/manifest.json",
+          "-Action",
+          "next"
+        ],
+        "exitCode": 0,
+        "stdout": "Modus / Mode: NotAssessed\nErgebnis / Outcome: Blocked\nLifecycle / Lifecycle: {\"series\": \"Completed\", \"targets\": {\"requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md\": \"Completed\", \"requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md\": \"Completed\"}}\nReview / Review: \"NotAssessed\"\nKandidaten / Candidates: []\nPräferenz / Preference: null\nBlocker / Blockers: {}\nLiefermodus / Delivery mode: \"NotAssessed\"\nStartautorität / Start authority: \"NotGrantedByQuery\"\nHistorische Receipt-Herkunft / Historical receipt provenance: [{\"path\": \"specs/intake-series-receipts/aoc-phase-2.json\", \"receiptId\": \"0b248b17-1585-4302-87ee-a91c76552b33\", \"operation\": \"Update\", \"authorityContext\": \"HistoricalOnly\"}]\nNächste Aktion / Next action: Manifest und Nachweise mit einer verantwortlichen Person erneut prüfen; nichts starten. / Reassess manifest and evidence with a responsible person; start nothing.\nKeine Startfreigabe. / No start authority granted.\n",
+        "stderr": ""
+      }
+    ],
+    "before": {
+      "specs/intake-series/aoc-phase-2/manifest.json": "609ca54b3d12178675bd82dc900cb52e7617ac2026b677883f65e3047d6fab43",
+      "specs/intake-series-receipts/aoc-phase-2.json": "bac201d00886f3649ba4f49847ed9648291c9434ffb00cb201344d101ec39f33",
+      "specs/004-series-eligibility/autonomous-run-state.json": "39101f100eef31e642d233650cb8168d27c72e79c28fb9fef23bf011c7710128",
+      "specs/003-authoring-contract/intake-lifecycle.json": "9df9ce7e074324546f600927a9dc273aab3d1e2443cc972493240808bc7cb6b8",
+      "specs/002-portfolio-ownership/intake-lifecycle.json": "40e66d527b6e9b8d952eda1d960302bc9e5250c0eae2284b8cad87b48867a554",
+      "specs/001-programmquellen-baseline/intake-lifecycle.json": "452e97b55f3e6bdd1620dba0502e1672796144a7067682e20790321356d7a84a"
+    },
+    "after": {
+      "specs/intake-series/aoc-phase-2/manifest.json": "609ca54b3d12178675bd82dc900cb52e7617ac2026b677883f65e3047d6fab43",
+      "specs/intake-series-receipts/aoc-phase-2.json": "bac201d00886f3649ba4f49847ed9648291c9434ffb00cb201344d101ec39f33",
+      "specs/004-series-eligibility/autonomous-run-state.json": "39101f100eef31e642d233650cb8168d27c72e79c28fb9fef23bf011c7710128",
+      "specs/003-authoring-contract/intake-lifecycle.json": "9df9ce7e074324546f600927a9dc273aab3d1e2443cc972493240808bc7cb6b8",
+      "specs/002-portfolio-ownership/intake-lifecycle.json": "40e66d527b6e9b8d952eda1d960302bc9e5250c0eae2284b8cad87b48867a554",
+      "specs/001-programmquellen-baseline/intake-lifecycle.json": "452e97b55f3e6bdd1620dba0502e1672796144a7067682e20790321356d7a84a"
+    },
+    "gitStatusUnchanged": true,
+    "semanticParity": true
+  },
+  "localEnvironment": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "bash": "5.3.15",
+    "powerShell": "7.6.5",
+    "python": "3.14.7",
+    "psscriptanalyzer": "1.25.0",
+    "psscriptanalyzerFiles": 115
+  },
+  "invariantAudit": {
+    "baseHead": "c82f3423398af2a3cbab80cec2b9e0b933ccef48",
+    "finalHead": "c82f3423398af2a3cbab80cec2b9e0b933ccef48",
+    "branch": "004-series-eligibility",
+    "indexUnchanged": true,
+    "runStateUnchanged": true,
+    "protectedFiles": 457,
+    "protectedHashesUnchanged": true,
+    "startSnapshot": {
+      "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5-audit/start.json",
+      "rawSha256": "b8b0604536e476b36b461fb2435813f8b6f75d1bfe4ef06b45de821e591c7f6a",
+      "normalizedSha256": "b8b0604536e476b36b461fb2435813f8b6f75d1bfe4ef06b45de821e591c7f6a"
+    },
+    "originalWorkflowPrefixUnchanged": true,
+    "stagingPerformed": false,
+    "commitsPerformed": false,
+    "statisticsRendered": false,
+    "remoteActionsPerformed": false,
+    "level0OrPresetChanges": false
+  },
+  "nativeEvidenceGaps": [
+    {
+      "platform": "ubuntu-22.04",
+      "status": "Open",
+      "reason": "No native provider job executed in this bounded local phase",
+      "owner": "Coordinating autonomous runner",
+      "nextTask": "T048"
+    },
+    {
+      "platform": "macos-14",
+      "status": "Open",
+      "reason": "No native provider job executed in this bounded local phase",
+      "owner": "Coordinating autonomous runner",
+      "nextTask": "T048"
+    },
+    {
+      "platform": "windows-2022",
+      "status": "Open",
+      "reason": "No native provider job executed in this bounded local phase",
+      "owner": "Coordinating autonomous runner",
+      "nextTask": "T048"
+    }
+  ],
+  "aepsAssessment": {
+    "result": "No new finding identity",
+    "existingFindings": [
+      "AEPS-FIND-AOC-001",
+      "AEPS-FIND-AOC-007",
+      "AEPS-FIND-AOC-010"
+    ],
+    "reason": "Lokale Nachweise härten die bestehenden getrennten Zustandsachsen und Read-only-Grenzen. / Local evidence hardens existing state separation and read-only boundaries.",
+    "canonicalCaptureTask": "T042",
+    "canonicalLedgerUpdated": false,
+    "scopeReason": "This phase is limited to T023-T030; canonical AEPS capture remains in its accepted later task, with no promotion or upstream authority."
+  },
+  "nextExactAction": "Return completed implement-5 result to the coordinating runner; stop before T031. Coordinator may rebind 30/57 task hash and perform T031 only under current checkpoint authority."
+}

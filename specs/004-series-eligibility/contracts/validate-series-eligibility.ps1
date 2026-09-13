@@ -15,6 +15,10 @@ not start a downstream run.
 Repository-Wurzel. / Repository root.
 .PARAMETER Fixture
 Relativer Fixture-Pfad. / Relative fixture path.
+.PARAMETER Series
+Series-Manifest statt Fixture, relativ zum Repo. / Series manifest instead of fixture, relative to repo.
+.PARAMETER Action
+status (Standard) oder next, nur Series. / status (default) or next, series only.
 .PARAMETER Json
 Maschinenlesbare Ausgabe. / Machine-readable output.
 .PARAMETER Help
@@ -23,11 +27,22 @@ Vollständige Hilfe anzeigen. / Show complete help.
 ./validate-series-eligibility.ps1 -Repo . -Fixture specs/intake-review-fixtures/meta-lh-04/valid-parallel.json -Json
 .EXAMPLE
 ./validate-series-eligibility.ps1 -Help
+.EXAMPLE
+Test-AocSeriesEligibility -Repo . -Series specs/intake-series/aoc-phase-2/manifest.json -Action next -Json
 .INPUTS
 Keine Pipeline-Eingabe. / No pipeline input.
 .OUTPUTS
 Text oder JSON vom lesenden Validator. / Text or JSON from the read-only validator.
 .NOTES
+Modi aus der Fixture / Modes from the fixture: manual-assisted, single-autonomous,
+serial-autonomous, parallel-autonomous, research-only, blocked.
+Fixture und Series schliessen sich aus. / Fixture and series are mutually exclusive.
+Lifecycle, Review, Kandidaten, Praeferenz, Blocker, Delivery und Authority bleiben getrennt.
+Lifecycle, review, candidates, preference, blockers, delivery and authority remain separate.
+Historische Receipt-Herkunft ist keine aktuelle Authority. / Historical provenance is not current authority.
+Exit 0: gueltiges Assessment, auch Blocked. / Valid assessment, including Blocked.
+Exit 2: ProductFailure, ungueltige Eingabe/Erwartung. / Invalid input/expectation.
+Exit 3: ProviderFailure, Laufzeitfehler. / Runtime failure.
 Eligibility ist keine Ausführungsautorität. / Eligibility is not execution authority.
 .LINK
 ../../../docs/man/validate-series-eligibility.1
@@ -36,6 +51,8 @@ Eligibility ist keine Ausführungsautorität. / Eligibility is not execution aut
 param(
     [string]$Repo,
     [string]$Fixture,
+    [string]$Series,
+    [string]$Action,
     [switch]$Json,
     [switch]$Help
 )
@@ -49,25 +66,42 @@ Prüft die Eignung einer Series ohne Startfreigabe.
 Assesses Series eligibility without granting authority to start.
 .DESCRIPTION
 Test-AocSeriesEligibility ruft den vorhandenen Python-Kern mit expliziter
-Repository-Wurzel und Fixture auf. Die Funktion liest nur. Ein Ergebnis
+Repository-Wurzel und entweder Fixture oder Series auf. Die Funktion liest nur. Ein Ergebnis
 Eligible oder Blocked erteilt keine Ausführungs-, Schreib- oder Merge-Rechte.
 
 Test-AocSeriesEligibility invokes the existing Python core with an explicit
-repository root and fixture. The function is read-only. An Eligible or Blocked
+repository root and either fixture or series. The function is read-only. An Eligible or Blocked
 result grants no execution, write, or merge authority.
 .PARAMETER Repo
 Repository-Wurzel. / Repository root.
 .PARAMETER Fixture
 Fixture relativ zum Repository. / Fixture relative to the repository.
+.PARAMETER Series
+Series-Manifest statt Fixture, relativ zum Repo. / Series manifest instead of fixture, relative to repo.
+.PARAMETER Action
+status (Standard) oder next, nur Series. / status (default) or next, series only.
+.PARAMETER Help
+Vollstaendige Funktionshilfe ohne Pruefung. / Complete function help without assessment.
 .PARAMETER Json
 Gibt das strukturierte Ergebnis als JSON aus. / Emits the structured result as JSON.
 .EXAMPLE
 Test-AocSeriesEligibility -Repo . -Fixture specs/intake-review-fixtures/meta-lh-04/valid-parallel.json -Json
+.EXAMPLE
+Test-AocSeriesEligibility -Repo . -Series specs/intake-series/aoc-phase-2/manifest.json -Action next -Json
 .INPUTS
 Keine Pipeline-Eingabe. / No pipeline input.
 .OUTPUTS
 Text oder JSON vom lesenden Validator. / Text or JSON from the read-only validator.
 .NOTES
+Modi aus der Fixture / Modes from the fixture: manual-assisted, single-autonomous,
+serial-autonomous, parallel-autonomous, research-only, blocked.
+Fixture und Series schliessen sich aus. / Fixture and series are mutually exclusive.
+Lifecycle, Review, Kandidaten, Praeferenz, Blocker, Delivery und Authority bleiben getrennt.
+Lifecycle, review, candidates, preference, blockers, delivery and authority remain separate.
+Historische Receipt-Herkunft ist keine aktuelle Authority. / Historical provenance is not current authority.
+Exit 0: gueltiges Assessment, auch Blocked. / Valid assessment, including Blocked.
+Exit 2: ProductFailure, ungueltige Eingabe/Erwartung. / Invalid input/expectation.
+Exit 3: ProviderFailure, Laufzeitfehler. / Runtime failure.
 Die Funktion kann durch Dot-Sourcing geladen werden, ohne eine Prüfung zu
 starten. / Dot-sourcing loads the function without starting an assessment.
 .LINK
@@ -76,13 +110,21 @@ starten. / Dot-sourcing loads the function without starting an assessment.
 function Test-AocSeriesEligibility {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory)][AllowEmptyString()][string]$Repo,
-        [Parameter(Mandatory)][AllowEmptyString()][string]$Fixture,
+        [AllowEmptyString()][string]$Repo,
+        [string]$Fixture,
+        [string]$Series,
+        [string]$Action,
+        [switch]$Help,
         [switch]$Json
     )
 
+    if ($Help) { Get-Help Test-AocSeriesEligibility -Full; return }
+
     $Core = Join-Path $PSScriptRoot 'validate_series_eligibility.py'
-    $CoreArguments = @('-B', $Core, '--repo', $Repo, '--fixture', $Fixture)
+    $CoreArguments = @('-B', $Core, '--repo', $Repo)
+    if ($PSBoundParameters.ContainsKey('Fixture')) { $CoreArguments += @('--fixture', $Fixture) }
+    if ($PSBoundParameters.ContainsKey('Series')) { $CoreArguments += @('--series', $Series) }
+    if ($PSBoundParameters.ContainsKey('Action')) { $CoreArguments += @('--action', $Action) }
     if ($Json) { $CoreArguments += '--json' }
     # Keine Rohdiagnosen des Interpreters ausgeben. / Do not emit raw interpreter diagnostics.
     $CoreExit = 3
@@ -124,6 +166,6 @@ if ($Help) {
     exit 0
 }
 
-Test-AocSeriesEligibility -Repo $Repo -Fixture $Fixture -Json:$Json
+Test-AocSeriesEligibility @PSBoundParameters
 $CoreExit = $LASTEXITCODE
 exit $CoreExit

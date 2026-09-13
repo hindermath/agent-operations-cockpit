@@ -667,15 +667,367 @@ class SeriesTests(unittest.TestCase):
             self.assertEqual(0, code)
 
 
+
+QUERY_AUDIT = r"""
+import json, os, runpy, sys
+sys.dont_write_bytecode = True
+core, repo, action = sys.argv[1:]
+violations = []
+def audit(event, args):
+    write = event == 'open' and ((isinstance(args[1], str) and any(c in args[1] for c in 'wax+'))
+        or (isinstance(args[2], int) and args[2] & (os.O_WRONLY | os.O_RDWR | os.O_CREAT)))
+    if write or event in ('subprocess.Popen', 'os.system', 'os.exec', 'os.posix_spawn',
+                          'os.remove', 'os.rename', 'os.mkdir', 'os.rmdir', 'os.link', 'os.symlink'):
+        violations.append(event)
+        raise RuntimeError('query side effect')
+sys.addaudithook(audit)
+module = runpy.run_path(core)
+result, code = module['assess_series'](repo, 'manifest.json', action)
+print(json.dumps({'result': result, 'code': code, 'violations': violations}))
+"""
+
+
+class QueryTests(unittest.TestCase):
+    def query(self, repo, action, *, text=False, seed=1, extra=()):
+        surface = REPO / CONTRACTS
+        if SHELL == 'bash':
+            command = [os.environ.get('AOC_GIT_BASH_EXE', 'bash'), str(surface/'validate-series-eligibility.sh'),
+                       '--repo', str(repo), '--series', 'manifest.json', '--action', action]
+            if not text:
+                command += ['--json']
+        else:
+            command = ['pwsh', '-NoProfile', '-File', str(surface/'validate-series-eligibility.ps1'),
+                       '-Repo', str(repo), '-Series', 'manifest.json', '-Action', action]
+            if not text:
+                command += ['-Json']
+        before = snapshot(repo)
+        protected = [REPO/'specs/004-series-eligibility/autonomous-run-state.json',
+                     REPO/'specs/intake-series/aoc-phase-2/manifest.json',
+                     REPO/'specs/intake-series-receipts/aoc-phase-2.json',
+                     *sorted((REPO/'specs').glob('*/intake-lifecycle.json'))]
+        protected_before = {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in protected}
+        git_before = subprocess.check_output(['git', '--no-optional-locks', 'status', '--porcelain=v1',
+                                             '--untracked-files=all'], cwd=REPO)
+        child = subprocess.run(command + list(extra), capture_output=True, text=True,
+            env={**os.environ, 'PYTHONHASHSEED': str(seed), 'PYTHONDONTWRITEBYTECODE': '1'})
+        self.assertEqual(before, snapshot(repo), 'query changed bytes or created files')
+        self.assertEqual(protected_before, {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in protected})
+        self.assertEqual(git_before, subprocess.check_output(['git', '--no-optional-locks', 'status',
+                         '--porcelain=v1', '--untracked-files=all'], cwd=REPO))
+        self.assertNotIn('harmless-private-sentinel', child.stdout + child.stderr)
+        self.assertNotIn('Traceback', child.stdout + child.stderr)
+        print(json.dumps(dict(test=self.id(), action=action, shell=SHELL, seed=seed, text=text,
+                             childExit=child.returncode, noWrite=True, gitStatusUnchanged=True)), flush=True)
+        return child
+
+    def test_status_next(self):
+        for state in ['Completed', 'Ready', 'Active', 'NeedsClarification']:
+            for scenario in ['zero', 'one', 'multiple', 'preferred', 'two-blockers']:
+                with self.subTest(state=state, scenario=scenario), tempfile.TemporaryDirectory(prefix='aoc query ') as temp:
+                    repo = Path(temp)
+                    manifest = series_fixture(repo)
+                    paths = [t['path'] for t in manifest['orderedTargets']]
+                    manifest['status'] = state
+                    if scenario == 'zero':
+                        for target in manifest['orderedTargets']:
+                            target['status'] = 'Completed'
+                        expected, preferred = [], None
+                    elif scenario == 'one':
+                        expected, preferred = [paths[3]], None
+                    elif scenario in ['multiple', 'preferred']:
+                        manifest['dependencies'], manifest['roots'] = [], paths
+                        for target in manifest['orderedTargets']:
+                            target['status'] = 'Pending'
+                        if scenario == 'preferred':
+                            manifest['orderedTargets'][2]['status'] = 'Eligible'
+                        expected, preferred = paths, paths[2] if scenario == 'preferred' else None
+                    else:
+                        manifest['roots'] = paths[:3]
+                        manifest['dependencies'] = [dict(**{'from': p, 'to': paths[3]},
+                            kind='HardCompletionGate', binding=True) for p in paths[:3]]
+                        for target in manifest['orderedTargets'][:2]:
+                            target['status'] = 'Pending'
+                        expected, preferred = paths[:2], None
+                    (repo/'manifest.json').write_text(json.dumps(manifest))
+                    # Unbound review and run facts must never become current authority.
+                    (repo/'review.json').write_text('{"outcome":"Ready"}')
+                    (repo/'autonomous-run-state.json').write_text('{"deliveryMode":"MergeAndSync"}')
+                    baseline = {}
+                    for action in ['status', 'next']:
+                        for seed in ([1, 7, 42] if scenario == 'two-blockers' else [1]):
+                            child = self.query(repo, action, seed=seed)
+                            self.assertEqual(0, child.returncode, child.stderr)
+                            data = json.loads(child.stdout)
+                            self.assertEqual(expected, data['eligibleCandidates'])
+                            self.assertEqual(preferred, data['preferredCandidate'])
+                            self.assertEqual(state, data['declaredLifecycle']['series'])
+                            self.assertEqual({p: t['status'] for p, t in zip(paths, manifest['orderedTargets'])},
+                                             data['declaredLifecycle']['targets'])
+                            self.assertEqual('NotAssessed', data['reviewState'])
+                            self.assertEqual('NotAssessed', data['deliveryMode'])
+                            self.assertEqual('NotGrantedByQuery', data['currentStartAuthority'])
+                            self.assertFalse(data['authorityGranted'])
+                            self.assertIsNone(data['failureClass'])
+                            self.assertEqual({'de', 'en'}, set(data['nextAction']))
+                            if scenario == 'two-blockers':
+                                self.assertEqual(paths[:2], data['blockers'][paths[3]])
+                                self.assertEqual(paths[:2], data['summary']['blockers'][paths[3]])
+                            display = self.query(repo, action, text=True, seed=seed)
+                            self.assertEqual(0, display.returncode)
+                            self.assertEqual(1, display.stdout.count('Nächste Aktion / Next action:'))
+                            self.assertIn('NotGrantedByQuery', display.stdout)
+                            self.assertIn('NotAssessed', display.stdout)
+                            self.assertIn(state, display.stdout)
+                            self.assertIn('Kandidaten / Candidates: ' + json.dumps(expected, ensure_ascii=False), display.stdout)
+                            self.assertIn('Blocker / Blockers: ' + json.dumps(data['blockers'], ensure_ascii=False), display.stdout)
+                            if seed == 1:
+                                baseline[action] = (child.stdout, display.stdout)
+                            else:
+                                self.assertEqual(baseline[action], (child.stdout, display.stdout))
+                    self.assertEqual(baseline['status'], baseline['next'])
+
+    def test_query_idle(self):
+        with tempfile.TemporaryDirectory(prefix='aoc idle ') as temp:
+            repo = Path(temp)
+            manifest = series_fixture(repo)
+            manifest.update(status='Idle', orderedTargets=[], roots=[], dependencies=[])
+            (repo/'manifest.json').write_text(json.dumps(manifest))
+            for action in ['status', 'next']:
+                child = self.query(repo, action)
+                self.assertEqual(0, child.returncode)
+                data = json.loads(child.stdout)
+                self.assertEqual([], data['eligibleCandidates'])
+                self.assertEqual('Idle', data['declaredLifecycle']['series'])
+                self.assertEqual({}, data['declaredLifecycle']['targets'])
+                self.assertEqual('NotAssessed', data['reviewState'])
+                self.assertEqual('NotGrantedByQuery', data['currentStartAuthority'])
+                self.assertEqual({'de', 'en'}, set(data['nextAction']))
+
+    def test_query_no_side_effects(self):
+        with tempfile.TemporaryDirectory(prefix='aoc query proof ') as temp:
+            repo = Path(temp)
+            manifest = series_fixture(repo)
+            SeriesTests.lifecycle(repo, manifest)
+            (repo/'manifest.json').write_text(json.dumps(manifest))
+            (repo/'receipt.json').write_text('{"historical":true}')
+            (repo/'autonomous-run-state.json').write_text('{"status":"Active"}')
+            for invalid in [False, True]:
+                if invalid:
+                    (repo/'intakes/a.md').write_text('hash drift')
+                for action in ['status', 'next']:
+                    before = snapshot(repo)
+                    child = self.query(repo, action)
+                    self.assertEqual(2 if invalid else 0, child.returncode)
+                    proof = subprocess.run([sys.executable, '-B', '-c', QUERY_AUDIT,
+                        str(REPO/CONTRACTS/'validate_series_eligibility.py'), str(repo), action],
+                        capture_output=True, text=True)
+                    self.assertEqual(0, proof.returncode, proof.stderr)
+                    record = json.loads(proof.stdout)
+                    self.assertEqual([], record['violations'])
+                    self.assertEqual(2 if invalid else 0, record['code'])
+                    self.assertEqual(before, snapshot(repo))
+                    print(json.dumps(dict(test=self.id(), action=action, invalid=invalid,
+                        auditedCoreProcesses=0, auditedWrites=0, files=before)), flush=True)
+
+    def test_query_receipt_provenance(self):
+        with tempfile.TemporaryDirectory(prefix='aoc receipt query ') as temp:
+            repo = Path(temp)
+            manifest = series_fixture(repo)
+            manifest['evidencePaths'] = ['receipt.json']
+            raw = json.dumps(manifest)
+            (repo/'manifest.json').write_text(raw)
+            receipt = dict(schemaVersion='1.0', documentType='IntakeSeriesReceipt',
+                receiptId='22222222-2222-4222-8222-222222222222', seriesId=manifest['seriesId'],
+                operation=dict(operationId='33333333-3333-4333-8333-333333333333', type='Create',
+                    authorityEvidence='harmless-private-sentinel'), status='Ready',
+                manifest=dict(path='manifest.json', normalizedSha256=hashlib.sha256(raw.encode()).hexdigest()),
+                supersedes={})
+            (repo/'receipt.json').write_text(json.dumps(receipt))
+            for action in ['status', 'next']:
+                child = self.query(repo, action)
+                self.assertEqual(0, child.returncode)
+                data = json.loads(child.stdout)
+                self.assertEqual('NotAssessed', data['reviewState'])
+                self.assertEqual('NotGrantedByQuery', data['currentStartAuthority'])
+                self.assertEqual([dict(path='receipt.json', receiptId=receipt['receiptId'],
+                    operation='Create', authorityContext='HistoricalOnly')], data['historicalReceiptProvenance'])
+            receipt['manifest']['normalizedSha256'] = '0'*64
+            (repo/'receipt.json').write_text(json.dumps(receipt))
+            self.assertEqual(2, self.query(repo, 'status').returncode)
+
+
+    def test_query_shell_surface(self):
+        surface = REPO/CONTRACTS
+        if SHELL == 'bash':
+            for flag in ['--help', '-h']:
+                child = subprocess.run([os.environ.get('AOC_GIT_BASH_EXE', 'bash'),
+                    str(surface/'validate-series-eligibility.sh'), flag], capture_output=True, text=True)
+                self.assertEqual(0, child.returncode)
+                for token in MODES + ['--series', '--action', 'ProductFailure', 'ProviderFailure']:
+                    self.assertIn(token, child.stdout)
+        else:
+            script = r'''
+param($Surface, $FixtureRepo)
+$ErrorActionPreference = 'Stop'
+$global:LASTEXITCODE = 71
+function python3 { throw 'Dot-sourcing/help attempted execution' }
+$loaded = @(. $Surface)
+if ($loaded.Count -ne 0 -or $LASTEXITCODE -ne 71) { throw 'Dot-sourcing executed or emitted output' }
+$helpText = Get-Help Test-AocSeriesEligibility -Full | Out-String
+foreach ($token in @('manual-assisted','single-autonomous','serial-autonomous','parallel-autonomous',
+    'research-only','blocked','Series','Action','Help','ProductFailure','ProviderFailure')) {
+    if (-not $helpText.Contains($token)) { throw "Help missing $token" }
+}
+Test-AocSeriesEligibility -Help | Out-Null
+Remove-Item Function:python3
+$functionResult = Test-AocSeriesEligibility -Repo $FixtureRepo -Series 'manifest.json' -Action next -Json
+$code = $LASTEXITCODE
+if ($code -ne 0) { throw "Advanced function failed: $code / $functionResult" }
+$cliResult = & $Surface -Repo $FixtureRepo -Series 'manifest.json' -Action next -Json
+$code = $LASTEXITCODE
+if ($code -ne 0 -or $functionResult -ne $cliResult) { throw 'Function and CLI differ' }
+'PASS: no execution on dot-source/help, complete help, function/CLI parity'
+'''
+            with tempfile.TemporaryDirectory(prefix='aoc function ') as temp:
+                repo = Path(temp)
+                (repo/'manifest.json').write_text(json.dumps(series_fixture(repo)))
+                before = snapshot(repo)
+                RunnerTests('test_runner_cardinality').pwsh_probe(script,
+                    [str(surface/'validate-series-eligibility.ps1'), str(repo)])
+                self.assertEqual(before, snapshot(repo))
+                help_child = subprocess.run(['pwsh','-NoProfile','-File',str(surface/'validate-series-eligibility.ps1'),
+                    '-Help'], capture_output=True, text=True)
+                self.assertEqual(0, help_child.returncode)
+                self.assertIn('Series', help_child.stdout)
+        with tempfile.TemporaryDirectory(prefix='aoc exclusive ') as temp:
+            repo = Path(temp)
+            (repo/'manifest.json').write_text(json.dumps(series_fixture(repo)))
+            fixture_option = '--fixture' if SHELL == 'bash' else '-Fixture'
+            child = self.query(repo, 'status', extra=[fixture_option, 'unused.json'])
+            self.assertEqual(2, child.returncode)
+            self.assertEqual('ProductFailure', json.loads(child.stdout)['failureClass'])
+            child = self.query(repo, 'unsafe-action')
+            self.assertEqual(2, child.returncode)
+            self.assertNotIn('unsafe-action', child.stdout + child.stderr)
+
+
+class RunnerTests(unittest.TestCase):
+    @staticmethod
+    def workflow_block(start, end):
+        source = (REPO/'.github/workflows/powershell-analysis.yml').read_text()
+        body = source.split(start, 1)[1].split(end, 1)[0]
+        return '\n'.join(line[10:] if line.startswith(' '*10) else line for line in body.splitlines())
+
+    def pwsh_probe(self, script, arguments=(), expected=0):
+        with tempfile.TemporaryDirectory(prefix='aoc runner spaces ') as temp:
+            probe = Path(temp)/'runner probe.ps1'
+            probe.write_text(script)
+            # Both launch surfaces must preserve script paths containing spaces.
+            if SHELL == 'bash':
+                command = [os.environ.get('AOC_GIT_BASH_EXE', 'bash'), '-c',
+                           'exec pwsh -NoProfile -File "$@"', 'runner', str(probe), *arguments]
+            else:
+                command = ['pwsh', '-NoProfile', '-File', str(probe), *arguments]
+            child = subprocess.run(command, capture_output=True, text=True)
+            print(json.dumps(dict(test=self.id(), shell=SHELL, childExit=child.returncode,
+                                  stdout=child.stdout, stderr=child.stderr)), flush=True)
+            self.assertEqual(expected, child.returncode, child.stdout + child.stderr)
+            return child
+
+    def test_runner_cardinality(self):
+        legacy = self.workflow_block('        run: |\n          if ($IsWindows)',
+            '      - name: Test Feature 003 authoring contract matrix')
+        legacy = 'if ($IsWindows)' + legacy
+        legacy = legacy.replace('$IsWindows', '$FixtureWindows')
+        legacy = legacy.split('"AOC_GIT_BASH_EXE=')[0]
+        prelude = '''
+$ErrorActionPreference = 'Stop'
+$FixtureWindows = $false
+$actual = @(Microsoft.PowerShell.Core\\Get-Command bash -CommandType Application)[0]
+function Get-Command { param($Name, $CommandType, $ErrorAction)
+    for ($i = 0; $i -lt $script:Count; $i++) { $script:actual }
+}
+'''
+        for count in [0, 1, 3]:
+            self.pwsh_probe(prelude + '\n$Count = ' + str(count) + '\n' + legacy,
+                            expected=1 if count == 0 else 0)
+        source = (REPO/'.github/workflows/powershell-analysis.yml').read_text()
+        self.assertIn('# FEATURE004-CAPABILITY-BEGIN', source, 'Feature-004 capability boundary absent')
+        capability = self.workflow_block('# FEATURE004-CAPABILITY-BEGIN', '# FEATURE004-CAPABILITY-END')
+        # Isolate version/cardinality decisions using real contained files, never label mocks native evidence.
+        with tempfile.TemporaryDirectory(prefix='aoc candidates ') as temp:
+            root = Path(temp)
+            for relative in ['old/bash', 'new/bash', 'Git/bin/bash.exe', 'Windows/System32/bash.exe']:
+                path = root/relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('fixture')
+            config = root/'paths.json'
+            config.write_text(json.dumps(dict(old=str(root/'old/bash'), new=str(root/'new/bash'),
+                git=str(root/'Git/bin/bash.exe'), wsl=str(root/'Windows/System32/bash.exe'))))
+            script = '''param($Config)
+$ErrorActionPreference = 'Stop'
+''' + capability + '''
+$p = Get-Content -Raw -LiteralPath $Config | ConvertFrom-Json
+function Get-AocFeature004BashMajor { param($Executable)
+    if ($Executable -eq $p.old) { return 3 }; return 5
+}
+function Assert-Rejected { param([scriptblock]$Probe)
+    $rejected = $false
+    try { & $Probe | Out-Null } catch { $rejected = $true }
+    if (-not $rejected) { throw 'Required rejection absent' }
+}
+Assert-Rejected { Resolve-AocFeature004Bash -Candidates @() }
+Assert-Rejected { Resolve-AocFeature004Bash -Candidates @($p.old) }
+Assert-Rejected { Resolve-AocFeature004Bash -Candidates @('missing') }
+foreach ($candidates in @(@($p.new), @($p.old, $p.new), @($p.new, $p.new))) {
+    $chosen = Resolve-AocFeature004Bash -Candidates $candidates
+    if ($chosen -ne $p.new) { throw 'Bash 5 selection differs' }
+}
+Assert-Rejected { Resolve-AocFeature004Bash -Candidates @($p.wsl) -WindowsHost -GitBashPath $p.wsl }
+Assert-Rejected { Resolve-AocFeature004Bash -Candidates @($p.new) -WindowsHost -GitBashPath $p.git }
+$chosen = Resolve-AocFeature004Bash -Candidates @($p.git) -WindowsHost -GitBashPath $p.git
+if ($chosen -ne $p.git) { throw 'Git Bash identity differs' }
+'PASS: zero/one/multiple references, Bash 3/5, Git Bash/WSL policy and spaced paths (isolated fixtures)'
+'''
+            self.pwsh_probe(script, [str(config)])
+        # Real native children verify executable identity beyond PowerShell aliases.
+        runtime = self.workflow_block('# FEATURE004-RUNTIME-BEGIN', '# FEATURE004-RUNTIME-END')
+        self.pwsh_probe("$ErrorActionPreference = 'Stop'\n" + capability + runtime)
+        alias_only = r'''
+$ErrorActionPreference = 'Stop'
+$python = (Get-Command python3 -CommandType Application | Select-Object -First 1).Source
+Set-Alias python3 $python
+$env:PATH = [IO.Path]::GetTempPath()
+if (@(Get-Command python3 -CommandType Application -ErrorAction SilentlyContinue).Count -ne 0) {
+    throw 'Fixture unexpectedly has a child executable'
+}
+& $python -B -c "import shutil,sys;sys.exit(0 if shutil.which('python3') is None else 1)"
+if ($LASTEXITCODE -ne 0) { throw 'Alias leaked into fresh process' }
+'PASS: a PowerShell alias alone cannot satisfy child PATH'
+'''
+        self.pwsh_probe(alias_only)
+        self.assertIn("$_.executionClass -eq 'native-automated-gate'", source)
+        self.assertIn("$_.executionTasks -contains 'T048'", source)
+        self.assertIn('$_.platforms -contains $env:AOC_FEATURE004_PLATFORM', source)
+        catalog = json.loads((REPO/CONTRACTS/'validation-commands.json').read_text())['commands']
+        selected = [c for c in catalog if c['executionClass'] == 'native-automated-gate'
+                    and 'T048' in c['executionTasks']]
+        self.assertTrue(selected)
+        self.assertTrue(all(c['command'].split()[0] in ['bash', 'pwsh', 'python3', 'git'] for c in selected))
+        self.assertFalse(any(c['id'] in ['stats-render', 'stats-preview', 'public-readiness'] for c in selected))
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo", type=Path, default=REPO)
     parser.add_argument("--shell", choices=["bash", "pwsh"], default="bash")
-    parser.add_argument("--case", choices=["surface", "empty-integration", "criteria-cardinality", "modes", "failure-taxonomy", "transitive-paths", "transitive-readers", "series-negatives", "all"], default="all")
+    parser.add_argument("--case", choices=["surface", "empty-integration", "criteria-cardinality", "modes", "failure-taxonomy", "transitive-paths", "transitive-readers", "series-negatives", "status-next", "query-no-side-effects", "query-receipt-provenance", "runner-cardinality", "all"], default="all")
     parser.add_argument("--binding", choices=["feature", "legacy"], default="feature")
     args = parser.parse_args()
     BINDING = args.binding
     REPO, SHELL = args.repo.resolve(), args.shell
-    names = ["surface", "empty_integration", "criteria_cardinality", "modes", "failure_taxonomy", "transitive_paths", "transitive_readers", "series_negatives"] if args.case == "all" else [args.case.replace("-", "_")]
-    suite = unittest.TestSuite((SeriesTests if name in ["transitive_paths", "transitive_readers", "series_negatives"] else EligibilityTests)("test_" + name) for name in names)
+    names = ["surface", "empty_integration", "criteria_cardinality", "modes", "failure_taxonomy", "transitive_paths", "transitive_readers", "series_negatives", "status_next", "query_no_side_effects", "query_receipt_provenance", "query_idle", "query_shell_surface", "runner_cardinality"] if args.case == "all" else [args.case.replace("-", "_")]
+    if args.case == "status-next":
+        names += ["query_no_side_effects", "query_receipt_provenance", "query_idle", "query_shell_surface"]
+    suite = unittest.TestSuite((SeriesTests if name in ["transitive_paths", "transitive_readers", "series_negatives"] else RunnerTests if name == "runner_cardinality" else QueryTests if name in ["status_next", "query_no_side_effects", "query_receipt_provenance", "query_idle", "query_shell_surface"] else EligibilityTests)("test_" + name) for name in names)
     raise SystemExit(0 if unittest.TextTestRunner(verbosity=2).run(suite).wasSuccessful() else 1)

@@ -132,3 +132,116 @@ jobs:
           if ($Failures -ne 0) {
             throw "Feature-003 focused matrix failed in $Failures command(s)."
           }
+
+      - name: Test Feature 004 series eligibility matrix
+        if: github.event_name == 'pull_request' || github.event_name == 'push'
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+          AOC_FEATURE004_PLATFORM: ${{ matrix.os }}
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          # FEATURE004-CAPABILITY-BEGIN
+          function Get-AocFeature004BashMajor {
+            param([string]$Executable)
+            $Major = & $Executable @('-c', 'printf "%s" "$BASH_VERSINFO"')
+            $Code = $LASTEXITCODE
+            Write-Host "BASH_MAJOR_PROBE: $Executable; IMMEDIATE_EXIT: $Code"
+            if ($Code -ne 0 -or "$Major" -notmatch '^\d+$') {
+              throw 'Bash version probe failed. / Bash-Versionspruefung fehlgeschlagen.'
+            }
+            return [int]$Major
+          }
+          function Resolve-AocFeature004Bash {
+            param([string[]]$Candidates, [switch]$WindowsHost, [string]$GitBashPath)
+            # Auf Windows nur Git Bash; sonst vorhandene Bash 5+. Keine Installation.
+            # Windows accepts Git Bash only; otherwise use installed Bash 5+. No installation.
+            foreach ($Candidate in @($Candidates | Sort-Object -Unique)) {
+              if ([string]::IsNullOrWhiteSpace($Candidate) -or
+                  -not [IO.Path]::IsPathFullyQualified($Candidate) -or
+                  -not (Test-Path -LiteralPath $Candidate -PathType Leaf)) { continue }
+              if ($WindowsHost -and ($Candidate -ne $GitBashPath -or
+                  $Candidate -notmatch '(?i)[\\/]Git[\\/]bin[\\/]bash\.exe$' -or
+                  $Candidate -match '(?i)[\\/]Windows[\\/]System32[\\/]')) { continue }
+              if ((Get-AocFeature004BashMajor $Candidate) -ge 5) {
+                return (Resolve-Path -LiteralPath $Candidate).Path
+              }
+            }
+            throw 'Bash >=5 unavailable. / Bash >=5 nicht verfuegbar.'
+          }
+          # FEATURE004-CAPABILITY-END
+          # FEATURE004-RUNTIME-BEGIN
+          if ($IsWindows) {
+            $GitBash = Join-Path $env:ProgramFiles 'Git\bin\bash.exe'
+            $Bash4 = Resolve-AocFeature004Bash -Candidates @($GitBash) -WindowsHost -GitBashPath $GitBash
+          } else {
+            $Candidates4 = @(Get-Command bash -CommandType Application -All -ErrorAction SilentlyContinue |
+              ForEach-Object { $_.Source })
+            $Bash4 = Resolve-AocFeature004Bash -Candidates $Candidates4
+          }
+          $PythonCandidates4 = @(Get-Command python3 -CommandType Application -All -ErrorAction SilentlyContinue)
+          if ($PythonCandidates4.Count -eq 0) { throw 'python3 application unavailable. / python3 fehlt.' }
+          $Python4 = $PythonCandidates4[0].Source
+          # Der PATH gilt auch fuer frische Kinder, nicht nur fuer PowerShell-Aliase.
+          # PATH applies to fresh children, not merely PowerShell aliases.
+          $env:PATH = (Split-Path $Bash4 -Parent) + [IO.Path]::PathSeparator +
+            (Split-Path $Python4 -Parent) + [IO.Path]::PathSeparator + $env:PATH
+          $env:AOC_GIT_BASH_EXE = $Bash4
+          $PythonIdentity4 = & $Python4 -B -c 'import os,sys;print(os.path.realpath(sys.executable))'
+          $Code = $LASTEXITCODE
+          Write-Output "IMMEDIATE_EXIT: $Code"
+          if ($Code -ne 0) { throw 'Python identity probe failed.' }
+          & $Python4 -B -c 'import os,shutil,sys;assert os.path.samefile(shutil.which("python3"),sys.argv[1]);assert os.path.samefile(shutil.which("bash"),sys.argv[2])' $PythonIdentity4 $Bash4
+          $Code = $LASTEXITCODE
+          Write-Output "IMMEDIATE_EXIT: $Code"
+          if ($Code -ne 0) { throw 'Child PATH identity differs. / Kindprozess-PATH weicht ab.' }
+          $BashPython4 = & $Bash4 @('-c', 'python3 -B -c ''import os,sys;print(os.path.realpath(sys.executable))''')
+          $Code = $LASTEXITCODE
+          Write-Output "IMMEDIATE_EXIT: $Code"
+          if ($Code -ne 0) { throw 'Fresh Bash Python probe failed.' }
+          & $Python4 -B -c 'import os,sys;assert os.path.samefile(sys.argv[1],sys.argv[2])' $PythonIdentity4 $BashPython4
+          $Code = $LASTEXITCODE
+          Write-Output "IMMEDIATE_EXIT: $Code"
+          if ($Code -ne 0) { throw 'Bash Python identity differs. / Bash-Python-Datei weicht ab.' }
+          Write-Output "BASH_EXECUTABLE: $Bash4"
+          Write-Output "PYTHON_EXECUTABLE: $PythonIdentity4"
+          & $Bash4 @('--version')
+          $Code = $LASTEXITCODE
+          Write-Output "IMMEDIATE_EXIT: $Code"
+          if ($Code -ne 0) { throw 'Bash version command failed.' }
+          & $Python4 --version
+          $Code = $LASTEXITCODE
+          Write-Output "IMMEDIATE_EXIT: $Code"
+          if ($Code -ne 0) { throw 'Python version command failed.' }
+          Write-Output "PowerShell: $($PSVersionTable.PSVersion)"
+          # FEATURE004-RUNTIME-END
+          Write-Output "RUNNER: $env:RUNNER_OS / $env:ImageOS / $env:AOC_FEATURE004_PLATFORM"
+          git rev-parse HEAD
+          $Code = $LASTEXITCODE
+          Write-Output "IMMEDIATE_EXIT: $Code"
+          if ($Code -ne 0) { throw 'HEAD probe failed.' }
+          $Catalog4 = Get-Content -Raw -LiteralPath 'specs/004-series-eligibility/contracts/validation-commands.json' | ConvertFrom-Json
+          $Gates4 = @($Catalog4.commands | Where-Object {
+            $_.executionClass -eq 'native-automated-gate' -and
+            ($_.executionTasks -contains 'T029' -or $_.executionTasks -contains 'T048') -and
+            $_.platforms -contains $env:AOC_FEATURE004_PLATFORM
+          })
+          if ($Gates4.Count -eq 0) { throw 'Native command set empty. / Native Befehlsmenge leer.' }
+          foreach ($Gate4 in $Gates4) {
+            # Der gebundene Katalog enthaelt einfache Argumente; keine Shell-Evaluation.
+            # The bound catalog contains plain arguments; never evaluate shell expressions.
+            if ($Gate4.command -match '["''`$;&|<>\r\n]') { throw 'Unsupported catalog syntax.' }
+            $Tokens4 = @($Gate4.command -split ' ' | Where-Object { $_ -ne '' })
+            $Executable4 = switch ($Tokens4[0]) {
+              'bash' { $Bash4 }
+              'python3' { $Python4 }
+              'pwsh' { (Get-Command pwsh -CommandType Application | Select-Object -First 1).Source }
+              'git' { (Get-Command git -CommandType Application | Select-Object -First 1).Source }
+              default { throw 'Unsupported catalog executable.' }
+            }
+            Write-Output "COMMAND [$($Gate4.id)]: $($Gate4.command)"
+            & $Executable4 @($Tokens4[1..($Tokens4.Count - 1)])
+            $Code = $LASTEXITCODE
+            Write-Output "IMMEDIATE_EXIT [$($Gate4.id)]: $Code"
+            if ($Code -ne 0) { throw "Feature-004 gate failed: $($Gate4.id), exit $Code" }
+          }

@@ -24,8 +24,8 @@
   ],
   "tasks": {
     "path": "specs/004-series-eligibility/tasks.md",
-    "sha256": "1c790e9a4171d6341d0aa42c72a73e5a9c18a04bda9403f53ae3d95122be72a2",
-    "completed": 21,
+    "sha256": "824034272e99073cb30580ef395c60c173bcf266b1b6a8342ffd158eec586d32",
+    "completed": 30,
     "total": 57
   },
   "routing": {
@@ -318,7 +318,7 @@
         "reasoningEffort": "high",
         "preflight": "Completed",
         "exitCode": 0,
-        "updatedAt": "2026-09-13T08:02:20.9142720Z",
+        "updatedAt": "2026-09-13T08:02:20.914272Z",
         "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-4.result.json",
         "resultSha256": "73443a9d99cfcd759598f542034abafa9dbb694ec777ac2caab0157230085483"
       },
@@ -330,16 +330,34 @@
         "dependsOn": [
           "implement-4"
         ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T08:28:22.1946200Z",
+        "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5.result.json",
+        "resultSha256": "6535b5035b933b9903c076c33d4598d2a0342af19b6d9383ec9908b7fc94a282"
+      },
+      {
+        "phaseId": "implement-6",
+        "command": "speckit.implement",
+        "routingRole": "long-running-implementation",
+        "runnerProfile": "codex-implementation-auto",
+        "dependsOn": [
+          "implement-5"
+        ],
         "status": "Pending"
       }
     ]
   },
   "lastPassingGate": "Preflight passed: clean synchronized main, current receipt and Ready review, 14-intake Global Ready gate, aligned model routing, and no competing run.",
-  "nextExactAction": "Complete coordinator checkpoint T022, then run routing phase 'implement-5'.",
+  "nextExactAction": "Complete coordinator checkpoint T031, then run routing phase 'implement-6'.",
   "lastOperation": {
-    "kind": "ModelRoutingPhase:implement-4",
+    "kind": "ModelRoutingPhase:implement-5",
     "state": "Completed",
-    "summary": "Phase completed with profile 'codex-implementation-auto' and result SHA-256 73443a9d99cfcd759598f542034abafa9dbb694ec777ac2caab0157230085483."
+    "summary": "Phase completed with profile 'codex-implementation-auto' and result SHA-256 6535b5035b933b9903c076c33d4598d2a0342af19b6d9383ec9908b7fc94a282."
   },
   "stop": {
     "reason": "N/A",
@@ -352,5 +370,5 @@
     "postMergeActions": "N/A",
     "finalValidation": "Pending"
   },
-  "updatedAt": "2026-09-13T08:02:20.9142720Z"
+  "updatedAt": "2026-09-13T08:28:22.1946200Z"
 }

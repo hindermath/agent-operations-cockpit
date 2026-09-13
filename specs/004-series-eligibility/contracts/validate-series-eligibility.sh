@@ -9,13 +9,34 @@ Series Eligibility pruefen / Assess Series Eligibility
 
 VERWENDUNG / USAGE
   validate-series-eligibility.sh --repo PATH --fixture PATH [--json]
+  validate-series-eligibility.sh --repo PATH --series PATH [--action status|next] [--json]
   validate-series-eligibility.sh --help | -h
 
 OPTIONEN / OPTIONS
   --repo PATH     Repository-Wurzel. / Repository root.
   --fixture PATH  Fixture relativ zum Repository. / Fixture relative to the repository.
+  --series PATH   Series-Manifest statt Fixture. / Series manifest instead of fixture.
+  --action MODE   status (Standard) oder next, nur Series. / status (default) or next, series only.
   --json          Maschinenlesbare Ausgabe. / Machine-readable output.
   --help, -h      Diese Hilfe anzeigen. / Show this help.
+
+MODI / MODES
+  manual-assisted, single-autonomous, serial-autonomous, parallel-autonomous,
+  research-only, blocked. Der Modus stammt aus der Fixture. / Mode comes from the fixture.
+  Fixture und Series schliessen sich aus. / Fixture and series are mutually exclusive.
+  Ohne --json: DE/EN-Klartext. / Without --json: bilingual plain text.
+
+BEISPIELE / EXAMPLES
+  validate-series-eligibility.sh --repo . --fixture specs/intake-review-fixtures/meta-lh-04/valid-parallel.json --json
+  validate-series-eligibility.sh --repo . --series specs/intake-series/aoc-phase-2/manifest.json --action next
+
+AUSGABE UND EXITS / OUTPUT AND EXITS
+  Lifecycle, Review, Kandidaten, Praeferenz, Blocker, Lieferung und Authority sind getrennt.
+  Lifecycle, review, candidates, preference, blockers, delivery and authority are separate.
+  Historische Receipt-Herkunft ist keine aktuelle Authority. / Historical provenance is not current authority.
+  0: Gueltiges Assessment, auch Blocked. / Valid assessment, including Blocked.
+  2: ProductFailure, ungueltige Eingabe/Erwartung. / Invalid input or expectation.
+  3: ProviderFailure, Laufzeitfehler. / Runtime failure.
 
 Die Pruefung liest nur und erteilt keine Startfreigabe.
 The assessment is read-only and grants no authority to start.
