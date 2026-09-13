@@ -13,6 +13,18 @@ assess Series eligibility read-only
 .BI -Repo " PATH"
 .BI -Fixture " PATH"
 .RI [ -Json ]
+.PP
+.B validate-series-eligibility.sh
+.BI --repo " PATH"
+.BI --series " PATH"
+.RI [ --action " status|next" ]
+.RI [ --json ]
+.PP
+.B validate-series-eligibility.ps1
+.BI -Repo " PATH"
+.BI -Series " PATH"
+.RI [ -Action " status|next" ]
+.RI [ -Json ]
 .SH BESCHREIBUNG / DESCRIPTION
 Die Oberflaechen delegieren eine lesende Eignungspruefung an den Python-Kern.
 Sie lesen den Kriterienvertrag und eine benannte Fixture, berechnen zuerst das
@@ -24,14 +36,14 @@ They read the criteria contract and a named fixture, compute the outcome first,
 and then compare it with the fixture expectation. They write no files and do
 not start a Spec Kit run.
 .PP
-Diese erste Oberflaeche deckt den vorhandenen T004-bis-T007-Stand ab:
-Repository, Fixture, optionale JSON-Ausgabe, delegierte Pruefung und den
-Integration-Wertecheck. Die spaetere vollstaendige Sechs-Modi-Schnittstelle ist
-nicht Bestandteil dieser Version.
+Fixture: genau neun Kriterien in der Reihenfolge authority, sideEffects,
+reversibility, writeScope, decisions, integration, review, abort, recovery.
+Die sechs Modi werden unten erklaert. Series: status und next liefern dieselbe
+gepruefte Projektion; Review und Lieferung sind NotAssessed.
 .PP
-This initial surface covers the existing T004-to-T007 scope: repository,
-fixture, optional JSON output, delegated assessment, and the integration value
-check. The later complete six-mode interface is not part of this version.
+Fixture: exactly nine criteria in the order listed above. The six modes are
+explained below. Series status and next return the same validated projection;
+review and delivery are NotAssessed.
 .SH OPTIONEN / OPTIONS
 .TP
 .BR --repo " " PATH , " " -Repo " " PATH
@@ -39,6 +51,16 @@ Repository-Wurzel. / Repository root.
 .TP
 .BR --fixture " " PATH , " " -Fixture " " PATH
 Fixture relativ zur Repository-Wurzel. / Fixture relative to the repository root.
+.TP
+.BR --series " " PATH , " " -Series " " PATH
+Series-Manifest relativ zum Repository; genau eine von Fixture oder Series.
+.br
+Series manifest relative to repository; choose exactly one of fixture or series.
+.TP
+.BR --action " " MODE , " " -Action " " MODE
+status (Standard) oder next, nur mit Series. Keine Startaktion.
+.br
+status (default) or next, with series only. No start action.
 .TP
 .BR --json , " " -Json
 Maschinenlesbare Ausgabe. / Machine-readable output.
@@ -81,3 +103,92 @@ fixture read-only with one example. Do not start downstream work merely because
 the result is Eligible.
 .SH SEE ALSO
 .BR validate-intake-series (1)
+
+.SH SECHS MODI / SIX MODES
+Der Modus kommt aus der Fixture, nicht aus --action. Authority bedeutet
+aktuelle ausdrueckliche Berechtigung; die Abfrage erteilt sie niemals.
+.PP
+Mode comes from the fixture, not --action. Authority means current explicit
+permission; this query never grants it.
+.TP
+.B manual-assisted
+Menschlich begleitete Bearbeitung. / Human-assisted work.
+.TP
+.B single-autonomous
+Ein separat autorisierter autonomer Lauf. / One separately authorized autonomous run.
+.TP
+.B serial-autonomous
+Nacheinander bearbeitete Ziele. / Targets handled in sequence.
+.TP
+.B parallel-autonomous
+Nur mit disjunkten Schreibbereichen und ohne gemeinsame offene Entscheidungen;
+Integration, Review, Abbruch und Wiederherstellung muessen belegt sein.
+.br
+Requires disjoint writes, no shared open decisions, and evidence for
+integration, review, abort and recovery.
+.TP
+.B research-only
+Nur Recherche als Eignungsklasse; kein automatischer Rechercheauftrag.
+.br
+Research eligibility only; no automatic research instruction.
+.TP
+.B blocked
+Gesperrte Eignungsklasse. / Blocked eligibility class.
+.PP
+Alle Modi benoetigen neun gueltige Kriterien und currentAuthority=true als
+Fixture-Nachweis. Bei nichtparallelen Modi sind die fuenf Parallelflags
+optional; vorhandene Flags muessen echte Booleans und konsistent sein.
+.PP
+All modes require nine valid criteria and currentAuthority=true as fixture
+evidence. Five parallel flags are optional outside parallel mode; any supplied
+flags must be actual booleans and consistent.
+.SH ABFRAGEN / QUERIES
+Lifecycle ist deklarierter Bearbeitungsstand. Review ist die gesonderte
+fachliche Pruefung. Eignung, bevorzugter Kandidat, Blocker, Lieferung und
+aktuelle Startautoritaet sind getrennte Achsen. Historische Receipt-Herkunft
+ist nur HistoricalOnly, keine aktuelle Autoritaet. Alle Kandidaten bleiben in
+Manifestreihenfolge sichtbar. Idle ohne Ziele ist gueltig; auch eine Completed
+Series kann keine Kandidaten liefern, ohne diesen autonomen Lauf abzuschliessen.
+.PP
+Lifecycle is declared progress. Review is a separate assessment. Eligibility,
+preference, blockers, delivery and current start authority remain separate.
+Receipt provenance is HistoricalOnly. All candidates retain manifest order.
+Idle is valid without targets; a Completed series may have no candidates
+without completing this autonomous run.
+.PP
+Ohne Kandidaten: Manifest und Nachweise mit einer verantwortlichen Person
+pruefen; nichts starten. Eine nextAction enthaelt genau eine sichere naechste
+Aktion mit gleichwertigem deutschen und englischen Text.
+.PP
+Without candidates: reassess manifest and evidence with a responsible person;
+start nothing. One nextAction holds one safe action in equivalent German and English.
+.SH POWERSHELL-FUNKTION / POWERSHELL FUNCTION
+.nf
+. ./specs/004-series-eligibility/contracts/validate-series-eligibility.ps1
+Get-Help Test-AocSeriesEligibility -Full
+Test-AocSeriesEligibility -Repo . -Series specs/intake-series/aoc-phase-2/manifest.json -Action next -Json
+.fi
+.PP
+Argumentfreies Dot-Sourcing laedt nur die Advanced Function; der Aufrufer
+bleibt aktiv. Die Funktion setzt LASTEXITCODE; nur das Skript beendet den Prozess.
+.PP
+Argument-free dot-sourcing only loads the advanced function and preserves the
+caller. The function sets LASTEXITCODE; only the script exits the process.
+.SH GRENZEN / LIMITS
+Unsichere Pfade, doppelte Schluessel und ungueltige Struktur: ProductFailure,
+Exit 2. Ausfall der Runtime: ProviderFailure, Exit 3; nie als Test-Pass werten.
+Ein fachlich ungueltiger Kriterienwert kann Blocked/ProductFailure bei Exit 0
+liefern, wenn expectedOutcome=Blocked korrekt erwartet wurde. Exit 0 allein
+ist weder Eligible noch Startfreigabe. Rohdiagnosen bleiben unterdrueckt.
+.PP
+Unsafe paths, duplicate keys and invalid structure return ProductFailure/2.
+Runtime failure returns ProviderFailure/3 and never a test pass. A semantic
+criterion defect can return Blocked/ProductFailure with exit 0 when the fixture
+correctly expects Blocked. Exit 0 alone grants neither eligibility nor authority.
+Raw diagnostics are suppressed.
+.PP
+Native Linux-/Windows-/macos-14-Providerjobs und Assistenztechnik bleiben
+separate Abnahme. Lokale Shellparitaet beweist keine vollstaendige native Matrix.
+.PP
+Native provider jobs and assistive technology remain separate acceptance.
+Local shell parity does not prove the full native matrix.

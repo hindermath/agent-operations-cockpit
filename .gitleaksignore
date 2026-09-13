@@ -1,0 +1,5 @@
+# DE: Drei verifizierte SHA-256-Evidence-Hashes, keine Geheimnisse; historische Bytes bleiben erhalten.
+# EN: Three verified SHA-256 evidence hashes, no secrets; historical bytes remain unchanged.
+specs/004-series-eligibility/phase-results/us1-tests.json:generic-api-key:185
+specs/004-series-eligibility/phase-results/us1-tests.json:generic-api-key:195
+specs/004-series-eligibility/phase-results/us2-tests.json:generic-api-key:684

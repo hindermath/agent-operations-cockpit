@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "1.0",
+  "runId": "8b306e28-51eb-4510-afbc-5056b9aee328",
+  "phaseId": "implement-6",
+  "attemptId": "9fc067ea-90a2-48a6-b627-d1041de66c09",
+  "reviewedAt": "2026-09-13T08:44:39.502248+00:00",
+  "result": "Pass",
+  "decision": "UpdateRequired",
+  "changeId": "CHG004",
+  "entryCount": 1,
+  "contract": {
+    "path": "specs/004-series-eligibility/contracts/documentation-impact.json",
+    "rawSha256": "49a3ce27786ba5794e63f9f47e532fcd99f7ee2b8dba48b0fb228e4468b0a484",
+    "normalizedSha256": "49a3ce27786ba5794e63f9f47e532fcd99f7ee2b8dba48b0fb228e4468b0a484"
+  },
+  "validatorSourceHashes": {
+    "scripts/validate-documentation-impact.sh": "fee32782674d0d2f37c147c46b8f1d8bc2ef9446f618b839ed89956246a02fe5",
+    "scripts/validate-documentation-impact.ps1": "afeea486d8b2899889dc0c2fbb94f02d03daa3c37e9629201ec14c7cde9bf645"
+  },
+  "executions": [
+    {
+      "label": "documentation-final-bash",
+      "command": [
+        "bash",
+        "scripts/validate-documentation-impact.sh",
+        "--evidence",
+        "specs/004-series-eligibility/contracts/documentation-impact.json"
+      ],
+      "startedAt": "2026-09-13T08:47:08.966157+00:00",
+      "exitCode": 0,
+      "stdout": "PASS: Documentation Impact evidence is current (1 entries).\n",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/documentation-final-bash.log",
+      "logSha256": "0f59c7a38200fa7f1c5d67d367841aae535c49a92e1ccb94a7b7fff282d1ecb1"
+    },
+    {
+      "label": "documentation-final-pwsh",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "scripts/validate-documentation-impact.ps1",
+        "-Evidence",
+        "specs/004-series-eligibility/contracts/documentation-impact.json"
+      ],
+      "startedAt": "2026-09-13T08:47:09.856056+00:00",
+      "exitCode": 0,
+      "stdout": "PASS: Documentation Impact evidence is current (1 entries).\n",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/documentation-final-pwsh.log",
+      "logSha256": "0f59c7a38200fa7f1c5d67d367841aae535c49a92e1ccb94a7b7fff282d1ecb1"
+    }
+  ],
+  "limits": "Schema validation proves fields, not semantic truth. Semantic review recorded separately. T040/statistics and native delivery remain open.",
+  "priorExecutions": [
+    {
+      "label": "documentation-bash",
+      "command": [
+        "bash",
+        "scripts/validate-documentation-impact.sh",
+        "--evidence",
+        "specs/004-series-eligibility/contracts/documentation-impact.json"
+      ],
+      "startedAt": "2026-09-13T08:42:54.248327+00:00",
+      "exitCode": 0,
+      "stdout": "PASS: Documentation Impact evidence is current (1 entries).\n",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/documentation-bash.log",
+      "logSha256": "0f59c7a38200fa7f1c5d67d367841aae535c49a92e1ccb94a7b7fff282d1ecb1"
+    },
+    {
+      "label": "documentation-pwsh",
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-File",
+        "scripts/validate-documentation-impact.ps1",
+        "-Evidence",
+        "specs/004-series-eligibility/contracts/documentation-impact.json"
+      ],
+      "startedAt": "2026-09-13T08:42:55.168920+00:00",
+      "exitCode": 0,
+      "stdout": "PASS: Documentation Impact evidence is current (1 entries).\n",
+      "stderr": "",
+      "log": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-audit/documentation-pwsh.log",
+      "logSha256": "0f59c7a38200fa7f1c5d67d367841aae535c49a92e1ccb94a7b7fff282d1ecb1"
+    }
+  ]
+}

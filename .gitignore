@@ -27,6 +27,7 @@
 !.gitignore
 !.gitconfig
 !.gitleaks.toml
+!.gitleaksignore
 
 # --- GitHub / GitHub ---
 !.github/

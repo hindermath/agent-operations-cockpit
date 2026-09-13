@@ -2,7 +2,7 @@
 
 ## Zweck und Voraussetzungen / Purpose and prerequisites
 
-Diese Anleitung prüft META-LH-04 ohne Workerstart. Sie unterscheidet **vorhandene Befehle** von **geplanten Befehlen**, die erst die spätere Implementierung erzeugt. Aktuelle Phase: Planung; kein Feature-Pass aus dieser Anleitung ableiten. / *This guide validates META-LH-04 without starting workers. It distinguishes existing commands from planned commands that later implementation must create. The current phase is planning; the guide itself is not a feature pass.*
+Diese Anleitung beschreibt den implementierten lesenden META-LH-04-Prüfadapter mit sechs Modi und den Abfragen `status`/`next`. Sie ist für Lernende ab Jahr 1 und Maintainer gedacht. Eignung bedeutet geprüfte Passung, **keine Startfreigabe**. Die Abschnitte zu früheren Implementierungs- und späteren Liefergates sind Referenzverfahren, kein Auftrag, sie jetzt auszuführen. / *This guide describes the implemented six-mode read-only adapter and status/next queries for first-year learners and maintainers. Eligibility is assessed suitability, not permission to start. Historical implementation and future delivery procedures below are references, not instructions to execute them now.*
 
 Beginne im Repository-Root. Benötigt werden Git, rg, Python 3.9+, Bash 5+ und PowerShell Core 7+; PSScriptAnalyzer 1.25.0 ist für die statische Prüfung erforderlich. Keine Pakete oder Provider einrichten. In Windows muss `bash` auf Git-for-Windows zeigen. Setze `PYTHONDONTWRITEBYTECODE=1`; `python3 -B` muss dieselbe geprüfte Python-Runtime aufrufen, unter Windows gegebenenfalls ein dokumentierter Alias auf `python`. Nie stillschweigend einen ausgefallenen Interpreter ersetzen. / *Start at repository root with the required existing tools. Do not install packages or configure providers. Use Git Bash on Windows, disable bytecode writes, and bind python3 to the verified Python runtime, using a documented alias if needed. Never silently replace a failed interpreter.*
 
@@ -14,6 +14,44 @@ pwsh -NoProfile -Command '$PSVersionTable.PSVersion.ToString()'
 ```
 
 Versionen und tatsächlich aufgelöste ausführbare Pfade im lokalen Evidence-Protokoll nennen; keine persönlichen absoluten Pfade in getrackte Berichte kopieren. / *Record versions and actual executable resolution locally; do not copy personal absolute paths into tracked reports.*
+
+## Finale Schnittstelle und Leserpfad / Final interface and reader path
+
+Leserpfad: [Spec](spec.md) → Voraussetzungen oben → dieser Abschnitt → [Manpage](../../docs/man/validate-series-eligibility.1) → [Schnittstellenvertrag](contracts/series-eligibility-interface.md) und [Datenmodell](data-model.md). Ein **Kriterium** ist ein benannter Prüfpunkt; eine **Fixture** ein Testdatensatz; ein **Manifest** beschreibt Ziele und Vorgänger. Ein **Receipt** belegt die Herkunft früherer Arbeit. / *Reader path: specification → prerequisites → this section → manual → interface and data model. A criterion is a named check, a fixture is test data, a manifest describes targets and predecessors, and a receipt records historical provenance.*
+
+Genau eine Eingabe wählen: `--fixture`/`-Fixture` oder `--series`/`-Series`. Repository-Wurzel: `--repo`/`-Repo`; Datenpfade sind repositoryrelativ. `--action`/`-Action` gilt nur für Series und ist `status` (Standard) oder `next`. `--json`/`-Json` gibt JSON aus; sonst erscheint DE/EN-Klartext. Hilfe: Bash `--help`/`-h`, PowerShell `-Help`. / *Choose exactly one fixture or series input. Set the repository root and relative data path. Action is series-only, status by default or next. JSON is optional; default output is bilingual text. Both shells expose help.*
+
+| Fixture-Modus / Fixture mode | Bedeutung / Meaning |
+|---|---|
+| `manual-assisted` | Mit menschlicher Begleitung. / Human-assisted work. |
+| `single-autonomous` | Ein separat autorisierter Lauf. / One separately authorized run. |
+| `serial-autonomous` | Ziele nacheinander bearbeiten. / Handle targets in sequence. |
+| `parallel-autonomous` | Getrennte Writes und keine gemeinsamen offenen Entscheidungen erforderlich. / Disjoint writes and no shared open decisions required. |
+| `research-only` | Eignung für Recherche; startet keine Recherche. / Research eligibility; starts no research. |
+| `blocked` | Eignung gesperrt. / Eligibility blocked. |
+
+Der Modus steht in der Fixture und ist kein `--action`-Wert. Alle Modi benötigen genau neun Kriterien: `authority` (Berechtigung), `sideEffects` (Nebenwirkungen), `reversibility` (Rücknehmbarkeit), `writeScope` (Schreibbereich), `decisions` (Entscheidungen), `integration` (Zusammenführung), `review` (Prüfung), `abort` (Abbruch), `recovery` (Wiederherstellung). `currentAuthority=true` ist erforderliche Fixture-Evidence, keine neu erteilte Berechtigung. Außerhalb Parallelität sind die fünf Parallelflags optional; vorhandene Werte müssen echte Booleans und konsistent sein. / *Mode is fixture data, not an action value. Every mode needs the nine criteria in the stated order and currentAuthority=true as existing evidence. Five parallel flags are optional in nonparallel modes; supplied values must be actual consistent booleans. The checker grants no new permission.*
+
+Beispiele für dieselbe lesende Abfrage; nur die passende Shell wählen: / *Equivalent read-only examples; choose the appropriate shell:*
+
+```text
+bash specs/004-series-eligibility/contracts/validate-series-eligibility.sh --repo . --series specs/intake-series/aoc-phase-2/manifest.json --action next
+pwsh -NoProfile -File specs/004-series-eligibility/contracts/validate-series-eligibility.ps1 -Repo . -Series specs/intake-series/aoc-phase-2/manifest.json -Action next
+```
+
+`status` und `next` verwenden dieselbe deterministische Projektion. Sie zeigen deklarierte Lifecycle-Werte, `reviewState=NotAssessed`, alle Kandidaten, bevorzugten Kandidaten, Blocker, `deliveryMode=NotAssessed`, `currentStartAuthority=NotGrantedByQuery` und historische Receipt-Herkunft (`HistoricalOnly`) getrennt. Ein Series-`Completed` schließt diesen autonomen Lauf nicht ab. `Idle` ohne Ziele ist gültig. Eine leere Kandidatenliste ist kein Parserfehler. / *Both queries use the same deterministic projection. Declared lifecycle, unassessed review/delivery, all candidates, preference, blockers, absent query-granted authority and historical provenance stay separate. Completed series data does not complete this run; Idle and no-candidate results can be valid.*
+
+| Exit | Bedeutung / Meaning |
+|---|---|
+| `0` | Gültige Auswertung oder passende Fixture-Erwartung, auch `Blocked`. Bei ungültigem Kriterienwert und erwarteten `Blocked` kann `ProductFailure` mit Exit 0 auftreten. / Valid assessment or matching fixture assertion, including Blocked; a semantic criterion defect can be ProductFailure with exit zero when correctly expected. |
+| `2` | `ProductFailure`: ungültige Struktur/Pfad/Eingabe oder abweichende Fixture-Erwartung. / Invalid structure, path, input or mismatched fixture expectation. |
+| `3` | `ProviderFailure`: Runtime/Interpreter ausgefallen; kein fachlicher Test-Pass. / Runtime failure, never a semantic pass. |
+
+Das JSON enthält genau ein `nextAction`-Objekt mit gleichwertigem `de`-/`en`-Text. `authorityGranted` bleibt false. Kriterien und Gründe stehen als Text, ohne Farbcodierung. Keine Schreib-, Stop-, Neustart- oder Teilmerge-Aktion folgt automatisch. PowerShell-Dot-Sourcing lädt nur `Test-AocSeriesEligibility`; die Funktion setzt `LASTEXITCODE`, das Skript beendet seinen Prozess. / *One nextAction object carries equivalent German/English wording; authorityGranted stays false. Criteria and reasons use text, no colour. No write, cancellation, restart or partial merge follows automatically. Dot-sourcing only loads the function; the function sets LASTEXITCODE, while script execution exits its process.*
+
+Lokale Nachweise: [Security](../../docs/security/series-eligibility.md), [Architektur](../../docs/architecture/series-eligibility.md), [A11Y](../../docs/accessibility/series-eligibility.md), [Plattform-/Agentenreview](checklists/cross-platform.md). Die native Provider-Matrix und Assistenztechnik bleiben dort ausdrücklich offen. / *Local evidence is linked here; native provider-matrix and assistive-technology gaps remain explicit.*
+
+**Nächste sichere Aktion:** Die gültige lokale Fixture lesend prüfen: `bash specs/004-series-eligibility/contracts/validate-series-eligibility.sh --repo . --fixture specs/intake-review-fixtures/meta-lh-04/valid-parallel.json`. / ***Next safe action:** assess the named valid local fixture read-only.*
 
 ## Bestehende Baseline / Existing baseline
 
@@ -32,7 +70,7 @@ pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-el
 ```
 
 
-## Minimale Einheit vor T008 / Minimal unit before T008
+## Historische minimale Einheit vor T008 / Historical minimal unit before T008
 
 **Implementierte Voraussetzung für T008.** T001–T007 und historische Red/Green-/Blocked-Nachweise bleiben erhalten. Die minimale Adaptereinheit umfasst die beiden Hilfeflächen, sicheres PowerShell-Dot-Sourcing, die Manpage und die unveränderten `surface`-/`empty-integration`-Tests. Der aktuelle Nachweis steht unter `phase-results/atomic-surface-t008-verification.json`. / ***Implemented prerequisite for T008.** Preserve T001–T007 and all historical evidence. The minimal adapter unit includes both help surfaces, safe PowerShell dot-sourcing, the manual, and the unchanged `surface`/`empty-integration` tests. Current evidence is stored in the named phase-result file.*
 
@@ -59,7 +97,7 @@ Vor Delivery-Set/Staging neue Evidence in `specs/004-series-eligibility/phase-re
 
 Fehlt ein Bestandteil oder scheitert eine Prüfung, bleibt T008 vor dem Quellencommit blockiert. Der äußere autonome Koordinator übernimmt danach unter aktueller Autorität die script-only Git-Checkpoints und den vollständigen folgenden Statistikvertrag. Modell-Sandboxes dürfen `.git` nicht schreiben; keine Sandboxkonfiguration oder Validatorregel ändern. / *Any missing component or failed check blocks T008 before the source commit. The outer coordinator then owns script-only Git checkpoints and the full statistics protocol under current authority. Model sandboxes may not write .git; change no sandbox configuration or validator rule.*
 
-## Geplanter Red/Green-Slice / Planned red/green slice
+## Historisches Red/Green-Verfahren / Historical red/green procedure
 
 Erst nach akzeptierter Planung und Implementierungsauftrag ausführen. `surface` prüft vollständige Python-ASTs, Bash-Syntax, PowerShell-Parser, Imports und Hilfe sowie einen gültigen delegierten Aufruf. Dann wird `empty-integration` einmal rot und nach der kleinen Werteprüfung grün ausgeführt. Rot wegen fehlender Datei, Runtime oder Syntax ist `ProviderFailure` bzw. Vorbereitungsfehler und kein Test-first-Beleg. / *Run only after plan acceptance and implementation authority. Surface checks all syntax, imports, help and one valid delegated invocation. Run empty-integration red once, add the narrow value check, and rerun green. Missing files/runtimes or syntax errors are preparation failures, not test-first proof.*
 
@@ -72,7 +110,7 @@ python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --r
 
 Erstes fachliches Red: nichtnull Testexit mit isolierter Abweichung für `integration=""`. Green: Tests Exit 0; negative Fixture `Blocked`, `ProductFailure`, Kriteriumsgrund, eine sichere Aktion, null Eingabewrites. Testname, Vorher-/Nachher-Quellhashes und echte Outputs in `phase-results/implementation-red-green.md` festhalten. / *First red is a nonzero test exit for the isolated empty-integration defect. Green is zero with the expected blocked diagnostic and no input writes. Record test name, source hashes and actual outputs in the named evidence file.*
 
-## Breitere geplante Prüfungen / Broader planned checks
+## Referenz für weitergehende Prüfungen / Reference for broader checks
 
 Erst nach Green und der unmittelbaren Statistikgrenze T008 folgen diese Fälle. Dieselbe zusätzliche `unittest`-Testdatei verwendet das bereits etablierte Werkzeug aus Feature 003, temporäre Daten und bestehende Validatoren; keine neue Testwerkzeug- oder CI-Familie. Die Szenarien werden in beiden Shells und auf allen drei nativen Runnern ausgeführt. `all` ist ein fachlicher Gesamtaufruf. Solange die Gate Requirements zusätzlich exakte Einzelaufrufe verlangen, müssen auch diese tatsächlich ausgeführt werden; ein interner Testgruppenname ersetzt keinen protokollierten Prozessaufruf. / *After green and the immediate T008 statistics boundary, use established unittest tooling for additional cases, without a new testing or CI framework; run broader cases using temporary data and existing validators, through both shells on all native runners. The all group is comprehensive. While gate requirements also demand exact individual invocations, execute those invocations too; an internal group name cannot replace an observed process command.*
 
@@ -254,7 +292,7 @@ pwsh -NoProfile -File .specify/presets/autonomous-run-governance/scripts/validat
 
 Vor einem später genehmigten Commit `--staged` und wiederholtes `--intended PFAD` für genau die genehmigten Lieferdateien benutzen. Aktuell keine Staging-/Commit-Aktion. Der Runner darf Plan nicht aus einem Prozess-Exit allein abschließen; er muss Payloadhash, Aufgabenanzahl und Gateaussage prüfen. / *Before a later authorized commit, use staged mode and repeated intended paths for the exact approved delivery set. No staging/commit now. Phase completion requires payload hash, task count and gate proof, not exit alone.*
 
-Nächste sichere Aktion dieser Phase: das geprüfte `plan`-Ergebnis an den Runner zurückgeben. / *This phase's next safe action is returning the validated plan result to the runner.*
+Aktuelle Implementierungsgrenze: T032–T039 lokal prüfen, vor T040 stoppen und das hashgebundene Phasenergebnis an den Runner zurückgeben. / *Current implementation boundary: review T032–T039 locally, stop before T040 and return the hash-bound phase result to the runner.*
 
 ## Verbindliche Review-Präzisierungen / Binding review clarifications
 

@@ -53,3 +53,8 @@ ist der AOC Repository Owner; Reviewer ist die Security-/Architecture-Rolle des
 Feature-032-Slices. Restrisiko bis zur Lieferung: native Linux-/Windows-Parität
 und unabhängiger PR-Review. Re-Evaluation bei Eingabe-, Prozess-, Dependency-,
 Netzwerk-, Produkt- oder Trust-Boundary-Änderung.
+
+
+## Ergänzende Series-Evidence / Additional series evidence
+
+Der lesende META-LH-04-Prüfadapter besitzt einen eigenen [Security-Review](series-eligibility.md). Seine Guard-/Sanitization- und No-start-Belege stammen aus Feature 004; die obigen Rendererbelege werden nicht als Prüfer-Pass übernommen. / *The read-only META-LH-04 adapter has its own security review. Its guard, sanitization and no-start evidence comes from feature 004; renderer evidence above is not reused as an adapter pass.*

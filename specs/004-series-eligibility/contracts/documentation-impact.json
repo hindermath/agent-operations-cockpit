@@ -4,9 +4,9 @@
   "entries": [
     {
       "changeId": "CHG004",
-      "scope": "Feature planning and later bounded eligibility verification/evidence; C001-C004, I001-I002, O001, L001 in-run remediation; bounded EL-STOP-001 statistics/checkpoint ordering remediation; bounded C005 atomic-surface planning remediation",
+      "scope": "META-LH-04 accepted feature; T032-T039 local security, architecture, accessibility/parity reviews, final six-mode manual/quickstart, and targeted quality evidence. Historical planning/remediation lineage retained; T040 and later delivery remain pending.",
       "decision": "UpdateRequired",
-      "rationale": "The accepted spec requires strict assessment, bilingual diagnostics and reproducible evidence. This carries CR-013 forward as the sole feature decision. The local Principle-X factual row and mirror introduce no shared rule or new tooling; retain the single UpdateRequired decision. Constitution Principle II requires the complete current minimal unit, including help/function/manual and reader proof, in the first T008 source commit.",
+      "rationale": "Carry forward exactly CHG004 / UpdateRequired for the feature, tasks, help, reviews, statistics, retrospective and AEPS. The implemented interface requires current bilingual explanation; no new shared rule or distribution authority.",
       "documents": [
         "specs/004-series-eligibility/plan.md",
         "specs/004-series-eligibility/research.md",
@@ -42,7 +42,11 @@
         "specs/004-series-eligibility/phase-results/atomic-surface-remediation-report.md",
         "specs/004-series-eligibility/phase-results/atomic-surface-remediation-validation.json",
         "specs/004-series-eligibility/phase-results/atomic-surface-remediation-execution.json",
-        "specs/004-series-eligibility/phase-results/atomic-surface-remediation-aeps-receipt.md"
+        "specs/004-series-eligibility/phase-results/atomic-surface-remediation-aeps-receipt.md",
+        "docs/security/linked-intake-evidence.md",
+        "specs/004-series-eligibility/phase-results/documentation-validation.json",
+        "specs/004-series-eligibility/phase-results/documentation-review.md",
+        "specs/004-series-eligibility/phase-results/quality-validation.json"
       ],
       "owner": "AOC Repository Owner",
       "audiences": [
@@ -52,18 +56,19 @@
       ],
       "readerPaths": [
         "Entry: intake -> spec -> plan -> quickstart -> interface and evidence -> one safe next action",
-        "Before first T008 source commit: plan -> minimal quickstart prerequisites -> Bash/PowerShell/function help -> docs/man/validate-series-eligibility.1 -> valid local fixture read-only"
+        "Before first T008 source commit: plan -> minimal quickstart prerequisites -> Bash/PowerShell/function help -> docs/man/validate-series-eligibility.1 -> valid local fixture read-only",
+        "Current: spec -> quickstart prerequisites -> final six-mode parameters/exits -> manual and interface/data model -> security/architecture/accessibility/parity evidence -> one read-only valid-fixture action"
       ],
       "canonicalSource": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
-      "navigationImpact": "Feature-local reader path and later evidence links; baseline remains canonical.",
+      "navigationImpact": "Expand existing quickstart/manpage; add descriptive feature evidence links and a security-index cross-reference. Preserve historical T008 and future delivery procedures as explicitly labelled references.",
       "documentClass": "ActiveSemantic",
-      "languageStrategy": "DE-first / EN-second CEFR B2; English paragraph immediately follows German.",
+      "languageStrategy": "German first / equivalent English second, CEFR B2. Adjacent paired text and bilingual table cells; no separate language partner. HTML/AT language evidence remains unverified.",
       "languagePartners": [],
-      "platformAndExampleProof": "specs/004-series-eligibility/quickstart.md; commands and native runner requirements in contracts/validation-commands.json",
+      "platformAndExampleProof": "specs/004-series-eligibility/phase-results/quality-validation.json: actual macOS Bash/PowerShell help, function, fixture and query output; native provider matrix remains Open in checklists/cross-platform.md.",
       "distributionClass": "sourceOnly",
       "homeSyncRequired": false,
-      "evidence": "specs/004-series-eligibility/phase-results/atomic-surface-remediation-report.md",
-      "risk": "C005 planning order repaired only; actual minimal unit and T008 remain pending. Preserve historical Blocked evidence and EL-STOP-002. Coordinator rebinds 7/57 and requires analyze-4 before authorized implement-3. Model sandboxes may not write .git; the outer coordinator owns script-only exact Git/statistics checkpoints. Full native/remote gates remain pending.",
+      "evidence": "specs/004-series-eligibility/phase-results/documentation-validation.json",
+      "risk": "Local review only. T040 statistics/homogeneity, T048 native provider matrix and later independent delivery review remain pending. Browser/AT validation unavailable. No new shared guidance/consumer mutation or remote action. T039 is blocked by three proven historical evidence-hash false positives from the unchanged named gitleaks command (exit 1); no exception or historical evidence rewrite is authorized in this slice.",
       "criticality": "Normal",
       "reevaluationTrigger": "Source, scope, language, platform, evidence or distribution changes.",
       "evidenceMapping": {
@@ -76,11 +81,13 @@
             "specs/004-series-eligibility/contracts/validate-series-eligibility.ps1"
           ],
           "verification": "specs/004-series-eligibility/phase-results/atomic-surface-t008-verification.json",
-          "executionStatus": "Pending"
+          "executionStatus": "Completed; authoritative ignored checkpoint receipt, checkbox already published; preserve immutable T008 evidence."
         },
-        "T027": "Expand existing help/advanced function for six modes/final interface only",
-        "T036": "Expand existing manpage/quickstart for six modes/final documentation only",
-        "historicalEvidence": "All earlier reports and hashes remain immutable; this mapping does not backdate completion."
+        "T027": "Completed by implement-5; source-bound help evidence in phase-results/us3-tests.json",
+        "T036": "Completed in implement-6; expanded existing manpage/quickstart; actual text renders and native local help in phase-results/quality-validation.json",
+        "historicalEvidence": "All earlier reports and hashes remain immutable; this mapping does not backdate completion.",
+        "T031": "Authoritative ignored t031-85b85504-4614-4224-82d8-5e7a2b6fd0d7.json; causal checkbox now prepared for the next coordinator source checkpoint.",
+        "T038": "Both documentation validators and canonical documentation-review.md; one decision only."
       }
     }
   ]

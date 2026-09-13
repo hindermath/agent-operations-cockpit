@@ -24,8 +24,8 @@
   ],
   "tasks": {
     "path": "specs/004-series-eligibility/tasks.md",
-    "sha256": "824034272e99073cb30580ef395c60c173bcf266b1b6a8342ffd158eec586d32",
-    "completed": 30,
+    "sha256": "18d1bd94deb81cb61c909e80ec3187064b8627b6e4df238c293ebc566b2e1b18",
+    "completed": 39,
     "total": 57
   },
   "routing": {
@@ -336,7 +336,7 @@
         "reasoningEffort": "high",
         "preflight": "Completed",
         "exitCode": 0,
-        "updatedAt": "2026-09-13T08:28:22.1946200Z",
+        "updatedAt": "2026-09-13T08:28:22.19462Z",
         "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-5.result.json",
         "resultSha256": "6535b5035b933b9903c076c33d4598d2a0342af19b6d9383ec9908b7fc94a282"
       },
@@ -348,16 +348,50 @@
         "dependsOn": [
           "implement-5"
         ],
+        "status": "Blocked",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T08:52:02.7545Z"
+      },
+      {
+        "phaseId": "implement-6-remediation",
+        "command": "speckit.implement",
+        "routingRole": "long-running-implementation",
+        "runnerProfile": "codex-implementation-auto",
+        "dependsOn": [
+          "implement-5"
+        ],
+        "status": "Completed",
+        "agentFamily": "Codex",
+        "model": "gpt-6-astra",
+        "reasoningEffort": "high",
+        "preflight": "Completed",
+        "exitCode": 0,
+        "updatedAt": "2026-09-13T08:59:33.1149370Z",
+        "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/implement-6-remediation.result.json",
+        "resultSha256": "2860a3bb2bd30187ad3b0a96e61431eb9949dd39f6026520132925dc2829c857"
+      },
+      {
+        "phaseId": "implement-7",
+        "command": "speckit.implement",
+        "routingRole": "long-running-implementation",
+        "runnerProfile": "codex-implementation-auto",
+        "dependsOn": [
+          "implement-6-remediation"
+        ],
         "status": "Pending"
       }
     ]
   },
   "lastPassingGate": "Preflight passed: clean synchronized main, current receipt and Ready review, 14-intake Global Ready gate, aligned model routing, and no competing run.",
-  "nextExactAction": "Complete coordinator checkpoint T031, then run routing phase 'implement-6'.",
+  "nextExactAction": "Complete coordinator checkpoint T040, then run routing phase 'implement-7'.",
   "lastOperation": {
-    "kind": "ModelRoutingPhase:implement-5",
+    "kind": "ModelRoutingPhase:implement-6-remediation",
     "state": "Completed",
-    "summary": "Phase completed with profile 'codex-implementation-auto' and result SHA-256 6535b5035b933b9903c076c33d4598d2a0342af19b6d9383ec9908b7fc94a282."
+    "summary": "Phase completed with profile 'codex-implementation-auto' and result SHA-256 2860a3bb2bd30187ad3b0a96e61431eb9949dd39f6026520132925dc2829c857."
   },
   "stop": {
     "reason": "N/A",
@@ -370,5 +404,5 @@
     "postMergeActions": "N/A",
     "finalValidation": "Pending"
   },
-  "updatedAt": "2026-09-13T08:28:22.1946200Z"
+  "updatedAt": "2026-09-13T08:59:33.1149370Z"
 }
