@@ -58,3 +58,17 @@ pwsh -NoProfile -File specs/003-authoring-contract/contracts/validate-authoring-
 .SH SEE ALSO
 .BR validate-current-evidence-binding (1),
 .BR validate-intake-authoring-receipt (1)
+.SH CHECKPOINT UND AKTUELLE INSTALLATION / CHECKPOINT AND CURRENT INSTALLATION
+Die feste 0.3.0-auf-0.3.1-Bruecke ist historische Reparatur-Evidence des
+Checkpoints ee530952acc8093c9afd8e01b97825a0a1c9ac72. Ihr alter Einzelvalidator
+validate-current-evidence-binding ist fuer diesen Checkpoint bestimmt und
+kein generischer Versions-Check nach spaeteren autorisierten Preset-Rollouts.
+Der aktuelle validate-authoring-contract prueft Checkpoint, laufende Blaetter
+und Transaktion; installierte Release-Identitaeten werden getrennt durch
+Registry/Paket-Hashes und den dokumentierten Rollout geprueft.
+.PP
+The fixed 0.3.0-to-0.3.1 bridge is historical repair-checkpoint evidence. Its
+older standalone validator targets that checkpoint, not arbitrary later preset
+versions. The current authoring-contract validator verifies checkpoint, current
+leaves and transaction; registry/package hashes separately prove the authorized
+installed releases. Historical approvals and receipts are not rewritten.
