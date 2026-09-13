@@ -63,3 +63,16 @@ archive successor. The local authoring profile remains de-DE; generic English
 fixtures continue to pass in review and sequencing. Both authoring-contract
 wrappers pass. Project configuration separately reports a Completed intake still
 stored in the active collection.
+
+Die lokal erweiterte Receipt-Vorlage bleibt bytegleich als hashgebundene Quelle
+von META-LH-03 erhalten, einschliesslich ihres historischen generator.version
+0.3.1. Das ist eine explizite lokale Ausnahme; die installierte Preset-Version
+ist 0.3.2. Neue Receipts muessen die tatsaechliche Generator-Version aus preset.yml
+verwenden. Die historische Vorlage ersetzt keinen Nachweis der aktuellen Version.
+Der laufende META-LH-03-Receipt wird ueber beide Wrapper erneut geprueft.
+
+The locally extended receipt template is preserved byte-for-byte as a hash-bound
+META-LH-03 source, including historical generator.version 0.3.1. This explicit
+local exception does not change installed preset version 0.3.2. New receipts must
+use the actual generator version from preset.yml. The historical template is not
+proof of the current version. Both wrappers revalidate the META-LH-03 receipt.
