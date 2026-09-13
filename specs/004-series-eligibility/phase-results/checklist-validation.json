@@ -47,9 +47,9 @@
   "prerequisite": {
     "standardCommand": "bash .specify/scripts/bash/check-prerequisites.sh --json",
     "exitCode": 1,
-    "output": "ERROR: plan.md not found in /Users/thorstenhindermann/RiderProjects/AgentOperationsCockpit/specs/004-series-eligibility\nRun /speckit-plan first to create the implementation plan.",
+    "output": "ERROR: plan.md not found in specs/004-series-eligibility\nRun /speckit-plan first to create the implementation plan.",
     "disposition": "Expected pre-plan mismatch; explicit user instruction takes precedence. Read-only --json --paths-only resolved the current branch and feature; no plan created.",
-    "resolvedFeatureDirectory": "/Users/thorstenhindermann/RiderProjects/AgentOperationsCockpit/specs/004-series-eligibility",
+    "resolvedFeatureDirectory": "specs/004-series-eligibility",
     "availablePlanningDocuments": []
   },
   "artifactChecks": {
