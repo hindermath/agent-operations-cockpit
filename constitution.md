@@ -1,37 +1,26 @@
 <!--
-Sync Impact Report
-Version change: 1.21.2 -> 1.21.3
-Modified principles:
-- Spec Kit preset governance: pin autonomous-run-governance v0.4.4 and require exact staged-candidate validation.
-- XIX. Spec Kit Governance Presets (align the autonomous governance version with the configured and installed release)
-Added sections:
-- None
-Removed sections:
-- None
-Templates requiring updates:
-- ✅ .specify/templates/agent-file-template.md
-- ✅ .specify/templates/plan-template.md
-- ✅ .specify/templates/spec-template.md
-- ✅ .specify/templates/tasks-template.md
-- ✅ scripts/templates/speckit-workflow-section.md
-- ✅ scripts/templates/AGENTS.md.tmpl
-- ✅ scripts/templates/CLAUDE.md.tmpl
-- ✅ scripts/templates/GEMINI.md.tmpl
-- ✅ scripts/templates/copilot-instructions.tmpl
-Runtime guidance requiring updates:
-- ✅ .specify/memory/constitution.md (mirror)
-- ✅ AGENTS.md
-- ✅ CLAUDE.md
-- ✅ GEMINI.md
-- ✅ .github/copilot-instructions.md
-- ✅ .github/agents/copilot-instructions.md
-New scripts:
-- None
-Follow-up TODOs:
-- None.
+Sync Impact Report / Sync-Auswirkungsbericht
+Version change: 1.21.3 -> 1.21.4 (local factual clarification under Principle X)
+Authority: explicit 2026-09-13 analysis-remediation instruction, C001.
+Modified principles: None; shared rules and existing registry rows unchanged.
+Added sections: None; add the factual RiderProjects/AgentOperationsCockpit row.
+Removed sections: None.
+Amendment status: locally prepared for the feature PR; no PR or merge performed.
+LAST_AMENDED_DATE remains the last actual amendment merge date, 2026-09-12.
+At authorized feature merge, record its observed date in both copies at closeout.
+Templates reviewed, no update required: .specify/templates/plan-template.md,
+  spec-template.md, tasks-template.md, agent-file-template.md; scripts/templates/.
+Runtime guidance reviewed, no update required: AGENTS.md, CLAUDE.md, GEMINI.md,
+  .github/copilot-instructions.md, .github/agents/copilot-instructions.md;
+  existing Spec-Kit surfaces. No runtime, tooling, shared rule or statistics change.
+Mirror: .specify/memory/constitution.md remains byte-identical.
+Evidence: specs/004-series-eligibility/phase-results/analysis-remediation-report.md.
+DE: Lokale Tatsachenergänzung; gemeinsame Regeln bleiben unverändert. PR und
+  Amendment-Mergedatum folgen erst bei autorisierter Lieferung.
+EN: Local factual clarification; shared rules remain unchanged. PR and actual
+  amendment merge date follow only during authorized delivery.
 -->
-
-# Constitution v1.21.3
+# Constitution v1.21.4
 
 # home-baseline Constitution
 
@@ -930,6 +919,7 @@ project context.
 
 | Level-2 Project | Runtime / Language | Build & Test Baseline | Docs / A11Y Baseline | Statistics Baseline | Agent Surfaces |
 |---|---|---|---|---|---|
+| `RiderProjects/AgentOperationsCockpit` | Python 3.9+ Standardbibliothek; Bash 5+/PowerShell Core 7+ Governance-Skripte; C#/.NET ist Produktkontext, kein vorhandenes Feature-Runtime-Scaffold. / Python standard library and governance scripts; C#/.NET is product context, no current feature runtime scaffold. | Bestehende Python `unittest`-Tests (z. B. `specs/003-authoring-contract/contracts/test_validate_authoring_contract.py`, `scripts/tests/test_home_sync_files.py`) und gepaarte native Bash-/PowerShell-Validierung einschließlich Sequencing-Suite; bestehende GitHub-Workflow-Matrix, keine neue Testwerkzeugfamilie. / Existing unittest, paired native validation/sequencing suites and workflow matrix; no new tooling family. | `docs/` und CLI: DE-first/EN-second, CEFR B2, WCAG 2.2 AA soweit anwendbar; Homogeneity, Help-/Manpage- und semantische A11Y-Prüfung. / Docs and CLI with paired language, B2 and applicable AA review. | Manuell `80`, Thorsten-Solo `125` Zeilen/Arbeitstag; Profil 2, Methodik v2, `docs/project-statistics.config.json` und bestehende Renderer. / Manual 80, solo 125 lines/workday; Profile 2 and methodology v2. | `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.github/copilot-instructions.md`, `.github/agents/copilot-instructions.md`, Spec-Kit surfaces (`.agents/skills/`, `.specify/`, generated commands/prompts) |
 | `C64Projects/cc65` | C/C89-oriented host tools, 6502 assembler/runtime libraries, C64 and 8-bit target support | GNU `make`; `make`, `make test`, `make check`, `make checkstyle`, `make -C targettest SYS=c64` | `doc/`, `samples/`, generated `html/`; DE-first/EN-second additions where local scope allows; no color-only meaning | Manual conservative `80` lines/workday; no C# default unless a justified Thorsten-Solo baseline is documented | `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.github/copilot-instructions.md`, Spec-Kit command/prompt surfaces |
 | `container-images/absdd-image-sandbox` | Python helper scripts plus Bash/PowerShell automation for a Docker/Podman Compose agent-sandbox image | `podman compose config --no-interpolate`; `podman compose build --pull`; `podman compose up -d`; `uvx pre-commit run --all-files`; SBOM scripts under `scripts/` | README, compliance plan, `docs/security/`, audit-log guidance, SBOM notes, and CLI output remain text-first and WCAG 2.2 AA-oriented where applicable | Manual conservative `80`; no C#/.NET default | `AGENTS.md`, `COMPLIANCE-PLAN_RL-SE-001.md`, `.gitlab/` review surfaces, container/security docs, and local hook surfaces |
 | `RiderProjects/InventarWorkerService` | .NET 10 / C# 14 multi-project inventory solution: worker/API, harvester, Terminal UI, shared libraries, SQLite/MongoDB/PostgreSQL | `dotnet restore/build/test` on `InventarWorkerService.sln`; MSTest unit/integration tests; Playwright setup when required | DocFX output and learner-facing docs require text-oriented A11Y review; generated `api/` and `_site/` remain build artefacts | Manual conservative `80`; repo-specific Thorsten-Solo `100` lines/workday unless all agent files change it | `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.github/copilot-instructions.md`, Spec-Kit surfaces |
@@ -1162,7 +1152,7 @@ Community/catalog coordination is tracked in `github/spec-kit#2362`.
 `.github/copilot-instructions.md` for per-agent operational guidance. This
 constitution is the authoritative policy layer above all agent-specific files.
 
-**Version**: 1.21.3 | **Ratified**: 2026-03-31 | **Last Amended**: 2026-09-12
+**Version**: 1.21.4 | **Ratified**: 2026-03-31 | **Last Amended**: 2026-09-12
 
 <!-- EN: constitution.md placeholder
 [DE-Zusammenfassung: constitution.md beschreibt die Prinzipien und Standards für alle home-baseline Workspaces.]

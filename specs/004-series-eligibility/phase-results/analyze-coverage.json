@@ -1,0 +1,1647 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "analyze",
+  "metrics": {
+    "functionalRequirements": 9,
+    "nonFunctionalRequirements": 3,
+    "constitutionRequirements": 14,
+    "buildableSuccessCriteria": 5,
+    "excludedBusinessKpis": 0,
+    "specObligations": 31,
+    "importedAcceptanceCriteria": 5,
+    "totalMappedObligations": 36,
+    "baselineFrScRequirementCount": 14,
+    "baselineFrScCoveragePercent": 100,
+    "extendedCoveragePercent": 100,
+    "requirementsWithoutTasks": 0,
+    "totalTasks": 54,
+    "checkedImplementationTasks": 0,
+    "unmappedTaskCount": 0,
+    "userStories": 3,
+    "storyAcceptanceScenarios": 10,
+    "taskPhases": 6,
+    "parallelMarkedTasks": 4,
+    "taskDependencyCycles": 0,
+    "catalogCommands": 43,
+    "existingCatalogCommands": 23,
+    "plannedCatalogCommands": 20,
+    "declaredGates": 54,
+    "applicableGates": 41,
+    "notApplicableGates": 13,
+    "mappedGates": 54,
+    "resolvedPlanReviewFindings": 7,
+    "reopenedPlanReviewFindings": 0,
+    "findingsBySeverity": {
+      "Critical": 4,
+      "High": 0,
+      "Medium": 3,
+      "Low": 1
+    },
+    "unresolvedMedium": 3,
+    "ambiguityCount": 1,
+    "duplicationCount": 0,
+    "findingsTotal": 8,
+    "overflowFindings": 0
+  },
+  "coverage": [
+    {
+      "requirementId": "FR-001",
+      "hasTask": true,
+      "taskIds": [
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T013",
+        "T014",
+        "T015"
+      ],
+      "notes": "Sechs Modi / Six modes"
+    },
+    {
+      "requirementId": "FR-002",
+      "hasTask": true,
+      "taskIds": [
+        "T008",
+        "T010",
+        "T014",
+        "T015"
+      ],
+      "notes": "Exakt neun Kriterien / Exactly nine criteria"
+    },
+    {
+      "requirementId": "FR-003",
+      "hasTask": true,
+      "taskIds": [
+        "T006",
+        "T007",
+        "T009",
+        "T011",
+        "T014",
+        "T015"
+      ],
+      "notes": "Parallelgrenze / Parallel boundary"
+    },
+    {
+      "requirementId": "FR-004",
+      "hasTask": true,
+      "taskIds": [
+        "T016",
+        "T017",
+        "T018",
+        "T019",
+        "T020",
+        "T021"
+      ],
+      "notes": "Hashes, Graph und Lifecycle / Hashes, graph and lifecycle"
+    },
+    {
+      "requirementId": "FR-005",
+      "hasTask": true,
+      "taskIds": [
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T014",
+        "T016",
+        "T017",
+        "T018",
+        "T019",
+        "T020",
+        "T025"
+      ],
+      "notes": "Konkrete Blocker / Specific blockers"
+    },
+    {
+      "requirementId": "FR-006",
+      "hasTask": true,
+      "taskIds": [
+        "T022",
+        "T023",
+        "T024",
+        "T025",
+        "T026",
+        "T029",
+        "T030",
+        "T034",
+        "T036"
+      ],
+      "notes": "Null Writes und Starts / Zero writes and starts"
+    },
+    {
+      "requirementId": "FR-007",
+      "hasTask": true,
+      "taskIds": [
+        "T022",
+        "T023",
+        "T024",
+        "T025",
+        "T034",
+        "T036"
+      ],
+      "notes": "Getrennte Achsen / Separate axes"
+    },
+    {
+      "requirementId": "FR-008",
+      "hasTask": true,
+      "taskIds": [
+        "T012",
+        "T013",
+        "T023",
+        "T024",
+        "T034",
+        "T036"
+      ],
+      "notes": "Receipt-Reuse und Fehlerklassen / Receipt reuse and failure classes"
+    },
+    {
+      "requirementId": "FR-009",
+      "hasTask": true,
+      "taskIds": [
+        "T009",
+        "T011",
+        "T013",
+        "T025",
+        "T030",
+        "T043",
+        "T044",
+        "T045",
+        "T046",
+        "T047",
+        "T048",
+        "T049",
+        "T050",
+        "T051",
+        "T052",
+        "T053",
+        "T054"
+      ],
+      "notes": "Stop, Recovery und Autorität / Stop, recovery and authority"
+    },
+    {
+      "requirementId": "NFR-001",
+      "hasTask": true,
+      "taskIds": [
+        "T013",
+        "T022",
+        "T025",
+        "T026",
+        "T029",
+        "T030",
+        "T033",
+        "T035",
+        "T036"
+      ],
+      "notes": "Textzustände / Text states"
+    },
+    {
+      "requirementId": "NFR-002",
+      "hasTask": true,
+      "taskIds": [
+        "T013",
+        "T026",
+        "T033",
+        "T035",
+        "T036",
+        "T037"
+      ],
+      "notes": "DE/EN und CEFR B2 / DE/EN and CEFR B2"
+    },
+    {
+      "requirementId": "NFR-003",
+      "hasTask": true,
+      "taskIds": [
+        "T014",
+        "T020",
+        "T027",
+        "T028",
+        "T029",
+        "T030",
+        "T034",
+        "T036",
+        "T038",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "notes": "Native Parität / Native parity"
+    },
+    {
+      "requirementId": "CR-001",
+      "hasTask": true,
+      "taskIds": [
+        "T001",
+        "T003",
+        "T034"
+      ],
+      "notes": "Zuordnung vorhanden; C001 offen / Mapped; C001 open"
+    },
+    {
+      "requirementId": "CR-002",
+      "hasTask": true,
+      "taskIds": [
+        "T033",
+        "T035",
+        "T036"
+      ],
+      "notes": "Gerenderter Leserpfad / Rendered reader path"
+    },
+    {
+      "requirementId": "CR-003",
+      "hasTask": true,
+      "taskIds": [
+        "T013",
+        "T026",
+        "T033",
+        "T035",
+        "T036",
+        "T037"
+      ],
+      "notes": "Sprachpaarung / Language pairing"
+    },
+    {
+      "requirementId": "CR-004",
+      "hasTask": true,
+      "taskIds": [
+        "T015",
+        "T021",
+        "T030",
+        "T039",
+        "T052"
+      ],
+      "notes": "Phasenpflege unvollständig: C004 / Incomplete phase maintenance: C004"
+    },
+    {
+      "requirementId": "CR-005",
+      "hasTask": true,
+      "taskIds": [
+        "T003",
+        "T004",
+        "T010",
+        "T011",
+        "T018",
+        "T019",
+        "T031",
+        "T038"
+      ],
+      "notes": "MSL und begrenzte Adapter / MSL and bounded adapters"
+    },
+    {
+      "requirementId": "CR-006",
+      "hasTask": true,
+      "taskIds": [
+        "T031"
+      ],
+      "notes": "SSDF/CWE und Matrix / SSDF/CWE and matrix"
+    },
+    {
+      "requirementId": "CR-007",
+      "hasTask": true,
+      "taskIds": [
+        "T031",
+        "T042"
+      ],
+      "notes": "ASVS N/A begründet / ASVS N/A justified"
+    },
+    {
+      "requirementId": "CR-008",
+      "hasTask": true,
+      "taskIds": [
+        "T031",
+        "T042",
+        "T044"
+      ],
+      "notes": "Release-Anwendbarkeit / Release applicability"
+    },
+    {
+      "requirementId": "CR-009",
+      "hasTask": true,
+      "taskIds": [
+        "T031",
+        "T042"
+      ],
+      "notes": "AI-SBOM N/A / AI-SBOM N/A"
+    },
+    {
+      "requirementId": "CR-010",
+      "hasTask": true,
+      "taskIds": [
+        "T016",
+        "T018",
+        "T019",
+        "T031",
+        "T032"
+      ],
+      "notes": "Bedrohungsmodell / Threat model"
+    },
+    {
+      "requirementId": "CR-011",
+      "hasTask": true,
+      "taskIds": [
+        "T031"
+      ],
+      "notes": "Lokaler Security-Nachweis / Local security evidence"
+    },
+    {
+      "requirementId": "CR-012",
+      "hasTask": true,
+      "taskIds": [
+        "T001",
+        "T002",
+        "T003",
+        "T031",
+        "T032",
+        "T033",
+        "T034",
+        "T041",
+        "T042",
+        "T043",
+        "T044",
+        "T045",
+        "T046",
+        "T047",
+        "T048",
+        "T049",
+        "T050",
+        "T051",
+        "T052",
+        "T053",
+        "T054"
+      ],
+      "notes": "Governance und Liefergrenzen / Governance and delivery bounds"
+    },
+    {
+      "requirementId": "CR-013",
+      "hasTask": true,
+      "taskIds": [
+        "T035",
+        "T037",
+        "T046"
+      ],
+      "notes": "Eine Dokumentationsentscheidung / One documentation decision"
+    },
+    {
+      "requirementId": "CR-014",
+      "hasTask": true,
+      "taskIds": [
+        "T040",
+        "T041",
+        "T042",
+        "T052",
+        "T053",
+        "T054"
+      ],
+      "notes": "Siebenteilige Retrospektive; L001 / Seven-part retrospective; L001"
+    },
+    {
+      "requirementId": "SC-001",
+      "hasTask": true,
+      "taskIds": [
+        "T005",
+        "T014",
+        "T015",
+        "T047"
+      ],
+      "notes": "Drei gebundene Fixtures / Three bound fixtures"
+    },
+    {
+      "requirementId": "SC-002",
+      "hasTask": true,
+      "taskIds": [
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T014",
+        "T016",
+        "T017",
+        "T018",
+        "T019",
+        "T020",
+        "T021",
+        "T047"
+      ],
+      "notes": "Negative Kriterien und Graphfälle / Negative criteria and graph cases"
+    },
+    {
+      "requirementId": "SC-003",
+      "hasTask": true,
+      "taskIds": [
+        "T022",
+        "T023",
+        "T024",
+        "T025",
+        "T029",
+        "T030",
+        "T047"
+      ],
+      "notes": "Wiederholung ohne Änderungen / Repeat without changes"
+    },
+    {
+      "requirementId": "SC-004",
+      "hasTask": true,
+      "taskIds": [
+        "T027",
+        "T028",
+        "T029",
+        "T030",
+        "T034",
+        "T036",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "notes": "Drei native Plattformen / Three native platforms"
+    },
+    {
+      "requirementId": "SC-005",
+      "hasTask": true,
+      "taskIds": [
+        "T031",
+        "T032",
+        "T033",
+        "T034",
+        "T035",
+        "T036",
+        "T037",
+        "T040",
+        "T041",
+        "T042",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "notes": "Semantischer Review / Semantic review"
+    },
+    {
+      "requirementId": "AC-001",
+      "hasTask": true,
+      "taskIds": [
+        "T017",
+        "T019",
+        "T020",
+        "T021",
+        "T047"
+      ],
+      "notes": "Series-Validatoren / Series validators"
+    },
+    {
+      "requirementId": "AC-002",
+      "hasTask": true,
+      "taskIds": [
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T012",
+        "T014",
+        "T017",
+        "T020",
+        "T047"
+      ],
+      "notes": "Originale und negative Suite / Original and negative suite"
+    },
+    {
+      "requirementId": "AC-003",
+      "hasTask": true,
+      "taskIds": [
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T014",
+        "T015"
+      ],
+      "notes": "Kriterienkardinalität / Criteria cardinality"
+    },
+    {
+      "requirementId": "AC-004",
+      "hasTask": true,
+      "taskIds": [
+        "T022",
+        "T023",
+        "T024",
+        "T025",
+        "T026",
+        "T029",
+        "T034",
+        "T036"
+      ],
+      "notes": "Read-only Next / Read-only next"
+    },
+    {
+      "requirementId": "AC-005",
+      "hasTask": true,
+      "taskIds": [
+        "T031",
+        "T032",
+        "T033",
+        "T034",
+        "T035",
+        "T036",
+        "T037",
+        "T042",
+        "T050"
+      ],
+      "notes": "Intake-/Sprach-/Scope-Review / Intake, language and scope review"
+    }
+  ],
+  "taskCoverage": {
+    "T001": [
+      "CR-001",
+      "CR-012"
+    ],
+    "T002": [
+      "CR-012"
+    ],
+    "T003": [
+      "CR-001",
+      "CR-005",
+      "CR-012"
+    ],
+    "T004": [
+      "CR-005"
+    ],
+    "T005": [
+      "SC-001",
+      "AC-002"
+    ],
+    "T006": [
+      "FR-003",
+      "AC-002"
+    ],
+    "T007": [
+      "FR-003",
+      "AC-002"
+    ],
+    "T008": [
+      "FR-001",
+      "FR-002",
+      "FR-005",
+      "SC-002",
+      "AC-002",
+      "AC-003"
+    ],
+    "T009": [
+      "FR-001",
+      "FR-003",
+      "FR-005",
+      "FR-009",
+      "SC-002",
+      "AC-002",
+      "AC-003"
+    ],
+    "T010": [
+      "FR-001",
+      "FR-002",
+      "FR-005",
+      "CR-005",
+      "SC-002",
+      "AC-003"
+    ],
+    "T011": [
+      "FR-001",
+      "FR-003",
+      "FR-005",
+      "FR-009",
+      "CR-005",
+      "SC-002",
+      "AC-003"
+    ],
+    "T012": [
+      "FR-005",
+      "FR-008",
+      "SC-002",
+      "AC-002"
+    ],
+    "T013": [
+      "FR-001",
+      "FR-005",
+      "FR-008",
+      "FR-009",
+      "NFR-001",
+      "NFR-002",
+      "CR-003",
+      "SC-002"
+    ],
+    "T014": [
+      "FR-001",
+      "FR-002",
+      "FR-003",
+      "FR-005",
+      "NFR-003",
+      "SC-001",
+      "SC-002",
+      "AC-002",
+      "AC-003"
+    ],
+    "T015": [
+      "FR-001",
+      "FR-002",
+      "FR-003",
+      "CR-004",
+      "SC-001",
+      "AC-003"
+    ],
+    "T016": [
+      "FR-004",
+      "FR-005",
+      "CR-010",
+      "SC-002"
+    ],
+    "T017": [
+      "FR-004",
+      "FR-005",
+      "SC-002",
+      "AC-001",
+      "AC-002"
+    ],
+    "T018": [
+      "FR-004",
+      "FR-005",
+      "CR-005",
+      "CR-010",
+      "SC-002"
+    ],
+    "T019": [
+      "FR-004",
+      "FR-005",
+      "CR-005",
+      "CR-010",
+      "SC-002",
+      "AC-001"
+    ],
+    "T020": [
+      "FR-004",
+      "FR-005",
+      "NFR-003",
+      "SC-002",
+      "AC-001",
+      "AC-002"
+    ],
+    "T021": [
+      "FR-004",
+      "CR-004",
+      "SC-002",
+      "AC-001"
+    ],
+    "T022": [
+      "FR-006",
+      "FR-007",
+      "NFR-001",
+      "SC-003",
+      "AC-004"
+    ],
+    "T023": [
+      "FR-006",
+      "FR-007",
+      "FR-008",
+      "SC-003",
+      "AC-004"
+    ],
+    "T024": [
+      "FR-006",
+      "FR-007",
+      "FR-008",
+      "SC-003",
+      "AC-004"
+    ],
+    "T025": [
+      "FR-005",
+      "FR-006",
+      "FR-007",
+      "FR-009",
+      "NFR-001",
+      "SC-003",
+      "AC-004"
+    ],
+    "T026": [
+      "FR-006",
+      "NFR-001",
+      "NFR-002",
+      "CR-003",
+      "AC-004"
+    ],
+    "T027": [
+      "NFR-003",
+      "SC-004"
+    ],
+    "T028": [
+      "NFR-003",
+      "SC-004"
+    ],
+    "T029": [
+      "FR-006",
+      "NFR-001",
+      "NFR-003",
+      "SC-003",
+      "SC-004",
+      "AC-004"
+    ],
+    "T030": [
+      "FR-006",
+      "FR-009",
+      "NFR-001",
+      "NFR-003",
+      "CR-004",
+      "SC-003",
+      "SC-004"
+    ],
+    "T031": [
+      "CR-005",
+      "CR-006",
+      "CR-007",
+      "CR-008",
+      "CR-009",
+      "CR-010",
+      "CR-011",
+      "CR-012",
+      "SC-005",
+      "AC-005"
+    ],
+    "T032": [
+      "CR-010",
+      "CR-012",
+      "SC-005",
+      "AC-005"
+    ],
+    "T033": [
+      "NFR-001",
+      "NFR-002",
+      "CR-002",
+      "CR-003",
+      "CR-012",
+      "SC-005",
+      "AC-005"
+    ],
+    "T034": [
+      "FR-006",
+      "FR-007",
+      "FR-008",
+      "NFR-003",
+      "CR-001",
+      "CR-012",
+      "SC-004",
+      "SC-005",
+      "AC-004",
+      "AC-005"
+    ],
+    "T035": [
+      "NFR-001",
+      "NFR-002",
+      "CR-002",
+      "CR-003",
+      "CR-013",
+      "SC-005",
+      "AC-005"
+    ],
+    "T036": [
+      "FR-006",
+      "FR-007",
+      "FR-008",
+      "NFR-001",
+      "NFR-002",
+      "NFR-003",
+      "CR-002",
+      "CR-003",
+      "SC-004",
+      "SC-005",
+      "AC-004",
+      "AC-005"
+    ],
+    "T037": [
+      "NFR-002",
+      "CR-003",
+      "CR-013",
+      "SC-005",
+      "AC-005"
+    ],
+    "T038": [
+      "NFR-003",
+      "CR-005"
+    ],
+    "T039": [
+      "CR-004"
+    ],
+    "T040": [
+      "CR-014",
+      "SC-005"
+    ],
+    "T041": [
+      "CR-012",
+      "CR-014",
+      "SC-005"
+    ],
+    "T042": [
+      "CR-007",
+      "CR-008",
+      "CR-009",
+      "CR-012",
+      "CR-014",
+      "SC-005",
+      "AC-005"
+    ],
+    "T043": [
+      "FR-009",
+      "CR-012"
+    ],
+    "T044": [
+      "FR-009",
+      "CR-008",
+      "CR-012"
+    ],
+    "T045": [
+      "FR-009",
+      "CR-012"
+    ],
+    "T046": [
+      "FR-009",
+      "CR-012",
+      "CR-013"
+    ],
+    "T047": [
+      "FR-009",
+      "NFR-003",
+      "CR-012",
+      "SC-001",
+      "SC-002",
+      "SC-003",
+      "SC-004",
+      "AC-001",
+      "AC-002"
+    ],
+    "T048": [
+      "FR-009",
+      "NFR-003",
+      "CR-012",
+      "SC-004",
+      "SC-005"
+    ],
+    "T049": [
+      "FR-009",
+      "NFR-003",
+      "CR-012",
+      "SC-004",
+      "SC-005"
+    ],
+    "T050": [
+      "FR-009",
+      "CR-012",
+      "SC-005",
+      "AC-005"
+    ],
+    "T051": [
+      "FR-009",
+      "CR-012"
+    ],
+    "T052": [
+      "FR-009",
+      "CR-004",
+      "CR-012",
+      "CR-014"
+    ],
+    "T053": [
+      "FR-009",
+      "CR-012",
+      "CR-014"
+    ],
+    "T054": [
+      "FR-009",
+      "CR-012",
+      "CR-014"
+    ]
+  },
+  "gateCoverage": [
+    {
+      "gateId": "EL-linux-bash-baseline",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-bash-strict",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-bash-query",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-pwsh-baseline",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-pwsh-strict",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-pwsh-query",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-sequencing",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-runner-cardinality",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-pssa",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-bash-baseline",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-bash-strict",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-bash-query",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-pwsh-baseline",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-pwsh-strict",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-pwsh-query",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-sequencing",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-runner-cardinality",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-pssa",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-bash-baseline",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-bash-strict",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-bash-query",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-pwsh-baseline",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-pwsh-strict",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-pwsh-query",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-sequencing",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-runner-cardinality",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-pssa",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-ready",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T001",
+        "T043"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-red-green",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-homogeneity-linux",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T039",
+        "T048"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-homogeneity-windows",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T039",
+        "T048"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-secrets",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T038",
+        "T048"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-public-readiness",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T048"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-documentation",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T037"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-statistics",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T015",
+        "T021",
+        "T030",
+        "T039",
+        "T052"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-security",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T031"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-architecture",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T032"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-accessibility",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T033",
+        "T036"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-parity",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T034",
+        "T036",
+        "T047"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-retrospective",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T040",
+        "T052"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-aeps",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T041",
+        "T052"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-product-build",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-asvs",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-release-supply-chain",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-ai-sbom",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-cloud",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-regulatory",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-privacy-publication",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-new-adr",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-visual-media",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-write-preview",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-shared-guidance",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-remote-delivery",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-parallel-provider-level0",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    }
+  ],
+  "findings": [
+    {
+      "id": "C001",
+      "category": "Constitution",
+      "severity": "Critical",
+      "locations": [
+        "constitution.md:297-318",
+        ".specify/memory/constitution.md:297-318",
+        "specs/004-series-eligibility/spec.md:93",
+        "specs/004-series-eligibility/plan.md:33",
+        "specs/004-series-eligibility/tasks.md:20"
+      ],
+      "summaryDe": "CR-001/Plan ersetzen den fehlenden AOC-Verfassungsanhang durch AGENTS-Kontext. Prinzip X verlangt lokale Runtime-, Build/Test-, Docs/A11Y-, Statistik- und Agentenangaben in der Verfassung bzw. einen passenden Registry-Eintrag. Beide Verfassungsdateien sind identische generische Kopien ohne AOC-Eintrag; T003 prüft nur dessen Fehlen.",
+      "summaryEn": "CR-001 and the plan substitute AGENTS context for the missing AOC constitutional addendum. Principle X requires local runtime, build/test, docs/accessibility, statistics and agent facts in the constitution or a matching registry entry. Both constitutional files are identical generic copies; T003 only checks the absence.",
+      "remediationDe": "Koordinator muss einen separat autorisierten lokalen Verfassungs-/Spiegel-Abgleich nach bestehendem Amendment-Verfahren veranlassen, der die tatsächliche AOC-Umgebung ergänzt, ohne gemeinsame Regeln zu schwächen. Danach CR-001, Plan und T003 auf den akzeptierten lokalen Vertrag beziehen; Readiness und Analyze erneut prüfen.",
+      "remediationEn": "Coordinator must arrange a separately authorised local constitutional/addendum and mirror update under the existing amendment process, preserving shared rules, then align CR-001, plan and T003 and rerun readiness and Analyze.",
+      "disposition": "Open"
+    },
+    {
+      "id": "C002",
+      "category": "Constitution",
+      "severity": "Critical",
+      "locations": [
+        "constitution.md:186-203",
+        "specs/004-series-eligibility/plan.md:22",
+        "specs/004-series-eligibility/tasks.md:27-28",
+        "specs/004-series-eligibility/tasks.md:39",
+        "specs/004-series-eligibility/tasks.md:82"
+      ],
+      "summaryDe": "Prinzip V verbietet neue automatisierte Testwerkzeuge ohne formale, in der Verfassung dokumentierte Entscheidung. Plan und T005 bauen einen neuen unittest-Harness samt CI-Einbindung. Keine solche AOC-Entscheidung ist dokumentiert. Standardbibliothek und fehlende neue Pakete allein erfüllen diese Pflicht nicht.",
+      "summaryEn": "Principle V prohibits adding automated test tooling without a formal decision documented in the constitution. The plan and T005 add a unittest harness and CI integration, with no recorded AOC decision. Standard-library reuse and absence of new packages do not themselves satisfy that requirement.",
+      "remediationDe": "Vor T005 die eng begrenzte AOC-Testwerkzeugentscheidung separat nach dem Verfassungsverfahren dokumentieren und den Plan daran binden; alternativ vollständig mit nachweislich bereits autorisiertem Werkzeug planen. Keine Ausnahme allein aus früheren grünen Reviews ableiten.",
+      "remediationEn": "Before T005, separately record the bounded AOC test-tooling decision through constitutional governance and bind the plan to it, or use demonstrably already authorised tooling throughout. Earlier passing reviews do not establish the missing exception.",
+      "disposition": "Open"
+    },
+    {
+      "id": "C003",
+      "category": "Constitution",
+      "severity": "Critical",
+      "locations": [
+        "constitution.md:992",
+        "specs/004-series-eligibility/tasks.md:10",
+        "specs/004-series-eligibility/tasks.md:110-113",
+        "specs/004-series-eligibility/research.md:15-21"
+      ],
+      "summaryDe": "T051-T054 planen vollständigen Merge-Abschluss, während Tasks-Zeile 10 Rename, Archive und Lifecycle-Writes dauerhaft ausschließen. Die Rename-Pflicht steht in der Verfassung selbst, nicht nur in einer generischen Vorlage: Nach vollständigem Merge ist der Rename-Commit als letzter Polish-Schritt vorgeschrieben.",
+      "summaryEn": "T051-T054 plan full merged completion while tasks line 10 permanently excludes rename, archive and lifecycle writes. The rename obligation is in the constitution itself, not merely a generic template: it requires a rename commit as the last polish step after full merge.",
+      "remediationDe": "Den Lieferplan mit der unveränderten Verfassung versöhnen: separat autorisierten, hash-/lineage-sicheren Rename-Abschluss mit nötiger Receipt-/Review-/Global-Ready-Revalidierung konkret einplanen; bis dahin kein vollständiges MergeAndSync-Completed. Falls dauerhafter Quellschutz gewollt ist, benötigt die Verfassungsregel eine separate ausdrückliche Amendment-Entscheidung; Analyze darf sie nicht auslegen oder abschwächen.",
+      "remediationEn": "Reconcile delivery with the unchanged constitution by planning separately authorised, hash/lineage-safe rename closeout and the required receipt/review/global-Ready revalidation; no full MergeAndSync completion meanwhile. Permanent source protection instead requires a separate explicit constitutional amendment, never an Analyze waiver.",
+      "disposition": "Open"
+    },
+    {
+      "id": "C004",
+      "category": "Constitution",
+      "severity": "Critical",
+      "locations": [
+        "constitution.md:211-221",
+        "specs/004-series-eligibility/spec.md:96",
+        "specs/004-series-eligibility/tasks.md:22-31",
+        "specs/004-series-eligibility/tasks.md:49",
+        "specs/004-series-eligibility/tasks.md:148"
+      ],
+      "summaryDe": "Phase 2 enthält tatsächliche Implementierung T004-T007 und einen Abschlusscheckpoint, aber keine Statistikpflege. Der erste Renderer-Schritt folgt erst nach der weiteren Implementierungsphase US1 in T015. CR-004 und Prinzip VI verlangen Pflege nach jeder abgeschlossenen Implementierungsphase.",
+      "summaryEn": "Phase 2 contains actual implementation T004-T007 and a completion checkpoint but no statistics update. Rendering first occurs after the next implementation phase, US1, at T015. CR-004 and Principle VI require maintenance after every completed implementation phase.",
+      "remediationDe": "Am Ende von Phase 2, nach dem unveränderten Red/Green-Slice und vor T008, Hilfe/Vorschau/Render/beide Check-Modi samt ehrlicher Git-Quellrevision als explizite Aufgabe oder T007-Abschluss erweitern. Reiner Setup-/Analysearbeit keine Implementierungsstatistik zuschreiben.",
+      "remediationEn": "At the end of phase 2, after the unchanged red/green slice and before T008, explicitly add help/preview/render/both checks with honest Git source revision, either as a task or T007 closeout. Do not manufacture implementation statistics for setup or analysis.",
+      "disposition": "Open"
+    },
+    {
+      "id": "I001",
+      "category": "Inconsistency",
+      "severity": "Medium",
+      "locations": [
+        "specs/004-series-eligibility/tasks.md:18"
+      ],
+      "summaryDe": "T001 bindet den obligatorischen Analyze-Preflight an specs/004-series-eligibility/analysis.md. Dieser Pfad existiert nicht und darf in dieser Phase nicht erzeugt werden. Der zulässige Bericht liegt unter phase-results; es gibt keine dokumentierte Weiterleitung.",
+      "summaryEn": "T001 binds the mandatory Analyze preflight to specs/004-series-eligibility/analysis.md, which is absent and cannot be created by this phase. The authorised report is under phase-results, with no documented redirection.",
+      "remediationDe": "T001 auf phase-results/analyze-report.md und den aktuellen hashgebundenen Analyze-Runner-Resultatpfad umstellen; ein bloß vorhandener Bericht genügt nicht, Outcome und Gates müssen bestehen. Kein zweites Analyseartefakt außerhalb phase-results erzeugen.",
+      "remediationEn": "Point T001 to phase-results/analyze-report.md and the current hash-bound Analyze runner result; require passing outcome and gates, not mere report existence. Do not create an additional report outside phase-results.",
+      "disposition": "Open"
+    },
+    {
+      "id": "I002",
+      "category": "Inconsistency",
+      "severity": "Medium",
+      "locations": [
+        "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json:549",
+        "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json:617",
+        "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json:635",
+        "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json:654",
+        "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json:744",
+        "specs/004-series-eligibility/tasks.md:27-29",
+        "specs/004-series-eligibility/tasks.md:96-100",
+        "specs/004-series-eligibility/tasks.md:107-108"
+      ],
+      "summaryDe": "Fünf individuelle plannedEvidence-Ziele haben keinen produzierenden Task: implementation-red-green.md, public-readiness.md, documentation-review.md, statistics-review.md und AEPS *-completion.md. Tasks nennen stattdessen red-green.json, ci-/quality-validation.json, documentation-validation.json und AEPS *-implementation.md. Keine explizite Migration bindet diese fünf Paare.",
+      "summaryEn": "Five individual plannedEvidence destinations lack producer tasks: implementation-red-green.md, public-readiness.md, documentation-review.md, statistics-review.md and the AEPS completion receipt. Tasks use differently named JSON/implementation outputs without an explicit five-pair migration.",
+      "remediationDe": "Für EL-red-green, EL-public-readiness, EL-documentation, EL-statistics und EL-aeps genau einen kanonischen Nachweispfad vereinbaren; entweder Tasks auf die akzeptierten Ziele ausrichten oder eine ausdrücklich akzeptierte Gate-zu-Pfad-Zuordnung ergänzen. Bei Vertragsänderung Requirements-/Readiness-Validierung und Analyze erneut ausführen.",
+      "remediationEn": "For the five named gates, agree one canonical evidence destination: align tasks with accepted destinations or add an explicitly accepted gate-to-path mapping. Revalidate requirements/readiness and Analyze after any contract change.",
+      "disposition": "Open"
+    },
+    {
+      "id": "O001",
+      "category": "Ordering/Ambiguity",
+      "severity": "Medium",
+      "locations": [
+        "specs/004-series-eligibility/tasks.md:82",
+        "specs/004-series-eligibility/tasks.md:106",
+        "specs/004-series-eligibility/contracts/validation-commands.json:419-429",
+        "specs/004-series-eligibility/contracts/validation-commands.json:452-459"
+      ],
+      "summaryDe": "T028/T047 verlangen alle exakten Katalogbefehle in der nativen Matrix. Der Katalog enthält auch stats-render, das ausdrücklich nur im autorisierten Implementierungsabschluss schreibt, und gh run view RUN_ID --job JOB_ID --log für die spätere Liefer-Evidence. Die Aufgaben grenzen diese Einträge und ihre Plattform-/Autoritätsbedingungen nicht von den ausführbaren Matrixprüfungen ab.",
+      "summaryEn": "T028/T047 demand every exact catalog command in the native matrix. The catalog also includes stats-render, explicitly limited to authorised implementation closeout writes, and later delivery-log retrieval using observed run/job IDs. The tasks do not distinguish those entries and their platform/authority conditions from executable matrix checks.",
+      "remediationDe": "T028/T047 explizit auf die nativen automatisierten Gate-Prüfungen begrenzen und je Katalog-ID Ausführungsphase/Plattform zuordnen: stats-render nur T015/T021/T030/T039/T052, Providerlog-Abfrage erst T048 mit beobachteten IDs. Alle erforderlichen Befehls-Tokens je Gate erhalten; keine Gruppen-Pass-Abkürzung.",
+      "remediationEn": "Explicitly limit T028/T047 to native automated gate checks and map catalog IDs to phases/platforms: render only at authorised statistics boundaries, retrieve provider logs at T048 with observed IDs. Preserve every required token per gate; do not replace commands with group passes.",
+      "disposition": "Open"
+    },
+    {
+      "id": "L001",
+      "category": "Coverage index",
+      "severity": "Low",
+      "locations": [
+        "specs/004-series-eligibility/spec.md:106",
+        "specs/004-series-eligibility/tasks.md:99",
+        "specs/004-series-eligibility/tasks.md:101",
+        "specs/004-series-eligibility/tasks.md:132"
+      ],
+      "summaryDe": "T042 und die Übersicht nennen nur CR-001-013, obwohl CR-014 existiert. T040/T052 enthalten die vollständige siebenteilige Retrospektive und den hashgebundenen Trend bereits; daher keine fehlende Arbeit.",
+      "summaryEn": "T042 and the overview list only CR-001-013 although CR-014 exists. T040/T052 already cover the full seven-part retrospective and hash-bound trend, so implementation work is present.",
+      "remediationDe": "Bereits erfüllte Disposition: CR-014 ist hier explizit T040-T042/T052-T054 zugeordnet. Den Zahlenbereich bei einer ohnehin autorisierten Tasks-Reparatur berichtigen; kein eigener Blocker.",
+      "remediationEn": "Already satisfied disposition: this analysis explicitly maps CR-014 to T040-T042/T052-T054. Correct the range during an otherwise authorised task repair; it is not a separate blocker.",
+      "disposition": "SatisfiedWithoutEdits"
+    }
+  ],
+  "priorReviewDispositions": {
+    "PR-001": [
+      "T016",
+      "T018",
+      "T019",
+      "T020"
+    ],
+    "PR-002": [
+      "T027",
+      "T028",
+      "T029",
+      "T047"
+    ],
+    "PR-003": [
+      "T009",
+      "T011",
+      "T014"
+    ],
+    "PR-004": [
+      "T022",
+      "T025",
+      "T029"
+    ],
+    "PR-005": [
+      "T014",
+      "T020",
+      "T028",
+      "T047",
+      "T048",
+      "T049"
+    ],
+    "PR-006": [
+      "T004",
+      "T005",
+      "T006",
+      "T007",
+      "T049"
+    ],
+    "PR-007": [
+      "T001",
+      "T044"
+    ]
+  },
+  "gatePathDisposition": {
+    "44AggregateGateRows": "Already satisfied by plan.md:148 and tasks T049/T051: runtime pre/postmerge evidence, outside reviewed commit. No self-hash file required.",
+    "5IndividualGateRows": "I002 unresolved; planned paths and task outputs lack explicit binding.",
+    "5DirectGateRows": "Security, architecture, accessibility, parity and retrospective paths match."
+  }
+}

@@ -48,3 +48,7 @@ Preset seine Major-/Minor-Version ändert oder ein AEPS-Handoff abgewiesen
 wird. / *Reassess after three further Ready captures, evidence from a second
 reference project, a relevant preset version change, or a rejected AEPS
 handoff.*
+
+## Ergänzende META04-Evidence / Additional META04 Evidence
+
+`AEPS-GAP-AOC-011` erhält mit dem [Plan-Receipt vom 2026-09-13](receipts/2026-09-13-series-eligibility-plan.md) weitere lokale Evidence: falsches `Eligible` bei leerem Kriterium, Boolean-String und doppeltem JSON-Schlüssel. Werte-, Typ- und Duplikat-Negativtests ergänzen den nächsten Feldnachweis; der Gap wird durch Planung nicht geschlossen. / *Gap 011 gains local evidence of false eligibility for an empty criterion, boolean string and duplicate JSON key. Negative boundary tests extend the next field test; planning does not close the gap.*

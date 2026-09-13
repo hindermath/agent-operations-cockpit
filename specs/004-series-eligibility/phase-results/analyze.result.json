@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "analyze",
+  "attemptId": "15ed2c65-ab80-4fbc-a4d3-44abca39d383",
+  "outcome": "Blocked",
+  "expectedTasks": 1,
+  "completedTasks": 1,
+  "blockedReason": "4 Critical, 0 High, 3 offene Medium: Verfassungs-, Statistik-, Nachweispfad- und Matrixkonflikte C001-C004/I001-I002/O001 zuerst begrenzt beheben, danach Readiness und Analyze erneut prüfen. 36/36 Pflichten und 54/54 Tasks zugeordnet; keine Implementierung. / Resolve the seven blocking findings through bounded coordinator remediation, then rerun readiness and Analyze. Full mapping does not satisfy the gates; no implementation performed.",
+  "gatesSatisfied": false,
+  "payloadPath": "specs/004-series-eligibility/phase-results/analyze-report.md",
+  "payloadSha256": "4db9f7f478ec1a08446fa5fdd7b7b6fa810629d9d30ef8264d9442de4da768e2"
+}

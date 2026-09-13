@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "plan-review",
+  "platform": "macOS",
+  "checks": [
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.sh --repo . --result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/plan-review.result.json --phase-id plan-review --exit-code 0",
+      "exitCode": 0,
+      "output": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"plan-review\",\n  \"normalizedSha256\": \"c968efc53f5b9deb88582b019dfa344c7df36e995eb396164d234d03a15e57ba\",\n  \"payloadSha256\": \"15ad36ca03bef69f95e3f9bedb826ae26964ff0bf0eda350c7f02a386a58dc66\"\n}\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.ps1 -Repo . -Result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/plan-review.result.json -PhaseId plan-review -ExitCode 0",
+      "exitCode": 0,
+      "output": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"plan-review\",\n  \"normalizedSha256\": \"c968efc53f5b9deb88582b019dfa344c7df36e995eb396164d234d03a15e57ba\",\n  \"payloadSha256\": \"15ad36ca03bef69f95e3f9bedb826ae26964ff0bf0eda350c7f02a386a58dc66\"\n}\n"
+    }
+  ],
+  "processExitBoundary": "Validator supplied exit 0; the outer coordinating runner binds the actual process exit after this response."
+}

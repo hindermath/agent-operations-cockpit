@@ -1,0 +1,83 @@
+.TH VALIDATE-SERIES-ELIGIBILITY 1 "2026-09-13" "AgentOperationsCockpit" "User Commands"
+.SH NAME
+validate-series-eligibility \- Eignung einer Series read-only pruefen
+.br
+assess Series eligibility read-only
+.SH SYNOPSIS
+.B validate-series-eligibility.sh
+.BI --repo " PATH"
+.BI --fixture " PATH"
+.RI [ --json ]
+.PP
+.B validate-series-eligibility.ps1
+.BI -Repo " PATH"
+.BI -Fixture " PATH"
+.RI [ -Json ]
+.SH BESCHREIBUNG / DESCRIPTION
+Die Oberflaechen delegieren eine lesende Eignungspruefung an den Python-Kern.
+Sie lesen den Kriterienvertrag und eine benannte Fixture, berechnen zuerst das
+Ergebnis und vergleichen es danach mit der Fixture-Erwartung. Sie schreiben
+keine Dateien und starten keinen Spec-Kit-Lauf.
+.PP
+The surfaces delegate a read-only eligibility assessment to the Python core.
+They read the criteria contract and a named fixture, compute the outcome first,
+and then compare it with the fixture expectation. They write no files and do
+not start a Spec Kit run.
+.PP
+Diese erste Oberflaeche deckt den vorhandenen T004-bis-T007-Stand ab:
+Repository, Fixture, optionale JSON-Ausgabe, delegierte Pruefung und den
+Integration-Wertecheck. Die spaetere vollstaendige Sechs-Modi-Schnittstelle ist
+nicht Bestandteil dieser Version.
+.PP
+This initial surface covers the existing T004-to-T007 scope: repository,
+fixture, optional JSON output, delegated assessment, and the integration value
+check. The later complete six-mode interface is not part of this version.
+.SH OPTIONEN / OPTIONS
+.TP
+.BR --repo " " PATH , " " -Repo " " PATH
+Repository-Wurzel. / Repository root.
+.TP
+.BR --fixture " " PATH , " " -Fixture " " PATH
+Fixture relativ zur Repository-Wurzel. / Fixture relative to the repository root.
+.TP
+.BR --json , " " -Json
+Maschinenlesbare Ausgabe. / Machine-readable output.
+.TP
+.BR --help , " " -h , " " -Help
+Zweisprachige Hilfe anzeigen. / Show bilingual help.
+.SH ERGEBNISSE / OUTCOMES
+.B Eligible
+bedeutet nur, dass die aktuelle Fixture die vorhandene Eignungspruefung
+besteht. Es ist keine Startfreigabe. / means only that the current fixture
+passes the existing eligibility assessment. It is not authority to start.
+.PP
+.B Blocked
+ist ein fachliches Ergebnis. Eine Abweichung zwischen berechnetem Ergebnis und
+`expectedOutcome` ist dagegen ein ungueltiges Pruefprodukt und fuehrt zu Exit 2.
+/ is a domain outcome. A mismatch between the computed result and
+`expectedOutcome` is an invalid assessment product and exits with 2.
+.SH EXIT STATUS
+.TP
+.B 0
+Pruefung oder Hilfe erfolgreich; ein fachliches Blocked darf Exit 0 besitzen.
+/ Assessment or help succeeded; a domain Blocked may exit with 0.
+.TP
+.B 2
+Eingabe, Vertrag oder Erwartungsvergleich ist nicht sicher gueltig.
+/ Input, contract, or expectation comparison is not safely valid.
+.TP
+.B 3
+Reserviert fuer einen nachgewiesenen Provider- oder Prozessfehler.
+/ Reserved for a proven provider or process failure.
+.SH BEISPIELE / EXAMPLES
+.nf
+bash specs/004-series-eligibility/contracts/validate-series-eligibility.sh --repo . --fixture specs/intake-review-fixtures/meta-lh-04/valid-parallel.json --json
+pwsh -NoProfile -File specs/004-series-eligibility/contracts/validate-series-eligibility.ps1 -Repo . -Fixture specs/intake-review-fixtures/meta-lh-04/valid-parallel.json -Json
+.fi
+.SH SICHERE NAECHSTE AKTION / SAFE NEXT ACTION
+Pruefe die gueltige lokale Fixture mit einem der Beispiele read-only. Starte
+keinen Folgeprozess allein aufgrund von Eligible. / Assess the valid local
+fixture read-only with one example. Do not start downstream work merely because
+the result is Eligible.
+.SH SEE ALSO
+.BR validate-intake-series (1)

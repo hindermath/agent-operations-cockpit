@@ -1,0 +1,16 @@
+{
+  "phaseId": "plan",
+  "platform": "macOS",
+  "checks": [
+    {
+      "command": "bash scripts/scan-agent-secrets.sh --fail-on-high .",
+      "exitCode": 0,
+      "output": "OK     | gitleaks | no secrets in current git diff\nlow    | .agents | empty agent directory\nlow    | .claude | prompt, command, or template files only\nlow    | .github/agents | prompt, command, or template files only\nlow    | .github/prompts | prompt, command, or template files only\nlow    | .opencode | prompt, command, or template files only\n\nSummary: high=0 medium=0 low=5 total_agent_dirs=5 gitleaks_high=0\n"
+    },
+    {
+      "command": "bash scripts/check-homogeneity.sh --dry-run --verbose .",
+      "exitCode": 1,
+      "output": "Workspace Homogeneity Guardian \u2014 check-homogeneity v1.0\nScan-Startpunkt: .\n======================================================\n\n[Level 0] ./\n  \u2713  AGENTS.md                                file present\n  \u2713  AGENTS.md                                bilingual-ok\n  \u2713  CLAUDE.md                                file present\n  \u2713  CLAUDE.md                                bilingual-ok\n  \u2713  GEMINI.md                                file present\n  \u2713  GEMINI.md                                bilingual-ok\n  \u2713  README.md                                file present\n  \u2713  README.md                                bilingual-ok\n  \u2713  STATS.md                                 file present\n  \u2713  STATS.md                                 bilingual-ok\n  \u2713  constitution.md                          file present\n  \u2713  constitution.md                          bilingual-ok\n  \u2717  docs/project-statistics.md               FAIL: ASCII Statistics Profile 2 drift\n  \u2713  README.md                                A11Y section\n  \u2713  README.md                                Spec-kit section\n  \u2713  README.md                                Azubis section\n  \u2713  .github/copilot-instructions.md          file present\n  \u2713  AGENTS.md                                EN guidance present\n  \u2713  CLAUDE.md                                EN guidance present\n  \u2713  GEMINI.md                                EN guidance present\n  \u2713  constitution.md                          EN guidance present\n  \u2713  .github/copilot-instructions.md          EN guidance present\n  \u2713  .github/workflows/homogeneity-check.yml  file present\n  \u2713  .specify/integrations/agy.manifest.json  Antigravity Spec-Kit integration present\n  \u2713  .gemini/commands                         legacy Gemini Spec-Kit integration absent\n  \u2713  .agents/skills                           Antigravity/Codex Spec-Kit skills present\n  \u2713  .gitignore                               surgical .agents skills allowlist\n  \u2713  scripts/                                 no ANSI codes in scripts/\n  \u2713  scripts/hooks/pre-push                   canonical hook present\n  \u2713  docs/scripts/reference.md                script catalog complete and current\n\n======================================================\nCOMPLIANCE SUMMARY\n\n.                              [#########.]  96 %  (29/30 checks)\n\nOverall: 96 %  |  Workspaces: 0  |  Projects: 0\n\nExit code: 1 (1 FAIL, 0 WARN)\n"
+    }
+  ]
+}

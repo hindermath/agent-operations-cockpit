@@ -1,0 +1,15 @@
+{
+  "command": [
+    "gh",
+    "repo",
+    "view",
+    "--json",
+    "nameWithOwner,defaultBranchRef,viewerPermission"
+  ],
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "error connecting to api.github.com\ncheck your internet connection or https://githubstatus.com\n",
+  "failureClass": "ProviderFailure",
+  "technicalGatesPassed": false,
+  "remoteMutationAttempted": false
+}

@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1.0",
+  "countingRule": "Count task checkbox lines once by task ID; task volume is scope, not efficiency. Historical report observations are qualitative, with no invented finding/intervention counts or durations.",
+  "sources": [
+    {
+      "path": "specs/001-programmquellen-baseline/autonomous-run-retrospective.md",
+      "normalizedSha256": "1d8bef8965ab811163612a0c36fdc613785b9f8a7e6528aab124b9eaa7e6801d"
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/causal-closeout-evidence.json",
+      "normalizedSha256": "0f93b1beb51d69c1b89e05e4bb512cd22265eef6e85c974f3cbeaf67304a5588"
+    },
+    {
+      "path": "specs/002-portfolio-ownership/autonomous-run-evidence.md",
+      "normalizedSha256": "d38faa268705e213a188e05898ce613496824a199e60ea462f51f3383e0ac555"
+    },
+    {
+      "path": "specs/002-portfolio-ownership/causal-closeout-evidence.json",
+      "normalizedSha256": "ca374ccbe201335884e340189739d34a059285e6bbfe0558b969922a0b3da163"
+    },
+    {
+      "path": "specs/003-authoring-contract/engineering-retrospective.md",
+      "normalizedSha256": "adf8c9632b8de6d5037b0a3a2badfe87a100013574fadfcbc3cdc4badeb64caf"
+    }
+  ],
+  "tasks": [
+    {
+      "path": "specs/001-programmquellen-baseline/tasks.md",
+      "normalizedSha256": "b0e05871052dbb5929550d6dd766a72a83a10e19cacb39d290907e41198681e2",
+      "total": 66,
+      "completed": 66
+    },
+    {
+      "path": "specs/002-portfolio-ownership/tasks.md",
+      "normalizedSha256": "bd75e9b222640e0a8ddc319794d7ce2d801676c00601859e255048aeac322aa0",
+      "total": 93,
+      "completed": 93
+    },
+    {
+      "path": "specs/003-authoring-contract/tasks.md",
+      "normalizedSha256": "ad5da75b41b169538a7e9be844a6cd3d64682e87a6b78563d1e522e6cea434f2",
+      "total": 79,
+      "completed": 79
+    },
+    {
+      "path": "specs/004-series-eligibility/tasks.md",
+      "normalizedSha256": "c0a2931e314a0da87459c53aab2981f10a5067b2572f216a508b9ab1cd84a2c2",
+      "total": 57,
+      "completed": 7
+    }
+  ],
+  "comparability": "Feature 004 is incomplete; no completion or speedup comparison is valid."
+}

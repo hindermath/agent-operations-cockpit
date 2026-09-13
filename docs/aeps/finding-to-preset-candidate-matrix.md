@@ -55,3 +55,7 @@ Kein Matrixeintrag hebt einen Kandidaten auf `Stable` oder `Canonical`.
 `cross-project-validated` bleibt für alle AOC-only-Ergebnisse gesperrt. /
 *No matrix row promotes a candidate to Stable or Canonical. Cross-project
 validated remains unavailable for AOC-only evidence.*
+
+## Ergänzende Plan-Evidence vom 2026-09-13 / Additional Plan Evidence from 2026-09-13
+
+`AEPS-FIND-AOC-013` bleibt bei `CAND-AEPS-05` und `CAND-AEPS-07` mit Abdeckung `Partial`. Das [META04-Plan-Receipt](receipts/2026-09-13-series-eligibility-plan.md) ergänzt drei reproduzierte Eingabeprüflücken; neun benannte Kriterien allein belegen keine Werte-/Typ-/Duplikatprüfung. Kein neuer Kandidat oder Promotion. / *Finding 013 keeps its existing candidates and Partial coverage. The receipt adds three reproduced input-validation gaps; nine named criteria alone do not prove value/type/duplicate checks. No new candidate or promotion.*

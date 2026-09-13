@@ -1,0 +1,180 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "plan-review",
+  "baseHead": "e5083c82d80099901774518b3987f47a1a628572",
+  "branch": "004-series-eligibility",
+  "acceptedArtifacts": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "expectedSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+      "actualSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce"
+    },
+    {
+      "path": "specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json",
+      "expectedSha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b",
+      "actualSha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b"
+    },
+    {
+      "path": "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json",
+      "expectedSha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07",
+      "actualSha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07"
+    }
+  ],
+  "previousPhaseResults": [
+    {
+      "phaseId": "specify",
+      "sha256": "a10a5d2963282baf0fe1ce0a7c0adc3a88db46b03edbe3e3f9857a3d71180a4f",
+      "matchesRunState": true
+    },
+    {
+      "phaseId": "clarify",
+      "sha256": "7b207cbfa27c497a5ade36cd936bb020326335d37d6c6399afdde38650f15f97",
+      "matchesRunState": true
+    },
+    {
+      "phaseId": "checklist",
+      "sha256": "e0de4e8ddb3cf82f267d851df1b266e3d25f7e3d532c5628d7358bbe049f77dc",
+      "matchesRunState": true
+    },
+    {
+      "phaseId": "plan",
+      "sha256": "d8d3e19e1f568b4429b78d70b263b2eb05604e4bc7688c4ac32d91a79e72d65c",
+      "matchesRunState": true
+    }
+  ],
+  "runStateSha256": "9691ffe64d620168b6b4c93703ce14ea59389bca0f8ba11ff76cf6cba980b352",
+  "inputAndBaselineChecks": {
+    "passed": 17,
+    "total": 17
+  },
+  "legacyDefectReproductions": {
+    "passed": 6,
+    "total": 6
+  },
+  "reviewFindings": {
+    "initial": {
+      "Critical": 0,
+      "High": 2,
+      "Medium": 4,
+      "Low": 1
+    },
+    "resolvedInPlanning": 7,
+    "remaining": {
+      "Critical": 0,
+      "High": 0,
+      "Medium": 0,
+      "Low": 0
+    }
+  },
+  "qualityChecks": [
+    {
+      "command": "bash scripts/validate-documentation-impact.sh --evidence specs/004-series-eligibility/contracts/documentation-impact.json",
+      "exitCode": 0,
+      "output": "PASS: Documentation Impact evidence is current (1 entries).\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File scripts/validate-documentation-impact.ps1 -Evidence specs/004-series-eligibility/contracts/documentation-impact.json",
+      "exitCode": 0,
+      "output": "PASS: Documentation Impact evidence is current (1 entries).\n"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": "gitleaks dir specs/004-series-eligibility --no-banner --no-color --redact",
+      "exitCode": 0,
+      "output": "2:03AM INF scanned ~357393 bytes (357.39 KB) in 31.6ms\n2:03AM INF no leaks found\n"
+    }
+  ],
+  "structure": {
+    "json": "Pass",
+    "nineCriteria": "Pass",
+    "sixModes": "Pass",
+    "headings": "Pass",
+    "whitespaceIncludingUntracked": "Pass",
+    "safePaths": "Pass",
+    "relativeLinksChecked": 28,
+    "pendingGeneratedLinks": [
+      "plan-review-validation.json",
+      "plan-review-result-validation.json"
+    ],
+    "semanticBilingualReview": "Pass; DE-first/EN-second, explained terms, no visual-only meaning"
+  },
+  "scopeProtection": {
+    "filesCompared": 1723,
+    "changedExistingFiles": [
+      "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json",
+      "specs/004-series-eligibility/contracts/documentation-impact.json",
+      "specs/004-series-eligibility/contracts/series-eligibility-interface.md",
+      "specs/004-series-eligibility/data-model.md",
+      "specs/004-series-eligibility/plan.md",
+      "specs/004-series-eligibility/quickstart.md",
+      "specs/004-series-eligibility/research.md"
+    ],
+    "newFiles": [
+      "specs/004-series-eligibility/checklists/plan-review.md",
+      "specs/004-series-eligibility/phase-results/plan-review-aeps-receipt.md",
+      "specs/004-series-eligibility/phase-results/plan-review-design-validation.json",
+      "specs/004-series-eligibility/phase-results/plan-review-execution.json",
+      "specs/004-series-eligibility/phase-results/plan-review-report.md"
+    ],
+    "unauthorizedChanges": [],
+    "acceptedIntakeReviewReceiptSpecAndStateUnchanged": true,
+    "preexistingAepsChangesPreserved": true,
+    "indexEmpty": true
+  },
+  "limitations": [
+    "Native implementation acceptance remains pending. macOS probes do not establish native Linux/Windows acceptance.",
+    "Existing statistics-profile homogeneity failure remains an I6 acceptance duty; not rerun or falsely passed by review.",
+    "Canonical AEPS capture deferred to owned authorised handoff; local receipt completed under explicit path limit.",
+    "Outer runner binds actual phase process exit after final response."
+  ],
+  "artifacts": [
+    {
+      "path": "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json",
+      "sha256": "7d5ffa0e63e152e1edec460d1aa8db3772d1e3bc6053ac51e07905fa4e18cf1d"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/documentation-impact.json",
+      "sha256": "6e9efeac86f8c7f1af35a5b490b6c0e69f7db47ca03dd874940869629f206229"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/series-eligibility-interface.md",
+      "sha256": "b0ee4fffce5b16c6b059730b31fe499b67fc9ec10dda70112e71ed341f0a95e3"
+    },
+    {
+      "path": "specs/004-series-eligibility/data-model.md",
+      "sha256": "be3435e2350e93545577fc59bd4dc22c8723a432245139f92d963e4d20a47e58"
+    },
+    {
+      "path": "specs/004-series-eligibility/plan.md",
+      "sha256": "990b6273ebcb20a666994093558259efe48b75f2be407862f238315e9ff39727"
+    },
+    {
+      "path": "specs/004-series-eligibility/quickstart.md",
+      "sha256": "ea6fb96b1411fe9585370276488c82fcfdf132a12514944ea8dc07204e1e83c1"
+    },
+    {
+      "path": "specs/004-series-eligibility/research.md",
+      "sha256": "2312e32f564b9cacc1527abfb8ba9d19344e9eeaaf53ca787d3efbe41b3c6b92"
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/plan-review.md",
+      "sha256": "e4145dca1719c0395cfb5b9975d108e8dc38aacd8f8047d5d179d761322fabd3"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/plan-review-aeps-receipt.md",
+      "sha256": "a181a7930ff9a0123da29144f8d5dc24c4353c427060556d24fde66473e8e506"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/plan-review-execution.json",
+      "sha256": "58d637efe0e750a7d8332984942196ce9815c7cdc9d93c37a97b738cadf3be71"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/plan-review-design-validation.json",
+      "sha256": "843e8791a76307eb08294fd07efffd081fea92732c131e33e17de5960002cac6"
+    }
+  ]
+}

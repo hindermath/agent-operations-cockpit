@@ -1,0 +1,72 @@
+{
+  "gateSchemaFeasibility": {
+    "requirementsCount": 54,
+    "applicable": 41,
+    "requirementsSha256": "7d5ffa0e63e152e1edec460d1aa8db3772d1e3bc6053ac51e07905fa4e18cf1d",
+    "syntheticCompleteRowsAccepted": true,
+    "negativeProbes": [
+      {
+        "missing": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-linux-bash-baseline: bash .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.sh --file specs/intake-series/aoc-phase-2/manifest.json --repo ."
+      },
+      {
+        "missing": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-linux-bash-baseline: ubuntu-22.04"
+      }
+    ],
+    "limit": "Isolated schema feasibility only. Fabricated rows are not saved as gate evidence and prove no feature execution."
+  },
+  "blockerOrderProbe": {
+    "runs": [
+      {
+        "seed": "1",
+        "exitCode": 0,
+        "output": "{\"intakes/c.md\": [\"intakes/b.md\", \"intakes/a.md\"]}"
+      },
+      {
+        "seed": "2",
+        "exitCode": 0,
+        "output": "{\"intakes/c.md\": [\"intakes/b.md\", \"intakes/a.md\"]}"
+      },
+      {
+        "seed": "3",
+        "exitCode": 0,
+        "output": "{\"intakes/c.md\": [\"intakes/a.md\", \"intakes/b.md\"]}"
+      },
+      {
+        "seed": "4",
+        "exitCode": 0,
+        "output": "{\"intakes/c.md\": [\"intakes/a.md\", \"intakes/b.md\"]}"
+      },
+      {
+        "seed": "5",
+        "exitCode": 0,
+        "output": "{\"intakes/c.md\": [\"intakes/b.md\", \"intakes/a.md\"]}"
+      },
+      {
+        "seed": "6",
+        "exitCode": 0,
+        "output": "{\"intakes/c.md\": [\"intakes/a.md\", \"intakes/b.md\"]}"
+      }
+    ],
+    "distinctOrders": 2
+  },
+  "transitiveSymlinkProbe": {
+    "syntheticOutsideTextOnly": true,
+    "exitCode": 0,
+    "legacyAcceptedEscape": true,
+    "limit": "No user data read. Temporary fixture only. New adapter must reject before contents read."
+  },
+  "legacyResolverProbe": {
+    "exitCode": 0,
+    "output": "GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)\nCopyright (C) 2007 Free Software Foundation, Inc.\n",
+    "acceptsBash3": true,
+    "limit": "Current macOS system Bash probe; not a native hosted-runner pass."
+  },
+  "tokenCoverage": {
+    "unresolved": [],
+    "pass": true
+  }
+}

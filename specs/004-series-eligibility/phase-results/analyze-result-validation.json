@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "analyze",
+  "resultPath": "specs/004-series-eligibility/phase-results/analyze.result.json",
+  "resultSha256": "c30c277a02b63ca3dabf08858db2d97cb08ac65ebf63571a99295e798c414de1",
+  "payloadPath": "specs/004-series-eligibility/phase-results/analyze-report.md",
+  "payloadSha256": "4db9f7f478ec1a08446fa5fdd7b7b6fa810629d9d30ef8264d9442de4da768e2",
+  "templateFieldsMatch": true,
+  "nonZeroUuid": true,
+  "countsMean": "One analysis performed; zero of 54 implementation tasks executed. Blocked outcome prevents completion.",
+  "schemaAndPayloadValidatedSeparately": true,
+  "validatorLimitation": "Installed validator intentionally rejects Blocked before checking counts or payload; checks above independently verify those fields. ExitCode 0 is the transport-success test input, not a claim about the still-running outer phase process.",
+  "checks": [
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.sh --repo . --result specs/004-series-eligibility/phase-results/analyze.result.json --phase-id analyze --exit-code 0",
+      "expectedExitCode": 3,
+      "exitCode": 3,
+      "expectedDiagnostic": "AEI104",
+      "output": "ERROR AEI104: phase result is Blocked\n",
+      "blockedCompletionRejected": true
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.ps1 -Repo . -Result specs/004-series-eligibility/phase-results/analyze.result.json -PhaseId analyze -ExitCode 0",
+      "expectedExitCode": 3,
+      "exitCode": 3,
+      "expectedDiagnostic": "AEI104",
+      "output": "ERROR AEI104: phase result is Blocked\n",
+      "blockedCompletionRejected": true
+    }
+  ],
+  "exactRunnerExportPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/analyze.result.json",
+  "exportMechanism": "Final assistant message written verbatim by runner --output-last-message; runtime path is not directly mutated in this phase."
+}

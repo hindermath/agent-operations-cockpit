@@ -1,0 +1,813 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "tasks",
+  "runId": "8b306e28-51eb-4510-afbc-5056b9aee328",
+  "baseHead": "e5083c82d80099901774518b3987f47a1a628572",
+  "acceptedArtifacts": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "sha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce"
+    },
+    {
+      "path": "specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json",
+      "sha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b"
+    },
+    {
+      "path": "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json",
+      "sha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07"
+    }
+  ],
+  "priorPhases": [
+    {
+      "phaseId": "specify",
+      "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/specify.result.json",
+      "sha256": "a10a5d2963282baf0fe1ce0a7c0adc3a88db46b03edbe3e3f9857a3d71180a4f"
+    },
+    {
+      "phaseId": "clarify",
+      "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/clarify.result.json",
+      "sha256": "7b207cbfa27c497a5ade36cd936bb020326335d37d6c6399afdde38650f15f97"
+    },
+    {
+      "phaseId": "checklist",
+      "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/checklist.result.json",
+      "sha256": "e0de4e8ddb3cf82f267d851df1b266e3d25f7e3d532c5628d7358bbe049f77dc"
+    },
+    {
+      "phaseId": "plan",
+      "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/plan.result.json",
+      "sha256": "d8d3e19e1f568b4429b78d70b263b2eb05604e4bc7688c4ac32d91a79e72d65c"
+    },
+    {
+      "phaseId": "plan-review",
+      "path": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/plan-review.result.json",
+      "sha256": "0b1b07c6534f99a6dd78dffb06b519288c1376d5d4098e54e35d1511bf9a3a33"
+    }
+  ],
+  "reviewedDesignHashesMatch": true,
+  "inputs": [
+    {
+      "path": "specs/004-series-eligibility/autonomous-run-state.json",
+      "sha256": "80976b5c17b651a72464f69fc2cc3e623e7e434c96fcfee4b3b4e492b3e55afc"
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/plan-review.md",
+      "sha256": "e4145dca1719c0395cfb5b9975d108e8dc38aacd8f8047d5d179d761322fabd3"
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/requirements.md",
+      "sha256": "1f9bd80458a76835f80ab6f67f95ddfd1e11e8730964c833b5f6136e6672195b"
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/series-eligibility.md",
+      "sha256": "e311478d29de33d054ffba9ff9d09498e69c562fe3cfa3f82157de76d45a6b3d"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json",
+      "sha256": "7d5ffa0e63e152e1edec460d1aa8db3772d1e3bc6053ac51e07905fa4e18cf1d"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/documentation-impact.json",
+      "sha256": "6e9efeac86f8c7f1af35a5b490b6c0e69f7db47ca03dd874940869629f206229"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/series-eligibility-interface.md",
+      "sha256": "b0ee4fffce5b16c6b059730b31fe499b67fc9ec10dda70112e71ed341f0a95e3"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/validation-commands.json",
+      "sha256": "a6dc4010953acbafa80548dd15abac7094b5254d3a9d78d822b0a0f616957601"
+    },
+    {
+      "path": "specs/004-series-eligibility/data-model.md",
+      "sha256": "be3435e2350e93545577fc59bd4dc22c8723a432245139f92d963e4d20a47e58"
+    },
+    {
+      "path": "specs/004-series-eligibility/plan.md",
+      "sha256": "990b6273ebcb20a666994093558259efe48b75f2be407862f238315e9ff39727"
+    },
+    {
+      "path": "specs/004-series-eligibility/quickstart.md",
+      "sha256": "ea6fb96b1411fe9585370276488c82fcfdf132a12514944ea8dc07204e1e83c1"
+    },
+    {
+      "path": "specs/004-series-eligibility/research.md",
+      "sha256": "2312e32f564b9cacc1527abfb8ba9d19344e9eeaaf53ca787d3efbe41b3c6b92"
+    },
+    {
+      "path": "specs/004-series-eligibility/spec.md",
+      "sha256": "083e34398e86472673ff202d1d841d179118070d0c71124d2d90b11b6b4b014f"
+    },
+    {
+      "path": ".specify/templates/tasks-template.md",
+      "sha256": "85108d7da57c31be169ad3b22aa3904e1c256389821e9174fbbad6a557a73055"
+    },
+    {
+      "path": ".agents/skills/speckit-tasks/SKILL.md",
+      "sha256": "deea04da2e42c34f2918be389451b9b6e1d7adcde2a3df2ca7bc7386e45ed6d7"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "efa2a8b800a4d860401dd6f5e165c4f69ddd9ad5e192d98e9022cc6987bd921d"
+    },
+    {
+      "path": "constitution.md",
+      "sha256": "77a86157629f212cb1ba635ba1bbe2b6593bb0492b546daf6f1adbeb56d100a4"
+    },
+    {
+      "path": ".specify/memory/constitution.md",
+      "sha256": "77a86157629f212cb1ba635ba1bbe2b6593bb0492b546daf6f1adbeb56d100a4"
+    },
+    {
+      "path": "docs/documentation-governance.md",
+      "sha256": "6f30d9f4195bec3dcb0c4895a2f793a5c3119f46c68929a00502d27d3d79718c"
+    },
+    {
+      "path": "docs/aeps/README.md",
+      "sha256": "1de14c4faaf5c46223260a7581b42989262cc7bbf1bb3c1e124fa91529c07f93"
+    },
+    {
+      "path": "docs/governance/engineering-retrospective.md",
+      "sha256": "f7349f7e625269965ab5fdb26196a20422df3b77934df5d33eb115ab6f4a9266"
+    },
+    {
+      "path": "requirements/baseline/series-eligibility-contract.json",
+      "sha256": "b054ad672b02fc472f25f3587191a3829fe5edbb20138beb827c6e630f38184b"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/plan-review-report.md",
+      "sha256": "15ad36ca03bef69f95e3f9bedb826ae26964ff0bf0eda350c7f02a386a58dc66"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/plan-review-validation.json",
+      "sha256": "8644cc365bf468c4e4eff17da2bbab26466544108d2ab4962195382442330d2b"
+    }
+  ],
+  "tasks": {
+    "path": "specs/004-series-eligibility/tasks.md",
+    "sha256": "6cff478100fdac9c7eb1b26911dac61d22512a7ab8cafbaa39f1a913cfaa0050",
+    "total": 54,
+    "completed": 0,
+    "storyCounts": {
+      "US1": 8,
+      "US2": 6,
+      "US3": 9
+    },
+    "setupAndFoundation": 7,
+    "crossCuttingAndCloseout": 24,
+    "parallelTaskIds": [
+      "T031",
+      "T032",
+      "T033",
+      "T034"
+    ]
+  },
+  "checks": [
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-run-state.sh --state specs/004-series-eligibility/autonomous-run-state.json",
+      "exitCode": 0,
+      "output": "PASS: run 8b306e28-51eb-4510-afbc-5056b9aee328, feature specs/004-series-eligibility, stage Tasks, status Active, tasks 0/0\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/autonomous-run-governance/scripts/validate-autonomous-run-state.ps1 -State specs/004-series-eligibility/autonomous-run-state.json",
+      "exitCode": 0,
+      "output": "PASS: run 8b306e28-51eb-4510-afbc-5056b9aee328, feature specs/004-series-eligibility, stage Tasks, status Active, tasks 0/0\n"
+    },
+    {
+      "command": "python3 -B specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py --repo . global-ready",
+      "exitCode": 0,
+      "output": "PASS: global-ready: qualified Feature-003 current-evidence binding; immutable META-LH-02 history and 14 current Ready receipt/review bindings\n"
+    },
+    {
+      "command": "bash .specify/presets/intake-review-governance/scripts/validate-intake-review-result.sh --result specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json --repo .",
+      "exitCode": 0,
+      "output": "PASS: intake review 4c0ffc79-22fd-422e-a691-624e24ae444f is current (Single, Ready, 1 targets)\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/intake-review-governance/scripts/validate-intake-review-result.ps1 -Result specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json -Repo .",
+      "exitCode": 0,
+      "output": "PASS: intake review 4c0ffc79-22fd-422e-a691-624e24ae444f is current (Single, Ready, 1 targets)\n"
+    },
+    {
+      "command": "bash .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.sh --receipt specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json --repo .",
+      "exitCode": 0,
+      "output": "PASS: intake authoring e6eea4e9-88de-4434-8305-97424374ca7c is current (ReadyForReview, 12 sources, requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md)\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.ps1 -Receipt specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json -Repo .",
+      "exitCode": 0,
+      "output": "PASS: intake authoring e6eea4e9-88de-4434-8305-97424374ca7c is current (ReadyForReview, 12 sources, requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md)\n"
+    },
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.sh --repo . --result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/plan-review.result.json --phase-id plan-review --exit-code 0",
+      "exitCode": 0,
+      "output": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"plan-review\",\n  \"normalizedSha256\": \"0b1b07c6534f99a6dd78dffb06b519288c1376d5d4098e54e35d1511bf9a3a33\",\n  \"payloadSha256\": \"15ad36ca03bef69f95e3f9bedb826ae26964ff0bf0eda350c7f02a386a58dc66\"\n}\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.ps1 -Repo . -Result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/plan-review.result.json -PhaseId plan-review -ExitCode 0",
+      "exitCode": 0,
+      "output": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"plan-review\",\n  \"normalizedSha256\": \"0b1b07c6534f99a6dd78dffb06b519288c1376d5d4098e54e35d1511bf9a3a33\",\n  \"payloadSha256\": \"15ad36ca03bef69f95e3f9bedb826ae26964ff0bf0eda350c7f02a386a58dc66\"\n}\n"
+    },
+    {
+      "command": "bash scripts/validate-documentation-impact.sh --evidence specs/004-series-eligibility/contracts/documentation-impact.json",
+      "exitCode": 0,
+      "output": "PASS: Documentation Impact evidence is current (1 entries).\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File scripts/validate-documentation-impact.ps1 -Evidence specs/004-series-eligibility/contracts/documentation-impact.json",
+      "exitCode": 0,
+      "output": "PASS: Documentation Impact evidence is current (1 entries).\n"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": "gitleaks dir specs/004-series-eligibility --no-banner --no-color --redact",
+      "exitCode": 0,
+      "output": "2:15AM INF scanned ~416979 bytes (416.98 KB) in 42.2ms\n2:15AM INF no leaks found\n"
+    }
+  ],
+  "structure": {
+    "strictChecklist": "Pass",
+    "sequentialIds": "Pass",
+    "storyLabels": "Pass",
+    "exactPaths": "Pass",
+    "dependencyGraph": "Pass; serial except explicit T030 -> T031..T034 -> T035 fork/join",
+    "bilingualSemanticReview": "Pass; DE-first/EN-second B2; task descriptions paired inline",
+    "headingHierarchy": "Pass",
+    "relativeLinks": "Pass",
+    "untrackedWhitespace": "Pass",
+    "testFirstSlice": "Pass; T006 semantic red before T007 narrow fix; no further functional delta before red",
+    "allRequestedObligations": "Pass; traceability table and task body reviewed"
+  },
+  "gateCoverage": [
+    {
+      "gateId": "EL-linux-bash-baseline",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-bash-strict",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-bash-query",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-pwsh-baseline",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-pwsh-strict",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-pwsh-query",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-sequencing",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-runner-cardinality",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-pssa",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-bash-baseline",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-bash-strict",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-bash-query",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-pwsh-baseline",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-pwsh-strict",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-pwsh-query",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-sequencing",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-runner-cardinality",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-pssa",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-bash-baseline",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-bash-strict",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-bash-query",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-pwsh-baseline",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-pwsh-strict",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-pwsh-query",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-sequencing",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-runner-cardinality",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-pssa",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T028",
+        "T047",
+        "T048",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-ready",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T001",
+        "T043"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-red-green",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T049"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-homogeneity-linux",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T039",
+        "T048"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-homogeneity-windows",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T039",
+        "T048"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-secrets",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T038",
+        "T048"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-public-readiness",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T048"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-documentation",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T037"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-statistics",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T015",
+        "T021",
+        "T030",
+        "T039",
+        "T052"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-security",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T031"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-architecture",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T032"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-accessibility",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T033",
+        "T036"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-parity",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T034",
+        "T036",
+        "T047"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-retrospective",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T040",
+        "T052"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-aeps",
+      "applicability": "Applicable",
+      "plannedTasks": [
+        "T041",
+        "T052"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-product-build",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-asvs",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-release-supply-chain",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-ai-sbom",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-cloud",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-regulatory",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-privacy-publication",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-new-adr",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-visual-media",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-write-preview",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-shared-guidance",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-remote-delivery",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-parallel-provider-level0",
+      "applicability": "N/A",
+      "plannedTasks": [
+        "T042",
+        "T044"
+      ],
+      "executionStatus": "Not Assessed"
+    }
+  ],
+  "hooks": {
+    "extensionsFileExists": false,
+    "beforeTasks": [],
+    "afterTasks": []
+  },
+  "documentationImpact": {
+    "decision": "UpdateRequired",
+    "canonicalContract": "specs/004-series-eligibility/contracts/documentation-impact.json",
+    "newDecisionCreated": false
+  },
+  "scopeProtection": {
+    "existingFilesCompared": 1730,
+    "changedExistingFiles": [],
+    "indexUnchanged": true,
+    "acceptedIntakeReviewReceiptAndRunStateUnchanged": true,
+    "preexistingAepsChangesPreserved": true,
+    "implementationTasksExecuted": 0
+  },
+  "limitations": [
+    "Task-generation gates only; 41 applicable implementation gates remain Not Assessed.",
+    "Native acceptance, statistics/homogeneity repair and all delivery steps remain future work.",
+    "Outer runner binds the actual phase process exit and updates autonomous state."
+  ]
+}

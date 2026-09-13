@@ -1,0 +1,242 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "analyze",
+  "checks": [
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-run-state.sh --state specs/004-series-eligibility/autonomous-run-state.json",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "passed": true,
+      "output": "PASS: run 8b306e28-51eb-4510-afbc-5056b9aee328, feature specs/004-series-eligibility, stage Analyze, status Active, tasks 0/54\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/autonomous-run-governance/scripts/validate-autonomous-run-state.ps1 -State specs/004-series-eligibility/autonomous-run-state.json",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "passed": true,
+      "output": "PASS: run 8b306e28-51eb-4510-afbc-5056b9aee328, feature specs/004-series-eligibility, stage Analyze, status Active, tasks 0/54\n"
+    },
+    {
+      "command": "python3 -B specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py --repo . global-ready",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "passed": true,
+      "output": "PASS: global-ready: qualified Feature-003 current-evidence binding; immutable META-LH-02 history and 14 current Ready receipt/review bindings\n"
+    },
+    {
+      "command": "bash .specify/presets/intake-review-governance/scripts/validate-intake-review-result.sh --result specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json --repo .",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "passed": true,
+      "output": "PASS: intake review 4c0ffc79-22fd-422e-a691-624e24ae444f is current (Single, Ready, 1 targets)\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/intake-review-governance/scripts/validate-intake-review-result.ps1 -Result specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json -Repo .",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "passed": true,
+      "output": "PASS: intake review 4c0ffc79-22fd-422e-a691-624e24ae444f is current (Single, Ready, 1 targets)\n"
+    },
+    {
+      "command": "bash .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.sh --receipt specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json --repo .",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "passed": true,
+      "output": "PASS: intake authoring e6eea4e9-88de-4434-8305-97424374ca7c is current (ReadyForReview, 12 sources, requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md)\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.ps1 -Receipt specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json -Repo .",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "passed": true,
+      "output": "PASS: intake authoring e6eea4e9-88de-4434-8305-97424374ca7c is current (ReadyForReview, 12 sources, requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md)\n"
+    },
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.sh --repo . --result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/tasks.result.json --phase-id tasks --exit-code 0",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "passed": true,
+      "output": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"tasks\",\n  \"normalizedSha256\": \"760d034bc505845b95fba932c2438cc7cfd165b51cc90484b8ab3066005e0711\",\n  \"payloadSha256\": \"feacce931acd5cf9d85c09df3d9fd4a46d364ba38ce3934daa28bfad3bd50efa\"\n}\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.ps1 -Repo . -Result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/tasks.result.json -PhaseId tasks -ExitCode 0",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "passed": true,
+      "output": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"tasks\",\n  \"normalizedSha256\": \"760d034bc505845b95fba932c2438cc7cfd165b51cc90484b8ab3066005e0711\",\n  \"payloadSha256\": \"feacce931acd5cf9d85c09df3d9fd4a46d364ba38ce3934daa28bfad3bd50efa\"\n}\n"
+    },
+    {
+      "command": "bash scripts/validate-documentation-impact.sh --evidence specs/004-series-eligibility/contracts/documentation-impact.json",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "passed": true,
+      "output": "PASS: Documentation Impact evidence is current (1 entries).\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File scripts/validate-documentation-impact.ps1 -Evidence specs/004-series-eligibility/contracts/documentation-impact.json",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "passed": true,
+      "output": "PASS: Documentation Impact evidence is current (1 entries).\n"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "passed": true,
+      "output": ""
+    }
+  ],
+  "acceptedBindings": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "sha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+      "actualSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+      "matches": true
+    },
+    {
+      "path": "specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json",
+      "sha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b",
+      "actualSha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b",
+      "matches": true
+    },
+    {
+      "path": "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json",
+      "sha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07",
+      "actualSha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07",
+      "matches": true
+    },
+    {
+      "path": "specs/004-series-eligibility/tasks.md",
+      "sha256": "6cff478100fdac9c7eb1b26911dac61d22512a7ab8cafbaa39f1a913cfaa0050",
+      "actualSha256": "6cff478100fdac9c7eb1b26911dac61d22512a7ab8cafbaa39f1a913cfaa0050",
+      "matches": true
+    }
+  ],
+  "priorPhaseBindings": [
+    {
+      "phaseId": "specify",
+      "resultMatches": true,
+      "payloadMatches": true
+    },
+    {
+      "phaseId": "clarify",
+      "resultMatches": true,
+      "payloadMatches": true
+    },
+    {
+      "phaseId": "checklist",
+      "resultMatches": true,
+      "payloadMatches": true
+    },
+    {
+      "phaseId": "plan",
+      "resultMatches": true,
+      "payloadMatches": true
+    },
+    {
+      "phaseId": "plan-review",
+      "resultMatches": true,
+      "payloadMatches": true
+    },
+    {
+      "phaseId": "tasks",
+      "resultMatches": true,
+      "payloadMatches": true
+    }
+  ],
+  "acceptedDesignBindings": [
+    {
+      "path": "specs/004-series-eligibility/checklists/plan-review.md",
+      "sha256": "e4145dca1719c0395cfb5b9975d108e8dc38aacd8f8047d5d179d761322fabd3",
+      "matches": true
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/requirements.md",
+      "sha256": "1f9bd80458a76835f80ab6f67f95ddfd1e11e8730964c833b5f6136e6672195b",
+      "matches": true
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/series-eligibility.md",
+      "sha256": "e311478d29de33d054ffba9ff9d09498e69c562fe3cfa3f82157de76d45a6b3d",
+      "matches": true
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json",
+      "sha256": "7d5ffa0e63e152e1edec460d1aa8db3772d1e3bc6053ac51e07905fa4e18cf1d",
+      "matches": true
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/documentation-impact.json",
+      "sha256": "6e9efeac86f8c7f1af35a5b490b6c0e69f7db47ca03dd874940869629f206229",
+      "matches": true
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/series-eligibility-interface.md",
+      "sha256": "b0ee4fffce5b16c6b059730b31fe499b67fc9ec10dda70112e71ed341f0a95e3",
+      "matches": true
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/validation-commands.json",
+      "sha256": "a6dc4010953acbafa80548dd15abac7094b5254d3a9d78d822b0a0f616957601",
+      "matches": true
+    },
+    {
+      "path": "specs/004-series-eligibility/data-model.md",
+      "sha256": "be3435e2350e93545577fc59bd4dc22c8723a432245139f92d963e4d20a47e58",
+      "matches": true
+    },
+    {
+      "path": "specs/004-series-eligibility/plan.md",
+      "sha256": "990b6273ebcb20a666994093558259efe48b75f2be407862f238315e9ff39727",
+      "matches": true
+    },
+    {
+      "path": "specs/004-series-eligibility/quickstart.md",
+      "sha256": "ea6fb96b1411fe9585370276488c82fcfdf132a12514944ea8dc07204e1e83c1",
+      "matches": true
+    },
+    {
+      "path": "specs/004-series-eligibility/research.md",
+      "sha256": "2312e32f564b9cacc1527abfb8ba9d19344e9eeaaf53ca787d3efbe41b3c6b92",
+      "matches": true
+    },
+    {
+      "path": "specs/004-series-eligibility/spec.md",
+      "sha256": "083e34398e86472673ff202d1d841d179118070d0c71124d2d90b11b6b4b014f",
+      "matches": true
+    }
+  ],
+  "predecessors": [
+    {
+      "path": "specs/001-programmquellen-baseline/autonomous-run-state.json",
+      "status": "Completed",
+      "stage": "MergeAndSync",
+      "sha256": "9cea8e010f9b20f0135c4e63ae219da58b6023f5ed52bed648b24e8bd6dd9d02"
+    },
+    {
+      "path": "specs/002-portfolio-ownership/autonomous-run-state.json",
+      "status": "Completed",
+      "stage": "MergeAndSync",
+      "sha256": "18069cb2627ac55f089117d255b1b19407d87e17b9c439fb4caccb6ae6f94893"
+    },
+    {
+      "path": "specs/003-authoring-contract/autonomous-run-state.json",
+      "status": "Completed",
+      "stage": "MergeAndSync",
+      "sha256": "56c7d4e9bc1f8717bc1a32d86ffbb9f3153045967b509e69447a4053a8a57efa"
+    }
+  ],
+  "requirementsValidator": {
+    "gateCount": 54,
+    "normalizedSha256": "7d5ffa0e63e152e1edec460d1aa8db3772d1e3bc6053ac51e07905fa4e18cf1d",
+    "applicable": 41,
+    "notApplicable": 13
+  },
+  "prerequisites": {
+    "command": "env -u SPECIFY_FEATURE_DIRECTORY bash .specify/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks",
+    "exitCode": 0,
+    "featureDirectory": "specs/004-series-eligibility",
+    "selectorWritePrevented": "Existing selector used; explicit directory override unset."
+  }
+}

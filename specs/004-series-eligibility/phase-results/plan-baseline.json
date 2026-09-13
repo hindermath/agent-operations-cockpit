@@ -1,0 +1,70 @@
+{
+  "platform": "macOS",
+  "checks": [
+    {
+      "command": "bash .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.sh --file specs/intake-series/aoc-phase-2/manifest.json --repo .",
+      "exitCode": 0,
+      "output": "PASS: d51e831c-24fb-4a71-b316-f7ad1bfe99d0 (14 targets, 1 roots, 14 dependencies)\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.ps1 -File specs/intake-series/aoc-phase-2/manifest.json -Repo .",
+      "exitCode": 0,
+      "output": "PASS: d51e831c-24fb-4a71-b316-f7ad1bfe99d0 (14 targets, 1 roots, 14 dependencies)\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/tests/test-intake-sequencing-validator.ps1",
+      "exitCode": 0,
+      "output": "PASS: intake sequencing validator parity and negative cases\n"
+    },
+    {
+      "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/valid-parallel.json",
+      "exitCode": 0,
+      "output": "META04-FX-VALID-PARALLEL: Eligible\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/valid-parallel.json",
+      "exitCode": 0,
+      "output": "META04-FX-VALID-PARALLEL: Eligible\n"
+    },
+    {
+      "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/shared-write.json",
+      "exitCode": 0,
+      "output": "META04-FX-SHARED-WRITE: Blocked\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/shared-write.json",
+      "exitCode": 0,
+      "output": "META04-FX-SHARED-WRITE: Blocked\n"
+    },
+    {
+      "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/shared-decision.json",
+      "exitCode": 0,
+      "output": "META04-FX-SHARED-DECISION: Blocked\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/shared-decision.json",
+      "exitCode": 0,
+      "output": "META04-FX-SHARED-DECISION: Blocked\n"
+    }
+  ],
+  "probes": [
+    {
+      "case": "empty-integration",
+      "exitCode": 0,
+      "output": "META04-FX-VALID-PARALLEL: Eligible\n",
+      "finding": "Invalid metadata accepted as Eligible; strict feature boundary required."
+    },
+    {
+      "case": "string-authority",
+      "exitCode": 0,
+      "output": "META04-FX-VALID-PARALLEL: Eligible\n",
+      "finding": "Invalid metadata accepted as Eligible; strict feature boundary required."
+    },
+    {
+      "case": "duplicate-authority-key",
+      "exitCode": 0,
+      "output": "META04-FX-VALID-PARALLEL: Eligible\n",
+      "finding": "Invalid metadata accepted as Eligible; strict feature boundary required."
+    }
+  ]
+}

@@ -110,3 +110,7 @@ oder dieser Empfehlungsbericht erteilt keine GitHub-Schreibautorität. / *Before
 handoff, re-check current authority, authentication, target repository,
 duplicates, and stable evidence. This recommendation grants no GitHub write
 authority.*
+
+## Lokale Ergänzung vor Handoff / Local Addition before Handoff
+
+Für `AEPS-FIND-AOC-013` ergänzt das [META04-Plan-Receipt](receipts/2026-09-13-series-eligibility-plan.md) drei lokale Fehlklassifikationen. Upstream bleibt `PendingPublication`; vor Handoff sind stabile veröffentlichte Evidence und aktuelle Schreibautorität nötig. Kein Remote-Handoff durch diese Planungsphase. / *The receipt adds three local misclassifications to finding 013. Upstream remains PendingPublication; stable published evidence and current write authority are required before handoff. This planning phase performs no remote handoff.*

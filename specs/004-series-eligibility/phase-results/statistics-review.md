@@ -1,0 +1,11 @@
+# Statistikprüfung / Statistics Review
+
+## T008: Blockierte Abschlussgrenze / Blocked boundary
+
+Hilfe beider Renderer gelesen und bytegleiche Vorschauen geprüft (je Exit 0). Der einzige Schreibversuch wurde mit Exit 1 abgewiesen; es wurde kein Ledger gerendert. Beide anschließenden Check-only-Läufe melden DRIFT/1. T008 bleibt offen und sperrt T009. / *Both helps and identical previews passed. The sole write attempt was rejected with exit 1; no ledger was rendered. Both subsequent check-only commands report DRIFT/1. T008 remains incomplete and blocks T009.*
+
+Der Renderer verlangt einen sauberen Arbeitsbaum (`scripts/render-project-statistics.ps1:1246-1250`): "Writing requires a clean working tree. Commit or stash existing changes first." Die akzeptierten Änderungen sind uncommitted; T046/T047 erlauben den Liefercommit erst nach T008 und den weiteren Tasks. Der Renderer hat keinen Dirty-Tree-Parameter. Direkte Blockübernahme, Guard-Änderung oder fremde Git-Projektion würden die aktuelle Pflicht nicht belegen. / *The renderer requires a clean worktree while accepted changes are uncommitted and delivery staging/commit follows T008. There is no dirty-tree parameter. Copying the generated block, modifying the guard or using a different Git projection would not prove the current mandatory procedure.*
+
+[Exakte Befehle, Ausgaben und Exits](statistics-t008.json). Git-HEAD `e5083c82d80099901774518b3987f47a1a628572`; Renderer-Quellrevision `f33f161a24d5` ist der letzte relevante Nicht-Merge-Commit gemäß Methodik v2. / *The execution record binds exact commands, output and exits. Git HEAD and the renderer's last relevant non-merge source revision are distinct.*
+
+Profil 2, Methodik v2, Konfiguration und Basis 80/125 bleiben unverändert. Ungetrackte Feature-Dateien sind noch nicht Teil der Git-Textbasis. Keine erfundenen Phasenwerte für Setup oder Planung. Nächste sichere Aktion: Der koordinierende Runner muss die kausale Reihenfolge für einen sauberen Renderer-Stand mit exakter Commitprüfung klären und neu validieren, bevor T008 wiederholt wird. / *Profile, methodology, configuration and reference values remain unchanged; untracked feature files are excluded from the Git text base. Invent no setup or planning volume. The coordinator must resolve and revalidate a causal clean-renderer/commit sequence before retrying T008.*

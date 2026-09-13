@@ -1,0 +1,3650 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "analyze-2",
+  "metrics": {
+    "specRequirements": 31,
+    "importedAcceptanceCriteria": 5,
+    "totalRequirements": 36,
+    "totalTasks": 57,
+    "requirementCoveragePercent": 100,
+    "taskMappingPercent": 100,
+    "skillFRSCRequirements": 14,
+    "excludedBusinessKPIs": 0,
+    "unmappedTasks": 0,
+    "requirementsWithoutTasks": 0,
+    "gateCount": 54,
+    "applicableGates": 41,
+    "notApplicableGates": 13,
+    "catalogCommands": 46,
+    "taskGraphCycles": 0,
+    "parallelTasks": [
+      "T032",
+      "T033",
+      "T034",
+      "T035"
+    ]
+  },
+  "requirements": [
+    {
+      "requirement": "FR-001",
+      "taskIds": [
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T014",
+        "T015",
+        "T016"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "FR-002",
+      "taskIds": [
+        "T009",
+        "T011",
+        "T015",
+        "T016"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "FR-003",
+      "taskIds": [
+        "T004",
+        "T006",
+        "T007",
+        "T010",
+        "T012",
+        "T015",
+        "T016"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "FR-004",
+      "taskIds": [
+        "T017",
+        "T018",
+        "T019",
+        "T020",
+        "T021",
+        "T022",
+        "T053",
+        "T054"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "FR-005",
+      "taskIds": [
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T014",
+        "T017",
+        "T018",
+        "T019",
+        "T020",
+        "T021",
+        "T026"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "FR-006",
+      "taskIds": [
+        "T023",
+        "T024",
+        "T025",
+        "T026",
+        "T027",
+        "T030",
+        "T031",
+        "T035",
+        "T037"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "FR-007",
+      "taskIds": [
+        "T023",
+        "T024",
+        "T025",
+        "T026",
+        "T035",
+        "T037"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "FR-008",
+      "taskIds": [
+        "T013",
+        "T014",
+        "T024",
+        "T025",
+        "T035",
+        "T037"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "FR-009",
+      "taskIds": [
+        "T010",
+        "T012",
+        "T014",
+        "T026",
+        "T031",
+        "T044",
+        "T045",
+        "T046",
+        "T047",
+        "T048",
+        "T049",
+        "T050",
+        "T051",
+        "T052",
+        "T053",
+        "T054",
+        "T055",
+        "T056",
+        "T057"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "NFR-001",
+      "taskIds": [
+        "T014",
+        "T023",
+        "T026",
+        "T027",
+        "T030",
+        "T031",
+        "T034",
+        "T036",
+        "T037"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "NFR-002",
+      "taskIds": [
+        "T014",
+        "T027",
+        "T034",
+        "T036",
+        "T037",
+        "T038"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "NFR-003",
+      "taskIds": [
+        "T015",
+        "T021",
+        "T028",
+        "T029",
+        "T030",
+        "T031",
+        "T035",
+        "T037",
+        "T039",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "CR-001",
+      "taskIds": [
+        "T001",
+        "T003",
+        "T035",
+        "T054"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "CR-002",
+      "taskIds": [
+        "T034",
+        "T036",
+        "T037"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "CR-003",
+      "taskIds": [
+        "T014",
+        "T027",
+        "T034",
+        "T036",
+        "T037",
+        "T038"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "CR-004",
+      "taskIds": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "CR-005",
+      "taskIds": [
+        "T003",
+        "T004",
+        "T011",
+        "T012",
+        "T019",
+        "T020",
+        "T032",
+        "T039"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "CR-006",
+      "taskIds": [
+        "T032"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "CR-007",
+      "taskIds": [
+        "T032",
+        "T043"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "CR-008",
+      "taskIds": [
+        "T032",
+        "T043",
+        "T045"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "CR-009",
+      "taskIds": [
+        "T032",
+        "T043"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "CR-010",
+      "taskIds": [
+        "T017",
+        "T019",
+        "T020",
+        "T032",
+        "T033"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "CR-011",
+      "taskIds": [
+        "T032"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "CR-012",
+      "taskIds": [
+        "T001",
+        "T002",
+        "T003",
+        "T032",
+        "T033",
+        "T034",
+        "T035",
+        "T042",
+        "T043",
+        "T044",
+        "T045",
+        "T046",
+        "T047",
+        "T048",
+        "T049",
+        "T050",
+        "T051",
+        "T052",
+        "T053",
+        "T054",
+        "T055",
+        "T056",
+        "T057"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "CR-013",
+      "taskIds": [
+        "T036",
+        "T038",
+        "T043",
+        "T047"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "CR-014",
+      "taskIds": [
+        "T041",
+        "T042",
+        "T043",
+        "T055",
+        "T056",
+        "T057"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "SC-001",
+      "taskIds": [
+        "T005",
+        "T015",
+        "T016",
+        "T048"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "SC-002",
+      "taskIds": [
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T017",
+        "T018",
+        "T019",
+        "T020",
+        "T021",
+        "T022",
+        "T048"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "SC-003",
+      "taskIds": [
+        "T023",
+        "T024",
+        "T025",
+        "T026",
+        "T030",
+        "T031",
+        "T048"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "SC-004",
+      "taskIds": [
+        "T028",
+        "T029",
+        "T030",
+        "T031",
+        "T035",
+        "T037",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "SC-005",
+      "taskIds": [
+        "T032",
+        "T033",
+        "T034",
+        "T035",
+        "T036",
+        "T037",
+        "T038",
+        "T041",
+        "T042",
+        "T043",
+        "T049",
+        "T050",
+        "T051"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "AC-001",
+      "taskIds": [
+        "T018",
+        "T020",
+        "T021",
+        "T022",
+        "T048"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "AC-002",
+      "taskIds": [
+        "T005",
+        "T006",
+        "T007",
+        "T009",
+        "T010",
+        "T013",
+        "T015",
+        "T018",
+        "T021",
+        "T048"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "AC-003",
+      "taskIds": [
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T015",
+        "T016"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "AC-004",
+      "taskIds": [
+        "T023",
+        "T024",
+        "T025",
+        "T026",
+        "T027",
+        "T030",
+        "T035",
+        "T037"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    },
+    {
+      "requirement": "AC-005",
+      "taskIds": [
+        "T032",
+        "T033",
+        "T034",
+        "T035",
+        "T036",
+        "T037",
+        "T038",
+        "T043",
+        "T050"
+      ],
+      "hasTask": true,
+      "basis": "Fresh semantic comparison; mapping is planning coverage, not passed implementation"
+    }
+  ],
+  "tasks": [
+    {
+      "taskId": "T001",
+      "line": 18,
+      "requirements": [
+        "CR-001",
+        "CR-012"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T002",
+      "line": 19,
+      "requirements": [
+        "CR-012"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T003",
+      "line": 20,
+      "requirements": [
+        "CR-001",
+        "CR-005",
+        "CR-012"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T004",
+      "line": 26,
+      "requirements": [
+        "FR-003",
+        "CR-005"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T005",
+      "line": 27,
+      "requirements": [
+        "SC-001",
+        "AC-002"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T006",
+      "line": 28,
+      "requirements": [
+        "FR-003",
+        "AC-002"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T007",
+      "line": 29,
+      "requirements": [
+        "FR-003",
+        "AC-002"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T008",
+      "line": 31,
+      "requirements": [
+        "CR-004"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T009",
+      "line": 41,
+      "requirements": [
+        "FR-001",
+        "FR-002",
+        "FR-005",
+        "SC-002",
+        "AC-002",
+        "AC-003"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T010",
+      "line": 42,
+      "requirements": [
+        "FR-001",
+        "FR-003",
+        "FR-005",
+        "FR-009",
+        "SC-002",
+        "AC-002",
+        "AC-003"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T011",
+      "line": 46,
+      "requirements": [
+        "FR-001",
+        "FR-002",
+        "FR-005",
+        "CR-005",
+        "SC-002",
+        "AC-003"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T012",
+      "line": 47,
+      "requirements": [
+        "FR-001",
+        "FR-003",
+        "FR-005",
+        "FR-009",
+        "CR-005",
+        "SC-002",
+        "AC-003"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T013",
+      "line": 48,
+      "requirements": [
+        "FR-005",
+        "FR-008",
+        "SC-002",
+        "AC-002"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T014",
+      "line": 49,
+      "requirements": [
+        "FR-001",
+        "FR-005",
+        "FR-008",
+        "FR-009",
+        "NFR-001",
+        "NFR-002",
+        "CR-003",
+        "SC-002"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T015",
+      "line": 50,
+      "requirements": [
+        "FR-001",
+        "FR-002",
+        "FR-003",
+        "NFR-003",
+        "SC-001",
+        "SC-002",
+        "AC-002",
+        "AC-003"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T016",
+      "line": 51,
+      "requirements": [
+        "FR-001",
+        "FR-002",
+        "FR-003",
+        "CR-004",
+        "SC-001",
+        "AC-003"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T017",
+      "line": 59,
+      "requirements": [
+        "FR-004",
+        "FR-005",
+        "CR-010",
+        "SC-002"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T018",
+      "line": 60,
+      "requirements": [
+        "FR-004",
+        "FR-005",
+        "SC-002",
+        "AC-001",
+        "AC-002"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T019",
+      "line": 64,
+      "requirements": [
+        "FR-004",
+        "FR-005",
+        "CR-005",
+        "CR-010",
+        "SC-002"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T020",
+      "line": 65,
+      "requirements": [
+        "FR-004",
+        "FR-005",
+        "CR-005",
+        "CR-010",
+        "SC-002",
+        "AC-001"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T021",
+      "line": 66,
+      "requirements": [
+        "FR-004",
+        "FR-005",
+        "NFR-003",
+        "SC-002",
+        "AC-001",
+        "AC-002"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T022",
+      "line": 67,
+      "requirements": [
+        "FR-004",
+        "CR-004",
+        "SC-002",
+        "AC-001"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T023",
+      "line": 75,
+      "requirements": [
+        "FR-006",
+        "FR-007",
+        "NFR-001",
+        "SC-003",
+        "AC-004"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T024",
+      "line": 76,
+      "requirements": [
+        "FR-006",
+        "FR-007",
+        "FR-008",
+        "SC-003",
+        "AC-004"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T025",
+      "line": 80,
+      "requirements": [
+        "FR-006",
+        "FR-007",
+        "FR-008",
+        "SC-003",
+        "AC-004"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T026",
+      "line": 81,
+      "requirements": [
+        "FR-005",
+        "FR-006",
+        "FR-007",
+        "FR-009",
+        "NFR-001",
+        "SC-003",
+        "AC-004"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T027",
+      "line": 82,
+      "requirements": [
+        "FR-006",
+        "NFR-001",
+        "NFR-002",
+        "CR-003",
+        "AC-004"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T028",
+      "line": 83,
+      "requirements": [
+        "NFR-003",
+        "SC-004"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T029",
+      "line": 84,
+      "requirements": [
+        "NFR-003",
+        "SC-004"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T030",
+      "line": 85,
+      "requirements": [
+        "FR-006",
+        "NFR-001",
+        "NFR-003",
+        "SC-003",
+        "SC-004",
+        "AC-004"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T031",
+      "line": 86,
+      "requirements": [
+        "FR-006",
+        "FR-009",
+        "NFR-001",
+        "NFR-003",
+        "CR-004",
+        "SC-003",
+        "SC-004"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T032",
+      "line": 92,
+      "requirements": [
+        "CR-005",
+        "CR-006",
+        "CR-007",
+        "CR-008",
+        "CR-009",
+        "CR-010",
+        "CR-011",
+        "CR-012",
+        "SC-005",
+        "AC-005"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T033",
+      "line": 93,
+      "requirements": [
+        "CR-010",
+        "CR-012",
+        "SC-005",
+        "AC-005"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T034",
+      "line": 94,
+      "requirements": [
+        "NFR-001",
+        "NFR-002",
+        "CR-002",
+        "CR-003",
+        "CR-012",
+        "SC-005",
+        "AC-005"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T035",
+      "line": 95,
+      "requirements": [
+        "FR-006",
+        "FR-007",
+        "FR-008",
+        "NFR-003",
+        "CR-001",
+        "CR-012",
+        "SC-004",
+        "SC-005",
+        "AC-004",
+        "AC-005"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T036",
+      "line": 96,
+      "requirements": [
+        "NFR-001",
+        "NFR-002",
+        "CR-002",
+        "CR-003",
+        "CR-013",
+        "SC-005",
+        "AC-005"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T037",
+      "line": 97,
+      "requirements": [
+        "FR-006",
+        "FR-007",
+        "FR-008",
+        "NFR-001",
+        "NFR-002",
+        "NFR-003",
+        "CR-002",
+        "CR-003",
+        "SC-004",
+        "SC-005",
+        "AC-004",
+        "AC-005"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T038",
+      "line": 98,
+      "requirements": [
+        "NFR-002",
+        "CR-003",
+        "CR-013",
+        "SC-005",
+        "AC-005"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T039",
+      "line": 99,
+      "requirements": [
+        "NFR-003",
+        "CR-005"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T040",
+      "line": 100,
+      "requirements": [
+        "CR-004"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T041",
+      "line": 101,
+      "requirements": [
+        "CR-014",
+        "SC-005"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T042",
+      "line": 102,
+      "requirements": [
+        "CR-012",
+        "CR-014",
+        "SC-005"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T043",
+      "line": 103,
+      "requirements": [
+        "CR-007",
+        "CR-008",
+        "CR-009",
+        "CR-012",
+        "CR-013",
+        "CR-014",
+        "SC-005",
+        "AC-005"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T044",
+      "line": 104,
+      "requirements": [
+        "FR-009",
+        "CR-012"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T045",
+      "line": 105,
+      "requirements": [
+        "FR-009",
+        "CR-008",
+        "CR-012"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T046",
+      "line": 106,
+      "requirements": [
+        "FR-009",
+        "CR-012"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T047",
+      "line": 107,
+      "requirements": [
+        "FR-009",
+        "CR-012",
+        "CR-013"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T048",
+      "line": 108,
+      "requirements": [
+        "FR-009",
+        "NFR-003",
+        "CR-012",
+        "SC-001",
+        "SC-002",
+        "SC-003",
+        "SC-004",
+        "AC-001",
+        "AC-002"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T049",
+      "line": 109,
+      "requirements": [
+        "FR-009",
+        "NFR-003",
+        "CR-012",
+        "SC-004",
+        "SC-005"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T050",
+      "line": 110,
+      "requirements": [
+        "FR-009",
+        "NFR-003",
+        "CR-012",
+        "SC-004",
+        "SC-005",
+        "AC-005"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T051",
+      "line": 111,
+      "requirements": [
+        "FR-009",
+        "CR-012",
+        "SC-005"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T052",
+      "line": 112,
+      "requirements": [
+        "FR-009",
+        "CR-012"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T053",
+      "line": 116,
+      "requirements": [
+        "FR-004",
+        "FR-009",
+        "CR-012"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T054",
+      "line": 117,
+      "requirements": [
+        "FR-004",
+        "FR-009",
+        "CR-001",
+        "CR-012"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T055",
+      "line": 121,
+      "requirements": [
+        "FR-009",
+        "CR-004",
+        "CR-012",
+        "CR-014"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T056",
+      "line": 122,
+      "requirements": [
+        "FR-009",
+        "CR-012",
+        "CR-014"
+      ],
+      "implementationStatus": "Pending"
+    },
+    {
+      "taskId": "T057",
+      "line": 123,
+      "requirements": [
+        "FR-009",
+        "CR-012",
+        "CR-014"
+      ],
+      "implementationStatus": "Pending"
+    }
+  ],
+  "taskDependencies": {
+    "T001": [],
+    "T002": [
+      "T001"
+    ],
+    "T003": [
+      "T002"
+    ],
+    "T004": [
+      "T003"
+    ],
+    "T005": [
+      "T004"
+    ],
+    "T006": [
+      "T005"
+    ],
+    "T007": [
+      "T006"
+    ],
+    "T008": [
+      "T007"
+    ],
+    "T009": [
+      "T008"
+    ],
+    "T010": [
+      "T009"
+    ],
+    "T011": [
+      "T010"
+    ],
+    "T012": [
+      "T011"
+    ],
+    "T013": [
+      "T012"
+    ],
+    "T014": [
+      "T013"
+    ],
+    "T015": [
+      "T014"
+    ],
+    "T016": [
+      "T015"
+    ],
+    "T017": [
+      "T016"
+    ],
+    "T018": [
+      "T017"
+    ],
+    "T019": [
+      "T018"
+    ],
+    "T020": [
+      "T019"
+    ],
+    "T021": [
+      "T020"
+    ],
+    "T022": [
+      "T021"
+    ],
+    "T023": [
+      "T022"
+    ],
+    "T024": [
+      "T023"
+    ],
+    "T025": [
+      "T024"
+    ],
+    "T026": [
+      "T025"
+    ],
+    "T027": [
+      "T026"
+    ],
+    "T028": [
+      "T027"
+    ],
+    "T029": [
+      "T028"
+    ],
+    "T030": [
+      "T029"
+    ],
+    "T031": [
+      "T030"
+    ],
+    "T032": [
+      "T031"
+    ],
+    "T033": [
+      "T031"
+    ],
+    "T034": [
+      "T031"
+    ],
+    "T035": [
+      "T031"
+    ],
+    "T036": [
+      "T032",
+      "T033",
+      "T034",
+      "T035"
+    ],
+    "T037": [
+      "T036"
+    ],
+    "T038": [
+      "T037"
+    ],
+    "T039": [
+      "T038"
+    ],
+    "T040": [
+      "T039"
+    ],
+    "T041": [
+      "T040"
+    ],
+    "T042": [
+      "T041"
+    ],
+    "T043": [
+      "T042"
+    ],
+    "T044": [
+      "T043"
+    ],
+    "T045": [
+      "T044"
+    ],
+    "T046": [
+      "T045"
+    ],
+    "T047": [
+      "T046"
+    ],
+    "T048": [
+      "T047"
+    ],
+    "T049": [
+      "T048"
+    ],
+    "T050": [
+      "T049"
+    ],
+    "T051": [
+      "T050"
+    ],
+    "T052": [
+      "T051"
+    ],
+    "T053": [
+      "T052"
+    ],
+    "T054": [
+      "T053"
+    ],
+    "T055": [
+      "T054"
+    ],
+    "T056": [
+      "T055"
+    ],
+    "T057": [
+      "T056"
+    ]
+  },
+  "gates": [
+    {
+      "gateId": "EL-linux-bash-baseline",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-bash-strict",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-bash-query",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-pwsh-baseline",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-pwsh-strict",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-pwsh-query",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-sequencing",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-runner-cardinality",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-linux-pssa",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-bash-baseline",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-bash-strict",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-bash-query",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-pwsh-baseline",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-pwsh-strict",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-pwsh-query",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-sequencing",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-runner-cardinality",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-macos-pssa",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-bash-baseline",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-bash-strict",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-bash-query",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-pwsh-baseline",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-pwsh-strict",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-pwsh-query",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-sequencing",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-runner-cardinality",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-windows-pssa",
+      "applicability": "Applicable",
+      "tasks": [
+        "T029",
+        "T048",
+        "T049",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-ready",
+      "applicability": "Applicable",
+      "tasks": [
+        "T001",
+        "T044"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-red-green",
+      "applicability": "Applicable",
+      "tasks": [
+        "T007",
+        "T050"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/phase-results/implementation-red-green.md",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-homogeneity-linux",
+      "applicability": "Applicable",
+      "tasks": [
+        "T040",
+        "T049"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-homogeneity-windows",
+      "applicability": "Applicable",
+      "tasks": [
+        "T040",
+        "T049"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-secrets",
+      "applicability": "Applicable",
+      "tasks": [
+        "T039",
+        "T049"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-public-readiness",
+      "applicability": "Applicable",
+      "tasks": [
+        "T049"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/phase-results/public-readiness.md",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-documentation",
+      "applicability": "Applicable",
+      "tasks": [
+        "T038"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/phase-results/documentation-review.md",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-statistics",
+      "applicability": "Applicable",
+      "tasks": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/phase-results/statistics-review.md",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-security",
+      "applicability": "Applicable",
+      "tasks": [
+        "T032"
+      ],
+      "plannedEvidence": "docs/security/series-eligibility.md",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-architecture",
+      "applicability": "Applicable",
+      "tasks": [
+        "T033"
+      ],
+      "plannedEvidence": "docs/architecture/series-eligibility.md",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-accessibility",
+      "applicability": "Applicable",
+      "tasks": [
+        "T034",
+        "T037"
+      ],
+      "plannedEvidence": "docs/accessibility/series-eligibility.md",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-parity",
+      "applicability": "Applicable",
+      "tasks": [
+        "T035",
+        "T037",
+        "T048"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/checklists/cross-platform.md",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-retrospective",
+      "applicability": "Applicable",
+      "tasks": [
+        "T041",
+        "T055"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/engineering-retrospective.md",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "EL-aeps",
+      "applicability": "Applicable",
+      "tasks": [
+        "T042",
+        "T055"
+      ],
+      "plannedEvidence": "docs/aeps/receipts/2026-09-13-series-eligibility-completion.md",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-product-build",
+      "applicability": "N/A",
+      "tasks": [
+        "T043",
+        "T045"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-asvs",
+      "applicability": "N/A",
+      "tasks": [
+        "T043",
+        "T045"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-release-supply-chain",
+      "applicability": "N/A",
+      "tasks": [
+        "T043",
+        "T045"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-ai-sbom",
+      "applicability": "N/A",
+      "tasks": [
+        "T043",
+        "T045"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-cloud",
+      "applicability": "N/A",
+      "tasks": [
+        "T043",
+        "T045"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-regulatory",
+      "applicability": "N/A",
+      "tasks": [
+        "T043",
+        "T045"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-privacy-publication",
+      "applicability": "N/A",
+      "tasks": [
+        "T043",
+        "T045"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-new-adr",
+      "applicability": "N/A",
+      "tasks": [
+        "T043",
+        "T045"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-visual-media",
+      "applicability": "N/A",
+      "tasks": [
+        "T043",
+        "T045"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-write-preview",
+      "applicability": "N/A",
+      "tasks": [
+        "T043",
+        "T045"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-shared-guidance",
+      "applicability": "N/A",
+      "tasks": [
+        "T043",
+        "T045"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-remote-delivery",
+      "applicability": "N/A",
+      "tasks": [
+        "T043",
+        "T045"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    },
+    {
+      "gateId": "NA-parallel-provider-level0",
+      "applicability": "N/A",
+      "tasks": [
+        "T043",
+        "T045"
+      ],
+      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json",
+      "executionStatus": "Not Assessed"
+    }
+  ],
+  "canonicalEvidenceProducers": {
+    "EL-red-green": {
+      "path": "specs/004-series-eligibility/phase-results/implementation-red-green.md",
+      "producerTasks": [
+        "T007",
+        "T050"
+      ]
+    },
+    "EL-public-readiness": {
+      "path": "specs/004-series-eligibility/phase-results/public-readiness.md",
+      "producerTasks": [
+        "T049"
+      ]
+    },
+    "EL-documentation": {
+      "path": "specs/004-series-eligibility/phase-results/documentation-review.md",
+      "producerTasks": [
+        "T038"
+      ]
+    },
+    "EL-statistics": {
+      "path": "specs/004-series-eligibility/phase-results/statistics-review.md",
+      "producerTasks": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055"
+      ]
+    },
+    "EL-aeps": {
+      "path": "docs/aeps/receipts/2026-09-13-series-eligibility-completion.md",
+      "producerTasks": [
+        "T042",
+        "T055"
+      ]
+    }
+  },
+  "catalog": [
+    {
+      "id": "series-bash",
+      "command": "bash .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.sh --file specs/intake-series/aoc-phase-2/manifest.json --repo .",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "series-pwsh",
+      "command": "pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.ps1 -File specs/intake-series/aoc-phase-2/manifest.json -Repo .",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "sequencing",
+      "command": "pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/tests/test-intake-sequencing-validator.ps1",
+      "existingAtPlan": true,
+      "expected": "Exit 0; children reject cycle ISG007, hash drift ISG004, roots ISG008, multiple declared Eligible ISG009 with exit 2",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "legacy-valid-parallel-bash",
+      "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/valid-parallel.json",
+      "existingAtPlan": true,
+      "expected": "Exit 0; Eligible",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "legacy-valid-parallel-pwsh",
+      "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/valid-parallel.json",
+      "existingAtPlan": true,
+      "expected": "Exit 0; Eligible",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "legacy-shared-write-bash",
+      "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/shared-write.json",
+      "existingAtPlan": true,
+      "expected": "Exit 0; Blocked",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "legacy-shared-write-pwsh",
+      "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/shared-write.json",
+      "existingAtPlan": true,
+      "expected": "Exit 0; Blocked",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "legacy-shared-decision-bash",
+      "command": "bash specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.sh specs/intake-review-fixtures/meta-lh-04/shared-decision.json",
+      "existingAtPlan": true,
+      "expected": "Exit 0; Blocked",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "legacy-shared-decision-pwsh",
+      "command": "pwsh -NoProfile -File specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.ps1 -Fixture specs/intake-review-fixtures/meta-lh-04/shared-decision.json",
+      "existingAtPlan": true,
+      "expected": "Exit 0; Blocked",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "surface-bash",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case surface",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "empty-integration-bash",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case empty-integration",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "all-bash",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case all",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "criteria-cardinality-bash",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case criteria-cardinality",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "runner-cardinality-bash",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case runner-cardinality",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "series-negatives-bash",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case series-negatives",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "status-next-bash",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case status-next",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "failure-taxonomy-bash",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case failure-taxonomy",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "status-bash",
+      "command": "bash specs/004-series-eligibility/contracts/validate-series-eligibility.sh --repo . --series specs/intake-series/aoc-phase-2/manifest.json --action status --json",
+      "existingAtPlan": false,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "next-bash",
+      "command": "bash specs/004-series-eligibility/contracts/validate-series-eligibility.sh --repo . --series specs/intake-series/aoc-phase-2/manifest.json --action next --json",
+      "existingAtPlan": false,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "surface-pwsh",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case surface",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "empty-integration-pwsh",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case empty-integration",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "all-pwsh",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case all",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "criteria-cardinality-pwsh",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case criteria-cardinality",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "runner-cardinality-pwsh",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case runner-cardinality",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "series-negatives-pwsh",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case series-negatives",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "status-next-pwsh",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case status-next",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "failure-taxonomy-pwsh",
+      "command": "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case failure-taxonomy",
+      "existingAtPlan": false,
+      "expected": "Exit 0 after implementation; empty-integration first red must fail on the named semantic defect only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "status-pwsh",
+      "command": "pwsh -NoProfile -File specs/004-series-eligibility/contracts/validate-series-eligibility.ps1 -Repo . -Series specs/intake-series/aoc-phase-2/manifest.json -Action status -Json",
+      "existingAtPlan": false,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "next-pwsh",
+      "command": "pwsh -NoProfile -File specs/004-series-eligibility/contracts/validate-series-eligibility.ps1 -Repo . -Series specs/intake-series/aoc-phase-2/manifest.json -Action next -Json",
+      "existingAtPlan": false,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "global-ready",
+      "command": "python3 -B specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py --repo . global-ready",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "pssa",
+      "command": "pwsh -NoProfile -File scripts/invoke-psscriptanalyzer.ps1 -RepositoryRoot .",
+      "existingAtPlan": true,
+      "expected": "Exit 0; PSScriptAnalyzer 1.25.0, complete tracked repository-owned PowerShell set",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "homogeneity-bash",
+      "command": "bash scripts/check-homogeneity.sh --dry-run --verbose .",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-latest",
+        "macos-14"
+      ],
+      "executionClass": "quality-automated-gate",
+      "executionTasks": [
+        "T039",
+        "T040",
+        "T049"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "homogeneity-pwsh",
+      "command": "pwsh -NoProfile -File scripts/check-homogeneity.ps1 -TargetDir . -DryRun -Verbose",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "windows-2022"
+      ],
+      "executionClass": "quality-automated-gate",
+      "executionTasks": [
+        "T039",
+        "T040",
+        "T049"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "secret-scan",
+      "command": "bash scripts/scan-agent-secrets.sh --fail-on-high .",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-latest",
+        "macos-14"
+      ],
+      "executionClass": "quality-automated-gate",
+      "executionTasks": [
+        "T039",
+        "T040",
+        "T049"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "whitespace",
+      "command": "git diff --check",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "documentation-bash",
+      "command": "bash scripts/validate-documentation-impact.sh --evidence specs/004-series-eligibility/contracts/documentation-impact.json",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "documentation-pwsh",
+      "command": "pwsh -NoProfile -File scripts/validate-documentation-impact.ps1 -Evidence specs/004-series-eligibility/contracts/documentation-impact.json",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T029",
+        "T048"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "stats-preview",
+      "command": "bash scripts/render-project-statistics.sh --repo . --dry-run",
+      "existingAtPlan": true,
+      "expected": "Exit 0; preview only",
+      "platforms": [
+        "macos-14",
+        "ubuntu-latest"
+      ],
+      "executionClass": "statistics-boundary",
+      "executionTasks": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055"
+      ],
+      "executionPhase": "After actual implementation or delivery milestone; help, paired preview, one render, both check modes only with current write authority"
+    },
+    {
+      "id": "stats-render",
+      "command": "pwsh -NoProfile -File scripts/render-project-statistics.ps1 -Repo .",
+      "existingAtPlan": true,
+      "expected": "Exit 0; implementation closeout only; generated write after preview",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "statistics-boundary",
+      "executionTasks": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055"
+      ],
+      "executionPhase": "After actual implementation or delivery milestone; help, paired preview, one render, both check modes only with current write authority"
+    },
+    {
+      "id": "stats-bash",
+      "command": "bash scripts/render-project-statistics.sh --repo . --check-only",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055",
+        "T048"
+      ],
+      "executionPhase": "Read-only statistics checks at statistics boundaries and exact-head native acceptance; never render in the matrix"
+    },
+    {
+      "id": "stats-pwsh",
+      "command": "pwsh -NoProfile -File scripts/render-project-statistics.ps1 -Repo . -CheckOnly",
+      "existingAtPlan": true,
+      "expected": "Exit 0",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "native-automated-gate",
+      "executionTasks": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055",
+        "T048"
+      ],
+      "executionPhase": "Read-only statistics checks at statistics boundaries and exact-head native acceptance; never render in the matrix"
+    },
+    {
+      "id": "public-readiness",
+      "command": "gh run view RUN_ID --job JOB_ID --log",
+      "existingAtPlan": true,
+      "expected": "Read-only evidence retrieval at authorized delivery: exact-head Repository baseline log proves both steps from .github/workflows/public-readiness.yml; replace IDs with observed IDs",
+      "platforms": [
+        "ubuntu-latest"
+      ],
+      "executionClass": "delivery-evidence-retrieval",
+      "executionTasks": [
+        "T049"
+      ],
+      "executionPhase": "Authorized delivery only; observed RUN_ID/JOB_ID and exact PR head; client retrieval is not a native matrix test",
+      "observedProviderPlatform": "ubuntu-latest",
+      "clientPlatforms": [
+        "Linux",
+        "macOS",
+        "Windows"
+      ]
+    },
+    {
+      "id": "untracked-secret-scan",
+      "command": "gitleaks dir specs/004-series-eligibility --no-banner --no-color --redact",
+      "existingAtPlan": true,
+      "expected": "Exit 0; includes named untracked feature files",
+      "platforms": [
+        "ubuntu-latest",
+        "macos-14"
+      ],
+      "executionClass": "quality-automated-gate",
+      "executionTasks": [
+        "T039",
+        "T040",
+        "T049"
+      ],
+      "executionPhase": "Automated gate checks only on the declared platforms; preserve every required command and runner token"
+    },
+    {
+      "id": "stats-help-bash",
+      "command": "bash scripts/render-project-statistics.sh --help",
+      "existingAtPlan": true,
+      "expected": "Exit 0; help or preview only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "statistics-boundary",
+      "executionTasks": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055"
+      ],
+      "executionPhase": "At statistics boundaries before render; read-only help or preview"
+    },
+    {
+      "id": "stats-help-pwsh",
+      "command": "pwsh -NoProfile -Command \"Get-Help ./scripts/render-project-statistics.ps1 -Full\"",
+      "existingAtPlan": true,
+      "expected": "Exit 0; help or preview only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "statistics-boundary",
+      "executionTasks": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055"
+      ],
+      "executionPhase": "At statistics boundaries before render; read-only help or preview"
+    },
+    {
+      "id": "stats-preview-pwsh",
+      "command": "pwsh -NoProfile -File scripts/render-project-statistics.ps1 -Repo . -WhatIf",
+      "existingAtPlan": true,
+      "expected": "Exit 0; help or preview only",
+      "platforms": [
+        "ubuntu-22.04",
+        "macos-14",
+        "windows-2022"
+      ],
+      "executionClass": "statistics-boundary",
+      "executionTasks": [
+        "T008",
+        "T016",
+        "T022",
+        "T031",
+        "T040",
+        "T055"
+      ],
+      "executionPhase": "At statistics boundaries before render; read-only help or preview"
+    }
+  ],
+  "checklists": [
+    {
+      "path": "specs/004-series-eligibility/checklists/analysis-remediation.md",
+      "items": 8,
+      "unchecked": 0,
+      "reviewedFresh": true,
+      "limit": "Requirement/planning checklist only; historical execution claims retain their original phase scope"
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/plan-review.md",
+      "items": 12,
+      "unchecked": 0,
+      "reviewedFresh": true,
+      "limit": "Requirement/planning checklist only; historical execution claims retain their original phase scope"
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/requirements.md",
+      "items": 16,
+      "unchecked": 0,
+      "reviewedFresh": true,
+      "limit": "Requirement/planning checklist only; historical execution claims retain their original phase scope"
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/series-eligibility.md",
+      "items": 36,
+      "unchecked": 0,
+      "reviewedFresh": true,
+      "limit": "Requirement/planning checklist only; historical execution claims retain their original phase scope"
+    }
+  ],
+  "constitution": {
+    "version": "1.21.4",
+    "byteIdentical": true,
+    "sha256": "37b42aef7201b851edda3c94974379860f4ff11fd37201df6b114210c48b87c9",
+    "registryLine": 922,
+    "sharedRulesChanged": false,
+    "newTestFramework": false
+  },
+  "acceptedBindings": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "expectedSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+      "actualSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+      "matches": true
+    },
+    {
+      "path": "specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json",
+      "expectedSha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b",
+      "actualSha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b",
+      "matches": true
+    },
+    {
+      "path": "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json",
+      "expectedSha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07",
+      "actualSha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07",
+      "matches": true
+    }
+  ],
+  "predecessors": [
+    {
+      "path": "specs/003-authoring-contract/autonomous-run-state.json",
+      "status": "Completed",
+      "stage": "MergeAndSync",
+      "tasks": {
+        "path": "specs/003-authoring-contract/tasks.md",
+        "sha256": "ad5da75b41b169538a7e9be844a6cd3d64682e87a6b78563d1e522e6cea434f2",
+        "completed": 79,
+        "total": 79
+      }
+    },
+    {
+      "path": "specs/002-portfolio-ownership/autonomous-run-state.json",
+      "status": "Completed",
+      "stage": "MergeAndSync",
+      "tasks": {
+        "path": "specs/002-portfolio-ownership/tasks.md",
+        "sha256": "bd75e9b222640e0a8ddc319794d7ce2d801676c00601859e255048aeac322aa0",
+        "completed": 93,
+        "total": 93
+      }
+    },
+    {
+      "path": "specs/001-programmquellen-baseline/autonomous-run-state.json",
+      "status": "Completed",
+      "stage": "MergeAndSync",
+      "tasks": {
+        "path": "specs/001-programmquellen-baseline/tasks.md",
+        "sha256": "b0e05871052dbb5929550d6dd766a72a83a10e19cacb39d290907e41198681e2",
+        "completed": 66,
+        "total": 66
+      }
+    }
+  ],
+  "schemaFeasibility": {
+    "requirementsSha256": "f0e49efeb0fd052a34fd1175818af487bd67488cee425e84512bfdd81a36d7fa",
+    "all54SyntheticRowsAccepted": true,
+    "negativeProbes": [
+      {
+        "gateId": "EL-linux-bash-baseline",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-linux-bash-baseline: bash .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.sh --file specs/intake-series/aoc-phase-2/manifest.json --repo ."
+      },
+      {
+        "gateId": "EL-linux-bash-baseline",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-linux-bash-baseline: ubuntu-22.04"
+      },
+      {
+        "gateId": "EL-linux-bash-strict",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-linux-bash-strict: python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case all"
+      },
+      {
+        "gateId": "EL-linux-bash-strict",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-linux-bash-strict: ubuntu-22.04"
+      },
+      {
+        "gateId": "EL-linux-bash-query",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-linux-bash-query: python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case status-next"
+      },
+      {
+        "gateId": "EL-linux-bash-query",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-linux-bash-query: ubuntu-22.04"
+      },
+      {
+        "gateId": "EL-linux-pwsh-baseline",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-linux-pwsh-baseline: pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.ps1 -File specs/intake-series/aoc-phase-2/manifest.json -Repo ."
+      },
+      {
+        "gateId": "EL-linux-pwsh-baseline",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-linux-pwsh-baseline: ubuntu-22.04"
+      },
+      {
+        "gateId": "EL-linux-pwsh-strict",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-linux-pwsh-strict: python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case all"
+      },
+      {
+        "gateId": "EL-linux-pwsh-strict",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-linux-pwsh-strict: ubuntu-22.04"
+      },
+      {
+        "gateId": "EL-linux-pwsh-query",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-linux-pwsh-query: python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case status-next"
+      },
+      {
+        "gateId": "EL-linux-pwsh-query",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-linux-pwsh-query: ubuntu-22.04"
+      },
+      {
+        "gateId": "EL-linux-sequencing",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-linux-sequencing: pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/tests/test-intake-sequencing-validator.ps1"
+      },
+      {
+        "gateId": "EL-linux-sequencing",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-linux-sequencing: ubuntu-22.04"
+      },
+      {
+        "gateId": "EL-linux-runner-cardinality",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-linux-runner-cardinality: python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case runner-cardinality"
+      },
+      {
+        "gateId": "EL-linux-runner-cardinality",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-linux-runner-cardinality: ubuntu-22.04"
+      },
+      {
+        "gateId": "EL-linux-pssa",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-linux-pssa: pwsh -NoProfile -File scripts/invoke-psscriptanalyzer.ps1 -RepositoryRoot ."
+      },
+      {
+        "gateId": "EL-linux-pssa",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-linux-pssa: ubuntu-22.04"
+      },
+      {
+        "gateId": "EL-macos-bash-baseline",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-macos-bash-baseline: bash .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.sh --file specs/intake-series/aoc-phase-2/manifest.json --repo ."
+      },
+      {
+        "gateId": "EL-macos-bash-baseline",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-macos-bash-baseline: macos-14"
+      },
+      {
+        "gateId": "EL-macos-bash-strict",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-macos-bash-strict: python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case all"
+      },
+      {
+        "gateId": "EL-macos-bash-strict",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-macos-bash-strict: macos-14"
+      },
+      {
+        "gateId": "EL-macos-bash-query",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-macos-bash-query: python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case status-next"
+      },
+      {
+        "gateId": "EL-macos-bash-query",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-macos-bash-query: macos-14"
+      },
+      {
+        "gateId": "EL-macos-pwsh-baseline",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-macos-pwsh-baseline: pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.ps1 -File specs/intake-series/aoc-phase-2/manifest.json -Repo ."
+      },
+      {
+        "gateId": "EL-macos-pwsh-baseline",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-macos-pwsh-baseline: macos-14"
+      },
+      {
+        "gateId": "EL-macos-pwsh-strict",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-macos-pwsh-strict: python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case all"
+      },
+      {
+        "gateId": "EL-macos-pwsh-strict",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-macos-pwsh-strict: macos-14"
+      },
+      {
+        "gateId": "EL-macos-pwsh-query",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-macos-pwsh-query: python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case status-next"
+      },
+      {
+        "gateId": "EL-macos-pwsh-query",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-macos-pwsh-query: macos-14"
+      },
+      {
+        "gateId": "EL-macos-sequencing",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-macos-sequencing: pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/tests/test-intake-sequencing-validator.ps1"
+      },
+      {
+        "gateId": "EL-macos-sequencing",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-macos-sequencing: macos-14"
+      },
+      {
+        "gateId": "EL-macos-runner-cardinality",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-macos-runner-cardinality: python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case runner-cardinality"
+      },
+      {
+        "gateId": "EL-macos-runner-cardinality",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-macos-runner-cardinality: macos-14"
+      },
+      {
+        "gateId": "EL-macos-pssa",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-macos-pssa: pwsh -NoProfile -File scripts/invoke-psscriptanalyzer.ps1 -RepositoryRoot ."
+      },
+      {
+        "gateId": "EL-macos-pssa",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-macos-pssa: macos-14"
+      },
+      {
+        "gateId": "EL-windows-bash-baseline",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-windows-bash-baseline: bash .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.sh --file specs/intake-series/aoc-phase-2/manifest.json --repo ."
+      },
+      {
+        "gateId": "EL-windows-bash-baseline",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-windows-bash-baseline: windows-2022"
+      },
+      {
+        "gateId": "EL-windows-bash-strict",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-windows-bash-strict: python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case all"
+      },
+      {
+        "gateId": "EL-windows-bash-strict",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-windows-bash-strict: windows-2022"
+      },
+      {
+        "gateId": "EL-windows-bash-query",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-windows-bash-query: python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case status-next"
+      },
+      {
+        "gateId": "EL-windows-bash-query",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-windows-bash-query: windows-2022"
+      },
+      {
+        "gateId": "EL-windows-pwsh-baseline",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-windows-pwsh-baseline: pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.ps1 -File specs/intake-series/aoc-phase-2/manifest.json -Repo ."
+      },
+      {
+        "gateId": "EL-windows-pwsh-baseline",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-windows-pwsh-baseline: windows-2022"
+      },
+      {
+        "gateId": "EL-windows-pwsh-strict",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-windows-pwsh-strict: python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case all"
+      },
+      {
+        "gateId": "EL-windows-pwsh-strict",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-windows-pwsh-strict: windows-2022"
+      },
+      {
+        "gateId": "EL-windows-pwsh-query",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-windows-pwsh-query: python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case status-next"
+      },
+      {
+        "gateId": "EL-windows-pwsh-query",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-windows-pwsh-query: windows-2022"
+      },
+      {
+        "gateId": "EL-windows-sequencing",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-windows-sequencing: pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/tests/test-intake-sequencing-validator.ps1"
+      },
+      {
+        "gateId": "EL-windows-sequencing",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-windows-sequencing: windows-2022"
+      },
+      {
+        "gateId": "EL-windows-runner-cardinality",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-windows-runner-cardinality: python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case runner-cardinality"
+      },
+      {
+        "gateId": "EL-windows-runner-cardinality",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-windows-runner-cardinality: windows-2022"
+      },
+      {
+        "gateId": "EL-windows-pssa",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-windows-pssa: pwsh -NoProfile -File scripts/invoke-psscriptanalyzer.ps1 -RepositoryRoot ."
+      },
+      {
+        "gateId": "EL-windows-pssa",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-windows-pssa: windows-2022"
+      },
+      {
+        "gateId": "EL-ready",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-ready: python3 -B specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py --repo . global-ready"
+      },
+      {
+        "gateId": "EL-ready",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-ready: Python 3"
+      },
+      {
+        "gateId": "EL-red-green",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-red-green: manual:red-green"
+      },
+      {
+        "gateId": "EL-red-green",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-red-green: Bash 5+"
+      },
+      {
+        "gateId": "EL-homogeneity-linux",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-homogeneity-linux: bash scripts/check-homogeneity.sh --dry-run --verbose ."
+      },
+      {
+        "gateId": "EL-homogeneity-linux",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-homogeneity-linux: ubuntu-latest"
+      },
+      {
+        "gateId": "EL-homogeneity-windows",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-homogeneity-windows: pwsh -NoProfile -File scripts/check-homogeneity.ps1 -TargetDir . -DryRun -Verbose"
+      },
+      {
+        "gateId": "EL-homogeneity-windows",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-homogeneity-windows: windows-2022"
+      },
+      {
+        "gateId": "EL-secrets",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-secrets: bash scripts/scan-agent-secrets.sh --fail-on-high ."
+      },
+      {
+        "gateId": "EL-secrets",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-secrets: ubuntu-latest"
+      },
+      {
+        "gateId": "EL-public-readiness",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-public-readiness: bash scripts/scan-agent-secrets.sh --fail-on-high ."
+      },
+      {
+        "gateId": "EL-public-readiness",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-public-readiness: ubuntu-latest"
+      },
+      {
+        "gateId": "EL-documentation",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-documentation: bash scripts/validate-documentation-impact.sh --evidence specs/004-series-eligibility/contracts/documentation-impact.json"
+      },
+      {
+        "gateId": "EL-documentation",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-documentation: Bash"
+      },
+      {
+        "gateId": "EL-statistics",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-statistics: bash scripts/render-project-statistics.sh --repo . --dry-run"
+      },
+      {
+        "gateId": "EL-statistics",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-statistics: Bash"
+      },
+      {
+        "gateId": "EL-security",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-security: manual:security"
+      },
+      {
+        "gateId": "EL-security",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-security: manual-review"
+      },
+      {
+        "gateId": "EL-architecture",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-architecture: manual:architecture"
+      },
+      {
+        "gateId": "EL-architecture",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-architecture: manual-review"
+      },
+      {
+        "gateId": "EL-accessibility",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-accessibility: manual:accessibility"
+      },
+      {
+        "gateId": "EL-accessibility",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-accessibility: manual-review"
+      },
+      {
+        "gateId": "EL-parity",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-parity: manual:parity"
+      },
+      {
+        "gateId": "EL-parity",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-parity: manual-review"
+      },
+      {
+        "gateId": "EL-retrospective",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-retrospective: manual:retrospective"
+      },
+      {
+        "gateId": "EL-retrospective",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-retrospective: manual-review"
+      },
+      {
+        "gateId": "EL-aeps",
+        "omittedField": "executedCommand",
+        "rejected": true,
+        "diagnostic": "missing command token for EL-aeps: manual:aeps"
+      },
+      {
+        "gateId": "EL-aeps",
+        "omittedField": "runnerOrPlatform",
+        "rejected": true,
+        "diagnostic": "missing runner token for EL-aeps: manual-review"
+      }
+    ],
+    "limit": "In-memory structural probes only; no synthetic gate-evidence file or feature Pass produced."
+  },
+  "findings": [],
+  "historicalFindingDispositions": [
+    {
+      "id": "C001",
+      "originalSeverity": "Critical",
+      "status": "Resolved",
+      "locations": [
+        "constitution.md:3",
+        "constitution.md:286",
+        "constitution.md:922",
+        "constitution.md:1155",
+        "specs/004-series-eligibility/spec.md:93",
+        "specs/004-series-eligibility/tasks.md:20"
+      ],
+      "evidence": "Byte-identical v1.21.4; factual local row verified against existing unittest, scripts, workflow, statistics and five surfaces. Shared principles unchanged; amendment merge date remains an actual later event."
+    },
+    {
+      "id": "C002",
+      "originalSeverity": "Critical",
+      "status": "Resolved",
+      "locations": [
+        "constitution.md:175",
+        "specs/004-series-eligibility/tasks.md:27",
+        "specs/004-series-eligibility/plan.md:22",
+        "specs/004-series-eligibility/research.md:33",
+        "specs/003-authoring-contract/contracts/test_validate_authoring_contract.py:13",
+        "scripts/tests/test_home_sync_files.py:11"
+      ],
+      "evidence": "Additional cases reuse existing unittest, temporary fixtures, subprocess patterns and sequencing/CI surfaces; no new framework, package or harness family. Existing authoring tests freshly pass."
+    },
+    {
+      "id": "C003",
+      "originalSeverity": "Critical",
+      "status": "Resolved",
+      "locations": [
+        "constitution.md:982",
+        "specs/004-series-eligibility/tasks.md:112",
+        "specs/004-series-eligibility/tasks.md:116",
+        "specs/004-series-eligibility/tasks.md:117",
+        "specs/004-series-eligibility/tasks.md:121",
+        "specs/004-series-eligibility/plan.md:192",
+        "specs/004-series-eligibility/research.md:61"
+      ],
+      "evidence": "T051-T057 order feature merge, postmerge, paired lifecycle preparation, exactly one rename PR with current bindings, separate causal closeout, final sync. Existing META03 lifecycle and current-evidence bridge verified as precedent. No META05 start or silent historical rewrite."
+    },
+    {
+      "id": "C004",
+      "originalSeverity": "Critical",
+      "status": "Resolved",
+      "locations": [
+        "constitution.md:210",
+        "specs/004-series-eligibility/tasks.md:31",
+        "specs/004-series-eligibility/plan.md:190",
+        "specs/004-series-eligibility/quickstart.md:180"
+      ],
+      "evidence": "T008 immediately follows T007 and blocks T009; both helps, paired previews, one render, both checks and honest source revision specified. Further boundaries T016/T022/T031/T040/T055."
+    },
+    {
+      "id": "I001",
+      "originalSeverity": "Medium",
+      "status": "Resolved",
+      "locations": [
+        "specs/004-series-eligibility/tasks.md:18",
+        "specs/004-series-eligibility/quickstart.md:245"
+      ],
+      "evidence": "T001 reads historical analyze-report.md with the exact current analyze-2 runner result and its current payload/input hashes, outcome/gates and both result validators. The new result payload is analyze-2-report.md; old blocked report remains historical and cannot satisfy T001 by itself."
+    },
+    {
+      "id": "I002",
+      "originalSeverity": "Medium",
+      "status": "Resolved",
+      "locations": [
+        "specs/004-series-eligibility/tasks.md:29",
+        "specs/004-series-eligibility/tasks.md:31",
+        "specs/004-series-eligibility/tasks.md:98",
+        "specs/004-series-eligibility/tasks.md:100",
+        "specs/004-series-eligibility/tasks.md:102",
+        "specs/004-series-eligibility/tasks.md:109"
+      ],
+      "evidence": "All five canonical plannedEvidence paths retain explicit producers; see canonicalEvidenceProducers. Raw JSON execution records supplement the named Markdown review artifacts."
+    },
+    {
+      "id": "O001",
+      "originalSeverity": "Medium",
+      "status": "Resolved",
+      "locations": [
+        "specs/004-series-eligibility/tasks.md:84",
+        "specs/004-series-eligibility/tasks.md:108",
+        "specs/004-series-eligibility/tasks.md:109",
+        "specs/004-series-eligibility/quickstart.md:247",
+        "specs/004-series-eligibility/contracts/validation-commands.json"
+      ],
+      "evidence": "46 IDs carry execution class, tasks, phase and platform. Matrix limited to native automated gates, including read-only statistics checks; render only six statistics boundaries, provider retrieval T049 with observed IDs. All required tokens retained."
+    },
+    {
+      "id": "L001",
+      "originalSeverity": "Low",
+      "status": "Resolved",
+      "locations": [
+        "specs/004-series-eligibility/tasks.md:103",
+        "specs/004-series-eligibility/tasks.md:146",
+        "specs/004-series-eligibility/spec.md:106"
+      ],
+      "evidence": "CR-001-014 range explicit; CR-014 independently mapped to T041/T042/T043/T055/T056/T057 with seven sections and source/hash trend."
+    }
+  ],
+  "findingsMetrics": {
+    "Critical": 0,
+    "High": 0,
+    "Medium": 0,
+    "Low": 0,
+    "ambiguities": 0,
+    "duplications": 0
+  },
+  "artifacts": [
+    {
+      "path": ".specify/memory/constitution.md",
+      "normalizedSha256": "37b42aef7201b851edda3c94974379860f4ff11fd37201df6b114210c48b87c9"
+    },
+    {
+      "path": "constitution.md",
+      "normalizedSha256": "37b42aef7201b851edda3c94974379860f4ff11fd37201df6b114210c48b87c9"
+    },
+    {
+      "path": "requirements/baseline/series-eligibility-contract.json",
+      "normalizedSha256": "b054ad672b02fc472f25f3587191a3829fe5edbb20138beb827c6e630f38184b"
+    },
+    {
+      "path": "specs/004-series-eligibility/autonomous-run-state.json",
+      "normalizedSha256": "f71be1a8c7d8b9c1f4d6da5375e2f7a98bedb08728a3308d50fa90c442dc0afa"
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/analysis-remediation.md",
+      "normalizedSha256": "444fd765b235603197be92eb51d0acf26a3830845fe38baffde988f59ad7b0c1"
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/plan-review.md",
+      "normalizedSha256": "bd64986e9c6bd3d34b3a9ea792f6a07920608b89041873c6e0563b8f9f029a24"
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/requirements.md",
+      "normalizedSha256": "1f9bd80458a76835f80ab6f67f95ddfd1e11e8730964c833b5f6136e6672195b"
+    },
+    {
+      "path": "specs/004-series-eligibility/checklists/series-eligibility.md",
+      "normalizedSha256": "e311478d29de33d054ffba9ff9d09498e69c562fe3cfa3f82157de76d45a6b3d"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/autonomous-run-gate-requirements.json",
+      "normalizedSha256": "f0e49efeb0fd052a34fd1175818af487bd67488cee425e84512bfdd81a36d7fa"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/documentation-impact.json",
+      "normalizedSha256": "50cf98aff369e741f693da41428d1954444073274bf4fbef824dedc9dcd8d585"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/series-eligibility-interface.md",
+      "normalizedSha256": "b0ee4fffce5b16c6b059730b31fe499b67fc9ec10dda70112e71ed341f0a95e3"
+    },
+    {
+      "path": "specs/004-series-eligibility/contracts/validation-commands.json",
+      "normalizedSha256": "4f067497ccb497f3f24da071793738f01099e5a6fc537d7b11f2a012f838e3eb"
+    },
+    {
+      "path": "specs/004-series-eligibility/data-model.md",
+      "normalizedSha256": "be3435e2350e93545577fc59bd4dc22c8723a432245139f92d963e4d20a47e58"
+    },
+    {
+      "path": "specs/004-series-eligibility/plan.md",
+      "normalizedSha256": "66bcb2d07bb4e5c3087e7db7dba5e2b0f3219bc2f5cdba58f729711d1798479e"
+    },
+    {
+      "path": "specs/004-series-eligibility/quickstart.md",
+      "normalizedSha256": "d73586fd12beb1db650e56beba946eef79feac2e92c424ce840d1f4f7c55b667"
+    },
+    {
+      "path": "specs/004-series-eligibility/research.md",
+      "normalizedSha256": "f94516bbd35de291b4b691dca3f1e94b110d356be309beed522bb285e259d5df"
+    },
+    {
+      "path": "specs/004-series-eligibility/spec.md",
+      "normalizedSha256": "e3fb2b5c08fe848f7790968e7b3944d8a5e16f9a74b7a2acfa092ac96bc979c3"
+    },
+    {
+      "path": "specs/004-series-eligibility/tasks.md",
+      "normalizedSha256": "042f2687fe13db74a0547745a5ac7dd6a9cd624551a16ae8d99ad55c6588a125"
+    },
+    {
+      "path": "specs/intake-series/aoc-phase-2/manifest.json",
+      "normalizedSha256": "609ca54b3d12178675bd82dc900cb52e7617ac2026b677883f65e3047d6fab43"
+    }
+  ],
+  "runnerResultBindings": [
+    {
+      "phaseId": "specify",
+      "resultHashMatches": true
+    },
+    {
+      "phaseId": "clarify",
+      "resultHashMatches": true
+    },
+    {
+      "phaseId": "checklist",
+      "resultHashMatches": true
+    },
+    {
+      "phaseId": "plan",
+      "resultHashMatches": true
+    },
+    {
+      "phaseId": "plan-review",
+      "resultHashMatches": true
+    },
+    {
+      "phaseId": "tasks",
+      "resultHashMatches": true
+    },
+    {
+      "phaseId": "analysis-remediation",
+      "resultHashMatches": true
+    }
+  ],
+  "protectedInputDrift": []
+}

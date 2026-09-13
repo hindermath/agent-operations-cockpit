@@ -1,0 +1,133 @@
+{
+  "schemaVersion": "1.0",
+  "scope": "Interim stop checkpoint only; not full T039/native/feature acceptance",
+  "checks": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--quiet"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py",
+        "--repo",
+        ".",
+        "global-ready"
+      ],
+      "exitCode": 0,
+      "stdout": "PASS: global-ready: qualified Feature-003 current-evidence binding; immutable META-LH-02 history and 14 current Ready receipt/review bindings\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "pwsh",
+        "-NoProfile",
+        "-Command",
+        "$Findings = @(Invoke-ScriptAnalyzer -Path 'specs/004-series-eligibility/contracts/validate-series-eligibility.ps1' -Settings 'scripts/config/PSScriptAnalyzerSettings.psd1'); $Findings | Select-Object RuleName,Severity,Line,Message | ConvertTo-Json; if ($Findings.Count) { exit 1 }"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "gitleaks",
+        "dir",
+        "specs/004-series-eligibility",
+        "--no-banner",
+        "--no-color",
+        "--redact"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "3:58AM INF scanned ~2028620 bytes (2.03 MB) in 310ms\n3:58AM INF no leaks found\n"
+    }
+  ],
+  "protectedBindings": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+      "sha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+      "actualSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce"
+    },
+    {
+      "path": "specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json",
+      "sha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b",
+      "actualSha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b"
+    },
+    {
+      "path": "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json",
+      "sha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07",
+      "actualSha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07"
+    },
+    {
+      "path": "requirements/baseline/series-eligibility-contract.json",
+      "rawSha256": "b054ad672b02fc472f25f3587191a3829fe5edbb20138beb827c6e630f38184b",
+      "actualSha256": "b054ad672b02fc472f25f3587191a3829fe5edbb20138beb827c6e630f38184b"
+    },
+    {
+      "path": "specs/intake-series/aoc-phase-2/manifest.json",
+      "rawSha256": "609ca54b3d12178675bd82dc900cb52e7617ac2026b677883f65e3047d6fab43",
+      "actualSha256": "609ca54b3d12178675bd82dc900cb52e7617ac2026b677883f65e3047d6fab43"
+    },
+    {
+      "path": "specs/intake-review-fixtures/meta-lh-04/validate-series-eligibility.py",
+      "rawSha256": "87db0af54e799e7d7fa01793394fcacc8b97e58e4fc7802674c5e62253b83c0c",
+      "actualSha256": "87db0af54e799e7d7fa01793394fcacc8b97e58e4fc7802674c5e62253b83c0c"
+    },
+    {
+      "path": ".specify/presets/intake-sequencing-governance/scripts/validate-intake-series.py",
+      "rawSha256": "f7f7988e6ca966406f60f849f0511f413d82a049c7eb8e7798804bdd355ae453",
+      "actualSha256": "f7f7988e6ca966406f60f849f0511f413d82a049c7eb8e7798804bdd355ae453"
+    },
+    {
+      "path": "docs/project-statistics.md",
+      "rawSha256": "57d9378db9fa534a915e450065daa5937fc75de843e7e11b98bb38effd7fd0d0",
+      "actualSha256": "57d9378db9fa534a915e450065daa5937fc75de843e7e11b98bb38effd7fd0d0"
+    },
+    {
+      "path": "docs/project-statistics.config.json",
+      "rawSha256": "1a26daeae93cf4c717b1450ce1fcaa0c25dcdf19a1529d8e15bb272a1a0f5269",
+      "actualSha256": "1a26daeae93cf4c717b1450ce1fcaa0c25dcdf19a1529d8e15bb272a1a0f5269"
+    },
+    {
+      "path": "specs/intake-review-fixtures/meta-lh-04/shared-write.json",
+      "rawSha256": "0906a558a438673570336a9be3dbc463fd2774a0a56c4492ab13cd917e196b5c",
+      "actualSha256": "0906a558a438673570336a9be3dbc463fd2774a0a56c4492ab13cd917e196b5c"
+    },
+    {
+      "path": "specs/intake-review-fixtures/meta-lh-04/valid-parallel.json",
+      "rawSha256": "15a64b0a27a5c812cc8d3f4d3441ff352049f5e80bee9fc7f911551196c4853f",
+      "actualSha256": "15a64b0a27a5c812cc8d3f4d3441ff352049f5e80bee9fc7f911551196c4853f"
+    },
+    {
+      "path": "specs/intake-review-fixtures/meta-lh-04/shared-decision.json",
+      "rawSha256": "6dddd2e8fbf6efe490de49e1af9becb04b155d5c4744ecce752206907eb0fac9",
+      "actualSha256": "6dddd2e8fbf6efe490de49e1af9becb04b155d5c4744ecce752206907eb0fac9"
+    }
+  ],
+  "head": "e5083c82d80099901774518b3987f47a1a628572",
+  "completedTasks": 7,
+  "totalTasks": 57,
+  "rendererAndConfigUnchanged": true,
+  "historicalEvidencePreserved": true,
+  "t009Started": false,
+  "subsequentFeatureStarted": false
+}

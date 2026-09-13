@@ -1,0 +1,310 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "analyze",
+  "outcome": "Blocked",
+  "baseHead": "e5083c82d80099901774518b3987f47a1a628572",
+  "metrics": {
+    "functionalRequirements": 9,
+    "nonFunctionalRequirements": 3,
+    "constitutionRequirements": 14,
+    "buildableSuccessCriteria": 5,
+    "excludedBusinessKpis": 0,
+    "specObligations": 31,
+    "importedAcceptanceCriteria": 5,
+    "totalMappedObligations": 36,
+    "baselineFrScRequirementCount": 14,
+    "baselineFrScCoveragePercent": 100,
+    "extendedCoveragePercent": 100,
+    "requirementsWithoutTasks": 0,
+    "totalTasks": 54,
+    "checkedImplementationTasks": 0,
+    "unmappedTaskCount": 0,
+    "userStories": 3,
+    "storyAcceptanceScenarios": 10,
+    "taskPhases": 6,
+    "parallelMarkedTasks": 4,
+    "taskDependencyCycles": 0,
+    "catalogCommands": 43,
+    "existingCatalogCommands": 23,
+    "plannedCatalogCommands": 20,
+    "declaredGates": 54,
+    "applicableGates": 41,
+    "notApplicableGates": 13,
+    "mappedGates": 54,
+    "resolvedPlanReviewFindings": 7,
+    "reopenedPlanReviewFindings": 0,
+    "findingsBySeverity": {
+      "Critical": 4,
+      "High": 0,
+      "Medium": 3,
+      "Low": 1
+    },
+    "unresolvedMedium": 3,
+    "ambiguityCount": 1,
+    "duplicationCount": 0,
+    "findingsTotal": 8,
+    "overflowFindings": 0
+  },
+  "taskDependencyEdges": {
+    "T001": [],
+    "T002": [
+      "T001"
+    ],
+    "T003": [
+      "T002"
+    ],
+    "T004": [
+      "T003"
+    ],
+    "T005": [
+      "T004"
+    ],
+    "T006": [
+      "T005"
+    ],
+    "T007": [
+      "T006"
+    ],
+    "T008": [
+      "T007"
+    ],
+    "T009": [
+      "T008"
+    ],
+    "T010": [
+      "T009"
+    ],
+    "T011": [
+      "T010"
+    ],
+    "T012": [
+      "T011"
+    ],
+    "T013": [
+      "T012"
+    ],
+    "T014": [
+      "T013"
+    ],
+    "T015": [
+      "T014"
+    ],
+    "T016": [
+      "T015"
+    ],
+    "T017": [
+      "T016"
+    ],
+    "T018": [
+      "T017"
+    ],
+    "T019": [
+      "T018"
+    ],
+    "T020": [
+      "T019"
+    ],
+    "T021": [
+      "T020"
+    ],
+    "T022": [
+      "T021"
+    ],
+    "T023": [
+      "T022"
+    ],
+    "T024": [
+      "T023"
+    ],
+    "T025": [
+      "T024"
+    ],
+    "T026": [
+      "T025"
+    ],
+    "T027": [
+      "T026"
+    ],
+    "T028": [
+      "T027"
+    ],
+    "T029": [
+      "T028"
+    ],
+    "T030": [
+      "T029"
+    ],
+    "T031": [
+      "T030"
+    ],
+    "T032": [
+      "T030"
+    ],
+    "T033": [
+      "T030"
+    ],
+    "T034": [
+      "T030"
+    ],
+    "T035": [
+      "T031",
+      "T032",
+      "T033",
+      "T034"
+    ],
+    "T036": [
+      "T035"
+    ],
+    "T037": [
+      "T036"
+    ],
+    "T038": [
+      "T037"
+    ],
+    "T039": [
+      "T038"
+    ],
+    "T040": [
+      "T039"
+    ],
+    "T041": [
+      "T040"
+    ],
+    "T042": [
+      "T041"
+    ],
+    "T043": [
+      "T042"
+    ],
+    "T044": [
+      "T043"
+    ],
+    "T045": [
+      "T044"
+    ],
+    "T046": [
+      "T045"
+    ],
+    "T047": [
+      "T046"
+    ],
+    "T048": [
+      "T047"
+    ],
+    "T049": [
+      "T048"
+    ],
+    "T050": [
+      "T049"
+    ],
+    "T051": [
+      "T050"
+    ],
+    "T052": [
+      "T051"
+    ],
+    "T053": [
+      "T052"
+    ],
+    "T054": [
+      "T053"
+    ]
+  },
+  "structureChecks": {
+    "uniqueTaskIds": 54,
+    "acyclicTasks": 54,
+    "coverageRows": 36,
+    "unmappedTasks": [],
+    "gateTaskReferencesValid": true,
+    "bilingualReportReviewed": true,
+    "nonColourTextReport": true,
+    "requirementCoverageIsNotCompliance": true
+  },
+  "checks": [
+    {
+      "command": "gitleaks dir specs/004-series-eligibility/phase-results --no-banner --no-color --redact",
+      "exitCode": 0,
+      "passed": true,
+      "output": "2:32AM INF scanned ~566527 bytes (566.53 KB) in 200ms\n2:32AM INF no leaks found\n"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "passed": true,
+      "output": ""
+    }
+  ],
+  "evidenceHashes": [
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-input-snapshot.json",
+      "sha256": "0f75aad33597fdad516db95149c5f8501387dfc792cf16cc8634293c9eeed74b"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-execution.json",
+      "sha256": "6e75e46c38874da21c3e7a730c034697b238e8242709d4bb21269ccafba5b75c"
+    },
+    {
+      "path": "specs/004-series-eligibility/phase-results/analyze-coverage.json",
+      "sha256": "20bb14c90cdb61cb59992d5484a34243b695573c8f7bab7453816d593860cf60"
+    }
+  ],
+  "scopeProtection": {
+    "existingFilesCompared": 1735,
+    "changedExistingFiles": [],
+    "indexUnchanged": true,
+    "featureSelectorUnchanged": true,
+    "runStateUnchanged": true,
+    "acceptedInputsUnchanged": true,
+    "preexistingAepsEditsPreserved": true,
+    "implementationTasksExecuted": 0,
+    "runtimeOutputWrittenByPhase": false,
+    "runnerExportsFinalMessage": true,
+    "newFiles": [
+      "specs/004-series-eligibility/phase-results/analyze-coverage.json",
+      "specs/004-series-eligibility/phase-results/analyze-execution.json",
+      "specs/004-series-eligibility/phase-results/analyze-input-snapshot.json",
+      "specs/004-series-eligibility/phase-results/analyze-report.md",
+      "specs/004-series-eligibility/phase-results/analyze-result-validation.json",
+      "specs/004-series-eligibility/phase-results/analyze-secret-scan.json",
+      "specs/004-series-eligibility/phase-results/analyze-validation.json",
+      "specs/004-series-eligibility/phase-results/analyze.result.json"
+    ],
+    "newFilesOutsideAuthorizedDirectory": [],
+    "finalNewFileCount": 8
+  },
+  "documentationImpact": {
+    "decision": "UpdateRequired",
+    "contract": "specs/004-series-eligibility/contracts/documentation-impact.json",
+    "newDecisionCreated": false
+  },
+  "aepsAssessment": {
+    "trigger": "Material analysis and blocked handoff",
+    "maturity": "observation",
+    "captureLocation": "specs/004-series-eligibility/phase-results/analyze-report.md#aeps-handoff-und-nächste-aktion--aeps-handoff-and-next-action",
+    "canonicalCapture": "Pending explicit coordinator evidence authority; before feature acceptance",
+    "owner": "AOC Repository Owner / coordinating runner",
+    "risk": "New local findings are not centrally discoverable before handoff",
+    "newCandidateIdCreated": false,
+    "ledgerOrReceiptWritten": false
+  },
+  "runnerExport": {
+    "profile": "codex-frontier-auto",
+    "mechanism": "--output-last-message {outputFile}",
+    "exactOutputPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/analyze.result.json"
+  },
+  "gateConclusion": {
+    "critical": 4,
+    "high": 0,
+    "unresolvedMedium": 3,
+    "gatesSatisfied": false,
+    "readOnlyInputChecksPassing": true,
+    "laterApplicableFeatureGates": "Not Assessed"
+  },
+  "secretScanDisposition": {
+    "initialDetections": 6,
+    "classification": "False positives on calculated SHA-256 values adjacent to filenames",
+    "remediation": "Represent inventory entries as objects with separate path and rawSha256 fields; no suppression or scanner configuration changes",
+    "initialRedactedEvidence": "specs/004-series-eligibility/phase-results/analyze-secret-scan.json",
+    "finalExitCode": 0
+  }
+}

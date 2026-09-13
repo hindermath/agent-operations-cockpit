@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "checklist",
+  "platform": "macOS",
+  "checks": [
+    {
+      "command": "bash .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.sh --repo . --result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/checklist.result.json --phase-id checklist --exit-code 0",
+      "exitCode": 0,
+      "output": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"checklist\",\n  \"normalizedSha256\": \"0f79b3298226ffb99cfc1a2dd3734409a5f68507ff042b4bc0ac2f265c9345c5\",\n  \"payloadSha256\": \"ed94d7b858c73ea16dfb1018ccc4fa653eeba0a6c16be775d645705e34727b5f\"\n}\n"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/autonomous-run-governance/scripts/validate-autonomous-phase-result.ps1 -Repo . -Result .specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/checklist.result.json -PhaseId checklist -ExitCode 0",
+      "exitCode": 0,
+      "output": "{\n  \"schemaVersion\": \"1.0\",\n  \"result\": \"Completed\",\n  \"phaseId\": \"checklist\",\n  \"normalizedSha256\": \"0f79b3298226ffb99cfc1a2dd3734409a5f68507ff042b4bc0ac2f265c9345c5\",\n  \"payloadSha256\": \"ed94d7b858c73ea16dfb1018ccc4fa653eeba0a6c16be775d645705e34727b5f\"\n}\n"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "output": ""
+    }
+  ],
+  "resultPath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/checklist.result.json",
+  "actualPhaseProcessExitCode": "Runner-owned; validators used supplied exitCode 0",
+  "scope": "Requirements-quality phase only; no native Linux/Windows implementation acceptance claim"
+}

@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "1.0",
+  "phaseId": "specify",
+  "platform": "macOS",
+  "checks": [
+    {
+      "command": "python3 -B specs/001-programmquellen-baseline/contracts/validate_meta_lh01.py --repo . global-ready",
+      "exitCode": 0,
+      "output": "PASS: global-ready: qualified Feature-003 current-evidence binding; immutable META-LH-02 history and 14 current Ready receipt/review bindings\n",
+      "classification": "CurrentPass"
+    },
+    {
+      "command": "bash specs/003-authoring-contract/contracts/validate-current-evidence-binding.sh --repo . current-evidence",
+      "exitCode": 1,
+      "output": "ERROR: current-evidence: accepted historical blob drift: specs/intake-series/aoc-phase-2/manifest.json\n",
+      "classification": "HistoricalDiagnosticNotCurrentGate"
+    },
+    {
+      "command": "pwsh -NoProfile -File specs/003-authoring-contract/contracts/validate-current-evidence-binding.ps1 -Repo . -Mode current-evidence",
+      "exitCode": 1,
+      "output": "ERROR: current-evidence: accepted historical blob drift: specs/intake-series/aoc-phase-2/manifest.json\n",
+      "classification": "HistoricalDiagnosticNotCurrentGate"
+    },
+    {
+      "command": "bash .specify/presets/intake-review-governance/scripts/validate-intake-review-result.sh --result specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json --repo .",
+      "exitCode": 0,
+      "output": "PASS: intake review 4c0ffc79-22fd-422e-a691-624e24ae444f is current (Single, Ready, 1 targets)\n",
+      "classification": "CurrentPass"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/intake-review-governance/scripts/validate-intake-review-result.ps1 -Result specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json -Repo .",
+      "exitCode": 0,
+      "output": "PASS: intake review 4c0ffc79-22fd-422e-a691-624e24ae444f is current (Single, Ready, 1 targets)\n",
+      "classification": "CurrentPass"
+    },
+    {
+      "command": "bash .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.sh --receipt specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json --repo .",
+      "exitCode": 0,
+      "output": "PASS: intake authoring e6eea4e9-88de-4434-8305-97424374ca7c is current (ReadyForReview, 12 sources, requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md)\n",
+      "classification": "CurrentPass"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/intake-authoring-governance/scripts/validate-intake-authoring-receipt.ps1 -Receipt specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json -Repo .",
+      "exitCode": 0,
+      "output": "PASS: intake authoring e6eea4e9-88de-4434-8305-97424374ca7c is current (ReadyForReview, 12 sources, requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md)\n",
+      "classification": "CurrentPass"
+    },
+    {
+      "command": "bash specs/003-authoring-contract/contracts/validate-authoring-contract.sh --repo . --json",
+      "exitCode": 0,
+      "output": "{\n  \"checkpoint\": {\n    \"ancestryValid\": true,\n    \"manifestExpectedInsideCheckpoint\": false,\n    \"repairCommit\": \"ee530952acc8093c9afd8e01b97825a0a1c9ac72\",\n    \"repairTree\": \"ec9d73fd5c497daf76acf120d2c906a0b6fa993c\",\n    \"validatedPathCount\": 48\n  },\n  \"outcome\": \"Pass\",\n  \"schemaVersion\": \"1.0\",\n  \"transaction\": {\n    \"changedLogicalTargets\": [\n      \"META-LH-03\"\n    ],\n    \"completedPredecessorUnchanged\": true,\n    \"operationId\": \"986c1d6c-d485-460b-8d8d-7cf5816a2c36\",\n    \"operationStatus\": \"Completed\",\n    \"receiptId\": \"f41328cd-b301-4533-89dc-02aab758ab1f\",\n    \"reviewId\": \"b8d49ed7-d05f-40b0-9e18-1aa1b689f1cf\",\n    \"unchangedLogicalTargetCount\": 13\n  }\n}\n",
+      "classification": "CurrentPass"
+    },
+    {
+      "command": "pwsh -NoProfile -File specs/003-authoring-contract/contracts/validate-authoring-contract.ps1 -Repo . -Json",
+      "exitCode": 0,
+      "output": "{\n  \"checkpoint\": {\n    \"ancestryValid\": true,\n    \"manifestExpectedInsideCheckpoint\": false,\n    \"repairCommit\": \"ee530952acc8093c9afd8e01b97825a0a1c9ac72\",\n    \"repairTree\": \"ec9d73fd5c497daf76acf120d2c906a0b6fa993c\",\n    \"validatedPathCount\": 48\n  },\n  \"outcome\": \"Pass\",\n  \"schemaVersion\": \"1.0\",\n  \"transaction\": {\n    \"changedLogicalTargets\": [\n      \"META-LH-03\"\n    ],\n    \"completedPredecessorUnchanged\": true,\n    \"operationId\": \"986c1d6c-d485-460b-8d8d-7cf5816a2c36\",\n    \"operationStatus\": \"Completed\",\n    \"receiptId\": \"f41328cd-b301-4533-89dc-02aab758ab1f\",\n    \"reviewId\": \"b8d49ed7-d05f-40b0-9e18-1aa1b689f1cf\",\n    \"unchangedLogicalTargetCount\": 13\n  }\n}\n",
+      "classification": "CurrentPass"
+    },
+    {
+      "command": "bash .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.sh --file specs/intake-series/aoc-phase-2/manifest.json --repo .",
+      "exitCode": 0,
+      "output": "PASS: d51e831c-24fb-4a71-b316-f7ad1bfe99d0 (14 targets, 1 roots, 14 dependencies)\n",
+      "classification": "CurrentPass"
+    },
+    {
+      "command": "pwsh -NoProfile -File .specify/presets/intake-sequencing-governance/scripts/validate-intake-series-manifest.ps1 -File specs/intake-series/aoc-phase-2/manifest.json -Repo .",
+      "exitCode": 0,
+      "output": "PASS: d51e831c-24fb-4a71-b316-f7ad1bfe99d0 (14 targets, 1 roots, 14 dependencies)\n",
+      "classification": "CurrentPass"
+    }
+  ]
+}
