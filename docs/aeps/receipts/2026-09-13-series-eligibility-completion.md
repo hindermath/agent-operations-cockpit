@@ -1,5 +1,7 @@
 # AEPS-Capture META-LH-04 / META-LH-04 AEPS Capture
 
+- Receipt-ID: `AEPS-RECEIPT-AOC-2026-09-13-META04-COMPLETION`
+
 Datum / Date: 2026-09-13. Run `8b306e28-51eb-4510-afbc-5056b9aee328`. Reviewer: Codex in der Implementierungsrolle; unabhängige technische Reviews der Liefer-Heads sind separat gebunden. Owner: AOC Repository Owner. Dieses aktualisierte AOC-lokale Receipt basiert auf dem Closeout-Merge `7e53a8b327410ba241d90a9c60bc286b16f7bc44` und wird durch die terminale Zustandslieferung veröffentlicht; der AEPS-Upstream-Status bleibt **PendingPublication**. Feature, Lifecycle und Closeout sind ausgeliefert, der terminale Run-State bindet diese bereits beobachteten Fakten kausal.
 *Date 2026-09-13. Run `8b306e28-51eb-4510-afbc-5056b9aee328`. Reviewer: Codex in the implementation role; independent technical reviews of delivery heads are bound separately. Owner: AOC Repository Owner. This updated AOC-local receipt is based on closeout merge `7e53a8b327410ba241d90a9c60bc286b16f7bc44` and is published by the terminal-state delivery; AEPS upstream status remains PendingPublication. Feature, lifecycle and closeout are delivered, and terminal run state causally binds those observed facts.*
 
@@ -21,7 +23,7 @@ Der Abschluss von Feature-PR #49, Lifecycle-PR #52 und Closeout-PR #53 löst die
 | `specs/004-series-eligibility/phase-results/us3-tests.json` | `93c24b485f6aa8468a49a388a9ac6ca3ea47787732062e7d186fb99434f10235` |
 | `specs/004-series-eligibility/phase-results/runner-tests.json` | `f6ee2a3093d94718e28ba305ab5d6aff74ebda5ae4b256d48424ce932b0f7590` |
 | `specs/004-series-eligibility/phase-results/quality-validation.json` | `4746b93ed4dcc0900914c4bedf7a0e6a05da0eaa9952356963d095b4dc243db3` |
-| `specs/004-series-eligibility/engineering-retrospective.md` | `939d5c9ac388c5fc8f280bd2ae9995bd67bd05c8a73493760ba0c4abe0d12919` |
+| `specs/004-series-eligibility/engineering-retrospective.md` | `6b53733daf5eb3c4917c2dfa998224a35e34abc27bd60b7806a751f51d938578` |
 | `specs/004-series-eligibility/completion-closeout.md` | `4e76ce26fc11bfc0451d7b78d86265370ed963655efbe356a66d1fe0998c8672` |
 
 Die Runtime-Pre/PostMerge-Nachweise sind absichtlich nicht als versionierte Quellen aufgenommen. Closeout-PreMerge `6e53d0c45048dcb78bd76193b0bf5039931eba2fbe5d0bca4ce23e09b143dfee` und PostMerge `22bf0f6ea82dab2bccb96165c2d23d36ba097e97894893c3ccd234e664cb285d` bestanden in beiden Shells und sind im kausalen Closeout dokumentiert.
