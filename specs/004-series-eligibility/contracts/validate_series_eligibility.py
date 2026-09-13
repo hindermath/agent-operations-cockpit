@@ -134,21 +134,84 @@ class ReadBoundary:
                 os.close(descriptor)
 
     def _read_windows(self, value):
-        # Windows besitzt kein openat/O_NOFOLLOW. Der endgültige Handle-Pfad wird
-        # deshalb vor dem ersten Byte gegen die feste Repository-Wurzel geprüft.
-        # Windows lacks openat/O_NOFOLLOW; validate the opened handle path before reading.
+        # Windows besitzt kein openat/O_NOFOLLOW. Deshalb wird jeder Bestandteil
+        # als Reparse-Punkt selbst geöffnet und bis zum Ende ohne Delete-Sharing
+        # festgehalten. Erst der so geprüfte letzte Handle wird gelesen.
+        # Windows lacks openat/O_NOFOLLOW. Open every component as the reparse
+        # point itself and hold it without delete sharing until the verified final
+        # handle has been read.
         import ctypes
         import msvcrt
 
-        path = self.root.joinpath(*value.split('/'))
-        descriptor = os.open(path, os.O_RDONLY | getattr(os, 'O_BINARY', 0))
+        class FileBasicInfo(ctypes.Structure):
+            _fields_ = [
+                ('creation_time', ctypes.c_longlong),
+                ('last_access_time', ctypes.c_longlong),
+                ('last_write_time', ctypes.c_longlong),
+                ('change_time', ctypes.c_longlong),
+                ('file_attributes', ctypes.c_ulong),
+            ]
+
+        kernel32 = ctypes.WinDLL('kernel32', use_last_error=True)
+        create_file = kernel32.CreateFileW
+        create_file.argtypes = [ctypes.c_wchar_p, ctypes.c_uint32, ctypes.c_uint32,
+                                ctypes.c_void_p, ctypes.c_uint32, ctypes.c_uint32,
+                                ctypes.c_void_p]
+        create_file.restype = ctypes.c_void_p
+        file_information = kernel32.GetFileInformationByHandleEx
+        file_information.argtypes = [ctypes.c_void_p, ctypes.c_int, ctypes.c_void_p,
+                                     ctypes.c_uint32]
+        file_information.restype = ctypes.c_int
+        final_path = kernel32.GetFinalPathNameByHandleW
+        final_path.argtypes = [ctypes.c_void_p, ctypes.c_wchar_p,
+                               ctypes.c_uint32, ctypes.c_uint32]
+        final_path.restype = ctypes.c_uint32
+        close_handle = kernel32.CloseHandle
+        close_handle.argtypes = [ctypes.c_void_p]
+        close_handle.restype = ctypes.c_int
+
+        generic_read = 0x80000000
+        read_attributes = 0x00000080
+        share_read_write = 0x00000001 | 0x00000002
+        open_existing = 3
+        open_reparse_point = 0x00200000
+        backup_semantics = 0x02000000
+        reparse_attribute = 0x00000400
+        directory_attribute = 0x00000010
+        invalid_handle = ctypes.c_void_p(-1).value
+
+        components = [self.root]
+        current = self.root
+        for part in value.split('/'):
+            current = current / part
+            components.append(current)
+
+        handles = []
+        descriptor = None
         try:
-            handle = msvcrt.get_osfhandle(descriptor)
-            kernel32 = ctypes.WinDLL('kernel32', use_last_error=True)
-            final_path = kernel32.GetFinalPathNameByHandleW
-            final_path.argtypes = [ctypes.c_void_p, ctypes.c_wchar_p,
-                                   ctypes.c_uint32, ctypes.c_uint32]
-            final_path.restype = ctypes.c_uint32
+            for index, component in enumerate(components):
+                final = index == len(components) - 1
+                access = generic_read if final else read_attributes
+                flags = open_reparse_point | (0 if final else backup_semantics)
+                handle = create_file(str(component), access, share_read_write, None,
+                                     open_existing, flags, None)
+                if handle == invalid_handle:
+                    raise OSError(ctypes.get_last_error(), "path handle unavailable")
+                handles.append(handle)
+
+                information = FileBasicInfo()
+                if not file_information(handle, 0, ctypes.byref(information),
+                                        ctypes.sizeof(information)):
+                    raise OSError(ctypes.get_last_error(), "path metadata unavailable")
+                if information.file_attributes & reparse_attribute:
+                    raise ValueError("unsupported reparse point")
+                directory = bool(information.file_attributes & directory_attribute)
+                if final and directory:
+                    raise ValueError("not a regular file")
+                if not final and not directory:
+                    raise ValueError("parent is not directory")
+
+            handle = handles[-1]
             size = final_path(handle, None, 0, 0)
             if size == 0:
                 raise OSError(ctypes.get_last_error(), "final path unavailable")
@@ -164,12 +227,19 @@ class ReadBoundary:
             actual_value = os.path.normcase(os.path.abspath(actual))
             if os.path.commonpath((root_value, actual_value)) != root_value:
                 raise ValueError("path escape")
-            if not stat.S_ISREG(os.fstat(descriptor).st_mode):
-                raise ValueError("not a regular file")
-            with os.fdopen(descriptor, 'rb', closefd=False) as stream:
+
+            descriptor = msvcrt.open_osfhandle(
+                handle, os.O_RDONLY | getattr(os, 'O_BINARY', 0))
+            handles.pop()  # Der Dateideskriptor besitzt nun den letzten Handle.
+            # The file descriptor now owns the final handle.
+            with os.fdopen(descriptor, 'rb') as stream:
+                descriptor = None
                 return stream.read()
         finally:
-            os.close(descriptor)
+            if descriptor is not None:
+                os.close(descriptor)
+            for handle in reversed(handles):
+                close_handle(handle)
 
 
 class GuardedPath:
