@@ -2,42 +2,43 @@
 
 ## Aktueller Stand / Current state
 
-Dies ist genau der vorab benannte kausale Closeout-Pfad für Run `8b306e28-51eb-4510-afbc-5056b9aee328`: `specs/004-series-eligibility/completion-closeout.md`. Stand 2026-09-13: **PendingLifecycleDelivery**, T001–T053 abgeschlossen (53/57 Tasks). PR #49 wurde nach grünem technischem Head `955ec4ad2a6c2fb94a3d0e275947e861e3174398` als Merge-Commit `d95c2ff87c4ac0f6d137bc96a129464365416780` zusammengeführt. Die Feature-PreMerge- und PostMerge-Snapshots bestehen in beiden Shells. Der bytegleiche Lifecycle-Rename ist vorbereitet; Lifecycle-PR, Closeout-PR und finaler Sync bleiben offen. Das Dokument bindet niemals seinen eigenen späteren Container-Commit oder Merge-Hash.
-*This is the sole declared causal closeout path. Current status is PendingLifecycleDelivery with T001-T053 complete (53/57 tasks). PR #49 merged the technically green head as the stated merge commit, and both feature PreMerge/PostMerge snapshots pass in both shells. The byte-identical lifecycle rename is prepared; lifecycle delivery, closeout delivery and final sync remain open.*
+Run `8b306e28-51eb-4510-afbc-5056b9aee328` steht nach Feature- und Lifecycle-Lieferung auf **PendingCloseoutDelivery**. T001–T055 sind abgeschlossen (55/57). Feature-PR #49 und Lifecycle-PR #52 wurden an ihren jeweils vollständig grünen und reviewten Heads zusammengeführt. Der Closeout-PR, dessen PostMerge-Nachweis und die terminale Zustandsbindung T056/T057 bleiben offen. Dieses Dokument behauptet niemals den eigenen späteren Container-Commit oder Merge-Hash.
+*Run `8b306e28-51eb-4510-afbc-5056b9aee328` is PendingCloseoutDelivery after feature and lifecycle delivery. T001-T055 are complete (55/57). Feature PR #49 and lifecycle PR #52 merged at fully green reviewed heads. The closeout PR, its postmerge proof and terminal T056/T057 state binding remain pending. This document never claims its own later container commit or merge hash.*
 
-## Autorität und Reihenfolge / Authority and sequence
+## Autorität und Grenze / Authority and boundary
 
-[Aktuelle Lieferautorität](phase-results/delivery-authority.json): Benutzerauftrag für META-LH-04, MergeAndSync und Push/PR/Merge/Sync. Admin-Bypass ausschließlich für verbleibende menschliche Approval-/Ruleset-Barrieren, nachdem alle technischen Gates grün und Findings geschlossen sind. Die aktuelle Phase führt keine dieser Lieferaktionen aus.
-*The current instruction grants META-LH-04 delivery authority, with bypass restricted to remaining human approval/ruleset barriers after technical convergence. This phase executes none of those actions.*
+Die aktuelle Autorität umfasst ausschließlich den Abschluss von META-LH-04 mit `MergeAndSync`. Admin-Bypass ist nur für eine verbleibende menschliche Approval- oder Ruleset-Sperre nach grünen technischen Gates und null umsetzbaren Review-Threads zulässig. Technische Fehler, fehlende Evidence, Drift oder Sicherheitsbefunde dürfen nicht umgangen werden. META-LH-05, Level 0, Preset-Promotion, Provider-Administration und Produktfunktion bleiben ausgeschlossen.
+*Current authority covers only META-LH-04 closeout with MergeAndSync. Admin bypass may address only a remaining human approval or ruleset barrier after green technical gates and zero actionable review threads. It may not bypass technical failures, missing evidence, drift or security findings. META-LH-05, Level 0, preset promotion, provider administration and product functionality remain excluded.*
 
-1. T046: Restdelta einschließlich vorangegangener Checkboxen exakt prüfen, Quellencommit, sauberer Baum, vollständiger Statistikcheckpoint und Freeze beim äußeren Koordinator.
-2. T047–T051: Feature-PR, reale native Matrix, exakter Review-Head, geschlossene Findings, zeitgleiche PreMerge-Prüfung, dann Merge.
-3. T052: Tatsächliche Feature-PostMerge-Evidence und Sync prüfen.
-4. T053–T054: gepaarte Lifecycle-Preview, unveränderter Rename und notwendige aktuelle Lineage-/Receipt-/Ready-/Manifestbindungen in genau einem Lifecycle-PR; technische Gates und Sync.
-5. T055–T056: belegte Retrospektive/AEPS, vollständiger Quellen-/Statistikcheckpoint im echten Closeout-Feature-Branch und genau ein Closeout-PR.
-6. T057: finaler Main-Sync 0/0, sauberer Baum, PostMerge-/Task-/State-Validierung; erst danach MergeAndSync-Completed.
+## Gelieferte Stufen / Delivered stages
 
-*Sequence: exact residual checkpoint and freeze; feature PR/native checks/review/premerge/merge; actual postmerge; one content-preserving lifecycle PR with required rebindings; one retrospective closeout PR after its checkpoint; final clean 0/0 sync and validation before completion.*
+| Stufe / Stage | Geprüfter Head / Reviewed head | Merge | Ergebnis / Result |
+|---|---|---|---|
+| Feature PR #49 | `955ec4ad2a6c2fb94a3d0e275947e861e3174398` | `d95c2ff87c4ac0f6d137bc96a129464365416780`, 2026-09-13 14:00:41 UTC | Pflichtchecks grün, 0 offene Threads, begrenzter Approval-Bypass / mandatory checks green, 0 open threads, bounded approval bypass |
+| Lifecycle PR #52 | `1788ba4282c7b13d7ddf472133d5c9131e726ef5` | `6cd6b408f3546c40e4d5e216af1b4115e73bdfa9`, 2026-09-13 15:11:12 UTC | 20 Checks grün, 0 offene Threads, begrenzter Approval-Bypass, `main...origin/main = 0 0` / 20 checks green, 0 open threads, bounded approval bypass, synchronized main |
+| Closeout | noch nicht geliefert / not delivered | noch nicht vorhanden / not yet available | T056 offen / pending |
 
-## Getrennte Runtime-Evidence / Separate runtime evidence
+Der Lifecycle-Rename ist genau einmal und inhaltsgleich erfolgt: Roh- und normalisierter SHA-256 des Intakes bleiben `eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce`. Receipt und aktuelles Ready-Review bleiben über die getestete Lifecycle-Projektion gültig; Manifest, Reihenfolge, fachlicher Inhalt und Delivery Authority wurden nicht geändert. Fünfzehn Authoring-Contract-Tests, beide Series-Oberflächen und Global Ready für alle 14 Intakes bestanden.
+*The lifecycle rename occurred exactly once with unchanged bytes and normalized hash. Receipt and current Ready review remain valid through the tested lifecycle projection; manifest, order, domain content and delivery authority did not change. Fifteen authoring-contract tests, both series surfaces and Global Ready for all fourteen intakes passed.*
 
-Unter `.specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/` gelten diese noch nicht aufgenommenen Snapshot-Paare:
+## Runtime-Gate-Evidence / Runtime gate evidence
 
 | Lieferung / Delivery | PreMerge | PostMerge | Status |
 |---|---|---|---|
-| Feature | `premerge-gate-evidence.json` | `postmerge-gate-evidence.json` | Completed: PreMerge `a7ef78957b9030ff4c9ea4d23afd220225d33ae68a87a47e9b09aa26d5459e95`; PostMerge `1700e3a7d27631f562a975d1f46eb1a3e0e6eb33c39f8c70aaa8b4d44b13e465` |
-| Lifecycle | `lifecycle/premerge-gate-evidence.json` | `lifecycle/postmerge-gate-evidence.json` | NotCaptured |
-| Closeout | `closeout/premerge-gate-evidence.json` | `closeout/postmerge-gate-evidence.json` | NotCaptured |
+| Feature | `a7ef78957b9030ff4c9ea4d23afd220225d33ae68a87a47e9b09aa26d5459e95` | `1700e3a7d27631f562a975d1f46eb1a3e0e6eb33c39f8c70aaa8b4d44b13e465` | beide Shells bestanden / both shells passed |
+| Lifecycle | `44a583123540d29d95152812caecbe5122c98164cd9283098682e220504a13d7` | `ea05c11a8d32eadad479b0e10de8f8ebb694915180cf78328bc936f446621b9b` | beide Shells bestanden / both shells passed |
+| Closeout | nach finalem geprüftem Head / after final reviewed head | nach tatsächlichem Merge / after actual merge | noch offen / pending |
 
-PreMerge verwendet Schema 2.0, tatsächlichen geprüften Head und aktuellen Requirement-Hash, keine Merge-Fakten. PostMerge bindet den unveränderten akzeptierten PreMerge-Pfad und Hash, beobachteten Merge/Synchronisationsstand und alle Driftfolgen. Beide Shell-Validatoren sind Pflicht. Keine Rekonstruktion wird als zeitgleiche Vorabaufnahme bezeichnet. Spätere Fakten werden kausal hier ergänzt; der finale eigene Merge bleibt im externen Runtime-Nachweis. Zur dauerhaften Veröffentlichung sind stabile, redigierte Evidence-Referenzen vor Abschluss erforderlich; Runtime-Pfade allein sind keine dauerhafte öffentliche Evidence.
-*PreMerge schema 2.0 binds the actually reviewed head and requirement hash without merge facts. PostMerge binds the accepted premerge path/hash and observed merge/sync, with both validators and drift handling. Never call reconstructed proof contemporaneous. Record causal facts here later; final self-container facts stay external. Durable redacted references are required before completion; runtime paths alone are not durable public proof.*
+Die Snapshots liegen getrennt unter `.specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/`. PreMerge bindet den tatsächlich geprüften Head; PostMerge bindet dessen akzeptierten Hash und den beobachteten Merge-/Synchronisationsstand. Runtime-Evidence ersetzt keine dauerhafte, redigierte Abschlussdokumentation.
+*Snapshots remain separated below the run-specific runtime directory. PreMerge binds the actually reviewed head; PostMerge binds its accepted hash and observed merge/synchronization state. Runtime evidence does not replace durable redacted closeout documentation.*
 
-## Stop und Dokumentation / Stop and documentation
+## Nächste kausale Schritte / Next causal steps
 
-Historisch war T044 in `implement-7` durch AEI004/Exit 2 beider Delivery-Set-Validatoren blockiert: `git write-tree` benötigt die in der Modell-Sandbox verbotene `.git/index.lock`. Die damalige T045-Autorität war nur vorbereitet. / *Historically, implement-7 T044 was blocked by both delivery validators because git write-tree needs a forbidden index lock. At that time T045 authority was prepared only.*
+1. Den bereits eröffneten Closeout-PR #53 nach den begrenzten Review-Reparaturen an seinem neuen exakten Head technisch und unabhängig prüfen und PreMerge-Evidence erstellen.
+2. PR #53 erst bei grünen technischen Gates und null offenen umsetzbaren Review-Threads zusammenführen und PostMerge prüfen.
+3. `main` per Fast-forward synchronisieren und anschließend T056/T057 sowie den terminalen Run-State in einem kausalen letzten Persistenzschritt binden.
 
-`implement-7-remediation` übernimmt nun den autoritativen Coordinator-Pass aus `implement-7-audit/coordinator-delivery-validation-summary.json`: Bash und PowerShell Exit 0, HEAD `e0172f6dd4aad214cfaa40ec66cf268514a04b23`, Indexbaum `42963a5bafef39c2ee712c50179c2ec2eaa19b02`, Statushash `63dbd127193e14f20fadd04dc105c71a3335da35d6058a91e0357e007e41b47f`, 17 Pfade und keine fremden ungetrackten Dateien. T044/T045 sind abgeschlossen; der aktuelle ausdrückliche Benutzerauftrag bestätigt MergeAndSync und den oben begrenzten Admin-Bypass. Dieser Pass gilt für den geprüften Kandidaten vor diesen kausalen Nachträgen. T046 muss den dann aktuellen Kandidaten erneut exakt prüfen.
-*The remediation consumes the authoritative coordinator pass with the bindings above: both shells exit zero, 17 paths and no unrelated untracked files. T044/T045 are complete under the current explicit MergeAndSync and bounded bypass authority. This pass covers the candidate before these causal amendments; T046 must revalidate the resulting exact candidate. No delivery action has occurred.*
+*Revalidate the already opened closeout PR #53 at its exact repaired head, capture premerge evidence, merge only after green gates and zero actionable threads, then validate postmerge. Finally fast-forward main and persist T056/T057 and terminal run state in a causal last step.*
 
-Stop bei Authority-, Head-, Input-, Review-, Index-/Pfad- oder Evidence-Drift; fehlender nativer Prüfung, offenen Findings, Providerfehlern oder fremden Änderungen. Kein technischer Bypass, Teilmerge, History-Rewrite, Level 0, Presetwechsel oder META-LH-05. Vor T046 bleiben Staging, Commit, Statistikrendering und Remote-Schritte ausgesetzt. Einzige Entscheidung: [CHG004 / UpdateRequired](contracts/documentation-impact.json).
-*Stop on authority, head, input, review, index/path or evidence drift, missing native proof, open findings, provider failures or foreign changes. No technical bypass, partial merge, history rewrite, Level 0, preset change or next feature. Staging, commits, statistics rendering and remote work remain deferred before T046; retain the sole documentation decision.*
+Stop bei Authority-, Head-, Review-, Input-, Pfad-/Index- oder Evidence-Drift. Die einzige Dokumentationsentscheidung bleibt [CHG004 / UpdateRequired](contracts/documentation-impact.json).
+*Stop on authority, head, review, input, path/index or evidence drift. CHG004 / UpdateRequired remains the sole documentation-impact decision.*
