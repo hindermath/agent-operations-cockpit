@@ -52,3 +52,9 @@ handoff.*
 ## Ergänzende META04-Evidence / Additional META04 Evidence
 
 `AEPS-GAP-AOC-011` erhält mit dem [Plan-Receipt vom 2026-09-13](receipts/2026-09-13-series-eligibility-plan.md) weitere lokale Evidence: falsches `Eligible` bei leerem Kriterium, Boolean-String und doppeltem JSON-Schlüssel. Werte-, Typ- und Duplikat-Negativtests ergänzen den nächsten Feldnachweis; der Gap wird durch Planung nicht geschlossen. / *Gap 011 gains local evidence of false eligibility for an empty criterion, boolean string and duplicate JSON key. Negative boundary tests extend the next field test; planning does not close the gap.*
+
+## Lokaler META04-Capture T042 / Local META04 Capture T042
+
+Die vorhandenen Lücken 004/005/008/011/013 bleiben offen: lokale Werte-/Pfadtests schließen weder Cross-Project-/Runtime- noch dauerhafte Remote-Evidence. / Existing gaps remain open; local boundary tests do not supply cross-project, runtime or durable remote proof.
+
+[Capture-Receipt mit Quellenhashes](receipts/2026-09-13-series-eligibility-completion.md) und Ledger nehmen den deferierten Plan-Handoff samt tatsächlicher US1–US3-Evidence auf. Kein neuer Kandidat, keine Reifegraderhöhung, Promotion oder Upstream-Aktion. / *The bound receipt and ledger capture deferred plan review and actual US1–US3 evidence without new candidates, maturity changes, promotion or upstream action.*

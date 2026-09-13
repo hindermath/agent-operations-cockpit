@@ -888,14 +888,24 @@
     },
     {
       "gateId": "NA-remote-delivery",
-      "applicability": "N/A",
-      "requiredScope": "Current Plan order forbids commit/push/merge; historical MergeAndSync is not authority. PreMerge/PostMerge validation becomes applicable only for separately authorized delivery.",
-      "requiredCommandTokens": [],
-      "requiredRunnerOrPlatformTokens": [],
-      "rationale": "Current Plan order forbids commit/push/merge; historical MergeAndSync is not authority. PreMerge/PostMerge validation becomes applicable only for separately authorized delivery.",
-      "reevaluationTrigger": "New explicit delivery instruction.",
+      "applicability": "Applicable",
+      "requiredScope": "T045 current explicit META-LH-04 MergeAndSync authority, bounded approval/ruleset-only admin bypass after technical convergence, exactly one causal completion-closeout.md path and separate runtime PreMerge/PostMerge evidence. T041-T045 performs no delivery; technical delivery remains Open until T046-T057.",
+      "requiredCommandTokens": [
+        "manual:delivery-authority"
+      ],
+      "requiredRunnerOrPlatformTokens": [
+        "manual-review"
+      ],
+      "rationale": "",
+      "reevaluationTrigger": "Before each delivery action; user authority, scope, exact head, review, technical gate or runtime evidence drift.",
       "owner": "AOC Repository Owner",
-      "plannedEvidence": "specs/004-series-eligibility/autonomous-run-gate-evidence.json"
+      "plannedEvidence": "specs/004-series-eligibility/phase-results/delivery-authority.json",
+      "plannedTasks": [
+        "T045",
+        "T051",
+        "T056",
+        "T057"
+      ]
     },
     {
       "gateId": "NA-parallel-provider-level0",

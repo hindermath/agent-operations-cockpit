@@ -292,7 +292,7 @@ pwsh -NoProfile -File .specify/presets/autonomous-run-governance/scripts/validat
 
 Vor einem später genehmigten Commit `--staged` und wiederholtes `--intended PFAD` für genau die genehmigten Lieferdateien benutzen. Aktuell keine Staging-/Commit-Aktion. Der Runner darf Plan nicht aus einem Prozess-Exit allein abschließen; er muss Payloadhash, Aufgabenanzahl und Gateaussage prüfen. / *Before a later authorized commit, use staged mode and repeated intended paths for the exact approved delivery set. No staging/commit now. Phase completion requires payload hash, task count and gate proof, not exit alone.*
 
-Aktuelle Implementierungsgrenze: T032–T039 lokal prüfen, vor T040 stoppen und das hashgebundene Phasenergebnis an den Runner zurückgeben. / *Current implementation boundary: review T032–T039 locally, stop before T040 and return the hash-bound phase result to the runner.*
+Aktuelle Implementierungsgrenze: T041–T045 lokal prüfen, T040 aus dem autoritativen Receipt übernehmen und vor T046 stoppen. Das [Closeout-Dokument](completion-closeout.md) benennt genau einen kausalen Pfad und getrennte Runtime-Snapshots. / *Current boundary: validate T041–T045 locally, carry T040 from the authoritative receipt, and stop before T046. The closeout document declares one causal path and separate runtime snapshots.*
 
 ## Verbindliche Review-Präzisierungen / Binding review clarifications
 

@@ -59,3 +59,9 @@ validated remains unavailable for AOC-only evidence.*
 ## Ergänzende Plan-Evidence vom 2026-09-13 / Additional Plan Evidence from 2026-09-13
 
 `AEPS-FIND-AOC-013` bleibt bei `CAND-AEPS-05` und `CAND-AEPS-07` mit Abdeckung `Partial`. Das [META04-Plan-Receipt](receipts/2026-09-13-series-eligibility-plan.md) ergänzt drei reproduzierte Eingabeprüflücken; neun benannte Kriterien allein belegen keine Werte-/Typ-/Duplikatprüfung. Kein neuer Kandidat oder Promotion. / *Finding 013 keeps its existing candidates and Partial coverage. The receipt adds three reproduced input-validation gaps; nine named criteria alone do not prove value/type/duplicate checks. No new candidate or promotion.*
+
+## Lokaler META04-Capture T042 / Local META04 Capture T042
+
+Die vorhandenen Zuordnungen für 007/009/013/017 bleiben unverändert; 013 bleibt Partial. / Existing mappings remain unchanged; finding 013 remains Partial.
+
+[Capture-Receipt mit Quellenhashes](receipts/2026-09-13-series-eligibility-completion.md) und Ledger nehmen den deferierten Plan-Handoff samt tatsächlicher US1–US3-Evidence auf. Kein neuer Kandidat, keine Reifegraderhöhung, Promotion oder Upstream-Aktion. / *The bound receipt and ledger capture deferred plan review and actual US1–US3 evidence without new candidates, maturity changes, promotion or upstream action.*
