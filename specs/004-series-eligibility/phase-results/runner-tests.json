@@ -2321,6 +2321,17 @@
       }
     }
   ],
+  "providerCapabilityRemediation": {
+    "status": "AuthorizedAndPendingValidation",
+    "observedHead": "e07c6fee5d405f41e8f24f44ed945e941e7cb5ab",
+    "workflowRunId": 34750365810,
+    "macosJobId": 103705689985,
+    "finding": "The GitHub-hosted macos-14 image exposed only Apple Bash 3.2, while the Feature-004 native gate requires Bash 5 or newer.",
+    "decision": "Provision Bash 5 ephemerally through Homebrew in the macos-14 Feature-004 job only; retain fail-closed version and child-PATH checks and do not add a Linux or Windows fallback.",
+    "authorizedBy": "Repository owner",
+    "authorizedAt": "2026-09-13",
+    "nextTask": "T048"
+  },
   "nativeEvidenceGaps": [
     {
       "platform": "ubuntu-22.04",

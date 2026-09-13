@@ -5,9 +5,9 @@
   "branch": "004-series-eligibility",
   "deliveryMode": "MergeAndSync",
   "authorityRevalidationRequired": true,
-  "stage": "Implement",
+  "stage": "MergeAndSync",
   "status": "Active",
-  "checkpointCommit": "e5083c82d80099901774518b3987f47a1a628572",
+  "checkpointCommit": "e07c6fee5d405f41e8f24f44ed945e941e7cb5ab",
   "acceptedArtifacts": [
     {
       "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
@@ -24,8 +24,8 @@
   ],
   "tasks": {
     "path": "specs/004-series-eligibility/tasks.md",
-    "sha256": "d5b3c61df1f5043bf0f30b0fc7e865f8d736300eca83fa0ec992a83816999fe8",
-    "completed": 45,
+    "sha256": "596ececd2d624e75cfe859b071dbaf9449472cb3d7bb35acd03a7c2368db779d",
+    "completed": 46,
     "total": 57
   },
   "routing": {
@@ -410,12 +410,12 @@
       }
     ]
   },
-  "lastPassingGate": "Preflight passed: clean synchronized main, current receipt and Ready review, 14-intake Global Ready gate, aligned model routing, and no competing run.",
-  "nextExactAction": "Complete outer-coordinator freeze checkpoint T046, then push the unchanged freeze head and create the feature PR at T047.",
+  "lastPassingGate": "Authorized macOS Bash 5 CI remediation passes the complete Feature 004 contract suite for Bash and PowerShell, workflow YAML parsing, JSON parsing, and git diff checks.",
+  "nextExactAction": "Commit and push the bounded macOS Bash 5 remediation, then collect exact-head CI evidence and complete T047 through T050.",
   "lastOperation": {
-    "kind": "ModelRoutingPhase:implement-7-remediation",
+    "kind": "DeliveryRemediation:macos-bash5",
     "state": "Completed",
-    "summary": "Phase completed with profile 'codex-implementation-auto' and result SHA-256 0fe31f1ea40e921013843b645d20fcd241bfc8e08113466952b667afbe50404f."
+    "summary": "Added the explicitly authorized ephemeral Homebrew Bash 5 provisioning step for the macOS CI runner and aligned the bounded plan, task, contract, evidence, and retrospective surfaces."
   },
   "stop": {
     "reason": "N/A",
@@ -428,5 +428,5 @@
     "postMergeActions": "N/A",
     "finalValidation": "Pending"
   },
-  "updatedAt": "2026-09-13T09:33:45.2979100Z"
+  "updatedAt": "2026-09-13T10:08:44Z"
 }

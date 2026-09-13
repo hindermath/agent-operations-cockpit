@@ -133,6 +133,31 @@ jobs:
             throw "Feature-003 focused matrix failed in $Failures command(s)."
           }
 
+      - name: Provision Feature 004 Bash 5 on macOS
+        if: (github.event_name == 'pull_request' || github.event_name == 'push') && matrix.os == 'macos-14'
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: '1'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          & brew install bash
+          if ($LASTEXITCODE -ne 0) {
+            throw "Homebrew Bash provisioning failed with exit $LASTEXITCODE."
+          }
+          $BrewPrefix = & brew --prefix
+          if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($BrewPrefix)) {
+            throw 'Homebrew prefix resolution failed.'
+          }
+          $BrewBash = Join-Path $BrewPrefix 'bin/bash'
+          if (-not (Test-Path -LiteralPath $BrewBash -PathType Leaf)) {
+            throw 'Provisioned Homebrew Bash executable is missing.'
+          }
+          & $BrewBash @('--version')
+          if ($LASTEXITCODE -ne 0) {
+            throw "Provisioned Homebrew Bash failed with exit $LASTEXITCODE."
+          }
+          (Split-Path $BrewBash -Parent) | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
       - name: Test Feature 004 series eligibility matrix
         if: github.event_name == 'pull_request' || github.event_name == 'push'
         env:
@@ -155,7 +180,7 @@ jobs:
           function Resolve-AocFeature004Bash {
             param([string[]]$Candidates, [switch]$WindowsHost, [string]$GitBashPath)
             # Auf Windows nur Git Bash; sonst vorhandene Bash 5+. Keine Installation.
-            # Windows accepts Git Bash only; otherwise use installed Bash 5+. No installation.
+            # Windows accepts Git Bash only; other runners use the available Bash 5+ capability.
             foreach ($Candidate in @($Candidates | Sort-Object -Unique)) {
               if ([string]::IsNullOrWhiteSpace($Candidate) -or
                   -not [IO.Path]::IsPathFullyQualified($Candidate) -or

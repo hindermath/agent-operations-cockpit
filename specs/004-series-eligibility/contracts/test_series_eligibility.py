@@ -1009,6 +1009,9 @@ if ($LASTEXITCODE -ne 0) { throw 'Alias leaked into fresh process' }
         self.assertIn("$_.executionClass -eq 'native-automated-gate'", source)
         self.assertIn("$_.executionTasks -contains 'T048'", source)
         self.assertIn('$_.platforms -contains $env:AOC_FEATURE004_PLATFORM', source)
+        self.assertIn("matrix.os == 'macos-14'", source)
+        self.assertIn('& brew install bash', source)
+        self.assertIn('$env:GITHUB_PATH', source)
         catalog = json.loads((REPO/CONTRACTS/'validation-commands.json').read_text())['commands']
         selected = [c for c in catalog if c['executionClass'] == 'native-automated-gate'
                     and 'T048' in c['executionTasks']]

@@ -2105,7 +2105,7 @@
     {
       "gateId": "EL-macos-runner-cardinality",
       "applicability": "Applicable",
-      "requiredScope": "Exercise unchanged workflow resolver with zero/one/duplicate candidates and Windows Git-Bash/WSL rejection; separately execute added Feature-004 Bash-major >=5 and child-process PATH checks (reject version 3, accept version 5). No dependency installation.",
+      "requiredScope": "Exercise unchanged workflow resolver with zero/one/duplicate candidates and Windows Git-Bash/WSL rejection; provision Bash 5 ephemerally through Homebrew only on macos-14 after confirmed provider evidence and explicit human approval; then execute Feature-004 Bash-major >=5 and child-process PATH checks (reject version 3, accept version 5).",
       "requiredCommandTokens": [
         "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case runner-cardinality",
         "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case runner-cardinality"
