@@ -22,14 +22,16 @@
 
 ---
 
+| 2026-09-13 | Intake-Lifecycle-Preset-Rollout / Intake lifecycle preset rollout | N/A | N/A | N/A | Vorhandene Authoring-/Review-/Sequencing-Presets auf 0.3.2/0.2.2/0.2.4 aktualisiert; optionale Profile und Dokumentation nachgefuehrt. Pruefnachweise in docs/maintenance/intake-lifecycle-fleet-rollout.json. / Update existing presets and profile references; preserve other presets and project extensions. |
+
 ## Gesamtstand des Repositories / Repository Snapshot
 
-Stand / As of: 2026-09-11. Die kanonischen aktuellen Werte stehen im
+Stand / As of: 2026-09-13. Die kanonischen aktuellen Werte stehen im
 generierten Statistikprofil 2 unter `Gesamtstatistik / Overall Statistics`.
 Der frühere, noch nicht befüllte Profil-1-Platzhalter wurde entfernt, damit
 keine veraltete Momentaufnahme mit der lebenden Statistik konkurriert.
 
-*As of 2026-09-11. The generated Profile 2 under `Gesamtstatistik / Overall
+*As of 2026-09-13. The generated Profile 2 under `Gesamtstatistik / Overall
 Statistics` is the canonical current snapshot. The former unpopulated Profile
 1 placeholder was removed so that no stale snapshot competes with the living
 statistics.*
@@ -44,27 +46,27 @@ Profil 2 verwendet Git-getrackte Textdateien und sichtbare Git-Aktivitaet. Die W
 
 | Kennzahl / Metric | Wert / Value |
 |---|---:|
-| Textbasis / Text base | 346628 lines |
-| Textdateien / Text files | 1803 |
+| Textbasis / Text base | 260331 lines |
+| Textdateien / Text files | 1708 |
 | Beobachtbarer Zeitraum / Observable period | 2025-09-21..2026-09-13 |
 | Aktivtage / Active days | 17 |
-| Relevante Commits / Relevant commits | 111 |
-| Zeilen je Aktivtag / Lines per active day | 20389.9 |
+| Relevante Commits / Relevant commits | 100 |
+| Zeilen je Aktivtag / Lines per active day | 15313.6 |
 | Peak-Tag im Fenster / Peak day in window | 2026-07-31 / 132656 |
 | Peak-Woche im Fenster / Peak week in window | 2026-07-26 / 135472 |
 | Laengste Serie / Longest streak | 3 days |
-| Speedup vs. 80 lines/day | 254.9x |
-| Speedup vs. 125 lines/day | 163.1x |
-| Methodik / Methodology | v2; source `2d2c14c350c6` |
+| Speedup vs. 80 lines/day | 191.4x |
+| Speedup vs. 125 lines/day | 122.5x |
+| Methodik / Methodology | v2; source `9786e92cfa5b` |
 
 ### Artefaktmix / Artifact Mix
 
 ```text
-Produktiv / Production          [#...................]   2.9% | 10215
-Tests                           [###.................]  13.8% | 47760
-Dokumentation / Documentation   [########............]  42.1% | 146024
-Skripte / Scripts               [###.................]  13.4% | 46604
-Konfiguration / Configuration   [######..............]  27.7% | 95882
+Produktiv / Production          [#...................]   3.3% | 8706
+Tests                           [#...................]   3.1% | 7974
+Dokumentation / Documentation   [###########.........]  56.4% | 146703
+Skripte / Scripts               [####................]  17.9% | 46676
+Konfiguration / Configuration   [####................]  19.3% | 50135
 Daten und Medien / Data and media [....................]   0.0% | 0
 Sonstiger Text / Other text     [#...................]   0.0% | 143
 ```
@@ -170,9 +172,9 @@ Die festen Slots halten den Phasenvergleich auch bei fehlenden oder spaeter erga
 ### Beschleunigungsfaktoren / Acceleration Factors
 
 ```text
-Scale: 0..500x
-80 lines/day       [##########..........] 254.9x
-125 lines/day      [#######.............] 163.1x
+Scale: 0..200x
+80 lines/day       [###################.] 191.4x
+125 lines/day      [############........] 122.5x
 ```
 
 Die Faktoren vergleichen sichtbare Lieferdichte mit den dokumentierten manuellen Referenzen. Sie messen keine Arbeitszeit.
@@ -185,7 +187,7 @@ Die Faktoren vergleichen sichtbare Lieferdichte mit den dokumentierten manuellen
 Scale: 0..50000 lines/day
 Experienced manual [#...................] 80
 Thorsten solo      [#...................] 125
-Visible repository [########............] 20389.9
+Visible repository [###############.....] 15313.6
 ```
 
 Die gemeinsame Skala vergleicht Referenzen und sichtbare Lieferdichte. Sie schreibt die Git-Aktivitaet keiner Person oder KI pauschal zu.
@@ -211,6 +213,6 @@ DE: Das Fenster beginnt am 2025-09-21 und endet am 2026-09-13. Es enthaelt 17 ak
 | 2026-06 | 0 |
 | 2026-07 | 132656 |
 | 2026-08 | 100244 |
-| 2026-09 | 126661 |
+| 2026-09 | 42280 |
 
 <!-- project-statistics-v2:end -->
