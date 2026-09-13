@@ -123,7 +123,7 @@
     "META-LH-05 start"
   ],
   "documentationDecision": "UpdateRequired",
-  "completionScope": "Planning only; T008-T057 remain incomplete until actual execution evidence exists.",
+  "completionScope": "Executed and completed; T001-T057 have actual checkpoint, delivery, PostMerge and synchronized-main evidence. The ordered steps remain the reusable audit contract.",
   "checkpointExecutor": {
     "owner": "outer autonomous coordinator",
     "mode": "script-only Git checkpoints under current authority",

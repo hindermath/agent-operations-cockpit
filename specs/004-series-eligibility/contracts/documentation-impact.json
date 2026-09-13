@@ -4,7 +4,7 @@
   "entries": [
     {
       "changeId": "CHG004",
-      "scope": "META-LH-04 T041-T043 completed, authoritative T040 checkbox carried; T044 history audit complete but residual gate blocked AEI004/exit 2 by model Git lock restrictions; T045 authority prepared only. Stop before T046.",
+      "scope": "META-LH-04 T001-T057 completed. Feature PR #49, Lifecycle PR #52 and Closeout PR #53 are merged at their reviewed heads; terminal run facts bind the observed closeout merge and synchronized main.",
       "decision": "UpdateRequired",
       "rationale": "Carry forward exactly CHG004 / UpdateRequired for the feature, tasks, help, reviews, statistics, retrospective and AEPS. The implemented interface requires current bilingual explanation; no new shared rule or distribution authority.",
       "documents": [
@@ -67,18 +67,18 @@
         "Entry: intake -> spec -> plan -> quickstart -> interface and evidence -> one safe next action",
         "Before first T008 source commit: plan -> minimal quickstart prerequisites -> Bash/PowerShell/function help -> docs/man/validate-series-eligibility.1 -> valid local fixture read-only",
         "Current: spec -> quickstart prerequisites -> final six-mode parameters/exits -> manual and interface/data model -> security/architecture/accessibility/parity evidence -> one read-only valid-fixture action",
-        "Current closeout: engineering-retrospective -> implementation-validation -> delivery-authority -> completion-closeout -> outer coordinator T046 after phase validation"
+        "Completed closeout: engineering-retrospective -> implementation-validation -> delivery-set terminalCheckpoint -> completion-closeout"
       ],
       "canonicalSource": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
       "navigationImpact": "Expand existing quickstart/manpage; add descriptive feature evidence links and a security-index cross-reference. Preserve historical T008 and future delivery procedures as explicitly labelled references.",
       "documentClass": "ActiveSemantic",
       "languageStrategy": "German first / equivalent English second, CEFR B2. Adjacent paired text and bilingual table cells; no separate language partner. HTML/AT language evidence remains unverified.",
       "languagePartners": [],
-      "platformAndExampleProof": "specs/004-series-eligibility/phase-results/quality-validation.json: actual macOS Bash/PowerShell help, function, fixture and query output; native provider matrix remains Open in checklists/cross-platform.md.",
+      "platformAndExampleProof": "specs/004-series-eligibility/phase-results/quality-validation.json and ci-evidence.json bind local help/function/fixture checks plus the completed native Linux, macOS and Windows provider matrix.",
       "distributionClass": "sourceOnly",
       "homeSyncRequired": false,
-      "evidence": "specs/004-series-eligibility/phase-results/implementation-validation.json",
-      "risk": "Native/remote acceptance and final delivery remain Open. T040 is completed and T039 exact-fingerprint remediation is preserved; this residual requires an additional full T046 source/statistics checkpoint. No new technical code or shared rule; no writes to Git/index, statistics renderer or remote in this phase. Historical T044 sandbox failure is retained. T044/T045 now complete from the authoritative coordinator pass and current explicit user authority; the amended candidate still requires the full T046 checkpoint.",
+      "evidence": "specs/004-series-eligibility/completion-closeout.md",
+      "risk": "Feature, lifecycle and closeout delivery are complete. Historical blocked attempts remain visible in implementation-validation.json, while delivery-set.json and completion-closeout.md bind the successful coordinator, review, CI, merge, PostMerge and synchronization evidence. Cross-project AEPS validation remains a separate future decision.",
       "criticality": "Normal",
       "reevaluationTrigger": "Source, scope, language, platform, evidence or distribution changes.",
       "evidenceMapping": {
@@ -99,7 +99,7 @@
         "T031": "Authoritative ignored t031-85b85504-4614-4224-82d8-5e7a2b6fd0d7.json; causal checkbox now prepared for the next coordinator source checkpoint.",
         "T038": "Both documentation validators and canonical documentation-review.md; one decision only.",
         "T040": "Completed by authoritative ignored receipt; immutable history audited in phase-results/delivery-set.json; checkbox carried into next source candidate.",
-        "T041-T045": "T041-T043 preserved; T044/T045 completed by implement-7-remediation from authoritative coordinator both-shell pass and current explicit user authority. 45/57 task marks, T046 unstarted, no delivery; historical blocked evidence retained."
+        "T041-T057": "Completed. Historical T044 ENV001 evidence remains in implementation-validation.json; the successful T044/T045 coordinator pass, T046/T055 checkpoints, PRs #49/#52/#53, T056 PostMerge and T057 synchronized-main facts are bound by delivery-set.json and completion-closeout.md."
       }
     }
   ]

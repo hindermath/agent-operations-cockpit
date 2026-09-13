@@ -6,6 +6,62 @@
   "auditedHead": "e0172f6dd4aad214cfaa40ec66cf268514a04b23",
   "historyResult": "PassWithDocumentedMetadataDefect",
   "commitCount": 12,
+  "recordClass": "HistoricalAuditWithTerminalCheckpoint",
+  "terminalCheckpoint": {
+    "status": "Completed",
+    "recordedAt": "2026-09-13T16:15:31Z",
+    "taskProgress": {
+      "completed": 57,
+      "total": 57,
+      "tasksSha256": "31602678f0c0af4525289c241c528528992fe37ade0847d2df5d73d39d9f038d"
+    },
+    "T056": {
+      "status": "Completed",
+      "reviewedHead": "1e4e35ba24c5c7952a82c6f19910ed49ad7820e3",
+      "mergeCommit": "7e53a8b327410ba241d90a9c60bc286b16f7bc44",
+      "preMergeNormalizedSha256": "6e53d0c45048dcb78bd76193b0bf5039931eba2fbe5d0bca4ce23e09b143dfee",
+      "postMergeNormalizedSha256": "22bf0f6ea82dab2bccb96165c2d23d36ba097e97894893c3ccd234e664cb285d"
+    },
+    "T057": {
+      "status": "Completed",
+      "synchronizedHead": "7e53a8b327410ba241d90a9c60bc286b16f7bc44",
+      "localMain": "7e53a8b327410ba241d90a9c60bc286b16f7bc44",
+      "originMain": "7e53a8b327410ba241d90a9c60bc286b16f7bc44",
+      "liveRemoteMain": "7e53a8b327410ba241d90a9c60bc286b16f7bc44",
+      "ahead": 0,
+      "behind": 0,
+      "worktree": "Clean"
+    },
+    "statistics": {
+      "status": "Completed",
+      "provenanceClass": "HistoricalPublishedCausalCheckpointBeforeTerminalContainer",
+      "sourceHead": "ea16591b28cf5b68c5cf4a906f45c0a30f05950c",
+      "sourceRevision": "ea16591b28cf",
+      "statisticsOnlyCommit": "d56fcd4928cdfa03ae2792859ef02a28497d99c4",
+      "totalTextLines": 351021,
+      "activeDays": 17,
+      "bashCheckOnly": "CURRENT",
+      "powerShellCheckOnly": "CURRENT",
+      "selfReferenceBoundary": "This is the last versioned causal checkpoint before the terminal evidence container. It is historical, not the current generated-ledger binding."
+    },
+    "currentStatisticsBinding": {
+      "status": "RuntimeBoundAfterImmutableFinalHead",
+      "canonicalLedger": "docs/project-statistics.md",
+      "runtimeEvidencePath": ".specify/runtime/autonomous-routing/8b306e28-51eb-4510-afbc-5056b9aee328/terminal-state/statistics-binding.json",
+      "requiredFields": [
+        "sourceHead",
+        "sourceRevision",
+        "statisticsOnlyCommit",
+        "totalTextLines",
+        "activeDays",
+        "bashCheckOnly",
+        "powerShellCheckOnly"
+      ],
+      "selfReferenceBoundary": "The exact final-head binding is generated only after the statistics-only commit and remains ignored runtime evidence; versioning that commit SHA in its own ancestry would create an endless self-reference loop."
+    },
+    "nextAction": "N/A",
+    "limits": "Causal terminal facts end at the observed closeout merge and synchronization. The later terminal-state container PR is not claimed by this checkpoint and META-LH-05 was not started."
+  },
   "commits": [
     {
       "commit": "a357ef6815c9175da74c65e0999a676e90759a05",
@@ -1726,5 +1782,5 @@
       "limits": "This is the coordinator-validated pre-amendment unstaged candidate. Causal evidence/task edits below are not a staged validation or freeze; T046 must revalidate the resulting exact residual candidate in both shells before any staging/commit. No remote/native gate is satisfied by this evidence."
     }
   },
-  "statisticsDisposition": "Five checkpoint boundaries audited; six source commits and six separate ledger-only commits. Current residual needs a new full T046 checkpoint; no renderer invoked in implement-7."
+  "statisticsDisposition": "Historical implement-7 audit only: five checkpoint boundaries, six source commits and six separate statistics-only commits were audited before T046. terminalCheckpoint.statistics is explicitly historical. Current generated values are authoritative in docs/project-statistics.md and are bound after the immutable final head by terminalCheckpoint.currentStatisticsBinding at its ignored runtimeEvidencePath."
 }

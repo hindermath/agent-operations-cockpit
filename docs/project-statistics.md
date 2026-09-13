@@ -23,6 +23,7 @@
 ---
 
 | 2026-09-13 | Intake-Lifecycle-Preset-Rollout / Intake lifecycle preset rollout | N/A | N/A | N/A | Vorhandene Authoring-/Review-/Sequencing-Presets auf 0.3.2/0.2.2/0.2.4 aktualisiert; optionale Profile und Dokumentation nachgefuehrt. Pruefnachweise in docs/maintenance/intake-lifecycle-fleet-rollout.json. / Update existing presets and profile references; preserve other presets and project extensions. |
+| 2026-09-13 | META-LH-04 Series Eligibility | — | — | — | Documentation Impact `UpdateRequired`: Neun typisierte Eligibility-Kriterien, sechs Auswertungsmodi, Bash-/PowerShell-Paritaet, positive und negative Fixtures sowie kausale Feature-, Lifecycle- und Closeout-Evidence geliefert. T001–T057 sind abgeschlossen; PR #49, #52 und #53 wurden an geprueften Heads gemergt und `main` auf `0 0` synchronisiert. / Nine typed eligibility criteria, six assessment modes, Bash/PowerShell parity, positive and negative fixtures, and causal feature, lifecycle and closeout evidence delivered. T001-T057 are complete; PRs #49, #52 and #53 merged at reviewed heads and main synchronized at zero divergence. |
 
 ## Gesamtstand des Repositories / Repository Snapshot
 
@@ -46,27 +47,27 @@ Profil 2 verwendet Git-getrackte Textdateien und sichtbare Git-Aktivitaet. Die W
 
 | Kennzahl / Metric | Wert / Value |
 |---|---:|
-| Textbasis / Text base | 350987 lines |
+| Textbasis / Text base | 351066 lines |
 | Textdateien / Text files | 1820 |
 | Beobachtbarer Zeitraum / Observable period | 2025-09-21..2026-09-13 |
 | Aktivtage / Active days | 17 |
-| Relevante Commits / Relevant commits | 127 |
-| Zeilen je Aktivtag / Lines per active day | 20646.3 |
+| Relevante Commits / Relevant commits | 134 |
+| Zeilen je Aktivtag / Lines per active day | 20650.9 |
 | Peak-Tag im Fenster / Peak day in window | 2026-07-31 / 132656 |
 | Peak-Woche im Fenster / Peak week in window | 2026-07-26 / 135472 |
 | Laengste Serie / Longest streak | 3 days |
 | Speedup vs. 80 lines/day | 258.1x |
 | Speedup vs. 125 lines/day | 165.2x |
-| Methodik / Methodology | v2; source `d0f9bba0894d` |
+| Methodik / Methodology | v2; source `35404bad264f` |
 
 ### Artefaktmix / Artifact Mix
 
 ```text
 Produktiv / Production          [#...................]   3.0% | 10650
 Tests                           [###.................]  13.6% | 47809
-Dokumentation / Documentation   [#########...........]  42.6% | 149370
+Dokumentation / Documentation   [#########...........]  42.6% | 149393
 Skripte / Scripts               [###.................]  13.4% | 46985
-Konfiguration / Configuration   [#####...............]  27.4% | 96030
+Konfiguration / Configuration   [#####...............]  27.4% | 96086
 Daten und Medien / Data and media [....................]   0.0% | 0
 Sonstiger Text / Other text     [#...................]   0.0% | 143
 ```
@@ -187,7 +188,7 @@ Die Faktoren vergleichen sichtbare Lieferdichte mit den dokumentierten manuellen
 Scale: 0..50000 lines/day
 Experienced manual [#...................] 80
 Thorsten solo      [#...................] 125
-Visible repository [########............] 20646.3
+Visible repository [########............] 20650.9
 ```
 
 Die gemeinsame Skala vergleicht Referenzen und sichtbare Lieferdichte. Sie schreibt die Git-Aktivitaet keiner Person oder KI pauschal zu.
@@ -213,6 +214,6 @@ DE: Das Fenster beginnt am 2025-09-21 und endet am 2026-09-13. Es enthaelt 17 ak
 | 2026-06 | 0 |
 | 2026-07 | 132656 |
 | 2026-08 | 100244 |
-| 2026-09 | 134388 |
+| 2026-09 | 134631 |
 
 <!-- project-statistics-v2:end -->
