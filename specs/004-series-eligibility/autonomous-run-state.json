@@ -7,7 +7,7 @@
   "authorityRevalidationRequired": true,
   "stage": "MergeAndSync",
   "status": "Active",
-  "checkpointCommit": "57ae2c7b482c019f38b0fa472e1b22e8c88de8bf",
+  "checkpointCommit": "077612627ae67cd8cc58858860d99a88aee2c684",
   "acceptedArtifacts": [
     {
       "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
@@ -410,12 +410,12 @@
       }
     ]
   },
-  "lastPassingGate": "The exact PR head passed the authorized macOS Bash 5 provisioning step; Linux and Windows reached the complete Feature 004 matrix before the pre-existing ten-minute job timeout stopped them.",
-  "nextExactAction": "Commit and push the bounded workflow timeout correction, then collect complete exact-head CI evidence and finish T047 through T050.",
+  "lastPassingGate": "Run 34751919837 proved the twenty-minute native matrix budget on Ubuntu and macOS; Windows reached status/next and isolated a test-harness UTF-8 decoding mismatch without a domain failure.",
+  "nextExactAction": "Validate, commit, and push the strict UTF-8 child-process decoding correction, then collect complete exact-head CI evidence and finish T047 through T050.",
   "lastOperation": {
-    "kind": "DeliveryRemediation:native-matrix-timeout",
+    "kind": "DeliveryRemediation:windows-utf8",
     "state": "Completed",
-    "summary": "Raised only the PowerShell Static Analysis job timeout from ten to twenty minutes after exact-head provider evidence showed the unchanged full native matrix exceeded the former budget."
+    "summary": "Correct the Python contract harness to decode redirected PowerShell output explicitly as strict UTF-8 after exact-head Windows evidence exposed locale replacement characters."
   },
   "stop": {
     "reason": "N/A",
@@ -428,5 +428,5 @@
     "postMergeActions": "N/A",
     "finalValidation": "Pending"
   },
-  "updatedAt": "2026-09-13T10:26:15Z"
+  "updatedAt": "2026-09-13T10:40:18Z"
 }

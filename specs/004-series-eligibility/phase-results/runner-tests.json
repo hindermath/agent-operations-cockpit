@@ -2322,7 +2322,7 @@
     }
   ],
   "providerCapabilityRemediation": {
-    "status": "AuthorizedAndPartiallyValidated",
+    "status": "AuthorizedAndAwaitingExactHeadValidation",
     "observedHead": "e07c6fee5d405f41e8f24f44ed945e941e7cb5ab",
     "workflowRunId": 34750365810,
     "macosJobId": 103705689985,
@@ -2332,6 +2332,17 @@
     "authorizedAt": "2026-09-13",
     "validation": "Run 34751212746 job 103707972407 passed the new macOS provisioning step. Jobs 103707972094 and 103707972342 then exceeded the pre-existing ten-minute job limit while executing the full native matrix.",
     "timingDecision": "Raise only this existing workflow job timeout from 10 to 20 minutes; do not skip, split, or weaken any native gate.",
+    "windowsEncodingFinding": "Run 34751919837 proved the twenty-minute budget on Ubuntu and macOS. Windows job 103709798761 reached the status/next suite, but Python decoded redirected PowerShell UTF-8 output through the Windows locale and replaced the German umlaut in the required bilingual heading.",
+    "encodingDecision": "Decode the PowerShell child process explicitly as strict UTF-8 in the Python contract harness. Preserve the bilingual heading assertion, query behavior, and every native gate.",
+    "encodingLocalValidation": {
+      "completedAt": "2026-09-13T10:43:49Z",
+      "result": "Pass",
+      "commands": [
+        "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case status-next",
+        "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case status-next"
+      ],
+      "testHarnessSha256": "bae2387bc8dc6a64f46331cd50367b15330c68325aac92da341603a22e645ec3"
+    },
     "nextTask": "T048"
   },
   "nativeEvidenceGaps": [
