@@ -76,15 +76,43 @@ starten. / Dot-sourcing loads the function without starting an assessment.
 function Test-AocSeriesEligibility {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory)][string]$Repo,
-        [Parameter(Mandatory)][string]$Fixture,
+        [Parameter(Mandatory)][AllowEmptyString()][string]$Repo,
+        [Parameter(Mandatory)][AllowEmptyString()][string]$Fixture,
         [switch]$Json
     )
 
     $Core = Join-Path $PSScriptRoot 'validate_series_eligibility.py'
     $CoreArguments = @('-B', $Core, '--repo', $Repo, '--fixture', $Fixture)
     if ($Json) { $CoreArguments += '--json' }
-    & python3 @CoreArguments
+    # Keine Rohdiagnosen des Interpreters ausgeben. / Do not emit raw interpreter diagnostics.
+    $CoreExit = 3
+    $CoreOutput = @()
+    try {
+        $CoreOutput = @(& python3 @CoreArguments 2>$null)
+        $CoreExit = $LASTEXITCODE
+    }
+    catch {
+        $CoreExit = 3
+    }
+    $OutputText = $CoreOutput -join "`n"
+    $KnownOutput = $OutputText.StartsWith('{"schemaVersion": "1.0", "mode": ') -or
+        $OutputText.StartsWith('Modus / Mode: ')
+    if ($CoreExit -in @(0, 2) -and $KnownOutput) {
+        $global:LASTEXITCODE = $CoreExit
+        $CoreOutput
+        return
+    }
+    $global:LASTEXITCODE = 3
+    if ($Json) {
+        '{"schemaVersion":"1.0","mode":null,"criteria":{},"outcome":"Blocked","reasons":[{"code":"EL_PROVIDER","criterion":null,"de":"Die Laufzeitprüfung ist fehlgeschlagen.","en":"The runtime check failed."}],"failureClass":"ProviderFailure","authorityGranted":false,"nextAction":{"de":"Eingaben und Nachweise erneut prüfen; nichts starten.","en":"Reassess inputs and evidence; start nothing."}}'
+    }
+    else {
+        'Modus / Mode: NotAssessed'
+        'Ergebnis / Outcome: Blocked'
+        'Die Laufzeitprüfung ist fehlgeschlagen. / The runtime check failed.'
+        'Nächste Aktion / Next action: Eingaben und Nachweise erneut prüfen; nichts starten. / Reassess inputs and evidence; start nothing.'
+        'Keine Startfreigabe. / No start authority granted.'
+    }
 }
 
 if ($MyInvocation.InvocationName -eq '.') {
@@ -94,11 +122,6 @@ if ($MyInvocation.InvocationName -eq '.') {
 if ($Help) {
     Get-Help $MyInvocation.MyCommand.Path -Full
     exit 0
-}
-
-if ([string]::IsNullOrWhiteSpace($Repo) -or [string]::IsNullOrWhiteSpace($Fixture)) {
-    Write-Error 'Repo und Fixture sind erforderlich. / Repo and Fixture are required.'
-    exit 2
 }
 
 Test-AocSeriesEligibility -Repo $Repo -Fixture $Fixture -Json:$Json
