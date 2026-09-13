@@ -76,3 +76,33 @@ META-LH-03 source, including historical generator.version 0.3.1. This explicit
 local exception does not change installed preset version 0.3.2. New receipts must
 use the actual generator version from preset.yml. The historical template is not
 proof of the current version. Both wrappers revalidate the META-LH-03 receipt.
+
+## Korrigierter Patchstand / Corrected patch releases
+
+Die Flottenreviews deckten physische Collection-Aliase und Receipt-Pfadfluchten
+auf. Die zentral korrigierten Releases sind Authoring 0.3.4, Review 0.2.3 und
+Sequencing 0.2.6. Negative Tests reproduzierten die Befunde vor der Korrektur;
+anschliessend bestehen die nativen Release-Suiten auf macOS, Linux und Windows.
+Die aktuellen Profile, Source-Locks und vorhandenen Bootstrap-/Agent-Vorlagen
+verwenden diese Versionen. Die mitgelieferten verschachtelten Workflows sind
+Quellmetadaten der Presets und aktivieren keine Verbraucher-Jobs; die technischen
+PR-Gates stammen aus den Root-Workflows des jeweiligen Verbraucher-Repositories.
+
+Fleet review found physical collection aliases and receipt path escapes. The
+centrally corrected releases are Authoring 0.3.4, Review 0.2.3 and Sequencing 0.2.6.
+Shipped JSON templates are parsed and their generator versions checked in native CI. Negative tests reproduced the findings before correction; native release suites
+then pass on macOS, Linux and Windows. Existing profiles, source locks and
+bootstrap/agent templates bind these versions. Packaged nested workflows are
+preset-source metadata, not consumer jobs; consumer PR gates use root workflows.
+
+Documentation Impact remains UpdateRequired. Re-evaluation includes portability,
+physical path aliases, source/hash bindings and local overlays. Project lifecycle
+inventory findings remain separate from successful package/regression checks.
+
+Lokale Quellbindung / Local source binding: Auch templates/field-validation-summary.md
+bleibt wegen eines aktuellen historischen Authoring-Receipts byteidentisch auf
+seiner Quellversion 0.3.1. Zusammen mit der Receipt-JSON-Vorlage ist dies eine
+absichtliche lokale Ausnahme; aktuelle Release-Identitaet ist preset.yml (0.3.4).
+Both the field-validation summary and receipt JSON template remain exact historical
+receipt-bound sources. Their 0.3.1 source labels are intentional local exceptions;
+new evidence records the installed release from preset.yml (0.3.4).

@@ -1,5 +1,14 @@
 # Intake Authoring Governance Preset
 
+Aktuelle Version / Current version: **0.3.4**. Dieser Patch schliesst physische
+Collection-Aliase und unbekannte Lifecycle-Zustaende aus. Authoring prueft auch
+bestehende Receipt-Ziele und Quellen vor dem Lesen gegen die Repository-Grenze.
+
+This patch rejects physical collection aliases and unknown lifecycle states.
+Authoring also checks existing receipt targets and sources for repository
+containment before reading. Earlier feature versions below describe history.
+See [boundary hardening](docs/lifecycle-boundary-hardening.md).
+
 Optional, stackable intake-authoring governance for GitHub Spec Kit. Version
 `0.3.1` publishes the agent-neutral `model-routing.json` contract. Version
 `0.3.0` governs traceable intake Create, Read, Update, logical Delete, bounded
@@ -55,7 +64,7 @@ and freshness without writing.*
 
 ```bash
 specify preset add \
-  --from https://github.com/hindermath/spec-kit-preset-intake-authoring-governance/archive/refs/tags/v0.3.2.zip \
+  --from https://github.com/hindermath/spec-kit-preset-intake-authoring-governance/archive/refs/tags/v0.3.4.zip \
   --priority 64
 specify preset list
 specify preset info intake-authoring-governance
@@ -487,12 +496,20 @@ sources remain errors. Lifecycle tests cover valid source archival and hash drif
 Die lokal erweiterte `templates/intake-authoring-receipt-template.json` ist eine
 hashgebundene Quelle des vorhandenen META-LH-03-Receipts. Sie bleibt einschliesslich
 ihres historischen Generator-Versionsfelds unveraendert. Fuer neue Receipts ist
-`generator.version` aus dem installierten `preset.yml` zu uebernehmen (0.3.2),
+`generator.version` aus dem installierten `preset.yml` zu uebernehmen (0.3.4),
 nicht aus diesem historischen Eingabebeleg. Details und Revalidierung stehen in
 `docs/maintenance/intake-lifecycle-fleet-rollout.md` an der Repository-Wurzel.
 
 The locally extended receipt template is a hash-bound source of the existing
 META-LH-03 receipt and preserves its historical generator version. New receipts
-must set `generator.version` from the installed `preset.yml` (0.3.2), rather than
+must set `generator.version` from the installed `preset.yml` (0.3.4), rather than
 copying the historical input value. The repository maintenance record documents
 this local exception and receipt revalidation.
+
+Lokale Quellbindung / Local source binding: Auch templates/field-validation-summary.md
+bleibt wegen eines aktuellen historischen Authoring-Receipts byteidentisch auf
+seiner Quellversion 0.3.1. Zusammen mit der Receipt-JSON-Vorlage ist dies eine
+absichtliche lokale Ausnahme; aktuelle Release-Identitaet ist preset.yml (0.3.4).
+Both the field-validation summary and receipt JSON template remain exact historical
+receipt-bound sources. Their 0.3.1 source labels are intentional local exceptions;
+new evidence records the installed release from preset.yml (0.3.4).

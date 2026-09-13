@@ -144,6 +144,19 @@ try {
     $WrongProfileRoot.projectProfile = $WrongProfileRoot.projectProfile.Clone()
     $WrongProfileRoot.projectProfile.path = 'requirements/outside-profile.md'
     Invoke-Fixture (Write-JsonFixture 'wrong-profile-root.json' $WrongProfileRoot) 2 'RIG019'
+    # DE/EN: The local profile source also rejects physical escapes with identical content.
+    $ExternalProfile = Join-Path ([IO.Path]::GetTempPath()) ('aoc-profile-' + [guid]::NewGuid() + '.md')
+    Copy-Item $ProfilePath $ExternalProfile
+    try {
+        Remove-Item $ProfilePath
+        New-Item -ItemType SymbolicLink -Path $ProfilePath -Target $ExternalProfile | Out-Null
+        Invoke-Fixture (Write-JsonFixture 'external-profile-link.json' $Base) 2 'RIG019'
+    }
+    finally {
+        Remove-Item $ProfilePath -Force
+        Copy-Item $ExternalProfile $ProfilePath
+        Remove-Item $ExternalProfile
+    }
 
     $WrongProfileId = New-BaseConfig
     $WrongProfileId.projectProfile = $WrongProfileId.projectProfile.Clone()
@@ -362,6 +375,34 @@ try {
         Invoke-Fixture (Write-JsonFixture 'english-local-profile-rejected.json' $English) 2 'RIG021'
         $Root = $OriginalRoot
     }
+    foreach ($ForeignPath in @('..\outside', 'C:\outside', 'C:outside')) {
+        $Foreign = $Base.Clone()
+        $Foreign.collections = $Base.collections.Clone()
+        $Foreign.collections.backlog = $ForeignPath
+        Invoke-Fixture (Write-JsonFixture ('foreign-' + [guid]::NewGuid() + '.json') $Foreign) 2 'RIG004'
+    }
+    # DE: Unbekannte Zustaende und physisch identische Collection-Wurzeln sind ungueltig.
+    # EN: Unknown states and physically aliased collection roots are invalid.
+    $UnknownSeries = $Manifest.Clone()
+    $UnknownSeries.status = 'Bogus'
+    $UnknownSeries | ConvertTo-Json -Depth 12 | Set-Content $ManifestPath -Encoding utf8NoBOM
+    Invoke-Fixture (Write-JsonFixture 'unknown-series-state.json' $ManifestInventory) 2 'RIG017'
+    Set-Content -LiteralPath $Second -Value '# Zweites' -Encoding utf8NoBOM
+    $UnknownTarget = $MultipleEligible.Clone()
+    $UnknownTarget.orderedTargets = @($MultipleEligible.orderedTargets[0].Clone(), $MultipleEligible.orderedTargets[1].Clone())
+    $UnknownTarget.orderedTargets[1].status = 'Bogus'
+    $UnknownTarget | ConvertTo-Json -Depth 12 | Set-Content $ManifestPath -Encoding utf8NoBOM
+    Invoke-Fixture (Write-JsonFixture 'unknown-target-state.json' $ManifestInventory) 2 'RIG017'
+    $Manifest | ConvertTo-Json -Depth 12 | Set-Content $ManifestPath -Encoding utf8NoBOM
+    $ActiveRoot = Join-Path $Root 'requirements/intakes/active'
+    $ArchiveRoot = Join-Path $Root 'requirements/intakes/archive'
+    Copy-Item $Target (Join-Path $ArchiveRoot (Split-Path $Target -Leaf))
+    Remove-Item $ActiveRoot -Recurse -Force
+    New-Item -ItemType SymbolicLink -Path $ActiveRoot -Target $ArchiveRoot | Out-Null
+    Invoke-Fixture (Write-JsonFixture 'aliased-collection-roots.json' $ManifestInventory) 2 'RIG007'
+    Remove-Item $ActiveRoot -Force
+    New-Item -ItemType Directory -Path $ActiveRoot | Out-Null
+    Copy-Item (Join-Path $ArchiveRoot (Split-Path $Target -Leaf)) $Target
     # DE: Logische AOC-Pfade werden vor der Collection-Pruefung eindeutig aufgeloest.
     # EN: Resolve logical AOC paths uniquely before checking the physical collection.
     $MappedPath = 'requirements/intakes/archive/Lastenheft_Beispiel.001-completed.md'
