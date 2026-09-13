@@ -481,3 +481,18 @@ prueft den gueltigen Quellenumzug und eine abweichende Quellhash-Bindung.
 *The same unique archive proof applies to missing repository file sources in
 historical receipts. The recorded source hash must still match; other missing
 sources remain errors. Lifecycle tests cover valid source archival and hash drift.*
+
+## Lokale gebundene Vorlage / Locally bound template
+
+Die lokal erweiterte `templates/intake-authoring-receipt-template.json` ist eine
+hashgebundene Quelle des vorhandenen META-LH-03-Receipts. Sie bleibt einschliesslich
+ihres historischen Generator-Versionsfelds unveraendert. Fuer neue Receipts ist
+`generator.version` aus dem installierten `preset.yml` zu uebernehmen (0.3.2),
+nicht aus diesem historischen Eingabebeleg. Details und Revalidierung stehen in
+`docs/maintenance/intake-lifecycle-fleet-rollout.md` an der Repository-Wurzel.
+
+The locally extended receipt template is a hash-bound source of the existing
+META-LH-03 receipt and preserves its historical generator version. New receipts
+must set `generator.version` from the installed `preset.yml` (0.3.2), rather than
+copying the historical input value. The repository maintenance record documents
+this local exception and receipt revalidation.
