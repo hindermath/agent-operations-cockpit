@@ -184,8 +184,8 @@ jobs:
           $Python4 = $PythonCandidates4[0].Source
           # Der PATH gilt auch fuer frische Kinder, nicht nur fuer PowerShell-Aliase.
           # PATH applies to fresh children, not merely PowerShell aliases.
-          $env:PATH = (Split-Path $Bash4 -Parent) + [IO.Path]::PathSeparator +
-            (Split-Path $Python4 -Parent) + [IO.Path]::PathSeparator + $env:PATH
+          $env:PATH = (Split-Path $Python4 -Parent) + [IO.Path]::PathSeparator +
+            (Split-Path $Bash4 -Parent) + [IO.Path]::PathSeparator + $env:PATH
           $env:AOC_GIT_BASH_EXE = $Bash4
           $PythonIdentity4 = & $Python4 -B -c 'import os,sys;print(os.path.realpath(sys.executable))'
           $Code = $LASTEXITCODE
