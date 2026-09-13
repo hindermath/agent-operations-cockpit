@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -218,18 +219,27 @@ def _require_file_hash(
 def _resolve_completed_lifecycle_target(
     repo: Path, logical_path: str, expected_hash: str,
 ) -> str:
-    """Resolve META-LH-03 after its post-feature lifecycle rename."""
-    lifecycle_path = repo / "specs/003-authoring-contract/intake-lifecycle.json"
-    if not lifecycle_path.is_file():
+    """Resolve one logical target through exactly one feature lifecycle record."""
+    matches: list[dict[str, Any]] = []
+    for lifecycle_path in sorted((repo / "specs").glob("*/intake-lifecycle.json")):
+        lifecycle = load_json(lifecycle_path)
+        records = lifecycle.get("records")
+        if lifecycle.get("schemaVersion") != "1.1" or not isinstance(records, list):
+            raise ContractViolation(
+                f"lifecycle resolution is invalid: {lifecycle_path.relative_to(repo)}"
+            )
+        matches.extend(
+            record for record in records
+            if isinstance(record, dict) and record.get("originalPath") == logical_path
+        )
+
+    logical_exists = (repo / logical_path).is_file()
+    if not matches:
+        if not logical_exists:
+            raise ContractViolation(f"logical target has no physical file: {logical_path}")
         return logical_path
-    lifecycle = load_json(lifecycle_path)
-    records = lifecycle.get("records")
-    matches = [
-        record for record in records or []
-        if isinstance(record, dict) and record.get("originalPath") == logical_path
-    ]
-    if lifecycle.get("schemaVersion") != "1.1" or len(matches) != 1:
-        raise ContractViolation("META-LH-03 lifecycle resolution is invalid")
+    if len(matches) != 1:
+        raise ContractViolation(f"lifecycle resolution is ambiguous: {logical_path}")
     record = matches[0]
     archived = record.get("archivedPath")
     if (
@@ -238,10 +248,32 @@ def _resolve_completed_lifecycle_target(
         or not (repo / archived).is_file()
         or normalized_sha256((repo / archived).read_bytes()) != expected_hash
     ):
-        raise ContractViolation("META-LH-03 lifecycle target binding drift")
-    if (repo / logical_path).is_file():
-        raise ContractViolation("META-LH-03 lifecycle requires the logical target to be absent")
+        raise ContractViolation(f"lifecycle target binding drift: {logical_path}")
+    if logical_exists:
+        raise ContractViolation(
+            f"lifecycle requires the logical target to be absent: {logical_path}"
+        )
     return archived
+
+
+def _validate_current_target_projection(repo: Path, current: dict[str, Any]) -> None:
+    """Prove that every current logical leaf resolves to exactly one physical file."""
+    for logical_id, leaf in _leaf_map(current).items():
+        target = leaf.get("target")
+        if not isinstance(target, dict) or set(target) != {"path", "normalizedSha256"}:
+            raise ContractViolation(f"{logical_id} target binding is incomplete")
+        logical_path = target.get("path")
+        expected_hash = target.get("normalizedSha256")
+        if not isinstance(logical_path, str) or not re.fullmatch(
+            r"[0-9a-f]{64}", str(expected_hash)
+        ):
+            raise ContractViolation(f"{logical_id} target binding is invalid")
+        _require_file_hash(
+            repo,
+            _resolve_completed_lifecycle_target(repo, logical_path, str(expected_hash)),
+            str(expected_hash),
+            normalized=True,
+        )
 
 
 def validate_r2_transaction(
@@ -260,6 +292,7 @@ def validate_r2_transaction(
     assert isinstance(baseline_raw, bytes)
     historical = load_json_bytes(baseline_raw, f"{checkpoint}:{binding_path}")
     leaf_summary = validate_leaf_replacement(historical, current)
+    _validate_current_target_projection(repo, current)
 
     before_renewed = {
         item["logicalTargetId"]: item

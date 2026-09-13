@@ -5,9 +5,9 @@ Authority: explicit 2026-09-13 analysis-remediation instruction, C001.
 Modified principles: None; shared rules and existing registry rows unchanged.
 Added sections: None; add the factual RiderProjects/AgentOperationsCockpit row.
 Removed sections: None.
-Amendment status: locally prepared for the feature PR; no PR or merge performed.
-LAST_AMENDED_DATE remains the last actual amendment merge date, 2026-09-12.
-At authorized feature merge, record its observed date in both copies at closeout.
+Amendment status: feature PR #49 merged as d95c2ff87c4ac0f6d137bc96a129464365416780.
+LAST_AMENDED_DATE records the observed feature merge date, 2026-09-13.
+The lifecycle and closeout deliveries do not introduce another amendment.
 Templates reviewed, no update required: .specify/templates/plan-template.md,
   spec-template.md, tasks-template.md, agent-file-template.md; scripts/templates/.
 Runtime guidance reviewed, no update required: AGENTS.md, CLAUDE.md, GEMINI.md,
@@ -15,10 +15,10 @@ Runtime guidance reviewed, no update required: AGENTS.md, CLAUDE.md, GEMINI.md,
   existing Spec-Kit surfaces. No runtime, tooling, shared rule or statistics change.
 Mirror: .specify/memory/constitution.md remains byte-identical.
 Evidence: specs/004-series-eligibility/phase-results/analysis-remediation-report.md.
-DE: Lokale Tatsachenergänzung; gemeinsame Regeln bleiben unverändert. PR und
-  Amendment-Mergedatum folgen erst bei autorisierter Lieferung.
-EN: Local factual clarification; shared rules remain unchanged. PR and actual
-  amendment merge date follow only during authorized delivery.
+DE: Lokale Tatsachenergänzung; gemeinsame Regeln bleiben unverändert. Das
+  tatsächliche Amendment-Mergedatum ist nach der autorisierten Lieferung erfasst.
+EN: Local factual clarification; shared rules remain unchanged. The actual
+  amendment merge date is recorded after the authorized delivery.
 -->
 # Constitution v1.21.4
 
@@ -1152,7 +1152,7 @@ Community/catalog coordination is tracked in `github/spec-kit#2362`.
 `.github/copilot-instructions.md` for per-agent operational guidance. This
 constitution is the authoritative policy layer above all agent-specific files.
 
-**Version**: 1.21.4 | **Ratified**: 2026-03-31 | **Last Amended**: 2026-09-12
+**Version**: 1.21.4 | **Ratified**: 2026-03-31 | **Last Amended**: 2026-09-13
 
 <!-- EN: constitution.md placeholder
 [DE-Zusammenfassung: constitution.md beschreibt die Prinzipien und Standards für alle home-baseline Workspaces.]
