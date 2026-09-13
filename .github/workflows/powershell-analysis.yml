@@ -204,23 +204,39 @@ jobs:
               ForEach-Object { $_.Source })
             $Bash4 = Resolve-AocFeature004Bash -Candidates $Candidates4
           }
-          $PythonCandidates4 = @(Get-Command python3 -CommandType Application -All -ErrorAction SilentlyContinue)
-          if ($PythonCandidates4.Count -eq 0) { throw 'python3 application unavailable. / python3 fehlt.' }
+          $PythonCandidates4 = @(Get-Command python3 -CommandType Application -All -ErrorAction SilentlyContinue |
+            Where-Object { -not [string]::IsNullOrWhiteSpace($_.Source) })
+          if ($PythonCandidates4.Count -eq 0) {
+            $PythonCandidates4 = @(Get-Command python -CommandType Application -All -ErrorAction SilentlyContinue |
+              Where-Object { -not [string]::IsNullOrWhiteSpace($_.Source) })
+          }
+          if ($PythonCandidates4.Count -eq 0) { throw 'Python 3 application unavailable. / Python 3 fehlt.' }
           $Python4 = $PythonCandidates4[0].Source
-          # Der PATH gilt auch fuer frische Kinder, nicht nur fuer PowerShell-Aliase.
-          # PATH applies to fresh children, not merely PowerShell aliases.
-          $env:PATH = (Split-Path $Python4 -Parent) + [IO.Path]::PathSeparator +
-            (Split-Path $Bash4 -Parent) + [IO.Path]::PathSeparator + $env:PATH
+          # Beide Shells lösen eine echte Anwendung auf; Funktions-/Alias-Schatten zählen nicht.
+          # Both shells resolve a real application; function or alias shadows do not count.
+          $env:PATH = (Split-Path $Bash4 -Parent) + [IO.Path]::PathSeparator + $env:PATH
           $env:AOC_GIT_BASH_EXE = $Bash4
           $PythonIdentity4 = & $Python4 -B -c 'import os,sys;print(os.path.realpath(sys.executable))'
           $Code = $LASTEXITCODE
           Write-Output "IMMEDIATE_EXIT: $Code"
           if ($Code -ne 0) { throw 'Python identity probe failed.' }
-          & $Python4 -B -c 'import os,shutil,sys;assert os.path.samefile(shutil.which("python3"),sys.argv[1]);assert os.path.samefile(shutil.which("bash"),sys.argv[2])' $PythonIdentity4 $Bash4
+          & $Python4 -B -c 'import os,shutil,sys;assert os.path.samefile(shutil.which("bash"),sys.argv[1])' $Bash4
           $Code = $LASTEXITCODE
           Write-Output "IMMEDIATE_EXIT: $Code"
-          if ($Code -ne 0) { throw 'Child PATH identity differs. / Kindprozess-PATH weicht ab.' }
-          $BashPython4 = & $Bash4 @('-c', 'python3 -B -c ''import os,sys;print(os.path.realpath(sys.executable))''')
+          if ($Code -ne 0) { throw 'Bash PATH identity differs. / Bash-PATH weicht ab.' }
+          if ($IsWindows) {
+            $env:AOC_NATIVE_PYTHON = $Python4
+            $BashPythonCommand4 = @(& $Bash4 @('-c', 'candidate="$(cygpath -u "$AOC_NATIVE_PYTHON")"; test -x "$candidate" && printf "%s\n" "$candidate"')) |
+              Select-Object -First 1
+          } else {
+            $BashPythonCommand4 = $Python4
+          }
+          $Code = $LASTEXITCODE
+          if ($Code -ne 0 -or [string]::IsNullOrWhiteSpace($BashPythonCommand4)) {
+            throw 'Fresh Bash cannot resolve Python 3. / Frische Bash findet Python 3 nicht.'
+          }
+          $env:AOC_PYTHON_EXECUTABLE = $BashPythonCommand4.Trim()
+          $BashPython4 = & $Bash4 @('-c', '"$AOC_PYTHON_EXECUTABLE" -B -c ''import os,sys;print(os.path.realpath(sys.executable))''')
           $Code = $LASTEXITCODE
           Write-Output "IMMEDIATE_EXIT: $Code"
           if ($Code -ne 0) { throw 'Fresh Bash Python probe failed.' }

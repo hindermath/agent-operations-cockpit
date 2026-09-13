@@ -24,6 +24,17 @@ VALUES = {
     "integration": ("planned",), "review": ("consolidation-review-planned",),
     "abort": ("defined",), "recovery": ("defined",),
 }
+MODES = ("manual-assisted", "single-autonomous", "serial-autonomous",
+         "parallel-autonomous", "research-only", "blocked")
+PARALLEL_ELIGIBILITY = {
+    "requiresCurrentAuthority": True,
+    "requiresDisjointWrites": True,
+    "allowsSharedOpenDecisions": False,
+    "requiresConsolidationReview": True,
+    "requiresAbortRule": True,
+    "requiresRecoveryRule": True,
+}
+FAILURE_TAXONOMY = ["ProviderFailure", "ProductFailure"]
 CRITERION_FLAGS = dict(zip(("authority", "writeScope", "decisions", "review", "abort", "recovery"), FLAGS))
 
 class ReadBoundary:
@@ -86,14 +97,79 @@ class ReadBoundary:
         return GuardedPath(self, self.relative(value))
 
     def read_bytes(self, value):
-        path = self.resolve(value)
-        # Der letzte Link darf zwischen Prüfung und Öffnen nicht ausgetauscht werden.
-        # Refuse a substituted final symlink between validation and opening.
-        descriptor = os.open(path, os.O_RDONLY | getattr(os, 'O_NOFOLLOW', 0))
-        with os.fdopen(descriptor, 'rb') as stream:
-            if not stat.S_ISREG(os.fstat(stream.fileno()).st_mode):
+        value = self.relative(value)
+        if os.name == 'nt':
+            return self._read_windows(value)
+        return self._read_descriptor_relative(value)
+
+    def _read_descriptor_relative(self, value):
+        # Jeder Pfadteil wird relativ zu einem bereits geöffneten Verzeichnis gelesen.
+        # Open every component relative to an already verified directory descriptor.
+        no_follow = getattr(os, 'O_NOFOLLOW', None)
+        directory = getattr(os, 'O_DIRECTORY', None)
+        if no_follow is None or directory is None or os.open not in os.supports_dir_fd:
+            raise OSError("descriptor-relative no-follow unavailable")
+        opened = []
+        try:
+            root_fd = os.open(self.root, os.O_RDONLY | directory | no_follow)
+            opened.append(root_fd)
+            current_fd = root_fd
+            parts = value.split('/')
+            for part in parts[:-1]:
+                next_fd = os.open(part, os.O_RDONLY | directory | no_follow,
+                                  dir_fd=current_fd)
+                if not stat.S_ISDIR(os.fstat(next_fd).st_mode):
+                    os.close(next_fd)
+                    raise ValueError("parent is not directory")
+                opened.append(next_fd)
+                current_fd = next_fd
+            descriptor = os.open(parts[-1], os.O_RDONLY | no_follow, dir_fd=current_fd)
+            if not stat.S_ISREG(os.fstat(descriptor).st_mode):
+                os.close(descriptor)
                 raise ValueError("not a regular file")
-            return stream.read()
+            with os.fdopen(descriptor, 'rb') as stream:
+                return stream.read()
+        finally:
+            for descriptor in reversed(opened):
+                os.close(descriptor)
+
+    def _read_windows(self, value):
+        # Windows besitzt kein openat/O_NOFOLLOW. Der endgültige Handle-Pfad wird
+        # deshalb vor dem ersten Byte gegen die feste Repository-Wurzel geprüft.
+        # Windows lacks openat/O_NOFOLLOW; validate the opened handle path before reading.
+        import ctypes
+        import msvcrt
+
+        path = self.root.joinpath(*value.split('/'))
+        descriptor = os.open(path, os.O_RDONLY | getattr(os, 'O_BINARY', 0))
+        try:
+            handle = msvcrt.get_osfhandle(descriptor)
+            kernel32 = ctypes.WinDLL('kernel32', use_last_error=True)
+            final_path = kernel32.GetFinalPathNameByHandleW
+            final_path.argtypes = [ctypes.c_void_p, ctypes.c_wchar_p,
+                                   ctypes.c_uint32, ctypes.c_uint32]
+            final_path.restype = ctypes.c_uint32
+            size = final_path(handle, None, 0, 0)
+            if size == 0:
+                raise OSError(ctypes.get_last_error(), "final path unavailable")
+            buffer = ctypes.create_unicode_buffer(size + 1)
+            if final_path(handle, buffer, len(buffer), 0) == 0:
+                raise OSError(ctypes.get_last_error(), "final path unavailable")
+            actual = buffer.value
+            if actual.startswith('\\\\?\\UNC\\'):
+                actual = '\\\\' + actual[8:]
+            elif actual.startswith('\\\\?\\'):
+                actual = actual[4:]
+            root_value = os.path.normcase(os.path.abspath(self.root))
+            actual_value = os.path.normcase(os.path.abspath(actual))
+            if os.path.commonpath((root_value, actual_value)) != root_value:
+                raise ValueError("path escape")
+            if not stat.S_ISREG(os.fstat(descriptor).st_mode):
+                raise ValueError("not a regular file")
+            with os.fdopen(descriptor, 'rb', closefd=False) as stream:
+                return stream.read()
+        finally:
+            os.close(descriptor)
 
 
 class GuardedPath:
@@ -170,12 +246,19 @@ def load_json(path):
 
 
 def validate_schema(contract, fixture):
+    if (not isinstance(contract, dict)
+            or set(contract) != {"schemaVersion", "documentType", "criteria", "modes",
+                                 "parallelEligibility", "failureTaxonomy"}
+            or contract.get("schemaVersion") != "1.0"
+            or contract.get("documentType") != "SeriesEligibilityContract"
+            or contract.get("criteria") != list(VALUES)
+            or contract.get("modes") != list(MODES)
+            or contract.get("parallelEligibility") != PARALLEL_ELIGIBILITY
+            or contract.get("failureTaxonomy") != FAILURE_TAXONOMY
+            or any(type(value) is not bool
+                   for value in contract.get("parallelEligibility", {}).values())):
+        raise ValueError("contract schema")
     keys, modes = contract["criteria"], contract["modes"]
-    for values, count in [(keys, 9), (modes, 6)]:
-        if (not isinstance(values, list) or len(values) != count
-                or not all(isinstance(v, str) and v for v in values)
-                or len(set(values)) != count):
-            raise ValueError("contract set")
     required = {"fixtureId", "mode", "criteria", "expectedOutcome"}
     if (not isinstance(fixture, dict) or not required <= set(fixture)
             or set(fixture) - required - set(FLAGS)):

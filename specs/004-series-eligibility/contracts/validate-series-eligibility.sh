@@ -52,8 +52,20 @@ fi
 
 # Kinddiagnosen bleiben privat; nur definierte Ergebnisse passieren die Grenze.
 # Keep child diagnostics private; only defined results cross the boundary.
+python_executable="${AOC_PYTHON_EXECUTABLE:-}"
+if [[ -z "$python_executable" ]]; then
+  python_executable="$(type -P python3 || type -P python || true)"
+fi
+if [[ -z "$python_executable" || ! -f "$python_executable" || ! -x "$python_executable" ]]; then
+  python_executable=""
+fi
 core_exit=0
-core_output="$(python3 -B "$script_dir/validate_series_eligibility.py" "$@" 2>/dev/null)" || core_exit=$?
+if [[ -n "$python_executable" ]]; then
+  core_output="$("$python_executable" -B "$script_dir/validate_series_eligibility.py" "$@" 2>/dev/null)" || core_exit=$?
+else
+  core_output=""
+  core_exit=3
+fi
 if [[ ( "$core_exit" -eq 0 || "$core_exit" -eq 2 ) &&
       ( "$core_output" == '{"schemaVersion": "1.0", "mode": '* ||
         "$core_output" == 'Modus / Mode: '* ) ]]; then

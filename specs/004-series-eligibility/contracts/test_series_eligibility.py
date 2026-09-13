@@ -40,13 +40,19 @@ def snapshot(repo: Path) -> dict:
 class EligibilityTests(unittest.TestCase):
     def run_fixture(self, fixture, *, raw=False, legacy_error=None,
                     provider_exit=None, provider_stdout=False,
-                    fixture_path='fixture.json', as_text=False):
+                    fixture_path='fixture.json', as_text=False,
+                    contract_mutation=None):
         # Testaufbau ist getrennt von der lesenden Abfrage. / Separate setup from query.
         with tempfile.TemporaryDirectory(prefix="aoc eligibility ") as temporary:
             repo = Path(temporary)
             target = repo / CONTRACT
             target.parent.mkdir(parents=True)
-            shutil.copyfile(REPO / CONTRACT, target)
+            if contract_mutation is None:
+                shutil.copyfile(REPO / CONTRACT, target)
+            else:
+                contract = json.loads((REPO / CONTRACT).read_text())
+                contract_mutation(contract)
+                target.write_text(json.dumps(contract), encoding="utf-8")
             (repo / "fixture.json").write_text(fixture if raw else json.dumps(fixture), encoding="utf-8")
             surface = REPO / CONTRACTS
             if legacy_error is not None:
@@ -152,6 +158,31 @@ class EligibilityTests(unittest.TestCase):
                     self.assertEqual('ProductFailure', result['failureClass'])
                     self.assertTrue(any(r['criterion'] == key for r in result['reasons']))
                     self.assertNotIn('harmless-private-sentinel', json.dumps(result))
+
+    def test_contract_schema(self):
+        mutations = {
+            'schema-version': lambda value: value.update(schemaVersion='2.0'),
+            'document-type': lambda value: value.update(documentType='OtherContract'),
+            'criteria-order': lambda value: value['criteria'].reverse(),
+            'mode-order': lambda value: value['modes'].reverse(),
+            'parallel-rule-false': lambda value: value['parallelEligibility'].__setitem__(
+                'requiresDisjointWrites', False),
+            'parallel-rule-type': lambda value: value['parallelEligibility'].__setitem__(
+                'requiresDisjointWrites', 'true'),
+            'parallel-rule-extra': lambda value: value['parallelEligibility'].__setitem__(
+                'allowsImplicitStart', True),
+            'failure-taxonomy': lambda value: value['failureTaxonomy'].reverse(),
+            'extra-field': lambda value: value.update(extra='harmless-private-sentinel'),
+        }
+        for label, mutation in mutations.items():
+            with self.subTest(case=label):
+                fixture = valid_fixture()
+                fixture['expectedOutcome'] = 'Blocked'
+                result, code = self.run_fixture(fixture, contract_mutation=mutation)
+                self.assertEqual(2, code)
+                self.assertEqual('ProductFailure', result['failureClass'])
+                self.assertEqual('Blocked', result['outcome'])
+                self.assertNotIn('harmless-private-sentinel', json.dumps(result))
 
     def test_modes(self):
         for mode in MODES:
@@ -305,6 +336,89 @@ class EligibilityTests(unittest.TestCase):
         self.assertEqual(0, code)
         self.assertEqual("Eligible", result["outcome"])
         self.assertFalse(result["authorityGranted"])
+        if SHELL == 'pwsh':
+            with tempfile.TemporaryDirectory(prefix='aoc python shadow ') as temporary:
+                probe = Path(temporary) / 'shadow.ps1'
+                probe.write_text(
+                    "param($Surface, $Repository, $FixturePath)\n"
+                    "function global:python3 { 'harmless-private-sentinel'; $global:LASTEXITCODE = 0 }\n"
+                    ". $Surface\n"
+                    "$Result = Test-AocSeriesEligibility -Repo $Repository -Fixture $FixturePath -Json\n"
+                    "$Code = $global:LASTEXITCODE\n"
+                    "$Result\n"
+                    "exit $Code\n",
+                    encoding='utf-8')
+                child = subprocess.run(
+                    ['pwsh', '-NoProfile', '-File', str(probe),
+                     str(REPO / CONTRACTS / 'validate-series-eligibility.ps1'),
+                     str(REPO), FIXTURE], cwd=REPO, capture_output=True, text=True)
+                self.assertEqual(0, child.returncode, child.stderr)
+                self.assertNotIn('harmless-private-sentinel', child.stdout + child.stderr)
+                self.assertEqual('Eligible', json.loads(child.stdout)['outcome'])
+
+    def test_pre_push_secret_fallback(self):
+        if SHELL != 'bash' or os.name == 'nt':
+            return
+        with tempfile.TemporaryDirectory(prefix='aoc pre push ') as temporary:
+            repo = Path(temporary) / 'repo'
+            repo.mkdir()
+            subprocess.run(['git', 'init', '-q', str(repo)], check=True)
+            subprocess.run(['git', '-C', str(repo), 'config', 'user.name', 'AOC Test'], check=True)
+            subprocess.run(['git', '-C', str(repo), 'config', 'user.email', 'aoc@example.invalid'], check=True)
+            hooks = Path(temporary) / 'hooks-disabled'
+            hooks.mkdir()
+            subprocess.run(['git', '-C', str(repo), 'config', 'core.hooksPath', str(hooks)], check=True)
+            evidence = repo / 'specs/004-test/phase-results/quality-validation.json'
+            evidence.parent.mkdir(parents=True)
+            rule = 'generic-api-' + 'key'
+            evidence.write_text(json.dumps({
+                'RuleID': rule,
+                'Fingerprint': 'specs/004-test/source.json:' + rule + ':1',
+            }, indent=2) + '\n', encoding='utf-8')
+            subprocess.run(['git', '-C', str(repo), 'add', '.'], check=True)
+            subprocess.run(['git', '-C', str(repo), 'commit', '-q', '-m', 'baseline'], check=True)
+            baseline = subprocess.check_output(
+                ['git', '-C', str(repo), 'rev-parse', 'HEAD'], text=True).strip()
+
+            evidence.write_text(json.dumps({
+                'RuleID': rule,
+                'Fingerprint': 'specs/004-test/source.json:' + rule + ':2',
+            }, indent=2) + '\n', encoding='utf-8')
+            subprocess.run(['git', '-C', str(repo), 'add', '.'], check=True)
+            subprocess.run(['git', '-C', str(repo), 'commit', '-q', '-m', 'benign metadata'], check=True)
+            benign = subprocess.check_output(
+                ['git', '-C', str(repo), 'rev-parse', 'HEAD'], text=True).strip()
+
+            tools = Path(temporary) / 'tools'
+            tools.mkdir()
+            fake = tools / 'gitleaks'
+            fake.write_text('#!/bin/sh\nexit 0\n', encoding='utf-8')
+            fake.chmod(0o755)
+            environment = os.environ.copy()
+            environment['PATH'] = str(tools) + os.pathsep + environment['PATH']
+            hook = REPO / 'scripts/hooks/pre-push'
+            ref_line = 'refs/heads/test {local} refs/heads/test {remote}\n'
+            clean = subprocess.run(
+                [os.environ.get('AOC_GIT_BASH_EXE', 'bash'), str(hook)], cwd=repo,
+                input=ref_line.format(local=benign, remote=baseline),
+                capture_output=True, text=True, env=environment)
+            self.assertEqual(0, clean.returncode, clean.stdout + clean.stderr)
+
+            evidence.write_text(json.dumps({
+                'RuleID': rule,
+                'Fingerprint': 'specs/004-test/source.json:' + rule + ':3',
+                'api_' + 'key': 'sk-' + ('A' * 24),
+            }, indent=2) + '\n', encoding='utf-8')
+            subprocess.run(['git', '-C', str(repo), 'add', '.'], check=True)
+            subprocess.run(['git', '-C', str(repo), 'commit', '-q', '-m', 'secret payload'], check=True)
+            secret = subprocess.check_output(
+                ['git', '-C', str(repo), 'rev-parse', 'HEAD'], text=True).strip()
+            blocked = subprocess.run(
+                [os.environ.get('AOC_GIT_BASH_EXE', 'bash'), str(hook)], cwd=repo,
+                input=ref_line.format(local=secret, remote=benign),
+                capture_output=True, text=True, env=environment)
+            self.assertEqual(2, blocked.returncode, blocked.stdout + blocked.stderr)
+            self.assertIn('PUSH ABGEBROCHEN', blocked.stderr)
 
     def test_empty_integration(self):
         fixture = json.loads((REPO / FIXTURE).read_text())
@@ -1028,12 +1142,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo", type=Path, default=REPO)
     parser.add_argument("--shell", choices=["bash", "pwsh"], default="bash")
-    parser.add_argument("--case", choices=["surface", "empty-integration", "criteria-cardinality", "modes", "failure-taxonomy", "transitive-paths", "transitive-readers", "series-negatives", "status-next", "query-no-side-effects", "query-receipt-provenance", "runner-cardinality", "all"], default="all")
+    parser.add_argument("--case", choices=["surface", "pre-push-secret-fallback", "empty-integration", "criteria-cardinality", "contract-schema", "modes", "failure-taxonomy", "transitive-paths", "transitive-readers", "series-negatives", "status-next", "query-no-side-effects", "query-receipt-provenance", "runner-cardinality", "all"], default="all")
     parser.add_argument("--binding", choices=["feature", "legacy"], default="feature")
     args = parser.parse_args()
     BINDING = args.binding
     REPO, SHELL = args.repo.resolve(), args.shell
-    names = ["surface", "empty_integration", "criteria_cardinality", "modes", "failure_taxonomy", "transitive_paths", "transitive_readers", "series_negatives", "status_next", "query_no_side_effects", "query_receipt_provenance", "query_idle", "query_shell_surface", "runner_cardinality"] if args.case == "all" else [args.case.replace("-", "_")]
+    names = ["surface", "pre_push_secret_fallback", "empty_integration", "criteria_cardinality", "contract_schema", "modes", "failure_taxonomy", "transitive_paths", "transitive_readers", "series_negatives", "status_next", "query_no_side_effects", "query_receipt_provenance", "query_idle", "query_shell_surface", "runner_cardinality"] if args.case == "all" else [args.case.replace("-", "_")]
     if args.case == "status-next":
         names += ["query_no_side_effects", "query_receipt_provenance", "query_idle", "query_shell_surface"]
     suite = unittest.TestSuite((SeriesTests if name in ["transitive_paths", "transitive_readers", "series_negatives"] else RunnerTests if name == "runner_cardinality" else QueryTests if name in ["status_next", "query_no_side_effects", "query_receipt_provenance", "query_idle", "query_shell_surface"] else EligibilityTests)("test_" + name) for name in names)

@@ -2,8 +2,8 @@
 
 ## Aktueller Stand / Current state
 
-Dies ist genau der vorab benannte kausale Closeout-Pfad für Run `8b306e28-51eb-4510-afbc-5056b9aee328`: `specs/004-series-eligibility/completion-closeout.md`. Stand 2026-09-13: **PendingFeatureMerge**, T001–T050 abgeschlossen (50/57 Tasks). PR #49 und alle technischen Gates am Quellen-Head `02a9399536c46497c34cee840e5ae2c4fc090574` sind belegt; der Merge bleibt T051. Kein Feature-, Lifecycle- oder Closeout-Merge und kein finaler Sync werden hier behauptet. Das Dokument bindet niemals seinen eigenen späteren Container-Commit oder Merge-Hash.
-*This is the sole declared causal closeout path. Current status is PendingFeatureMerge with T001-T050 complete (50/57 tasks). PR #49 and all technical gates at the named source head are proven; merge remains T051. No feature, lifecycle or closeout merge or final sync is claimed.*
+Dies ist genau der vorab benannte kausale Closeout-Pfad für Run `8b306e28-51eb-4510-afbc-5056b9aee328`: `specs/004-series-eligibility/completion-closeout.md`. Stand 2026-09-13: **PendingFeatureMerge**, T001–T050 abgeschlossen (50/57 Tasks). Die autorisierte Review-Reparatur für PR #49 wird am finalen PR-Head validiert; der Merge bleibt T051. Der getrennte Runtime-PreMerge-Nachweis bindet erst nach grünem CI den unveränderten finalen Head. Kein Feature-, Lifecycle- oder Closeout-Merge und kein finaler Sync werden hier behauptet. Das Dokument bindet niemals seinen eigenen späteren Container-Commit oder Merge-Hash.
+*This is the sole declared causal closeout path. Current status is PendingFeatureMerge with T001-T050 complete (50/57 tasks). The authorized review remediation for PR #49 is being validated at the final PR head; merge remains T051. Separate runtime PreMerge evidence binds that unchanged head only after green CI. No feature, lifecycle or closeout merge or final sync is claimed.*
 
 ## Autorität und Reihenfolge / Authority and sequence
 

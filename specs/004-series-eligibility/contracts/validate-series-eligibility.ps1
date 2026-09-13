@@ -121,6 +121,27 @@ function Test-AocSeriesEligibility {
     if ($Help) { Get-Help Test-AocSeriesEligibility -Full; return }
 
     $Core = Join-Path $PSScriptRoot 'validate_series_eligibility.py'
+    $PythonApplications = @(Get-Command python3 -CommandType Application -All -ErrorAction SilentlyContinue |
+        Where-Object { -not [string]::IsNullOrWhiteSpace($_.Source) })
+    if ($PythonApplications.Count -eq 0) {
+        $PythonApplications = @(Get-Command python -CommandType Application -All -ErrorAction SilentlyContinue |
+            Where-Object { -not [string]::IsNullOrWhiteSpace($_.Source) })
+    }
+    if ($PythonApplications.Count -eq 0) {
+        $global:LASTEXITCODE = 3
+        if ($Json) {
+            '{"schemaVersion":"1.0","mode":null,"criteria":{},"outcome":"Blocked","reasons":[{"code":"EL_PROVIDER","criterion":null,"de":"Die Laufzeitprüfung ist fehlgeschlagen.","en":"The runtime check failed."}],"failureClass":"ProviderFailure","authorityGranted":false,"nextAction":{"de":"Eingaben und Nachweise erneut prüfen; nichts starten.","en":"Reassess inputs and evidence; start nothing."}}'
+        }
+        else {
+            'Modus / Mode: NotAssessed'
+            'Ergebnis / Outcome: Blocked'
+            'Die Laufzeitprüfung ist fehlgeschlagen. / The runtime check failed.'
+            'Nächste Aktion / Next action: Eingaben und Nachweise erneut prüfen; nichts starten. / Reassess inputs and evidence; start nothing.'
+            'Keine Startfreigabe. / No start authority granted.'
+        }
+        return
+    }
+    $PythonExecutable = $PythonApplications[0].Source
     $CoreArguments = @('-B', $Core, '--repo', $Repo)
     if ($PSBoundParameters.ContainsKey('Fixture')) { $CoreArguments += @('--fixture', $Fixture) }
     if ($PSBoundParameters.ContainsKey('Series')) { $CoreArguments += @('--series', $Series) }
@@ -134,7 +155,7 @@ function Test-AocSeriesEligibility {
         # Native Python-Ausgabe ist an dieser PowerShell-Grenze immer UTF-8.
         # Native Python output is always UTF-8 at this PowerShell boundary.
         [Environment]::SetEnvironmentVariable('PYTHONIOENCODING', 'utf-8:strict', 'Process')
-        $CoreOutput = @(& python3 @CoreArguments 2>$null)
+        $CoreOutput = @(& $PythonExecutable @CoreArguments 2>$null)
         $CoreExit = $LASTEXITCODE
     }
     catch {

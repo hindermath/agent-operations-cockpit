@@ -2,7 +2,7 @@
 
 ## Grenze und Herkunft / Boundary and provenance
 
-Diese Schnittstelle ist **geplant**, noch nicht implementiert. Sie ergänzt interne Prüfwerkzeuge für META-LH-04. Bestehende gebundene Aufrufe unter `specs/intake-review-fixtures/meta-lh-04/` behalten ihre Bedeutung als Kompatibilitätsbelege. / *This interface is planned, not implemented. It adds internal META-LH-04 validation tooling. Existing bound fixture commands retain their role as compatibility evidence.*
+Diese Schnittstelle ist **implementiert** und ergänzt interne Prüfwerkzeuge für META-LH-04. Bestehende gebundene Aufrufe unter `specs/intake-review-fixtures/meta-lh-04/` behalten ihre Bedeutung als Kompatibilitätsbelege. / *This interface is implemented and adds internal META-LH-04 validation tooling. Existing bound fixture commands retain their role as compatibility evidence.*
 
 ## Aufrufe / Invocations
 
