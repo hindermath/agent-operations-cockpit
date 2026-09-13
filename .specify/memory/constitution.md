@@ -23,7 +23,7 @@ DE: Der Bericht wird gespeichert und nach jedem Lauf sichtbar ausgegeben;
 EN: The report is saved and shown after every run; efficiency guardrails do not
   weaken mandatory gates.
 -->
-# Constitution v1.22.0
+# Constitution v1.23.0
 
 # home-baseline Constitution
 
