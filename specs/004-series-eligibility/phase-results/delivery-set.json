@@ -32,6 +32,18 @@
       "behind": 0,
       "worktree": "Clean"
     },
+    "statistics": {
+      "status": "Completed",
+      "provenanceClass": "PublishedCausalCheckpointBeforeTerminalContainer",
+      "sourceHead": "ea16591b28cf5b68c5cf4a906f45c0a30f05950c",
+      "sourceRevision": "ea16591b28cf",
+      "statisticsOnlyCommit": "d56fcd4928cdfa03ae2792859ef02a28497d99c4",
+      "totalTextLines": 351021,
+      "activeDays": 17,
+      "bashCheckOnly": "CURRENT",
+      "powerShellCheckOnly": "CURRENT",
+      "selfReferenceBoundary": "The current terminal evidence container cannot bind its own future commit SHA; its immediate completion remains runtime-only until a later causal checkpoint."
+    },
     "nextAction": "N/A",
     "limits": "Causal terminal facts end at the observed closeout merge and synchronization. The later terminal-state container PR is not claimed by this checkpoint and META-LH-05 was not started."
   },
@@ -1755,5 +1767,5 @@
       "limits": "This is the coordinator-validated pre-amendment unstaged candidate. Causal evidence/task edits below are not a staged validation or freeze; T046 must revalidate the resulting exact residual candidate in both shells before any staging/commit. No remote/native gate is satisfied by this evidence."
     }
   },
-  "statisticsDisposition": "Five checkpoint boundaries audited; six source commits and six separate ledger-only commits. Current residual needs a new full T046 checkpoint; no renderer invoked in implement-7."
+  "statisticsDisposition": "Historical implement-7 audit only: five checkpoint boundaries, six source commits and six separate statistics-only commits were audited before T046. Superseded for current status by terminalCheckpoint.statistics, which records the completed causal renderer checkpoint and its self-reference boundary."
 }

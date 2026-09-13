@@ -5,6 +5,24 @@
 Datum / Date: 2026-09-13. Run `8b306e28-51eb-4510-afbc-5056b9aee328`. Reviewer: Codex in der Implementierungsrolle; unabhängige technische Reviews der Liefer-Heads sind separat gebunden. Owner: AOC Repository Owner. Base-HEAD ist der Closeout-Merge `7e53a8b327410ba241d90a9c60bc286b16f7bc44`. Dieses aktualisierte AOC-lokale Receipt wird durch die terminale Zustandslieferung veröffentlicht; der AEPS-Upstream-Status bleibt **PendingPublication**. Feature, Lifecycle und Closeout sind ausgeliefert, der terminale Run-State bindet diese bereits beobachteten Fakten kausal.
 *Date 2026-09-13. Run `8b306e28-51eb-4510-afbc-5056b9aee328`. Reviewer: Codex in the implementation role; independent technical reviews of delivery heads are bound separately. Owner: AOC Repository Owner. Base-HEAD is closeout merge `7e53a8b327410ba241d90a9c60bc286b16f7bc44`. This updated AOC-local receipt is published by the terminal-state delivery; AEPS upstream status remains PendingPublication. Feature, lifecycle and closeout are delivered, and terminal run state causally binds those observed facts.*
 
+```aeps-outcome-json
+{
+  "schemaVersion": "1.0",
+  "outcome": "NoChange",
+  "trigger": "CompletionReceipt",
+  "capturedAt": "2026-09-13T16:15:31Z",
+  "sourcePath": "specs/004-series-eligibility/completion-closeout.md",
+  "sourceSha256": "4e76ce26fc11bfc0451d7b78d86265370ed963655efbe356a66d1fe0998c8672",
+  "deduplicationKey": "specs/004-series-eligibility/completion-closeout.md + 4e76ce26fc11bfc0451d7b78d86265370ed963655efbe356a66d1fe0998c8672 + 2026-09-13",
+  "baseHead": "7e53a8b327410ba241d90a9c60bc286b16f7bc44",
+  "publicationState": "PendingPublication",
+  "rationale": "The completed META-LH-04 run strengthens existing AOC findings 007, 009, 013 and 017 but creates no new deduplicable finding or cross-project maturity claim.",
+  "maturity": "observation",
+  "presetPromotion": false,
+  "level0Handoff": false
+}
+```
+
 ## Trigger, Methode und Quellen / Trigger, method and sources
 
 Der Abschluss von Feature-PR #49, Lifecycle-PR #52 und Closeout-PR #53 löst die AEPS-Prüfung aus. `manual:aeps` wurde gegen den Vertrag in `docs/aeps/README.md`, das vollständige Ledger und die vorhandenen Ableitungen ausgeführt. Deduplizierungsschlüssel bleibt Quellpfad + normalisierter SHA-256 + Datum. Normalisierung: UTF-8 ohne BOM, CRLF/CR zu LF, sonst unverändert.
