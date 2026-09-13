@@ -1,26 +1,25 @@
 <!--
 Sync Impact Report / Sync-Auswirkungsbericht
-Version change: 1.21.3 -> 1.21.4 (local factual clarification under Principle X)
-Authority: explicit 2026-09-13 analysis-remediation instruction, C001.
-Modified principles: None; shared rules and existing registry rows unchanged.
-Added sections: None; add the factual RiderProjects/AgentOperationsCockpit row.
+Version change: 1.21.4 -> 1.22.0 (material expansion under Principles IX and XXI)
+Authority: explicit 2026-09-13 user requests for persistent retrospective guidance.
+Modified principles: IX (five maintained surfaces); XXI (visible closeout report and efficiency guardrails).
+Added sections: None.
 Removed sections: None.
-Amendment status: feature PR #49 merged as d95c2ff87c4ac0f6d137bc96a129464365416780.
-LAST_AMENDED_DATE records the observed feature merge date, 2026-09-13.
-The lifecycle and closeout deliveries do not introduce another amendment.
+Amendment delivery: PR #55; the merge commit remains remote evidence.
+LAST_AMENDED_DATE remains 2026-09-13.
 Templates reviewed, no update required: .specify/templates/plan-template.md,
-  spec-template.md, tasks-template.md, agent-file-template.md; scripts/templates/.
-Runtime guidance reviewed, no update required: AGENTS.md, CLAUDE.md, GEMINI.md,
-  .github/copilot-instructions.md, .github/agents/copilot-instructions.md;
-  existing Spec-Kit surfaces. No runtime, tooling, shared rule or statistics change.
-Mirror: .specify/memory/constitution.md remains byte-identical.
-Evidence: specs/004-series-eligibility/phase-results/analysis-remediation-report.md.
-DE: Lokale Tatsachenergänzung; gemeinsame Regeln bleiben unverändert. Das
-  tatsächliche Amendment-Mergedatum ist nach der autorisierten Lieferung erfasst.
-EN: Local factual clarification; shared rules remain unchanged. The actual
-  amendment merge date is recorded after the authorized delivery.
+  spec-template.md and tasks-template.md; agent-file-template.md and
+  scripts/templates/ updated.
+Runtime guidance updated: AGENTS.md, CLAUDE.md, GEMINI.md,
+  .github/copilot-instructions.md and .github/agents/copilot-instructions.md.
+Mirror: .specify/memory/constitution.md is updated byte-identically.
+Evidence: PR #55 validation and docs/governance/engineering-retrospective.md.
+DE: Der Bericht wird gespeichert und nach jedem Lauf sichtbar ausgegeben;
+  Effizienzleitlinien schwächen keine Pflichtgates.
+EN: The report is saved and shown after every run; efficiency guardrails do not
+  weaken mandatory gates.
 -->
-# Constitution v1.21.4
+# Constitution v1.22.0
 
 # home-baseline Constitution
 
@@ -266,20 +265,21 @@ Mandatory rules:
 
 **Rationale**: DE-first / EN-second delivery reflects the actual audience while keeping the content usable for mixed-language teams, apprentices, and external review.
 
-### IX. Four-Agent Guidance Parity & Template Synchronization
+### IX. Five-Agent Guidance Parity & Template Synchronization
 
-Shared AI-agent guidance in this workspace family is only valid when the four maintained agent surfaces stay aligned:
+Shared AI-agent guidance in this workspace family is only valid when the five maintained agent surfaces stay aligned:
 
 - `AGENTS.md` for Codex/Codex-like agents
 - `CLAUDE.md`
 - `GEMINI.md`
 - `.github/copilot-instructions.md`
+- `.github/agents/copilot-instructions.md`
 
 Mandatory rules:
-- Shared operational rules MUST NOT be updated in only one of the four files.
+- Shared operational rules MUST NOT be updated in only one of the five files.
 - Any intentional deviation MUST be documented explicitly in the same change.
 - The corresponding project templates and `.specify/memory/constitution.md` MUST be updated in the same change whenever a shared principle changes.
-- Runtime guidance references in governance text MUST name all four maintained agent surfaces.
+- Runtime guidance references in governance text MUST name all five maintained agent surfaces.
 
 **Rationale**: Divergent agent instructions create silent process drift. Atomic parity keeps different AI tools aligned and makes future project bootstraps inherit the same governance baseline.
 
@@ -891,8 +891,15 @@ dürfen nicht als abgeschlossen oder messbar dargestellt werden. Nach dem
 dritten vergleichbaren Lauf MUSS ein quellen- und hashgebundener Trendvergleich
 erstellt werden; fehlende Vergleichsdaten bleiben ausdrücklich sichtbar.
 Projektvorlagen und alle gepflegten Agentenflächen MÜSSEN diesen Vertrag
-gemeinsam tragen. Der Bericht allein erteilt keine Review-, Remote-, Merge-,
-Bypass-, Level-0- oder Preset-Promotion-Autorität.
+gemeinsam tragen. Nach jedem Feature-Lauf MUSS die Abschlussantwort den
+kompakten Bericht mit allen Perspektiven, Completion-Evidence und Dateilink
+direkt anzeigen; ein bloßer Link genügt nicht. Zusammengehörige Änderungen
+werden vor Exact-Head-Prüfungen gebündelt, Providergrenzen früh geprüft,
+unveränderte Evidence nur bei nachgewiesener Bindung wiederverwendet und
+vollständige Matrizen nur bei geänderter konsumierter Fläche oder verbindlicher
+Exact-Head-Regel wiederholt. Diese Effizienzleitlinien schwächen keine
+Pflichtgates. Der Bericht allein erteilt keine Review-, Remote-, Merge-, Bypass-,
+Level-0- oder Preset-Promotion-Autorität.
 
 *From `003-authoring-contract` onwards, every completed Spec Kit feature run
 MUST have a readable, saved report at
@@ -903,8 +910,14 @@ states are labelled; unperformed delivery or non-comparable values must never
 be presented as completed or measurable. After the third comparable run, a
 source- and hash-bound trend comparison MUST be produced, while missing
 comparison evidence remains explicit. Project templates and every maintained
-agent surface MUST carry this contract together. The report alone grants no
-review, remote, merge, bypass, Level-0, or preset-promotion authority.*
+agent surface MUST carry this contract together. After every feature run, the
+final response MUST directly show the concise report with every perspective,
+completion evidence, and its file link; a link alone is insufficient. Bundle
+related changes before exact-head validation, check provider boundaries early,
+reuse unchanged evidence only with proven binding, and repeat full matrices only
+for a changed consumed surface or a mandatory exact-head rule. These efficiency
+guardrails never weaken mandatory gates. The report alone grants no review,
+remote, merge, bypass, Level-0, or preset-promotion authority.*
 
 **Rationale**: A durable, consistently structured retrospective turns completed
 runs into comparable engineering evidence without conflating learning capture
@@ -1152,7 +1165,7 @@ Community/catalog coordination is tracked in `github/spec-kit#2362`.
 `.github/copilot-instructions.md` for per-agent operational guidance. This
 constitution is the authoritative policy layer above all agent-specific files.
 
-**Version**: 1.21.4 | **Ratified**: 2026-03-31 | **Last Amended**: 2026-09-13
+**Version**: 1.22.0 | **Ratified**: 2026-03-31 | **Last Amended**: 2026-09-13
 
 <!-- EN: constitution.md placeholder
 [DE-Zusammenfassung: constitution.md beschreibt die Prinzipien und Standards für alle home-baseline Workspaces.]
