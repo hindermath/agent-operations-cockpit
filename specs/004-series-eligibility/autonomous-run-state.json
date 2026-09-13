@@ -7,7 +7,7 @@
   "authorityRevalidationRequired": true,
   "stage": "MergeAndSync",
   "status": "Active",
-  "checkpointCommit": "077612627ae67cd8cc58858860d99a88aee2c684",
+  "checkpointCommit": "ef7d9ea629899795c1d6c42cc86c89c1bab14484",
   "acceptedArtifacts": [
     {
       "path": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
@@ -410,12 +410,12 @@
       }
     ]
   },
-  "lastPassingGate": "Run 34751919837 proved the twenty-minute native matrix budget on Ubuntu and macOS; Windows reached status/next and isolated a test-harness UTF-8 decoding mismatch without a domain failure.",
-  "nextExactAction": "Validate, commit, and push the strict UTF-8 child-process decoding correction, then collect complete exact-head CI evidence and finish T047 through T050.",
+  "lastPassingGate": "Run 34752736325 isolated different Windows encodings by surface: Git Bash uses the native code page, while the prior PowerShell query output requires explicit UTF-8 decoding; no domain assertion or gate is weakened.",
+  "nextExactAction": "Validate, commit, and push the surface-specific child-process decoding correction, then collect complete exact-head CI evidence and finish T047 through T050.",
   "lastOperation": {
     "kind": "DeliveryRemediation:windows-utf8",
     "state": "Completed",
-    "summary": "Correct the Python contract harness to decode redirected PowerShell output explicitly as strict UTF-8 after exact-head Windows evidence exposed locale replacement characters."
+    "summary": "Decode redirected PowerShell output explicitly as strict UTF-8 while retaining native Windows decoding for Git Bash, based on two exact-head Windows provider logs."
   },
   "stop": {
     "reason": "N/A",
@@ -428,5 +428,5 @@
     "postMergeActions": "N/A",
     "finalValidation": "Pending"
   },
-  "updatedAt": "2026-09-13T10:40:18Z"
+  "updatedAt": "2026-09-13T10:52:58Z"
 }

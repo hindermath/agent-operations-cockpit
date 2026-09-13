@@ -708,8 +708,9 @@ class QueryTests(unittest.TestCase):
         protected_before = {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in protected}
         git_before = subprocess.check_output(['git', '--no-optional-locks', 'status', '--porcelain=v1',
                                              '--untracked-files=all'], cwd=REPO)
-        child = subprocess.run(command + list(extra), capture_output=True, text=True,
-            encoding='utf-8', errors='strict',
+        # PowerShell 7 redirects as UTF-8; Git Bash on Windows uses its native code page.
+        decoding = {'encoding': 'utf-8', 'errors': 'strict'} if SHELL == 'pwsh' else {}
+        child = subprocess.run(command + list(extra), capture_output=True, text=True, **decoding,
             env={**os.environ, 'PYTHONHASHSEED': str(seed), 'PYTHONDONTWRITEBYTECODE': '1'})
         self.assertEqual(before, snapshot(repo), 'query changed bytes or created files')
         self.assertEqual(protected_before, {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in protected})

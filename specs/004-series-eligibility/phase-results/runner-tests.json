@@ -2333,15 +2333,16 @@
     "validation": "Run 34751212746 job 103707972407 passed the new macOS provisioning step. Jobs 103707972094 and 103707972342 then exceeded the pre-existing ten-minute job limit while executing the full native matrix.",
     "timingDecision": "Raise only this existing workflow job timeout from 10 to 20 minutes; do not skip, split, or weaken any native gate.",
     "windowsEncodingFinding": "Run 34751919837 proved the twenty-minute budget on Ubuntu and macOS. Windows job 103709798761 reached the status/next suite, but Python decoded redirected PowerShell UTF-8 output through the Windows locale and replaced the German umlaut in the required bilingual heading.",
-    "encodingDecision": "Decode the PowerShell child process explicitly as strict UTF-8 in the Python contract harness. Preserve the bilingual heading assertion, query behavior, and every native gate.",
+    "encodingDecision": "Decode only the PowerShell child process explicitly as strict UTF-8 in the Python contract harness. Retain the native platform decoder for Git Bash, and preserve the bilingual heading assertion, query behavior, and every native gate.",
+    "windowsBashEncodingFinding": "Run 34752736325, Windows job 103711893897, showed that applying UTF-8 to both surfaces is invalid: Git Bash emitted byte 0xfc through the Windows native code page and the strict UTF-8 reader rejected it. This finding narrows the correction to the PowerShell surface.",
     "encodingLocalValidation": {
-      "completedAt": "2026-09-13T10:43:49Z",
+      "completedAt": "2026-09-13T10:56:50Z",
       "result": "Pass",
       "commands": [
         "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell bash --case status-next",
         "python3 -B specs/004-series-eligibility/contracts/test_series_eligibility.py --repo . --shell pwsh --case status-next"
       ],
-      "testHarnessSha256": "bae2387bc8dc6a64f46331cd50367b15330c68325aac92da341603a22e645ec3"
+      "testHarnessSha256": "4b03bf76fec19c1642e8e8f5a26de7c0dbd84f71255dd02999bd4109eee533d4"
     },
     "nextTask": "T048"
   },
