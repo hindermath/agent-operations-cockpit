@@ -106,3 +106,15 @@ absichtliche lokale Ausnahme; aktuelle Release-Identitaet ist preset.yml (0.3.4)
 Both the field-validation summary and receipt JSON template remain exact historical
 receipt-bound sources. Their 0.3.1 source labels are intentional local exceptions;
 new evidence records the installed release from preset.yml (0.3.4).
+
+Checkpoint-Vertrag / Checkpoint contract: Der alte validate_current_evidence_binding.py
+ist selbst als historischer Pfad im 48-Dateien-Reparaturcheckpoint gebunden und
+prueft dessen 0.3.0-auf-0.3.1-Transaktion. Er wird nicht zur allgemeinen
+Paketversionspruefung umgeschrieben. Der aktuelle CI-Einstieg
+validate-authoring-contract.sh/.ps1 prueft den Checkpoint und die erneuerte
+META-LH-03-Transaktion erfolgreich; die heutige 0.3.4-Installation hat getrennte
+Registry-, Paket- und Receipt-Evidence. Die historische Freigabe erteilt keine
+heutige Rollout-Autoritaet; diese stammt aus dem aktuellen Benutzerauftrag.
+The old bridge validator is checkpoint-bound historical evidence. Current CI
+uses validate-authoring-contract in both shells, while release/package checks
+prove the current authorized installation. No historical approval is expanded.

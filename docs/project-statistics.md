@@ -26,12 +26,12 @@
 
 ## Gesamtstand des Repositories / Repository Snapshot
 
-Stand / As of: 2026-09-11. Die kanonischen aktuellen Werte stehen im
+Stand / As of: 2026-09-13. Die kanonischen aktuellen Werte stehen im
 generierten Statistikprofil 2 unter `Gesamtstatistik / Overall Statistics`.
 Der frühere, noch nicht befüllte Profil-1-Platzhalter wurde entfernt, damit
 keine veraltete Momentaufnahme mit der lebenden Statistik konkurriert.
 
-*As of 2026-09-11. The generated Profile 2 under `Gesamtstatistik / Overall
+*As of 2026-09-13. The generated Profile 2 under `Gesamtstatistik / Overall
 Statistics` is the canonical current snapshot. The former unpopulated Profile
 1 placeholder was removed so that no stale snapshot competes with the living
 statistics.*
