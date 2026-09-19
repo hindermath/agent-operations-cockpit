@@ -62,6 +62,22 @@ mandatory. Results and exact head are recorded in the PR, not predicted here.
 
 ## Dokumentation und Sicherheit / Documentation and security
 
+Renderer-Nachlauf: Die veraltete AOC-Kopie erzeugte Markdown-Hardbreaks mit
+abschliessenden Leerzeichen, die der Delivery-Validator abwies (AEI007).
+Die Ausnahme fuer neue historische Dateien ist hier nicht anwendbar (AEI009).
+Der Inhaltscommit c38e72c wurde durch einen Befehlsablauffehler dennoch lokal
+angelegt; vor Veroeffentlichung wird der korrigierte gesamte Lieferstand erneut
+geprueft. Keine Validator-Abschwaechung oder Whitespace-Ausnahme.
+Die genehmigte Korrektur uebernimmt ausschliesslich den bereits kanonischen
+Renderer aus Home Baseline, Commit `3edef31b20ebec4e414afe1da72236fcfbaf20a9`:
+Leerzeile statt abschliessender Leerzeichen. Keine weitere Flottenpropagation.
+
+The stale renderer emitted trailing-space hard breaks rejected by the delivery
+validator. A shell sequencing error still created local commit c38e72c; validate
+the corrected complete delivery before publishing. Reuse the existing canonical
+renderer fix only: paragraph separation instead of trailing spaces. Do not weaken
+the validator, grant exceptions, or propagate unrelated fleet changes.
+
 Documentation Impact: `UpdateRequired`; Owner Thorsten Hindermann.
 Zielgruppen: Lernende ab Jahr 1, Maintainer und Reviewer. Leserpfad:
 README -> Kontextanleitung -> Bericht/Snapshot -> Installationsbeleg.

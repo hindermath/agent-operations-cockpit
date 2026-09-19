@@ -3,7 +3,7 @@
 Datum / Date: 2026-09-19. Owner: AOC Repository Owner.
 Status: `PendingPublication`; Base-HEAD `e463963e048a4b0508dcba1a5c31fceed6b0f7f2`.
 Quelle: [Rollout-Vertrag](../../maintenance/project-statistics-rollout-v010.md),
-SHA-256 `87a30469cfa7ecd06745eae309fff9fd1542a68ebbefe260f59d51497b0c94d5`.
+SHA-256 `0ee69bbca156685598370fffe7ffd1a6d31f8254b0405e5a160e20ee22fb3739`.
 Deduplizierung: Quellpfad + Hash + Datum. Trigger: technische Integrationspruefung.
 
 **Keine neue AEPS-Evidence / No new AEPS evidence.** Der genehmigte Rollout
