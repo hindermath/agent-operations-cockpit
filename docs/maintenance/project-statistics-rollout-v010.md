@@ -4,18 +4,54 @@
 
 Vierter Kandidat von [Rollout #302](https://github.com/hindermath/home-baseline/issues/302).
 Ausgangscommit: `e463963e048a4b0508dcba1a5c31fceed6b0f7f2`.
-Installation und technische Pruefung sind beauftragt. Fachliche Abnahme und
-Lieferfreigabe durch @hindermath bleiben vor Merge erforderlich; kein
+Installation und technische Pruefung wurden geliefert. Die fachliche Sichtung
+und manuelle Lieferung durch @hindermath sind unten belegt; kein
 uebertragener Admin-Bypass. Kein Produktlauf, kein Release, keine Promotion,
 keine Intake-/Serienaenderung und kein Home-Sync. Die globale Review-Sperre
 der AOC-Programmreihe bleibt unveraendert.
 
-Fourth rollout target. Installation and technical validation are authorized;
-human acceptance and delivery permission remain separate. No inherited bypass,
+Fourth rollout target. Installation and technical validation were delivered;
+human review and manual delivery are evidenced below. No inherited bypass,
 product run, release, promotion, intake mutation or home synchronization.
 The programme-wide review gate is preserved.
 
-## Paket und Profil / Package and profile
+## Abschlussnachweis vom 2026-09-19 / Closeout evidence of 2026-09-19
+
+- [PR #57](https://github.com/hindermath/agent-operations-cockpit/pull/57):
+  gepruefter Head `b3fb2c97c6469856dc5438f51b707a834f94307f`.
+- [Sichtung durch @hindermath](https://github.com/hindermath/agent-operations-cockpit/pull/57#pullrequestreview-5255978596):
+  "Gesichtet und in Ordnung." am exakten Head. GitHub-Reviewtyp `COMMENTED`;
+  fachliche Freigabe durch die ausdrueckliche Bestaetigung des Owners im Auftrag,
+  nicht durch einen erfundenen GitHub-Status `APPROVED`.
+- Manueller Merge am 2026-09-19 um 14:14:20 UTC:
+  `99946d4ea099948e986082ffab9b64f16c350509`.
+  Lokales `main` danach sauber und identisch mit Remote, Divergenz `0/0`.
+- Alle 22 Checks des PR-Heads erfolgreich. Der manuelle Merge erfolgte vor
+  Ende aller Checks; deren spaeterer Erfolg ist nachtraegliche technische
+  Evidence, keine Behauptung einer vor dem Merge erfuellten Reihenfolge.
+- [Native Statistik-CI](https://github.com/hindermath/agent-operations-cockpit/actions/runs/35447714302):
+  Linux 67 und Windows 61 Assertions; macOS lokal 67. Exakter Head, Paketbindung,
+  Matrix, Lifecycle, Idempotenz, Encoding und `checkedSourceChanges=0` bestanden.
+  Quelle `ecb5b0424965da488515eb4e281dd336261e97e7`, Stichtag 2026-09-19.
+- Post-Merge-Statistik: `CURRENT`, `reproducible=true`, `current=true`,
+  `changed=false`, Exitcode 0. Der separate Dokumentationsnachlauf misst den
+  erweiterten Textbestand neu, ohne Methodik oder Paket zu aendern.
+
+The owner explicitly accepted the reviewed head and merged it manually. The
+GitHub review is COMMENTED, not APPROVED. All 22 PR-head checks subsequently
+passed; this does not retroactively claim that checks finished before merge.
+Local and remote main were synchronized at zero divergence. Native statistics
+proof passed on all three platforms. This documentation follow-up refreshes
+measurement without changing methodology, product scope or release authority.
+
+Die finale main-CI und die operative Profilzuordnung werden vor dem
+administrativen Abschluss im zentralen Tracking belegt. Dieser Nachlauf
+erteilt keine Produkt-, Release-, AEPS-Promotion- oder Admin-Bypass-Freigabe.
+
+Record final main CI and operational profile assignment in central tracking
+before administrative closure. No product, release, promotion or bypass authority.
+
+## Paketbindung / Package binding
 
 [Installationsbeleg](project-statistics-installation-v010.json): 26 Paketdateien
 bytegleich mit dem v0.1.0-Tag-ZIP; bestehende 13 Registry-Eintraege und
