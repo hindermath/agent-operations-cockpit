@@ -37,10 +37,6 @@
   MUST cite the matching row from the Level-2 Project Environment Registry in
   `constitution.md` and use its runtime, build/test, docs/A11Y, statistics, and
   agent-surface baselines.
-- **Engineering run retrospective**: For feature runs from
-  `003-authoring-contract` onward, plan the saved seven-part retrospective,
-  its Completion/Retrospective Evidence links, and—after the third comparable
-  run—the source- and hash-bound trend comparison required by Principle XXI.
 - **Memory-safe languages (MSL)**: State the primary implementation language
   and confirm it is on the MSL allow-list in `constitution.md`, Principle XI.
   If the primary language is not an MSL (e.g. C, C++, Assembly, `cc65`), cite
@@ -104,6 +100,12 @@
   and which manual/Thorsten-Solo baseline applies.
 - **Agent guidance parity**: State whether `AGENTS.md`, `CLAUDE.md`,
   `GEMINI.md`, and `.github/copilot-instructions.md` are affected together.
+- **macOS-first platform evidence**: Name the local macOS safe-mode command.
+  If a native Linux or Windows host is unavailable, plan an isolated native
+  Linux container or narrowly scoped native Linux/Windows CI. Bind exact
+  commit, command, runner/platform, exit code, payload SHA-256, decision
+  SHA-256, and zero-write values. State which partial proofs cannot establish
+  a full regression pass.
 - **Documentation Impact**: Select exactly one of `UpdateRequired`,
   `NoUpdateRequired`, `GeneratedUpdate`, or `FollowUp`. Identify source of
   truth, owner, affected documents, generated derivations, validation, and
@@ -191,7 +193,7 @@ Bei einfachen Inhalten die Nichtanwendung kurz begründen. Diagramme bilden die
 verbindlichen Text-/Manifestquellen ab; Farbe allein trägt keine Bedeutung.
 Nach jedem vollständig abgeschlossenen Spec-Kit-Feature-Lauf den vollständigen
 Ergebnisbericht im Chat anzeigen und im Feature-Verzeichnis als
-`engineering-retrospective.md` versionieren. Einzelne Planungs-/Status-/Review-Kommandos
+`completion-report.md` versionieren. Einzelne Planungs-/Status-/Review-Kommandos
 lösen keinen solchen Bericht aus; blockierte oder pausierte Läufe als
 Zwischenbericht kennzeichnen. Vorlage: `.specify/templates/completion-report-template.md`;
 Regel: `docs/spec-kit-diagrams-and-completion-reports.md`.
@@ -206,7 +208,7 @@ Diese Projektregel und lokale Vorlagen bei Spec-Kit-Updates erhalten.
 useful workflows, states or dependencies; justify omission for simple content.
 Diagrams reflect authoritative text/manifests and never rely on color alone.
 After each completed feature run, show the full outcome report in chat and
-version engineering-retrospective.md in the feature directory using the shared template
+version completion-report.md in the feature directory using the shared template
 and rule above. Individual planning/status/review commands do not trigger it;
 paused/blocked runs receive interim reports. Evidence outcomes, tests, docs,
 Git-bound counts, delivery history and remaining work. Distinguish code from
