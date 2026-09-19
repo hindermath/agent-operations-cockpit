@@ -1118,6 +1118,13 @@ AOC-spezifisch bleiben Programmgraph, Pfade und Checkpoint-Reihenfolge. Domains,
 Der historische T044-Abbruch ist in [implementation-validation.json](../../specs/004-series-eligibility/phase-results/implementation-validation.json) als bekannte ENV001-/F-003-03-Grenze mit beiden Exit-2-Nachweisen erfasst; keine neue ID oder Promotion. / *The historical T044 stop is captured in implementation-validation.json as known ENV001/F-003-03 boundary evidence with both exit-2 results; no new ID or promotion.*
 ## Statistik-Rollout vom 2026-09-19 / Statistics rollout of 2026-09-19
 
+Veroeffentlicht mit PR #57, Merge `99946d4ea099948e986082ffab9b64f16c350509`;
+Owner-Sichtung und native Nachweise sind im Rollout-Bericht gebunden.
+AEPS-Upstream `NotApplicable`: kein neuer Handoff oder Promotionsclaim.
+
+Published through PR #57 with owner review and native evidence linked in the
+rollout record. Upstream handoff is not applicable; no promotion claim.
+
 [No-change-Receipt](receipts/2026-09-19-statistics-rollout.md): Wiederverwendung
 des stabilen Statistik-Presets und der bestehenden Clean-Tree-/Quellenreihenfolge;
 keine neue Finding-ID, Reifegradsteigerung oder Promotion. Native technische
