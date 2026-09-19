@@ -5,7 +5,7 @@
 > Generated from `scripts/config/script-catalog.json` and the Git index. Do not edit manually.
 
 Stand / Updated: 2026-07-28
-Kanonische Skriptdateien / Canonical script files: 133
+Kanonische Skriptdateien / Canonical script files: 134
 
 ## Workspace-Lebenszyklus / Workspace lifecycle
 
@@ -829,6 +829,18 @@ pwsh -NoProfile -File scripts/init-stats.ps1 -WhatIf  # falls SupportsShouldProc
 ```text
 bash scripts/init-stats.sh --help
 bash scripts/init-stats.sh --dry-run  # falls angeboten / when supported
+```
+
+### `scripts/prove-project-statistics-context.ps1`
+
+- **Rolle / Role:** oeffentliches Kommando / public command
+- **Kurzbeschreibung / Summary:** Prueft den gelieferten Statistik-Kontext / Verifies the delivered statistics context.
+- **Voraussetzungen / Prerequisites:** passende Shell; weitere Anforderungen stehen in `--help` oder `Get-Help`.
+- **Nebenwirkungen / Side effects:** zuerst Check-, Dry-Run- oder WhatIf-Modus verwenden, sofern angeboten.
+
+```text
+Get-Help ./scripts/prove-project-statistics-context.ps1 -Full
+pwsh -NoProfile -File scripts/prove-project-statistics-context.ps1 -WhatIf  # falls SupportsShouldProcess angeboten wird / when supported
 ```
 
 ### `scripts/render-project-statistics.ps1`

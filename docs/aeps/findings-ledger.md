@@ -1116,3 +1116,12 @@ AOC-spezifisch bleiben Programmgraph, Pfade und Checkpoint-Reihenfolge. Domains,
 *Programme paths and checkpoint ordering remain AOC-specific. Preserve domain, candidate, maturity and capture dispositions; upstream stays PendingPublication. Reassess on evidence drift or separately authorized reference-project work. Cross-project validation and separately authorized upstream action remain promotion blockers.*
 
 Der historische T044-Abbruch ist in [implementation-validation.json](../../specs/004-series-eligibility/phase-results/implementation-validation.json) als bekannte ENV001-/F-003-03-Grenze mit beiden Exit-2-Nachweisen erfasst; keine neue ID oder Promotion. / *The historical T044 stop is captured in implementation-validation.json as known ENV001/F-003-03 boundary evidence with both exit-2 results; no new ID or promotion.*
+## Statistik-Rollout vom 2026-09-19 / Statistics rollout of 2026-09-19
+
+[No-change-Receipt](receipts/2026-09-19-statistics-rollout.md): Wiederverwendung
+des stabilen Statistik-Presets und der bestehenden Clean-Tree-/Quellenreihenfolge;
+keine neue Finding-ID, Reifegradsteigerung oder Promotion. Native technische
+Evidence und menschliche Abnahme bleiben getrennt.
+
+No new AEPS evidence: reuse the stable preset and existing source-order rules.
+Preserve findings and maturity; native proof does not grant human acceptance.

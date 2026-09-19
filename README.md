@@ -195,3 +195,14 @@ Dieses Repository steht unter der [MIT-Lizenz](LICENSE).
 führen vom neuen Lastenheft zum belegten Feature-Ergebnisbericht. / The linked
 rules explain accessible intake diagrams and evidence-based feature reports.
 <!-- END spec-kit-diagrams-completion -->
+## Statistik-Preset / Statistics preset
+
+Reproduzierbare Projekttransparenz: [Statistik-Kontext und Bedienung](docs/project-statistics/README.md).
+Das optionale 14er-Profil ergaenzt Statistik v0.1.0; die bisherigen 13 Presets
+und die [kanonische Profil-2-Statistik](docs/project-statistics.md) bleiben erhalten.
+[Rollout-Nachweis](docs/maintenance/project-statistics-rollout-v010.md).
+Installation startet keinen Produktlauf und erteilt keine Freigabe.
+
+Reproducible project transparency: use the linked context and operating guide.
+The optional profile adds statistics v0.1.0 and preserves the previous presets
+and legacy statistics. Installation does not authorize product execution or acceptance.
