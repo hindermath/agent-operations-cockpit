@@ -137,6 +137,13 @@ Bei jeder Preset-Version oder Prioritätsänderung zuerst die zentrale Matrix
 aktualisieren und danach README-Tabellen, Constitution, Agenten-Dateien und
 Templates gemeinsam prüfen.
 
+Plattformnachweise laufen agentenneutral macOS-first: zuerst lokal im passenden
+Safe Mode, bei fehlendem Linux-Host in einem isolierten nativen Container oder
+eng begrenzter nativer Linux-CI und bei fehlendem Windows-Host in eng begrenzter
+nativer Windows-CI. Evidence bindet exakten Commit, Befehl, Runner/Plattform,
+Exitcode, Payload-/Entscheidungs-SHA-256 und Nullschreibwerte. Ein Teilnachweis
+ist kein vollständiger Regressionspass.
+
 ---
 
 ## Spec-kit Workflow
@@ -162,6 +169,13 @@ Registered level-0, level-1, and level-2 repositories install Spec Kit
 governance presets from the central matrix
 `scripts/config/spec-kit-governance-presets.json`. The standard set for this
 workspace family is:
+
+Platform evidence follows an agent-neutral macOS-first path: matching local
+safe mode first, isolated native Linux container or narrowly scoped native
+Linux CI when no Linux host is available, and narrowly scoped native Windows
+CI when no Windows host is available. Evidence binds the exact commit,
+command, runner/platform, exit code, payload and decision SHA-256, and
+zero-write values. A partial proof is not a full regression pass.
 
 | Preset ID | Name | Version | Priority |
 |---|---|---:|---:|
@@ -277,7 +291,7 @@ Bei einfachen Inhalten die Nichtanwendung kurz begründen. Diagramme bilden die
 verbindlichen Text-/Manifestquellen ab; Farbe allein trägt keine Bedeutung.
 Nach jedem vollständig abgeschlossenen Spec-Kit-Feature-Lauf den vollständigen
 Ergebnisbericht im Chat anzeigen und im Feature-Verzeichnis als
-`engineering-retrospective.md` versionieren. Einzelne Planungs-/Status-/Review-Kommandos
+`completion-report.md` versionieren. Einzelne Planungs-/Status-/Review-Kommandos
 lösen keinen solchen Bericht aus; blockierte oder pausierte Läufe als
 Zwischenbericht kennzeichnen. Vorlage: `.specify/templates/completion-report-template.md`;
 Regel: `docs/spec-kit-diagrams-and-completion-reports.md`.
@@ -292,7 +306,7 @@ Diese Projektregel und lokale Vorlagen bei Spec-Kit-Updates erhalten.
 useful workflows, states or dependencies; justify omission for simple content.
 Diagrams reflect authoritative text/manifests and never rely on color alone.
 After each completed feature run, show the full outcome report in chat and
-version engineering-retrospective.md in the feature directory using the shared template
+version completion-report.md in the feature directory using the shared template
 and rule above. Individual planning/status/review commands do not trigger it;
 paused/blocked runs receive interim reports. Evidence outcomes, tests, docs,
 Git-bound counts, delivery history and remaining work. Distinguish code from

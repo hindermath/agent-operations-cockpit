@@ -151,9 +151,6 @@ Examples of foundational tasks (adjust based on your project):
 **Purpose**: Improvements that affect multiple user stories
 
 - [ ] TXXX [P] Documentation updates in docs/
-- [ ] TXXX Save the seven-part feature retrospective under
-  `specs/<feature>/engineering-retrospective.md`, link completion evidence, and
-  add a source- and hash-bound trend comparison when three comparable runs exist
 - [ ] TXXX [P] Verify the implementation against the matching Level-2 Project Environment Registry row in `constitution.md`
 - [ ] TXXX [P] Verify the exact eight-preset matrix with `install-spec-kit-governance-presets.* --check-only` / `-CheckOnly`; document any justified repository exception
 - [ ] TXXX [P] Verify primary implementation language against the MSL allow-list in `constitution.md`, Principle XI; cite the Level-2 non-MSL justification if applicable
@@ -161,6 +158,8 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] TXXX [P] Verify learner-facing content is DE-first/EN-second at CEFR B2, explains technical terms at first use, assumes no prior Spec Kit experience, and provides text-first explanations for dependencies, states, and decisions
 - [ ] TXXX [P] Update `docs/project-statistics.md` when the feature changes statistics-relevant artefacts or delivery evidence
 - [ ] TXXX [P] Review and synchronize affected AI-agent guidance files: `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.github/copilot-instructions.md`
+- [ ] TXXX Validate platform-dependent changes macOS-first: matching local safe mode, then isolated native Linux container or narrowly scoped native Linux/Windows CI only when the target host is unavailable
+- [ ] TXXX Bind each portable platform proof to exact commit, command, runner/platform, exit code, payload SHA-256, decision SHA-256, and zero-write values; do not infer a full regression pass from a partial proof
 - [ ] TXXX Record exactly one Documentation Impact decision and complete its
   required update, generated render, no-change rationale, or bounded follow-up
   evidence
@@ -293,7 +292,7 @@ Bei einfachen Inhalten die Nichtanwendung kurz begründen. Diagramme bilden die
 verbindlichen Text-/Manifestquellen ab; Farbe allein trägt keine Bedeutung.
 Nach jedem vollständig abgeschlossenen Spec-Kit-Feature-Lauf den vollständigen
 Ergebnisbericht im Chat anzeigen und im Feature-Verzeichnis als
-`engineering-retrospective.md` versionieren. Einzelne Planungs-/Status-/Review-Kommandos
+`completion-report.md` versionieren. Einzelne Planungs-/Status-/Review-Kommandos
 lösen keinen solchen Bericht aus; blockierte oder pausierte Läufe als
 Zwischenbericht kennzeichnen. Vorlage: `.specify/templates/completion-report-template.md`;
 Regel: `docs/spec-kit-diagrams-and-completion-reports.md`.
@@ -308,7 +307,7 @@ Diese Projektregel und lokale Vorlagen bei Spec-Kit-Updates erhalten.
 useful workflows, states or dependencies; justify omission for simple content.
 Diagrams reflect authoritative text/manifests and never rely on color alone.
 After each completed feature run, show the full outcome report in chat and
-version engineering-retrospective.md in the feature directory using the shared template
+version completion-report.md in the feature directory using the shared template
 and rule above. Individual planning/status/review commands do not trigger it;
 paused/blocked runs receive interim reports. Evidence outcomes, tests, docs,
 Git-bound counts, delivery history and remaining work. Distinguish code from

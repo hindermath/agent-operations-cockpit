@@ -25,6 +25,24 @@ Auto-generated from all feature plans. Last updated: [DATE]
 [LAST 3 FEATURES AND WHAT THEY ADDED]
 
 
+## macOS-first-Plattformnachweis / macOS-First Platform Evidence
+
+- Zuerst die passende lokale macOS-Safe-Mode-Prüfung ausführen.
+- Fehlt ein nativer Linux-Host, einen isolierten nativen Container mit
+  schreibgeschütztem Repository und ohne unnötiges Netzwerk oder eng begrenzte
+  native Linux-CI verwenden; ohne nativen Windows-Host eng begrenzte native
+  Windows-CI verwenden.
+- Evidence an exakten Commit, Befehl, Runner/Plattform, Exitcode,
+  Payload-SHA-256, Entscheidungs-SHA-256 und Nullschreibwerte binden.
+- Teilnachweise nie als vollständigen Regressions-, Security-, A11Y-, Review-
+  oder Delivery-Pass ausgeben.
+
+*Run the matching local macOS safe mode first. Without a native target host,
+use isolated native Linux container/CI or narrowly scoped native Windows CI as
+applicable. Bind exact commit, command, runner/platform, exit code, payload and
+decision SHA-256, and zero-write values. Never promote partial proof to a full
+regression, security, accessibility, review, or delivery pass.*
+
 ## Spec-Kit-Modell-Routing / Spec Kit Model Routing
 
 - Modellwahl ist operative Agenten-Routing-Guidance, keine Feature-Anforderung. Modellnamen nicht in `spec.md`, `plan.md`, `tasks.md` oder einzelne Feature-Specs schreiben; diese Artefakte muessen reproduzierbar bleiben, auch wenn Modellnamen wechseln oder ein anderer KI-Agent verwendet wird.
@@ -54,39 +72,6 @@ Installing either autonomous preset starts no run and grants no remote, merge,
 bypass, cancellation, secret, or provider authority. Complete autonomous and
 parallel autonomous runs require explicit delegation. Parallel campaigns use
 separate worktrees and at most three concurrently active workers.
-
-<!-- engineering-retrospective:start -->
-## Engineering-Retrospektive je Feature / Engineering retrospective per feature
-
-Ab `003-authoring-contract` erhält jeder aktuelle und zukünftige Feature-Lauf
-einen gespeicherten, verständlichen Abschlussbericht nach
-`docs/governance/engineering-retrospective.md`, unter
-`specs/<feature>/engineering-retrospective.md`. Den Bericht nach jedem Lauf
-zusätzlich direkt in der Abschlussantwort anzeigen; ein bloßer Dateilink genügt
-nicht. Sechs Perspektiven getrennt behandeln: Output,
-Findings, bestätigte Regeln, Interventionen/Reparaturen, Effizienzbeobachtungen
-und AEPS-Relevanz. Completion-/Retrospective-Evidence verlinken; Zwischenstände
-kennzeichnen und keine nicht erfolgte Lieferung behaupten. Bestehende Evidence
-wiederverwenden, wenn ihre Bindung unverändert ist; zusammengehörige Änderungen
-bündeln, Providergrenzen früh prüfen und vollständige Matrizen nur bei geänderter
-Fläche oder verbindlicher Exact-Head-Regel wiederholen. Pflichtgates bleiben
-unverändert. Keine Review-Schleife oder Preset-Promotion allein durch den Bericht
-auslösen. Die Regel gilt auch für neu startende Agentensitzungen.
-
-*From `003-authoring-contract` onwards, every current and future feature run
-gets a readable, saved closeout report under
-`specs/<feature>/engineering-retrospective.md`, following
-`docs/governance/engineering-retrospective.md`. Show the report directly in the
-final response after every run; a file link alone is insufficient. Keep six
-perspectives separate: output, findings, confirmed
-rules, interventions/repairs, efficiency observations, and AEPS relevance.
-Link completion/retrospective evidence, label interim reports, and never claim
-unperformed delivery. Reuse evidence when its binding is unchanged, bundle
-related changes, check provider boundaries early, and repeat full matrices only
-for a changed surface or a mandatory exact-head rule. Mandatory gates remain
-unchanged. The report alone triggers no review loop or preset promotion. This
-applies to new agent sessions as well.*
-<!-- engineering-retrospective:end -->
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->

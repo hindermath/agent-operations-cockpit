@@ -152,12 +152,12 @@
   re-evaluation trigger.
   `FollowUp` also requires owner, risk, due date, re-evaluation trigger,
   evidence, and scope rationale.
-- **CR-014**: Feature runs from `003-authoring-contract` onward MUST specify a
-  saved retrospective with Output, Findings, confirmed rules,
-  interventions/repairs, efficiency observations, AEPS relevance, and
-  Completion/Retrospective Evidence. After the third comparable run, the
-  retrospective MUST include a source- and hash-bound trend comparison and
-  keep missing comparable evidence explicit.
+- **CR-014**: Platform-dependent evidence MUST follow the agent-neutral
+  macOS-first contract: local matching safe mode first; isolated native Linux
+  container or narrowly scoped native Linux CI when no Linux host exists;
+  narrowly scoped native Windows CI when no Windows host exists; exact commit,
+  command, runner/platform, exit code, payload SHA-256, decision SHA-256, and
+  zero-write binding. A partial proof MUST NOT imply a full regression pass.
 
 ### Key Entities *(include if feature involves data)*
 
@@ -200,7 +200,7 @@ Bei einfachen Inhalten die Nichtanwendung kurz begründen. Diagramme bilden die
 verbindlichen Text-/Manifestquellen ab; Farbe allein trägt keine Bedeutung.
 Nach jedem vollständig abgeschlossenen Spec-Kit-Feature-Lauf den vollständigen
 Ergebnisbericht im Chat anzeigen und im Feature-Verzeichnis als
-`engineering-retrospective.md` versionieren. Einzelne Planungs-/Status-/Review-Kommandos
+`completion-report.md` versionieren. Einzelne Planungs-/Status-/Review-Kommandos
 lösen keinen solchen Bericht aus; blockierte oder pausierte Läufe als
 Zwischenbericht kennzeichnen. Vorlage: `.specify/templates/completion-report-template.md`;
 Regel: `docs/spec-kit-diagrams-and-completion-reports.md`.
@@ -215,7 +215,7 @@ Diese Projektregel und lokale Vorlagen bei Spec-Kit-Updates erhalten.
 useful workflows, states or dependencies; justify omission for simple content.
 Diagrams reflect authoritative text/manifests and never rely on color alone.
 After each completed feature run, show the full outcome report in chat and
-version engineering-retrospective.md in the feature directory using the shared template
+version completion-report.md in the feature directory using the shared template
 and rule above. Individual planning/status/review commands do not trigger it;
 paused/blocked runs receive interim reports. Evidence outcomes, tests, docs,
 Git-bound counts, delivery history and remaining work. Distinguish code from

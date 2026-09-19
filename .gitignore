@@ -103,8 +103,8 @@
 # --- OpenCode Spec-Kit Commands ---
 !.opencode/
 .opencode/*
-!.opencode/commands/
-!.opencode/commands/**
+!.opencode/command/
+!.opencode/command/**
 
 # --- Release Please ---
 !release-please-config.json
