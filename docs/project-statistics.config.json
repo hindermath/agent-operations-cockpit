@@ -17,6 +17,14 @@
       "labelEn": "Feature 032 AOC vertical slice",
       "netLines": 4395,
       "activeDays": 1
+    },
+    {
+      "slot": 1,
+      "id": "storage-checkonly-make-safety",
+      "labelDe": "Storage-Check-only-Make-Härtung",
+      "labelEn": "Storage check-only Make hardening",
+      "netLines": 187,
+      "activeDays": 1
     }
   ],
   "excludedPaths": ["docs/project-statistics/*"],
