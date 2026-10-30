@@ -14,8 +14,12 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $forgejoLib = Join-Path $PSScriptRoot 'lib/hg-forgejo.ps1'
+$sourceResolver = Join-Path $PSScriptRoot 'lib/resolve-home-baseline-source.ps1'
 if (Test-Path $forgejoLib) {
     . $forgejoLib
+}
+if (Test-Path $sourceResolver) {
+    . $sourceResolver
 }
 
 $script:ExitCode = 0
@@ -35,6 +39,10 @@ function Show-Usage {
     @'
 Verwendung / Usage:
   teardown-workspace.ps1 -WorkspaceName <Name> [OPTIONEN / OPTIONS]
+
+WorkspaceName:
+  Einfacher Name eines echten direkten Home-Unterverzeichnisses /
+  Simple name of a real direct Home child directory
 
 Optionen / Options:
   -Backup         Erstellt vor der Löschung ein Backup-Archiv / Create backup archive before deletion
@@ -89,9 +97,68 @@ function Resolve-HomeDirectory {
     (Resolve-Path -LiteralPath $candidate).Path
 }
 
+function Assert-ValidWorkspaceName([string]$Name) {
+    if ([System.IO.Path]::IsPathFullyQualified($Name) -or
+        $Name -in @('.', '..') -or
+        $Name.Contains('/') -or
+        $Name.Contains('\')) {
+        throw 'Fehler: Workspace-Name muss ein einzelnes direktes Unterverzeichnis von Home sein / Error: Workspace name must be one direct child directory of Home'
+    }
+}
+
+function Test-PathValueEqual([string]$Left, [string]$Right) {
+    $comparison = if ($IsWindows) {
+        [System.StringComparison]::OrdinalIgnoreCase
+    }
+    else {
+        [System.StringComparison]::Ordinal
+    }
+    [string]::Equals($Left, $Right, $comparison)
+}
+
+function Resolve-SafeDirectChildDirectory {
+    param(
+        [Parameter(Mandatory)]
+        [string] $Path,
+        [Parameter(Mandatory)]
+        [string] $ExpectedParent,
+        [Parameter(Mandatory)]
+        [string] $ExpectedName
+    )
+
+    if (-not (Test-Path -LiteralPath $Path -PathType Container)) {
+        throw "Fehler: Workspace '$Path' nicht gefunden / Error: Workspace '$Path' not found"
+    }
+
+    $item = Get-Item -LiteralPath $Path -Force
+    if ($item.LinkType -or (($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0)) {
+        throw 'Fehler: Workspace muss ein echtes direktes Unterverzeichnis sein; Links und Pfadumgehungen sind unzulässig / Error: Workspace must be a real direct child directory; links and path escapes are not allowed'
+    }
+
+    $resolved = [System.IO.Path]::GetFullPath($item.FullName)
+    $resolvedParent = [System.IO.Path]::GetDirectoryName($resolved)
+    $resolvedName = [System.IO.Path]::GetFileName($resolved)
+    if (-not (Test-PathValueEqual -Left $resolvedParent -Right $ExpectedParent) -or
+        -not (Test-PathValueEqual -Left $resolvedName -Right $ExpectedName)) {
+        throw 'Fehler: Workspace muss ein echtes direktes Unterverzeichnis sein; Links und Pfadumgehungen sind unzulässig / Error: Workspace must be a real direct child directory; links and path escapes are not allowed'
+    }
+
+    $gitDirectory = Join-Path $resolved '.git'
+    $gitItem = Get-Item -LiteralPath $gitDirectory -Force -ErrorAction SilentlyContinue
+    if ($null -ne $gitItem) {
+        if ($gitItem.LinkType -or
+            (($gitItem.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0)) {
+            throw 'Fehler: Git-Metadatenverzeichnis darf kein Link sein / Error: Git metadata directory must not be a link'
+        }
+    }
+
+    $resolved
+}
+
 function Initialize-Context {
     $script:HomeDir = Resolve-HomeDirectory
-    $script:WorkspaceDir = Join-Path $script:HomeDir $WorkspaceName
+    Assert-ValidWorkspaceName -Name $WorkspaceName
+    $candidate = Join-Path $script:HomeDir $WorkspaceName
     $script:NormalizedName = ConvertTo-NormalizedName $WorkspaceName
     $script:ReadmePath = Join-Path $script:HomeDir 'README.md'
     $script:GitignorePath = Join-Path $script:HomeDir '.gitignore'
@@ -99,12 +166,27 @@ function Initialize-Context {
     $script:GitconfigD = Join-Path $script:HomeDir '.gitconfig.d'
     $script:IncFile = Join-Path $script:GitconfigD "$($script:NormalizedName).inc"
 
-    if ($WorkspaceName -eq 'home-baseline') {
-        throw "Fehler: 'home-baseline' ist geschützt / Error: 'home-baseline' is protected"
+    if ($WorkspaceName -in @('home-baseline', 'home-baseline-source')) {
+        throw 'Fehler: Level-0-Quelle ist geschützt / Error: Level 0 source is protected'
     }
 
-    if (-not (Test-Path -LiteralPath $script:WorkspaceDir -PathType Container)) {
-        throw "Fehler: Workspace '$script:WorkspaceDir' nicht gefunden / Error: Workspace '$script:WorkspaceDir' not found"
+    $script:WorkspaceDir = Resolve-SafeDirectChildDirectory `
+        -Path $candidate `
+        -ExpectedParent $script:HomeDir `
+        -ExpectedName $WorkspaceName
+
+    if (Get-Command Resolve-HBSourceRepository -ErrorAction SilentlyContinue) {
+        try {
+            $protectedSource = Resolve-HBSourceRepository -StartPath $script:HomeDir -AllowLegacy
+            if (Test-PathValueEqual -Left $script:WorkspaceDir -Right $protectedSource) {
+                throw 'Fehler: Konfigurierte Level-0-Quelle ist geschützt / Error: Configured Level 0 source is protected'
+            }
+        }
+        catch {
+            if ($_.Exception.Message -match 'Configured Level 0 source is protected') {
+                throw
+            }
+        }
     }
 }
 
@@ -112,8 +194,18 @@ function Get-Level2Projects {
     $script:Level2Projects.Clear()
     $children = Get-ChildItem -LiteralPath $script:WorkspaceDir -Directory -ErrorAction SilentlyContinue
     foreach ($child in $children) {
-        if (Test-Path -LiteralPath (Join-Path $child.FullName '.git') -PathType Container) {
-            $script:Level2Projects.Add($child.FullName)
+        $gitDirectory = Join-Path $child.FullName '.git'
+        if (Test-Path -LiteralPath $gitDirectory -PathType Container) {
+            $resolvedChild = Resolve-SafeDirectChildDirectory `
+                -Path $child.FullName `
+                -ExpectedParent $script:WorkspaceDir `
+                -ExpectedName $child.Name
+            $gitItem = Get-Item -LiteralPath $gitDirectory -Force
+            if ($gitItem.LinkType -or
+                (($gitItem.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0)) {
+                throw 'Fehler: Level-2-Git-Verzeichnis darf kein Link sein / Error: Level 2 Git directory must not be a link'
+            }
+            $script:Level2Projects.Add($resolvedChild)
         }
     }
 }
@@ -152,7 +244,7 @@ function Get-UniqueBackupPath([string]$TargetName) {
     $archivePath = "$base.tar.gz"
     $index = 1
 
-    while (Test-Path -LiteralPath $archivePath) {
+    while ($null -ne (Get-Item -LiteralPath $archivePath -Force -ErrorAction SilentlyContinue)) {
         $archivePath = "$base-$index.tar.gz"
         $index++
     }
@@ -507,15 +599,31 @@ function Invoke-TargetTeardown {
         [switch] $IncludeArtifacts
     )
 
+    $expectedParent = if ($IncludeArtifacts) { $script:HomeDir } else { $script:WorkspaceDir }
+    $Dir = Resolve-SafeDirectChildDirectory `
+        -Path $Dir `
+        -ExpectedParent $expectedParent `
+        -ExpectedName $BackupName
+
     Invoke-Backup -Label $Label -Dir $Dir -TargetName $BackupName
 
     if (-not (Test-Safety -Label $Label -Dir $Dir)) {
         return $false
     }
 
+    $Dir = Resolve-SafeDirectChildDirectory `
+        -Path $Dir `
+        -ExpectedParent $expectedParent `
+        -ExpectedName $BackupName
+
     if (-not (Remove-RemoteRepo -Label $Label -Dir $Dir)) {
         return $false
     }
+
+    $Dir = Resolve-SafeDirectChildDirectory `
+        -Path $Dir `
+        -ExpectedParent $expectedParent `
+        -ExpectedName $BackupName
 
     Remove-LocalDirectory -Label $Label -Dir $Dir
 
@@ -590,6 +698,6 @@ catch {
         Write-Host $message
         exit 1
     }
-    Write-Error $message
+    [Console]::Error.WriteLine($message)
     exit 2
 }

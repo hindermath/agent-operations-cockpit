@@ -4,9 +4,14 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FORGEJO_LIB="$SCRIPT_DIR/lib/hg-forgejo.sh"
+SOURCE_RESOLVER="$SCRIPT_DIR/lib/resolve-home-baseline-source.sh"
 if [ -f "$FORGEJO_LIB" ]; then
   # shellcheck source=scripts/lib/hg-forgejo.sh
   source "$FORGEJO_LIB"
+fi
+if [ -f "$SOURCE_RESOLVER" ]; then
+  # shellcheck source=scripts/lib/resolve-home-baseline-source.sh
+  source "$SOURCE_RESOLVER"
 fi
 
 BOX_WIDTH=66
@@ -35,6 +40,10 @@ usage() {
   cat <<'EOF'
 Verwendung / Usage:
   teardown-workspace.sh <WorkspaceName> [OPTIONEN / OPTIONS]
+
+WorkspaceName:
+  Einfacher Name eines echten direkten Home-Unterverzeichnisses /
+  Simple name of a real direct Home child directory
 
 Optionen / Options:
   --backup        Erstellt vor der Löschung ein Backup-Archiv / Create backup archive before deletion
@@ -93,8 +102,37 @@ resolve_home_dir() {
   fi
 
   (
-    cd "$candidate" >/dev/null 2>&1 && pwd
+    cd "$candidate" >/dev/null 2>&1 && pwd -P
   )
+}
+
+validate_workspace_name() {
+  case "$WORKSPACE_NAME" in
+    .|..|*/*|*\\*)
+      echo "Fehler: Workspace-Name muss ein einzelnes direktes Unterverzeichnis von Home sein / Error: Workspace name must be one direct child directory of Home" >&2
+      exit 2
+      ;;
+  esac
+}
+
+resolve_direct_child() {
+  local expected_parent="$1"
+  local expected_name="$2"
+  local candidate="$3"
+  local resolved=""
+
+  if [ ! -d "$candidate" ]; then
+    return 1
+  fi
+  resolved="$(cd "$candidate" >/dev/null 2>&1 && pwd -P)" || return 1
+  if [ "$(dirname "$resolved")" != "$expected_parent" ] ||
+     [ "$(basename "$resolved")" != "$expected_name" ]; then
+    return 1
+  fi
+  if [ -L "$resolved/.git" ]; then
+    return 1
+  fi
+  printf '%s\n' "$resolved"
 }
 
 parse_args() {
@@ -149,8 +187,16 @@ parse_args() {
 }
 
 validate_context() {
+  local candidate=""
+  local resolved=""
+  local resolved_parent=""
+  local resolved_name=""
+  local protected_source=""
+
   HOME_DIR="$(resolve_home_dir)"
-  WORKSPACE_DIR="$HOME_DIR/$WORKSPACE_NAME"
+  validate_workspace_name
+
+  candidate="$HOME_DIR/$WORKSPACE_NAME"
   NORMALIZED_NAME="$(normalize_name "$WORKSPACE_NAME")"
   README_PATH="$HOME_DIR/README.md"
   GITIGNORE_PATH="$HOME_DIR/.gitignore"
@@ -158,15 +204,39 @@ validate_context() {
   GITCONFIG_D="$HOME_DIR/.gitconfig.d"
   INC_FILE="$GITCONFIG_D/$NORMALIZED_NAME.inc"
 
-  if [ "$WORKSPACE_NAME" = "home-baseline" ]; then
-    echo "Fehler: 'home-baseline' ist geschützt / Error: 'home-baseline' is protected" >&2
+  case "$(printf '%s' "$WORKSPACE_NAME" | tr '[:upper:]' '[:lower:]')" in
+    home-baseline|home-baseline-source)
+      echo "Fehler: Level-0-Quelle ist geschützt / Error: Level 0 source is protected" >&2
+      exit 2
+      ;;
+  esac
+
+  if [ ! -d "$candidate" ]; then
+    echo "Fehler: Workspace '$candidate' nicht gefunden / Error: Workspace '$candidate' not found" >&2
     exit 2
   fi
 
-  if [ ! -d "$WORKSPACE_DIR" ]; then
-    echo "Fehler: Workspace '$WORKSPACE_DIR' nicht gefunden / Error: Workspace '$WORKSPACE_DIR' not found" >&2
+  resolved="$(resolve_direct_child "$HOME_DIR" "$WORKSPACE_NAME" "$candidate" || true)"
+  if [ -z "$resolved" ]; then
+    echo "Fehler: Workspace muss ein echtes direktes Unterverzeichnis von Home sein; Links und Pfadumgehungen sind unzulässig / Error: Workspace must be a real direct child of Home; links and path escapes are not allowed" >&2
     exit 2
   fi
+  resolved_parent="$(dirname "$resolved")"
+  resolved_name="$(basename "$resolved")"
+  if [ "$resolved_parent" != "$HOME_DIR" ] || [ "$resolved_name" != "$WORKSPACE_NAME" ]; then
+    echo "Fehler: Workspace muss ein echtes direktes Unterverzeichnis von Home sein; Links und Pfadumgehungen sind unzulässig / Error: Workspace must be a real direct child of Home; links and path escapes are not allowed" >&2
+    exit 2
+  fi
+
+  if declare -F resolve_hb_source_repository >/dev/null 2>&1; then
+    protected_source="$(resolve_hb_source_repository "$HOME_DIR/README.md" 1 2>/dev/null || true)"
+  fi
+  if [ -n "$protected_source" ] && [ "$resolved" = "$protected_source" ]; then
+    echo "Fehler: Konfigurierte Level-0-Quelle ist geschützt / Error: Configured Level 0 source is protected" >&2
+    exit 2
+  fi
+
+  WORKSPACE_DIR="$resolved"
 }
 
 discover_level2_projects() {
@@ -316,7 +386,7 @@ unique_backup_path() {
 
   base="$HOME_DIR/$target_name-backup-$(date +%Y-%m-%d)"
   archive="${base}.tar.gz"
-  while [ -e "$archive" ]; do
+  while [ -e "$archive" ] || [ -L "$archive" ]; do
     archive="${base}-${index}.tar.gz"
     index=$((index + 1))
   done
@@ -600,6 +670,20 @@ teardown_target() {
   local dir="$2"
   local backup_name="$3"
   local include_artifacts="$4"
+  local expected_parent="$WORKSPACE_DIR"
+  local validated_dir=""
+
+  if [ "$include_artifacts" -eq 1 ]; then
+    expected_parent="$HOME_DIR"
+  fi
+
+  validated_dir="$(resolve_direct_child "$expected_parent" "$backup_name" "$dir" || true)"
+  if [ -z "$validated_dir" ]; then
+    add_result "fail" "Unsicheres Teardown-Ziel abgelehnt / Unsafe teardown target rejected: $label"
+    set_warning_exit
+    return 1
+  fi
+  dir="$validated_dir"
 
   create_backup "$label" "$dir" "$backup_name"
 
@@ -607,9 +691,25 @@ teardown_target() {
     return 1
   fi
 
+  validated_dir="$(resolve_direct_child "$expected_parent" "$backup_name" "$dir" || true)"
+  if [ -z "$validated_dir" ]; then
+    add_result "fail" "Unsicheres Teardown-Ziel abgelehnt / Unsafe teardown target rejected: $label"
+    set_warning_exit
+    return 1
+  fi
+  dir="$validated_dir"
+
   if ! delete_remote_repo "$label" "$dir"; then
     return 1
   fi
+
+  validated_dir="$(resolve_direct_child "$expected_parent" "$backup_name" "$dir" || true)"
+  if [ -z "$validated_dir" ]; then
+    add_result "fail" "Unsicheres Teardown-Ziel abgelehnt / Unsafe teardown target rejected: $label"
+    set_warning_exit
+    return 1
+  fi
+  dir="$validated_dir"
 
   delete_local_directory "$label" "$dir"
 

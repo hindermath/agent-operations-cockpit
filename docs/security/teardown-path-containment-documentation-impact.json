@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "1.1",
+  "feature": "teardown-path-containment",
+  "entries": [
+    {
+      "changeId": "CHG001",
+      "scope": "Propagated teardown workspace-name and resolved-path containment",
+      "decision": "NoUpdateRequired",
+      "rationale": "The generated script reference is a non-semantic inventory entry; detailed active usage and threat-boundary documentation is owned by the Level 0 canonical source. Existing broader reference drift is outside this focused security fix.",
+      "documents": [
+        "docs/scripts/reference.md"
+      ],
+      "owner": "Repository Maintainer",
+      "audiences": [
+        "Workspace operators",
+        "Maintainers",
+        "AI agents"
+      ],
+      "readerPaths": [
+        "Script inventory -> canonical Level 0 teardown reference"
+      ],
+      "canonicalSource": "Level 0 scripts/teardown-workspace.sh and scripts/teardown-workspace.ps1",
+      "navigationImpact": "No local navigation change; the existing generated script reference remains the entry point.",
+      "documentClass": "Generated",
+      "languageStrategy": "German first, English second",
+      "languagePartners": [],
+      "platformAndExampleProof": "The propagated Bash and PowerShell copies run the same temporary-Home path-boundary, configured-source, linked-Git-metadata and backup-link probes as Level 0.",
+      "distributionClass": "sourceOnly",
+      "homeSyncRequired": false,
+      "evidence": "scripts/tests/test-teardown-workspace-path-safety.ps1",
+      "risk": "The Level 2 copy can drift from its Level 0 source; exact file equality is checked in this change.",
+      "criticality": "Security",
+      "reevaluationTrigger": "Level 0 teardown behavior, local script inventory or propagation ownership changes"
+    }
+  ]
+}
