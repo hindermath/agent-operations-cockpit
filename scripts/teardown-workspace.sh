@@ -36,6 +36,7 @@ INC_FILE=""
 declare -a LEVEL2_PROJECTS=()
 declare -a RESULTS=()
 declare -A APPROVED_REMOTE_IDENTITIES=()
+declare -A APPROVED_GIT_MARKERS=()
 
 usage() {
   cat <<'EOF'
@@ -246,7 +247,28 @@ discover_level2_projects() {
   LEVEL2_PROJECTS=()
   while IFS= read -r gitdir; do
     LEVEL2_PROJECTS+=("$(dirname "$gitdir")")
-  done < <(find "$WORKSPACE_DIR" -mindepth 2 -maxdepth 2 -name ".git" -type d 2>/dev/null | sort)
+  done < <(find "$WORKSPACE_DIR" -mindepth 2 -maxdepth 2 -name ".git" \( -type d -o -type f -o -type l \) 2>/dev/null | sort)
+}
+
+has_git_marker() {
+  [ -e "$1/.git" ] || [ -L "$1/.git" ]
+}
+
+check_git_metadata() {
+  local inside=""
+  inside="$(git -C "$1" rev-parse --is-inside-work-tree 2>/dev/null)" || return 1
+  [ "$inside" = "true" ] || return 1
+  git -C "$1" config --local --list >/dev/null 2>&1
+}
+
+origin_for_dir() {
+  local dir="$1" remotes=""
+  remotes="$(git -C "$dir" remote 2>/dev/null)" || return 1
+  if grep -Fxq 'origin' <<< "$remotes"; then
+    git -C "$dir" remote get-url origin 2>/dev/null
+  else
+    printf ''
+  fi
 }
 
 remote_platform_for_dir() {
@@ -291,11 +313,20 @@ forgejo_target_for_dir() {
 
 prepare_remote_targets() {
   local dir="" platform="" identity="" origin="" parsed=""
-  [ "$KEEP_REMOTE" -eq 0 ] || return 0
   for dir in "${LEVEL2_PROJECTS[@]}" "$WORKSPACE_DIR"; do
+    APPROVED_GIT_MARKERS["$dir"]="none"
     APPROVED_REMOTE_IDENTITIES["$dir"]="none"
-    [ -d "$dir/.git" ] || continue
-    origin="$(git -C "$dir" remote get-url origin 2>/dev/null || true)"
+    if ! has_git_marker "$dir"; then continue; fi
+    APPROVED_GIT_MARKERS["$dir"]="git"
+    [ "$KEEP_REMOTE" -eq 0 ] || continue
+    check_git_metadata "$dir" || {
+      echo "Fehler: Git-Metadaten nicht pruefbar / Error: Git metadata unavailable: $dir" >&2
+      return 1
+    }
+    origin="$(origin_for_dir "$dir")" || {
+      echo "Fehler: Git-Remote nicht pruefbar / Error: Git remote unavailable: $dir" >&2
+      return 1
+    }
     [ -n "$origin" ] || continue
     platform="$(git -C "$dir" config --local --get home-baseline.remote-platform 2>/dev/null || true)"
     case "$platform" in
@@ -407,28 +438,85 @@ confirm_or_abort() {
 check_safety() {
   local label="$1"
   local dir="$2"
+  local status="" ahead="" branch="" upstream_remote="" upstream_merge=""
+  local config_status=0
 
   if [ "$FORCE" -eq 1 ]; then
     add_result "skip" "Sicherheitsprüfung übersprungen / Safety check skipped: $label"
     return 0
   fi
 
-  if [ ! -d "$dir/.git" ]; then
+  if [ "${APPROVED_GIT_MARKERS[$dir]:-}" = "git" ] && ! has_git_marker "$dir"; then
+    add_result "fail" "Git-Metadaten seit Vorschau entfernt / Git metadata removed after preview: $label"
+    set_warning_exit
+    return 1
+  fi
+  if [ "${APPROVED_GIT_MARKERS[$dir]:-}" = "none" ] && has_git_marker "$dir"; then
+    add_result "fail" "Git-Metadaten seit Vorschau hinzugefuegt / Git metadata added after preview: $label"
+    set_warning_exit
+    return 1
+  fi
+
+  if ! has_git_marker "$dir"; then
     add_result "skip" "Kein Git-Repository für Sicherheitsprüfung / No git repository for safety check: $label"
     return 0
   fi
 
-  if [ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ]; then
+  if ! check_git_metadata "$dir"; then
+    add_result "fail" "Git-Metadaten nicht pruefbar / Git metadata unavailable: $label"
+    set_warning_exit
+    return 1
+  fi
+  status="$(git -C "$dir" status --porcelain 2>/dev/null)" || {
+    add_result "fail" "Git-Status nicht pruefbar / Git status unavailable: $label"
+    set_warning_exit
+    return 1
+  }
+  if [ -n "$status" ]; then
     add_result "fail" "Uncommittete Änderungen erkannt / Uncommitted changes detected: $label"
     set_warning_exit
     return 1
   fi
 
-  if git -C "$dir" rev-parse @{u} >/dev/null 2>&1; then
-    if [ -n "$(git -C "$dir" log @{u}..HEAD --oneline 2>/dev/null)" ]; then
+  if git -C "$dir" rev-parse '@{u}' >/dev/null 2>&1; then
+    ahead="$(git -C "$dir" log '@{u}..HEAD' --oneline 2>/dev/null)" || {
+      add_result "fail" "Git-Historie nicht pruefbar / Git history unavailable: $label"
+      set_warning_exit
+      return 1
+    }
+    if [ -n "$ahead" ]; then
       add_result "fail" "Ungepushte Commits erkannt / Unpushed commits detected: $label"
       set_warning_exit
       return 1
+    fi
+  else
+    branch="$(git -C "$dir" branch --show-current 2>/dev/null)" || {
+      add_result "fail" "Git-Branch nicht pruefbar / Git branch unavailable: $label"
+      set_warning_exit
+      return 1
+    }
+    if [ -n "$branch" ]; then
+      upstream_remote="$(git -C "$dir" config --local --get "branch.$branch.remote" 2>/dev/null)" || {
+        config_status=$?
+        if [ "$config_status" -ne 1 ]; then
+          add_result "fail" "Git-Upstream-Konfiguration nicht pruefbar / Git upstream configuration unavailable: $label"
+          set_warning_exit
+          return 1
+        fi
+      }
+      upstream_merge="$(git -C "$dir" config --local --get "branch.$branch.merge" 2>/dev/null)" || {
+        config_status=$?
+        if [ "$config_status" -ne 1 ]; then
+          add_result "fail" "Git-Upstream-Konfiguration nicht pruefbar / Git upstream configuration unavailable: $label"
+          set_warning_exit
+          return 1
+        fi
+      }
+      if [ -n "$upstream_remote" ] || [ -n "$upstream_merge" ]; then
+        add_result "fail" "Konfigurierter Git-Upstream nicht pruefbar / Configured Git upstream unavailable: $label"
+        set_warning_exit
+        return 1
+      fi
     fi
   fi
 
@@ -468,7 +556,7 @@ create_backup() {
   fi
 
   archive="$(unique_backup_path "$target_name")"
-  if tar czf "$archive" -C "$(dirname "$dir")" "$(basename "$dir")" >/dev/null 2>&1 && [ -s "$archive" ]; then
+  if tar czf "$archive" -C "$(dirname "$dir")" "./$(basename "$dir")" >/dev/null 2>&1 && [ -s "$archive" ]; then
     add_result "done" "Backup erstellt / Backup created: $(basename "$archive")"
   else
     add_result "fail" "Backup fehlgeschlagen / Backup failed: $label"
@@ -500,7 +588,18 @@ delete_remote_repo() {
     return 1
   fi
 
-  if [ ! -d "$dir/.git" ]; then
+  if [ "${APPROVED_GIT_MARKERS[$dir]:-}" = "git" ] && ! has_git_marker "$dir"; then
+    add_result "fail" "Git-Metadaten seit Vorschau entfernt / Git metadata removed after preview: $label"
+    set_warning_exit
+    return 1
+  fi
+  if [ "${APPROVED_GIT_MARKERS[$dir]:-}" = "none" ] && has_git_marker "$dir"; then
+    add_result "fail" "Git-Metadaten seit Vorschau hinzugefuegt / Git metadata added after preview: $label"
+    set_warning_exit
+    return 1
+  fi
+
+  if ! has_git_marker "$dir"; then
     if [ "$approved" != "none" ]; then
       add_result "fail" "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $label"
       set_warning_exit
@@ -510,7 +609,16 @@ delete_remote_repo() {
     return 0
   fi
 
-  remote_url="$(git -C "$dir" remote get-url origin 2>/dev/null || true)"
+  if ! check_git_metadata "$dir"; then
+    add_result "fail" "Git-Metadaten nicht pruefbar / Git metadata unavailable: $label"
+    set_warning_exit
+    return 1
+  fi
+  remote_url="$(origin_for_dir "$dir")" || {
+    add_result "fail" "Git-Remote nicht pruefbar / Git remote unavailable: $label"
+    set_warning_exit
+    return 1
+  }
   if [ "$approved" != "none" ] && [ -z "$remote_url" ]; then
     add_result "fail" "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $label"
     set_warning_exit
@@ -766,6 +874,11 @@ commit_artifacts() {
 check_home_artifacts_clean() {
   local status=""
   if ! git -C "$HOME_DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    if has_git_marker "$HOME_DIR"; then
+      add_result "fail" "Home-Git-Metadaten nicht pruefbar / Home Git metadata unavailable"
+      set_warning_exit
+      return 1
+    fi
     return 0
   fi
   status="$(git -C "$HOME_DIR" status --porcelain -- README.md .gitignore)" || {

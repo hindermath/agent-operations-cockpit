@@ -1,6 +1,6 @@
 ---
 name: speckit-parallel-autonomous-resume
-description: Resume a stopped or interrupted campaign after complete revalidation.
+description: Inspect a paused parallel campaign; production resume is suspended.
 compatibility: Requires spec-kit project structure with .specify/ directory
 metadata:
   author: github-spec-kit
@@ -8,6 +8,17 @@ metadata:
 ---
 
 # Speckit Parallel Autonomous Resume Skill
+
+*DE: Produktive Parallel-Kampagnen sind bis zu einer isolierten Worker-Laufzeit
+gesperrt. `Start`, `Resume` und `Consolidate` duerfen weder ueber den
+Koordinator noch direkt durch Agenten ausgefuehrt werden. Erlaubt bleiben
+`Validate`, `Status` und `Stop` ueber den Koordinator. Die folgenden Schritte
+sind derzeit inaktiv.*
+
+*EN: Production parallel campaigns are suspended until workers have an
+isolated runtime. Agents must not run `Start`, `Resume` or `Consolidate`,
+including by scheduling workers or merging directly. Only coordinator
+`Validate`, `Status` and `Stop` remain available. The steps below are dormant.*
 
 Revalidate campaign manifest hash, repositories, worktrees, branches, current
 authority, runner profile, worker result contracts, autonomous states,

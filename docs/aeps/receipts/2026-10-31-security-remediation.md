@@ -265,3 +265,24 @@ abort, limited commit and package exclusions. Documentation Impact is
 `UpdateRequired`; this receipt and affected script surfaces were updated.
 No new cross-project AEPS preset evidence or promotion is claimed. Final diff
 and Standard scans and publication follow.*
+
+Der Security-Diff-Scan `d22c6a52-2c73-4f2b-9bb4-9360f9768e2a` schloss
+die acht geaenderten Dateien ohne neuen Befund ab. Der erneute Standardscan
+`6fd94dbd-e21e-4fb6-9fbb-4d24c85f1f68` auf `3abcd65` bestaetigte zwei
+weitere Teardown-Grenzen. Die nachfolgende Korrektur bricht bei nicht
+pruefbaren Git-Metadaten ab und bindet angeforderte Backups an das ausgewaehlte
+Verzeichnis. Die Agenten-Einstiege fuer produktive Parallel-Kampagnen nennen
+jetzt einheitlich die bis zur Worker-Isolation geltende Sperre.
+Documentation Impact: `UpdateRequired`; Quelle: lokaler Standardscan,
+Owner: AOC Repository Owner; aktualisiert wurden Teardown-Skripte,
+Regressionstests, Agenten-Einstiege, Preset-Dokumentation und dieses Receipt.
+Es entsteht keine neue projektuebergreifende AEPS-Evidence.
+
+*The diff scan closed eight changed files without a new finding. The Standard
+scan on `3abcd65` confirmed two more teardown boundaries. The subsequent fix
+stops when Git metadata cannot be inspected and binds requested backups to the
+selected directory. Agent entry points now consistently state that production
+parallel campaigns remain suspended until workers are isolated. Documentation
+Impact is `UpdateRequired`; the teardown scripts, regression tests, agent
+entry points, preset documentation and this receipt were updated. No new
+cross-project AEPS evidence is claimed.*

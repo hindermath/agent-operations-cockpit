@@ -420,7 +420,7 @@ function Invoke-Backup([string]$Label, [string]$Dir, [string]$TargetName) {
     }
 
     $archivePath = Get-UniqueBackupPath $TargetName
-    & tar czf $archivePath -C (Split-Path $Dir -Parent) (Split-Path $Dir -Leaf) *> $null
+    & tar czf $archivePath -C (Split-Path $Dir -Parent) "./$(Split-Path $Dir -Leaf)" *> $null
     if ($LASTEXITCODE -eq 0 -and (Test-Path -LiteralPath $archivePath -PathType Leaf) -and
         (Get-Item -LiteralPath $archivePath).Length -gt 0) {
         Add-Result 'done' "Backup erstellt / Backup created: $(Split-Path $archivePath -Leaf)"

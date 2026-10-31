@@ -12,6 +12,7 @@ import shlex
 import shutil
 import stat
 import struct
+import tarfile
 import subprocess
 import sys
 import tempfile
@@ -234,6 +235,103 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
                 result = subprocess.run(command, env=environment, capture_output=True, text=True)
                 self.assertNotEqual(result.returncode, 0, result.stdout)
                 self.assertTrue((workspace / "payload.txt").exists(), result.stdout)
+
+    @unittest.skipIf(os.name == "nt", "POSIX fake Git fixture")
+    def test_teardown_git_inspection_failure_preserves_workspace(self) -> None:
+        real_git = shutil.which("git")
+        assert real_git is not None
+        for failed_command in ("rev-parse", "status", "log", "config-get"):
+            with self.subTest(failed_command=failed_command), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                _, workspace, environment = teardown_fixture(root)
+                subprocess.run(["git", "-C", str(workspace), "init", "-q"], check=True)
+                subprocess.run(["git", "-C", str(workspace), "config", "user.name", "Test"], check=True)
+                subprocess.run(["git", "-C", str(workspace), "config", "user.email", "test@example.invalid"],
+                               check=True)
+                (workspace / "payload.txt").write_text("keep\n", encoding="utf-8")
+                if failed_command in {"log", "config-get"}:
+                    subprocess.run(["git", "-C", str(workspace), "add", "payload.txt"], check=True)
+                    subprocess.run(["git", "-C", str(workspace), "commit", "-qm", "initial"], check=True)
+                    branch = subprocess.run(["git", "-C", str(workspace), "branch", "--show-current"],
+                                            capture_output=True, text=True, check=True).stdout.strip()
+                    if failed_command == "log":
+                        subprocess.run(["git", "-C", str(workspace), "update-ref",
+                                        f"refs/remotes/origin/{branch}", "HEAD"], check=True)
+                    subprocess.run(["git", "-C", str(workspace), "config",
+                                    f"branch.{branch}.remote", "origin"], check=True)
+                    subprocess.run(["git", "-C", str(workspace), "config",
+                                    f"branch.{branch}.merge", f"refs/heads/{branch}"], check=True)
+                fake = root / "bin"
+                fake.mkdir()
+                git_wrapper = fake / "git"
+                failed_test = ('[ "$3" = config ] && [ "$4" = --local ] && [ "$5" = --get ]'
+                               if failed_command == "config-get" else
+                               f'[ "$3" = {failed_command} ]')
+                git_wrapper.write_text(
+                    "#!/bin/sh\n"
+                    f"if [ \"$2\" = {shlex.quote(str(workspace))} ] && "
+                    f"{failed_test}; then exit 2; fi\n"
+                    f'exec {shlex.quote(real_git)} "$@"\n', encoding="utf-8")
+                git_wrapper.chmod(0o755)
+                environment["PATH"] = f"{fake}{os.pathsep}{os.environ['PATH']}"
+                result = subprocess.run(["bash", str(LIBRARY.parent / "teardown-workspace.sh"),
+                                         "Demo", "--keep-remote", "--yes"],
+                                        env=environment, capture_output=True, text=True)
+                self.assertNotEqual(result.returncode, 0, result.stdout)
+                self.assertTrue((workspace / "payload.txt").exists(), result.stdout)
+
+    @unittest.skipIf(os.name == "nt", "POSIX temporary Home fixture")
+    def test_teardown_backup_option_name_archives_selected_workspace(self) -> None:
+        for shell in ("bash", "pwsh"):
+            if not shutil.which(shell):
+                continue
+            with self.subTest(shell=shell), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                home, workspace, environment = teardown_fixture(root)
+                workspace.rename(home / "-Tlist")
+                (home / "-Tlist" / "payload.txt").write_text("backup me\n", encoding="utf-8")
+                (root / "list").write_text("other.txt\n", encoding="utf-8")
+                (root / "other.txt").write_text("not the target\n", encoding="utf-8")
+                command = (["bash", str(LIBRARY.parent / "teardown-workspace.sh"),
+                            "--backup", "--keep-remote", "--yes", "--", "-Tlist"] if shell == "bash" else
+                           ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "teardown-workspace.ps1"),
+                            "-WorkspaceName", "-Tlist", "-Backup", "-KeepRemote", "-Yes"])
+                result = subprocess.run(command, cwd=root, env=environment, capture_output=True, text=True)
+                archives = list(home.glob("-Tlist-backup-*.tar.gz"))
+                self.assertEqual(len(archives), 1, result.stdout + result.stderr)
+                with tarfile.open(archives[0], "r:gz") as package:
+                    members = {name.removeprefix("./") for name in package.getnames()}
+                    self.assertIn("-Tlist/payload.txt", members, result.stdout)
+                    self.assertNotIn("other.txt", members, result.stdout)
+                self.assertFalse((home / "-Tlist").exists(), result.stdout)
+
+    def test_teardown_clean_git_without_origin_or_upstream_is_allowed(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            _, workspace, environment = teardown_fixture(root)
+            subprocess.run(["git", "-C", str(workspace), "init", "-q"], check=True)
+            subprocess.run(["git", "-C", str(workspace), "config", "user.name", "Test"], check=True)
+            subprocess.run(["git", "-C", str(workspace), "config", "user.email", "test@example.invalid"],
+                           check=True)
+            (workspace / "payload.txt").write_text("committed\n", encoding="utf-8")
+            subprocess.run(["git", "-C", str(workspace), "add", "payload.txt"], check=True)
+            subprocess.run(["git", "-C", str(workspace), "commit", "-qm", "initial"], check=True)
+            result = subprocess.run(["bash", str(LIBRARY.parent / "teardown-workspace.sh"),
+                                     "Demo", "--yes"], env=environment, capture_output=True, text=True)
+            self.assertIn("Sicherheitsprüfung bestanden", result.stdout)
+            self.assertFalse(workspace.exists(), result.stdout)
+
+    def test_teardown_rejects_unreadable_git_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            _, workspace, environment = teardown_fixture(root)
+            (workspace / ".git").mkdir()
+            (workspace / "payload.txt").write_text("keep\n", encoding="utf-8")
+            result = subprocess.run(["bash", str(LIBRARY.parent / "teardown-workspace.sh"),
+                                     "Demo", "--keep-remote", "--yes"],
+                                    env=environment, capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0, result.stdout)
+            self.assertTrue((workspace / "payload.txt").exists(), result.stdout)
 
     @unittest.skipIf(os.name == "nt", "POSIX temporary Home fixture")
     def test_teardown_artifact_commit_preserves_unrelated_index(self) -> None:

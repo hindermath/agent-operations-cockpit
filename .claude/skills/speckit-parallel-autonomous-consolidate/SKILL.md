@@ -1,11 +1,22 @@
 ---
 name: speckit-parallel-autonomous-consolidate
-description: Consolidate campaign results under explicit current authority.
+description: Inspect parallel results; production consolidation is suspended.
 compatibility: Requires spec-kit project structure with .specify/ directory
 metadata:
   author: github-spec-kit
   source: parallel-autonomous-run-governance:commands/speckit.parallel-autonomous-consolidate.md
 ---
+
+*DE: Produktive Parallel-Kampagnen sind bis zu einer isolierten Worker-Laufzeit
+gesperrt. `Start`, `Resume` und `Consolidate` duerfen weder ueber den
+Koordinator noch direkt durch Agenten ausgefuehrt werden. Erlaubt bleiben
+`Validate`, `Status` und `Stop` ueber den Koordinator. Die folgenden Schritte
+sind derzeit inaktiv.*
+
+*EN: Production parallel campaigns are suspended until workers have an
+isolated runtime. Agents must not run `Start`, `Resume` or `Consolidate`,
+including by scheduling workers or merging directly. Only coordinator
+`Validate`, `Status` and `Stop` remain available. The steps below are dormant.*
 
 For `AlternativeSolutions`, require a named human-selected worker and reject
 automatic scoring or merging of several candidates.
