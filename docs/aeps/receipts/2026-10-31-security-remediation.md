@@ -417,3 +417,22 @@ unavailable remote SHA.
 Documentation Impact is `UpdateRequired`; the hook, regression tests and this
 receipt were updated. Evidence remains project-specific, with no AEPS
 promotion or upstream action.*
+
+Die Maintenance-TUI-Matrix wurde fuer die bereits vorgeschriebenen
+Regressionsvoraussetzungen angepasst: Ubuntu installiert `rg`, macOS Bash 5+
+und `rg`. Auf Windows laufen die nativen Python-Maintenance-Module; das
+POSIX-Pfadfixture `test_security_boundary_helpers.py` ist dort ausgenommen,
+weil der Runner ohne WSL-Distribution `bash` als WSL-Starter aufloest. Die
+Security-Boundary-Suite laeuft weiter auf Ubuntu und macOS. Documentation
+Impact: `UpdateRequired`; Quelle: PR-68-CI-Logs, Owner: AOC Repository Owner;
+Workflow und dieses Receipt aktualisiert. Die native Windows-Laufzeitpruefung
+des POSIX-Fixtures ist keine Aussage ueber PowerShell-Produktsicherheit.
+
+*The Maintenance TUI matrix now installs required regression prerequisites:
+`rg` on Ubuntu and Bash 5+ plus `rg` on macOS. Windows runs the native Python
+maintenance modules; the POSIX-path `test_security_boundary_helpers.py`
+fixture is excluded there because the runner resolves `bash` to WSL without
+a distribution. The security-boundary suite still runs on Ubuntu and macOS.
+Documentation Impact is `UpdateRequired`; source: PR 68 CI logs; owner: AOC
+Repository Owner; the workflow and this receipt were updated. This limitation
+does not establish native Windows PowerShell product security.*
