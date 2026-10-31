@@ -177,6 +177,16 @@ if [ "${#tracked_files[@]}" -gt 0 ]; then
           grep -Ev "$evidence_metadata_line_regex" >/dev/null; then
         content_hits+=("$f")
       fi
+    elif [[ "$f" == "$REPO_ROOT/scripts/lib/check_learning_package_secrets.py" ]]; then
+      while IFS= read -r line; do
+        case "$line" in
+          '    ("docs/secure-development/mitgeltende-dokumente/Leitlinie_Sichere-Programmierung.md", "generic-api-key", 38):'|\
+          '    ("specs/004-series-eligibility/phase-results/us1-tests.json", "generic-api-key", 185):'|\
+          '    ("specs/004-series-eligibility/phase-results/us1-tests.json", "generic-api-key", 195):'|\
+          '    ("specs/004-series-eligibility/phase-results/us2-tests.json", "generic-api-key", 684):') ;;
+          *) content_hits+=("$f"); break ;;
+        esac
+      done < <(grep -Ei "$secret_content_regex" "$f" 2>/dev/null || true)
     elif grep -Eiq "$secret_content_regex" "$f" 2>/dev/null; then
       content_hits+=("$f")
     fi

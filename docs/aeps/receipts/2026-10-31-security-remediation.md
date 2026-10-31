@@ -372,3 +372,18 @@ and object IDs before and after the archive and immediately before local
 deletion. A temporary tar wrapper creates a late ref in the regression test;
 teardown aborts and preserves the workspace. Documentation Impact remains
 `UpdateRequired` for this patch. No cross-project AEPS evidence is claimed.*
+
+Beim autorisierten Push blockierte der lokal installierte Pre-Push-Hook vier
+harmlos dokumentierte Regelbezeichner in der
+Lernpaket-Secret-Pruefung. Gitleaks meldete fuer die zu pushenden Commits
+keinen Fund. Der versionierte Hook nimmt nur diese vier unveraenderten
+Metadatenzeilen vom Regex-Fallback aus; andere Treffer in derselben Datei
+bleiben blockierend. Documentation Impact: `UpdateRequired`; Quelle: lokaler
+Push-Block, Owner: AOC Repository Owner; Hook und dieses Receipt aktualisiert.
+
+*During the authorized push, the locally installed pre-push hook blocked four
+reviewed rule labels in the learning-package secret checker.
+Gitleaks found no secret in the commits being pushed. The versioned hook now
+exempts only those four exact metadata lines from its regex fallback; other
+matches in that file still block. Documentation Impact is `UpdateRequired`;
+the hook and this receipt were updated.*
