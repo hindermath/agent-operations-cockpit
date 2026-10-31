@@ -58,13 +58,6 @@ function New-BaseConfig {
     return @{
         schemaVersion = '2.0'
         documentationLanguage = $Language
-        projectProfile = @{
-            path = $script:ProfileRelative
-            profileId = $script:ProfileId
-            normalizedSha256 = $script:ProfileHash
-        }
-        allowedRoots = @('requirements', 'specs', '.specify/presets/intake-authoring-governance')
-        implicitAuthority = $false
         artifactNaming = @{
             profile = $NamingProfile
             canonicalIndex = $Index
@@ -102,12 +95,6 @@ try {
     }
     Set-Content -LiteralPath (Join-Path $Root 'Pflichtenheft.md') -Value '# Index' -Encoding utf8NoBOM
     Set-Content -LiteralPath (Join-Path $Root 'Lastenheft_Abarbeitungsreihenfolge.md') -Value '# Order' -Encoding utf8NoBOM
-    $script:ProfileRelative = '.specify/presets/intake-authoring-governance/templates/project-profile-template.md'
-    $script:ProfileId = 'generic-markdown'
-    $ProfilePath = Join-Path $Root $script:ProfileRelative
-    New-Item -ItemType Directory -Path (Split-Path -Parent $ProfilePath) -Force | Out-Null
-    Set-Content -LiteralPath $ProfilePath -Value "# Profile`n`n- Profile ID: ``generic-markdown```n- Documentation language: ``de-DE```n" -Encoding utf8NoBOM
-    $script:ProfileHash = Get-NormalizedSha256 $ProfilePath
     $Target = Join-Path $Root 'requirements/intakes/active/Lastenheft_Beispiel.md'
     Set-Content -LiteralPath $Target -Value '# Beispiel' -Encoding utf8NoBOM
     $Manifest = @{
@@ -134,37 +121,6 @@ try {
 
     $Explicit = New-BaseConfig -Language 'de-DE' -NamingProfile 'explicit'
     Invoke-Fixture (Write-JsonFixture 'explicit.json' $Explicit) 0 '"profile": "explicit"'
-
-    $MissingProfile = New-BaseConfig
-    $MissingProfile.projectProfile = $MissingProfile.projectProfile.Clone()
-    $MissingProfile.projectProfile.path = '.specify/presets/intake-authoring-governance/templates/missing.md'
-    Invoke-Fixture (Write-JsonFixture 'missing-profile.json' $MissingProfile) 2 'RIG018'
-
-    $WrongProfileRoot = New-BaseConfig
-    $WrongProfileRoot.projectProfile = $WrongProfileRoot.projectProfile.Clone()
-    $WrongProfileRoot.projectProfile.path = 'requirements/outside-profile.md'
-    Invoke-Fixture (Write-JsonFixture 'wrong-profile-root.json' $WrongProfileRoot) 2 'RIG019'
-    # DE/EN: The local profile source also rejects physical escapes with identical content.
-    $ExternalProfile = Join-Path ([IO.Path]::GetTempPath()) ('aoc-profile-' + [guid]::NewGuid() + '.md')
-    Copy-Item $ProfilePath $ExternalProfile
-    try {
-        Remove-Item $ProfilePath
-        New-Item -ItemType SymbolicLink -Path $ProfilePath -Target $ExternalProfile | Out-Null
-        Invoke-Fixture (Write-JsonFixture 'external-profile-link.json' $Base) 2 'RIG019'
-    }
-    finally {
-        Remove-Item $ProfilePath -Force
-        Copy-Item $ExternalProfile $ProfilePath
-        Remove-Item $ExternalProfile
-    }
-
-    $WrongProfileId = New-BaseConfig
-    $WrongProfileId.projectProfile = $WrongProfileId.projectProfile.Clone()
-    $WrongProfileId.projectProfile.profileId = 'contradictory-profile'
-    Invoke-Fixture (Write-JsonFixture 'wrong-profile-id.json' $WrongProfileId) 2 'RIG020'
-
-    $WrongProfileLocale = New-BaseConfig -Language 'en-US'
-    Invoke-Fixture (Write-JsonFixture 'wrong-profile-locale.json' $WrongProfileLocale) 2 'RIG021'
 
     $HistoricalInFlatLayout = Join-Path $Root 'requirements/intakes/active/Lastenheft_Historisch.md'
     Set-Content -LiteralPath $HistoricalInFlatLayout -Value '# Historisch' -Encoding utf8NoBOM
@@ -331,22 +287,6 @@ try {
     $MultipleEligible.orderedTargets[1].normalizedSha256 = Get-NormalizedSha256 $Second
     $MultipleEligible | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $ManifestPath -Encoding utf8NoBOM
     Invoke-Fixture (Write-JsonFixture 'multiple-eligible.json' $Base) 2 'RIG017'
-    Remove-Item -LiteralPath $Second
-
-    $CompletedManifest = $Manifest.Clone()
-    $CompletedManifest['status'] = 'Completed'
-    $CompletedManifest.orderedTargets = @($Manifest.orderedTargets[0].Clone())
-    $CompletedManifest.orderedTargets[0].status = 'Completed'
-    $CompletedManifest | ConvertTo-Json -Depth 12 |
-        Set-Content -LiteralPath $ManifestPath -Encoding utf8NoBOM
-    Invoke-Fixture (Write-JsonFixture 'legacy-completed-in-active.json' $Base) 2 'RIG017'
-
-    $InvalidCompletedManifest = $CompletedManifest.Clone()
-    $InvalidCompletedManifest.orderedTargets = @($CompletedManifest.orderedTargets[0].Clone())
-    $InvalidCompletedManifest.orderedTargets[0].status = 'Eligible'
-    $InvalidCompletedManifest | ConvertTo-Json -Depth 12 |
-        Set-Content -LiteralPath $ManifestPath -Encoding utf8NoBOM
-    Invoke-Fixture (Write-JsonFixture 'completed-with-eligible.json' $Base) 2 'RIG017'
 
     # DE: Echte englische Dateinamen und beide Zeilenenden pruefen denselben Vertrag.
     # EN: Real English filenames and both line endings exercise the same contract.
@@ -358,11 +298,6 @@ try {
         New-Item -ItemType Directory -Path (Join-Path $Root 'requirements/baseline') -Force | Out-Null
         $English = New-BaseConfig -Language 'en' -NamingProfile 'en' -Index 'RequirementsIndex.md' -Pattern 'RequirementsIntake_<slug>.md' -Order 'RequirementsIntakeOrder.md'
         $English.inventoryMode = 'SeriesManifest'
-        # DE: Das lokale AOC-Profil bleibt de-DE; der allgemeine EN-Vertrag ist im Release getestet.
-        # EN: Preserve the local de-DE profile; the generic EN contract is covered by release tests.
-        $ProfileDestination = Join-Path $Root $script:ProfileRelative
-        New-Item -ItemType Directory -Path (Split-Path $ProfileDestination -Parent) -Force | Out-Null
-        Copy-Item (Join-Path $OriginalRoot $script:ProfileRelative) $ProfileDestination
         [IO.File]::WriteAllText((Join-Path $Root 'RequirementsIndex.md'), "# Index${Ending}")
         [IO.File]::WriteAllText((Join-Path $Root 'RequirementsIntakeOrder.md'), "# Order${Ending}")
         $EnglishTarget = 'requirements/intakes/archive/RequirementsIntake_Example.001-done.md'
@@ -372,7 +307,7 @@ try {
         $EnglishManifest.roots = @($EnglishTarget)
         $Json = ($EnglishManifest | ConvertTo-Json -Depth 12).Replace("`r`n", "`n").Replace("`n", $Ending)
         [IO.File]::WriteAllText((Join-Path $Root 'requirements/intakes/series/manifest.json'), $Json)
-        Invoke-Fixture (Write-JsonFixture 'english-local-profile-rejected.json' $English) 2 'RIG021'
+        Invoke-Fixture (Write-JsonFixture 'english.json' $English) 0 '"activeIntakeCount": 0'
         $Root = $OriginalRoot
     }
     foreach ($ForeignPath in @('..\outside', 'C:\outside', 'C:outside')) {
@@ -387,7 +322,6 @@ try {
     $UnknownSeries.status = 'Bogus'
     $UnknownSeries | ConvertTo-Json -Depth 12 | Set-Content $ManifestPath -Encoding utf8NoBOM
     Invoke-Fixture (Write-JsonFixture 'unknown-series-state.json' $ManifestInventory) 2 'RIG017'
-    Set-Content -LiteralPath $Second -Value '# Zweites' -Encoding utf8NoBOM
     $UnknownTarget = $MultipleEligible.Clone()
     $UnknownTarget.orderedTargets = @($MultipleEligible.orderedTargets[0].Clone(), $MultipleEligible.orderedTargets[1].Clone())
     $UnknownTarget.orderedTargets[1].status = 'Bogus'
@@ -402,34 +336,6 @@ try {
     Invoke-Fixture (Write-JsonFixture 'aliased-collection-roots.json' $ManifestInventory) 2 'RIG007'
     Remove-Item $ActiveRoot -Force
     New-Item -ItemType Directory -Path $ActiveRoot | Out-Null
-    Copy-Item (Join-Path $ArchiveRoot (Split-Path $Target -Leaf)) $Target
-    # DE: Logische AOC-Pfade werden vor der Collection-Pruefung eindeutig aufgeloest.
-    # EN: Resolve logical AOC paths uniquely before checking the physical collection.
-    $MappedPath = 'requirements/intakes/archive/Lastenheft_Beispiel.001-completed.md'
-    Copy-Item $Target (Join-Path $Root $MappedPath)
-    Remove-Item $Target
-    $Mapped = $Manifest.Clone()
-    $Mapped.status = 'Completed'
-    $Mapped.orderedTargets = @($Manifest.orderedTargets[0].Clone())
-    $Mapped.orderedTargets[0].status = 'Completed'
-    $Mapped | ConvertTo-Json -Depth 12 | Set-Content $ManifestPath -Encoding utf8NoBOM
-    $LifecyclePath = Join-Path $Root 'specs/001-fixture/intake-lifecycle.json'
-    New-Item -ItemType Directory -Path (Split-Path $LifecyclePath -Parent) -Force | Out-Null
-    $Record = @{ originalPath = $Mapped.orderedTargets[0].path; archivedPath = $MappedPath; originalNormalizedSha256 = $Mapped.orderedTargets[0].normalizedSha256 }
-    $Lifecycle = @{ schemaVersion = '1.1'; records = @($Record) }
-    $Lifecycle | ConvertTo-Json -Depth 12 | Set-Content $LifecyclePath -Encoding utf8NoBOM
-    Invoke-Fixture (Write-JsonFixture 'mapped-completed.json' $ManifestInventory) 0 '"activeSeriesTargetCount": 0'
-    $Lifecycle.records = @($Record, $Record.Clone())
-    $Lifecycle | ConvertTo-Json -Depth 12 | Set-Content $LifecyclePath -Encoding utf8NoBOM
-    Invoke-Fixture (Write-JsonFixture 'ambiguous-lifecycle.json' $ManifestInventory) 2 'RIG014'
-    $Lifecycle.records = @($Record)
-    $Record.originalNormalizedSha256 = '0' * 64
-    $Lifecycle | ConvertTo-Json -Depth 12 | Set-Content $LifecyclePath -Encoding utf8NoBOM
-    Invoke-Fixture (Write-JsonFixture 'lifecycle-hash-drift.json' $ManifestInventory) 2 'RIG015'
-    $Record.originalNormalizedSha256 = $Mapped.orderedTargets[0].normalizedSha256
-    $Lifecycle | ConvertTo-Json -Depth 12 | Set-Content $LifecyclePath -Encoding utf8NoBOM
-    Remove-Item (Join-Path $Root $MappedPath)
-    Invoke-Fixture (Write-JsonFixture 'missing-lifecycle-successor.json' $ManifestInventory) 2 'RIG014'
     Write-Output 'PASS: requirements intake governance fixtures (Bash/PowerShell JSON and zero-write parity)'
 }
 finally {

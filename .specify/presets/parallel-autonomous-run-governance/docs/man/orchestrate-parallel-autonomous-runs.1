@@ -1,6 +1,6 @@
 .TH ORCHESTRATE-PARALLEL-AUTONOMOUS-RUNS 1 "2026-08-07" "v0.2.6"
 .SH NAME
-orchestrate-parallel-autonomous-runs \- validate parallel autonomous Spec Kit campaigns
+orchestrate-parallel-autonomous-runs \- validate and coordinate isolated autonomous Spec Kit campaigns
 .SH SYNOPSIS
 .B orchestrate-parallel-autonomous-runs.sh
 -Action ACTION -Manifest PATH [-RunnerConfig PATH] [OPTIONS]
@@ -24,16 +24,6 @@ require runner configuration.
 Status supports machine-readable JSON and accessible text with
 -OutputFormat Json or -OutputFormat Text.
 .SH SICHERHEIT / SAFETY
-Produktive Start-, Resume- und Consolidate-Laeufe sind bis zum Nachweis einer
-isolierten Worker-Laufzeit fuer alle DeliveryModes gesperrt. Validate, Status
-und Stop bleiben verfuegbar. Deterministische Tests nutzen eine temporaere
-Skriptkopie; der produktive Einstiegspunkt hat keinen Testschalter.
-.PP
-Production Start, Resume, and Consolidate runs are suspended for every
-delivery mode until an isolated worker runtime is verified. Validate, Status,
-and Stop remain available. Deterministic tests use a temporary script copy;
-the production entry point has no test switch.
-.PP
 Runner arguments are passed as an executable argument array without shell
 evaluation. Fail-closed routing requires an exact stable-role profile, model,
 reasoning effort, and successful read-only preflight before process start.

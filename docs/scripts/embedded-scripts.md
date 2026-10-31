@@ -70,7 +70,6 @@ Change their respective canonical source first, then propagate the result.*
 | `.specify/presets/parallel-autonomous-run-governance/tests/fixture-post-merge.ps1` | `.specify` |
 | `.specify/presets/parallel-autonomous-run-governance/tests/fixture-provider.ps1` | `.specify` |
 | `.specify/presets/parallel-autonomous-run-governance/tests/fixture-worker.ps1` | `.specify` |
-| `.specify/presets/parallel-autonomous-run-governance/tests/new-fixture-coordinator.ps1` | `.specify` |
 | `.specify/presets/parallel-autonomous-run-governance/tests/run-native-secure-casetracker-field.ps1` | `.specify` |
 | `.specify/presets/parallel-autonomous-run-governance/tests/test-autonomous-preset-dependency.ps1` | `.specify` |
 | `.specify/presets/parallel-autonomous-run-governance/tests/test-consolidation-v2.ps1` | `.specify` |

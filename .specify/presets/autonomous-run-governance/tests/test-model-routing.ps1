@@ -124,28 +124,6 @@ try {
         -RunnerConfig $runnerConfig -RoutingRoot $allPresetRoot 2>&1)
     Assert-RoutingTest ($LASTEXITCODE -eq 0) "Valid routing fixture failed: $($validation -join [Environment]::NewLine)"
 
-    $defaultOutput = Join-Path $repository ".specify/runtime/autonomous-routing/$($state.runId)"
-    & pwsh -NoProfile -File $runner -Action Run -State $statePath `
-        -RunnerConfig $runnerConfig -RoutingRoot $allPresetRoot -PhaseId 'read-intake' -WhatIf *> $null
-    Assert-RoutingTest ($LASTEXITCODE -eq 0) 'Valid WhatIf phase failed'
-    Assert-RoutingTest (-not (Test-Path -LiteralPath $defaultOutput)) 'WhatIf created an output directory'
-
-    $unsafeRunState = Get-Content -LiteralPath $statePath -Raw | ConvertFrom-Json -AsHashtable
-    $unsafeRunState.runId = '../outside'
-    $unsafeRunPath = Join-Path $featureDirectory 'unsafe-run-state.json'
-    Write-RoutingJson $unsafeRunPath $unsafeRunState
-    & pwsh -NoProfile -File $runner -Action Run -State $unsafeRunPath `
-        -RunnerConfig $runnerConfig -RoutingRoot $allPresetRoot -PhaseId 'read-intake' -WhatIf *> $null
-    Assert-RoutingTest ($LASTEXITCODE -ne 0) 'Traversal runId was accepted'
-
-    $unsafePhaseState = Get-Content -LiteralPath $statePath -Raw | ConvertFrom-Json -AsHashtable
-    $unsafePhaseState.routing.phases[0].phaseId = '../outside'
-    $unsafePhasePath = Join-Path $featureDirectory 'unsafe-phase-state.json'
-    Write-RoutingJson $unsafePhasePath $unsafePhaseState
-    & pwsh -NoProfile -File $runner -Action Run -State $unsafePhasePath `
-        -RunnerConfig $runnerConfig -RoutingRoot $allPresetRoot -PhaseId '../outside' -WhatIf *> $null
-    Assert-RoutingTest ($LASTEXITCODE -ne 0) 'Traversal phaseId was accepted'
-
     $first = @(& pwsh -NoProfile -File $runner -Action Run -State $statePath `
         -RunnerConfig $runnerConfig -RoutingRoot $allPresetRoot -PhaseId 'read-intake' 2>&1)
     Assert-RoutingTest ($LASTEXITCODE -eq 0) "Fast phase failed: $($first -join [Environment]::NewLine)"

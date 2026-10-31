@@ -169,21 +169,6 @@ try {
         Set-Content -LiteralPath $ManifestPath -Encoding utf8NoBOM
     Invoke-Fixture (Write-JsonFixture 'idle-with-target.json' $ManifestInventory) 2 'RIG017'
 
-    $CompletedManifest = $Manifest.Clone()
-    $CompletedManifest['status'] = 'Completed'
-    $CompletedManifest.orderedTargets = @($Manifest.orderedTargets[0].Clone())
-    $CompletedManifest.orderedTargets[0].status = 'Completed'
-    $CompletedManifest | ConvertTo-Json -Depth 12 |
-        Set-Content -LiteralPath $ManifestPath -Encoding utf8NoBOM
-    Invoke-Fixture (Write-JsonFixture 'legacy-completed-in-active.json' $ManifestInventory) 2 'RIG017'
-
-    $InvalidCompletedManifest = $CompletedManifest.Clone()
-    $InvalidCompletedManifest.orderedTargets = @($CompletedManifest.orderedTargets[0].Clone())
-    $InvalidCompletedManifest.orderedTargets[0].status = 'Eligible'
-    $InvalidCompletedManifest | ConvertTo-Json -Depth 12 |
-        Set-Content -LiteralPath $ManifestPath -Encoding utf8NoBOM
-    Invoke-Fixture (Write-JsonFixture 'completed-with-eligible.json' $ManifestInventory) 2 'RIG017'
-
     $InvalidEmptyManifest = $IdleManifest.Clone()
     $InvalidEmptyManifest.status = 'Ready'
     $InvalidEmptyManifest | ConvertTo-Json -Depth 12 |
@@ -377,7 +362,6 @@ try {
     $UnknownSeries.status = 'Bogus'
     $UnknownSeries | ConvertTo-Json -Depth 12 | Set-Content $ManifestPath -Encoding utf8NoBOM
     Invoke-Fixture (Write-JsonFixture 'unknown-series-state.json' $ManifestInventory) 2 'RIG017'
-    Set-Content -LiteralPath $Second -Value '# Zweites' -Encoding utf8NoBOM
     $UnknownTarget = $MultipleEligible.Clone()
     $UnknownTarget.orderedTargets = @($MultipleEligible.orderedTargets[0].Clone(), $MultipleEligible.orderedTargets[1].Clone())
     $UnknownTarget.orderedTargets[1].status = 'Bogus'
@@ -392,34 +376,6 @@ try {
     Invoke-Fixture (Write-JsonFixture 'aliased-collection-roots.json' $ManifestInventory) 2 'RIG007'
     Remove-Item $ActiveRoot -Force
     New-Item -ItemType Directory -Path $ActiveRoot | Out-Null
-    Copy-Item (Join-Path $ArchiveRoot (Split-Path $Target -Leaf)) $Target
-    # DE: Logische AOC-Pfade werden vor der Collection-Pruefung eindeutig aufgeloest.
-    # EN: Resolve logical AOC paths uniquely before checking the physical collection.
-    $MappedPath = 'requirements/intakes/archive/Lastenheft_Beispiel.001-completed.md'
-    Copy-Item $Target (Join-Path $Root $MappedPath)
-    Remove-Item $Target
-    $Mapped = $Manifest.Clone()
-    $Mapped.status = 'Completed'
-    $Mapped.orderedTargets = @($Manifest.orderedTargets[0].Clone())
-    $Mapped.orderedTargets[0].status = 'Completed'
-    $Mapped | ConvertTo-Json -Depth 12 | Set-Content $ManifestPath -Encoding utf8NoBOM
-    $LifecyclePath = Join-Path $Root 'specs/001-fixture/intake-lifecycle.json'
-    New-Item -ItemType Directory -Path (Split-Path $LifecyclePath -Parent) -Force | Out-Null
-    $Record = @{ originalPath = $Mapped.orderedTargets[0].path; archivedPath = $MappedPath; originalNormalizedSha256 = $Mapped.orderedTargets[0].normalizedSha256 }
-    $Lifecycle = @{ schemaVersion = '1.1'; records = @($Record) }
-    $Lifecycle | ConvertTo-Json -Depth 12 | Set-Content $LifecyclePath -Encoding utf8NoBOM
-    Invoke-Fixture (Write-JsonFixture 'mapped-completed.json' $ManifestInventory) 0 '"activeSeriesTargetCount": 0'
-    $Lifecycle.records = @($Record, $Record.Clone())
-    $Lifecycle | ConvertTo-Json -Depth 12 | Set-Content $LifecyclePath -Encoding utf8NoBOM
-    Invoke-Fixture (Write-JsonFixture 'ambiguous-lifecycle.json' $ManifestInventory) 2 'RIG014'
-    $Lifecycle.records = @($Record)
-    $Record.originalNormalizedSha256 = '0' * 64
-    $Lifecycle | ConvertTo-Json -Depth 12 | Set-Content $LifecyclePath -Encoding utf8NoBOM
-    Invoke-Fixture (Write-JsonFixture 'lifecycle-hash-drift.json' $ManifestInventory) 2 'RIG015'
-    $Record.originalNormalizedSha256 = $Mapped.orderedTargets[0].normalizedSha256
-    $Lifecycle | ConvertTo-Json -Depth 12 | Set-Content $LifecyclePath -Encoding utf8NoBOM
-    Remove-Item (Join-Path $Root $MappedPath)
-    Invoke-Fixture (Write-JsonFixture 'missing-lifecycle-successor.json' $ManifestInventory) 2 'RIG014'
     Write-Output 'PASS: requirements intake governance fixtures (Bash/PowerShell JSON and zero-write parity)'
 }
 finally {

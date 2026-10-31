@@ -10,10 +10,7 @@ $Count = 0
 foreach ($File in Get-ChildItem (Join-Path $Root 'templates') -Filter '*.json' -Recurse) {
     $Data = Get-Content $File.FullName -Raw | ConvertFrom-Json -AsHashtable
     if ($Data.ContainsKey('generator') -and $Data.generator.version -ne $Version) {
-        # DE/EN: This exact historical AOC source template is receipt-bound; new receipts use preset.yml.
-        if ($File.Name -ne 'intake-authoring-receipt-template.json' -or (Get-FileHash $File.FullName).Hash -ne '83B723286EA5BE4C14ECF6B98538193A00651A159237F4D01193AC598056D7C1' -or $Data.generator.version -ne '0.3.1') {
-            throw "Generator version mismatch: $($File.Name)"
-        }
+        throw "Generator version mismatch: $($File.Name)"
     }
     $Count++
 }

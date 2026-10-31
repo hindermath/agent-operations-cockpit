@@ -192,17 +192,13 @@ function Get-AMRPhase {
     Assert-AMRCondition ([string] $StateData.routing.policy -eq 'balanced-v1') 'State.routing.policy muss balanced-v1 sein.'
     Assert-AMRCondition ([string] $StateData.routing.fallbackPolicy -eq 'fail-closed') 'State.routing.fallbackPolicy muss fail-closed sein.'
     Assert-AMRCondition ($StateData.routing.phases -is [object[]]) 'State.routing.phases muss ein Array sein.'
-    $parsedRunId = [Guid]::Empty
-    Assert-AMRCondition ([Guid]::TryParse([string] $StateData.runId, [ref] $parsedRunId) -and
-        $parsedRunId -ne [Guid]::Empty) 'State.runId muss eine nichtleere UUID sein.'
 
     $phaseIds = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
     $selected = $null
     foreach ($phase in @($StateData.routing.phases)) {
         Assert-AMRCondition ($phase -is [hashtable]) 'Jede Routing-Phase muss ein Objekt sein.'
         $currentId = [string] $phase.phaseId
-        Assert-AMRCondition ($currentId -cmatch '^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$') `
-            'Routing phaseId muss eine einzelne sichere Pfadkomponente sein.'
+        Assert-AMRCondition (-not [string]::IsNullOrWhiteSpace($currentId)) 'Routing phaseId fehlt.'
         Assert-AMRCondition ($phaseIds.Add($currentId)) "Doppelte routing phaseId: $currentId"
         Assert-AMRCondition (-not [string]::IsNullOrWhiteSpace([string] $phase.command)) "Routing command fehlt: $currentId"
         Assert-AMRCondition ($script:AllowedRoles -contains [string] $phase.routingRole) "Ungueltige routingRole: $currentId"
@@ -431,6 +427,7 @@ if ([string]::IsNullOrWhiteSpace($OutputDirectory)) {
     $OutputDirectory = Join-Path $repositoryRoot ".specify/runtime/autonomous-routing/$($stateData.runId)"
 }
 $OutputDirectory = [IO.Path]::GetFullPath($OutputDirectory)
+[void](New-Item -ItemType Directory -Path $OutputDirectory -Force)
 $outputFile = Join-Path $OutputDirectory "$PhaseId.result.json"
 $logFile = Join-Path $OutputDirectory "$PhaseId.log.txt"
 $values = @{
@@ -459,7 +456,6 @@ if (-not $PSCmdlet.ShouldProcess("phase '$PhaseId'", "Run fail-closed model pref
 }
 
 try {
-    [void](New-Item -ItemType Directory -Path $OutputDirectory -Force)
     $preflight = Invoke-AMRCommand $runnerProfileData.preflight $values $Worktree
     if ([int] $preflight.exitCode -ne 0) {
         $reason = "Model preflight failed for profile '$profileName' with exit code $($preflight.exitCode)."

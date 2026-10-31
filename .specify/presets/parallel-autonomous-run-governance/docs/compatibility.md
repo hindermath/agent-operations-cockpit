@@ -27,9 +27,6 @@ unverändert.
 `requireAutonomousPreset: false` existiert fuer isolierte interne
 Koordinator-Fixtures. Es ist kein dokumentierter Produktionsmodus und hebt die
 Worker-Governance aus Preset 7 nicht auf.
-Produktive `Start`-, `Resume`- und `Consolidate`-Laeufe sind voruebergehend
-gesperrt. Deterministische Tests nutzen eine temporaere Kopie des Koordinators; der
-produktive Einstiegspunkt besitzt keinen Testschalter.
 
 ### Schema `1.0`
 
@@ -83,9 +80,6 @@ repository. The currently tested pair is Preset 7 `v0.3.6` with Preset 8
 `requireAutonomousPreset: false` exists for isolated internal coordinator
 fixtures. It is not a documented production mode and does not replace Preset 7
 worker governance.
-Production `Start`, `Resume`, and `Consolidate` runs are temporarily suspended.
-Deterministic tests use a temporary coordinator copy; the production entry
-point has no test switch.
 
 ### Schema compatibility
 

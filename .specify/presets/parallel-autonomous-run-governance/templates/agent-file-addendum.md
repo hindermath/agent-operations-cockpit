@@ -1,15 +1,5 @@
 ## Parallele autonome Lauf-Governance / Parallel Autonomous Run Governance
 
-Produktive `Start`-, `Resume`- und `Consolidate`-Aktionen sind bis zu einer
-isolierten Worker-Laufzeit gesperrt. Agenten duerfen diese Aktionen auch nicht
-direkt ausfuehren. `Validate`, `Status` und `Stop` bleiben ueber den
-Koordinator verfuegbar. Die folgenden Ausfuehrungsregeln sind derzeit inaktiv.
-
-*Production Start, Resume and Consolidate are suspended until workers have an
-isolated runtime. Agents must not perform these actions directly. Coordinator
-Validate, Status and Stop remain available. The execution rules below are
-currently dormant.*
-
 For schema-1.2 campaigns, enforce an active `intakeReview` gate before creating
 worktrees. One semantic target review may cover byte-equivalent repeated worker
 inputs, but every worker still needs an applicability row.

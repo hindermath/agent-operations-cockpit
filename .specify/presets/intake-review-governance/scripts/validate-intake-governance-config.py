@@ -103,41 +103,6 @@ def normalized_sha256(path: Path) -> str:
     return hashlib.sha256(normalized_bytes(path)).hexdigest()
 
 
-def resolve_lifecycle_target(repo: Path, logical_path: str, expected_hash: str) -> Path:
-    """Resolve one logical intake path through exactly one lifecycle record."""
-    matches: list[dict] = []
-    for lifecycle_path in sorted((repo / "specs").glob("*/intake-lifecycle.json")):
-        lifecycle = load_json(lifecycle_path)
-        records = lifecycle.get("records")
-        if lifecycle.get("schemaVersion") != "1.1" or not isinstance(records, list):
-            fail("RIG014", f"invalid lifecycle contract: {lifecycle_path.relative_to(repo)}")
-        matches.extend(
-            record for record in records
-            if isinstance(record, dict) and record.get("originalPath") == logical_path
-        )
-    if not matches:
-        return repo / logical_path
-    if len(matches) != 1:
-        fail("RIG014", f"ambiguous lifecycle resolution for {logical_path}")
-    record = matches[0]
-    archived_path = record.get("archivedPath")
-    lifecycle_hash = record.get("originalNormalizedSha256")
-    if not isinstance(archived_path, str) or not relative(archived_path):
-        fail("RIG014", f"invalid archivedPath for {logical_path}")
-    if lifecycle_hash != expected_hash:
-        fail("RIG015", f"lifecycle hash drift for {logical_path}")
-    original_file = repo / logical_path
-    archived_file = repo / archived_path
-    if original_file.is_file() == archived_file.is_file():
-        fail("RIG014", f"lifecycle requires exactly one physical target for {logical_path}")
-    resolved = original_file if original_file.is_file() else archived_file
-    if not resolved.resolve().is_relative_to(repo):
-        fail("RIG004", "series target resolves outside the repository")
-    if normalized_sha256(resolved) != expected_hash:
-        fail("RIG015", f"resolved target hash drift for {logical_path}")
-    return resolved
-
-
 def intake_name_matches(name: str, pattern: str) -> bool:
     prefix, suffix = pattern.split("<slug>", 1)
     return name.startswith(prefix) and name.endswith(suffix) and len(name) > len(prefix) + len(suffix)
@@ -171,9 +136,8 @@ def validate_series_manifest(
     )
     active_targets: set[str] = set()
     target_paths: list[str] = []
-    physical_target_paths: list[str] = []
-    eligible: list[str] = []
     target_statuses: dict[str, str] = {}
+    eligible: list[str] = []
     for index, target in enumerate(targets):
         if not isinstance(target, dict):
             fail("RIG014", f"orderedTargets[{index}] must be an object")
@@ -182,17 +146,18 @@ def validate_series_manifest(
         if target_path in target_paths:
             fail("RIG013", f"duplicate active target {target_path}")
         target_paths.append(target_path)
+        target_file = repo / target_path
+        # DE: Vor dem Lesen verhindern wir, dass Symlinks die Repository-Grenze verlassen.
+        # EN: Check containment before reading so symlinks cannot cross the repository boundary.
+        if not target_file.resolve().is_relative_to(repo):
+            fail("RIG004", "series target resolves outside the repository")
+        if not target_file.is_file():
+            fail("RIG014", f"missing active target {target_path}")
         expected_hash = required_text(target, "normalizedSha256", "RIG015")
         if not re.fullmatch(r"[0-9a-f]{64}", expected_hash):
             fail("RIG015", f"invalid normalizedSha256 for {target_path}")
-        target_file = resolve_lifecycle_target(repo, target_path, expected_hash)
-        if not target_file.is_file():
-            fail("RIG014", f"missing active target {target_path}")
-        if not target_file.resolve().is_relative_to(repo):
-            fail("RIG004", "series target resolves outside the repository")
         if normalized_sha256(target_file) != expected_hash:
             fail("RIG015", f"hash drift for {target_path}")
-        physical_target_paths.append(target_file.relative_to(repo).as_posix())
         status = required_text(target, "status", "RIG017")
         if status not in {"Pending", "Blocked", "Eligible", "Active", "Completed", "Withdrawn"}:
             fail("RIG017", f"unsupported target status: {target_path}")
@@ -215,12 +180,10 @@ def validate_series_manifest(
         if in_active and resolved_target.is_relative_to(archive_dir.resolve()):
             fail("RIG004", "active target resolves into the archive collection")
         if in_active:
-            active_targets.add(target_file.relative_to(repo).as_posix())
+            active_targets.add(target_path)
         if status == "Eligible":
             eligible.append(target_path)
 
-    if len(physical_target_paths) != len(set(physical_target_paths)):
-        fail("RIG013", "multiple logical targets resolve to the same physical intake")
     if inventory_mode == "DirectoryStrict" and active_targets != active_paths:
         missing = sorted(active_paths - active_targets)
         extra = sorted(active_targets - active_paths)

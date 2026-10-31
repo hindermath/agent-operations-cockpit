@@ -6,14 +6,12 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $presetRoot = Split-Path -Parent $PSScriptRoot
-$productionCoordinator = Join-Path $presetRoot 'scripts/orchestrate-parallel-autonomous-runs.ps1'
+$coordinator = Join-Path $presetRoot 'scripts/orchestrate-parallel-autonomous-runs.ps1'
 $fixtureWorker = Join-Path $PSScriptRoot 'fixture-worker.ps1'
 $fixtureProvider = Join-Path $PSScriptRoot 'fixture-provider.ps1'
 $fixturePostMerge = Join-Path $PSScriptRoot 'fixture-post-merge.ps1'
 $tempRoot = Join-Path ([IO.Path]::GetTempPath()) "parallel-autonomous-v2-tests-$([guid]::NewGuid())"
 [void](New-Item -ItemType Directory -Path $tempRoot)
-$coordinator = & (Join-Path $PSScriptRoot 'new-fixture-coordinator.ps1') `
-    -Source $productionCoordinator -Destination (Join-Path $tempRoot 'fixture-coordinator.ps1')
 
 function Assert-Test {
     param([bool] $Condition, [string] $Message)
