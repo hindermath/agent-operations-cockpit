@@ -344,14 +344,6 @@ implementation or remote authority. `DirectoryStrict` validates a dedicated
 active directory; `SeriesManifest` supports established flat or mixed layouts
 without trusting manual counts.*
 
-Eine terminale `Completed`-Serie besitzt genau null `Eligible`-Kandidaten und
-ist nur gültig, wenn jedes deklarierte Ziel `Completed` ist. Für alle nicht
-terminalen Serienzustände bleibt genau ein `Eligible`-Kandidat erforderlich.
-
-*A terminal `Completed` Series has exactly zero `Eligible` candidates and is
-valid only when every declared target is `Completed`. Every non-terminal
-Series state still requires exactly one `Eligible` candidate.*
-
 ## Status / Statuspruefung
 
 ```text
@@ -490,26 +482,3 @@ prueft den gueltigen Quellenumzug und eine abweichende Quellhash-Bindung.
 *The same unique archive proof applies to missing repository file sources in
 historical receipts. The recorded source hash must still match; other missing
 sources remain errors. Lifecycle tests cover valid source archival and hash drift.*
-
-## Lokale gebundene Vorlage / Locally bound template
-
-Die lokal erweiterte `templates/intake-authoring-receipt-template.json` ist eine
-hashgebundene Quelle des vorhandenen META-LH-03-Receipts. Sie bleibt einschliesslich
-ihres historischen Generator-Versionsfelds unveraendert. Fuer neue Receipts ist
-`generator.version` aus dem installierten `preset.yml` zu uebernehmen (0.3.4),
-nicht aus diesem historischen Eingabebeleg. Details und Revalidierung stehen in
-`docs/maintenance/intake-lifecycle-fleet-rollout.md` an der Repository-Wurzel.
-
-The locally extended receipt template is a hash-bound source of the existing
-META-LH-03 receipt and preserves its historical generator version. New receipts
-must set `generator.version` from the installed `preset.yml` (0.3.4), rather than
-copying the historical input value. The repository maintenance record documents
-this local exception and receipt revalidation.
-
-Lokale Quellbindung / Local source binding: Auch templates/field-validation-summary.md
-bleibt wegen eines aktuellen historischen Authoring-Receipts byteidentisch auf
-seiner Quellversion 0.3.1. Zusammen mit der Receipt-JSON-Vorlage ist dies eine
-absichtliche lokale Ausnahme; aktuelle Release-Identitaet ist preset.yml (0.3.4).
-Both the field-validation summary and receipt JSON template remain exact historical
-receipt-bound sources. Their 0.3.1 source labels are intentional local exceptions;
-new evidence records the installed release from preset.yml (0.3.4).

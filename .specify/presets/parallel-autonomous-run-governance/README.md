@@ -105,18 +105,14 @@ Fuer regulaere Kampagnen gilt:
      -RunnerConfig ~/.config/spec-kit/parallel-runner-profiles.json
    ```
 
-5. Produktive Starts, Resume und Consolidate bleiben bis zu einer isolierten
-   Worker-Laufzeit gesperrt. `Validate`, `Status` und `Stop` bleiben verfuegbar.
-
-*Production Start, Resume and Consolidate remain suspended until workers have
-an isolated runtime. Validate, Status and Stop remain available.*
+5. Erst danach den Start ausdruecklich delegieren.
 
 ### Handbuch
 
 | Kapitel | Inhalt |
 |---|---|
 | [Dokumentationsstart](docs/README.md) | Rollenbasierter Wegweiser |
-| [Erste Kampagne](docs/getting-started.md) | Installation, Preflight und aktuelle Sperre |
+| [Erste Kampagne](docs/getting-started.md) | Installation, Preflight und sicherer Start |
 | [Topologien und Scheduling](docs/topologies-and-scheduling.md) | Vier Topologien, DAG, Handoffs und Parallelitaet |
 | [Manifest und Runner](docs/manifest-and-runners.md) | Schema, Profile, Agenten und Isolation |
 | [Lebenszyklus und Operationen](docs/lifecycle-and-operations.md) | Status, Stop und Resume |
@@ -154,17 +150,15 @@ For regular campaigns:
 
 Install Preset 7 at priority `70`, then Preset 8 at priority `80`. Verify both
 with `specify preset info`, derive the campaign and local runner files from the
-templates, and run coordinator action `Validate`. Production `Start`, `Resume`
-and `Consolidate` are currently suspended
-until workers have an isolated runtime. Only `Validate`, `Status` and `Stop`
-remain available through the coordinator.
+templates, and run coordinator action `Validate` before explicitly delegating
+`Start`.
 
 ### Manual
 
 | Chapter | Subject |
 |---|---|
 | [Documentation home](docs/README.md) | Role-based documentation map |
-| [First campaign](docs/getting-started.md) | Installation, preflight, and current suspension |
+| [First campaign](docs/getting-started.md) | Installation, preflight, and safe start |
 | [Topologies and scheduling](docs/topologies-and-scheduling.md) | Four topologies, DAG, handoffs, and concurrency |
 | [Manifest and runners](docs/manifest-and-runners.md) | Schema, profiles, agents, and isolation |
 | [Lifecycle and operations](docs/lifecycle-and-operations.md) | Status, stop, and resume |
