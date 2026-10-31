@@ -64,6 +64,22 @@ passed. Documentation Impact: UpdateRequired; the man page documents the safe
 mode boundary. Statistics provide Git-based transparency, not measured AI
 productivity.
 
+### 2026-10-31 - Security-Remediation / Security remediation
+
+DE: Lokale Sicherheitsgrenzen fuer Wartung, Lernpakete und parallele
+Kampagnen gehaertet. Der Paket-Freigabepfad hat einen verpflichtenden
+Secret-Scan; produktive Parallel-Kampagnen bleiben bis zur isolierten
+Worker-Laufzeit gesperrt. Documentation Impact: UpdateRequired. Das
+generierte Profil 2 wurde nach dem lokalen Code-Commit aktualisiert;
+Security-Diff-Scans und gezielte Tests liefern die technische Evidence.
+
+EN: Local security boundaries for maintenance, learning packages and
+parallel campaigns were hardened. Package release now requires a secret
+scan; production parallel campaigns remain suspended until workers have an
+isolated runtime. Documentation Impact: UpdateRequired. Profile 2 was
+rendered after the local code commit; security diff scans and focused tests
+provide technical evidence.
+
 ## Gesamtstatistik / Overall Statistics
 
 <!-- project-statistics-v2:begin -->
@@ -74,27 +90,27 @@ Profil 2 verwendet Git-getrackte Textdateien und sichtbare Git-Aktivitaet. Die W
 
 | Kennzahl / Metric | Wert / Value |
 |---|---:|
-| Textbasis / Text base | 363806 lines |
-| Textdateien / Text files | 1892 |
+| Textbasis / Text base | 364131 lines |
+| Textdateien / Text files | 1894 |
 | Beobachtbarer Zeitraum / Observable period | 2025-11-02..2026-10-31 |
 | Aktivtage / Active days | 23 |
-| Relevante Commits / Relevant commits | 166 |
-| Zeilen je Aktivtag / Lines per active day | 15817.7 |
+| Relevante Commits / Relevant commits | 167 |
+| Zeilen je Aktivtag / Lines per active day | 15831.8 |
 | Peak-Tag im Fenster / Peak day in window | 2026-07-31 / 132656 |
 | Peak-Woche im Fenster / Peak week in window | 2026-07-26 / 135472 |
 | Laengste Serie / Longest streak | 3 days |
-| Speedup vs. 80 lines/day | 197.7x |
-| Speedup vs. 125 lines/day | 126.5x |
-| Methodik / Methodology | v2; source `d62f0831daa3` |
+| Speedup vs. 80 lines/day | 197.9x |
+| Speedup vs. 125 lines/day | 126.7x |
+| Methodik / Methodology | v2; source `b31f162031bc` |
 
 ### Artefaktmix / Artifact Mix
 
 ```text
 Produktiv / Production          [#...................]   2.9% | 10650
-Tests                           [###.................]  13.6% | 49536
-Dokumentation / Documentation   [########............]  42.4% | 154230
-Skripte / Scripts               [###.................]  14.7% | 53331
-Konfiguration / Configuration   [#####...............]  26.4% | 95916
+Tests                           [###.................]  13.7% | 49715
+Dokumentation / Documentation   [########............]  42.4% | 154279
+Skripte / Scripts               [###.................]  14.7% | 53428
+Konfiguration / Configuration   [#####...............]  26.3% | 95916
 Daten und Medien / Data and media [....................]   0.0% | 0
 Sonstiger Text / Other text     [#...................]   0.0% | 143
 ```
@@ -202,8 +218,8 @@ Die festen Slots halten den Phasenvergleich auch bei fehlenden oder spaeter erga
 
 ```text
 Scale: 0..200x
-80 lines/day       [####################] 197.7x
-125 lines/day      [#############.......] 126.5x
+80 lines/day       [####################] 197.9x
+125 lines/day      [#############.......] 126.7x
 ```
 
 Die Faktoren vergleichen sichtbare Lieferdichte mit den dokumentierten manuellen Referenzen. Sie messen keine Arbeitszeit.
@@ -216,7 +232,7 @@ Die Faktoren vergleichen sichtbare Lieferdichte mit den dokumentierten manuellen
 Scale: 0..20000 lines/day
 Experienced manual [#...................] 80
 Thorsten solo      [#...................] 125
-Visible repository [################....] 15817.7
+Visible repository [################....] 15831.8
 ```
 
 Die gemeinsame Skala vergleicht Referenzen und sichtbare Lieferdichte. Sie schreibt die Git-Aktivitaet keiner Person oder KI pauschal zu.
@@ -242,6 +258,6 @@ DE: Das Fenster beginnt am 2025-11-02 und endet am 2026-10-31. Es enthaelt 23 ak
 | 2026-07 | 132656 |
 | 2026-08 | 100244 |
 | 2026-09 | 145646 |
-| 2026-10 | 4575 |
+| 2026-10 | 4950 |
 
 <!-- project-statistics-v2:end -->
