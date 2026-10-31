@@ -54,6 +54,21 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
             outside = root / "outside.md"
             outside.write_text("private\n", encoding="utf-8")
             patch = root / "memory-patch.md"
+            patch.write_text("### Target: README.md\n+++ unexpected\n", encoding="utf-8")
+            original_head = subprocess.run(["git", "-C", str(repository), "rev-parse", "HEAD"],
+                                           capture_output=True, text=True, check=True).stdout.strip()
+            for command in (["bash", str(LIBRARY.parent / "check-homogeneity.sh"),
+                             "--dry-run", "--apply-patch", str(patch), "--yes", str(repository)],
+                            ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "check-homogeneity.ps1"),
+                             "-DryRun", "-ApplyPatch", str(patch), "-Yes", "-TargetDir", str(repository)]):
+                if not shutil.which(command[0]):
+                    continue
+                result = subprocess.run(command, capture_output=True, text=True, check=False)
+                self.assertNotEqual(result.returncode, 0, result.stdout)
+                self.assertEqual((repository / "README.md").read_text(encoding="utf-8"), "original\n")
+                current_head = subprocess.run(["git", "-C", str(repository), "rev-parse", "HEAD"],
+                                              capture_output=True, text=True, check=True).stdout.strip()
+                self.assertEqual(current_head, original_head)
             for command in (["bash", str(LIBRARY.parent / "check-homogeneity.sh"),
                              "--apply-patch", str(patch), "--yes", str(repository)],
                             ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "check-homogeneity.ps1"),

@@ -13,7 +13,22 @@ auf Base-HEAD `8e3c737e3fcba1ba8b0f338bebb135bf7339acaf` sowie Standardscan
 `58da765fd1fbe1ac8089ca441c1b6ac18000bea0`, Diff-Scan
 `f94c7e70-9790-46b1-a165-aea0eccc3c27` auf dem zweiten Patch und erneutem
 Standardscan `c04be6bb-61a9-4fae-95a1-06ae03cf86d4` auf Commit
-`da91bf6014b22275be7b2779c6649802f96b7b18`. Publikationsstand:
+`da91bf6014b22275be7b2779c6649802f96b7b18`.
+Der dritte Standardscan `6d06f2fb-3793-4ed8-bb01-0de02426a963` auf
+`d2914d0709993a95e0f2a7a7ead40224e67621dd` meldete drei mittlere
+Befunde bei teilweiser Abdeckung. Dry-run-Vorrang und Worker-Ressourcenlimits
+werden in einem weiteren lokalen Patch korrigiert; die Trennung der
+Worker-Rechte bleibt vor Veröffentlichung offen. / The third Standard scan
+reported three medium findings with partial coverage. A further local patch
+addresses dry-run precedence and worker resource limits; worker authority
+separation remains open before publication.
+Der anschliessende lokale Diff-Scan `88561811-ce37-4bc3-93fa-53b8f27faba2`
+fand einen weiteren bedingten Laufzeitfehler in der Log-Behandlung; der
+Koordinator beendet jetzt auch bei Log-Fehlern den betroffenen Worker und ein
+gezielter Fixture-Lauf prueft diesen Pfad. / The subsequent local diff scan
+found one conditional log-handling runtime issue. The coordinator now stops
+the affected worker on log errors, with a targeted fixture covering that path.
+Publikationsstand:
 `PendingPublication`; AEPS-Upstream:
 `NotApplicable`. Deduplizierung: Scan-ID + Datum + Remediation-Receipt.
 
@@ -70,9 +85,11 @@ publication remain pending at receipt time.*
 Documentation Impact: `UpdateRequired`. Quelle: privater Scan und lokaler
 Patch; Owner: AOC Repository Owner. Aktualisiert wurden
 `docs/man/maintain-workspace-storage.1.md`, die generierte
-`docs/scripts/reference.md`, dieses Receipt und das AEPS-Ledger. Die
+`docs/scripts/reference.md`, die Parallel-Runner-Dokumentation, die
+Verteilungsmanifeste, dieses Receipt und das AEPS-Ledger. Die
 öffentlichen Dokumente enthalten keine Ausnutzungsdetails.
 
 *Documentation Impact is `UpdateRequired`: the storage manual, generated script
-reference, this receipt and the AEPS ledger describe the changed behavior and
-verification without publishing exploit details.*
+reference, parallel runner guide, distribution manifests, this receipt and
+the AEPS ledger describe changed behavior and verification without publishing
+exploit details.*

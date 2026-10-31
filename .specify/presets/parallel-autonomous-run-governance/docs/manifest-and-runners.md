@@ -119,6 +119,9 @@ erteilt keine pauschale Netzwerk- oder Schreibberechtigung.
 `RuntimeRoot` enthaelt Worktrees, Locks, Logs und Prozessresultate. Dieser
 Bereich bleibt ausserhalb versionierter Feature-Artefakte. Der normale Checkout
 wird weder gewechselt noch zurueckgesetzt.
+Jeder Worker ist auf vier Stunden Laufzeit und je 16 MiB Standardausgabe und
+Fehlerausgabe begrenzt. Bei Ueberschreitung beendet der Koordinator den
+Prozess und markiert den Worker als fehlgeschlagen.
 
 ## English
 
@@ -156,3 +159,6 @@ optional status metadata and never guess another agent's configuration.
 
 `RuntimeRoot` contains worktrees, locks, logs, and process results outside
 tracked feature artifacts. The normal checkout is never switched or reset.
+Each worker has a four-hour runtime limit and a 16 MiB limit for each of
+standard output and standard error. If a limit is exceeded, the coordinator
+terminates the process and marks the worker failed.

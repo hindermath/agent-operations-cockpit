@@ -78,6 +78,10 @@ if (-not (Get-Command rg -ErrorAction SilentlyContinue)) {
 
 # ─── Apply-Patch Mode ────────────────────────────────────────────────────────
 if ($ApplyPatch) {
+    if ($DryRun) {
+        Write-Error 'FATAL: -DryRun and -ApplyPatch cannot be combined / duerfen nicht kombiniert werden'
+        exit 2
+    }
     if (-not (Test-Path -LiteralPath $ApplyPatch -PathType Leaf)) {
         Write-Error "FATAL: patch file not found: $ApplyPatch"
         exit 2

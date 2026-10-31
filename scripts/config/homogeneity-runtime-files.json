@@ -12,6 +12,10 @@
       "executable": false
     },
     {
+      "path": "scripts/lib/apply_memory_patch.py",
+      "executable": false
+    },
+    {
       "path": "scripts/lib/hg-a11y.ps1",
       "executable": false
     },

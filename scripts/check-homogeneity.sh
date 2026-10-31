@@ -88,6 +88,10 @@ fi
 # ─── Apply-Patch Mode ────────────────────────────────────────────────────────
 
 if [ -n "$OPT_APPLY_PATCH" ]; then
+  if $OPT_DRY_RUN; then
+    echo "FATAL: --dry-run and --apply-patch cannot be combined / duerfen nicht kombiniert werden" >&2
+    exit 2
+  fi
   patch_file="${OPT_APPLY_PATCH/#\~/$HOME}"
   if ! [ -f "$patch_file" ]; then
     echo "FATAL: patch file not found: ${patch_file}" >&2

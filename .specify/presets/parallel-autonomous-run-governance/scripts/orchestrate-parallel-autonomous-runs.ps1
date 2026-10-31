@@ -1000,6 +1000,38 @@ function Invoke-PARProcessAsync {
         [Parameter(Mandatory)][string] $StderrPath
     )
 
+    if (-not ('PARBoundedOutput' -as [type])) {
+        Add-Type -TypeDefinition @'
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
+
+public static class PARBoundedOutput
+{
+    public static async Task CopyAsync(Stream input, string path, Process process, int maximumBytes)
+    {
+        using (var output = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read, 8192, true))
+        {
+            var buffer = new byte[8192];
+            var written = 0;
+            int count;
+            while ((count = await input.ReadAsync(buffer, 0, buffer.Length)) != 0)
+            {
+                if (count > maximumBytes - written)
+                {
+                    try { if (!process.HasExited) process.Kill(true); }
+                    catch (InvalidOperationException) { }
+                    throw new IOException("Worker output limit exceeded.");
+                }
+                await output.WriteAsync(buffer, 0, count);
+                written += count;
+            }
+        }
+    }
+}
+'@
+    }
     $psi = [Diagnostics.ProcessStartInfo]::new()
     $psi.FileName = $Executable
     $psi.WorkingDirectory = $WorkingDirectory
@@ -1014,10 +1046,12 @@ function Invoke-PARProcessAsync {
     Assert-PARCondition $process.Start() "Runner konnte nicht gestartet werden: $Executable"
     return @{
         Process = $process
-        StdoutTask = $process.StandardOutput.ReadToEndAsync()
-        StderrTask = $process.StandardError.ReadToEndAsync()
+        StdoutTask = [PARBoundedOutput]::CopyAsync($process.StandardOutput.BaseStream, $StdoutPath, $process, 16777216)
+        StderrTask = [PARBoundedOutput]::CopyAsync($process.StandardError.BaseStream, $StderrPath, $process, 16777216)
         StdoutPath = $StdoutPath
         StderrPath = $StderrPath
+        StartedAt = [DateTime]::UtcNow
+        TerminationReason = ''
     }
 }
 
@@ -1031,10 +1065,11 @@ function Complete-PARWorker {
     )
 
     $process = $RunningEntry.Process.Process
-    $stdout = $RunningEntry.Process.StdoutTask.GetAwaiter().GetResult()
-    $stderr = $RunningEntry.Process.StderrTask.GetAwaiter().GetResult()
-    $stdout | Set-Content -LiteralPath $RunningEntry.Process.StdoutPath -Encoding utf8NoBOM
-    $stderr | Set-Content -LiteralPath $RunningEntry.Process.StderrPath -Encoding utf8NoBOM
+    $outputTasks = [Threading.Tasks.Task[]]@(
+        $RunningEntry.Process.StdoutTask,
+        $RunningEntry.Process.StderrTask
+    )
+    [Threading.Tasks.Task]::WhenAll($outputTasks).GetAwaiter().GetResult()
     $WorkerState.exitCode = $process.ExitCode
     $WorkerState.processId = $null
 
@@ -1406,7 +1441,24 @@ Do not infer remote, merge, bypass, cancellation, secret, or provider authority.
             foreach ($workerId in @($running.Keys)) {
                 $entry = $running[$workerId]
                 if (-not $entry.Process.Process.HasExited) {
-                    continue
+                    if ($entry.Process.StdoutTask.IsFaulted -or $entry.Process.StderrTask.IsFaulted) {
+                        $entry.Process.TerminationReason = 'Worker output capture failed.'
+                        try { $entry.Process.Process.Kill($true) }
+                        catch [InvalidOperationException] {
+                            if (-not $entry.Process.Process.HasExited) { throw }
+                        }
+                    } elseif (([DateTime]::UtcNow - $entry.Process.StartedAt).TotalHours -ge 4) {
+                        $entry.Process.TerminationReason = 'Worker exceeded the four-hour runtime limit.'
+                        try { $entry.Process.Process.Kill($true) }
+                        catch [InvalidOperationException] {
+                            if (-not $entry.Process.Process.HasExited) { throw }
+                        }
+                    } else {
+                        continue
+                    }
+                    if (-not $entry.Process.Process.HasExited) {
+                        continue
+                    }
                 }
                 $workerState = Get-PARWorkerState $campaignState $workerId
                 try {
@@ -1414,6 +1466,10 @@ Do not infer remote, merge, bypass, cancellation, secret, or provider authority.
                 } catch {
                     $workerState.status = 'Failed'
                     $workerState.summary = $_.Exception.Message
+                }
+                if ($entry.Process.TerminationReason) {
+                    $workerState.status = 'Failed'
+                    $workerState.summary = $entry.Process.TerminationReason
                 }
                 Add-PARStateEvent $campaignState 'WorkerFinished' $workerState.summary `
                     -WorkerId $workerId -Attempt ([int] $workerState.executionAttempt)

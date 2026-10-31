@@ -169,11 +169,49 @@ try {
         Get-TestWorker "replicated-0$_" (Initialize-TestRepository "replicated-repo-0$_")
     }
     $replicated = Invoke-Campaign (Get-TestCampaign 'replicated' 'ReplicatedTargets' $replicatedWorkers) 'replicated'
-    Assert-Test ($replicated.Data.status -eq 'Completed') 'ReplicatedTargets did not complete'
+    Assert-Test ($replicated.Data.status -eq 'Completed') "ReplicatedTargets did not complete: $($replicated.Data.workers | ConvertTo-Json -Compress -Depth 10)"
     Assert-Test ($replicated.Data.maximumObservedConcurrency -ge 2) 'ReplicatedTargets did not prove concurrency'
     $replicatedPrompt = Get-Content -LiteralPath (Join-Path $replicated.Runtime 'prompts/replicated-01.txt') -Raw
     Assert-Test ($replicatedPrompt.Contains('Fixture operator instruction.')) 'Campaign operator instructions were not routed to the worker'
     Assert-Test ($replicatedPrompt.Contains("Remain on the assigned branch '")) 'Assigned branch boundary was not routed to the worker'
+
+    $runnerData.profiles.flood = [ordered]@{
+        executable = 'pwsh'
+        arguments = @(
+            '-NoProfile', '-File', $fixtureWorker,
+            '-CampaignId', '{campaignId}', '-WorkerId', '{workerId}',
+            '-RunId', '{runId}', '-Worktree', '{worktree}',
+            '-ResultFile', '{resultFile}', '-Mode', 'Flood'
+        )
+    }
+    Write-Data $script:runnerConfig $runnerData
+    $floodCampaign = Get-TestCampaign 'bounded-output' 'ReplicatedTargets' @(
+        (Get-TestWorker 'flood-a' (Initialize-TestRepository 'flood-repo'))
+    )
+    $floodCampaign.runnerProfile = 'flood'
+    $flood = Invoke-Campaign $floodCampaign 'bounded-output'
+    Assert-Test ($flood.Data.status -eq 'Failed') 'Output flood did not fail the campaign'
+    $floodLog = Join-Path $flood.Runtime 'logs/flood-a.out.log'
+    Assert-Test ((Get-Item -LiteralPath $floodLog).Length -le 16777216) 'Output log exceeded its byte limit'
+
+    $faultCampaign = Get-TestCampaign 'log-failure' 'ReplicatedTargets' @(
+        (Get-TestWorker 'fault-a' (Initialize-TestRepository 'fault-repo'))
+    )
+    $faultCampaign.runnerProfile = 'slow'
+    $faultRoot = Join-Path $tempRoot 'log-failure'
+    $faultRuntime = Join-Path $faultRoot 'runtime'
+    [void](New-Item -ItemType Directory -Path (Join-Path $faultRuntime 'logs/fault-a.out.log') -Force)
+    $faultManifest = Join-Path $faultRoot 'campaign.json'
+    $faultState = Join-Path $faultRoot 'state.json'
+    Write-Data $faultManifest $faultCampaign
+    $faultStartedAt = [DateTime]::UtcNow
+    & pwsh -NoProfile -File $coordinator -Action Start -Manifest $faultManifest `
+        -RunnerConfig $script:runnerConfig -State $faultState -RuntimeRoot $faultRuntime | Out-Null
+    Assert-Test ($LASTEXITCODE -eq 0) 'Log I/O failure aborted the coordinator'
+    Assert-Test (([DateTime]::UtcNow - $faultStartedAt).TotalSeconds -lt 10) `
+        'Log I/O failure did not stop the worker promptly'
+    $faultData = Get-Content -LiteralPath $faultState -Raw | ConvertFrom-Json
+    Assert-Test ($faultData.status -eq 'Failed') 'Log I/O failure did not fail the campaign'
 
     $independentRepo = Initialize-TestRepository 'independent-repo'
     $independentWorkers = 1..3 | ForEach-Object { Get-TestWorker "independent-0$_" $independentRepo }
