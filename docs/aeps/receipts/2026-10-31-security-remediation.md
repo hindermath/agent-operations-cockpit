@@ -387,3 +387,33 @@ Gitleaks found no secret in the commits being pushed. The versioned hook now
 exempts only those four exact metadata lines from its regex fallback; other
 matches in that file still block. Documentation Impact is `UpdateRequired`;
 the hook and this receipt were updated.*
+
+Der Standardscan `667ff725-c848-454f-b4cf-06370ec39437` auf `1ec2245`
+meldete zwei weitere Pre-Push-Befunde bei teilweiser Repository-Abdeckung.
+Ein neuer Ziel-Ref konnte den Commit-Scan ueberspringen, wenn dessen Commit
+bereits auf einem anderen Remote lag. Fehlendes `gitleaks` liess ausserdem
+einen Regex-Scan der aktuellen Arbeitsdateien zu, der nicht alle zu pushenden
+Commit-Versionen erfasst. Der Hook ermittelt fuer neue Refs jetzt die
+tatsaechlichen Referenzen der von Git uebergebenen Push-URL, prueft daraus
+die Commit-Range und
+bricht bei fehlendem Scanner oder fehlgeschlagener Range-Ermittlung ab.
+Isolierte Regressionen pruefen den Cross-Remote-Fall, abweichende Fetch- und
+Push-URLs, den fehlenden Scanner und eine nicht verfuegbare Remote-SHA.
+Documentation Impact: `UpdateRequired`;
+Quelle: privater Standardscan; Owner: AOC Repository Owner; aktualisiert
+wurden Hook, Regressionstests und dieses Receipt. Die Evidence bleibt
+projektspezifisch; keine AEPS-Promotion oder Upstream-Aktion folgt daraus.
+
+*The Standard scan on `1ec2245` reported two further pre-push findings with
+partial repository coverage. A new destination ref could skip commit scanning
+when its commit was reachable from another remote. Missing Gitleaks also
+allowed a regex scan of current worktree files, which cannot cover every
+pushed commit version. The hook now obtains the actual refs from the push URL
+provided by Git for new branches, derives the commit range from them, and
+aborts when
+the scanner or range inspection fails. Isolated regressions cover the
+cross-remote case, distinct fetch and push URLs, missing scanner, and an
+unavailable remote SHA.
+Documentation Impact is `UpdateRequired`; the hook, regression tests and this
+receipt were updated. Evidence remains project-specific, with no AEPS
+promotion or upstream action.*
