@@ -14,6 +14,7 @@ HOOK = Path(__file__).resolve().parents[1] / "hooks" / "pre-push"
 ZERO_SHA = "0" * 40
 
 
+@unittest.skipIf(os.name == "nt", "Bash pre-push hook requires POSIX")
 class PrePushHookTests(unittest.TestCase):
     def setUp(self) -> None:
         self.temporary = tempfile.TemporaryDirectory()
