@@ -263,8 +263,10 @@ remote_platform_for_dir() {
     if [ "$KEEP_REMOTE" -eq 1 ]; then
       echo "$configured_platform"
     else
-      echo "$configured_platform ${APPROVED_REMOTE_IDENTITIES[$dir]:-unsicheres Ziel / unsafe target}"
+      echo "${APPROVED_REMOTE_IDENTITIES[$dir]:-unsicheres Ziel / unsafe target}" | tr '|' ' '
     fi
+  elif [ "$KEEP_REMOTE" -eq 0 ]; then
+    echo "${APPROVED_REMOTE_IDENTITIES[$dir]:-none}" | tr '|' ' '
   else
     parsed="$(python3 "$SCRIPT_DIR/lib/parse_teardown_remote.py" "$remote_url" 2>/dev/null || true)"
     case "${parsed%%$'\t'*}" in
@@ -288,11 +290,13 @@ forgejo_target_for_dir() {
 }
 
 prepare_remote_targets() {
-  local dir="" platform="" identity=""
+  local dir="" platform="" identity="" origin="" parsed=""
   [ "$KEEP_REMOTE" -eq 0 ] || return 0
   for dir in "${LEVEL2_PROJECTS[@]}" "$WORKSPACE_DIR"; do
+    APPROVED_REMOTE_IDENTITIES["$dir"]="none"
     [ -d "$dir/.git" ] || continue
-    [ -n "$(git -C "$dir" remote get-url origin 2>/dev/null || true)" ] || continue
+    origin="$(git -C "$dir" remote get-url origin 2>/dev/null || true)"
+    [ -n "$origin" ] || continue
     platform="$(git -C "$dir" config --local --get home-baseline.remote-platform 2>/dev/null || true)"
     case "$platform" in
       forgejo|codeberg)
@@ -300,7 +304,14 @@ prepare_remote_targets() {
           echo "Fehler: Forgejo/Codeberg-Ziel stimmt nicht mit origin ueberein / Error: target does not match origin: $dir" >&2
           return 1
         }
-        APPROVED_REMOTE_IDENTITIES["$dir"]="$identity"
+        APPROVED_REMOTE_IDENTITIES["$dir"]="$platform|$identity"
+        ;;
+      *)
+        parsed="$(python3 "$SCRIPT_DIR/lib/parse_teardown_remote.py" "$origin" 2>/dev/null)" || {
+          echo "Fehler: Remote-Ziel ist ungueltig / Error: remote target is invalid: $dir" >&2
+          return 1
+        }
+        APPROVED_REMOTE_IDENTITIES["$dir"]="${parsed%%$'\t'*}|${parsed#*$'\t'}"
         ;;
     esac
   done
@@ -361,7 +372,8 @@ build_preamble() {
   print_box "$title" "${box_line_buffer[@]}"
   local target_dir=""
   for target_dir in "${LEVEL2_PROJECTS[@]}" "$WORKSPACE_DIR"; do
-    if [ -n "${APPROVED_REMOTE_IDENTITIES[$target_dir]:-}" ]; then
+    if [ -n "${APPROVED_REMOTE_IDENTITIES[$target_dir]:-}" ] &&
+       [ "${APPROVED_REMOTE_IDENTITIES[$target_dir]}" != "none" ]; then
       printf 'Remote-Loeschziel / Remote deletion target (%s): %s\n' \
         "$target_dir" "${APPROVED_REMOTE_IDENTITIES[$target_dir]}"
     fi
@@ -452,15 +464,16 @@ create_backup() {
   if ! command -v tar >/dev/null 2>&1; then
     add_result "fail" "Backup nicht erstellt, tar fehlt / Backup not created, tar missing: $label"
     set_warning_exit
-    return 0
+    return 1
   fi
 
   archive="$(unique_backup_path "$target_name")"
-  if tar czf "$archive" -C "$(dirname "$dir")" "$(basename "$dir")" >/dev/null 2>&1; then
+  if tar czf "$archive" -C "$(dirname "$dir")" "$(basename "$dir")" >/dev/null 2>&1 && [ -s "$archive" ]; then
     add_result "done" "Backup erstellt / Backup created: $(basename "$archive")"
   else
     add_result "fail" "Backup fehlgeschlagen / Backup failed: $label"
     set_warning_exit
+    return 1
   fi
 }
 
@@ -474,19 +487,31 @@ delete_remote_repo() {
   local forgejo_owner=""
   local forgejo_repository=""
   local parsed=""
+  local approved="${APPROVED_REMOTE_IDENTITIES[$dir]:-}"
 
   if [ "$KEEP_REMOTE" -eq 1 ]; then
     add_result "skip" "Remote bewusst behalten / Remote intentionally kept: $label"
     return 0
   fi
 
+  if [ -z "$approved" ]; then
+    add_result "fail" "Remote-Vorschau fehlt / Remote preview is missing: $label"
+    set_warning_exit
+    return 1
+  fi
+
   if [ ! -d "$dir/.git" ]; then
+    if [ "$approved" != "none" ]; then
+      add_result "fail" "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $label"
+      set_warning_exit
+      return 1
+    fi
     add_result "skip" "Kein Git-Repository, Remote-Schritt übersprungen / No git repository, remote step skipped: $label"
     return 0
   fi
 
   remote_url="$(git -C "$dir" remote get-url origin 2>/dev/null || true)"
-  if [ -n "${APPROVED_REMOTE_IDENTITIES[$dir]:-}" ] && [ -z "$remote_url" ]; then
+  if [ "$approved" != "none" ] && [ -z "$remote_url" ]; then
     add_result "fail" "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $label"
     set_warning_exit
     return 1
@@ -495,14 +520,13 @@ delete_remote_repo() {
     add_result "skip" "Kein Remote konfiguriert / No remote configured: $label"
     return 0
   fi
-
-  configured_platform="$(git -C "$dir" config --local --get home-baseline.remote-platform 2>/dev/null || true)"
-  if [ -n "${APPROVED_REMOTE_IDENTITIES[$dir]:-}" ] &&
-     [ "$configured_platform" != "forgejo" ] && [ "$configured_platform" != "codeberg" ]; then
-    add_result "fail" "Remote-Plattform hat sich nach der Vorschau geaendert / Remote platform changed after preview: $label"
+  if [ "$approved" = "none" ]; then
+    add_result "fail" "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $label"
     set_warning_exit
     return 1
   fi
+
+  configured_platform="$(git -C "$dir" config --local --get home-baseline.remote-platform 2>/dev/null || true)"
   if [ "$configured_platform" = "forgejo" ] || [ "$configured_platform" = "codeberg" ]; then
     if [ ! -f "$FORGEJO_LIB" ]; then
       add_result "fail" "Forgejo-Bibliothek fehlt, Remote-Löschung abgebrochen / Forgejo library missing, remote deletion aborted: $label"
@@ -524,7 +548,7 @@ delete_remote_repo() {
       set_warning_exit
       return 1
     }
-    if [ "$verified_identity" != "${APPROVED_REMOTE_IDENTITIES[$dir]:-}" ]; then
+    if [ "$configured_platform|$verified_identity" != "$approved" ]; then
       add_result "fail" "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $label"
       set_warning_exit
       return 1
@@ -544,6 +568,11 @@ delete_remote_repo() {
     return 1
   }
   owner_repo="${parsed#*$'\t'}"
+  if [ "${parsed%%$'\t'*}|$owner_repo" != "$approved" ]; then
+    add_result "fail" "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $label"
+    set_warning_exit
+    return 1
+  fi
   if [ "${parsed%%$'\t'*}" = "github" ]; then
     if ! command -v gh >/dev/null 2>&1; then
       add_result "fail" "gh fehlt, Remote-Löschung abgebrochen / gh missing, remote deletion aborted: $label"
@@ -692,6 +721,7 @@ cleanup_inc_file() {
 commit_artifacts() {
   local staged=0
   local subject="chore: teardown $WORKSPACE_NAME - Artefakte bereinigt / artifacts cleaned up"
+  local -a artifact_paths=()
 
   if ! git -C "$HOME_DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     add_result "skip" "Artefakt-Commit übersprungen, ~/ ist kein Git-Repo / Artifact commit skipped, ~/ is not a git repo"
@@ -700,10 +730,20 @@ commit_artifacts() {
   fi
 
   if [ -f "$README_PATH" ]; then
-    git -C "$HOME_DIR" add --update -- README.md >/dev/null 2>&1 || true
+    artifact_paths+=(README.md)
+    git -C "$HOME_DIR" add --update -- README.md >/dev/null 2>&1 || {
+      add_result "fail" "README-Commit-Vorbereitung fehlgeschlagen / README commit preparation failed"
+      set_warning_exit
+      return 1
+    }
   fi
   if [ -f "$GITIGNORE_PATH" ]; then
-    git -C "$HOME_DIR" add --update -- .gitignore >/dev/null 2>&1 || true
+    artifact_paths+=(.gitignore)
+    git -C "$HOME_DIR" add --update -- .gitignore >/dev/null 2>&1 || {
+      add_result "fail" "Gitignore-Commit-Vorbereitung fehlgeschlagen / gitignore commit preparation failed"
+      set_warning_exit
+      return 1
+    }
   fi
 
   if ! git -C "$HOME_DIR" diff --cached --quiet -- README.md .gitignore >/dev/null 2>&1; then
@@ -715,11 +755,28 @@ commit_artifacts() {
     return 0
   fi
 
-  if git -C "$HOME_DIR" commit -m "$subject" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>" >/dev/null 2>&1; then
+  if git -C "$HOME_DIR" commit --only -m "$subject" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>" -- "${artifact_paths[@]}" >/dev/null 2>&1; then
     add_result "done" "Artefakte committed / Artifacts committed"
   else
     add_result "fail" "Artefakt-Commit fehlgeschlagen / Artifact commit failed"
     set_warning_exit
+  fi
+}
+
+check_home_artifacts_clean() {
+  local status=""
+  if ! git -C "$HOME_DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    return 0
+  fi
+  status="$(git -C "$HOME_DIR" status --porcelain -- README.md .gitignore)" || {
+    add_result "fail" "Home-Artefaktstatus nicht pruefbar / Home artifact status unavailable"
+    set_warning_exit
+    return 1
+  }
+  if [ -n "$status" ]; then
+    add_result "fail" "Vorhandene Home-Artefaktaenderungen blockieren Teardown / Existing Home artifact changes block teardown"
+    set_warning_exit
+    return 1
   fi
 }
 
@@ -751,7 +808,9 @@ teardown_target() {
   fi
   dir="$validated_dir"
 
-  create_backup "$label" "$dir" "$backup_name"
+  if ! create_backup "$label" "$dir" "$backup_name"; then
+    return 1
+  fi
 
   if ! check_safety "$label" "$dir"; then
     return 1
@@ -847,6 +906,11 @@ main() {
   fi
 
   confirm_or_abort
+
+  if ! check_home_artifacts_clean; then
+    print_completion_report
+    exit "$EXIT_CODE"
+  fi
 
   if [ "${#LEVEL2_PROJECTS[@]}" -gt 0 ]; then
     local project=""

@@ -152,7 +152,7 @@ zip_path="${OUTPUT_DIR}/${package_name}.zip"
 sha_path="${zip_path}.sha256"
 
 excludes=(
-  --exclude='.git'
+  --exclude='.[gG][iI][tT]'
   --exclude='docs/learning-units/dist/'
   --exclude='.DS_Store'
   --exclude='__MACOSX/'

@@ -239,3 +239,29 @@ Windows-Namensvariante innerhalb der ZIP-Pruefung. Der Filter und die
 Negativprobe decken jetzt auch diese reservierten Namen ab. / The diff scan
 found another Windows name variant in ZIP validation. The filter and negative
 fixture now cover these reserved names as well.
+
+Der korrigierte Diff-Scan `665f170b-824a-4977-9273-ed3e1c2e5f9c` meldete
+keinen Befund. Der Standardscan `709905cb-9c3e-4aad-92cf-498ae0353efb`
+auf `066bd24` fand bei teilweiser Repository-Abdeckung drei weitere
+Beobachtungen in Teardown- und Lernpaketgrenzen. Die lokale Korrektur bindet
+alle Remote-Ziele einschliesslich des Zustands ohne Remote an die Vorschau,
+begrenzt den Home-Artefakt-Commit, erzwingt angeforderte Backups vor
+Loeschungen und schliesst Git-Metadaten unabhaengig von Grossschreibung aus
+Lernpaketen aus. Isolierte Bash- und PowerShell-Proben bestaetigen die
+Sperre geaenderter Remote-Ziele, den Backup-Abbruch, den begrenzten Commit
+und die Paket-Ausschluesse. Documentation Impact: `UpdateRequired`;
+Quelle: privater Scan und lokaler Patch; Owner: AOC Repository Owner;
+aktualisiert wurden dieses Receipt und die betroffenen Skriptoberflaechen.
+Es entsteht keine neue AEPS-Evidence fuer eine projektuebergreifende
+Preset-Promotion. Finaler Diff- und Standardscan sowie Publikation folgen.
+
+*The corrected diff scan reported no finding. The Standard scan on `066bd24`
+reported three further observations under partial repository coverage. The
+local fix binds every remote target, including no-remote state, to its preview;
+limits the Home artifact commit; requires a successful requested backup before
+deletion; and excludes Git metadata from learning packages regardless of case.
+Isolated Bash and PowerShell fixtures confirm the target-change gate, backup
+abort, limited commit and package exclusions. Documentation Impact is
+`UpdateRequired`; this receipt and affected script surfaces were updated.
+No new cross-project AEPS preset evidence or promotion is claimed. Final diff
+and Standard scans and publication follow.*

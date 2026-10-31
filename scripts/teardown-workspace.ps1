@@ -224,7 +224,11 @@ function Get-RemotePlatform([string]$Dir) {
     $configuredPlatform = ((& git -C $Dir config --local --get home-baseline.remote-platform 2>$null) | Out-String).Trim()
     if ($configuredPlatform -in @('forgejo', 'codeberg')) {
         if ($KeepRemote) { return $configuredPlatform }
-        return "$configuredPlatform $($script:ApprovedRemoteIdentities[$Dir])"
+        return $script:ApprovedRemoteIdentities[$Dir].Replace('|', ' ')
+    }
+
+    if (-not $KeepRemote) {
+        return $script:ApprovedRemoteIdentities[$Dir].Replace('|', ' ')
     }
 
     $parsed = Get-ParsedRemote $remoteUrl
@@ -257,16 +261,25 @@ function Get-ForgejoTargetFromValues(
 function Initialize-ApprovedRemoteTargets {
     if ($KeepRemote) { return }
     foreach ($dir in @($script:Level2Projects.ToArray()) + @($script:WorkspaceDir)) {
+        $script:ApprovedRemoteIdentities[$dir] = 'none'
         if (-not (Test-Path -LiteralPath (Join-Path $dir '.git') -PathType Container)) { continue }
         $origin = ((& git -C $dir remote get-url origin 2>$null) | Out-String).Trim()
         if (-not $origin) { continue }
         $platform = ((& git -C $dir config --local --get home-baseline.remote-platform 2>$null) | Out-String).Trim()
-        if ($platform -notin @('forgejo', 'codeberg')) { continue }
-        $identity = Get-ForgejoTargetForDir $dir
-        if (-not $identity) {
-            throw "Forgejo/Codeberg-Ziel stimmt nicht mit origin ueberein / target does not match origin: $dir"
+        if ($platform -in @('forgejo', 'codeberg')) {
+            $identity = Get-ForgejoTargetForDir $dir
+            if (-not $identity) {
+                throw "Forgejo/Codeberg-Ziel stimmt nicht mit origin ueberein / target does not match origin: $dir"
+            }
+            $script:ApprovedRemoteIdentities[$dir] = "$platform|$identity"
         }
-        $script:ApprovedRemoteIdentities[$dir] = $identity
+        else {
+            $parsed = Get-ParsedRemote $origin
+            if ($null -eq $parsed) {
+                throw "Remote-Ziel ist ungueltig / remote target is invalid: $dir"
+            }
+            $script:ApprovedRemoteIdentities[$dir] = "$($parsed.Platform)|$($parsed.OwnerRepo)"
+        }
     }
 }
 
@@ -333,7 +346,8 @@ function Show-Preamble {
 
     Show-Box -Title $title -Lines $lines
     foreach ($dir in @($script:Level2Projects.ToArray()) + @($script:WorkspaceDir)) {
-        if ($script:ApprovedRemoteIdentities.ContainsKey($dir)) {
+        if ($script:ApprovedRemoteIdentities.ContainsKey($dir) -and
+            $script:ApprovedRemoteIdentities[$dir] -ne 'none') {
             Write-Host "Remote-Loeschziel / Remote deletion target ($dir): $($script:ApprovedRemoteIdentities[$dir])"
         }
     }
@@ -396,22 +410,25 @@ function Get-ParsedRemote([string]$RemoteUrl) {
 
 function Invoke-Backup([string]$Label, [string]$Dir, [string]$TargetName) {
     if (-not $Backup) {
-        return
+        return $true
     }
 
     if (-not (Get-Command tar -ErrorAction SilentlyContinue)) {
         Add-Result 'fail' "Backup nicht erstellt, tar fehlt / Backup not created, tar missing: $Label"
         Set-WarningExit
-        return
+        return $false
     }
 
     $archivePath = Get-UniqueBackupPath $TargetName
     & tar czf $archivePath -C (Split-Path $Dir -Parent) (Split-Path $Dir -Leaf) *> $null
-    if ($LASTEXITCODE -eq 0) {
+    if ($LASTEXITCODE -eq 0 -and (Test-Path -LiteralPath $archivePath -PathType Leaf) -and
+        (Get-Item -LiteralPath $archivePath).Length -gt 0) {
         Add-Result 'done' "Backup erstellt / Backup created: $(Split-Path $archivePath -Leaf)"
+        return $true
     } else {
         Add-Result 'fail' "Backup fehlgeschlagen / Backup failed: $Label"
         Set-WarningExit
+        return $false
     }
 }
 
@@ -421,13 +438,25 @@ function Remove-RemoteRepo([string]$Label, [string]$Dir) {
         return $true
     }
 
+    if (-not $script:ApprovedRemoteIdentities.ContainsKey($Dir)) {
+        Add-Result 'fail' "Remote-Vorschau fehlt / Remote preview is missing: $Label"
+        Set-WarningExit
+        return $false
+    }
+    $approved = $script:ApprovedRemoteIdentities[$Dir]
+
     if (-not (Test-Path -LiteralPath (Join-Path $Dir '.git') -PathType Container)) {
+        if ($approved -ne 'none') {
+            Add-Result 'fail' "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $Label"
+            Set-WarningExit
+            return $false
+        }
         Add-Result 'skip' "Kein Git-Repository, Remote-Schritt übersprungen / No git repository, remote step skipped: $Label"
         return $true
     }
 
     $remoteUrl = (& git -C $Dir remote get-url origin 2>$null)
-    if ($script:ApprovedRemoteIdentities.ContainsKey($Dir) -and -not $remoteUrl) {
+    if ($approved -ne 'none' -and -not $remoteUrl) {
         Add-Result 'fail' "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $Label"
         Set-WarningExit
         return $false
@@ -436,14 +465,13 @@ function Remove-RemoteRepo([string]$Label, [string]$Dir) {
         Add-Result 'skip' "Kein Remote konfiguriert / No remote configured: $Label"
         return $true
     }
-
-    $configuredPlatform = ((& git -C $Dir config --local --get home-baseline.remote-platform 2>$null) | Out-String).Trim()
-    if ($script:ApprovedRemoteIdentities.ContainsKey($Dir) -and
-        $configuredPlatform -notin @('forgejo', 'codeberg')) {
-        Add-Result 'fail' "Remote-Plattform hat sich nach der Vorschau geaendert / Remote platform changed after preview: $Label"
+    if ($approved -eq 'none') {
+        Add-Result 'fail' "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $Label"
         Set-WarningExit
         return $false
     }
+
+    $configuredPlatform = ((& git -C $Dir config --local --get home-baseline.remote-platform 2>$null) | Out-String).Trim()
     if ($configuredPlatform -in @('forgejo', 'codeberg')) {
         if (-not (Test-Path $forgejoLib)) {
             Add-Result 'fail' "Forgejo-Bibliothek fehlt, Remote-Löschung abgebrochen / Forgejo library missing, remote deletion aborted: $Label"
@@ -460,7 +488,7 @@ function Remove-RemoteRepo([string]$Label, [string]$Dir) {
         }
         $verifiedIdentity = Get-ForgejoTargetFromValues $remoteUrl $baseUrl $configuredPlatform $owner $repository
         if (-not $verifiedIdentity -or
-            $verifiedIdentity -ne $script:ApprovedRemoteIdentities[$Dir]) {
+            "$configuredPlatform|$verifiedIdentity" -cne $approved) {
             Add-Result 'fail' "Forgejo/Codeberg-Ziel ungueltig oder seit Vorschau geaendert / target invalid or changed after preview: $Label"
             Set-WarningExit
             return $false
@@ -483,6 +511,11 @@ function Remove-RemoteRepo([string]$Label, [string]$Dir) {
         return $false
     }
     $ownerRepo = $parsed.OwnerRepo
+    if ("$($parsed.Platform)|$ownerRepo" -cne $approved) {
+        Add-Result 'fail' "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $Label"
+        Set-WarningExit
+        return $false
+    }
     if ($parsed.Platform -eq 'github') {
         if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
             Add-Result 'fail' "gh fehlt, Remote-Löschung abgebrochen / gh missing, remote deletion aborted: $Label"
@@ -631,11 +664,24 @@ function Commit-Artifacts {
         return
     }
 
+    $artifactPaths = @()
     if (Test-Path -LiteralPath $script:ReadmePath -PathType Leaf) {
+        $artifactPaths += 'README.md'
         & git -C $script:HomeDir add --update -- README.md *> $null
+        if ($LASTEXITCODE -ne 0) {
+            Add-Result 'fail' 'README-Commit-Vorbereitung fehlgeschlagen / README commit preparation failed'
+            Set-WarningExit
+            return
+        }
     }
     if (Test-Path -LiteralPath $script:GitignorePath -PathType Leaf) {
+        $artifactPaths += '.gitignore'
         & git -C $script:HomeDir add --update -- .gitignore *> $null
+        if ($LASTEXITCODE -ne 0) {
+            Add-Result 'fail' 'Gitignore-Commit-Vorbereitung fehlgeschlagen / gitignore commit preparation failed'
+            Set-WarningExit
+            return
+        }
     }
 
     & git -C $script:HomeDir diff --cached --quiet -- README.md .gitignore *> $null
@@ -645,13 +691,30 @@ function Commit-Artifacts {
     }
 
     $subject = "chore: teardown $WorkspaceName - Artefakte bereinigt / artifacts cleaned up"
-    & git -C $script:HomeDir commit -m $subject -m 'Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>' *> $null
+    & git -C $script:HomeDir commit --only -m $subject -m 'Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>' -- @artifactPaths *> $null
     if ($LASTEXITCODE -eq 0) {
         Add-Result 'done' 'Artefakte committed / Artifacts committed'
     } else {
         Add-Result 'fail' 'Artefakt-Commit fehlgeschlagen / Artifact commit failed'
         Set-WarningExit
     }
+}
+
+function Test-HomeArtifactsClean {
+    $insideWorkTree = (& git -C $script:HomeDir rev-parse --is-inside-work-tree 2>$null | Out-String).Trim()
+    if (-not $insideWorkTree) { return $true }
+    $status = & git -C $script:HomeDir status --porcelain -- README.md .gitignore 2>$null
+    if ($LASTEXITCODE -ne 0) {
+        Add-Result 'fail' 'Home-Artefaktstatus nicht pruefbar / Home artifact status unavailable'
+        Set-WarningExit
+        return $false
+    }
+    if ($status) {
+        Add-Result 'fail' 'Vorhandene Home-Artefaktaenderungen blockieren Teardown / Existing Home artifact changes block teardown'
+        Set-WarningExit
+        return $false
+    }
+    return $true
 }
 
 function Cleanup-WorkspaceArtifacts {
@@ -676,7 +739,9 @@ function Invoke-TargetTeardown {
         -ExpectedParent $expectedParent `
         -ExpectedName $BackupName
 
-    Invoke-Backup -Label $Label -Dir $Dir -TargetName $BackupName
+    if (-not (Invoke-Backup -Label $Label -Dir $Dir -TargetName $BackupName)) {
+        return $false
+    }
 
     if (-not (Test-Safety -Label $Label -Dir $Dir)) {
         return $false
@@ -748,6 +813,11 @@ try {
     }
 
     Confirm-OrAbort
+
+    if (-not (Test-HomeArtifactsClean)) {
+        Show-CompletionReport
+        exit $script:ExitCode
+    }
 
     foreach ($project in $script:Level2Projects) {
         $projectName = Split-Path $project -Leaf

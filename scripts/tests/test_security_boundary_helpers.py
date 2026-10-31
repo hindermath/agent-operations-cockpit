@@ -8,6 +8,7 @@ import codecs
 import hashlib
 import os
 from pathlib import Path
+import shlex
 import shutil
 import stat
 import struct
@@ -51,6 +52,23 @@ bootstrap_target = load_helper("check_bootstrap_target_symlinks")
 origin = load_helper("validate_bootstrap_origin")
 package_source = load_helper("check_learning_package_source")
 teardown_remote = load_helper("parse_teardown_remote")
+
+
+def teardown_fixture(root: Path) -> tuple[Path, Path, dict[str, str]]:
+    home = root / "home"
+    home.mkdir()
+    source = home / "ConfiguredSource"
+    scripts = source / "scripts"
+    scripts.mkdir(parents=True)
+    (scripts / "sync-home.sh").write_text("#!/usr/bin/env bash\n", encoding="utf-8")
+    (scripts / "sync-home.ps1").write_text("#Requires -Version 7\n", encoding="utf-8")
+    subprocess.run(["git", "-C", str(source), "init", "-q"], check=True)
+    subprocess.run(["git", "-C", str(source), "remote", "add", "origin",
+                    "https://example.invalid/home-baseline.git"], check=True)
+    workspace = home / "Demo"
+    workspace.mkdir()
+    environment = dict(os.environ, HOME=str(home), HOME_BASELINE_SOURCE=str(source))
+    return home, workspace, environment
 
 
 class SecurityBoundaryHelpersTests(unittest.TestCase):
@@ -145,6 +163,113 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
             with self.subTest(remote=remote):
                 self.assertIsNone(teardown_remote.parse_remote(remote))
 
+    @unittest.skipIf(os.name == "nt", "POSIX fake command fixture")
+    def test_teardown_rejects_remote_changed_after_preview(self) -> None:
+        real_git = shutil.which("git")
+        assert real_git is not None
+        for shell, replacement in (("bash", "https://github.com/owner/other.git"),
+                                   ("pwsh", "https://github.com/owner/other.git"),
+                                   ("pwsh", "https://github.com/owner/APPROVED.git")):
+            if not shutil.which(shell):
+                continue
+            with self.subTest(shell=shell, replacement=replacement), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                _, workspace, environment = teardown_fixture(root)
+                subprocess.run(["git", "-C", str(workspace), "init", "-q"], check=True)
+                subprocess.run(["git", "-C", str(workspace), "remote", "add", "origin",
+                                "https://github.com/owner/approved.git"], check=True)
+                fake = root / "bin"
+                fake.mkdir()
+                count = root / "remote-reads"
+                marker = root / "provider-called"
+                git_wrapper = fake / "git"
+                git_wrapper.write_text(
+                    "#!/bin/sh\n"
+                    'case "$2" in */Demo) candidate=1 ;; *) candidate=0 ;; esac\n'
+                    'if [ "$1" = -C ] && [ "$candidate" = 1 ] && '
+                    '[ "$3" = remote ] && [ "$4" = get-url ]; then\n'
+                    f'  count=$(cat {shlex.quote(str(count))} 2>/dev/null || printf 0)\n'
+                    '  count=$((count + 1))\n'
+                    f'  printf "%s" "$count" > {shlex.quote(str(count))}\n'
+                    '  if [ "$count" -ge 3 ]; then '
+                    f"printf '%s\\n' {shlex.quote(replacement)}; exit 0; fi\n"
+                    'fi\n'
+                    f'exec {shlex.quote(real_git)} "$@"\n', encoding="utf-8")
+                git_wrapper.chmod(0o755)
+                provider = fake / "gh"
+                provider.write_text(f"#!/bin/sh\nprintf called > {shlex.quote(str(marker))}\n",
+                                    encoding="utf-8")
+                provider.chmod(0o755)
+                environment["PATH"] = f"{fake}{os.pathsep}{os.environ['PATH']}"
+                command = (["bash", str(LIBRARY.parent / "teardown-workspace.sh"),
+                            "Demo", "--force", "--yes"] if shell == "bash" else
+                           ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "teardown-workspace.ps1"),
+                            "-WorkspaceName", "Demo", "-Force", "-Yes"])
+                result = subprocess.run(command, env=environment, capture_output=True, text=True)
+                self.assertNotEqual(result.returncode, 0, result.stdout)
+                self.assertEqual(count.read_text(encoding="utf-8"), "3")
+                self.assertFalse(marker.exists(), result.stdout)
+                self.assertTrue(workspace.exists())
+
+    @unittest.skipIf(os.name == "nt", "POSIX fake command fixture")
+    def test_requested_backup_failure_preserves_workspace(self) -> None:
+        for shell in ("bash", "pwsh"):
+            if not shutil.which(shell):
+                continue
+            with self.subTest(shell=shell), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                _, workspace, environment = teardown_fixture(root)
+                (workspace / "payload.txt").write_text("keep\n", encoding="utf-8")
+                fake = root / "bin"
+                fake.mkdir()
+                tar = fake / "tar"
+                tar.write_text("#!/bin/sh\nexit 1\n", encoding="utf-8")
+                tar.chmod(0o755)
+                environment["PATH"] = f"{fake}{os.pathsep}{os.environ['PATH']}"
+                command = (["bash", str(LIBRARY.parent / "teardown-workspace.sh"),
+                            "Demo", "--backup", "--keep-remote", "--force", "--yes"]
+                           if shell == "bash" else
+                           ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "teardown-workspace.ps1"),
+                            "-WorkspaceName", "Demo", "-Backup", "-KeepRemote", "-Force", "-Yes"])
+                result = subprocess.run(command, env=environment, capture_output=True, text=True)
+                self.assertNotEqual(result.returncode, 0, result.stdout)
+                self.assertTrue((workspace / "payload.txt").exists(), result.stdout)
+
+    @unittest.skipIf(os.name == "nt", "POSIX temporary Home fixture")
+    def test_teardown_artifact_commit_preserves_unrelated_index(self) -> None:
+        for shell in ("bash", "pwsh"):
+            if not shutil.which(shell):
+                continue
+            with self.subTest(shell=shell), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                home, workspace, environment = teardown_fixture(root)
+                subprocess.run(["git", "-C", str(home), "init", "-q"], check=True)
+                subprocess.run(["git", "-C", str(home), "config", "user.name", "Test"], check=True)
+                subprocess.run(["git", "-C", str(home), "config", "user.email", "test@example.invalid"],
+                               check=True)
+                (home / "README.md").write_text("# Home\n~/Demo/\n", encoding="utf-8")
+                (home / ".gitignore").write_text("Demo/\n", encoding="utf-8")
+                (home / "private.txt").write_text("old\n", encoding="utf-8")
+                subprocess.run(["git", "-C", str(home), "add", "--", "README.md", ".gitignore",
+                                "private.txt"], check=True)
+                subprocess.run(["git", "-C", str(home), "commit", "-qm", "initial"], check=True)
+                (home / "private.txt").write_text("unrelated staged content\n", encoding="utf-8")
+                subprocess.run(["git", "-C", str(home), "add", "--", "private.txt"], check=True)
+                command = (["bash", str(LIBRARY.parent / "teardown-workspace.sh"),
+                            "Demo", "--keep-remote", "--force", "--yes"] if shell == "bash" else
+                           ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "teardown-workspace.ps1"),
+                            "-WorkspaceName", "Demo", "-KeepRemote", "-Force", "-Yes"])
+                subprocess.run(command, env=environment, capture_output=True, text=True)
+                committed = subprocess.run(["git", "-C", str(home), "show", "--pretty=format:",
+                                            "--name-only", "HEAD"], capture_output=True, text=True,
+                                           check=True).stdout.splitlines()
+                staged = subprocess.run(["git", "-C", str(home), "diff", "--cached", "--name-only"],
+                                        capture_output=True, text=True, check=True).stdout.splitlines()
+                self.assertTrue(any(name in {"README.md", ".gitignore"} for name in committed))
+                self.assertNotIn("private.txt", committed)
+                self.assertEqual(staged, ["private.txt"])
+                self.assertFalse(workspace.exists())
+
     def test_learning_package_rejects_external_link_and_keeps_regular_source(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -201,6 +326,9 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
             nested = source / "lesson"
             nested.mkdir()
             (nested / ".git").write_text("gitdir: ../../private/nested\n", encoding="utf-8")
+            mixed_case = source / "other/.GIT"
+            mixed_case.mkdir(parents=True)
+            (mixed_case / "config").write_text("[remote \"origin\"]\n", encoding="utf-8")
             command = ["bash", str(LIBRARY.parent / "package-learning-series.sh"),
                        "--source-dir", str(source), "--output-dir", str(root / "out")]
             preview = subprocess.run([*command, "--dry-run"], capture_output=True, text=True)
@@ -208,7 +336,7 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
             result = subprocess.run(command, capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             with zipfile.ZipFile(next((root / "out").glob("*.zip"))) as package:
-                self.assertFalse(any(Path(name).name == ".git" for name in package.namelist()))
+                self.assertFalse(any(Path(name).name.casefold() == ".git" for name in package.namelist()))
             with self.assertRaisesRegex(ValueError, "excluded path"):
                 package_source.check_tree(source, skip_excluded=False)
 
@@ -296,6 +424,35 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
                                             capture_output=True, text=True, check=False)
                     self.assertNotEqual(result.returncode, 0, result.stdout)
                     self.assertIn("gitleaks", result.stderr)
+                    self.assertNotIn("PASS:", result.stdout)
+
+    def test_learning_package_checkers_reject_case_variant_git_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            package = root / "lesson.zip"
+            with zipfile.ZipFile(package, "w") as writer:
+                for name in ("START-HERE-FUER-LERNENDE.md", "GIT-START-FUER-LERNENDE.md",
+                             "INSTITUTIONELLES-GIT-HOSTING.md"):
+                    writer.writestr(f"lesson/{name}", "# Guide\n")
+                writer.writestr("lesson/PACKAGING-MANIFEST.txt",
+                                "Git data included: no (package only)\n"
+                                "Original remotes included: no\n"
+                                "Start here after extracting: START-HERE-FUER-LERNENDE.md\n"
+                                "Institutional hosting guide: INSTITUTIONELLES-GIT-HOSTING.md\n")
+                writer.writestr("lesson/sub/.GIT/config", "[remote \"origin\"]\n")
+            (root / "lesson.zip.sha256").write_text(
+                f"{hashlib.sha256(package.read_bytes()).hexdigest()}  lesson.zip\n", encoding="ascii")
+            commands = (
+                ["bash", str(LIBRARY.parent / "check-learning-package.sh"), str(package)],
+                ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "check-learning-package.ps1"),
+                 "-PackagePath", str(package)],
+            )
+            for command in commands:
+                if not shutil.which(command[0]):
+                    continue
+                with self.subTest(platform=command[0]):
+                    result = subprocess.run(command, capture_output=True, text=True)
+                    self.assertNotEqual(result.returncode, 0, result.stdout)
                     self.assertNotIn("PASS:", result.stdout)
 
     @unittest.skipUnless(shutil.which("gitleaks"), "Gitleaks is required for the real scan fixture")
@@ -668,6 +825,7 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
             with self.assertRaisesRegex(archive.UnsafePackage, "unsafe ZIP entry"):
                 archive.extract_bounded(package, destination)
             for name in ("lesson/D:escape.txt", "lesson/file.txt:stream", "lesson/CON",
+                         "lesson/.GIT/config", "lesson\\sub\\.GIT\\config",
                          "lesson/COM¹", "lesson/COM².txt", "lesson/COM³",
                          "lesson/LPT¹", "lesson/LPT².txt", "lesson/LPT³"):
                 with self.subTest(name=name):

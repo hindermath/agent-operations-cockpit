@@ -101,7 +101,7 @@ check_package() {
     }
   done
 
-  if grep -Eq '(^|/)(\.git|bin|obj|build|node_modules|\.vs|\.idea)(/|$)|(^|/)settings\.local\.json$|(^|/)\.vscode/(settings\.json|c_cpp_properties\.json)$' <<< "$entries"; then
+  if grep -Eiq '(^|/)(\.git|bin|obj|build|node_modules|\.vs|\.idea)(/|$)|(^|/)settings\.local\.json$|(^|/)\.vscode/(settings\.json|c_cpp_properties\.json)$' <<< "$entries"; then
     echo "ERROR: ZIP enthaelt ausgeschlossene Git-, Build-, IDE- oder lokale Einstellungsartefakte" >&2
     return 1
   fi
@@ -109,6 +109,7 @@ check_package() {
   work_dir="$(mktemp -d)"
   trap 'rm -rf "$work_dir"' RETURN
   python3 "${SCRIPT_DIR}/lib/check_learning_package_archive.py" "$package" "$work_dir"
+  python3 "${SCRIPT_DIR}/lib/check_learning_package_source.py" --staging "${work_dir}/${root}"
   manifest="${work_dir}/${root}/PACKAGING-MANIFEST.txt"
   grep -Eq '^Git data included: no ' "$manifest" || { echo "ERROR: Manifest bestaetigt Git-Ausschluss nicht" >&2; return 1; }
   grep -Eq '^Original remotes included: no$' "$manifest" || { echo "ERROR: Manifest bestaetigt Remote-Ausschluss nicht" >&2; return 1; }

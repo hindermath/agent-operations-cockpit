@@ -154,6 +154,7 @@ def _extract_checked_archive(archive: zipfile.ZipFile, destination: Path) -> Non
         if (
             not name or name.startswith("/") or has_control_character(name)
             or any(invalid_windows_component(part) for part in name.split("/") if part)
+            or any(part.casefold() == ".git" for part in name.split("/"))
             or path.is_absolute() or any(part in {".", ".."} for part in name.split("/"))
             or mode not in {0, stat.S_IFREG, stat.S_IFDIR}
             or (mode == stat.S_IFDIR and not entry.is_dir())

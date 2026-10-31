@@ -24,7 +24,7 @@ def indirect(path: Path) -> bool:
 
 def excluded(relative: Path) -> bool:
     parts = relative.parts
-    return (any(part in EXCLUDED_DIRS for part in parts) or
+    return (any(part in EXCLUDED_DIRS or part.casefold() == ".git" for part in parts) or
             relative.as_posix() == "docs/learning-units/dist" or
             relative.as_posix().startswith("docs/learning-units/dist/") or
             relative.as_posix() in EXCLUDED_PATHS or
