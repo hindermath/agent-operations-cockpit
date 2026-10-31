@@ -197,6 +197,18 @@ def safe_target(home: Path, relative_path: str) -> Path:
     return target
 
 
+def safe_source(repository: Path, relative_path: str) -> Path:
+    source = repository / relative_path
+    root = repository.resolve(strict=True)
+    try:
+        source.parent.resolve(strict=True).relative_to(root)
+    except (OSError, ValueError) as exc:
+        raise HomeSyncError(f"Source parent escapes repository: {relative_path}") from exc
+    if not source.is_file() or source.is_symlink():
+        raise HomeSyncError(f"Managed source is not a regular file: {relative_path}")
+    return source
+
+
 def clean_tracked_home_path(home: Path, relative_path: str) -> bool:
     inside = run_git(home, "rev-parse", "--is-inside-work-tree", check=False)
     if inside.returncode != 0:
@@ -213,9 +225,7 @@ def source_files(repository: Path, manifest: dict[str, Any]) -> dict[str, dict[s
     for relative_path, mode in tracked_files(repository).items():
         if not matches_manifest(relative_path, manifest):
             continue
-        source = repository / relative_path
-        if not source.is_file() or source.is_symlink():
-            raise HomeSyncError(f"Managed source is not a regular file: {relative_path}")
+        source = safe_source(repository, relative_path)
         selected[relative_path] = {"sha256": sha256_file(source), "mode": mode}
     return dict(sorted(selected.items()))
 
@@ -351,7 +361,7 @@ def apply_plan(repository: Path, home: Path, plan: dict[str, Any]) -> list[str]:
         if not identities_equal(file_identity(target), action["expected"]):
             raise HomeSyncError(f"Target changed after preflight: {relative_path}")
         if action["action"] == "copy":
-            source = repository / relative_path
+            source = safe_source(repository, relative_path)
             planned_identity = plan["sources"][relative_path]
             current_source = {"sha256": sha256_file(source), "mode": planned_identity["mode"]}
             if not identities_equal(current_source, planned_identity):

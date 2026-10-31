@@ -198,8 +198,22 @@ function Sync-SdhBaseline {
     $targetManifest = Join-Path $TargetDir 'baseline-manifest.json'
     if (-not (Test-Path $sourceManifest)) { throw "Baseline-Manifest fehlt: ${sourceManifest}" }
 
+    $targetRepo = Split-Path -Parent (Split-Path -Parent $TargetDir)
+    $pathGuard = Join-Path $PSScriptRoot 'check_baseline_sync_path.py'
+    $python = Get-Command python3, python, py -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $python) { throw 'Python fuer Baseline-Pfadpruefung fehlt / Python is required for baseline path validation.' }
+    & $python.Source $pathGuard --root $targetRepo --path $targetManifest 2>$null | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw 'Baseline-Manifestziel verlaesst das Repository.' }
     $newPaths = @(Get-SdhManifestPaths -ManifestPath $sourceManifest)
     $oldPaths = if (Test-Path $targetManifest) { @(Get-SdhManifestPaths -ManifestPath $targetManifest) } else { @() }
+    foreach ($relative in @($oldPaths) + @($newPaths)) {
+        if ([IO.Path]::IsPathRooted($relative) -or $relative -match '(^|[\/])\.\.([\/]|$)' -or $relative.Contains('\')) {
+            throw "Unsicherer Manifestpfad: ${relative}"
+        }
+        $targetFile = Join-Path $TargetDir $relative
+        & $python.Source $pathGuard --root $targetRepo --path $targetFile 2>$null | Out-Null
+        if ($LASTEXITCODE -ne 0) { throw "Verwalteter Zielpfad verlaesst das Repository: ${relative}" }
+    }
     $copied = 0
     $removed = 0
 
@@ -209,7 +223,11 @@ function Sync-SdhBaseline {
             $targetFile = Join-Path $TargetDir $relative
             if (Test-Path $targetFile -PathType Leaf) {
                 $removed++
-                if (-not $WhatIfMode) { Remove-Item -LiteralPath $targetFile -Force }
+                if (-not $WhatIfMode) {
+                    & $python.Source $pathGuard --root $targetRepo --path $targetFile 2>$null | Out-Null
+                    if ($LASTEXITCODE -ne 0) { throw "Verwalteter Zielpfad verlaesst das Repository: ${relative}" }
+                    Remove-Item -LiteralPath $targetFile -Force
+                }
             }
         }
     }
@@ -228,12 +246,16 @@ function Sync-SdhBaseline {
             if (-not $WhatIfMode -and $relative -ne 'baseline-manifest.json') {
                 $parent = Split-Path -Parent $targetFile
                 New-Item -ItemType Directory -Path $parent -Force | Out-Null
+                & $python.Source $pathGuard --root $targetRepo --path $targetFile 2>$null | Out-Null
+                if ($LASTEXITCODE -ne 0) { throw "Verwalteter Zielpfad verlaesst das Repository: ${relative}" }
                 Copy-Item -LiteralPath $sourceFile -Destination $targetFile -Force
             }
         }
     }
 
     if (-not $WhatIfMode) {
+        & $python.Source $pathGuard --root $targetRepo --path $targetManifest 2>$null | Out-Null
+        if ($LASTEXITCODE -ne 0) { throw 'Baseline-Manifestziel verlaesst das Repository.' }
         New-Item -ItemType Directory -Path $TargetDir -Force | Out-Null
         Copy-Item -LiteralPath $sourceManifest -Destination $targetManifest -Force
         Get-ChildItem -Path $TargetDir -Directory -Recurse -ErrorAction SilentlyContinue |

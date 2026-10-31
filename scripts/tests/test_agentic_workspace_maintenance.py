@@ -630,6 +630,60 @@ class AgenticWorkspaceMaintenanceTests(unittest.TestCase):
                 "PATH_CONFLICT",
             )
 
+    def test_symlinked_parent_cannot_redirect_fleet_clone_outside_home(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = FleetFixture(Path(directory))
+            outside = fixture.root / "outside"
+            outside.mkdir()
+            (fixture.home / "Fleet").symlink_to(outside, target_is_directory=True)
+
+            completed, report = fixture.run("update")
+            self.assertEqual(completed.returncode, 1, completed.stdout)
+            self.assertFalse((outside / "Example").exists())
+            target = next(item for item in report["targets"] if item["targetId"] == "example")
+            self.assertEqual(target["status"], "PATH_CONFLICT")
+
+    def test_later_blocker_prevents_earlier_fleet_fast_forward(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = FleetFixture(Path(directory))
+            first, _ = fixture.run("update")
+            self.assertEqual(first.returncode, 0, first.stdout)
+            checkout = fixture.home / "Fleet" / "Example"
+            original_head = git(checkout, "rev-parse", "HEAD")
+            (fixture.seed / "README.md").write_text("remote update\n", encoding="utf-8")
+            git(fixture.seed, "add", "README.md")
+            git(fixture.seed, "commit", "-q", "-m", "remote update")
+            git(fixture.seed, "push", "-q")
+
+            manifest_data = json.loads(fixture.manifest().read_text(encoding="utf-8"))
+            blocked = dict(manifest_data["targets"][1])
+            blocked.update(id="blocked", path="Fleet/Blocked", remote=str(fixture.root / "blocked.git"))
+            manifest_data["targets"].append(blocked)
+            manifest = fixture.root / "blocked-manifest.json"
+            manifest.write_text(json.dumps(manifest_data), encoding="utf-8")
+            (fixture.home / "Fleet" / "Blocked").write_text("keep\n", encoding="utf-8")
+
+            completed, report = fixture.run("update", manifest)
+            self.assertEqual(completed.returncode, 1, completed.stdout)
+            self.assertEqual(git(checkout, "rev-parse", "HEAD"), original_head)
+            self.assertEqual((fixture.home / "Fleet" / "Blocked").read_text(), "keep\n")
+            self.assertEqual(
+                next(item for item in report["targets"] if item["targetId"] == "blocked")["status"],
+                "PATH_CONFLICT",
+            )
+
+    def test_blocked_level0_prevents_fleet_clone(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = FleetFixture(Path(directory))
+            (fixture.seed / "uncommitted.txt").write_text("dirty\n", encoding="utf-8")
+            completed, report = fixture.run("update", level0_dir=fixture.seed)
+            self.assertEqual(completed.returncode, 1, completed.stdout)
+            self.assertFalse((fixture.home / "Fleet" / "Example").exists())
+            self.assertEqual(
+                next(item for item in report["targets"] if item["targetId"] == "level0")["status"],
+                "DIRTY",
+            )
+
     def test_unsafe_repository_states_are_classified_without_repair(self) -> None:
         scenarios = ("BRANCH_MISMATCH", "DETACHED", "REMOTE_MISMATCH", "MISSING_UPSTREAM", "AHEAD", "DIVERGED")
         for expected in scenarios:

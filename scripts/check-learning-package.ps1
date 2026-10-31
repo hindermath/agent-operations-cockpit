@@ -59,7 +59,11 @@ function Test-HBLearningPackage {
     $tempRoot = Join-Path ([System.IO.Path]::GetTempPath()) ([System.Guid]::NewGuid().ToString())
     New-Item -ItemType Directory -Path $tempRoot -Force | Out-Null
     try {
-        Expand-Archive -LiteralPath $ZipPath -DestinationPath $tempRoot -Force
+        $python = Get-Command python3, python, py -ErrorAction SilentlyContinue | Select-Object -First 1
+        if (-not $python) { throw 'Python fuer begrenzte ZIP-Extraktion fehlt / Python is required for bounded ZIP extraction.' }
+        $archiveHelper = Join-Path $PSScriptRoot 'lib/check_learning_package_archive.py'
+        & $python.Source $archiveHelper $ZipPath $tempRoot
+        if ($LASTEXITCODE -ne 0) { throw 'ZIP-Extraktion oder Groessenpruefung fehlgeschlagen / ZIP extraction or size validation failed.' }
         $roots = @(Get-ChildItem -LiteralPath $tempRoot -Force)
         if ($roots.Count -ne 1 -or -not $roots[0].PSIsContainer) {
             throw 'ZIP muss genau einen Paket-Root enthalten.'

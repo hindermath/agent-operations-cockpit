@@ -66,10 +66,11 @@ check_package() {
   [ -f "$package" ] || { echo "ERROR: ZIP nicht gefunden: $package" >&2; return 1; }
   [ -f "$checksum" ] || { echo "ERROR: SHA-256-Datei nicht gefunden: $checksum" >&2; return 1; }
 
-  (
-    cd -- "$(dirname -- "$checksum")"
-    shasum -a 256 -c "$(basename -- "$checksum")"
-  )
+  local expected actual
+  expected="$(awk 'NR == 1 { print $1 }' "$checksum")"
+  [[ "$expected" =~ ^[[:xdigit:]]{64}$ ]] || { echo "ERROR: ungueltige SHA-256-Datei: $checksum" >&2; return 1; }
+  actual="$(shasum -a 256 "$package" | awk '{ print $1 }')"
+  [ "${expected,,}" = "${actual,,}" ] || { echo "ERROR: SHA-256 stimmt nicht: $package" >&2; return 1; }
 
   entries="$(unzip -Z1 "$package")"
   [ -n "$entries" ] || { echo "ERROR: ZIP ist leer" >&2; return 1; }
@@ -99,7 +100,7 @@ check_package() {
 
   work_dir="$(mktemp -d)"
   trap 'rm -rf "$work_dir"' RETURN
-  unzip -q "$package" -d "$work_dir"
+  python3 "${SCRIPT_DIR}/lib/check_learning_package_archive.py" "$package" "$work_dir"
   manifest="${work_dir}/${root}/PACKAGING-MANIFEST.txt"
   grep -Eq '^Git data included: no ' "$manifest" || { echo "ERROR: Manifest bestaetigt Git-Ausschluss nicht" >&2; return 1; }
   grep -Eq '^Original remotes included: no$' "$manifest" || { echo "ERROR: Manifest bestaetigt Remote-Ausschluss nicht" >&2; return 1; }
@@ -148,6 +149,7 @@ self_test() {
 
 require_tool shasum
 require_tool unzip
+require_tool python3
 
 if [ "$SELF_TEST" -eq 1 ]; then
   [ -z "$PACKAGE_PATH" ] || { echo "ERROR: --self-test akzeptiert keinen ZIP-Pfad" >&2; exit 2; }

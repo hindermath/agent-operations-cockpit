@@ -5,7 +5,7 @@
 > Generated from `scripts/config/script-catalog.json` and the Git index. Do not edit manually.
 
 Stand / Updated: 2026-07-28
-Kanonische Skriptdateien / Canonical script files: 138
+Kanonische Skriptdateien / Canonical script files: 143
 
 ## Workspace-Lebenszyklus / Workspace lifecycle
 
@@ -774,6 +774,17 @@ python3 scripts/tests/test_maintenance_execution_context.py --help
 python3 scripts/tests/test_maintenance_tui_wrappers.py --help
 ```
 
+### `scripts/tests/test_security_boundary_helpers.py`
+
+- **Rolle / Role:** oeffentliches Kommando / public command
+- **Kurzbeschreibung / Summary:** Siehe Quelltext und Hilfe. / See source and help.
+- **Voraussetzungen / Prerequisites:** passende Shell; weitere Anforderungen stehen in `--help` oder `Get-Help`.
+- **Nebenwirkungen / Side effects:** zuerst Check-, Dry-Run- oder WhatIf-Modus verwenden, sofern angeboten.
+
+```text
+python3 scripts/tests/test_security_boundary_helpers.py --help
+```
+
 ### `scripts/tests/test_spec_kit_agent_surface_parity.py`
 
 - **Rolle / Role:** oeffentliches Kommando / public command
@@ -1226,6 +1237,42 @@ Nicht direkt aufrufen; wird von oeffentlichen Skripten geladen.
 Do not invoke directly; it is loaded by public scripts.
 ```
 
+### `scripts/lib/check_baseline_sync_path.py`
+
+- **Rolle / Role:** intern oder installiert / internal or installed
+- **Kurzbeschreibung / Summary:** Siehe Quelltext und Hilfe. / See source and help.
+- **Voraussetzungen / Prerequisites:** passende Shell; weitere Anforderungen stehen in `--help` oder `Get-Help`.
+- **Nebenwirkungen / Side effects:** zuerst Check-, Dry-Run- oder WhatIf-Modus verwenden, sofern angeboten.
+
+```text
+Nicht direkt aufrufen; wird von oeffentlichen Skripten geladen.
+Do not invoke directly; it is loaded by public scripts.
+```
+
+### `scripts/lib/check_bootstrap_target_symlinks.py`
+
+- **Rolle / Role:** intern oder installiert / internal or installed
+- **Kurzbeschreibung / Summary:** Siehe Quelltext und Hilfe. / See source and help.
+- **Voraussetzungen / Prerequisites:** passende Shell; weitere Anforderungen stehen in `--help` oder `Get-Help`.
+- **Nebenwirkungen / Side effects:** zuerst Check-, Dry-Run- oder WhatIf-Modus verwenden, sofern angeboten.
+
+```text
+Nicht direkt aufrufen; wird von oeffentlichen Skripten geladen.
+Do not invoke directly; it is loaded by public scripts.
+```
+
+### `scripts/lib/check_learning_package_archive.py`
+
+- **Rolle / Role:** intern oder installiert / internal or installed
+- **Kurzbeschreibung / Summary:** Siehe Quelltext und Hilfe. / See source and help.
+- **Voraussetzungen / Prerequisites:** passende Shell; weitere Anforderungen stehen in `--help` oder `Get-Help`.
+- **Nebenwirkungen / Side effects:** zuerst Check-, Dry-Run- oder WhatIf-Modus verwenden, sofern angeboten.
+
+```text
+Nicht direkt aufrufen; wird von oeffentlichen Skripten geladen.
+Do not invoke directly; it is loaded by public scripts.
+```
+
 ### `scripts/lib/hg-a11y.ps1`
 
 - **Rolle / Role:** intern oder installiert / internal or installed
@@ -1566,6 +1613,18 @@ Do not invoke directly; it is loaded by public scripts.
 
 - **Rolle / Role:** intern oder installiert / internal or installed
 - **Kurzbeschreibung / Summary:** Shared helpers for secure-development hardening intake preparation.
+- **Voraussetzungen / Prerequisites:** passende Shell; weitere Anforderungen stehen in `--help` oder `Get-Help`.
+- **Nebenwirkungen / Side effects:** zuerst Check-, Dry-Run- oder WhatIf-Modus verwenden, sofern angeboten.
+
+```text
+Nicht direkt aufrufen; wird von oeffentlichen Skripten geladen.
+Do not invoke directly; it is loaded by public scripts.
+```
+
+### `scripts/lib/validate_bootstrap_origin.py`
+
+- **Rolle / Role:** intern oder installiert / internal or installed
+- **Kurzbeschreibung / Summary:** Siehe Quelltext und Hilfe. / See source and help.
 - **Voraussetzungen / Prerequisites:** passende Shell; weitere Anforderungen stehen in `--help` oder `Get-Help`.
 - **Nebenwirkungen / Side effects:** zuerst Check-, Dry-Run- oder WhatIf-Modus verwenden, sofern angeboten.
 

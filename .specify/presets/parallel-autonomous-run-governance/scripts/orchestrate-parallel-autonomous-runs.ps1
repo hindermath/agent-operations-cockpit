@@ -654,7 +654,8 @@ function Test-PARCampaign {
     Assert-PARCondition (@($branches | Sort-Object -Unique).Count -eq $branches.Count) 'branch muss campaignweit eindeutig sein.'
 
     foreach ($worker in $Campaign.workers) {
-        Assert-PARCondition (-not [string]::IsNullOrWhiteSpace([string] $worker.workerId)) 'workerId darf nicht leer sein.'
+        Assert-PARCondition ([string] $worker.workerId -cmatch '^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$') `
+            'workerId muss eine einzelne sichere Pfadkomponente sein.'
         Assert-PARCondition (Test-PARUuid ([string] $worker.runId)) "runId von '$($worker.workerId)' ist keine UUID."
         Assert-PARCondition (-not [string]::IsNullOrWhiteSpace([string] $worker.branch)) "branch von '$($worker.workerId)' fehlt."
         $runnerProfileName = Get-PARRunnerProfileName $Campaign $worker
