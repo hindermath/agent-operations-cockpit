@@ -222,24 +222,18 @@ function Initialize-Context {
         -ExpectedParent $script:HomeDir `
         -ExpectedName $WorkspaceName
 
-    if (Get-Command Resolve-HBSourceRepository -ErrorAction SilentlyContinue) {
-        try {
-            $protectedSource = Resolve-HBSourceRepository -StartPath $script:HomeDir -AllowLegacy
-            if (Test-PathValueEqual -Left $script:WorkspaceDir -Right $protectedSource) {
-                throw 'Fehler: Konfigurierte Level-0-Quelle ist geschützt / Error: Configured Level 0 source is protected'
-            }
-        }
-        catch {
-            if ($_.Exception.Message -match 'Configured Level 0 source is protected') {
-                throw
-            }
-        }
+    if (-not (Get-Command Resolve-HBSourceRepository -ErrorAction SilentlyContinue)) {
+        throw 'Fehler: Level-0-Quelle nicht pruefbar / Error: Level 0 source unavailable'
+    }
+    $protectedSource = Resolve-HBSourceRepository -StartPath $script:HomeDir -AllowLegacy
+    if (Test-PathValueEqual -Left $script:WorkspaceDir -Right $protectedSource) {
+        throw 'Fehler: Konfigurierte Level-0-Quelle ist geschützt / Error: Configured Level 0 source is protected'
     }
 }
 
 function Get-Level2Projects {
     $script:Level2Projects.Clear()
-    $children = Get-ChildItem -LiteralPath $script:WorkspaceDir -Directory -ErrorAction SilentlyContinue
+    $children = Get-ChildItem -LiteralPath $script:WorkspaceDir -Directory -ErrorAction Stop
     foreach ($child in $children) {
         $gitDirectory = Join-Path $child.FullName '.git'
         if (Test-GitMarker $child.FullName) {
@@ -428,14 +422,14 @@ function Test-Safety([string]$Label, [string]$Dir, [switch]$Preflight) {
     }
 
     Assert-GitMetadata $Dir
-    $statusOutput = (& git -C $Dir status --porcelain 2>$null)
+    $statusOutput = (& git -C $Dir status --porcelain --ignored=matching --untracked-files=all 2>$null)
     if ($LASTEXITCODE -ne 0) {
         Add-Result 'fail' "Git-Status nicht pruefbar / Git status unavailable: $Label"
         Set-WarningExit
         return $false
     }
     if ($statusOutput) {
-        Add-Result 'fail' "Uncommittete Änderungen erkannt / Uncommitted changes detected: $Label"
+        Add-Result 'fail' "Lokale oder ignorierte Dateien erkannt / Local or ignored files detected: $Label"
         Set-WarningExit
         return $false
     }
@@ -654,9 +648,9 @@ function Remove-RemoteRepo([string]$Label, [string]$Dir) {
 
     if ($parsed.Platform -eq 'gitlab') {
         if (-not (Get-Command glab -ErrorAction SilentlyContinue)) {
-            Add-Result 'skip' "glab fehlt, GitLab-Remote übersprungen / glab missing, GitLab remote skipped: $ownerRepo"
+            Add-Result 'fail' "glab fehlt, Remote-Löschung abgebrochen / glab missing, remote deletion aborted: $ownerRepo"
             Set-WarningExit
-            return $true
+            return $false
         }
 
         & glab repo delete $ownerRepo --yes *> $null
@@ -676,7 +670,10 @@ function Remove-RemoteRepo([string]$Label, [string]$Dir) {
 }
 
 function Remove-LocalDirectory([string]$Label, [string]$Dir) {
-    Remove-Item -LiteralPath $Dir -Recurse -Force
+    Remove-Item -LiteralPath $Dir -Recurse -Force -ErrorAction Stop
+    if (Test-Path -LiteralPath $Dir) {
+        throw "Fehler: Verzeichnis konnte nicht geloescht werden / Error: Directory could not be deleted: $Label"
+    }
     Add-Result 'done' "Verzeichnis gelöscht / Directory deleted: $Label"
 }
 

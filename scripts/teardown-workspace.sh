@@ -230,9 +230,14 @@ validate_context() {
     exit 2
   fi
 
-  if declare -F resolve_hb_source_repository >/dev/null 2>&1; then
-    protected_source="$(resolve_hb_source_repository "$HOME_DIR/README.md" 1 2>/dev/null || true)"
+  if ! declare -F resolve_hb_source_repository >/dev/null 2>&1; then
+    echo "Fehler: Level-0-Quelle nicht pruefbar / Error: Level 0 source unavailable" >&2
+    exit 2
   fi
+  protected_source="$(resolve_hb_source_repository "$HOME_DIR/README.md" 1 2>/dev/null)" || {
+    echo "Fehler: Level-0-Quelle nicht pruefbar / Error: Level 0 source unavailable" >&2
+    exit 2
+  }
   if [ -n "$protected_source" ] && [ "$resolved" = "$protected_source" ]; then
     echo "Fehler: Konfigurierte Level-0-Quelle ist geschützt / Error: Configured Level 0 source is protected" >&2
     exit 2
@@ -242,12 +247,18 @@ validate_context() {
 }
 
 discover_level2_projects() {
-  local gitdir=""
+  local gitdir="" discovered=""
 
   LEVEL2_PROJECTS=()
+  discovered="$(find "$WORKSPACE_DIR" -mindepth 2 -maxdepth 2 -name ".git" \( -type d -o -type f -o -type l \) 2>/dev/null | sort)" || {
+    echo "Fehler: Level-2-Projekte nicht pruefbar / Error: Level 2 projects unavailable" >&2
+    return 1
+  }
   while IFS= read -r gitdir; do
-    LEVEL2_PROJECTS+=("$(dirname "$gitdir")")
-  done < <(find "$WORKSPACE_DIR" -mindepth 2 -maxdepth 2 -name ".git" \( -type d -o -type f -o -type l \) 2>/dev/null | sort)
+    if [ -n "$gitdir" ]; then
+      LEVEL2_PROJECTS+=("$(dirname "$gitdir")")
+    fi
+  done <<< "$discovered"
 }
 
 has_git_marker() {
@@ -471,13 +482,13 @@ check_safety() {
     set_warning_exit
     return 1
   fi
-  status="$(git -C "$dir" status --porcelain 2>/dev/null)" || {
+  status="$(git -C "$dir" status --porcelain --ignored=matching --untracked-files=all 2>/dev/null)" || {
     add_result "fail" "Git-Status nicht pruefbar / Git status unavailable: $label"
     set_warning_exit
     return 1
   }
   if [ -n "$status" ]; then
-    add_result "fail" "Uncommittete Änderungen erkannt / Uncommitted changes detected: $label"
+    add_result "fail" "Lokale oder ignorierte Dateien erkannt / Local or ignored files detected: $label"
     set_warning_exit
     return 1
   fi
@@ -719,9 +730,9 @@ delete_remote_repo() {
 
   if [ "${parsed%%$'\t'*}" = "gitlab" ]; then
     if ! command -v glab >/dev/null 2>&1; then
-      add_result "skip" "glab fehlt, GitLab-Remote übersprungen / glab missing, GitLab remote skipped: $owner_repo"
+      add_result "fail" "glab fehlt, Remote-Löschung abgebrochen / glab missing, remote deletion aborted: $owner_repo"
       set_warning_exit
-      return 0
+      return 1
     fi
     if glab repo delete "$owner_repo" --yes >/dev/null 2>&1; then
       add_result "done" "GitLab-Remote gelöscht / GitLab remote deleted: $owner_repo"
@@ -741,30 +752,40 @@ delete_local_directory() {
   local label="$1"
   local dir="$2"
 
-  rm -rf "$dir"
+  if ! rm -rf "$dir" || [ -e "$dir" ] || [ -L "$dir" ]; then
+    add_result "fail" "Verzeichnis konnte nicht geloescht werden / Directory could not be deleted: $label"
+    set_warning_exit
+    return 1
+  fi
   add_result "done" "Verzeichnis gelöscht / Directory deleted: $label"
 }
 
-rewrite_without_match() {
+finish_cleanup_file() {
   local source="$1"
   local tmp_file="$2"
-  local awk_script="$3"
-  local changed_message="$4"
-  local missing_message="$5"
+  local changed_message="$3"
+  local missing_message="$4"
+  local compare_status=0
 
-  if [ ! -f "$source" ]; then
-    add_result "skip" "$missing_message"
-    return 0
+  cmp -s "$source" "$tmp_file" || compare_status=$?
+  if [ "$compare_status" -gt 1 ]; then
+    rm -f "$tmp_file"
+    add_result "fail" "Artefaktvergleich fehlgeschlagen / Artifact comparison failed: $source"
+    set_warning_exit
+    return 1
   fi
-
-  awk "$awk_script" "$source" > "$tmp_file"
-  if cmp -s "$source" "$tmp_file"; then
+  if [ "$compare_status" -eq 0 ]; then
     rm -f "$tmp_file"
     add_result "skip" "$missing_message"
     return 0
   fi
 
-  mv "$tmp_file" "$source"
+  if ! mv "$tmp_file" "$source"; then
+    rm -f "$tmp_file"
+    add_result "fail" "Artefakt konnte nicht bereinigt werden / Artifact cleanup failed: $source"
+    set_warning_exit
+    return 1
+  fi
   add_result "done" "$changed_message"
 }
 
@@ -776,15 +797,13 @@ cleanup_readme() {
     return 0
   fi
 
-  awk -v workspace="$WORKSPACE_NAME" 'index($0, "~/" workspace "/") == 0 { print }' "$README_PATH" > "$tmp_file"
-  if cmp -s "$README_PATH" "$tmp_file"; then
+  if ! awk -v workspace="$WORKSPACE_NAME" 'index($0, "~/" workspace "/") == 0 { print }' "$README_PATH" > "$tmp_file"; then
     rm -f "$tmp_file"
-    add_result "skip" "README.md-Eintrag nicht vorhanden / README.md entry not present"
-    return 0
+    add_result "fail" "README.md konnte nicht gelesen werden / README.md could not be read"
+    set_warning_exit
+    return 1
   fi
-
-  mv "$tmp_file" "$README_PATH"
-  add_result "done" "README.md bereinigt / README.md cleaned up"
+  finish_cleanup_file "$README_PATH" "$tmp_file" "README.md bereinigt / README.md cleaned up" "README.md-Eintrag nicht vorhanden / README.md entry not present"
 }
 
 cleanup_gitignore() {
@@ -795,15 +814,13 @@ cleanup_gitignore() {
     return 0
   fi
 
-  awk -v entry="$WORKSPACE_NAME/" '$0 != entry { print }' "$GITIGNORE_PATH" > "$tmp_file"
-  if cmp -s "$GITIGNORE_PATH" "$tmp_file"; then
+  if ! awk -v entry="$WORKSPACE_NAME/" '$0 != entry { print }' "$GITIGNORE_PATH" > "$tmp_file"; then
     rm -f "$tmp_file"
-    add_result "skip" ".gitignore-Eintrag nicht vorhanden / .gitignore entry not present"
-    return 0
+    add_result "fail" ".gitignore konnte nicht gelesen werden / .gitignore could not be read"
+    set_warning_exit
+    return 1
   fi
-
-  mv "$tmp_file" "$GITIGNORE_PATH"
-  add_result "done" ".gitignore bereinigt / .gitignore cleaned up"
+  finish_cleanup_file "$GITIGNORE_PATH" "$tmp_file" ".gitignore bereinigt / .gitignore cleaned up" ".gitignore-Eintrag nicht vorhanden / .gitignore entry not present"
 }
 
 cleanup_gitconfig() {
@@ -816,20 +833,17 @@ cleanup_gitconfig() {
     return 0
   fi
 
-  awk -v header1="$tilde_header" -v header2="$expanded_header" '
+  if ! awk -v header1="$tilde_header" -v header2="$expanded_header" '
     $0 == header1 || $0 == header2 { skip = 1; removed = 1; next }
     skip && /^[[:space:]]/ { next }
     { skip = 0; print }
-  ' "$GITCONFIG_PATH" > "$tmp_file"
-
-  if cmp -s "$GITCONFIG_PATH" "$tmp_file"; then
+  ' "$GITCONFIG_PATH" > "$tmp_file"; then
     rm -f "$tmp_file"
-    add_result "skip" ".gitconfig includeIf-Block nicht vorhanden / .gitconfig includeIf block not present"
-    return 0
+    add_result "fail" ".gitconfig konnte nicht gelesen werden / .gitconfig could not be read"
+    set_warning_exit
+    return 1
   fi
-
-  mv "$tmp_file" "$GITCONFIG_PATH"
-  add_result "done" ".gitconfig bereinigt / .gitconfig cleaned up"
+  finish_cleanup_file "$GITCONFIG_PATH" "$tmp_file" ".gitconfig bereinigt / .gitconfig cleaned up" ".gitconfig includeIf-Block nicht vorhanden / .gitconfig includeIf block not present"
 }
 
 cleanup_inc_file() {
@@ -843,7 +857,11 @@ cleanup_inc_file() {
     return 0
   fi
 
-  rm -f "$INC_FILE"
+  if ! rm -f "$INC_FILE" || [ -e "$INC_FILE" ] || [ -L "$INC_FILE" ]; then
+    add_result "fail" ".inc-Datei konnte nicht geloescht werden / .inc file could not be deleted: $NORMALIZED_NAME.inc"
+    set_warning_exit
+    return 1
+  fi
   add_result "done" ".inc-Datei gelöscht / .inc file deleted: $NORMALIZED_NAME.inc"
 }
 
@@ -875,7 +893,14 @@ commit_artifacts() {
     }
   fi
 
-  if ! git -C "$HOME_DIR" diff --cached --quiet -- README.md .gitignore >/dev/null 2>&1; then
+  local diff_status=0
+  git -C "$HOME_DIR" diff --cached --quiet -- README.md .gitignore >/dev/null 2>&1 || diff_status=$?
+  if [ "$diff_status" -gt 1 ]; then
+    add_result "fail" "Artefakt-Diff nicht pruefbar / Artifact diff unavailable"
+    set_warning_exit
+    return 1
+  fi
+  if [ "$diff_status" -eq 1 ]; then
     staged=1
   fi
 
@@ -889,6 +914,7 @@ commit_artifacts() {
   else
     add_result "fail" "Artefakt-Commit fehlgeschlagen / Artifact commit failed"
     set_warning_exit
+    return 1
   fi
 }
 
@@ -915,10 +941,10 @@ check_home_artifacts_clean() {
 }
 
 cleanup_workspace_artifacts() {
-  cleanup_readme
-  cleanup_gitignore
-  cleanup_gitconfig
-  cleanup_inc_file
+  cleanup_readme || return 1
+  cleanup_gitignore || return 1
+  cleanup_gitconfig || return 1
+  cleanup_inc_file || return 1
   commit_artifacts
 }
 
@@ -970,7 +996,7 @@ teardown_target() {
   fi
   dir="$validated_dir"
 
-  delete_local_directory "$label" "$dir"
+  delete_local_directory "$label" "$dir" || return 1
 
   if [ "$include_artifacts" -eq 1 ]; then
     cleanup_workspace_artifacts
@@ -1024,7 +1050,7 @@ print_completion_report() {
 main() {
   parse_args "$@"
   validate_context
-  discover_level2_projects
+  discover_level2_projects || exit 2
 
   if [ "${#LEVEL2_PROJECTS[@]}" -gt 0 ] && [ "$RECURSIVE" -ne 1 ]; then
     print_level2_abort

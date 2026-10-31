@@ -309,3 +309,26 @@ deletion. Force remains an explicit override. Isolated regression checks cover
 these boundaries, empty Git repositories, and the override. Documentation
 Impact is `UpdateRequired`; the teardown scripts, regression tests and this
 receipt were updated. No new cross-project AEPS evidence is claimed.*
+
+Der Standardscan `26dd62d7-2453-4997-8f05-b42d0506fdd9` auf `555b9aa`
+meldete bei teilweiser Repository-Abdeckung sechs weitere Teardown-Befunde.
+Der lokale Patch behandelt eine fehlgeschlagene Level-2-Suche als Abbruch,
+schuetzt auch ignorierte lokale Dateien, verlangt die GitLab-CLI fuer eine
+angeforderte Remote-Loeschung und eine pruefbare Level-0-Quelle auch bei
+`Force`. Fehler beim lokalen Loeschen und bei der Home-Artefakt-Bereinigung
+beenden den Ablauf ohne falsche Erfolgsmeldung. Die Regressionen verwenden
+isolierte temporaere Home-Verzeichnisse. Documentation Impact:
+`UpdateRequired`; Quelle: privater Standardscan, Owner: AOC Repository Owner;
+aktualisiert wurden Teardown-Skripte, Regressionstests und dieses Receipt.
+Die neue Evidence ist projektspezifisch; keine AEPS-Promotion oder
+Upstream-Aktion folgt daraus.
+
+*The Standard scan on `555b9aa` reported six further teardown findings with
+partial repository coverage. The local patch aborts on failed Level-2
+discovery, protects ignored local files, requires the GitLab CLI for requested
+remote deletion, and requires a resolvable Level-0 source even with `Force`.
+Local deletion and Home artifact cleanup errors now stop without false success.
+Regression tests use isolated temporary Home directories. Documentation Impact
+is `UpdateRequired`; the teardown scripts, regression tests and this receipt
+were updated. This evidence is project-specific and does not justify AEPS
+promotion or an upstream action.*

@@ -283,6 +283,137 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
                 self.assertNotEqual(result.returncode, 0, result.stdout)
                 self.assertTrue((workspace / "payload.txt").exists(), result.stdout)
 
+    @unittest.skipIf(os.name == "nt", "POSIX fake command fixture")
+    def test_teardown_find_failure_preserves_nested_repository(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            _, workspace, environment = teardown_fixture(root)
+            child = workspace / "child"
+            child.mkdir()
+            subprocess.run(["git", "-C", str(child), "init", "-q"], check=True)
+            (child / "local.txt").write_text("preserve\n", encoding="utf-8")
+            fake = root / "bin"
+            fake.mkdir()
+            finder = fake / "find"
+            finder.write_text("#!/bin/sh\nexit 2\n", encoding="utf-8")
+            finder.chmod(0o755)
+            environment["PATH"] = f"{fake}{os.pathsep}{os.environ['PATH']}"
+            result = subprocess.run(["bash", str(LIBRARY.parent / "teardown-workspace.sh"),
+                                     "Demo", "--keep-remote", "--yes"],
+                                    env=environment, capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0, result.stdout)
+            self.assertIn("Level 2 projects unavailable", result.stderr)
+            self.assertTrue((child / "local.txt").exists(), result.stdout)
+
+    def test_teardown_preserves_ignored_local_file(self) -> None:
+        for shell in ("bash", "pwsh"):
+            if not shutil.which(shell):
+                continue
+            with self.subTest(shell=shell), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                _, workspace, environment = teardown_fixture(root)
+                subprocess.run(["git", "-C", str(workspace), "init", "-q"], check=True)
+                (workspace / ".git" / "info" / "exclude").write_text("local.txt\n", encoding="utf-8")
+                (workspace / "local.txt").write_text("preserve\n", encoding="utf-8")
+                command = (["bash", str(LIBRARY.parent / "teardown-workspace.sh"),
+                            "Demo", "--keep-remote", "--yes"] if shell == "bash" else
+                           ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "teardown-workspace.ps1"),
+                            "-WorkspaceName", "Demo", "-KeepRemote", "-Yes"])
+                result = subprocess.run(command, env=environment, capture_output=True, text=True)
+                self.assertNotEqual(result.returncode, 0, result.stdout)
+                self.assertTrue((workspace / "local.txt").exists(), result.stdout)
+
+    @unittest.skipIf(os.name == "nt", "POSIX PATH fixture")
+    def test_teardown_missing_gitlab_cli_preserves_workspace(self) -> None:
+        for shell in ("bash", "pwsh"):
+            if not shutil.which(shell):
+                continue
+            with self.subTest(shell=shell), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                _, workspace, environment = teardown_fixture(root)
+                subprocess.run(["git", "-C", str(workspace), "init", "-q"], check=True)
+                subprocess.run(["git", "-C", str(workspace), "remote", "add", "origin",
+                                "https://gitlab.com/example/demo.git"], check=True)
+                fake = root / "bin"
+                fake.mkdir()
+                for command_name in ("bash", "pwsh", "python3"):
+                    executable = shutil.which(command_name)
+                    if executable:
+                        (fake / command_name).symlink_to(executable)
+                environment["PATH"] = f"{fake}{os.pathsep}/usr/bin{os.pathsep}/bin"
+                command = (["bash", str(LIBRARY.parent / "teardown-workspace.sh"),
+                            "Demo", "--yes"] if shell == "bash" else
+                           ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "teardown-workspace.ps1"),
+                            "-WorkspaceName", "Demo", "-Yes"])
+                result = subprocess.run(command, env=environment, capture_output=True, text=True)
+                self.assertNotEqual(result.returncode, 0, result.stdout)
+                self.assertIn("glab missing", result.stdout)
+                self.assertTrue(workspace.exists(), result.stdout)
+
+    def test_teardown_rejects_unresolvable_level0_source(self) -> None:
+        for shell in ("bash", "pwsh"):
+            if not shutil.which(shell):
+                continue
+            with self.subTest(shell=shell), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                home, _, environment = teardown_fixture(root)
+                source = home / "ConfiguredSource"
+                subprocess.run(["git", "-C", str(source), "remote", "remove", "origin"], check=True)
+                command = (["bash", str(LIBRARY.parent / "teardown-workspace.sh"),
+                            "ConfiguredSource", "--force", "--keep-remote", "--yes"] if shell == "bash" else
+                           ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "teardown-workspace.ps1"),
+                            "-WorkspaceName", "ConfiguredSource", "-Force", "-KeepRemote", "-Yes"])
+                result = subprocess.run(command, env=environment, capture_output=True, text=True)
+                self.assertNotEqual(result.returncode, 0, result.stdout)
+                self.assertTrue((source / "scripts" / "sync-home.sh").exists(), result.stdout)
+
+    @unittest.skipIf(os.name == "nt", "POSIX fake command fixture")
+    def test_teardown_failed_local_delete_preserves_home_artifacts(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            home, workspace, environment = teardown_fixture(root)
+            readme = home / "README.md"
+            readme.write_text("Keep ~/Demo/ entry\n", encoding="utf-8")
+            fake = root / "bin"
+            fake.mkdir()
+            remover = fake / "rm"
+            real_rm = shutil.which("rm")
+            assert real_rm is not None
+            remover.write_text("#!/bin/sh\n"
+                               'if [ "${2##*/}" = Demo ]; then exit 2; fi\n'
+                               f'exec {shlex.quote(real_rm)} "$@"\n', encoding="utf-8")
+            remover.chmod(0o755)
+            environment["PATH"] = f"{fake}{os.pathsep}{os.environ['PATH']}"
+            result = subprocess.run(["bash", str(LIBRARY.parent / "teardown-workspace.sh"),
+                                     "Demo", "--keep-remote", "--yes"],
+                                    env=environment, capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0, result.stdout)
+            self.assertTrue(workspace.exists(), result.stdout)
+            self.assertEqual(readme.read_text(encoding="utf-8"), "Keep ~/Demo/ entry\n")
+
+    @unittest.skipIf(os.name == "nt", "POSIX fake command fixture")
+    def test_teardown_failed_home_read_preserves_original(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            home, _, environment = teardown_fixture(root)
+            readme = home / "README.md"
+            readme.write_text("Keep ~/Demo/ entry\n", encoding="utf-8")
+            fake = root / "bin"
+            fake.mkdir()
+            reader = fake / "awk"
+            real_awk = shutil.which("awk")
+            assert real_awk is not None
+            reader.write_text("#!/bin/sh\n"
+                              'for arg in "$@"; do case "$arg" in */README.md) exit 2;; esac; done\n'
+                              f'exec {shlex.quote(real_awk)} "$@"\n', encoding="utf-8")
+            reader.chmod(0o755)
+            environment["PATH"] = f"{fake}{os.pathsep}{os.environ['PATH']}"
+            result = subprocess.run(["bash", str(LIBRARY.parent / "teardown-workspace.sh"),
+                                     "Demo", "--keep-remote", "--yes"],
+                                    env=environment, capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0, result.stdout)
+            self.assertEqual(readme.read_text(encoding="utf-8"), "Keep ~/Demo/ entry\n")
+
     @unittest.skipIf(os.name == "nt", "POSIX temporary Home fixture")
     def test_teardown_backup_option_name_archives_selected_workspace(self) -> None:
         for shell in ("bash", "pwsh"):
