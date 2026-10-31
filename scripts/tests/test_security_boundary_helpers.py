@@ -367,6 +367,168 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
                 self.assertNotEqual(result.returncode, 0, result.stdout)
                 self.assertTrue((source / "scripts" / "sync-home.sh").exists(), result.stdout)
 
+    @unittest.skipIf(os.name == "nt", "POSIX PATH fixture")
+    def test_teardown_missing_jq_cannot_skip_configured_source(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            home, _, environment = teardown_fixture(root)
+            source = home / "ConfiguredSource"
+            fallback = home / "home-baseline-source"
+            fallback.mkdir()
+            (fallback / "scripts").mkdir()
+            (fallback / "scripts" / "sync-home.sh").write_text("#!/bin/sh\n", encoding="utf-8")
+            subprocess.run(["git", "-C", str(fallback), "init", "-q"], check=True)
+            subprocess.run(["git", "-C", str(fallback), "remote", "add", "origin",
+                            "https://example.invalid/old-source.git"], check=True)
+            state = home / ".home-baseline" / "source-repository.json"
+            state.parent.mkdir()
+            state.write_text('{"sourcePath":"' + str(source) + '"}\n', encoding="utf-8")
+            environment.pop("HOME_BASELINE_SOURCE", None)
+            fake = root / "bin"
+            fake.mkdir()
+            for command_name in ("bash", "python3", "dirname", "basename", "tr", "git", "sed"):
+                executable = shutil.which(command_name)
+                assert executable is not None
+                (fake / command_name).symlink_to(executable)
+            environment["PATH"] = str(fake)
+            result = subprocess.run(["bash", str(LIBRARY.parent / "teardown-workspace.sh"),
+                                     "ConfiguredSource", "--force", "--keep-remote", "--yes"],
+                                    env=environment, capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0, result.stdout)
+            self.assertIn("source state unavailable", result.stderr)
+            self.assertTrue((source / "scripts" / "sync-home.sh").exists(), result.stdout)
+
+    def test_teardown_rejects_configured_source_with_fallback(self) -> None:
+        for shell in ("bash", "pwsh"):
+            if not shutil.which(shell):
+                continue
+            with self.subTest(shell=shell), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                home, _, environment = teardown_fixture(root)
+                source = home / "ConfiguredSource"
+                subprocess.run(["git", "-C", str(source), "remote", "remove", "origin"], check=True)
+                fallback = home / "home-baseline-source"
+                fallback.mkdir()
+                (fallback / "scripts").mkdir()
+                (fallback / "scripts" / "sync-home.sh").write_text("#!/bin/sh\n", encoding="utf-8")
+                (fallback / "scripts" / "sync-home.ps1").write_text("#Requires -Version 7\n", encoding="utf-8")
+                subprocess.run(["git", "-C", str(fallback), "init", "-q"], check=True)
+                subprocess.run(["git", "-C", str(fallback), "remote", "add", "origin",
+                                "https://example.invalid/old-source.git"], check=True)
+                state = home / ".home-baseline" / "source-repository.json"
+                state.parent.mkdir()
+                state.write_text('{"sourcePath":"' + str(source) + '"}\n', encoding="utf-8")
+                environment.pop("HOME_BASELINE_SOURCE", None)
+                command = (["bash", str(LIBRARY.parent / "teardown-workspace.sh"),
+                            "ConfiguredSource", "--force", "--keep-remote", "--yes"] if shell == "bash" else
+                           ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "teardown-workspace.ps1"),
+                            "-WorkspaceName", "ConfiguredSource", "-Force", "-KeepRemote", "-Yes"])
+                result = subprocess.run(command, env=environment, capture_output=True, text=True)
+                self.assertNotEqual(result.returncode, 0, result.stdout)
+                self.assertTrue((source / "scripts" / "sync-home.sh").exists(), result.stdout)
+
+    @unittest.skipIf(os.name == "nt", "POSIX find fixture")
+    def test_teardown_detects_case_variant_git_marker(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            _, workspace, environment = teardown_fixture(root)
+            child = workspace / "child"
+            child.mkdir()
+            (child / ".GIT").mkdir()
+            result = subprocess.run(["bash", str(LIBRARY.parent / "teardown-workspace.sh"),
+                                     "Demo", "--keep-remote", "--yes", "--dry-run"],
+                                    env=environment, capture_output=True, text=True)
+            if (child / ".git").exists():
+                self.assertNotEqual(result.returncode, 0, result.stdout)
+                self.assertIn("Level-2 repositories detected", result.stdout)
+            else:
+                self.assertEqual(result.returncode, 0, result.stdout)
+            self.assertTrue((child / ".GIT").exists(), result.stdout)
+
+    def test_teardown_preserves_nonbranch_git_reference(self) -> None:
+        for shell in ("bash", "pwsh"):
+            if not shutil.which(shell):
+                continue
+            with self.subTest(shell=shell), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                _, workspace, environment = teardown_fixture(root)
+                subprocess.run(["git", "-C", str(workspace), "init", "-q"], check=True)
+                subprocess.run(["git", "-C", str(workspace), "config", "user.name", "Test"], check=True)
+                subprocess.run(["git", "-C", str(workspace), "config", "user.email", "test@example.invalid"], check=True)
+                (workspace / "tracked.txt").write_text("base\n", encoding="utf-8")
+                subprocess.run(["git", "-C", str(workspace), "add", "tracked.txt"], check=True)
+                subprocess.run(["git", "-C", str(workspace), "commit", "-qm", "initial"], check=True)
+                branch = subprocess.run(["git", "-C", str(workspace), "branch", "--show-current"],
+                                        capture_output=True, text=True, check=True).stdout.strip()
+                subprocess.run(["git", "-C", str(workspace), "remote", "add", "origin",
+                                "https://example.invalid/workspace.git"], check=True)
+                subprocess.run(["git", "-C", str(workspace), "update-ref",
+                                f"refs/remotes/origin/{branch}", "HEAD"], check=True)
+                subprocess.run(["git", "-C", str(workspace), "config", f"branch.{branch}.remote", "origin"], check=True)
+                subprocess.run(["git", "-C", str(workspace), "config", f"branch.{branch}.merge",
+                                f"refs/heads/{branch}"], check=True)
+                subprocess.run(["git", "-C", str(workspace), "tag", "local-only"], check=True)
+                command = (["bash", str(LIBRARY.parent / "teardown-workspace.sh"),
+                            "Demo", "--keep-remote", "--yes"] if shell == "bash" else
+                           ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "teardown-workspace.ps1"),
+                            "-WorkspaceName", "Demo", "-KeepRemote", "-Yes"])
+                result = subprocess.run(command, env=environment, capture_output=True, text=True)
+                self.assertNotEqual(result.returncode, 0, result.stdout)
+                self.assertTrue(workspace.exists(), result.stdout)
+                self.assertIn("local-only", subprocess.run(["git", "-C", str(workspace), "tag"],
+                                                        capture_output=True, text=True, check=True).stdout)
+                backed_up_command = [*command, "--backup" if shell == "bash" else "-Backup"]
+                backed_up = subprocess.run(backed_up_command, env=environment, capture_output=True, text=True)
+                archives = list((root / "home").glob("Demo-backup-*.tar.gz"))
+                self.assertEqual(len(archives), 1, backed_up.stdout + backed_up.stderr)
+                with tarfile.open(archives[0], "r:gz") as package:
+                    self.assertTrue(any(name.endswith(".git/refs/tags/local-only") for name in package.getnames()))
+                self.assertFalse(workspace.exists(), backed_up.stdout + backed_up.stderr)
+
+    @unittest.skipIf(os.name == "nt", "POSIX tar wrapper fixture")
+    def test_teardown_rejects_refs_changed_during_backup(self) -> None:
+        for shell in ("bash", "pwsh"):
+            if not shutil.which(shell):
+                continue
+            with self.subTest(shell=shell), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                _, workspace, environment = teardown_fixture(root)
+                subprocess.run(["git", "-C", str(workspace), "init", "-q"], check=True)
+                subprocess.run(["git", "-C", str(workspace), "config", "user.name", "Test"], check=True)
+                subprocess.run(["git", "-C", str(workspace), "config", "user.email", "test@example.invalid"], check=True)
+                (workspace / "tracked.txt").write_text("base\n", encoding="utf-8")
+                subprocess.run(["git", "-C", str(workspace), "add", "tracked.txt"], check=True)
+                subprocess.run(["git", "-C", str(workspace), "commit", "-qm", "initial"], check=True)
+                branch = subprocess.run(["git", "-C", str(workspace), "branch", "--show-current"],
+                                        capture_output=True, text=True, check=True).stdout.strip()
+                subprocess.run(["git", "-C", str(workspace), "remote", "add", "origin",
+                                "https://example.invalid/workspace.git"], check=True)
+                subprocess.run(["git", "-C", str(workspace), "update-ref",
+                                f"refs/remotes/origin/{branch}", "HEAD"], check=True)
+                subprocess.run(["git", "-C", str(workspace), "config", f"branch.{branch}.remote", "origin"], check=True)
+                subprocess.run(["git", "-C", str(workspace), "config", f"branch.{branch}.merge",
+                                f"refs/heads/{branch}"], check=True)
+                fake = root / "bin"
+                fake.mkdir()
+                real_tar = shutil.which("tar")
+                assert real_tar is not None
+                wrapper = fake / "tar"
+                wrapper.write_text("#!/bin/sh\n"
+                                   f'{shlex.quote(real_tar)} "$@" || exit $?\n'
+                                   'git -C "$TEST_REPO" tag late-tag\n', encoding="utf-8")
+                wrapper.chmod(0o755)
+                environment["PATH"] = f"{fake}{os.pathsep}{os.environ['PATH']}"
+                environment["TEST_REPO"] = str(workspace)
+                command = (["bash", str(LIBRARY.parent / "teardown-workspace.sh"),
+                            "Demo", "--backup", "--keep-remote", "--yes"] if shell == "bash" else
+                           ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "teardown-workspace.ps1"),
+                            "-WorkspaceName", "Demo", "-Backup", "-KeepRemote", "-Yes"])
+                result = subprocess.run(command, env=environment, capture_output=True, text=True)
+                self.assertNotEqual(result.returncode, 0, result.stdout)
+                self.assertTrue(workspace.exists(), result.stdout)
+                self.assertIn("late-tag", subprocess.run(["git", "-C", str(workspace), "tag"],
+                                                      capture_output=True, text=True, check=True).stdout)
+
     @unittest.skipIf(os.name == "nt", "POSIX fake command fixture")
     def test_teardown_failed_local_delete_preserves_home_artifacts(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

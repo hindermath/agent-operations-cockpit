@@ -27,6 +27,7 @@ $script:Results = [System.Collections.Generic.List[object]]::new()
 $script:Level2Projects = [System.Collections.Generic.List[string]]::new()
 $script:ApprovedRemoteIdentities = @{}
 $script:ApprovedGitMarkers = @{}
+$script:BackupRefSnapshots = @{}
 $script:DryRun = [bool]$WhatIfPreference
 $script:HomeDir = ''
 $script:WorkspaceDir = ''
@@ -221,6 +222,39 @@ function Initialize-Context {
         -Path $candidate `
         -ExpectedParent $script:HomeDir `
         -ExpectedName $WorkspaceName
+
+    $configuredPaths = [Collections.Generic.List[string]]::new()
+    if (-not [string]::IsNullOrWhiteSpace($env:HOME_BASELINE_SOURCE)) {
+        $configuredPaths.Add($env:HOME_BASELINE_SOURCE)
+    }
+    $stateFile = Join-Path $script:HomeDir '.home-baseline/source-repository.json'
+    if (Test-Path -LiteralPath $stateFile -PathType Leaf) {
+        try {
+            $state = Get-Content -LiteralPath $stateFile -Raw -Encoding UTF8 -ErrorAction Stop | ConvertFrom-Json -ErrorAction Stop
+            if (-not ($state.sourcePath -is [string]) -or [string]::IsNullOrWhiteSpace($state.sourcePath)) {
+                throw 'Missing sourcePath'
+            }
+            $configuredPaths.Add([string]$state.sourcePath)
+        }
+        catch {
+            throw "Fehler: Level-0-Quellstatus nicht pruefbar / Error: Level 0 source state unavailable: $stateFile"
+        }
+    }
+    foreach ($configuredPath in $configuredPaths) {
+        $sourceItem = Get-Item -LiteralPath $configuredPath -Force -ErrorAction Stop
+        if (-not $sourceItem.PSIsContainer) {
+            throw 'Fehler: Konfigurierte Level-0-Quelle nicht pruefbar / Error: Configured Level 0 source unavailable'
+        }
+        $sourceTarget = $sourceItem.ResolveLinkTarget($true)
+        $sourcePath = if ($null -ne $sourceTarget) { $sourceTarget.FullName } else { $sourceItem.FullName }
+        if (Test-PathValueEqual -Left $script:WorkspaceDir -Right $sourcePath) {
+            throw 'Fehler: Konfigurierte Level-0-Quelle ist geschützt / Error: Configured Level 0 source is protected'
+        }
+    }
+    if ((Test-Path -LiteralPath (Join-Path $script:WorkspaceDir 'scripts/sync-home.sh') -PathType Leaf) -and
+        (Test-Path -LiteralPath (Join-Path $script:WorkspaceDir 'scripts/sync-home.ps1') -PathType Leaf)) {
+        throw 'Fehler: Level-0-Quelle ist geschützt / Error: Level 0 source is protected'
+    }
 
     if (-not (Get-Command Resolve-HBSourceRepository -ErrorAction SilentlyContinue)) {
         throw 'Fehler: Level-0-Quelle nicht pruefbar / Error: Level 0 source unavailable'
@@ -446,6 +480,23 @@ function Test-Safety([string]$Label, [string]$Dir, [switch]$Preflight) {
         return $false
     }
 
+    $allRefs = @(& git -C $Dir for-each-ref --format='%(refname)' refs 2>$null)
+    if ($LASTEXITCODE -ne 0) {
+        Add-Result 'fail' "Git-Referenzen nicht pruefbar / Git refs unavailable: $Label"
+        Set-WarningExit
+        return $false
+    }
+    foreach ($reference in $allRefs) {
+        if ($reference -and
+            -not $reference.StartsWith('refs/heads/', [StringComparison]::Ordinal) -and
+            -not $reference.StartsWith('refs/remotes/', [StringComparison]::Ordinal) -and
+            -not $Backup) {
+            Add-Result 'fail' "Lokale Git-Referenzen erkannt; -Backup oder -Force verwenden / Local Git refs detected; use -Backup or -Force: $Label"
+            Set-WarningExit
+            return $false
+        }
+    }
+
     & git -C $Dir symbolic-ref --quiet HEAD *> $null
     if ($LASTEXITCODE -ne 0) {
         Add-Result 'fail' "Git-HEAD ohne pruefbaren Branch / Git HEAD has no verifiable branch: $Label"
@@ -519,10 +570,29 @@ function Invoke-Backup([string]$Label, [string]$Dir, [string]$TargetName) {
         return $false
     }
 
+    $hadGitMarker = Test-GitMarker $Dir
+    $refsBefore = if ($hadGitMarker) { Get-GitRefsSnapshot $Dir } else { '' }
+
     $archivePath = Get-UniqueBackupPath $TargetName
     & tar czf $archivePath -C (Split-Path $Dir -Parent) "./$(Split-Path $Dir -Leaf)" *> $null
     if ($LASTEXITCODE -eq 0 -and (Test-Path -LiteralPath $archivePath -PathType Leaf) -and
         (Get-Item -LiteralPath $archivePath).Length -gt 0) {
+        if ((Test-GitMarker $Dir) -ne $hadGitMarker) {
+            Add-Result 'fail' "Git-Metadaten waehrend Backup geaendert / Git metadata changed during backup: $Label"
+            Set-WarningExit
+            return $false
+        }
+        if ($hadGitMarker) {
+            $refsAfter = Get-GitRefsSnapshot $Dir
+            if ($refsAfter -cne $refsBefore) {
+                Add-Result 'fail' "Git-Referenzen waehrend Backup geaendert / Git refs changed during backup: $Label"
+                Set-WarningExit
+                return $false
+            }
+            $script:BackupRefSnapshots[$Dir] = "git|$refsAfter"
+        } else {
+            $script:BackupRefSnapshots[$Dir] = 'none'
+        }
         Add-Result 'done' "Backup erstellt / Backup created: $(Split-Path $archivePath -Leaf)"
         return $true
     } else {
@@ -530,6 +600,33 @@ function Invoke-Backup([string]$Label, [string]$Dir, [string]$TargetName) {
         Set-WarningExit
         return $false
     }
+}
+
+function Get-GitRefsSnapshot([string]$Dir) {
+    $refs = @(& git -C $Dir for-each-ref --format='%(refname)%09%(objectname)' refs 2>$null)
+    if ($LASTEXITCODE -ne 0) {
+        throw "Fehler: Git-Referenzen nicht pruefbar / Error: Git refs unavailable: $Dir"
+    }
+    $refs -join "`n"
+}
+
+function Test-BackupRefs([string]$Label, [string]$Dir) {
+    if (-not $Backup) { return $true }
+    if (-not $script:BackupRefSnapshots.ContainsKey($Dir)) {
+        Add-Result 'fail' "Backup-Referenzstand fehlt / Backup ref snapshot missing: $Label"
+        Set-WarningExit
+        return $false
+    }
+    $snapshot = $script:BackupRefSnapshots[$Dir]
+    if ($snapshot -eq 'none') {
+        if (-not (Test-GitMarker $Dir)) { return $true }
+    } elseif ((Test-GitMarker $Dir) -and
+              ("git|$(Get-GitRefsSnapshot $Dir)" -ceq $snapshot)) {
+        return $true
+    }
+    Add-Result 'fail' "Git-Referenzen nach Backup geaendert / Git refs changed after backup: $Label"
+    Set-WarningExit
+    return $false
 }
 
 function Remove-RemoteRepo([string]$Label, [string]$Dir) {
@@ -868,6 +965,9 @@ function Invoke-TargetTeardown {
     if (-not (Test-Safety -Label $Label -Dir $Dir)) {
         return $false
     }
+    if (-not (Test-BackupRefs -Label $Label -Dir $Dir)) {
+        return $false
+    }
 
     $Dir = Resolve-SafeDirectChildDirectory `
         -Path $Dir `
@@ -883,6 +983,9 @@ function Invoke-TargetTeardown {
         -ExpectedParent $expectedParent `
         -ExpectedName $BackupName
 
+    if (-not (Test-BackupRefs -Label $Label -Dir $Dir)) {
+        return $false
+    }
     Remove-LocalDirectory -Label $Label -Dir $Dir
 
     if ($IncludeArtifacts) {

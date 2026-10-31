@@ -332,3 +332,43 @@ Regression tests use isolated temporary Home directories. Documentation Impact
 is `UpdateRequired`; the teardown scripts, regression tests and this receipt
 were updated. This evidence is project-specific and does not justify AEPS
 promotion or an upstream action.*
+
+Der Standardscan `2455fa46-27fc-4aa4-b6fc-874bec6ed445` auf `889f104`
+meldete drei weitere Teardown-Befunde bei teilweiser Repository-Abdeckung.
+Der aktuelle Patch verlangt fuer lokale Git-Referenzen ausserhalb gepruefter
+Branches und Remote-Tracking-Refs ein erfolgreiches Backup oder `Force`, erkennt
+echte `.GIT`-Marker unabhaengig von der
+Schreibweise und prueft explizite Level-0-Quellpfade aus Umgebung und
+Statusdatei vor der Loeschung. Fehlt `jq` bei vorhandener Statusdatei, bricht
+der Bash-Lauf ab. Isolierte Regressionen decken Tags, Marker-Schreibweise,
+Konfigurations-Fallback und fehlendes `jq` ab. Documentation Impact:
+`UpdateRequired`; Quelle: privater Standardscan, Owner: AOC Repository Owner;
+aktualisiert wurden beide Teardown-Skripte, Regressionstests und dieses
+Receipt. Keine neue projektuebergreifende AEPS-Evidence oder Promotion.
+
+*The Standard scan on `889f104` reported three further teardown findings with
+partial repository coverage. The current patch requires a successful backup
+or `Force` for local Git refs outside verified branches and remote-tracking
+refs, discovers genuine `.GIT` markers without
+case sensitivity, and checks explicit Level-0 source paths from the
+environment and state file before deletion. Bash aborts if `jq` is unavailable
+while a state file exists. Isolated regressions cover tags, marker case,
+configuration fallback and missing `jq`. Documentation Impact is
+`UpdateRequired`; both teardown scripts, regression tests and this receipt
+were updated. No cross-project AEPS evidence or promotion is claimed.*
+
+Der Security-Diff-Scan `2c6baeac-23a1-4eab-b88a-443d8c7858ed` fand
+eine weitere lokale Backup-Luecke: Neue Git-Referenzen nach dem Archivieren
+waren nicht an den gesicherten Stand gebunden. Beide Skripte vergleichen jetzt
+Referenznamen und Objekt-IDs vor und nach dem Archiv sowie unmittelbar vor
+der lokalen Loeschung. Ein temporaerer Tar-Wrapper erzeugt im Regressionstest
+eine spaete Referenz; der Teardown bricht ab und behaelt das Workspace.
+Documentation Impact bleibt `UpdateRequired` fuer diesen Patch; eine
+projektuebergreifende AEPS-Evidence entsteht weiterhin nicht.
+
+*The Security Diff Scan found one local backup gap: Git refs created after
+archiving were not bound to the saved state. Both scripts now compare ref names
+and object IDs before and after the archive and immediately before local
+deletion. A temporary tar wrapper creates a late ref in the regression test;
+teardown aborts and preserves the workspace. Documentation Impact remains
+`UpdateRequired` for this patch. No cross-project AEPS evidence is claimed.*

@@ -37,6 +37,7 @@ declare -a LEVEL2_PROJECTS=()
 declare -a RESULTS=()
 declare -A APPROVED_REMOTE_IDENTITIES=()
 declare -A APPROVED_GIT_MARKERS=()
+declare -A BACKUP_REF_SNAPSHOTS=()
 
 usage() {
   cat <<'EOF'
@@ -194,6 +195,8 @@ validate_context() {
   local resolved_parent=""
   local resolved_name=""
   local protected_source=""
+  local configured_source=""
+  local state_file=""
 
   HOME_DIR="$(resolve_home_dir)"
   validate_workspace_name
@@ -230,6 +233,42 @@ validate_context() {
     exit 2
   fi
 
+  if [ -n "${HOME_BASELINE_SOURCE:-}" ]; then
+    configured_source="$(cd -- "$HOME_BASELINE_SOURCE" 2>/dev/null && pwd -P)" || {
+      echo "Fehler: Konfigurierte Level-0-Quelle nicht pruefbar / Error: Configured Level 0 source unavailable" >&2
+      exit 2
+    }
+    if [ "$resolved" = "$configured_source" ]; then
+      echo "Fehler: Konfigurierte Level-0-Quelle ist geschützt / Error: Configured Level 0 source is protected" >&2
+      exit 2
+    fi
+  fi
+
+  state_file="$HOME_DIR/.home-baseline/source-repository.json"
+  if [ -f "$state_file" ]; then
+    if ! command -v jq >/dev/null 2>&1; then
+      echo "Fehler: Level-0-Quellstatus nicht pruefbar / Error: Level 0 source state unavailable" >&2
+      exit 2
+    fi
+    configured_source="$(jq -er '.sourcePath | select(type == "string" and length > 0)' "$state_file" 2>/dev/null)" || {
+      echo "Fehler: Level-0-Quellstatus nicht pruefbar / Error: Level 0 source state unavailable" >&2
+      exit 2
+    }
+    configured_source="$(cd -- "$configured_source" 2>/dev/null && pwd -P)" || {
+      echo "Fehler: Konfigurierte Level-0-Quelle nicht pruefbar / Error: Configured Level 0 source unavailable" >&2
+      exit 2
+    }
+    if [ "$resolved" = "$configured_source" ]; then
+      echo "Fehler: Konfigurierte Level-0-Quelle ist geschützt / Error: Configured Level 0 source is protected" >&2
+      exit 2
+    fi
+  fi
+
+  if [ -f "$resolved/scripts/sync-home.sh" ] && [ -f "$resolved/scripts/sync-home.ps1" ]; then
+    echo "Fehler: Level-0-Quelle ist geschützt / Error: Level 0 source is protected" >&2
+    exit 2
+  fi
+
   if ! declare -F resolve_hb_source_repository >/dev/null 2>&1; then
     echo "Fehler: Level-0-Quelle nicht pruefbar / Error: Level 0 source unavailable" >&2
     exit 2
@@ -250,12 +289,12 @@ discover_level2_projects() {
   local gitdir="" discovered=""
 
   LEVEL2_PROJECTS=()
-  discovered="$(find "$WORKSPACE_DIR" -mindepth 2 -maxdepth 2 -name ".git" \( -type d -o -type f -o -type l \) 2>/dev/null | sort)" || {
+  discovered="$(find "$WORKSPACE_DIR" -mindepth 2 -maxdepth 2 -iname ".git" \( -type d -o -type f -o -type l \) 2>/dev/null | sort)" || {
     echo "Fehler: Level-2-Projekte nicht pruefbar / Error: Level 2 projects unavailable" >&2
     return 1
   }
   while IFS= read -r gitdir; do
-    if [ -n "$gitdir" ]; then
+    if [ -n "$gitdir" ] && has_git_marker "$(dirname "$gitdir")"; then
       LEVEL2_PROJECTS+=("$(dirname "$gitdir")")
     fi
   done <<< "$discovered"
@@ -504,6 +543,26 @@ check_safety() {
     return 1
   fi
 
+  local reference="" references=""
+  references="$(git -C "$dir" for-each-ref --format='%(refname)' refs 2>/dev/null)" || {
+    add_result "fail" "Git-Referenzen nicht pruefbar / Git refs unavailable: $label"
+    set_warning_exit
+    return 1
+  }
+  while IFS= read -r reference; do
+    [ -n "$reference" ] || continue
+    case "$reference" in
+      refs/heads/*|refs/remotes/*) ;;
+      *)
+        if [ "$BACKUP" -ne 1 ]; then
+          add_result "fail" "Lokale Git-Referenzen erkannt; --backup oder --force verwenden / Local Git refs detected; use --backup or --force: $label"
+          set_warning_exit
+          return 1
+        fi
+        ;;
+    esac
+  done <<< "$references"
+
   if ! git -C "$dir" symbolic-ref --quiet HEAD >/dev/null 2>&1; then
     add_result "fail" "Git-HEAD ohne pruefbaren Branch / Git HEAD has no verifiable branch: $label"
     set_warning_exit
@@ -576,6 +635,7 @@ create_backup() {
   local dir="$2"
   local target_name="$3"
   local archive=""
+  local refs_before="" refs_after="" had_git_marker=0
 
   if [ "$BACKUP" -ne 1 ]; then
     return 0
@@ -587,11 +647,74 @@ create_backup() {
     return 1
   fi
 
+  if has_git_marker "$dir"; then
+    had_git_marker=1
+    refs_before="$(git -C "$dir" for-each-ref --format='%(refname)%09%(objectname)' refs 2>/dev/null)" || {
+      add_result "fail" "Git-Referenzen vor Backup nicht pruefbar / Git refs unavailable before backup: $label"
+      set_warning_exit
+      return 1
+    }
+  fi
+
   archive="$(unique_backup_path "$target_name")"
   if tar czf "$archive" -C "$(dirname "$dir")" "./$(basename "$dir")" >/dev/null 2>&1 && [ -s "$archive" ]; then
+    if [ "$had_git_marker" -eq 1 ] && has_git_marker "$dir"; then
+      refs_after="$(git -C "$dir" for-each-ref --format='%(refname)%09%(objectname)' refs 2>/dev/null)" || {
+        add_result "fail" "Git-Referenzen nach Backup nicht pruefbar / Git refs unavailable after backup: $label"
+        set_warning_exit
+        return 1
+      }
+      if [ "$refs_before" != "$refs_after" ]; then
+        add_result "fail" "Git-Referenzen waehrend Backup geaendert / Git refs changed during backup: $label"
+        set_warning_exit
+        return 1
+      fi
+      BACKUP_REF_SNAPSHOTS["$dir"]="git|$refs_after"
+    else
+      if [ "$had_git_marker" -eq 1 ] || has_git_marker "$dir"; then
+        add_result "fail" "Git-Metadaten waehrend Backup geaendert / Git metadata changed during backup: $label"
+        set_warning_exit
+        return 1
+      fi
+      BACKUP_REF_SNAPSHOTS["$dir"]="none"
+    fi
     add_result "done" "Backup erstellt / Backup created: $(basename "$archive")"
   else
     add_result "fail" "Backup fehlgeschlagen / Backup failed: $label"
+    set_warning_exit
+    return 1
+  fi
+}
+
+verify_backup_refs() {
+  local label="$1" dir="$2" snapshot="" current=""
+  [ "$BACKUP" -eq 1 ] || return 0
+  snapshot="${BACKUP_REF_SNAPSHOTS[$dir]:-}"
+  if [ -z "$snapshot" ]; then
+    add_result "fail" "Backup-Referenzstand fehlt / Backup ref snapshot missing: $label"
+    set_warning_exit
+    return 1
+  fi
+  if [ "$snapshot" = "none" ]; then
+    if has_git_marker "$dir"; then
+      add_result "fail" "Git-Metadaten nach Backup geaendert / Git metadata changed after backup: $label"
+      set_warning_exit
+      return 1
+    fi
+    return 0
+  fi
+  if ! has_git_marker "$dir"; then
+    add_result "fail" "Git-Metadaten nach Backup entfernt / Git metadata removed after backup: $label"
+    set_warning_exit
+    return 1
+  fi
+  current="$(git -C "$dir" for-each-ref --format='%(refname)%09%(objectname)' refs 2>/dev/null)" || {
+    add_result "fail" "Git-Referenzen nach Backup nicht pruefbar / Git refs unavailable after backup: $label"
+    set_warning_exit
+    return 1
+  }
+  if [ "git|$current" != "$snapshot" ]; then
+    add_result "fail" "Git-Referenzen nach Backup geaendert / Git refs changed after backup: $label"
     set_warning_exit
     return 1
   fi
@@ -975,6 +1098,7 @@ teardown_target() {
   if ! check_safety "$label" "$dir"; then
     return 1
   fi
+  verify_backup_refs "$label" "$dir" || return 1
 
   validated_dir="$(resolve_direct_child "$expected_parent" "$backup_name" "$dir" || true)"
   if [ -z "$validated_dir" ]; then
@@ -996,6 +1120,7 @@ teardown_target() {
   fi
   dir="$validated_dir"
 
+  verify_backup_refs "$label" "$dir" || return 1
   delete_local_directory "$label" "$dir" || return 1
 
   if [ "$include_artifacts" -eq 1 ]; then
