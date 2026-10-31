@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import importlib.util
+import codecs
 import hashlib
 import os
 from pathlib import Path
@@ -190,6 +191,77 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
             )
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("SHA-256 stimmt nicht", result.stderr)
+
+    def test_checksum_sidecar_is_bounded_and_preserves_generated_formats(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            sidecar = root / "package.sha256"
+            digest = "a" * 64
+            sidecar.write_bytes((digest.upper() + "  ").encode("ascii") + b"name-\xff.zip\r\nignored line\n")
+            self.assertEqual(archive.read_checksum_bounded(sidecar), digest)
+            for marker, encoding in (
+                (codecs.BOM_UTF16_LE, "utf-16-le"),
+                (codecs.BOM_UTF16_BE, "utf-16-be"),
+                (codecs.BOM_UTF32_LE, "utf-32-le"),
+                (codecs.BOM_UTF32_BE, "utf-32-be"),
+            ):
+                sidecar.write_bytes(marker + (digest.upper() + "  package.zip\r\n").encode(encoding))
+                self.assertEqual(archive.read_checksum_bounded(sidecar), digest)
+            sidecar.write_bytes((digest + "\n").encode("ascii") + b"x" * (archive.MAX_CHECKSUM_BYTES - 65))
+            self.assertEqual(sidecar.stat().st_size, archive.MAX_CHECKSUM_BYTES)
+            self.assertEqual(archive.read_checksum_bounded(sidecar), digest)
+            with sidecar.open("ab") as output:
+                output.write(b"x")
+            with self.assertRaisesRegex(archive.UnsafePackage, "sidecar exceeds byte limit"):
+                archive.read_checksum_bounded(sidecar)
+            sidecar.write_bytes(b"\n" + digest.encode("ascii"))
+            with self.assertRaisesRegex(archive.UnsafePackage, "no valid digest"):
+                archive.read_checksum_bounded(sidecar)
+
+    def test_oversized_checksum_sidecar_is_rejected_by_both_checkers(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            package = root / "small.zip"
+            with zipfile.ZipFile(package, "w") as writer:
+                writer.writestr("lesson/one.txt", "one")
+            sidecar = root / "other.sha256"
+            digest = hashlib.sha256(package.read_bytes()).hexdigest()
+            sidecar.write_bytes((digest + "  small.zip\n").encode("ascii") + b"x" * 4096)
+            for command in (
+                ["bash", str(LIBRARY.parent / "check-learning-package.sh"), "--checksum", str(sidecar), str(package)],
+                ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "check-learning-package.ps1"),
+                 "-ChecksumPath", str(sidecar), "-PackagePath", str(package)],
+            ):
+                if not shutil.which(command[0]):
+                    continue
+                result = subprocess.run(command, capture_output=True, text=True, check=False)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("sidecar exceeds byte limit", result.stderr)
+
+    def test_utf16_checksum_sidecar_remains_usable_by_powershell(self) -> None:
+        if not shutil.which("pwsh"):
+            self.skipTest("PowerShell 7 is required")
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            package = root / "package.zip"
+            with zipfile.ZipFile(package, "w") as writer:
+                for required in ("START-HERE-FUER-LERNENDE.md", "GIT-START-FUER-LERNENDE.md",
+                                 "INSTITUTIONELLES-GIT-HOSTING.md"):
+                    writer.writestr(f"lesson/{required}", "# Guide\n")
+                writer.writestr("lesson/PACKAGING-MANIFEST.txt",
+                                "Git data included: no (package only)\n"
+                                "Original remotes included: no\n"
+                                "Start here after extracting: START-HERE-FUER-LERNENDE.md\n"
+                                "Institutional hosting guide: INSTITUTIONELLES-GIT-HOSTING.md\n")
+            sidecar = root / "other.sha256"
+            digest = hashlib.sha256(package.read_bytes()).hexdigest()
+            sidecar.write_bytes(codecs.BOM_UTF16_LE + (digest + "  package.zip\r\n").encode("utf-16-le"))
+            result = subprocess.run(
+                ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "check-learning-package.ps1"),
+                 "-ChecksumPath", str(sidecar), "-PackagePath", str(package)],
+                capture_output=True, text=True, check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
 
     @unittest.skipUnless(shutil.which("pwsh"), "PowerShell 7 is required")
     def test_wsl_wrapper_passes_metacharacters_as_one_argument(self) -> None:

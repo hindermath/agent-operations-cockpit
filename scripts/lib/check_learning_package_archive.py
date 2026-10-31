@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import codecs
 from pathlib import Path, PurePosixPath
 import re
 import stat
@@ -14,6 +15,7 @@ import zipfile
 MAX_ENTRIES = 20_000
 MAX_CENTRAL_DIRECTORY_BYTES = 32 << 20
 MAX_ARCHIVE_BYTES = 2 << 30
+MAX_CHECKSUM_BYTES = 4096
 MAX_UNCOMPRESSED_BYTES = 1 << 30
 COPY_CHUNK = 1 << 20
 END_RECORD = struct.Struct("<4s4H2IH")
@@ -26,6 +28,34 @@ class UnsafePackage(ValueError):
 
 def has_control_character(name: str) -> bool:
     return any(ord(character) < 32 or ord(character) == 127 for character in name)
+
+
+def read_checksum_bounded(sidecar: Path) -> str:
+    with sidecar.open("rb") as source:
+        contents = source.read(MAX_CHECKSUM_BYTES + 1)
+    if len(contents) > MAX_CHECKSUM_BYTES:
+        raise UnsafePackage("SHA-256 sidecar exceeds byte limit")
+    for marker, encoding in (
+        (codecs.BOM_UTF32_LE, "utf-32"),
+        (codecs.BOM_UTF32_BE, "utf-32"),
+        (codecs.BOM_UTF16_LE, "utf-16"),
+        (codecs.BOM_UTF16_BE, "utf-16"),
+    ):
+        if contents.startswith(marker):
+            try:
+                lines = contents.decode(encoding).splitlines()
+            except UnicodeDecodeError as exc:
+                raise UnsafePackage("SHA-256 sidecar encoding is invalid") from exc
+            fields = lines[0].split() if lines else []
+            digest = fields[0] if fields else ""
+            if re.fullmatch(r"[0-9a-fA-F]{64}", digest) is None:
+                raise UnsafePackage("SHA-256 sidecar has no valid digest on its first line")
+            return digest.lower()
+    first_line = contents.removeprefix(codecs.BOM_UTF8).split(b"\n", 1)[0]
+    fields = first_line.split()
+    if not fields or re.fullmatch(rb"[0-9a-fA-F]{64}", fields[0]) is None:
+        raise UnsafePackage("SHA-256 sidecar has no valid digest on its first line")
+    return fields[0].decode("ascii").lower()
 
 
 def check_archive_size(source) -> int:
@@ -146,10 +176,12 @@ def _extract_checked_archive(archive: zipfile.ZipFile, destination: Path) -> Non
 
 def main(arguments: list[str]) -> int:
     if len(arguments) != 2:
-        print("Usage: check_learning_package_archive.py ZIP DESTINATION | --list ZIP | --size ZIP", file=sys.stderr)
+        print("Usage: check_learning_package_archive.py ZIP DESTINATION | --list ZIP | --size ZIP | --checksum SIDECAR", file=sys.stderr)
         return 2
     try:
-        if arguments[0] == "--size":
+        if arguments[0] == "--checksum":
+            print(read_checksum_bounded(Path(arguments[1])))
+        elif arguments[0] == "--size":
             with Path(arguments[1]).open("rb") as source:
                 check_archive_size(source)
         elif arguments[0] == "--list":
@@ -157,7 +189,8 @@ def main(arguments: list[str]) -> int:
         else:
             extract_bounded(Path(arguments[0]), Path(arguments[1]))
     except (OSError, UnsafePackage, zipfile.BadZipFile, RuntimeError) as exc:
-        print(f"ERROR: unsafe learning ZIP: {exc}", file=sys.stderr)
+        subject = "invalid SHA-256 sidecar" if arguments[0] == "--checksum" else "unsafe learning ZIP"
+        print(f"ERROR: {subject}: {exc}", file=sys.stderr)
         return 1
     return 0
 

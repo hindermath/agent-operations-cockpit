@@ -10,6 +10,8 @@
     Git/build/IDE artefacts, and obvious secrets.
     Maximal 2 GiB Archiv, 20.000 Eintraege und 32 MiB ZIP-Verzeichnis; ZIP64 wird abgewiesen.
     Maximum 2 GiB archive, 20,000 entries and 32 MiB ZIP central directory; ZIP64 is rejected.
+    Die SHA-256-Datei ist auf 4 KiB begrenzt.
+    The SHA-256 sidecar is limited to 4 KiB.
 
 .PARAMETER PackagePath
     Pfad zum Lernreihen-ZIP. Path to the learning-series ZIP.
@@ -60,7 +62,8 @@ function Test-HBLearningPackage {
     & $python.Source $archiveHelper --size $ZipPath
     if ($LASTEXITCODE -ne 0) { throw 'ZIP-Groessenpruefung fehlgeschlagen / ZIP size validation failed.' }
 
-    $expected = ((Get-Content -LiteralPath $ShaPath -Raw).Trim() -split '\s+')[0].ToLowerInvariant()
+    $expected = & $python.Source $archiveHelper --checksum $ShaPath
+    if ($LASTEXITCODE -ne 0) { throw 'SHA-256-Sidecar ist ungueltig / SHA-256 sidecar is invalid.' }
     $actual = (Get-FileHash -LiteralPath $ZipPath -Algorithm SHA256).Hash.ToLowerInvariant()
     if ($expected -ne $actual) { throw "SHA-256 stimmt nicht: $ShaPath" }
 

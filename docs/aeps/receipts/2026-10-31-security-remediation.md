@@ -130,6 +130,14 @@ control characters in entry names no longer spoof Bash required-file checks.
 The ZIP diff scan `476d44a2-c46f-4148-8073-447b6d426afd` covered all three
 changed executable files without a new finding. The final Standard scan and
 publication remain pending.*
+Der Standardscan `37db3488-1f94-4647-af97-6f509ba160b1` auf `7115df7c1aee`
+meldete bei teilweiser Repository-Abdeckung eine weitere niedrige Beobachtung
+zur Groessengrenze der SHA-256-Begleitdatei. Der lokale Patch liest diese Datei
+nun begrenzt und bewahrt die erzeugten ASCII- sowie bisher akzeptierten
+BOM-kodierten Formate. / The Standard scan found one further low-severity
+checksum-sidecar resource issue under partial repository coverage. The local
+patch bounds that input and preserves generated ASCII and previously accepted
+BOM-encoded formats.
 
 *Focused tests and static checks passed. Three broad fleet tests could not use
 `ps` in this sandbox. The parallel coordinator and model-routing suites passed.
@@ -138,6 +146,17 @@ remains open. The second patch passed focused boundary, package, teardown,
 coordinator, static-analysis and clean-checkout Gitleaks checks. Diff and
 Standard scans of that patch completed; final scanning and publication of the
 ZIP patch remain pending at receipt time.*
+Der Sidecar-Patch bestand 19 fokussierte Python-Grenztests, beide
+Paketpruefer-Selbsttests und den PowerShell-Analyselauf fuer 124 Dateien.
+Die erneuten Diff- und Standardscans sowie die Publikation stehen noch aus. /
+The sidecar patch passed 19 focused Python boundary tests, both package-checker
+self-tests, and PowerShell analysis over 124 files. Its repeat diff and Standard
+scans and publication remain pending.
+Der Sidecar-Diff-Scan `d49920da-f89b-42d6-9fae-30e543313805` pruefte alle
+drei geaenderten ausfuehrbaren Dateien ohne weiteren Befund. Der finale
+Standardscan und die Publikation stehen noch aus. / The sidecar diff scan
+covered all three changed executable files without a further finding. The
+final Standard scan and publication remain pending.
 
 Documentation Impact: `UpdateRequired`. Quelle: privater Scan und lokaler
 Patch; Owner: AOC Repository Owner. Aktualisiert wurden

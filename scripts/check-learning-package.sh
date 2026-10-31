@@ -16,11 +16,13 @@ Usage: check-learning-package.sh [--checksum FILE] ZIP
 Prueft ein Lernreihen-ZIP auf genau einen Paket-Root, die Startanleitungen,
 Manifest, SHA-256, ausgeschlossene Git-/Build-/IDE-Artefakte und offensichtliche
 Secrets. Maximal 2 GiB Archiv, 20.000 Eintraege und 32 MiB ZIP-Verzeichnis; ZIP64 wird
-abgewiesen. --self-test erzeugt und prueft ein minimales Testpaket.
+abgewiesen. Die SHA-256-Datei ist auf 4 KiB begrenzt. --self-test erzeugt und
+prueft ein minimales Testpaket.
 
 Checks one package root, guides, manifest, SHA-256, excluded artefacts and
 obvious secrets. Maximum 2 GiB archive, 20,000 entries and 32 MiB ZIP directory; ZIP64 is
-rejected. --self-test creates and checks a minimal test package.
+rejected. The SHA-256 sidecar is limited to 4 KiB. --self-test creates and
+checks a minimal test package.
 
 Options:
   --checksum FILE  Abweichende SHA-256-Datei; Standard: ZIP.sha256
@@ -73,7 +75,7 @@ check_package() {
   python3 "${SCRIPT_DIR}/lib/check_learning_package_archive.py" --size "$package"
 
   local expected actual
-  expected="$(awk 'NR == 1 { print $1 }' "$checksum")"
+  expected="$(python3 "${SCRIPT_DIR}/lib/check_learning_package_archive.py" --checksum "$checksum")"
   [[ "$expected" =~ ^[[:xdigit:]]{64}$ ]] || { echo "ERROR: ungueltige SHA-256-Datei: $checksum" >&2; return 1; }
   actual="$(shasum -a 256 "$package" | awk '{ print $1 }')"
   [ "${expected,,}" = "${actual,,}" ] || { echo "ERROR: SHA-256 stimmt nicht: $package" >&2; return 1; }
