@@ -35,6 +35,7 @@ INC_FILE=""
 
 declare -a LEVEL2_PROJECTS=()
 declare -a RESULTS=()
+declare -A APPROVED_REMOTE_IDENTITIES=()
 
 usage() {
   cat <<'EOF'
@@ -259,7 +260,11 @@ remote_platform_for_dir() {
   if [ -z "$remote_url" ]; then
     echo "kein Remote / no remote"
   elif [ "$configured_platform" = "forgejo" ] || [ "$configured_platform" = "codeberg" ]; then
-    echo "$configured_platform"
+    if [ "$KEEP_REMOTE" -eq 1 ]; then
+      echo "$configured_platform"
+    else
+      echo "$configured_platform ${APPROVED_REMOTE_IDENTITIES[$dir]:-unsicheres Ziel / unsafe target}"
+    fi
   else
     parsed="$(python3 "$SCRIPT_DIR/lib/parse_teardown_remote.py" "$remote_url" 2>/dev/null || true)"
     case "${parsed%%$'\t'*}" in
@@ -268,6 +273,37 @@ remote_platform_for_dir() {
       *) echo "anderes Remote / other remote" ;;
     esac
   fi
+}
+
+forgejo_target_for_dir() {
+  local dir="$1"
+  local origin="" platform="" base_url="" owner="" repository=""
+  origin="$(git -C "$dir" remote get-url origin 2>/dev/null || true)"
+  platform="$(git -C "$dir" config --local --get home-baseline.remote-platform 2>/dev/null || true)"
+  base_url="$(git -C "$dir" config --local --get home-baseline.remote-base-url 2>/dev/null || true)"
+  owner="$(git -C "$dir" config --local --get home-baseline.remote-owner 2>/dev/null || true)"
+  repository="$(git -C "$dir" config --local --get home-baseline.remote-repository 2>/dev/null || true)"
+  python3 "$SCRIPT_DIR/lib/validate_forgejo_teardown_remote.py" \
+    "$origin" "$base_url" "$platform" "$owner" "$repository"
+}
+
+prepare_remote_targets() {
+  local dir="" platform="" identity=""
+  [ "$KEEP_REMOTE" -eq 0 ] || return 0
+  for dir in "${LEVEL2_PROJECTS[@]}" "$WORKSPACE_DIR"; do
+    [ -d "$dir/.git" ] || continue
+    [ -n "$(git -C "$dir" remote get-url origin 2>/dev/null || true)" ] || continue
+    platform="$(git -C "$dir" config --local --get home-baseline.remote-platform 2>/dev/null || true)"
+    case "$platform" in
+      forgejo|codeberg)
+        identity="$(forgejo_target_for_dir "$dir")" || {
+          echo "Fehler: Forgejo/Codeberg-Ziel stimmt nicht mit origin ueberein / Error: target does not match origin: $dir" >&2
+          return 1
+        }
+        APPROVED_REMOTE_IDENTITIES["$dir"]="$identity"
+        ;;
+    esac
+  done
 }
 
 build_preamble() {
@@ -323,6 +359,13 @@ build_preamble() {
   box_line_buffer+=("       - ~/.gitconfig.d/$NORMALIZED_NAME.inc")
 
   print_box "$title" "${box_line_buffer[@]}"
+  local target_dir=""
+  for target_dir in "${LEVEL2_PROJECTS[@]}" "$WORKSPACE_DIR"; do
+    if [ -n "${APPROVED_REMOTE_IDENTITIES[$target_dir]:-}" ]; then
+      printf 'Remote-Loeschziel / Remote deletion target (%s): %s\n' \
+        "$target_dir" "${APPROVED_REMOTE_IDENTITIES[$target_dir]}"
+    fi
+  done
 }
 
 planned_backup_path() {
@@ -443,12 +486,23 @@ delete_remote_repo() {
   fi
 
   remote_url="$(git -C "$dir" remote get-url origin 2>/dev/null || true)"
+  if [ -n "${APPROVED_REMOTE_IDENTITIES[$dir]:-}" ] && [ -z "$remote_url" ]; then
+    add_result "fail" "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $label"
+    set_warning_exit
+    return 1
+  fi
   if [ -z "$remote_url" ]; then
     add_result "skip" "Kein Remote konfiguriert / No remote configured: $label"
     return 0
   fi
 
   configured_platform="$(git -C "$dir" config --local --get home-baseline.remote-platform 2>/dev/null || true)"
+  if [ -n "${APPROVED_REMOTE_IDENTITIES[$dir]:-}" ] &&
+     [ "$configured_platform" != "forgejo" ] && [ "$configured_platform" != "codeberg" ]; then
+    add_result "fail" "Remote-Plattform hat sich nach der Vorschau geaendert / Remote platform changed after preview: $label"
+    set_warning_exit
+    return 1
+  fi
   if [ "$configured_platform" = "forgejo" ] || [ "$configured_platform" = "codeberg" ]; then
     if [ ! -f "$FORGEJO_LIB" ]; then
       add_result "fail" "Forgejo-Bibliothek fehlt, Remote-Löschung abgebrochen / Forgejo library missing, remote deletion aborted: $label"
@@ -460,6 +514,18 @@ delete_remote_repo() {
     forgejo_repository="$(git -C "$dir" config --local --get home-baseline.remote-repository 2>/dev/null || true)"
     if [ -z "$forgejo_base_url" ] || [ -z "$forgejo_owner" ] || [ -z "$forgejo_repository" ]; then
       add_result "fail" "Forgejo-Metadaten fehlen, bitte --keep-remote verwenden / Forgejo metadata missing, use --keep-remote: $label"
+      set_warning_exit
+      return 1
+    fi
+    local verified_identity=""
+    verified_identity="$(python3 "$SCRIPT_DIR/lib/validate_forgejo_teardown_remote.py" \
+      "$remote_url" "$forgejo_base_url" "$configured_platform" "$forgejo_owner" "$forgejo_repository")" || {
+      add_result "fail" "Forgejo/Codeberg-Ziel stimmt nicht mit origin ueberein / target does not match origin: $label"
+      set_warning_exit
+      return 1
+    }
+    if [ "$verified_identity" != "${APPROVED_REMOTE_IDENTITIES[$dir]:-}" ]; then
+      add_result "fail" "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $label"
       set_warning_exit
       return 1
     fi
@@ -771,6 +837,8 @@ main() {
     print_level2_abort
     exit 1
   fi
+
+  prepare_remote_targets || exit 2
 
   build_preamble
 

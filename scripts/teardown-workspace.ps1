@@ -25,6 +25,7 @@ if (Test-Path $sourceResolver) {
 $script:ExitCode = 0
 $script:Results = [System.Collections.Generic.List[object]]::new()
 $script:Level2Projects = [System.Collections.Generic.List[string]]::new()
+$script:ApprovedRemoteIdentities = @{}
 $script:DryRun = [bool]$WhatIfPreference
 $script:HomeDir = ''
 $script:WorkspaceDir = ''
@@ -222,12 +223,51 @@ function Get-RemotePlatform([string]$Dir) {
 
     $configuredPlatform = ((& git -C $Dir config --local --get home-baseline.remote-platform 2>$null) | Out-String).Trim()
     if ($configuredPlatform -in @('forgejo', 'codeberg')) {
-        return $configuredPlatform
+        if ($KeepRemote) { return $configuredPlatform }
+        return "$configuredPlatform $($script:ApprovedRemoteIdentities[$Dir])"
     }
 
     $parsed = Get-ParsedRemote $remoteUrl
     if ($null -eq $parsed) { return 'anderes Remote / other remote' }
     return "$($parsed.Platform) $($parsed.OwnerRepo)"
+}
+
+function Get-ForgejoTargetForDir([string]$Dir) {
+    $origin = ((& git -C $Dir remote get-url origin 2>$null) | Out-String).Trim()
+    $platform = ((& git -C $Dir config --local --get home-baseline.remote-platform 2>$null) | Out-String).Trim()
+    $baseUrl = ((& git -C $Dir config --local --get home-baseline.remote-base-url 2>$null) | Out-String).Trim()
+    $owner = ((& git -C $Dir config --local --get home-baseline.remote-owner 2>$null) | Out-String).Trim()
+    $repository = ((& git -C $Dir config --local --get home-baseline.remote-repository 2>$null) | Out-String).Trim()
+    return Get-ForgejoTargetFromValues $origin $baseUrl $platform $owner $repository
+}
+
+function Get-ForgejoTargetFromValues(
+    [string]$Origin, [string]$BaseUrl, [string]$Platform,
+    [string]$Owner, [string]$Repository
+) {
+    $pythonCommand = Get-Command python3 -ErrorAction SilentlyContinue
+    if (-not $pythonCommand) { $pythonCommand = Get-Command python -ErrorAction SilentlyContinue }
+    if (-not $pythonCommand) { return $null }
+    $parser = Join-Path $PSScriptRoot 'lib/validate_forgejo_teardown_remote.py'
+    $identity = & $pythonCommand.Source $parser $Origin $BaseUrl $Platform $Owner $Repository 2>$null
+    if ($LASTEXITCODE -ne 0 -or -not $identity) { return $null }
+    return ([string] $identity).Trim()
+}
+
+function Initialize-ApprovedRemoteTargets {
+    if ($KeepRemote) { return }
+    foreach ($dir in @($script:Level2Projects.ToArray()) + @($script:WorkspaceDir)) {
+        if (-not (Test-Path -LiteralPath (Join-Path $dir '.git') -PathType Container)) { continue }
+        $origin = ((& git -C $dir remote get-url origin 2>$null) | Out-String).Trim()
+        if (-not $origin) { continue }
+        $platform = ((& git -C $dir config --local --get home-baseline.remote-platform 2>$null) | Out-String).Trim()
+        if ($platform -notin @('forgejo', 'codeberg')) { continue }
+        $identity = Get-ForgejoTargetForDir $dir
+        if (-not $identity) {
+            throw "Forgejo/Codeberg-Ziel stimmt nicht mit origin ueberein / target does not match origin: $dir"
+        }
+        $script:ApprovedRemoteIdentities[$dir] = $identity
+    }
 }
 
 function Get-PlannedBackupPath([string]$TargetName) {
@@ -292,6 +332,11 @@ function Show-Preamble {
     $lines.Add("       - ~/.gitconfig.d/$($script:NormalizedName).inc")
 
     Show-Box -Title $title -Lines $lines
+    foreach ($dir in @($script:Level2Projects.ToArray()) + @($script:WorkspaceDir)) {
+        if ($script:ApprovedRemoteIdentities.ContainsKey($dir)) {
+            Write-Host "Remote-Loeschziel / Remote deletion target ($dir): $($script:ApprovedRemoteIdentities[$dir])"
+        }
+    }
 }
 
 function Confirm-OrAbort {
@@ -382,12 +427,23 @@ function Remove-RemoteRepo([string]$Label, [string]$Dir) {
     }
 
     $remoteUrl = (& git -C $Dir remote get-url origin 2>$null)
+    if ($script:ApprovedRemoteIdentities.ContainsKey($Dir) -and -not $remoteUrl) {
+        Add-Result 'fail' "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $Label"
+        Set-WarningExit
+        return $false
+    }
     if (-not $remoteUrl) {
         Add-Result 'skip' "Kein Remote konfiguriert / No remote configured: $Label"
         return $true
     }
 
     $configuredPlatform = ((& git -C $Dir config --local --get home-baseline.remote-platform 2>$null) | Out-String).Trim()
+    if ($script:ApprovedRemoteIdentities.ContainsKey($Dir) -and
+        $configuredPlatform -notin @('forgejo', 'codeberg')) {
+        Add-Result 'fail' "Remote-Plattform hat sich nach der Vorschau geaendert / Remote platform changed after preview: $Label"
+        Set-WarningExit
+        return $false
+    }
     if ($configuredPlatform -in @('forgejo', 'codeberg')) {
         if (-not (Test-Path $forgejoLib)) {
             Add-Result 'fail' "Forgejo-Bibliothek fehlt, Remote-Löschung abgebrochen / Forgejo library missing, remote deletion aborted: $Label"
@@ -399,6 +455,13 @@ function Remove-RemoteRepo([string]$Label, [string]$Dir) {
         $repository = ((& git -C $Dir config --local --get home-baseline.remote-repository 2>$null) | Out-String).Trim()
         if (-not $baseUrl -or -not $owner -or -not $repository) {
             Add-Result 'fail' "Forgejo-Metadaten fehlen, bitte -KeepRemote verwenden / Forgejo metadata missing, use -KeepRemote: $Label"
+            Set-WarningExit
+            return $false
+        }
+        $verifiedIdentity = Get-ForgejoTargetFromValues $remoteUrl $baseUrl $configuredPlatform $owner $repository
+        if (-not $verifiedIdentity -or
+            $verifiedIdentity -ne $script:ApprovedRemoteIdentities[$Dir]) {
+            Add-Result 'fail' "Forgejo/Codeberg-Ziel ungueltig oder seit Vorschau geaendert / target invalid or changed after preview: $Label"
             Set-WarningExit
             return $false
         }
@@ -675,6 +738,8 @@ try {
         Show-Level2Abort
         exit 1
     }
+
+    Initialize-ApprovedRemoteTargets
 
     Show-Preamble
 

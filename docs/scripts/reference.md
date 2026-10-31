@@ -5,7 +5,7 @@
 > Generated from `scripts/config/script-catalog.json` and the Git index. Do not edit manually.
 
 Stand / Updated: 2026-07-28
-Kanonische Skriptdateien / Canonical script files: 146
+Kanonische Skriptdateien / Canonical script files: 148
 
 ## Workspace-Lebenszyklus / Workspace lifecycle
 
@@ -805,6 +805,17 @@ python3 scripts/tests/test_spec_kit_agent_surface_parity.py --help
 
 ```text
 python3 scripts/tests/test_sync_home_cli.py --help
+```
+
+### `scripts/tests/test_validate_forgejo_teardown_remote.py`
+
+- **Rolle / Role:** oeffentliches Kommando / public command
+- **Kurzbeschreibung / Summary:** Siehe Quelltext und Hilfe. / See source and help.
+- **Voraussetzungen / Prerequisites:** passende Shell; weitere Anforderungen stehen in `--help` oder `Get-Help`.
+- **Nebenwirkungen / Side effects:** zuerst Check-, Dry-Run- oder WhatIf-Modus verwenden, sofern angeboten.
+
+```text
+python3 scripts/tests/test_validate_forgejo_teardown_remote.py --help
 ```
 
 ### `scripts/tests/test_windows_maintenance_hardening.py`
@@ -1658,6 +1669,18 @@ Do not invoke directly; it is loaded by public scripts.
 ```
 
 ### `scripts/lib/validate_bootstrap_origin.py`
+
+- **Rolle / Role:** intern oder installiert / internal or installed
+- **Kurzbeschreibung / Summary:** Siehe Quelltext und Hilfe. / See source and help.
+- **Voraussetzungen / Prerequisites:** passende Shell; weitere Anforderungen stehen in `--help` oder `Get-Help`.
+- **Nebenwirkungen / Side effects:** zuerst Check-, Dry-Run- oder WhatIf-Modus verwenden, sofern angeboten.
+
+```text
+Nicht direkt aufrufen; wird von oeffentlichen Skripten geladen.
+Do not invoke directly; it is loaded by public scripts.
+```
+
+### `scripts/lib/validate_forgejo_teardown_remote.py`
 
 - **Rolle / Role:** intern oder installiert / internal or installed
 - **Kurzbeschreibung / Summary:** Siehe Quelltext und Hilfe. / See source and help.

@@ -44,6 +44,17 @@ The repository owner selected a temporary fail-closed suspension for all
 production parallel campaigns. Start, resume and consolidation are rejected
 before the first subprocess. Deterministic tests use a temporary script copy
 with no production switch. Actual isolation needs separate validation.
+Der Diff-Scan `e2f695f8-5c81-4424-8cea-ef421a9e8cf3` bestaetigte die
+Produktionssperre ohne neuen Befund. Der anschliessende Standardscan
+`8f3becfa-621f-4575-bceb-2a5a14f3d69e` auf `e2c1bff383a8` fand bei
+teilweiser Repository-Abdeckung eine weitere mittlere Beobachtung zur
+Bindung des Forgejo/Codeberg-Remote-Ziels. Die lokale Korrektur prueft nun
+`origin`, Provider-Basis und Repository-Identitaet gemeinsam und zeigt das
+vollstaendige Ziel vor einer Loeschung an. / The diff scan found no new issue
+in the production suspension. The following Standard scan found one medium
+remote-target binding issue under partial repository coverage. The local fix
+binds origin, provider base and repository identity and displays the complete
+target before deletion.
 Publikationsstand:
 `PendingPublication`; AEPS-Upstream:
 `NotApplicable`. Deduplizierung: Scan-ID + Datum + Remediation-Receipt.
