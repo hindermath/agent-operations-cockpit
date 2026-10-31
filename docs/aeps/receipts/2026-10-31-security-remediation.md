@@ -286,3 +286,26 @@ parallel campaigns remain suspended until workers are isolated. Documentation
 Impact is `UpdateRequired`; the teardown scripts, regression tests, agent
 entry points, preset documentation and this receipt were updated. No new
 cross-project AEPS evidence is claimed.*
+
+Der Security-Diff-Scan `95f03408-71be-4c6d-953c-e90504e451d1` meldete
+keinen neuen Befund. Der Standardscan `9647413e-e49c-43a6-bb53-119da1dc3371`
+auf `a593830` identifizierte eine weitere PowerShell-Git-Pruefgrenze.
+Die Korrektur erkennt Git-Worktrees mit `.git`-Datei, behandelt fehlgeschlagene
+Git-Abfragen als Abbruchgrund und schliesst lokale Git-Historie ohne pruefbaren
+Upstream in beiden Shells vom Standard-Teardown aus. Alle lokalen Branches
+und Stash-Daten werden vor einer rekursiven Loeschung geprueft. `Force` bleibt
+ein ausdruecklicher Override. Isolierte Regressionen pruefen diese Grenzen
+sowie leere Git-Repositories und den vorgesehenen Override. Documentation Impact:
+`UpdateRequired`; Quelle: privater lokaler Standardscan; Owner: AOC Repository
+Owner; aktualisiert wurden Teardown-Skripte, Regressionstests und dieses
+Receipt. Keine neue projektuebergreifende AEPS-Evidence.
+
+*The diff scan reported no new finding. The Standard scan on `a593830`
+identified another PowerShell Git-inspection boundary. The fix recognizes
+Git worktree metadata files, aborts on failed Git inspection, and prevents
+default teardown of local Git history without a verifiable upstream in both
+shells. All local branches and stashed work are checked before recursive
+deletion. Force remains an explicit override. Isolated regression checks cover
+these boundaries, empty Git repositories, and the override. Documentation
+Impact is `UpdateRequired`; the teardown scripts, regression tests and this
+receipt were updated. No new cross-project AEPS evidence is claimed.*

@@ -26,6 +26,7 @@ $script:ExitCode = 0
 $script:Results = [System.Collections.Generic.List[object]]::new()
 $script:Level2Projects = [System.Collections.Generic.List[string]]::new()
 $script:ApprovedRemoteIdentities = @{}
+$script:ApprovedGitMarkers = @{}
 $script:DryRun = [bool]$WhatIfPreference
 $script:HomeDir = ''
 $script:WorkspaceDir = ''
@@ -117,6 +118,51 @@ function Test-PathValueEqual([string]$Left, [string]$Right) {
     [string]::Equals($Left, $Right, $comparison)
 }
 
+function Test-GitMarker([string]$Dir) {
+    $gitPath = Join-Path $Dir '.git'
+    if ($null -ne (Get-Item -LiteralPath $gitPath -Force -ErrorAction SilentlyContinue)) {
+        return $true
+    }
+    $entries = @(Get-ChildItem -LiteralPath $Dir -Force -Name -ErrorAction Stop)
+    if ($IsWindows) { return ($entries -contains '.git') }
+    return ($entries -ccontains '.git')
+}
+
+function Assert-GitMetadata([string]$Dir) {
+    $inside = ((& git -C $Dir rev-parse --is-inside-work-tree 2>$null) | Out-String).Trim()
+    if ($LASTEXITCODE -ne 0 -or $inside -cne 'true') {
+        throw "Git-Metadaten nicht pruefbar / Git metadata unavailable: $Dir"
+    }
+    & git -C $Dir config --local --list *> $null
+    if ($LASTEXITCODE -ne 0) {
+        throw "Git-Konfiguration nicht pruefbar / Git configuration unavailable: $Dir"
+    }
+}
+
+function Get-OriginForDir([string]$Dir) {
+    $remotes = @(& git -C $Dir remote 2>$null)
+    if ($LASTEXITCODE -ne 0) {
+        throw "Git-Remotes nicht pruefbar / Git remotes unavailable: $Dir"
+    }
+    if ($remotes -ccontains 'origin') {
+        $origin = ((& git -C $Dir remote get-url origin 2>$null) | Out-String).Trim()
+        if ($LASTEXITCODE -ne 0 -or -not $origin) {
+            throw "Git-Origin nicht pruefbar / Git origin unavailable: $Dir"
+        }
+        return $origin
+    }
+    return ''
+}
+
+function Get-OptionalGitConfig([string]$Dir, [string]$Key) {
+    $value = ((& git -C $Dir config --local --get $Key 2>$null) | Out-String).Trim()
+    if ($LASTEXITCODE -eq 1) { return '' }
+    if ($LASTEXITCODE -ne 0) {
+        throw "Git-Konfiguration nicht pruefbar / Git configuration unavailable: $Dir"
+    }
+    return $value
+}
+
 function Resolve-SafeDirectChildDirectory {
     param(
         [Parameter(Mandatory)]
@@ -196,7 +242,7 @@ function Get-Level2Projects {
     $children = Get-ChildItem -LiteralPath $script:WorkspaceDir -Directory -ErrorAction SilentlyContinue
     foreach ($child in $children) {
         $gitDirectory = Join-Path $child.FullName '.git'
-        if (Test-Path -LiteralPath $gitDirectory -PathType Container) {
+        if (Test-GitMarker $child.FullName) {
             $resolvedChild = Resolve-SafeDirectChildDirectory `
                 -Path $child.FullName `
                 -ExpectedParent $script:WorkspaceDir `
@@ -212,28 +258,16 @@ function Get-Level2Projects {
 }
 
 function Get-RemotePlatform([string]$Dir) {
-    if (-not (Test-Path -LiteralPath (Join-Path $Dir '.git') -PathType Container)) {
+    if (-not (Test-GitMarker $Dir)) {
         return 'kein Remote / no remote'
     }
-
-    $remoteUrl = (& git -C $Dir remote get-url origin 2>$null)
-    if (-not $remoteUrl) {
-        return 'kein Remote / no remote'
+    if ($KeepRemote) {
+        return 'bewusst behalten / intentionally kept'
     }
 
-    $configuredPlatform = ((& git -C $Dir config --local --get home-baseline.remote-platform 2>$null) | Out-String).Trim()
-    if ($configuredPlatform -in @('forgejo', 'codeberg')) {
-        if ($KeepRemote) { return $configuredPlatform }
-        return $script:ApprovedRemoteIdentities[$Dir].Replace('|', ' ')
-    }
-
-    if (-not $KeepRemote) {
-        return $script:ApprovedRemoteIdentities[$Dir].Replace('|', ' ')
-    }
-
-    $parsed = Get-ParsedRemote $remoteUrl
-    if ($null -eq $parsed) { return 'anderes Remote / other remote' }
-    return "$($parsed.Platform) $($parsed.OwnerRepo)"
+    $approved = $script:ApprovedRemoteIdentities[$Dir]
+    if ($approved -eq 'none') { return 'kein Remote / no remote' }
+    return $approved.Replace('|', ' ')
 }
 
 function Get-ForgejoTargetForDir([string]$Dir) {
@@ -259,11 +293,14 @@ function Get-ForgejoTargetFromValues(
 }
 
 function Initialize-ApprovedRemoteTargets {
-    if ($KeepRemote) { return }
     foreach ($dir in @($script:Level2Projects.ToArray()) + @($script:WorkspaceDir)) {
+        $script:ApprovedGitMarkers[$dir] = 'none'
         $script:ApprovedRemoteIdentities[$dir] = 'none'
-        if (-not (Test-Path -LiteralPath (Join-Path $dir '.git') -PathType Container)) { continue }
-        $origin = ((& git -C $dir remote get-url origin 2>$null) | Out-String).Trim()
+        if (-not (Test-GitMarker $dir)) { continue }
+        $script:ApprovedGitMarkers[$dir] = 'git'
+        if ($KeepRemote) { continue }
+        Assert-GitMetadata $dir
+        $origin = Get-OriginForDir $dir
         if (-not $origin) { continue }
         $platform = ((& git -C $dir config --local --get home-baseline.remote-platform 2>$null) | Out-String).Trim()
         if ($platform -in @('forgejo', 'codeberg')) {
@@ -364,35 +401,104 @@ function Confirm-OrAbort {
     }
 }
 
-function Test-Safety([string]$Label, [string]$Dir) {
+function Test-Safety([string]$Label, [string]$Dir, [switch]$Preflight) {
     if ($Force) {
-        Add-Result 'skip' "Sicherheitsprüfung übersprungen / Safety check skipped: $Label"
+        if (-not $Preflight) {
+            Add-Result 'skip' "Sicherheitsprüfung übersprungen / Safety check skipped: $Label"
+        }
         return $true
     }
 
-    if (-not (Test-Path -LiteralPath (Join-Path $Dir '.git') -PathType Container)) {
-        Add-Result 'skip' "Kein Git-Repository für Sicherheitsprüfung / No git repository for safety check: $Label"
+    $marker = Test-GitMarker $Dir
+    if ($script:ApprovedGitMarkers[$Dir] -eq 'git' -and -not $marker) {
+        Add-Result 'fail' "Git-Metadaten seit Vorschau entfernt / Git metadata removed after preview: $Label"
+        Set-WarningExit
+        return $false
+    }
+    if ($script:ApprovedGitMarkers[$Dir] -eq 'none' -and $marker) {
+        Add-Result 'fail' "Git-Metadaten seit Vorschau hinzugefuegt / Git metadata added after preview: $Label"
+        Set-WarningExit
+        return $false
+    }
+    if (-not $marker) {
+        if (-not $Preflight) {
+            Add-Result 'skip' "Kein Git-Repository für Sicherheitsprüfung / No git repository for safety check: $Label"
+        }
         return $true
     }
 
+    Assert-GitMetadata $Dir
     $statusOutput = (& git -C $Dir status --porcelain 2>$null)
+    if ($LASTEXITCODE -ne 0) {
+        Add-Result 'fail' "Git-Status nicht pruefbar / Git status unavailable: $Label"
+        Set-WarningExit
+        return $false
+    }
     if ($statusOutput) {
         Add-Result 'fail' "Uncommittete Änderungen erkannt / Uncommitted changes detected: $Label"
         Set-WarningExit
         return $false
     }
 
-    & git -C $Dir rev-parse '@{u}' *> $null
-    if ($LASTEXITCODE -eq 0) {
-        $unpushed = (& git -C $Dir log '@{u}..HEAD' --oneline 2>$null)
-        if ($unpushed) {
+    $stash = @(& git -C $Dir for-each-ref --format='%(refname)' refs/stash 2>$null)
+    if ($LASTEXITCODE -ne 0) {
+        Add-Result 'fail' "Git-Stash nicht pruefbar / Git stash unavailable: $Label"
+        Set-WarningExit
+        return $false
+    }
+    if ($stash.Count -gt 0) {
+        Add-Result 'fail' "Git-Stash enthaelt lokale Arbeit / Git stash contains local work: $Label"
+        Set-WarningExit
+        return $false
+    }
+
+    & git -C $Dir symbolic-ref --quiet HEAD *> $null
+    if ($LASTEXITCODE -ne 0) {
+        Add-Result 'fail' "Git-HEAD ohne pruefbaren Branch / Git HEAD has no verifiable branch: $Label"
+        Set-WarningExit
+        return $false
+    }
+    $branchRows = @(& git -C $Dir for-each-ref --format='%(refname)%09%(upstream)' refs/heads 2>$null)
+    if ($LASTEXITCODE -ne 0) {
+        Add-Result 'fail' "Git-Branches nicht pruefbar / Git branches unavailable: $Label"
+        Set-WarningExit
+        return $false
+    }
+    foreach ($row in $branchRows) {
+        if (-not $row) { continue }
+        $parts = $row -split "`t", 2
+        if ($parts.Count -ne 2 -or -not $parts[0].StartsWith('refs/heads/', [StringComparison]::Ordinal)) {
+            Add-Result 'fail' "Git-Branch nicht pruefbar / Git branch unavailable: $Label"
+            Set-WarningExit
+            return $false
+        }
+        $branchRef = $parts[0]
+        $branchName = $branchRef.Substring('refs/heads/'.Length)
+        $upstream = $parts[1]
+        $remote = Get-OptionalGitConfig $Dir "branch.$branchName.remote"
+        if (-not $remote -or $remote -eq '.' -or
+            -not $upstream.StartsWith("refs/remotes/$remote/", [StringComparison]::Ordinal)) {
+            Add-Result 'fail' "Git-Branch ohne pruefbaren Remote-Upstream / Git branch has no verifiable remote upstream: $Label"
+            Set-WarningExit
+            return $false
+        }
+        $remoteUrl = ((& git -C $Dir remote get-url $remote 2>$null) | Out-String).Trim()
+        if ($LASTEXITCODE -ne 0 -or -not $remoteUrl) {
+            Add-Result 'fail' "Git-Remote nicht pruefbar / Git remote unavailable: $Label"
+            Set-WarningExit
+            return $false
+        }
+        $ahead = ((& git -C $Dir rev-list --count "$upstream..$branchRef" 2>$null) | Out-String).Trim()
+        if ($LASTEXITCODE -ne 0 -or $ahead -notmatch '^0+$') {
             Add-Result 'fail' "Ungepushte Commits erkannt / Unpushed commits detected: $Label"
             Set-WarningExit
             return $false
         }
     }
 
-    Add-Result 'done' "Sicherheitsprüfung bestanden / Safety check passed: $Label"
+    if (-not $Preflight) {
+        Add-Result 'done' "Sicherheitsprüfung bestanden / Safety check passed: $Label"
+    }
     $true
 }
 
@@ -445,7 +551,18 @@ function Remove-RemoteRepo([string]$Label, [string]$Dir) {
     }
     $approved = $script:ApprovedRemoteIdentities[$Dir]
 
-    if (-not (Test-Path -LiteralPath (Join-Path $Dir '.git') -PathType Container)) {
+    $marker = Test-GitMarker $Dir
+    if ($script:ApprovedGitMarkers[$Dir] -eq 'git' -and -not $marker) {
+        Add-Result 'fail' "Git-Metadaten seit Vorschau entfernt / Git metadata removed after preview: $Label"
+        Set-WarningExit
+        return $false
+    }
+    if ($script:ApprovedGitMarkers[$Dir] -eq 'none' -and $marker) {
+        Add-Result 'fail' "Git-Metadaten seit Vorschau hinzugefuegt / Git metadata added after preview: $Label"
+        Set-WarningExit
+        return $false
+    }
+    if (-not $marker) {
         if ($approved -ne 'none') {
             Add-Result 'fail' "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $Label"
             Set-WarningExit
@@ -455,7 +572,8 @@ function Remove-RemoteRepo([string]$Label, [string]$Dir) {
         return $true
     }
 
-    $remoteUrl = (& git -C $Dir remote get-url origin 2>$null)
+    Assert-GitMetadata $Dir
+    $remoteUrl = Get-OriginForDir $Dir
     if ($approved -ne 'none' -and -not $remoteUrl) {
         Add-Result 'fail' "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $Label"
         Set-WarningExit
@@ -702,7 +820,14 @@ function Commit-Artifacts {
 
 function Test-HomeArtifactsClean {
     $insideWorkTree = (& git -C $script:HomeDir rev-parse --is-inside-work-tree 2>$null | Out-String).Trim()
-    if (-not $insideWorkTree) { return $true }
+    if ($LASTEXITCODE -ne 0 -or $insideWorkTree -cne 'true') {
+        if (Test-GitMarker $script:HomeDir) {
+            Add-Result 'fail' 'Home-Git-Metadaten nicht pruefbar / Home Git metadata unavailable'
+            Set-WarningExit
+            return $false
+        }
+        return $true
+    }
     $status = & git -C $script:HomeDir status --porcelain -- README.md .gitignore 2>$null
     if ($LASTEXITCODE -ne 0) {
         Add-Result 'fail' 'Home-Artefaktstatus nicht pruefbar / Home artifact status unavailable'
@@ -815,6 +940,18 @@ try {
     Confirm-OrAbort
 
     if (-not (Test-HomeArtifactsClean)) {
+        Show-CompletionReport
+        exit $script:ExitCode
+    }
+
+    foreach ($project in $script:Level2Projects) {
+        $projectName = Split-Path $project -Leaf
+        if (-not (Test-Safety -Label "Level-2 $projectName" -Dir $project -Preflight)) {
+            Show-CompletionReport
+            exit $script:ExitCode
+        }
+    }
+    if (-not (Test-Safety -Label "Workspace $WorkspaceName" -Dir $script:WorkspaceDir -Preflight)) {
         Show-CompletionReport
         exit $script:ExitCode
     }

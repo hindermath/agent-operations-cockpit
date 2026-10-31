@@ -438,11 +438,13 @@ confirm_or_abort() {
 check_safety() {
   local label="$1"
   local dir="$2"
-  local status="" ahead="" branch="" upstream_remote="" upstream_merge=""
-  local config_status=0
+  local preflight="${3:-0}"
+  local status="" stash="" branches="" branch="" branch_name="" upstream="" remote="" ahead=""
 
   if [ "$FORCE" -eq 1 ]; then
-    add_result "skip" "Sicherheitsprüfung übersprungen / Safety check skipped: $label"
+    if [ "$preflight" -eq 0 ]; then
+      add_result "skip" "Sicherheitsprüfung übersprungen / Safety check skipped: $label"
+    fi
     return 0
   fi
 
@@ -458,7 +460,9 @@ check_safety() {
   fi
 
   if ! has_git_marker "$dir"; then
-    add_result "skip" "Kein Git-Repository für Sicherheitsprüfung / No git repository for safety check: $label"
+    if [ "$preflight" -eq 0 ]; then
+      add_result "skip" "Kein Git-Repository für Sicherheitsprüfung / No git repository for safety check: $label"
+    fi
     return 0
   fi
 
@@ -478,49 +482,66 @@ check_safety() {
     return 1
   fi
 
-  if git -C "$dir" rev-parse '@{u}' >/dev/null 2>&1; then
-    ahead="$(git -C "$dir" log '@{u}..HEAD' --oneline 2>/dev/null)" || {
+  stash="$(git -C "$dir" for-each-ref --format='%(refname)' refs/stash 2>/dev/null)" || {
+    add_result "fail" "Git-Stash nicht pruefbar / Git stash unavailable: $label"
+    set_warning_exit
+    return 1
+  }
+  if [ -n "$stash" ]; then
+    add_result "fail" "Git-Stash enthaelt lokale Arbeit / Git stash contains local work: $label"
+    set_warning_exit
+    return 1
+  fi
+
+  if ! git -C "$dir" symbolic-ref --quiet HEAD >/dev/null 2>&1; then
+    add_result "fail" "Git-HEAD ohne pruefbaren Branch / Git HEAD has no verifiable branch: $label"
+    set_warning_exit
+    return 1
+  fi
+  branches="$(git -C "$dir" for-each-ref --format='%(refname)%09%(upstream)' refs/heads 2>/dev/null)" || {
+    add_result "fail" "Git-Branches nicht pruefbar / Git branches unavailable: $label"
+    set_warning_exit
+    return 1
+  }
+  while IFS=$'\t' read -r branch upstream; do
+    [ -n "$branch" ] || continue
+    branch_name="${branch#refs/heads/}"
+    remote="$(git -C "$dir" config --local --get "branch.$branch_name.remote" 2>/dev/null)" || {
+      add_result "fail" "Git-Branch ohne pruefbaren Remote-Upstream / Git branch has no verifiable remote upstream: $label"
+      set_warning_exit
+      return 1
+    }
+    if [ -z "$remote" ] || [ "$remote" = "." ] ||
+       [[ "$upstream" != "refs/remotes/$remote/"* ]] ||
+       ! git -C "$dir" remote get-url "$remote" >/dev/null 2>&1; then
+      add_result "fail" "Git-Branch ohne pruefbaren Remote-Upstream / Git branch has no verifiable remote upstream: $label"
+      set_warning_exit
+      return 1
+    fi
+    ahead="$(git -C "$dir" rev-list --count "$upstream..$branch" 2>/dev/null)" || {
       add_result "fail" "Git-Historie nicht pruefbar / Git history unavailable: $label"
       set_warning_exit
       return 1
     }
-    if [ -n "$ahead" ]; then
+    if [[ ! "$ahead" =~ ^[0-9]+$ ]] || [ "$ahead" -ne 0 ]; then
       add_result "fail" "Ungepushte Commits erkannt / Unpushed commits detected: $label"
       set_warning_exit
       return 1
     fi
-  else
-    branch="$(git -C "$dir" branch --show-current 2>/dev/null)" || {
-      add_result "fail" "Git-Branch nicht pruefbar / Git branch unavailable: $label"
-      set_warning_exit
-      return 1
-    }
-    if [ -n "$branch" ]; then
-      upstream_remote="$(git -C "$dir" config --local --get "branch.$branch.remote" 2>/dev/null)" || {
-        config_status=$?
-        if [ "$config_status" -ne 1 ]; then
-          add_result "fail" "Git-Upstream-Konfiguration nicht pruefbar / Git upstream configuration unavailable: $label"
-          set_warning_exit
-          return 1
-        fi
-      }
-      upstream_merge="$(git -C "$dir" config --local --get "branch.$branch.merge" 2>/dev/null)" || {
-        config_status=$?
-        if [ "$config_status" -ne 1 ]; then
-          add_result "fail" "Git-Upstream-Konfiguration nicht pruefbar / Git upstream configuration unavailable: $label"
-          set_warning_exit
-          return 1
-        fi
-      }
-      if [ -n "$upstream_remote" ] || [ -n "$upstream_merge" ]; then
-        add_result "fail" "Konfigurierter Git-Upstream nicht pruefbar / Configured Git upstream unavailable: $label"
-        set_warning_exit
-        return 1
-      fi
-    fi
-  fi
+  done <<< "$branches"
 
-  add_result "done" "Sicherheitsprüfung bestanden / Safety check passed: $label"
+  if [ "$preflight" -eq 0 ]; then
+    add_result "done" "Sicherheitsprüfung bestanden / Safety check passed: $label"
+  fi
+}
+
+preflight_all_safety() {
+  local project="" project_name=""
+  for project in "${LEVEL2_PROJECTS[@]}"; do
+    project_name="$(basename "$project")"
+    check_safety "Level-2 $project_name" "$project" 1 || return 1
+  done
+  check_safety "Workspace $WORKSPACE_NAME" "$WORKSPACE_DIR" 1
 }
 
 unique_backup_path() {
@@ -1021,6 +1042,11 @@ main() {
   confirm_or_abort
 
   if ! check_home_artifacts_clean; then
+    print_completion_report
+    exit "$EXIT_CODE"
+  fi
+
+  if ! preflight_all_safety; then
     print_completion_report
     exit "$EXIT_CODE"
   fi
