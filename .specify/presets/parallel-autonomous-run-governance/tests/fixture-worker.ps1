@@ -6,7 +6,7 @@ param(
     [Parameter(Mandatory)][string] $RunId,
     [Parameter(Mandatory)][string] $Worktree,
     [Parameter(Mandatory)][string] $ResultFile,
-    [ValidateSet('Completed', 'ReadyForMerge', 'Failed', 'Flood')]
+    [ValidateSet('Completed', 'ReadyForMerge', 'Failed', 'Flood', 'RetainedPipe')]
     [string] $Mode = 'Completed',
     [string] $HandoffsJson = '[]',
     [int] $DelayMilliseconds = 100
@@ -18,6 +18,12 @@ $ErrorActionPreference = 'Stop'
 Start-Sleep -Milliseconds $DelayMilliseconds
 if ($Mode -eq 'Flood') {
     [Console]::Out.Write(('x' * 17000000))
+    exit 0
+}
+if ($Mode -eq 'RetainedPipe') {
+    [void](Start-Process -FilePath 'pwsh' -ArgumentList @(
+        '-NoProfile', '-Command', 'Start-Sleep -Seconds 20'
+    ) -NoNewWindow -PassThru)
     exit 0
 }
 if ($Mode -eq 'Failed') {

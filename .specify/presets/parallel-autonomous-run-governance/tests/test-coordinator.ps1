@@ -213,6 +213,77 @@ try {
     $faultData = Get-Content -LiteralPath $faultState -Raw | ConvertFrom-Json
     Assert-Test ($faultData.status -eq 'Failed') 'Log I/O failure did not fail the campaign'
 
+    $runnerData.profiles.retained = [ordered]@{
+        executable = 'pwsh'
+        arguments = @(
+            '-NoProfile', '-File', $fixtureWorker,
+            '-CampaignId', '{campaignId}', '-WorkerId', '{workerId}',
+            '-RunId', '{runId}', '-Worktree', '{worktree}',
+            '-ResultFile', '{resultFile}', '-Mode', 'RetainedPipe'
+        )
+    }
+    Write-Data $script:runnerConfig $runnerData
+    $retainedCampaign = Get-TestCampaign 'retained-pipe' 'ReplicatedTargets' @(
+        (Get-TestWorker 'retained-a' (Initialize-TestRepository 'retained-repo'))
+    )
+    $retainedCampaign.runnerProfile = 'retained'
+    $retainedStartedAt = [DateTime]::UtcNow
+    $retained = Invoke-Campaign $retainedCampaign 'retained-pipe'
+    Assert-Test (([DateTime]::UtcNow - $retainedStartedAt).TotalSeconds -lt 12) `
+        'Retained output pipe blocked the coordinator'
+    Assert-Test ($retained.Data.status -eq 'Failed') 'Retained output pipe did not fail the campaign'
+
+    $runnerData.profiles.strict = [ordered]@{
+        executable = 'pwsh'
+        arguments = @(
+            '-NoProfile', '-File', $fixtureWorker,
+            '-CampaignId', '{campaignId}', '-WorkerId', '{workerId}',
+            '-RunId', '{runId}', '-Worktree', '{worktree}',
+            '-ResultFile', '{resultFile}'
+        )
+        agentFamily = 'Fixture'
+        routingRole = 'script-only'
+        model = 'fixture'
+        reasoningEffort = 'low'
+        preflight = [ordered]@{
+            executable = 'pwsh'
+            arguments = @('-NoProfile', '-Command', 'Start-Sleep -Seconds 30')
+            timeoutSeconds = 1
+        }
+    }
+    Write-Data $script:runnerConfig $runnerData
+    $strictCampaign = Get-TestCampaign 'bounded-preflight' 'ReplicatedTargets' @(
+        (Get-TestWorker 'strict-a' (Initialize-TestRepository 'strict-repo'))
+    )
+    $strictCampaign.runnerProfile = 'strict'
+    $strictCampaign.routingRole = 'script-only'
+    $strictCampaign.fallbackPolicy = 'fail-closed'
+    $strictRoot = Join-Path $tempRoot 'bounded-preflight'
+    [void](New-Item -ItemType Directory -Path $strictRoot)
+    $strictManifest = Join-Path $strictRoot 'campaign.json'
+    Write-Data $strictManifest $strictCampaign
+    $strictStartedAt = [DateTime]::UtcNow
+    & pwsh -NoProfile -File $coordinator -Action Start -Manifest $strictManifest `
+        -RunnerConfig $script:runnerConfig -State (Join-Path $strictRoot 'state.json') `
+        -RuntimeRoot (Join-Path $strictRoot 'runtime') 2>$null
+    Assert-Test ($LASTEXITCODE -ne 0) 'Hanging profile preflight was accepted'
+    Assert-Test (([DateTime]::UtcNow - $strictStartedAt).TotalSeconds -lt 10) `
+        'Profile command timeout did not stop promptly'
+
+    $runnerData.profiles.strict.preflight.arguments = @(
+        '-NoProfile', '-Command', '[Console]::Out.Write(("x" * 1100000))'
+    )
+    Write-Data $script:runnerConfig $runnerData
+    $strictFloodRoot = Join-Path $tempRoot 'bounded-preflight-output'
+    [void](New-Item -ItemType Directory -Path $strictFloodRoot)
+    $strictFloodManifest = Join-Path $strictFloodRoot 'campaign.json'
+    $strictCampaign.campaignId = [guid]::NewGuid().ToString()
+    Write-Data $strictFloodManifest $strictCampaign
+    & pwsh -NoProfile -File $coordinator -Action Start -Manifest $strictFloodManifest `
+        -RunnerConfig $script:runnerConfig -State (Join-Path $strictFloodRoot 'state.json') `
+        -RuntimeRoot (Join-Path $strictFloodRoot 'runtime') 2>$null
+    Assert-Test ($LASTEXITCODE -ne 0) 'Noisy profile preflight was accepted'
+
     $independentRepo = Initialize-TestRepository 'independent-repo'
     $independentWorkers = 1..3 | ForEach-Object { Get-TestWorker "independent-0$_" $independentRepo }
     $independent = Invoke-Campaign (Get-TestCampaign 'independent' 'IndependentFeatures' $independentWorkers) 'independent'

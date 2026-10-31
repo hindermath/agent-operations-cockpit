@@ -256,6 +256,62 @@ function Invoke-PARGit {
     }
 }
 
+function Import-PARBoundedOutputType {
+    if ('PARBoundedOutput' -as [type]) { return }
+    Add-Type -TypeDefinition @'
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
+
+public static class PARBoundedOutput
+{
+    public static async Task CopyAsync(Stream input, string path, Process process, int maximumBytes)
+    {
+        using (var output = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read, 8192, true))
+        {
+            var buffer = new byte[8192];
+            var written = 0;
+            int count;
+            while ((count = await input.ReadAsync(buffer, 0, buffer.Length)) != 0)
+            {
+                if (count > maximumBytes - written)
+                {
+                    try { if (!process.HasExited) process.Kill(true); }
+                    catch (InvalidOperationException) { }
+                    throw new IOException("Worker output limit exceeded.");
+                }
+                await output.WriteAsync(buffer, 0, count);
+                written += count;
+            }
+        }
+    }
+
+    public static async Task<byte[]> CaptureAsync(Stream input, Process process, int maximumBytes)
+    {
+        using (var output = new MemoryStream())
+        {
+            var buffer = new byte[8192];
+            var written = 0;
+            int count;
+            while ((count = await input.ReadAsync(buffer, 0, buffer.Length)) != 0)
+            {
+                if (count > maximumBytes - written)
+                {
+                    try { if (!process.HasExited) process.Kill(true); }
+                    catch (InvalidOperationException) { }
+                    throw new IOException("Profile command output limit exceeded.");
+                }
+                await output.WriteAsync(buffer, 0, count);
+                written += count;
+            }
+            return output.ToArray();
+        }
+    }
+}
+'@
+}
+
 function Invoke-PARProfileCommand {
     param(
         [Parameter(Mandatory)][hashtable] $CommandProfile,
@@ -266,16 +322,57 @@ function Invoke-PARProfileCommand {
     Assert-PARCondition (-not [string]::IsNullOrWhiteSpace([string] $CommandProfile.executable)) 'Profile executable fehlt.'
     Assert-PARCondition ($CommandProfile.arguments -is [object[]]) 'Profile arguments muss ein Array sein.'
     $arguments = ConvertTo-PARArgumentList @($CommandProfile.arguments) $Values
-    Push-Location -LiteralPath $WorkingDirectory
-    try {
-        $output = @(& ([string] $CommandProfile.executable) @arguments 2>&1)
-        $exitCode = $LASTEXITCODE
-    } finally {
-        Pop-Location
+    $timeoutSeconds = 300
+    if ($CommandProfile.ContainsKey('timeoutSeconds')) {
+        Assert-PARCondition ($CommandProfile.timeoutSeconds -is [int] -and
+            [int] $CommandProfile.timeoutSeconds -ge 1 -and
+            [int] $CommandProfile.timeoutSeconds -le 300) 'Profile timeoutSeconds muss 1..300 sein.'
+        $timeoutSeconds = [int] $CommandProfile.timeoutSeconds
     }
-    return @{
-        ExitCode = $exitCode
-        Output = @($output)
+    Import-PARBoundedOutputType
+    $psi = [Diagnostics.ProcessStartInfo]::new()
+    $psi.FileName = [string] $CommandProfile.executable
+    $psi.WorkingDirectory = $WorkingDirectory
+    $psi.UseShellExecute = $false
+    $psi.RedirectStandardOutput = $true
+    $psi.RedirectStandardError = $true
+    foreach ($argument in $arguments) { [void] $psi.ArgumentList.Add($argument) }
+    $process = [Diagnostics.Process]::new()
+    $process.StartInfo = $psi
+    $started = $false
+    try {
+        Assert-PARCondition $process.Start() 'Profile command could not start.'
+        $started = $true
+        $stdoutTask = [PARBoundedOutput]::CaptureAsync($process.StandardOutput.BaseStream, $process, 1048576)
+        $stderrTask = [PARBoundedOutput]::CaptureAsync($process.StandardError.BaseStream, $process, 1048576)
+        $deadline = [DateTime]::UtcNow.AddSeconds($timeoutSeconds)
+        while (-not $process.HasExited) {
+            if ($stdoutTask.IsFaulted -or $stderrTask.IsFaulted) {
+                throw 'Profile command output capture failed.'
+            }
+            if ([DateTime]::UtcNow -ge $deadline) {
+                throw 'Profile command exceeded its runtime limit.'
+            }
+            Start-Sleep -Milliseconds 100
+        }
+        $tasks = [Threading.Tasks.Task[]]@($stdoutTask, $stderrTask)
+        $combined = [Threading.Tasks.Task]::WhenAll($tasks)
+        if (-not $combined.Wait(5000)) {
+            throw 'Profile command output streams did not close.'
+        }
+        $output = @(
+            [Text.Encoding]::UTF8.GetString($stdoutTask.Result),
+            [Text.Encoding]::UTF8.GetString($stderrTask.Result)
+        )
+        return @{ ExitCode = $process.ExitCode; Output = @($output) }
+    } finally {
+        if ($started -and -not $process.HasExited) {
+            try { $process.Kill($true) }
+            catch [InvalidOperationException] {
+                if (-not $process.HasExited) { throw }
+            }
+        }
+        $process.Dispose()
     }
 }
 
@@ -1000,38 +1097,7 @@ function Invoke-PARProcessAsync {
         [Parameter(Mandatory)][string] $StderrPath
     )
 
-    if (-not ('PARBoundedOutput' -as [type])) {
-        Add-Type -TypeDefinition @'
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
-
-public static class PARBoundedOutput
-{
-    public static async Task CopyAsync(Stream input, string path, Process process, int maximumBytes)
-    {
-        using (var output = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read, 8192, true))
-        {
-            var buffer = new byte[8192];
-            var written = 0;
-            int count;
-            while ((count = await input.ReadAsync(buffer, 0, buffer.Length)) != 0)
-            {
-                if (count > maximumBytes - written)
-                {
-                    try { if (!process.HasExited) process.Kill(true); }
-                    catch (InvalidOperationException) { }
-                    throw new IOException("Worker output limit exceeded.");
-                }
-                await output.WriteAsync(buffer, 0, count);
-                written += count;
-            }
-        }
-    }
-}
-'@
-    }
+    Import-PARBoundedOutputType
     $psi = [Diagnostics.ProcessStartInfo]::new()
     $psi.FileName = $Executable
     $psi.WorkingDirectory = $WorkingDirectory
@@ -1069,7 +1135,13 @@ function Complete-PARWorker {
         $RunningEntry.Process.StdoutTask,
         $RunningEntry.Process.StderrTask
     )
-    [Threading.Tasks.Task]::WhenAll($outputTasks).GetAwaiter().GetResult()
+    $combined = [Threading.Tasks.Task]::WhenAll($outputTasks)
+    if (-not $combined.Wait(5000)) {
+        $process.StandardOutput.BaseStream.Dispose()
+        $process.StandardError.BaseStream.Dispose()
+        throw 'Worker output streams did not close after process exit.'
+    }
+    $combined.GetAwaiter().GetResult()
     $WorkerState.exitCode = $process.ExitCode
     $WorkerState.processId = $null
 

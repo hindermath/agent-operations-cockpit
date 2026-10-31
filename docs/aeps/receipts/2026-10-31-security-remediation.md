@@ -28,6 +28,13 @@ Koordinator beendet jetzt auch bei Log-Fehlern den betroffenen Worker und ein
 gezielter Fixture-Lauf prueft diesen Pfad. / The subsequent local diff scan
 found one conditional log-handling runtime issue. The coordinator now stops
 the affected worker on log errors, with a targeted fixture covering that path.
+Der Standardscan `14b56679-c0a1-4375-96d7-bc59b131f92b` auf
+`eae3590e4f37f651574a256ffc8b106ce16b7313` bestaetigte die offene
+Worker-Rechtetrennung und zwei weitere Ressourcenpfade. Profilbefehle und
+Ausgabekanaele nach Worker-Ende erhalten nun begrenzte Wartezeiten; gezielte
+Fixtures pruefen beide Pfade. / The Standard scan confirmed the open worker
+authority boundary and two further resource paths. Profile commands and
+post-exit output streams now have bounded waits, covered by focused fixtures.
 Publikationsstand:
 `PendingPublication`; AEPS-Upstream:
 `NotApplicable`. Deduplizierung: Scan-ID + Datum + Remediation-Receipt.

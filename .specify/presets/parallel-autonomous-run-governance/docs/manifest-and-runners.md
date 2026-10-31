@@ -122,6 +122,11 @@ wird weder gewechselt noch zurueckgesetzt.
 Jeder Worker ist auf vier Stunden Laufzeit und je 16 MiB Standardausgabe und
 Fehlerausgabe begrenzt. Bei Ueberschreitung beendet der Koordinator den
 Prozess und markiert den Worker als fehlgeschlagen.
+Auch Profilbefehle fuer Preflight, Merge und Post-Merge sind auf je 1 MiB
+Ausgabe pro Kanal und hoechstens fuenf Minuten begrenzt. Ein lokales Profil
+kann `timeoutSeconds` auf einen Wert von 1 bis 300 setzen. Nach dem Ende eines
+Workers wartet der Koordinator hoechstens fuenf Sekunden auf das Schliessen
+der Ausgabekanaele.
 
 ## English
 
@@ -162,3 +167,7 @@ tracked feature artifacts. The normal checkout is never switched or reset.
 Each worker has a four-hour runtime limit and a 16 MiB limit for each of
 standard output and standard error. If a limit is exceeded, the coordinator
 terminates the process and marks the worker failed.
+Profile commands for preflight, merge, and post-merge are limited to 1 MiB
+per output stream and five minutes. A local profile may set `timeoutSeconds`
+to a value from 1 to 300. After a worker exits, the coordinator waits at most
+five seconds for its output streams to close.
