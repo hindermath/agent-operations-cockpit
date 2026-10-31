@@ -29,7 +29,7 @@ jobs:
           tar -xzf "$RUNNER_TEMP/gitleaks.tar.gz" -C "$RUNNER_TEMP" gitleaks
           sudo install -m 755 "$RUNNER_TEMP/gitleaks" /usr/local/bin/gitleaks
       - name: Scan full checked-out repository for secrets
-        run: gitleaks dir --redact --no-banner --no-color --log-level warn --exit-code 2 .
+        run: python3 scripts/lib/check_learning_package_secrets.py .
       - name: Run secret scan
         run: bash scripts/scan-agent-secrets.sh --fail-on-high .
       - name: Reject personal absolute paths and committed preset cache

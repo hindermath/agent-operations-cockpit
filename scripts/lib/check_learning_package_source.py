@@ -49,6 +49,8 @@ def check_tree(root: Path, *, skip_excluded: bool) -> None:
                 if name in directories:
                     directories.remove(name)
                 continue
+            if not skip_excluded and excluded(relative):
+                raise ValueError(f"package staging contains an excluded path: {relative}")
             if not path.is_file() and not path.is_dir():
                 raise ValueError(f"package source contains a special file: {relative}")
 

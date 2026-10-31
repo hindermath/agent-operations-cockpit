@@ -12,7 +12,7 @@ import sys
 import tempfile
 
 
-# These exact files contain three reviewed instructional false positives.
+# These exact files contain reviewed instructional and fixture false positives.
 # Any edit, different location, rule, or new finding must fail for review.
 REVIEWED_EXAMPLES = {
     ("docs/secure-development/mitgeltende-dokumente/Leitlinie_Sichere-Programmierung.md", "generic-api-key", 38):
@@ -21,6 +21,12 @@ REVIEWED_EXAMPLES = {
         "071ed93b5c2bcdfa585f54e7c5386db8cc265d92c6b0bc018ed77d0adfabb766",
     ("docs/secure-development/Checklistensammelband_Sichere-Entwicklung.md", "private-key", 10081):
         "ac4ebb80a4954db060074762f99c211930a347bec965902dc08becf608aa0b69",
+    ("specs/004-series-eligibility/phase-results/us1-tests.json", "generic-api-key", 185):
+        "a65a9d4d3b6b820a4591e1801b05c50b7d0affe912c2ab899450b3a6539afa15",
+    ("specs/004-series-eligibility/phase-results/us1-tests.json", "generic-api-key", 195):
+        "a65a9d4d3b6b820a4591e1801b05c50b7d0affe912c2ab899450b3a6539afa15",
+    ("specs/004-series-eligibility/phase-results/us2-tests.json", "generic-api-key", 684):
+        "8931e2fd768e665e5642b210793cd9fc405a917a328a6ff26847507bf3a721a4",
 }
 MAX_REPORT_BYTES = 4 * 1024 * 1024
 MAX_EXAMPLE_BYTES = 4 * 1024 * 1024

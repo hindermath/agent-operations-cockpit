@@ -30,6 +30,13 @@ def has_control_character(name: str) -> bool:
     return any(ord(character) < 32 or ord(character) == 127 for character in name)
 
 
+def invalid_windows_component(part: str) -> bool:
+    device_name = part.split(".", 1)[0].upper()
+    return (":" in part or part.endswith((" ", "."))
+            or device_name in {"CON", "PRN", "AUX", "NUL"}
+            or re.fullmatch(r"(?:COM|LPT)[1-9¹²³]", device_name) is not None)
+
+
 def read_checksum_bounded(sidecar: Path) -> str:
     with sidecar.open("rb") as source:
         contents = source.read(MAX_CHECKSUM_BYTES + 1)
@@ -146,7 +153,7 @@ def _extract_checked_archive(archive: zipfile.ZipFile, destination: Path) -> Non
         mode = (entry.external_attr >> 16) & 0o170000
         if (
             not name or name.startswith("/") or has_control_character(name)
-            or re.match(r"^[A-Za-z]:", name) is not None
+            or any(invalid_windows_component(part) for part in name.split("/") if part)
             or path.is_absolute() or any(part in {".", ".."} for part in name.split("/"))
             or mode not in {0, stat.S_IFREG, stat.S_IFDIR}
             or (mode == stat.S_IFDIR and not entry.is_dir())
@@ -162,6 +169,8 @@ def _extract_checked_archive(archive: zipfile.ZipFile, destination: Path) -> Non
     written_bytes = 0
     for entry in entries:
         target = destination.joinpath(*PurePosixPath(entry.filename.replace("\\", "/")).parts)
+        if not target.resolve(strict=False).is_relative_to(destination):
+            raise UnsafePackage(f"unsafe ZIP entry: {entry.filename!r}")
         if entry.is_dir():
             target.mkdir(parents=True, exist_ok=True)
             continue

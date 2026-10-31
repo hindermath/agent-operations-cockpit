@@ -152,7 +152,7 @@ zip_path="${OUTPUT_DIR}/${package_name}.zip"
 sha_path="${zip_path}.sha256"
 
 excludes=(
-  --exclude='.git/'
+  --exclude='.git'
   --exclude='docs/learning-units/dist/'
   --exclude='.DS_Store'
   --exclude='__MACOSX/'
@@ -200,7 +200,7 @@ manifest="${package_root}/PACKAGING-MANIFEST.txt"
   echo "${SERIES_NAME} learning package"
   echo "Generated UTC: ${stamp}"
   echo "Source directory: ${ROOT_NAME}"
-  echo "Git data included: no (.git directories excluded)"
+  echo "Git data included: no (.git files and directories excluded)"
   echo "Original remotes included: no"
   echo
   echo "Repository states without remote URLs:"

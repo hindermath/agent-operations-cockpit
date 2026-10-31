@@ -1,20 +1,14 @@
 # gitleaks-Konfiguration / gitleaks configuration
 #
-# DE: Die sichere-Entwicklung-Lehrdokumentation enthält absichtlich erkennbare
-# Negativbeispiele wie PEM-/OpenSSH-Schlüssel-Kopfzeilen sowie erklärenden Text
-# mit Framework-Namen. Standardregeln melden diese Texte als Falschpositive,
-# obwohl sie keine Geheimnisse enthalten. Die Ausnahme ist deshalb auf
-# Markdown-Lehrmaterial unter docs/secure-development/ begrenzt. Drei
-# Quellhash-Eintraege in den Phase-Result-Fixtures sind keine API-Schluessel;
-# nur ihre exakten JSON-Zeilenformen sind zusaetzlich ausgenommen.
+# DE: Lehrdokumente werden ohne Pfadausnahme gescannt. Die CI akzeptiert
+# einzelne geprüfte Falschpositive nur bei identischem Datei-Hash, Pfad,
+# Regel und Zeile. Drei Quellhash-Eintraege in Phase-Result-Fixtures sind
+# keine API-Schluessel; nur ihre exakten JSON-Zeilenformen sind hier ausgenommen.
 #
-# EN: The secure-development teaching documentation intentionally contains
-# recognisable negative examples such as PEM/OpenSSH key headers and explanatory
-# prose with framework names. Default rules report these texts as false
-# positives even though they contain no secrets. The exception is therefore
-# limited to Markdown teaching material under docs/secure-development/.
-# Three SHA-256 source-hash entries in phase-result fixtures are also exempted
-# by their exact Gitleaks match and hash, while surrounding content stays scanned.
+# EN: Teaching documents are scanned without a path exemption. CI accepts
+# individual reviewed false positives only with an identical file hash, path,
+# rule and line. Three source hashes in phase-result fixtures are exempted here
+# only by their exact Gitleaks match; surrounding content remains scanned.
 
 title = "Agent Operations Cockpit gitleaks config"
 
@@ -22,10 +16,7 @@ title = "Agent Operations Cockpit gitleaks config"
 useDefault = true
 
 [allowlist]
-description = "Teaching documentation and three SHA-256 fixture source-hash false positives"
-paths = [
-  '''docs/secure-development/.*\.md$''',
-]
+description = "Three SHA-256 fixture source-hash false positives"
 regexTarget = "match"
 regexes = [
   '''^analyze-secret-scan\.json": "902b5b05f8868f26aa75cf373a47ccd15014b3878c60d0b62730276be2c93670"$''',

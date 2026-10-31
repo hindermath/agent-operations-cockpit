@@ -185,6 +185,33 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
                 self.assertFalse(list((root / "out").glob("*.zip")) if (root / "out").exists() else False)
             (source / "bin").unlink()
 
+    @unittest.skipUnless(shutil.which("bash") and shutil.which("rsync") and shutil.which("gitleaks"),
+                         "Bash, rsync and Gitleaks are required")
+    def test_bash_package_excludes_git_pointer_files(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "lessons"
+            guides = source / "docs/learning-units"
+            guides.mkdir(parents=True)
+            for name in ("START-HERE-FUER-LERNENDE.md", "GIT-START-FUER-LERNENDE.md",
+                         "INSTITUTIONELLES-GIT-HOSTING.md"):
+                (guides / name).write_text("# Guide\n", encoding="utf-8")
+            (source / "README.md").write_text("# Lesson\n", encoding="utf-8")
+            (source / ".git").write_text("gitdir: ../private/root\n", encoding="utf-8")
+            nested = source / "lesson"
+            nested.mkdir()
+            (nested / ".git").write_text("gitdir: ../../private/nested\n", encoding="utf-8")
+            command = ["bash", str(LIBRARY.parent / "package-learning-series.sh"),
+                       "--source-dir", str(source), "--output-dir", str(root / "out")]
+            preview = subprocess.run([*command, "--dry-run"], capture_output=True, text=True)
+            self.assertEqual(preview.returncode, 0, preview.stderr)
+            result = subprocess.run(command, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            with zipfile.ZipFile(next((root / "out").glob("*.zip"))) as package:
+                self.assertFalse(any(Path(name).name == ".git" for name in package.namelist()))
+            with self.assertRaisesRegex(ValueError, "excluded path"):
+                package_source.check_tree(source, skip_excluded=False)
+
     @unittest.skipIf(os.name == "nt", "Restricted POSIX PATH fixture requires Unix tools")
     def test_learning_package_secret_scan_is_required_before_release(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -350,6 +377,38 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
                                             check=False)
                     self.assertEqual(result.returncode, 0, result.stderr)
                     self.assertEqual(len(list((root / f"{executable_name}-out").glob("*.zip"))), 1)
+
+    @unittest.skipUnless(shutil.which("gitleaks"), "Gitleaks is required")
+    def test_repository_scan_reviews_exact_examples_and_rejects_new_secret(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            project_root = LIBRARY.parent.parent
+            examples = (
+                "docs/secure-development/mitgeltende-dokumente/Leitlinie_Sichere-Programmierung.md",
+                "docs/secure-development/checklisten/CL_09_KI-Codeerzeugung.md",
+                "docs/secure-development/Checklistensammelband_Sichere-Entwicklung.md",
+                "specs/004-series-eligibility/phase-results/us1-tests.json",
+                "specs/004-series-eligibility/phase-results/us2-tests.json",
+            )
+            for relative in examples:
+                target = root / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(project_root / relative, target)
+            scanner = LIBRARY / "check_learning_package_secrets.py"
+            command = [sys.executable, str(scanner), str(root)]
+            accepted = subprocess.run(command, capture_output=True, text=True)
+            self.assertEqual(accepted.returncode, 0, accepted.stderr)
+            extra = root / "docs/secure-development/example.md"
+            extra.write_text("GITHUB_TOKEN=" + "ghp_" +
+                             "abcdef0123456789abcdef0123456789abcd\n",
+                             encoding="utf-8")
+            rejected = subprocess.run(command, capture_output=True, text=True)
+            self.assertNotEqual(rejected.returncode, 0, rejected.stdout)
+            extra.unlink()
+            reviewed = root / examples[0]
+            reviewed.write_text(reviewed.read_text(encoding="utf-8") + "\nChanged\n", encoding="utf-8")
+            changed = subprocess.run(command, capture_output=True, text=True)
+            self.assertNotEqual(changed.returncode, 0, changed.stdout)
 
     @unittest.skipUnless(shutil.which("bash") and shutil.which("shasum"), "Bash checksum check requires shasum")
     def test_bash_checker_binds_custom_sidecar_to_selected_archive(self) -> None:
@@ -608,6 +667,14 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
                 writer.writestr("lesson/../../outside", "bad")
             with self.assertRaisesRegex(archive.UnsafePackage, "unsafe ZIP entry"):
                 archive.extract_bounded(package, destination)
+            for name in ("lesson/D:escape.txt", "lesson/file.txt:stream", "lesson/CON",
+                         "lesson/COM¹", "lesson/COM².txt", "lesson/COM³",
+                         "lesson/LPT¹", "lesson/LPT².txt", "lesson/LPT³"):
+                with self.subTest(name=name):
+                    with zipfile.ZipFile(package, "w") as writer:
+                        writer.writestr(name, "bad")
+                    with self.assertRaisesRegex(archive.UnsafePackage, "unsafe ZIP entry"):
+                        archive.extract_bounded(package, destination)
             link = zipfile.ZipInfo("lesson/link")
             link.create_system = 3
             link.external_attr = (stat.S_IFLNK | 0o777) << 16

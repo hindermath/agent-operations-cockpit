@@ -208,3 +208,34 @@ Standardscan folgen. Keine neue AEPS-Evidence oder Upstream-Aktion.
 found one further low-severity bypass in the package release gate. The shared
 checker was corrected; a synthetic negative test confirms rejection. Repeat
 diff and final Standard scans follow. No new AEPS evidence or upstream action.*
+
+Der erneute Diff-Scan `6c045932-b070-4f03-b2fe-7e2296fc5b2c` meldete
+keinen weiteren Befund. Der Standardscan
+`6fae3ae3-5030-4628-8e64-93cea84f0228` auf `4b1d8e3` fand bei
+teilweiser Abdeckung drei weitere Beobachtungen zu Secret-Scan, ZIP-Pruefung
+und Paket-Staging. Die lokale Korrektur entfernt eine pauschale
+Dokument-Ausnahme, bindet gepruefte Beispiele an Datei-Hashes, begrenzt
+Archivpfade auch fuer Windows und schliesst Git-Metadaten im Staging aus.
+24 gezielte Grenztests und ein Secret-Scan des sauberen getrackten
+Repository-Snapshots bestanden. Native Windows-Pruefung und abschliessende
+Diff- und Standardscans folgen. Documentation Impact: `UpdateRequired`;
+Quelle: privater Scan und lokaler Patch; Owner: AOC Repository Owner;
+aktualisiert wurden die CI- und Hook-Pruefung sowie dieses Receipt. Keine
+neue AEPS-Evidence oder Upstream-Aktion ohne projektuebergreifende
+Validierung.
+
+*The repeat diff scan reported no finding. The Standard scan on `4b1d8e3`
+reported three more observations with partial coverage. The local change
+narrows secret-scan exceptions to reviewed, content-bound examples, checks ZIP
+paths for Windows as well, and excludes Git metadata from package staging.
+Twenty-four focused boundary tests and a clean tracked-snapshot secret scan
+passed. Native Windows validation and final diff and Standard scans follow.
+Documentation Impact is `UpdateRequired`; the repository owner updated CI,
+the hook, and this receipt. No new AEPS evidence or upstream action is claimed
+without cross-project validation.*
+
+Der Diff-Scan `55029bd8-8b75-4ca5-9ea5-92292cef6f4c` fand eine weitere
+Windows-Namensvariante innerhalb der ZIP-Pruefung. Der Filter und die
+Negativprobe decken jetzt auch diese reservierten Namen ab. / The diff scan
+found another Windows name variant in ZIP validation. The filter and negative
+fixture now cover these reserved names as well.

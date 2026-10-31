@@ -1299,7 +1299,7 @@ Do not invoke directly; it is loaded by public scripts.
 ### `scripts/lib/check_learning_package_secrets.py`
 
 - **Rolle / Role:** intern oder installiert / internal or installed
-- **Kurzbeschreibung / Summary:** These exact files contain three reviewed instructional false positives.
+- **Kurzbeschreibung / Summary:** These exact files contain reviewed instructional and fixture false positives.
 - **Voraussetzungen / Prerequisites:** passende Shell; weitere Anforderungen stehen in `--help` oder `Get-Help`.
 - **Nebenwirkungen / Side effects:** zuerst Check-, Dry-Run- oder WhatIf-Modus verwenden, sofern angeboten.
 
