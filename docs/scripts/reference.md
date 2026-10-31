@@ -5,7 +5,7 @@
 > Generated from `scripts/config/script-catalog.json` and the Git index. Do not edit manually.
 
 Stand / Updated: 2026-07-28
-Kanonische Skriptdateien / Canonical script files: 145
+Kanonische Skriptdateien / Canonical script files: 146
 
 ## Workspace-Lebenszyklus / Workspace lifecycle
 
@@ -1226,6 +1226,18 @@ Stellt wiederverwendbare interne Funktionen fuer die oeffentlichen Skripte berei
 *Provides reusable internal functions for public scripts.*
 
 ### `scripts/lib/agentic_workspace_fleet.py`
+
+- **Rolle / Role:** intern oder installiert / internal or installed
+- **Kurzbeschreibung / Summary:** Siehe Quelltext und Hilfe. / See source and help.
+- **Voraussetzungen / Prerequisites:** passende Shell; weitere Anforderungen stehen in `--help` oder `Get-Help`.
+- **Nebenwirkungen / Side effects:** zuerst Check-, Dry-Run- oder WhatIf-Modus verwenden, sofern angeboten.
+
+```text
+Nicht direkt aufrufen; wird von oeffentlichen Skripten geladen.
+Do not invoke directly; it is loaded by public scripts.
+```
+
+### `scripts/lib/apply_memory_patch.py`
 
 - **Rolle / Role:** intern oder installiert / internal or installed
 - **Kurzbeschreibung / Summary:** Siehe Quelltext und Hilfe. / See source and help.

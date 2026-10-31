@@ -82,31 +82,15 @@ if ($ApplyPatch) {
         Write-Error "FATAL: patch file not found: $ApplyPatch"
         exit 2
     }
-    $content = Get-Content -LiteralPath $ApplyPatch
-    Write-Host "Patch-Datei: $ApplyPatch"
-    Write-Host ""
-    Write-Host "Vorgeschlagene Aenderungen:"
-    $content | Select-String '^\#\#|^- |^\*\*' | Select-Object -First 30 | ForEach-Object { Write-Host $_.Line }
-    Write-Host ""
-
-    $answer = if ($Yes) { 'j' } else { Read-Host "Patch anwenden? [j/N]" }
-    if ($answer -match '^[jJyY]') {
-        $patchCount = 0
-        $targetFile = ''
-        foreach ($line in $content) {
-            if ($line -match '### Target: (.+)') { $targetFile = $Matches[1] }
-            if ($line -match '^\+\+\+ (.+)' -and $targetFile) {
-                Add-Content -Path $targetFile -Value $Matches[1]
-                $patchCount++
-            }
-        }
-        git -C $TargetDir add -A 2>$null
-        git -C $TargetDir commit -m "chore: apply memory-patch -- $patchCount entries updated" 2>$null
-        Write-Host "Patch angewendet: $patchCount Eintraege, git-Commit erstellt."
-    } else {
-        Write-Host "Patch abgebrochen."
-    }
-    exit 0
+    $pythonCommand = Get-Command python3 -ErrorAction SilentlyContinue
+    if (-not $pythonCommand) { $pythonCommand = Get-Command python -ErrorAction SilentlyContinue }
+    if (-not $pythonCommand) { throw 'Python 3 fuer sichere Patch-Anwendung fehlt.' }
+    & $pythonCommand.Source -c 'import sys; sys.exit(0 if sys.version_info >= (3, 8) else 2)'
+    if ($LASTEXITCODE -ne 0) { throw 'Python 3.8 oder neuer fuer sichere Patch-Anwendung erforderlich.' }
+    $patchArgs = @('--target-dir', $TargetDir, '--patch', $ApplyPatch)
+    if ($Yes) { $patchArgs += '--yes' }
+    & $pythonCommand.Source (Join-Path $PSScriptRoot 'lib/apply_memory_patch.py') @patchArgs
+    exit $LASTEXITCODE
 }
 
 # ─── Scan State ──────────────────────────────────────────────────────────────

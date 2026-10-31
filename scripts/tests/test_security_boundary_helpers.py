@@ -29,6 +29,7 @@ def load_helper(name: str):
 
 
 archive = load_helper("check_learning_package_archive")
+memory_patch = load_helper("apply_memory_patch")
 baseline = load_helper("check_baseline_sync_path")
 bootstrap_target = load_helper("check_bootstrap_target_symlinks")
 origin = load_helper("validate_bootstrap_origin")
@@ -37,6 +38,67 @@ teardown_remote = load_helper("parse_teardown_remote")
 
 
 class SecurityBoundaryHelpersTests(unittest.TestCase):
+    def test_memory_patch_is_contained_and_commits_only_its_target(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            repository = root / "repository"
+            repository.mkdir()
+            subprocess.run(["git", "init", "-q", str(repository)], check=True)
+            subprocess.run(["git", "-C", str(repository), "config", "user.name", "Test"], check=True)
+            subprocess.run(["git", "-C", str(repository), "config", "user.email", "test@example.invalid"], check=True)
+            (repository / "README.md").write_text("original\n", encoding="utf-8")
+            (repository / "other.md").write_text("other\n", encoding="utf-8")
+            (repository / "foobar.md").write_text("tracked\n", encoding="utf-8")
+            subprocess.run(["git", "-C", str(repository), "add", "README.md", "other.md", "foobar.md"], check=True)
+            subprocess.run(["git", "-C", str(repository), "commit", "-qm", "initial"], check=True)
+            outside = root / "outside.md"
+            outside.write_text("private\n", encoding="utf-8")
+            patch = root / "memory-patch.md"
+            for command in (["bash", str(LIBRARY.parent / "check-homogeneity.sh"),
+                             "--apply-patch", str(patch), "--yes", str(repository)],
+                            ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "check-homogeneity.ps1"),
+                             "-ApplyPatch", str(patch), "-Yes", "-TargetDir", str(repository)]):
+                if not shutil.which(command[0]):
+                    continue
+                patch.write_text(f"### Target: {outside}\n+++ injected\n", encoding="utf-8")
+                result = subprocess.run(command, capture_output=True, text=True, check=False)
+                self.assertNotEqual(result.returncode, 0, result.stdout)
+                self.assertEqual(outside.read_text(encoding="utf-8"), "private\n")
+            wildcard = repository / "foo*.md"
+            wildcard.write_text("untracked\n", encoding="utf-8")
+            patch.write_text("### Target: foo*.md\n+++ injected\n", encoding="utf-8")
+            result = subprocess.run(["bash", str(LIBRARY.parent / "check-homogeneity.sh"),
+                                     "--apply-patch", str(patch), "--yes", str(repository)],
+                                    capture_output=True, text=True, check=False)
+            self.assertNotEqual(result.returncode, 0, result.stdout)
+            self.assertEqual(wildcard.read_text(encoding="utf-8"), "untracked\n")
+            patch.write_text("### Target: README.md\n+++ [Review needed: inspect]\n", encoding="utf-8")
+            result = subprocess.run(["bash", str(LIBRARY.parent / "check-homogeneity.sh"),
+                                     "--apply-patch", str(patch), "--yes", str(repository)],
+                                    capture_output=True, text=True, check=False)
+            self.assertNotEqual(result.returncode, 0, result.stdout)
+            self.assertEqual((repository / "README.md").read_text(encoding="utf-8"), "original\n")
+            _, relative, identity = memory_patch.checked_target(repository, "README.md")
+            replacement = repository / "replacement.tmp"
+            replacement.write_text("original\n", encoding="utf-8")
+            os.replace(replacement, repository / "README.md")
+            with self.assertRaisesRegex(ValueError, "validated file"):
+                memory_patch.open_target(repository, relative, identity)
+            (repository / "other.md").write_text("unrelated staged\n", encoding="utf-8")
+            subprocess.run(["git", "-C", str(repository), "add", "other.md"], check=True)
+            patch.write_text("### Target: README.md\n+++ approved\n", encoding="utf-8")
+            result = subprocess.run(["bash", str(LIBRARY.parent / "check-homogeneity.sh"),
+                                     "--apply-patch", str(patch), "--yes", str(repository)],
+                                    capture_output=True, text=True, check=False)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            committed = subprocess.run(["git", "-C", str(repository), "show", "--pretty=format:",
+                                        "--name-only", "HEAD"], capture_output=True, text=True,
+                                       check=True).stdout.strip().splitlines()
+            self.assertEqual(committed, ["README.md"])
+            staged = subprocess.run(["git", "-C", str(repository), "diff", "--cached", "--name-only"],
+                                    capture_output=True, text=True, check=True).stdout.strip().splitlines()
+            self.assertEqual(staged, ["other.md"])
+
     def test_teardown_remote_requires_exact_provider_host(self) -> None:
         self.assertEqual(teardown_remote.parse_remote("https://github.com/owner/repository.git"),
                          ("github", "owner/repository"))
