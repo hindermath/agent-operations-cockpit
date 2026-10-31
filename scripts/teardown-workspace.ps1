@@ -225,14 +225,9 @@ function Get-RemotePlatform([string]$Dir) {
         return $configuredPlatform
     }
 
-    if ($remoteUrl -match 'github\.com') {
-        return 'GitHub'
-    }
-    if ($remoteUrl -match 'gitlab\.com') {
-        return 'GitLab'
-    }
-
-    return 'anderes Remote / other remote'
+    $parsed = Get-ParsedRemote $remoteUrl
+    if ($null -eq $parsed) { return 'anderes Remote / other remote' }
+    return "$($parsed.Platform) $($parsed.OwnerRepo)"
 }
 
 function Get-PlannedBackupPath([string]$TargetName) {
@@ -342,8 +337,16 @@ function Test-Safety([string]$Label, [string]$Dir) {
     $true
 }
 
-function Get-OwnerRepo([string]$RemoteUrl, [string]$HostPattern) {
-    $RemoteUrl -replace ".*$HostPattern[:/](.*?)(\.git)?$", '$1'
+function Get-ParsedRemote([string]$RemoteUrl) {
+    $pythonCommand = Get-Command python3 -ErrorAction SilentlyContinue
+    if (-not $pythonCommand) { $pythonCommand = Get-Command python -ErrorAction SilentlyContinue }
+    if (-not $pythonCommand) { return $null }
+    $parser = Join-Path $PSScriptRoot 'lib/parse_teardown_remote.py'
+    $parsed = & $pythonCommand.Source $parser $RemoteUrl 2>$null
+    if ($LASTEXITCODE -ne 0 -or -not $parsed) { return $null }
+    $fields = ([string] $parsed).Split("`t")
+    if ($fields.Count -ne 2) { return $null }
+    return [pscustomobject]@{ Platform = $fields[0]; OwnerRepo = $fields[1] }
 }
 
 function Invoke-Backup([string]$Label, [string]$Dir, [string]$TargetName) {
@@ -410,14 +413,20 @@ function Remove-RemoteRepo([string]$Label, [string]$Dir) {
         }
     }
 
-    if ($remoteUrl -match 'github\.com') {
+    $parsed = Get-ParsedRemote $remoteUrl
+    if ($null -eq $parsed) {
+        Add-Result 'fail' "Unbekanntes oder unsicheres Remote, bitte -KeepRemote verwenden / Unknown or unsafe remote, use -KeepRemote: $Label"
+        Set-WarningExit
+        return $false
+    }
+    $ownerRepo = $parsed.OwnerRepo
+    if ($parsed.Platform -eq 'github') {
         if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
             Add-Result 'fail' "gh fehlt, Remote-Löschung abgebrochen / gh missing, remote deletion aborted: $Label"
             Set-WarningExit
             return $false
         }
 
-        $ownerRepo = Get-OwnerRepo $remoteUrl 'github\.com'
         & gh repo delete $ownerRepo --yes *> $null
         if ($LASTEXITCODE -eq 0) {
             Add-Result 'done' "Remote-Repo gelöscht / Remote repo deleted: $ownerRepo"
@@ -429,8 +438,7 @@ function Remove-RemoteRepo([string]$Label, [string]$Dir) {
         return $false
     }
 
-    if ($remoteUrl -match 'gitlab\.com') {
-        $ownerRepo = Get-OwnerRepo $remoteUrl 'gitlab\.com'
+    if ($parsed.Platform -eq 'gitlab') {
         if (-not (Get-Command glab -ErrorAction SilentlyContinue)) {
             Add-Result 'skip' "glab fehlt, GitLab-Remote übersprungen / glab missing, GitLab remote skipped: $ownerRepo"
             Set-WarningExit

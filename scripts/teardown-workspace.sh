@@ -252,6 +252,7 @@ remote_platform_for_dir() {
   local dir="$1"
   local remote_url=""
   local configured_platform=""
+  local parsed=""
 
   remote_url="$(git -C "$dir" remote get-url origin 2>/dev/null || true)"
   configured_platform="$(git -C "$dir" config --local --get home-baseline.remote-platform 2>/dev/null || true)"
@@ -259,12 +260,13 @@ remote_platform_for_dir() {
     echo "kein Remote / no remote"
   elif [ "$configured_platform" = "forgejo" ] || [ "$configured_platform" = "codeberg" ]; then
     echo "$configured_platform"
-  elif echo "$remote_url" | grep -qi 'github\.com'; then
-    echo "GitHub"
-  elif echo "$remote_url" | grep -qi 'gitlab\.com'; then
-    echo "GitLab"
   else
-    echo "anderes Remote / other remote"
+    parsed="$(python3 "$SCRIPT_DIR/lib/parse_teardown_remote.py" "$remote_url" 2>/dev/null || true)"
+    case "${parsed%%$'\t'*}" in
+      github) echo "GitHub ${parsed#*$'\t'}" ;;
+      gitlab) echo "GitLab ${parsed#*$'\t'}" ;;
+      *) echo "anderes Remote / other remote" ;;
+    esac
   fi
 }
 
@@ -419,13 +421,6 @@ create_backup() {
   fi
 }
 
-extract_owner_repo() {
-  local remote_url="$1"
-  local host="$2"
-
-  echo "$remote_url" | sed -E "s#.*${host}[:/]##" | sed 's/\.git$//'
-}
-
 delete_remote_repo() {
   local label="$1"
   local dir="$2"
@@ -435,6 +430,7 @@ delete_remote_repo() {
   local forgejo_base_url=""
   local forgejo_owner=""
   local forgejo_repository=""
+  local parsed=""
 
   if [ "$KEEP_REMOTE" -eq 1 ]; then
     add_result "skip" "Remote bewusst behalten / Remote intentionally kept: $label"
@@ -476,13 +472,18 @@ delete_remote_repo() {
     return 1
   fi
 
-  if echo "$remote_url" | grep -qi 'github\.com'; then
+  parsed="$(python3 "$SCRIPT_DIR/lib/parse_teardown_remote.py" "$remote_url" 2>/dev/null)" || {
+    add_result "fail" "Unbekanntes oder unsicheres Remote, bitte --keep-remote verwenden / Unknown or unsafe remote, use --keep-remote: $label"
+    set_warning_exit
+    return 1
+  }
+  owner_repo="${parsed#*$'\t'}"
+  if [ "${parsed%%$'\t'*}" = "github" ]; then
     if ! command -v gh >/dev/null 2>&1; then
       add_result "fail" "gh fehlt, Remote-Löschung abgebrochen / gh missing, remote deletion aborted: $label"
       set_warning_exit
       return 1
     fi
-    owner_repo="$(extract_owner_repo "$remote_url" 'github\.com')"
     if gh repo delete "$owner_repo" --yes >/dev/null 2>&1; then
       add_result "done" "Remote-Repo gelöscht / Remote repo deleted: $owner_repo"
       return 0
@@ -492,8 +493,7 @@ delete_remote_repo() {
     return 1
   fi
 
-  if echo "$remote_url" | grep -qi 'gitlab\.com'; then
-    owner_repo="$(extract_owner_repo "$remote_url" 'gitlab\.com')"
+  if [ "${parsed%%$'\t'*}" = "gitlab" ]; then
     if ! command -v glab >/dev/null 2>&1; then
       add_result "skip" "glab fehlt, GitLab-Remote übersprungen / glab missing, GitLab remote skipped: $owner_repo"
       set_warning_exit

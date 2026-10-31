@@ -5,7 +5,7 @@
 > Generated from `scripts/config/script-catalog.json` and the Git index. Do not edit manually.
 
 Stand / Updated: 2026-07-28
-Kanonische Skriptdateien / Canonical script files: 143
+Kanonische Skriptdateien / Canonical script files: 145
 
 ## Workspace-Lebenszyklus / Workspace lifecycle
 
@@ -1273,6 +1273,18 @@ Nicht direkt aufrufen; wird von oeffentlichen Skripten geladen.
 Do not invoke directly; it is loaded by public scripts.
 ```
 
+### `scripts/lib/check_learning_package_source.py`
+
+- **Rolle / Role:** intern oder installiert / internal or installed
+- **Kurzbeschreibung / Summary:** Siehe Quelltext und Hilfe. / See source and help.
+- **Voraussetzungen / Prerequisites:** passende Shell; weitere Anforderungen stehen in `--help` oder `Get-Help`.
+- **Nebenwirkungen / Side effects:** zuerst Check-, Dry-Run- oder WhatIf-Modus verwenden, sofern angeboten.
+
+```text
+Nicht direkt aufrufen; wird von oeffentlichen Skripten geladen.
+Do not invoke directly; it is loaded by public scripts.
+```
+
 ### `scripts/lib/hg-a11y.ps1`
 
 - **Rolle / Role:** intern oder installiert / internal or installed
@@ -1562,6 +1574,18 @@ Do not invoke directly; it is loaded by public scripts.
 ```
 
 ### `scripts/lib/maintenance_execution_context.py`
+
+- **Rolle / Role:** intern oder installiert / internal or installed
+- **Kurzbeschreibung / Summary:** Siehe Quelltext und Hilfe. / See source and help.
+- **Voraussetzungen / Prerequisites:** passende Shell; weitere Anforderungen stehen in `--help` oder `Get-Help`.
+- **Nebenwirkungen / Side effects:** zuerst Check-, Dry-Run- oder WhatIf-Modus verwenden, sofern angeboten.
+
+```text
+Nicht direkt aufrufen; wird von oeffentlichen Skripten geladen.
+Do not invoke directly; it is loaded by public scripts.
+```
+
+### `scripts/lib/parse_teardown_remote.py`
 
 - **Rolle / Role:** intern oder installiert / internal or installed
 - **Kurzbeschreibung / Summary:** Siehe Quelltext und Hilfe. / See source and help.

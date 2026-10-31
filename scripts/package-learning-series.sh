@@ -105,6 +105,7 @@ require_tool git
 require_tool rsync
 require_tool zip
 require_tool shasum
+require_tool python3
 
 SOURCE_DIR="$(cd "$SOURCE_DIR" && pwd)"
 [ -d "$SOURCE_DIR" ] || { echo "ERROR: Quelle nicht gefunden: $SOURCE_DIR" >&2; exit 1; }
@@ -136,6 +137,9 @@ fi
 [ -f "$START_GUIDE_PATH" ] || { echo "ERROR: verbindliche Startanleitung fehlt: $START_GUIDE_PATH" >&2; exit 1; }
 [ -f "$GIT_GUIDE_PATH" ] || { echo "ERROR: verbindliche Git-Startanleitung fehlt: $GIT_GUIDE_PATH" >&2; exit 1; }
 [ -f "$HOSTING_GUIDE_PATH" ] || { echo "ERROR: Leitfaden fuer institutionelles Git-Hosting fehlt: $HOSTING_GUIDE_PATH" >&2; exit 1; }
+python3 "$(dirname "${BASH_SOURCE[0]}")/lib/check_learning_package_source.py" \
+  --source "$SOURCE_DIR" --guide "$START_GUIDE_PATH" --guide "$GIT_GUIDE_PATH" \
+  --guide "$HOSTING_GUIDE_PATH"
 
 short_sha="$(git -C "$SOURCE_DIR" rev-parse --short HEAD 2>/dev/null || printf 'nogit')"
 stamp="$(date -u '+%Y%m%dT%H%M%SZ')"
@@ -184,6 +188,8 @@ rsync -a --delete "${excludes[@]}" "${SOURCE_DIR}/" "${package_root}/"
 cp "$START_GUIDE_PATH" "${package_root}/$(basename "$START_GUIDE_PATH")"
 cp "$GIT_GUIDE_PATH" "${package_root}/$(basename "$GIT_GUIDE_PATH")"
 cp "$HOSTING_GUIDE_PATH" "${package_root}/$(basename "$HOSTING_GUIDE_PATH")"
+python3 "$(dirname "${BASH_SOURCE[0]}")/lib/check_learning_package_source.py" \
+  --staging "$package_root"
 
 manifest="${package_root}/PACKAGING-MANIFEST.txt"
 {

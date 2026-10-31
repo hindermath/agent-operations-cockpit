@@ -510,6 +510,21 @@ function Test-PARIntakeReview {
         'intakeReview.resultPath muss unterhalb des Manifestverzeichnisses liegen.'
     Assert-PARCondition (Test-Path -LiteralPath $resultPath -PathType Leaf) `
         "Intake-Review-Ergebnis fehlt: $resultPath"
+    $reviewValidator = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../intake-review-governance/scripts/validate-intake-review-result.ps1'))
+    Assert-PARCondition (Test-Path -LiteralPath $reviewValidator -PathType Leaf) `
+        'Kanonischer Intake-Review-Validator fehlt.'
+    $reviewRepositories = @($Campaign.workers | ForEach-Object {
+        Resolve-PARRepository ([string] $_.repository) $ManifestDirectory
+    } | Sort-Object -Unique)
+    $canonicalReviewPassed = $false
+    foreach ($reviewRepository in $reviewRepositories) {
+        & pwsh -NoProfile -File $reviewValidator -Result $resultPath -Repo $reviewRepository 2>$null | Out-Null
+        if ($LASTEXITCODE -eq 0) {
+            $canonicalReviewPassed = $true
+            break
+        }
+    }
+    Assert-PARCondition $canonicalReviewPassed 'Kanonische Intake-Review-Validierung fehlgeschlagen.'
     $result = Read-PARJson $resultPath
     Assert-PARCondition ([string] $result.schemaVersion -eq '1.0') `
         'Intake-Review-Ergebnis benoetigt Schema 1.0.'
@@ -1087,6 +1102,50 @@ function Complete-PARWorker {
     $actualHead = (Invoke-PARGit $RunningEntry.Worktree @('rev-parse', 'HEAD')).Output[0]
     Assert-PARCondition ($resultData.headSha -eq $actualHead) "Worker result headSha ist nicht der aktuelle Worktree-Head: $ResultPath"
 
+    if ([bool] $Campaign.requireAutonomousPreset) {
+        $stateRelative = [string] $resultData.autonomousStatePath
+        Assert-PARCondition (-not [string]::IsNullOrWhiteSpace($stateRelative) -and
+            $stateRelative -ne 'N/A' -and -not [IO.Path]::IsPathRooted($stateRelative) -and
+            [IO.Path]::GetFileName($stateRelative) -eq 'autonomous-run-state.json') `
+            'Worker result benoetigt einen relativen autonomen State-Pfad.'
+        $statePath = [IO.Path]::GetFullPath((Join-Path $RunningEntry.Worktree $stateRelative))
+        $worktreePrefix = [IO.Path]::GetFullPath($RunningEntry.Worktree).TrimEnd(
+            [IO.Path]::DirectorySeparatorChar) + [IO.Path]::DirectorySeparatorChar
+        Assert-PARCondition ($statePath.StartsWith($worktreePrefix, [StringComparison]::Ordinal) -and
+            (Test-Path -LiteralPath $statePath -PathType Leaf)) `
+            'Autonomer Worker-State fehlt oder verlaesst den Worktree.'
+        $statePart = [IO.Path]::GetFullPath($RunningEntry.Worktree)
+        foreach ($part in ($stateRelative -split '[\\/]')) {
+            Assert-PARCondition ($part -notin @('', '.', '..')) 'Autonomer State-Pfad enthaelt ungueltige Komponenten.'
+            $statePart = Join-Path $statePart $part
+            $partItem = Get-Item -LiteralPath $statePart -Force
+            Assert-PARCondition (-not $partItem.LinkType -and
+                (($partItem.Attributes -band [IO.FileAttributes]::ReparsePoint) -eq 0)) `
+                'Autonomer Worker-State-Pfad darf keine Links enthalten.'
+        }
+        $stateItem = Get-Item -LiteralPath $statePath -Force
+        Assert-PARCondition (-not $stateItem.LinkType -and
+            (($stateItem.Attributes -band [IO.FileAttributes]::ReparsePoint) -eq 0)) `
+            'Autonomer Worker-State darf kein Link sein.'
+        Assert-PARCondition ([string] $resultData.autonomousStateSha256 -eq (Get-PARSha256 $statePath)) `
+            'Autonomer Worker-State-Hash stimmt nicht.'
+        $stateValidator = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../autonomous-run-governance/scripts/validate-autonomous-run-state.ps1'))
+        Assert-PARCondition (Test-Path -LiteralPath $stateValidator -PathType Leaf) `
+            'Vertrauenswuerdiger autonomer State-Validator fehlt.'
+        & pwsh -NoProfile -File $stateValidator -State $statePath | Out-Null
+        Assert-PARCondition ($LASTEXITCODE -eq 0) 'Autonomer Worker-State ist ungueltig.'
+        $validatedState = Read-PARJson $statePath
+        $expectedFeatureStatePath = [IO.Path]::GetFullPath((Join-Path $RunningEntry.Worktree (
+            Join-Path ([string] $validatedState.featurePath) 'autonomous-run-state.json')))
+        $expectedDeliveryMode = if ($Campaign.deliveryMode -eq 'MergeAndSync') { 'PublishPR' } else { [string] $Campaign.deliveryMode }
+        Assert-PARCondition ([string] $validatedState.runId -eq [string] $Worker.runId -and
+            [string] $validatedState.status -eq 'Completed' -and
+            [string] $validatedState.branch -eq [string] $Worker.branch -and
+            [string] $validatedState.deliveryMode -eq $expectedDeliveryMode -and
+            [string]::Equals($statePath, $expectedFeatureStatePath, [StringComparison]::Ordinal)) `
+            'Autonomer Worker-State passt nicht zu Run-ID, Feature, Branch, Delivery-Modus oder Abschlussstatus.'
+    }
+
     $validatedHandoffs = @()
     foreach ($declaredHandoff in @($Worker.handoffs)) {
         $resultHandoffs = @($resultData.handoffs | Where-Object {
@@ -1475,6 +1534,10 @@ function Invoke-PARProviderPreflight {
     )) {
         Assert-PARCondition $preflight.ContainsKey($requiredField) `
             "Provider-Preflight '$($Worker.workerId)' enthaelt '$requiredField' nicht."
+    }
+    foreach ($booleanField in @('isDraft', 'mergeable', 'checkPolicySatisfied')) {
+        Assert-PARCondition ($preflight[$booleanField] -is [bool]) `
+            "Provider-Preflight '$($Worker.workerId)' benoetigt boolesches $booleanField."
     }
     Assert-PARCondition ([string] $preflight.prUrl -eq [string] $WorkerState.prUrl) `
         "Provider-Preflight verweist auf eine andere PR fuer Worker '$($Worker.workerId)'."

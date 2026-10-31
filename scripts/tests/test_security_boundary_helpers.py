@@ -32,9 +32,66 @@ archive = load_helper("check_learning_package_archive")
 baseline = load_helper("check_baseline_sync_path")
 bootstrap_target = load_helper("check_bootstrap_target_symlinks")
 origin = load_helper("validate_bootstrap_origin")
+package_source = load_helper("check_learning_package_source")
+teardown_remote = load_helper("parse_teardown_remote")
 
 
 class SecurityBoundaryHelpersTests(unittest.TestCase):
+    def test_teardown_remote_requires_exact_provider_host(self) -> None:
+        self.assertEqual(teardown_remote.parse_remote("https://github.com/owner/repository.git"),
+                         ("github", "owner/repository"))
+        self.assertEqual(teardown_remote.parse_remote("git@gitlab.com:group/sub/repository.git"),
+                         ("gitlab", "group/sub/repository"))
+        self.assertEqual(teardown_remote.parse_remote("ssh://git@github.com/owner/repository.git"),
+                         ("github", "owner/repository"))
+        for remote in ("https://evil.invalid/github.com/owner/victim.git",
+                       "https://github.com.evil.invalid/owner/victim.git",
+                       "https://github.com/owner/victim.git?x=1",
+                       "https://github.com/owner/../victim.git",
+                       "https://user:secret@github.com/owner/victim.git"):
+            with self.subTest(remote=remote):
+                self.assertIsNone(teardown_remote.parse_remote(remote))
+
+    def test_learning_package_rejects_external_link_and_keeps_regular_source(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "lessons"
+            source.mkdir()
+            guides = source / "docs/learning-units"
+            guides.mkdir(parents=True)
+            for name in ("START-HERE-FUER-LERNENDE.md", "GIT-START-FUER-LERNENDE.md",
+                         "INSTITUTIONELLES-GIT-HOSTING.md"):
+                (guides / name).write_text("guide\n", encoding="utf-8")
+            (source / "README.md").write_text("public\n", encoding="utf-8")
+            package_source.check_tree(source, skip_excluded=True)
+            outside = root / "private.txt"
+            outside.write_text("sensitive marker\n", encoding="utf-8")
+            (source / "innocent.txt").symlink_to(outside)
+            with self.assertRaisesRegex(ValueError, "link"):
+                package_source.check_tree(source, skip_excluded=True)
+            for command in (["bash", str(LIBRARY.parent / "package-learning-series.sh"),
+                             "--source-dir", str(source), "--output-dir", str(root / "out")],
+                            ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "package-learning-series.ps1"),
+                             "-SourceDir", str(source), "-OutputDir", str(root / "out")]):
+                if shutil.which(command[0]):
+                    result = subprocess.run(command, capture_output=True, text=True, check=False)
+                    self.assertNotEqual(result.returncode, 0, result.stdout)
+                    self.assertFalse(list((root / "out").glob("*.zip")) if (root / "out").exists() else False)
+            (source / "innocent.txt").unlink()
+            package_source.check_tree(source, skip_excluded=True)
+            (source / "bin").symlink_to(root, target_is_directory=True)
+            with self.assertRaisesRegex(ValueError, "link"):
+                package_source.check_tree(source, skip_excluded=True)
+            if shutil.which("pwsh"):
+                result = subprocess.run(
+                    ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "package-learning-series.ps1"),
+                     "-SourceDir", str(source), "-OutputDir", str(root / "out")],
+                    capture_output=True, text=True, check=False,
+                )
+                self.assertNotEqual(result.returncode, 0, result.stdout)
+                self.assertFalse(list((root / "out").glob("*.zip")) if (root / "out").exists() else False)
+            (source / "bin").unlink()
+
     @unittest.skipUnless(shutil.which("bash") and shutil.which("shasum"), "Bash checksum check requires shasum")
     def test_bash_checker_binds_custom_sidecar_to_selected_archive(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
