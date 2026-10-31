@@ -2164,7 +2164,9 @@ $manifestPath = [IO.Path]::GetFullPath($Manifest)
 $manifestDirectory = Split-Path -Parent $manifestPath
 $campaign = Read-PARJson $manifestPath
 Assert-PARSchemaVersion $campaign 'Campaign'
-$script:CurrentIntakeReview = Test-PARIntakeReview $campaign $manifestDirectory
+if ($Action -in @('Start', 'Resume', 'Consolidate')) {
+    throw 'Produktive Parallel-Kampagnen sind bis zur isolierten Worker-Laufzeit gesperrt. / Production parallel campaigns are suspended until workers are isolated.'
+}
 
 if (-not $State) {
     $State = Join-Path $manifestDirectory 'parallel-campaign-state.json'
@@ -2177,6 +2179,7 @@ if (-not $RuntimeRoot) {
 $runtimePath = [IO.Path]::GetFullPath($RuntimeRoot)
 
 if ($Action -eq 'Status') {
+    $script:CurrentIntakeReview = Test-PARIntakeReview $campaign $manifestDirectory
     $statusData = Read-PARJson $statePath
     Assert-PARCondition ($statusData.campaignId -eq $campaign.campaignId) 'State campaignId stimmt nicht.'
     Write-PARStatus $campaign $statusData $OutputFormat
@@ -2184,6 +2187,7 @@ if ($Action -eq 'Status') {
 }
 
 if ($Action -eq 'Stop') {
+    $script:CurrentIntakeReview = Test-PARIntakeReview $campaign $manifestDirectory
     $statusData = Read-PARJson $statePath
     Assert-PARCondition ($statusData.campaignId -eq $campaign.campaignId) 'State campaignId stimmt nicht.'
     [IO.File]::WriteAllText(
@@ -2203,6 +2207,7 @@ Assert-PARCondition (-not [string]::IsNullOrWhiteSpace($RunnerConfig)) "-RunnerC
 $runnerConfigPath = [IO.Path]::GetFullPath($RunnerConfig)
 $profiles = Read-PARJson $runnerConfigPath
 Assert-PARSchemaVersion $profiles 'RunnerConfig'
+$script:CurrentIntakeReview = Test-PARIntakeReview $campaign $manifestDirectory
 
 $skipClean = $Action -in @('Resume', 'Consolidate')
 Test-PARCampaign $campaign $profiles $manifestDirectory -SkipCleanCheck:$skipClean

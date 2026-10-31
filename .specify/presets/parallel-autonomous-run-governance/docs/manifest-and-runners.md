@@ -116,6 +116,12 @@ erteilt keine pauschale Netzwerk- oder Schreibberechtigung.
 
 ### Lokaler Runtime-Bereich
 
+Produktive Parallel-Kampagnen sind derzeit in allen DeliveryModes gesperrt,
+bis eine isolierte Worker-Laufzeit mit getrennten Rechten und kontrollierter
+Prozessgruppe nachgewiesen ist. `Validate`, `Status` und `Stop` bleiben
+verfuegbar. Deterministische Tests nutzen eine temporaere Skriptkopie unter einem
+Testverzeichnis; der produktive Einstiegspunkt hat keinen Bypass.
+
 `RuntimeRoot` enthaelt Worktrees, Locks, Logs und Prozessresultate. Dieser
 Bereich bleibt ausserhalb versionierter Feature-Artefakte. Der normale Checkout
 wird weder gewechselt noch zurueckgesetzt.
@@ -161,6 +167,12 @@ block the worker before its process starts. Legacy non-strict manifests retain
 optional status metadata and never guess another agent's configuration.
 
 ### Runtime boundary
+
+Production parallel campaigns are currently suspended in every delivery mode
+until an isolated worker runtime with separate authority and process-tree
+control is verified. `Validate`, `Status`, and `Stop` remain available.
+Deterministic tests use a temporary script copy under a disposable test root;
+the production entry point has no bypass.
 
 `RuntimeRoot` contains worktrees, locks, logs, and process results outside
 tracked feature artifacts. The normal checkout is never switched or reset.

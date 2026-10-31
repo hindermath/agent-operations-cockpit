@@ -6,10 +6,12 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $presetRoot = Split-Path -Parent $PSScriptRoot
-$coordinator = Join-Path $presetRoot 'scripts/orchestrate-parallel-autonomous-runs.ps1'
+$productionCoordinator = Join-Path $presetRoot 'scripts/orchestrate-parallel-autonomous-runs.ps1'
 $fixtureWorker = Join-Path $PSScriptRoot 'fixture-worker.ps1'
 $tempRoot = Join-Path ([IO.Path]::GetTempPath()) "parallel-autonomous-tests-$([guid]::NewGuid())"
 [void](New-Item -ItemType Directory -Path $tempRoot)
+$coordinator = & (Join-Path $PSScriptRoot 'new-fixture-coordinator.ps1') `
+    -Source $productionCoordinator -Destination (Join-Path $tempRoot 'fixture-coordinator.ps1')
 
 function Assert-Test {
     param([bool] $Condition, [string] $Message)
@@ -164,6 +166,30 @@ try {
         }
     }
     Write-Data $script:runnerConfig $runnerData
+
+    $blockedRepository = Initialize-TestRepository 'blocked-repo'
+    foreach ($deliveryMode in @('LocalImplementation', 'PublishPR', 'MergeAndSync')) {
+        $blockedRoot = Join-Path $tempRoot "blocked-$deliveryMode"
+        [void](New-Item -ItemType Directory -Path $blockedRoot)
+        $blockedManifest = Join-Path $blockedRoot 'campaign.json'
+        $blockedState = Join-Path $blockedRoot 'state.json'
+        $blockedRuntime = Join-Path $blockedRoot 'runtime'
+        $blockedCampaign = Get-TestCampaign "blocked-$deliveryMode" 'ReplicatedTargets' @(
+            (Get-TestWorker "blocked-$deliveryMode" $blockedRepository)
+        ) -DeliveryMode $deliveryMode
+        Write-Data $blockedManifest $blockedCampaign
+        foreach ($action in @('Start', 'Resume', 'Consolidate')) {
+            $output = & pwsh -NoProfile -File $productionCoordinator -Action $action -Manifest $blockedManifest `
+                -RunnerConfig $script:runnerConfig -State $blockedState -RuntimeRoot $blockedRuntime 2>&1
+            Assert-Test ($LASTEXITCODE -ne 0 -and
+                ($output -join [Environment]::NewLine) -match 'gesperrt') `
+                "$deliveryMode $action did not fail at the production guard"
+            Assert-Test (-not (Test-Path -LiteralPath $blockedState)) `
+                "$deliveryMode $action created state before the guard"
+            Assert-Test (-not (Test-Path -LiteralPath $blockedRuntime)) `
+                "$deliveryMode $action created runtime before the guard"
+        }
+    }
 
     $replicatedWorkers = 1..3 | ForEach-Object {
         Get-TestWorker "replicated-0$_" (Initialize-TestRepository "replicated-repo-0$_")

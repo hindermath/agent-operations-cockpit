@@ -35,6 +35,15 @@ Ausgabekanaele nach Worker-Ende erhalten nun begrenzte Wartezeiten; gezielte
 Fixtures pruefen beide Pfade. / The Standard scan confirmed the open worker
 authority boundary and two further resource paths. Profile commands and
 post-exit output streams now have bounded waits, covered by focused fixtures.
+Der Repository Owner hat die temporaere Fail-Closed-Sperre fuer alle
+produktiven Parallel-Kampagnen gewaehlt. `Start`, `Resume` und `Consolidate`
+werden vor dem ersten Unterprozess abgewiesen. Deterministische Tests laufen
+mit einer temporaeren Skriptkopie ohne Produktionsschalter. Die eigentliche
+Isolation bleibt ein spaeteres, gesondert zu validierendes Arbeitspaket. /
+The repository owner selected a temporary fail-closed suspension for all
+production parallel campaigns. Start, resume and consolidation are rejected
+before the first subprocess. Deterministic tests use a temporary script copy
+with no production switch. Actual isolation needs separate validation.
 Publikationsstand:
 `PendingPublication`; AEPS-Upstream:
 `NotApplicable`. Deduplizierung: Scan-ID + Datum + Remediation-Receipt.
