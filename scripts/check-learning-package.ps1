@@ -41,7 +41,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $packageScript = Join-Path $PSScriptRoot 'package-learning-series.ps1'
-$gitleaksConfig = Join-Path $PSScriptRoot 'templates/gitleaks.toml'
+$secretChecker = Join-Path $PSScriptRoot 'lib/check_learning_package_secrets.py'
 
 function Test-HBLearningPackage {
     param(
@@ -106,17 +106,8 @@ function Test-HBLearningPackage {
             throw 'Manifest nennt den Hosting-Leitfaden nicht.'
         }
 
-        $gitleaks = Get-Command gitleaks -ErrorAction SilentlyContinue
-        if ($gitleaks) {
-            $gitleaksArguments = @('dir', $root, '--no-banner', '--redact')
-            if (Test-Path -LiteralPath $gitleaksConfig -PathType Leaf) {
-                $gitleaksArguments += @('--config', $gitleaksConfig)
-            }
-            & $gitleaks.Source @gitleaksArguments *> $null
-            if ($LASTEXITCODE -ne 0) { throw 'gitleaks hat einen moeglichen Secret-Befund gemeldet.' }
-        } else {
-            Write-Warning 'gitleaks nicht verfuegbar; Secret-Scan uebersprungen.'
-        }
+        & $python.Source $secretChecker $root
+        if ($LASTEXITCODE -ne 0) { throw 'Lernpaket-Secret-Scan fehlgeschlagen / package secret scan failed.' }
 
         Write-Host "PASS: Lernpaket ist strukturell und gegen die Ausschlussregeln geprueft: $ZipPath"
     } finally {

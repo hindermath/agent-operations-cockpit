@@ -7,6 +7,8 @@ Erzeugt ein git-freies Lernreihen-ZIP.
 Kopiert einen Level-1-Lernreihenordner in ein temporaeres Staging-Verzeichnis,
 schliesst .git-Verzeichnisse, Remote-Konfigurationen sowie lokale Build- und
 IDE-Artefakte aus und erzeugt daraus ein ZIP mit SHA256-Datei.
+Das Staging muss vorher einen gitleaks-Secret-Scan bestehen.
+The staged package must pass a gitleaks secret scan before ZIP creation.
 
 .PARAMETER SourceDir
 Level-1-Quellordner der Lernreihe.
@@ -203,6 +205,9 @@ if ($PSCmdlet.ShouldProcess($zipPath, 'Create learning series ZIP package')) {
         $lines.Add("Git guide: $(Split-Path $gitGuidePath -Leaf)")
         $lines.Add("Institutional hosting guide: $(Split-Path $hostingGuidePath -Leaf)")
         Set-Content -Path $manifest -Value $lines -Encoding UTF8
+
+        & $pythonCommand.Source (Join-Path $PSScriptRoot 'lib/check_learning_package_secrets.py') $packageRoot
+        if ($LASTEXITCODE -ne 0) { throw 'Lernpaket-Secret-Scan fehlgeschlagen / package secret scan failed.' }
 
         if (Test-Path $zipPath) { Remove-Item -Path $zipPath -Force }
         if (Test-Path $shaPath) { Remove-Item -Path $shaPath -Force }

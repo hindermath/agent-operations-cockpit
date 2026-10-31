@@ -16,7 +16,11 @@ usage() {
 Usage: package-learning-series.sh --source-dir DIR [options]
 
 Erzeugt ein Lernreihen-ZIP ohne .git-Verzeichnisse, ohne Remote-Konfigurationen
-und ohne lokale Build-/IDE-Artefakte.
+und ohne lokale Build-/IDE-Artefakte. Ein gitleaks-Secret-Scan des Stagings
+ist vor der ZIP-Erzeugung erforderlich.
+
+Creates a learning ZIP without Git, remote settings, or local build/IDE files.
+The staged package must pass a gitleaks secret scan before ZIP creation.
 
 Options:
   --source-dir DIR       Level-1-Quellordner der Lernreihe
@@ -216,6 +220,8 @@ manifest="${package_root}/PACKAGING-MANIFEST.txt"
   echo "Git guide: $(basename "$GIT_GUIDE_PATH")"
   echo "Institutional hosting guide: $(basename "$HOSTING_GUIDE_PATH")"
 } > "$manifest"
+
+python3 "$(dirname "${BASH_SOURCE[0]}")/lib/check_learning_package_secrets.py" "$package_root"
 
 rm -f "$zip_path" "$sha_path"
 (

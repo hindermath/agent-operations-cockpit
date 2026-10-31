@@ -23,6 +23,19 @@ import zipfile
 LIBRARY = Path(__file__).resolve().parents[1] / "lib"
 
 
+def path_without_gitleaks(root: Path) -> str:
+    """Expose only the local tools needed by package scripts, without gitleaks."""
+    tool_directory = root / "tools-without-gitleaks"
+    tool_directory.mkdir()
+    for name in ("git", "rsync", "zip", "shasum", "python3", "python", "tr", "date",
+                 "mktemp", "mkdir", "cp", "rm", "sed", "awk", "find", "wc", "sort",
+                 "grep", "basename", "dirname", "pwd", "cat", "head"):
+        executable = shutil.which(name)
+        if executable:
+            (tool_directory / name).symlink_to(executable)
+    return str(tool_directory)
+
+
 def load_helper(name: str):
     specification = importlib.util.spec_from_file_location(name, LIBRARY / f"{name}.py")
     assert specification is not None and specification.loader is not None
@@ -172,6 +185,172 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
                 self.assertFalse(list((root / "out").glob("*.zip")) if (root / "out").exists() else False)
             (source / "bin").unlink()
 
+    @unittest.skipIf(os.name == "nt", "Restricted POSIX PATH fixture requires Unix tools")
+    def test_learning_package_secret_scan_is_required_before_release(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "lessons"
+            guides = source / "docs/learning-units"
+            guides.mkdir(parents=True)
+            for name in ("START-HERE-FUER-LERNENDE.md", "GIT-START-FUER-LERNENDE.md",
+                         "INSTITUTIONELLES-GIT-HOSTING.md"):
+                (guides / name).write_text("# Guide\n", encoding="utf-8")
+            (source / "README.md").write_text("# Lesson\n", encoding="utf-8")
+            output = root / "out"
+            commands = [
+                ["bash", str(LIBRARY.parent / "package-learning-series.sh"),
+                 "--source-dir", str(source), "--output-dir", str(output)],
+                ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "package-learning-series.ps1"),
+                 "-SourceDir", str(source), "-OutputDir", str(output)],
+            ]
+            restricted_environment = dict(os.environ, PATH=path_without_gitleaks(root))
+            for command in commands:
+                executable = shutil.which(command[0])
+                if not executable:
+                    continue
+                preview_option = "--dry-run" if command[0] == "bash" else "-WhatIf"
+                with self.subTest(platform=command[0], scanner="missing", mode="preview"):
+                    preview = subprocess.run([executable, *command[1:], preview_option],
+                                             env=restricted_environment, capture_output=True,
+                                             text=True, check=False)
+                    self.assertEqual(preview.returncode, 0, preview.stderr)
+                    self.assertFalse(list(output.glob("*.zip")))
+                with self.subTest(platform=command[0], scanner="missing"):
+                    result = subprocess.run([executable, *command[1:]], env=restricted_environment,
+                                            capture_output=True, text=True, check=False)
+                    self.assertNotEqual(result.returncode, 0, result.stdout)
+                    self.assertIn("gitleaks", result.stderr)
+                    self.assertFalse(list(output.glob("*.zip")))
+
+            fake_bin = root / "fake-bin"
+            fake_bin.mkdir()
+            fake_scanner = fake_bin / "gitleaks"
+            fake_scanner.write_text("#!/bin/sh\nexit 1\n", encoding="utf-8")
+            fake_scanner.chmod(0o755)
+            failing_environment = dict(os.environ, PATH=f"{fake_bin}{os.pathsep}{os.environ['PATH']}")
+            for command in commands:
+                executable = shutil.which(command[0])
+                if not executable:
+                    continue
+                with self.subTest(platform=command[0], scanner="failure"):
+                    result = subprocess.run([executable, *command[1:]], env=failing_environment,
+                                            capture_output=True, text=True, check=False)
+                    self.assertNotEqual(result.returncode, 0, result.stdout)
+                    self.assertFalse(list(output.glob("*.zip")))
+
+    @unittest.skipIf(os.name == "nt", "Restricted POSIX PATH fixture requires Unix tools")
+    def test_learning_package_checker_rejects_missing_secret_scanner(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            package = root / "lesson.zip"
+            with zipfile.ZipFile(package, "w") as writer:
+                for name in ("START-HERE-FUER-LERNENDE.md", "GIT-START-FUER-LERNENDE.md",
+                             "INSTITUTIONELLES-GIT-HOSTING.md"):
+                    writer.writestr(f"lesson/{name}", "# Guide\n")
+                writer.writestr("lesson/PACKAGING-MANIFEST.txt",
+                                "Git data included: no (package only)\n"
+                                "Original remotes included: no\n"
+                                "Start here after extracting: START-HERE-FUER-LERNENDE.md\n"
+                                "Institutional hosting guide: INSTITUTIONELLES-GIT-HOSTING.md\n")
+            (root / "lesson.zip.sha256").write_text(
+                f"{hashlib.sha256(package.read_bytes()).hexdigest()}  lesson.zip\n", encoding="ascii")
+            environment = dict(os.environ, PATH=path_without_gitleaks(root))
+            commands = [
+                ["bash", str(LIBRARY.parent / "check-learning-package.sh"), str(package)],
+                ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "check-learning-package.ps1"),
+                 "-PackagePath", str(package)],
+            ]
+            for command in commands:
+                executable = shutil.which(command[0])
+                if not executable:
+                    continue
+                with self.subTest(platform=command[0]):
+                    result = subprocess.run([executable, *command[1:]], env=environment,
+                                            capture_output=True, text=True, check=False)
+                    self.assertNotEqual(result.returncode, 0, result.stdout)
+                    self.assertIn("gitleaks", result.stderr)
+                    self.assertNotIn("PASS:", result.stdout)
+
+    @unittest.skipUnless(shutil.which("gitleaks"), "Gitleaks is required for the real scan fixture")
+    def test_learning_package_scan_blocks_secret_in_teaching_path(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "lessons"
+            source.mkdir()
+            guides = source / "docs/learning-units"
+            guides.mkdir(parents=True)
+            for name in ("START-HERE-FUER-LERNENDE.md", "GIT-START-FUER-LERNENDE.md",
+                         "INSTITUTIONELLES-GIT-HOSTING.md"):
+                (guides / name).write_text("# Guide\n", encoding="utf-8")
+            (source / "README.md").write_text("# Lesson\n", encoding="utf-8")
+            project_root = LIBRARY.parent.parent
+            reviewed_example = Path("docs/secure-development/checklisten/CL_09_KI-Codeerzeugung.md")
+            (source / reviewed_example).parent.mkdir(parents=True)
+            shutil.copy2(project_root / reviewed_example, source / reviewed_example)
+            secret_file = source / "docs/secure-development/example.md"
+            secret_file.write_text("GITHUB_TOKEN=" + "ghp_" +
+                                   "abcdef0123456789abcdef0123456789abcd" +
+                                   " # gitleaks:allow\n", encoding="utf-8")
+            (source / ".gitleaks.toml").write_text(
+                "title = 'untrusted package config'\n[extend]\nuseDefault = true\n"
+                "[allowlist]\npaths = ['''docs/secure-development/.*''']\n", encoding="utf-8")
+
+            for executable_name, arguments in (
+                ("bash", [str(LIBRARY.parent / "package-learning-series.sh"),
+                          "--source-dir", str(source), "--output-dir", str(root / "bash-out")]),
+                ("pwsh", ["-NoProfile", "-File", str(LIBRARY.parent / "package-learning-series.ps1"),
+                           "-SourceDir", str(source), "-OutputDir", str(root / "pwsh-out")]),
+            ):
+                executable = shutil.which(executable_name)
+                if not executable:
+                    continue
+                with self.subTest(command=executable_name, mode="produce"):
+                    result = subprocess.run([executable, *arguments], capture_output=True, text=True,
+                                            check=False)
+                    self.assertNotEqual(result.returncode, 0, result.stdout)
+                    self.assertFalse(list((root / f"{executable_name}-out").glob("*.zip")))
+
+            (source / "PACKAGING-MANIFEST.txt").write_text(
+                "Git data included: no (package only)\nOriginal remotes included: no\n"
+                "Start here after extracting: START-HERE-FUER-LERNENDE.md\n"
+                "Institutional hosting guide: INSTITUTIONELLES-GIT-HOSTING.md\n", encoding="utf-8")
+            package = root / "lesson.zip"
+            with zipfile.ZipFile(package, "w") as writer:
+                for file_path in source.rglob("*"):
+                    if file_path.is_file():
+                        writer.write(file_path, f"lesson/{file_path.relative_to(source).as_posix()}")
+            (root / "lesson.zip.sha256").write_text(
+                f"{hashlib.sha256(package.read_bytes()).hexdigest()}  lesson.zip\n", encoding="ascii")
+            for executable_name, arguments in (
+                ("bash", [str(LIBRARY.parent / "check-learning-package.sh"), str(package)]),
+                ("pwsh", ["-NoProfile", "-File", str(LIBRARY.parent / "check-learning-package.ps1"),
+                           "-PackagePath", str(package)]),
+            ):
+                executable = shutil.which(executable_name)
+                if not executable:
+                    continue
+                with self.subTest(command=executable_name, mode="check"):
+                    result = subprocess.run([executable, *arguments], capture_output=True, text=True,
+                                            check=False)
+                    self.assertNotEqual(result.returncode, 0, result.stdout)
+                    self.assertNotIn("PASS:", result.stdout)
+
+            secret_file.unlink()
+            for executable_name, arguments in (
+                ("bash", [str(LIBRARY.parent / "package-learning-series.sh"),
+                          "--source-dir", str(source), "--output-dir", str(root / "bash-out")]),
+                ("pwsh", ["-NoProfile", "-File", str(LIBRARY.parent / "package-learning-series.ps1"),
+                           "-SourceDir", str(source), "-OutputDir", str(root / "pwsh-out")]),
+            ):
+                executable = shutil.which(executable_name)
+                if not executable:
+                    continue
+                with self.subTest(command=executable_name, mode="reviewed-example"):
+                    result = subprocess.run([executable, *arguments], capture_output=True, text=True,
+                                            check=False)
+                    self.assertEqual(result.returncode, 0, result.stderr)
+                    self.assertEqual(len(list((root / f"{executable_name}-out").glob("*.zip"))), 1)
+
     @unittest.skipUnless(shutil.which("bash") and shutil.which("shasum"), "Bash checksum check requires shasum")
     def test_bash_checker_binds_custom_sidecar_to_selected_archive(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -239,8 +418,8 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
                 self.assertIn("sidecar exceeds byte limit", result.stderr)
 
     def test_utf16_checksum_sidecar_remains_usable_by_powershell(self) -> None:
-        if not shutil.which("pwsh"):
-            self.skipTest("PowerShell 7 is required")
+        if not shutil.which("pwsh") or not shutil.which("gitleaks"):
+            self.skipTest("PowerShell 7 and gitleaks are required")
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             package = root / "package.zip"

@@ -115,15 +115,7 @@ check_package() {
   grep -Eq '^Start here after extracting: START-HERE-FUER-LERNENDE\.md$' "$manifest" || { echo "ERROR: Manifest nennt die primaere Startdatei nicht" >&2; return 1; }
   grep -Eq '^Institutional hosting guide: INSTITUTIONELLES-GIT-HOSTING\.md$' "$manifest" || { echo "ERROR: Manifest nennt den Hosting-Leitfaden nicht" >&2; return 1; }
 
-  if command -v gitleaks >/dev/null 2>&1; then
-    gitleaks_args=(dir "${work_dir}/${root}" --no-banner --redact)
-    if [ -f "${SCRIPT_DIR}/templates/gitleaks.toml" ]; then
-      gitleaks_args+=(--config "${SCRIPT_DIR}/templates/gitleaks.toml")
-    fi
-    gitleaks "${gitleaks_args[@]}" >/dev/null
-  else
-    echo "WARN: gitleaks nicht verfuegbar; Secret-Scan uebersprungen" >&2
-  fi
+  python3 "${SCRIPT_DIR}/lib/check_learning_package_secrets.py" "${work_dir}/${root}"
 
   rm -rf "$work_dir"
   trap - RETURN

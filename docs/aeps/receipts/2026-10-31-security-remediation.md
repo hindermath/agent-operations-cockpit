@@ -171,3 +171,40 @@ reference, parallel runner guide, distribution manifests, package-checker help,
 this receipt and
 the AEPS ledger describe changed behavior and verification without publishing
 exploit details.*
+
+Der Standardscan `70eece36-f626-4b26-b8c1-713d8dbc5bee` auf `8f44da7`
+meldete bei teilweiser Repository-Abdeckung einen weiteren niedrigen Befund
+am Lernpaket-Freigabegate. Beide Paketierer und beide Paketpruefer verlangen
+nun einen erfolgreichen Secret-Scan des fertigen Stagings beziehungsweise
+entpackten Pakets; nur nach Zeilenendennormalisierung hashgebundene
+Lehrbeispiele bleiben zugelassen.
+Vorschauen erzeugen weiterhin keine Pakete. 22 gezielte
+Python-Grenztests, beide Paket-Selbsttests und der Skriptreferenz-Check
+bestanden. Die erneuten Diff- und Standardscans sowie die Publikation stehen
+zum Zeitpunkt dieses Eintrags noch aus. Documentation Impact bleibt
+`UpdateRequired`: Skripthilfe und dieses Receipt beschreiben die geaenderte
+Voraussetzung. Keine neue AEPS-Evidence oder Preset-Promotion: Die lokale
+Korrektur allein belegt keine projektuebergreifende Wiederverwendung.
+
+*The Standard scan found one further low-severity learning-package release
+gate issue under partial repository coverage. Both producers and checkers now
+require a successful secret scan of the staged or extracted package. Only
+reviewed teaching examples bound by a line-ending-normalized hash remain
+accepted; previews remain
+non-writing. Twenty-two focused Python boundary tests, both package
+self-tests and the script-reference check passed. Repeat diff and Standard
+scans and publication remain pending at this entry. Documentation Impact stays
+`UpdateRequired` for the command help and this receipt. No new AEPS evidence or
+preset promotion follows from this local fix.*
+
+Der Diff-Scan `851cf6aa-cc89-43ba-a4da-d5d4c13edea4` pruefte alle sechs
+geaenderten ausfuehrbaren beziehungsweise Konfigurationsdateien und fand
+einen weiteren niedrigen Umgehungspfad im Paket-Freigabegate. Der gemeinsame
+Pruefer wurde korrigiert; ein negativer Test mit synthetischem Testwert
+bestaetigt die Sperre. Der erneute Diff-Scan und der abschliessende
+Standardscan folgen. Keine neue AEPS-Evidence oder Upstream-Aktion.
+
+*The diff scan reviewed all six changed executable or configuration files and
+found one further low-severity bypass in the package release gate. The shared
+checker was corrected; a synthetic negative test confirms rejection. Repeat
+diff and final Standard scans follow. No new AEPS evidence or upstream action.*

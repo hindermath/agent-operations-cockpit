@@ -1,0 +1,6 @@
+# DE: Paketinhalt darf den Secret-Scan nicht selbst konfigurieren.
+# EN: Package contents must not configure their own secret scan.
+title = "Learning package default gitleaks rules"
+
+[extend]
+useDefault = true
