@@ -40,6 +40,19 @@ jobs:
         with:
           python-version: "3.13"
 
+      - name: Install regression prerequisites (Ubuntu)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: sudo apt-get update && sudo apt-get install -y ripgrep
+
+      - name: Install regression prerequisites (macOS)
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          brew install bash ripgrep
+          echo "$(brew --prefix bash)/bin" >> "$GITHUB_PATH"
+          echo "$(brew --prefix ripgrep)/bin" >> "$GITHUB_PATH"
+
       - name: Restore locked projects
         shell: pwsh
         run: |

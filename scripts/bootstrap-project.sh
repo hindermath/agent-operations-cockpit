@@ -171,6 +171,36 @@ repo_name_from_url() {
   printf '%s' "${repo_url##*/}"
 }
 
+existing_origin_matches_destination() {
+  local origin="$1" owner="" base_url="" repository=""
+  case "$OPT_PLATFORM" in
+    github)
+      command -v gh >/dev/null 2>&1 || return 1
+      owner="$(gh api user --jq '.login' 2>/dev/null || true)"
+      base_url="https://github.com"
+      repository="$(printf '%s' "$PROJECT_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')"
+      ;;
+    gitlab)
+      owner="$GITLAB_USER_LOCAL"
+      base_url="$OPT_GITLAB_URL"
+      repository="$PROJECT_SLUG"
+      ;;
+    forgejo|codeberg)
+      hb_forgejo_require_tools || return 1
+      hb_forgejo_get_credential "$FORGEJO_BASE_URL" || return 1
+      hb_forgejo_api_request GET "$FORGEJO_BASE_URL" /api/v1/user || return 1
+      [ "$HB_FORGEJO_HTTP_STATUS" = "200" ] || return 1
+      owner="$(printf '%s' "$HB_FORGEJO_HTTP_BODY" | hb_forgejo_json_field login)"
+      base_url="$FORGEJO_BASE_URL"
+      repository="$PROJECT_SLUG"
+      ;;
+  esac
+  [ -n "$owner" ] || return 1
+  python3 "$SCRIPT_DIR/lib/validate_bootstrap_origin.py" \
+    --origin "$origin" --base-url "$base_url" --owner "$owner" \
+    --repository "$repository" --git-repository "$TARGET_DIR"
+}
+
 json_escape() {
   local value="$1"
   value="${value//\\/\\\\}"
@@ -221,11 +251,25 @@ if [ -z "$PROJECT_NAME" ]; then
   echo "USAGE: bootstrap-project.sh <ProjectName> [TARGET_WORKSPACE] [OPTIONS]" >&2
   exit 2
 fi
+case "$PROJECT_NAME" in
+  .|..|*/*|*\\*)
+    echo "Fehler: Projektname muss ein einzelnes Workspace-Unterverzeichnis sein / Error: project name must be one workspace child directory" >&2
+    exit 2
+    ;;
+esac
 
 TARGET_WORKSPACE="${TARGET_WORKSPACE:-$PWD}"
 TARGET_WORKSPACE="${TARGET_WORKSPACE/#\~/$HOME}"
 TARGET_WORKSPACE="${TARGET_WORKSPACE%/}"
 TARGET_DIR="${TARGET_WORKSPACE}/${PROJECT_NAME}"
+if [ -L "$TARGET_DIR" ]; then
+  echo "Fehler: Projektziel darf kein Symlink sein / Error: project target must not be a symlink" >&2
+  exit 2
+fi
+if [ -e "$TARGET_DIR" ] && ! python3 "$SCRIPT_DIR/lib/check_bootstrap_target_symlinks.py" "$TARGET_DIR"; then
+  echo "Fehler: Projektziel enthaelt Symlinks oder ist kein Verzeichnis / Error: project target contains symlinks or is not a directory" >&2
+  exit 2
+fi
 
 RESOLVED_CONSTITUTION_VERSION="$(resolve_constitution_version "${HOME}/constitution.md")" || exit $?
 IFS=$'\t' read -r RESOLVED_PRESET_PROFILE RESOLVED_PRESET_CONFIG < <(
@@ -963,9 +1007,9 @@ else
 fi
 
 step_start "ASCII-Statistikprofil 2 initialisieren"
-if [ ! -f "${TARGET_DIR}/scripts/render-project-statistics.sh" ]; then
+if [ ! -f "${SCRIPT_DIR}/render-project-statistics.sh" ]; then
   step_warn "Statistikrenderer nicht gefunden"
-elif bash "${TARGET_DIR}/scripts/render-project-statistics.sh" --repo "$TARGET_DIR" >/dev/null; then
+elif bash "${SCRIPT_DIR}/render-project-statistics.sh" --repo "$TARGET_DIR" >/dev/null; then
   if [ -n "$(git -C "$TARGET_DIR" status --porcelain -- docs/project-statistics.md)" ]; then
     git -C "$TARGET_DIR" add docs/project-statistics.md >/dev/null 2>&1
     git -C "$TARGET_DIR" commit -m "docs: initialize ASCII statistics profile 2
@@ -979,16 +1023,23 @@ fi
 
 # ─── Step 13: gh repo create ─────────────────────────────────────────────────
 step_start "Repo erstellen (privat)"
+REMOTE_AUTHORIZED=false
 if $OPT_NO_REMOTE; then
   step_skip "--no-remote"
 elif git -C "$TARGET_DIR" remote get-url origin >/dev/null 2>&1; then
   remote_url="$(git -C "$TARGET_DIR" remote get-url origin 2>/dev/null || true)"
-  SUMMARY_REPO_URL="$(repo_url_from_remote "$remote_url")"
-  SUMMARY_DISPLAY_REPO="$(repo_name_from_url "$remote_url")"
-  step_skip "Remote vorhanden"
+  if existing_origin_matches_destination "$remote_url"; then
+    REMOTE_AUTHORIZED=true
+    SUMMARY_REPO_URL="$(repo_url_from_remote "$remote_url")"
+    SUMMARY_DISPLAY_REPO="$(repo_name_from_url "$remote_url")"
+    step_skip "Remote vorhanden und Ziel geprüft"
+  else
+    step_warn "Bestehendes Origin stimmt nicht mit dem authentifizierten Ziel überein; Push und Rechteänderung gesperrt"
+  fi
 elif [ "$OPT_PLATFORM" = "github" ] && command -v gh >/dev/null 2>&1; then
   repo_name=$(echo "$PROJECT_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
   if gh repo create "$repo_name" --private --source "$TARGET_DIR" --remote origin >/dev/null 2>&1; then
+    REMOTE_AUTHORIZED=true
     SUMMARY_REPO_URL="https://github.com/$(gh api user --jq '.login' 2>/dev/null || true)/$repo_name"
     SUMMARY_DISPLAY_REPO="$repo_name"
     step_done "$repo_name"
@@ -999,6 +1050,7 @@ elif [ "$OPT_PLATFORM" = "gitlab" ]; then
   remote_url="https://${OPT_GITLAB_HOSTNAME}/${GITLAB_USER_LOCAL}/${PROJECT_SLUG}.git"
   if GITLAB_HOST="$OPT_GITLAB_HOSTNAME" glab repo create "$PROJECT_SLUG" --private >/dev/null 2>&1; then
     if git -C "$TARGET_DIR" remote add origin "$remote_url" >/dev/null 2>&1; then
+      REMOTE_AUTHORIZED=true
       SUMMARY_REPO_URL="${OPT_GITLAB_URL%/}/$GITLAB_USER_LOCAL/$PROJECT_SLUG"
       SUMMARY_DISPLAY_REPO="$PROJECT_SLUG"
       step_done "$PROJECT_SLUG"
@@ -1011,6 +1063,7 @@ elif [ "$OPT_PLATFORM" = "gitlab" ]; then
 elif [ "$OPT_PLATFORM" = "forgejo" ] || [ "$OPT_PLATFORM" = "codeberg" ]; then
   if hb_forgejo_create_or_get_repository "$FORGEJO_BASE_URL" "$PROJECT_SLUG" "Project repository for $PROJECT_NAME"; then
     if git -C "$TARGET_DIR" remote add origin "$HB_FORGEJO_CLONE_URL" >/dev/null 2>&1; then
+      REMOTE_AUTHORIZED=true
       git -C "$TARGET_DIR" config --local home-baseline.remote-platform "$OPT_PLATFORM"
       git -C "$TARGET_DIR" config --local home-baseline.remote-base-url "$FORGEJO_BASE_URL"
       git -C "$TARGET_DIR" config --local home-baseline.remote-owner "$HB_FORGEJO_REPOSITORY_OWNER"
@@ -1036,8 +1089,13 @@ fi
 step_start "git push"
 if $OPT_NO_REMOTE; then
   step_skip "--no-remote"
+elif ! $REMOTE_AUTHORIZED; then
+  step_skip "Origin-Ziel nicht geprüft"
 elif ! git -C "$TARGET_DIR" remote get-url origin >/dev/null 2>&1; then
   step_skip "kein Remote konfiguriert"
+elif ! existing_origin_matches_destination "$(git -C "$TARGET_DIR" remote get-url origin)"; then
+  REMOTE_AUTHORIZED=false
+  step_skip "wirksames Push-Ziel stimmt nicht mit dem authentifizierten Repository überein"
 else
   if git -C "$TARGET_DIR" push -u origin HEAD >/dev/null 2>&1; then
     step_done
@@ -1048,7 +1106,7 @@ fi
 
 # ─── Step 14b: GitHub Actions Berechtigungen ────────────────────────────────
 step_start "GitHub Actions Berechtigungen setzen"
-if $OPT_NO_RELEASE_PLEASE || $OPT_NO_REMOTE || [ "$OPT_PLATFORM" != "github" ]; then
+if $OPT_NO_RELEASE_PLEASE || $OPT_NO_REMOTE || ! $REMOTE_AUTHORIZED || [ "$OPT_PLATFORM" != "github" ]; then
   step_skip "nicht anwendbar"
 elif [ -z "$SUMMARY_REPO_URL" ]; then
   step_skip "kein Remote konfiguriert"
@@ -1195,13 +1253,15 @@ elif [ -f "$home_readme" ] && grep -q '<!-- workspace-table-end -->' "$home_read
     repo_cell="—"
   fi
   row="| \`${short_target}/\` | ${repo_cell} | \`bootstrap-project\` |\n"
-  sed -i "" "s|<!-- workspace-table-end -->|${row}<!-- workspace-table-end -->|" "$home_readme" 2>/dev/null || \
-  python3 -c "
-content = open('${home_readme}').read()
-row = '${row}'
-content = content.replace('<!-- workspace-table-end -->', row + '<!-- workspace-table-end -->')
-open('${home_readme}','w').write(content)
-" 2>/dev/null || step_warn "README.md Update fehlgeschlagen"
+  python3 - "$home_readme" "$row" <<'PY' || step_warn "README.md Update fehlgeschlagen"
+from pathlib import Path
+import sys
+
+path = Path(sys.argv[1])
+row = sys.argv[2].replace(r'\n', '\n')
+content = path.read_text(encoding='utf-8')
+path.write_text(content.replace('<!-- workspace-table-end -->', row + '<!-- workspace-table-end -->'), encoding='utf-8')
+PY
   step_done
 else
   step_skip "README.md oder Marker nicht gefunden"

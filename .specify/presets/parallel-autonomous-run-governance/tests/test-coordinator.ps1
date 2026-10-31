@@ -6,10 +6,12 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $presetRoot = Split-Path -Parent $PSScriptRoot
-$coordinator = Join-Path $presetRoot 'scripts/orchestrate-parallel-autonomous-runs.ps1'
+$productionCoordinator = Join-Path $presetRoot 'scripts/orchestrate-parallel-autonomous-runs.ps1'
 $fixtureWorker = Join-Path $PSScriptRoot 'fixture-worker.ps1'
 $tempRoot = Join-Path ([IO.Path]::GetTempPath()) "parallel-autonomous-tests-$([guid]::NewGuid())"
 [void](New-Item -ItemType Directory -Path $tempRoot)
+$coordinator = & (Join-Path $PSScriptRoot 'new-fixture-coordinator.ps1') `
+    -Source $productionCoordinator -Destination (Join-Path $tempRoot 'fixture-coordinator.ps1')
 
 function Assert-Test {
     param([bool] $Condition, [string] $Message)
@@ -165,15 +167,148 @@ try {
     }
     Write-Data $script:runnerConfig $runnerData
 
+    $blockedRepository = Initialize-TestRepository 'blocked-repo'
+    foreach ($deliveryMode in @('LocalImplementation', 'PublishPR', 'MergeAndSync')) {
+        $blockedRoot = Join-Path $tempRoot "blocked-$deliveryMode"
+        [void](New-Item -ItemType Directory -Path $blockedRoot)
+        $blockedManifest = Join-Path $blockedRoot 'campaign.json'
+        $blockedState = Join-Path $blockedRoot 'state.json'
+        $blockedRuntime = Join-Path $blockedRoot 'runtime'
+        $blockedCampaign = Get-TestCampaign "blocked-$deliveryMode" 'ReplicatedTargets' @(
+            (Get-TestWorker "blocked-$deliveryMode" $blockedRepository)
+        ) -DeliveryMode $deliveryMode
+        Write-Data $blockedManifest $blockedCampaign
+        foreach ($action in @('Start', 'Resume', 'Consolidate')) {
+            $output = & pwsh -NoProfile -File $productionCoordinator -Action $action -Manifest $blockedManifest `
+                -RunnerConfig $script:runnerConfig -State $blockedState -RuntimeRoot $blockedRuntime 2>&1
+            Assert-Test ($LASTEXITCODE -ne 0 -and
+                ($output -join [Environment]::NewLine) -match 'gesperrt') `
+                "$deliveryMode $action did not fail at the production guard"
+            Assert-Test (-not (Test-Path -LiteralPath $blockedState)) `
+                "$deliveryMode $action created state before the guard"
+            Assert-Test (-not (Test-Path -LiteralPath $blockedRuntime)) `
+                "$deliveryMode $action created runtime before the guard"
+        }
+    }
+
     $replicatedWorkers = 1..3 | ForEach-Object {
         Get-TestWorker "replicated-0$_" (Initialize-TestRepository "replicated-repo-0$_")
     }
     $replicated = Invoke-Campaign (Get-TestCampaign 'replicated' 'ReplicatedTargets' $replicatedWorkers) 'replicated'
-    Assert-Test ($replicated.Data.status -eq 'Completed') 'ReplicatedTargets did not complete'
+    Assert-Test ($replicated.Data.status -eq 'Completed') "ReplicatedTargets did not complete: $($replicated.Data.workers | ConvertTo-Json -Compress -Depth 10)"
     Assert-Test ($replicated.Data.maximumObservedConcurrency -ge 2) 'ReplicatedTargets did not prove concurrency'
     $replicatedPrompt = Get-Content -LiteralPath (Join-Path $replicated.Runtime 'prompts/replicated-01.txt') -Raw
     Assert-Test ($replicatedPrompt.Contains('Fixture operator instruction.')) 'Campaign operator instructions were not routed to the worker'
     Assert-Test ($replicatedPrompt.Contains("Remain on the assigned branch '")) 'Assigned branch boundary was not routed to the worker'
+
+    $runnerData.profiles.flood = [ordered]@{
+        executable = 'pwsh'
+        arguments = @(
+            '-NoProfile', '-File', $fixtureWorker,
+            '-CampaignId', '{campaignId}', '-WorkerId', '{workerId}',
+            '-RunId', '{runId}', '-Worktree', '{worktree}',
+            '-ResultFile', '{resultFile}', '-Mode', 'Flood'
+        )
+    }
+    Write-Data $script:runnerConfig $runnerData
+    $floodCampaign = Get-TestCampaign 'bounded-output' 'ReplicatedTargets' @(
+        (Get-TestWorker 'flood-a' (Initialize-TestRepository 'flood-repo'))
+    )
+    $floodCampaign.runnerProfile = 'flood'
+    $flood = Invoke-Campaign $floodCampaign 'bounded-output'
+    Assert-Test ($flood.Data.status -eq 'Failed') 'Output flood did not fail the campaign'
+    $floodLog = Join-Path $flood.Runtime 'logs/flood-a.out.log'
+    Assert-Test ((Get-Item -LiteralPath $floodLog).Length -le 16777216) 'Output log exceeded its byte limit'
+
+    $faultCampaign = Get-TestCampaign 'log-failure' 'ReplicatedTargets' @(
+        (Get-TestWorker 'fault-a' (Initialize-TestRepository 'fault-repo'))
+    )
+    $faultCampaign.runnerProfile = 'slow'
+    $faultRoot = Join-Path $tempRoot 'log-failure'
+    $faultRuntime = Join-Path $faultRoot 'runtime'
+    [void](New-Item -ItemType Directory -Path (Join-Path $faultRuntime 'logs/fault-a.out.log') -Force)
+    $faultManifest = Join-Path $faultRoot 'campaign.json'
+    $faultState = Join-Path $faultRoot 'state.json'
+    Write-Data $faultManifest $faultCampaign
+    $faultStartedAt = [DateTime]::UtcNow
+    & pwsh -NoProfile -File $coordinator -Action Start -Manifest $faultManifest `
+        -RunnerConfig $script:runnerConfig -State $faultState -RuntimeRoot $faultRuntime | Out-Null
+    Assert-Test ($LASTEXITCODE -eq 0) 'Log I/O failure aborted the coordinator'
+    Assert-Test (([DateTime]::UtcNow - $faultStartedAt).TotalSeconds -lt 10) `
+        'Log I/O failure did not stop the worker promptly'
+    $faultData = Get-Content -LiteralPath $faultState -Raw | ConvertFrom-Json
+    Assert-Test ($faultData.status -eq 'Failed') 'Log I/O failure did not fail the campaign'
+
+    $runnerData.profiles.retained = [ordered]@{
+        executable = 'pwsh'
+        arguments = @(
+            '-NoProfile', '-File', $fixtureWorker,
+            '-CampaignId', '{campaignId}', '-WorkerId', '{workerId}',
+            '-RunId', '{runId}', '-Worktree', '{worktree}',
+            '-ResultFile', '{resultFile}', '-Mode', 'RetainedPipe'
+        )
+    }
+    Write-Data $script:runnerConfig $runnerData
+    $retainedCampaign = Get-TestCampaign 'retained-pipe' 'ReplicatedTargets' @(
+        (Get-TestWorker 'retained-a' (Initialize-TestRepository 'retained-repo'))
+    )
+    $retainedCampaign.runnerProfile = 'retained'
+    $retainedStartedAt = [DateTime]::UtcNow
+    $retained = Invoke-Campaign $retainedCampaign 'retained-pipe'
+    Assert-Test (([DateTime]::UtcNow - $retainedStartedAt).TotalSeconds -lt 12) `
+        'Retained output pipe blocked the coordinator'
+    Assert-Test ($retained.Data.status -eq 'Failed') 'Retained output pipe did not fail the campaign'
+
+    $runnerData.profiles.strict = [ordered]@{
+        executable = 'pwsh'
+        arguments = @(
+            '-NoProfile', '-File', $fixtureWorker,
+            '-CampaignId', '{campaignId}', '-WorkerId', '{workerId}',
+            '-RunId', '{runId}', '-Worktree', '{worktree}',
+            '-ResultFile', '{resultFile}'
+        )
+        agentFamily = 'Fixture'
+        routingRole = 'script-only'
+        model = 'fixture'
+        reasoningEffort = 'low'
+        preflight = [ordered]@{
+            executable = 'pwsh'
+            arguments = @('-NoProfile', '-Command', 'Start-Sleep -Seconds 30')
+            timeoutSeconds = 1
+        }
+    }
+    Write-Data $script:runnerConfig $runnerData
+    $strictCampaign = Get-TestCampaign 'bounded-preflight' 'ReplicatedTargets' @(
+        (Get-TestWorker 'strict-a' (Initialize-TestRepository 'strict-repo'))
+    )
+    $strictCampaign.runnerProfile = 'strict'
+    $strictCampaign.routingRole = 'script-only'
+    $strictCampaign.fallbackPolicy = 'fail-closed'
+    $strictRoot = Join-Path $tempRoot 'bounded-preflight'
+    [void](New-Item -ItemType Directory -Path $strictRoot)
+    $strictManifest = Join-Path $strictRoot 'campaign.json'
+    Write-Data $strictManifest $strictCampaign
+    $strictStartedAt = [DateTime]::UtcNow
+    & pwsh -NoProfile -File $coordinator -Action Start -Manifest $strictManifest `
+        -RunnerConfig $script:runnerConfig -State (Join-Path $strictRoot 'state.json') `
+        -RuntimeRoot (Join-Path $strictRoot 'runtime') 2>$null
+    Assert-Test ($LASTEXITCODE -ne 0) 'Hanging profile preflight was accepted'
+    Assert-Test (([DateTime]::UtcNow - $strictStartedAt).TotalSeconds -lt 10) `
+        'Profile command timeout did not stop promptly'
+
+    $runnerData.profiles.strict.preflight.arguments = @(
+        '-NoProfile', '-Command', '[Console]::Out.Write(("x" * 1100000))'
+    )
+    Write-Data $script:runnerConfig $runnerData
+    $strictFloodRoot = Join-Path $tempRoot 'bounded-preflight-output'
+    [void](New-Item -ItemType Directory -Path $strictFloodRoot)
+    $strictFloodManifest = Join-Path $strictFloodRoot 'campaign.json'
+    $strictCampaign.campaignId = [guid]::NewGuid().ToString()
+    Write-Data $strictFloodManifest $strictCampaign
+    & pwsh -NoProfile -File $coordinator -Action Start -Manifest $strictFloodManifest `
+        -RunnerConfig $script:runnerConfig -State (Join-Path $strictFloodRoot 'state.json') `
+        -RuntimeRoot (Join-Path $strictFloodRoot 'runtime') 2>$null
+    Assert-Test ($LASTEXITCODE -ne 0) 'Noisy profile preflight was accepted'
 
     $independentRepo = Initialize-TestRepository 'independent-repo'
     $independentWorkers = 1..3 | ForEach-Object { Get-TestWorker "independent-0$_" $independentRepo }
@@ -185,9 +320,9 @@ try {
     $alternativeWorkers = 1..3 | ForEach-Object { Get-TestWorker "alternative-0$_" $alternativeRepo }
     $alternative = Invoke-Campaign (Get-TestCampaign 'alternatives' 'AlternativeSolutions' $alternativeWorkers) 'alternatives'
     Assert-Test ($alternative.Data.status -eq 'AwaitingSelection') 'AlternativeSolutions did not await selection'
-    & pwsh -NoProfile -File $coordinator -Action Consolidate -Manifest $alternative.Manifest -RunnerConfig $script:runnerConfig -State $alternative.State 2>$null
+    & pwsh -NoProfile -File $coordinator -Action Consolidate -Manifest $alternative.Manifest -RunnerConfig $script:runnerConfig -State $alternative.State -RuntimeRoot $alternative.Runtime 2>$null
     Assert-Test ($LASTEXITCODE -ne 0) 'Alternative consolidation accepted missing human selection'
-    & pwsh -NoProfile -File $coordinator -Action Consolidate -Manifest $alternative.Manifest -RunnerConfig $script:runnerConfig -State $alternative.State -SelectedWorker 'alternative-02' | Out-Null
+    & pwsh -NoProfile -File $coordinator -Action Consolidate -Manifest $alternative.Manifest -RunnerConfig $script:runnerConfig -State $alternative.State -RuntimeRoot $alternative.Runtime -SelectedWorker 'alternative-02' | Out-Null
     Assert-Test ($LASTEXITCODE -eq 0) 'Selected alternative consolidation failed'
 
     $pipelineRepo = Initialize-TestRepository 'pipeline-repo'
@@ -234,6 +369,14 @@ try {
     Write-Data $invalidPath $invalid
     & pwsh -NoProfile -File $coordinator -Action Validate -Manifest $invalidPath -RunnerConfig $script:runnerConfig 2>$null
     Assert-Test ($LASTEXITCODE -ne 0) 'DAG cycle was accepted'
+
+    $unsafeWorker = Get-TestCampaign 'unsafe-worker' 'ReplicatedTargets' @(
+        (Get-TestWorker '../outside' $pipelineRepo)
+    )
+    $unsafeWorkerPath = Join-Path $tempRoot 'unsafe-worker.json'
+    Write-Data $unsafeWorkerPath $unsafeWorker
+    & pwsh -NoProfile -File $coordinator -Action Validate -Manifest $unsafeWorkerPath -RunnerConfig $script:runnerConfig 2>$null
+    Assert-Test ($LASTEXITCODE -ne 0) 'Traversal workerId was accepted'
 
     $invalidBaseWorker = Get-TestCampaign 'invalid-base-worker' 'Pipeline' @(
         (Get-TestWorker 'base-a' $pipelineRepo),

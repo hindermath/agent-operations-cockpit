@@ -256,6 +256,62 @@ function Invoke-PARGit {
     }
 }
 
+function Import-PARBoundedOutputType {
+    if ('PARBoundedOutput' -as [type]) { return }
+    Add-Type -TypeDefinition @'
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
+
+public static class PARBoundedOutput
+{
+    public static async Task CopyAsync(Stream input, string path, Process process, int maximumBytes)
+    {
+        using (var output = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read, 8192, true))
+        {
+            var buffer = new byte[8192];
+            var written = 0;
+            int count;
+            while ((count = await input.ReadAsync(buffer, 0, buffer.Length)) != 0)
+            {
+                if (count > maximumBytes - written)
+                {
+                    try { if (!process.HasExited) process.Kill(true); }
+                    catch (InvalidOperationException) { }
+                    throw new IOException("Worker output limit exceeded.");
+                }
+                await output.WriteAsync(buffer, 0, count);
+                written += count;
+            }
+        }
+    }
+
+    public static async Task<byte[]> CaptureAsync(Stream input, Process process, int maximumBytes)
+    {
+        using (var output = new MemoryStream())
+        {
+            var buffer = new byte[8192];
+            var written = 0;
+            int count;
+            while ((count = await input.ReadAsync(buffer, 0, buffer.Length)) != 0)
+            {
+                if (count > maximumBytes - written)
+                {
+                    try { if (!process.HasExited) process.Kill(true); }
+                    catch (InvalidOperationException) { }
+                    throw new IOException("Profile command output limit exceeded.");
+                }
+                await output.WriteAsync(buffer, 0, count);
+                written += count;
+            }
+            return output.ToArray();
+        }
+    }
+}
+'@
+}
+
 function Invoke-PARProfileCommand {
     param(
         [Parameter(Mandatory)][hashtable] $CommandProfile,
@@ -266,16 +322,57 @@ function Invoke-PARProfileCommand {
     Assert-PARCondition (-not [string]::IsNullOrWhiteSpace([string] $CommandProfile.executable)) 'Profile executable fehlt.'
     Assert-PARCondition ($CommandProfile.arguments -is [object[]]) 'Profile arguments muss ein Array sein.'
     $arguments = ConvertTo-PARArgumentList @($CommandProfile.arguments) $Values
-    Push-Location -LiteralPath $WorkingDirectory
-    try {
-        $output = @(& ([string] $CommandProfile.executable) @arguments 2>&1)
-        $exitCode = $LASTEXITCODE
-    } finally {
-        Pop-Location
+    $timeoutSeconds = 300
+    if ($CommandProfile.ContainsKey('timeoutSeconds')) {
+        Assert-PARCondition ($CommandProfile.timeoutSeconds -is [int] -and
+            [int] $CommandProfile.timeoutSeconds -ge 1 -and
+            [int] $CommandProfile.timeoutSeconds -le 300) 'Profile timeoutSeconds muss 1..300 sein.'
+        $timeoutSeconds = [int] $CommandProfile.timeoutSeconds
     }
-    return @{
-        ExitCode = $exitCode
-        Output = @($output)
+    Import-PARBoundedOutputType
+    $psi = [Diagnostics.ProcessStartInfo]::new()
+    $psi.FileName = [string] $CommandProfile.executable
+    $psi.WorkingDirectory = $WorkingDirectory
+    $psi.UseShellExecute = $false
+    $psi.RedirectStandardOutput = $true
+    $psi.RedirectStandardError = $true
+    foreach ($argument in $arguments) { [void] $psi.ArgumentList.Add($argument) }
+    $process = [Diagnostics.Process]::new()
+    $process.StartInfo = $psi
+    $started = $false
+    try {
+        Assert-PARCondition $process.Start() 'Profile command could not start.'
+        $started = $true
+        $stdoutTask = [PARBoundedOutput]::CaptureAsync($process.StandardOutput.BaseStream, $process, 1048576)
+        $stderrTask = [PARBoundedOutput]::CaptureAsync($process.StandardError.BaseStream, $process, 1048576)
+        $deadline = [DateTime]::UtcNow.AddSeconds($timeoutSeconds)
+        while (-not $process.HasExited) {
+            if ($stdoutTask.IsFaulted -or $stderrTask.IsFaulted) {
+                throw 'Profile command output capture failed.'
+            }
+            if ([DateTime]::UtcNow -ge $deadline) {
+                throw 'Profile command exceeded its runtime limit.'
+            }
+            Start-Sleep -Milliseconds 100
+        }
+        $tasks = [Threading.Tasks.Task[]]@($stdoutTask, $stderrTask)
+        $combined = [Threading.Tasks.Task]::WhenAll($tasks)
+        if (-not $combined.Wait(5000)) {
+            throw 'Profile command output streams did not close.'
+        }
+        $output = @(
+            [Text.Encoding]::UTF8.GetString($stdoutTask.Result),
+            [Text.Encoding]::UTF8.GetString($stderrTask.Result)
+        )
+        return @{ ExitCode = $process.ExitCode; Output = @($output) }
+    } finally {
+        if ($started -and -not $process.HasExited) {
+            try { $process.Kill($true) }
+            catch [InvalidOperationException] {
+                if (-not $process.HasExited) { throw }
+            }
+        }
+        $process.Dispose()
     }
 }
 
@@ -510,6 +607,21 @@ function Test-PARIntakeReview {
         'intakeReview.resultPath muss unterhalb des Manifestverzeichnisses liegen.'
     Assert-PARCondition (Test-Path -LiteralPath $resultPath -PathType Leaf) `
         "Intake-Review-Ergebnis fehlt: $resultPath"
+    $reviewValidator = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../intake-review-governance/scripts/validate-intake-review-result.ps1'))
+    Assert-PARCondition (Test-Path -LiteralPath $reviewValidator -PathType Leaf) `
+        'Kanonischer Intake-Review-Validator fehlt.'
+    $reviewRepositories = @($Campaign.workers | ForEach-Object {
+        Resolve-PARRepository ([string] $_.repository) $ManifestDirectory
+    } | Sort-Object -Unique)
+    $canonicalReviewPassed = $false
+    foreach ($reviewRepository in $reviewRepositories) {
+        & pwsh -NoProfile -File $reviewValidator -Result $resultPath -Repo $reviewRepository 2>$null | Out-Null
+        if ($LASTEXITCODE -eq 0) {
+            $canonicalReviewPassed = $true
+            break
+        }
+    }
+    Assert-PARCondition $canonicalReviewPassed 'Kanonische Intake-Review-Validierung fehlgeschlagen.'
     $result = Read-PARJson $resultPath
     Assert-PARCondition ([string] $result.schemaVersion -eq '1.0') `
         'Intake-Review-Ergebnis benoetigt Schema 1.0.'
@@ -654,7 +766,8 @@ function Test-PARCampaign {
     Assert-PARCondition (@($branches | Sort-Object -Unique).Count -eq $branches.Count) 'branch muss campaignweit eindeutig sein.'
 
     foreach ($worker in $Campaign.workers) {
-        Assert-PARCondition (-not [string]::IsNullOrWhiteSpace([string] $worker.workerId)) 'workerId darf nicht leer sein.'
+        Assert-PARCondition ([string] $worker.workerId -cmatch '^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$') `
+            'workerId muss eine einzelne sichere Pfadkomponente sein.'
         Assert-PARCondition (Test-PARUuid ([string] $worker.runId)) "runId von '$($worker.workerId)' ist keine UUID."
         Assert-PARCondition (-not [string]::IsNullOrWhiteSpace([string] $worker.branch)) "branch von '$($worker.workerId)' fehlt."
         $runnerProfileName = Get-PARRunnerProfileName $Campaign $worker
@@ -984,6 +1097,7 @@ function Invoke-PARProcessAsync {
         [Parameter(Mandatory)][string] $StderrPath
     )
 
+    Import-PARBoundedOutputType
     $psi = [Diagnostics.ProcessStartInfo]::new()
     $psi.FileName = $Executable
     $psi.WorkingDirectory = $WorkingDirectory
@@ -998,10 +1112,12 @@ function Invoke-PARProcessAsync {
     Assert-PARCondition $process.Start() "Runner konnte nicht gestartet werden: $Executable"
     return @{
         Process = $process
-        StdoutTask = $process.StandardOutput.ReadToEndAsync()
-        StderrTask = $process.StandardError.ReadToEndAsync()
+        StdoutTask = [PARBoundedOutput]::CopyAsync($process.StandardOutput.BaseStream, $StdoutPath, $process, 16777216)
+        StderrTask = [PARBoundedOutput]::CopyAsync($process.StandardError.BaseStream, $StderrPath, $process, 16777216)
         StdoutPath = $StdoutPath
         StderrPath = $StderrPath
+        StartedAt = [DateTime]::UtcNow
+        TerminationReason = ''
     }
 }
 
@@ -1015,10 +1131,17 @@ function Complete-PARWorker {
     )
 
     $process = $RunningEntry.Process.Process
-    $stdout = $RunningEntry.Process.StdoutTask.GetAwaiter().GetResult()
-    $stderr = $RunningEntry.Process.StderrTask.GetAwaiter().GetResult()
-    $stdout | Set-Content -LiteralPath $RunningEntry.Process.StdoutPath -Encoding utf8NoBOM
-    $stderr | Set-Content -LiteralPath $RunningEntry.Process.StderrPath -Encoding utf8NoBOM
+    $outputTasks = [Threading.Tasks.Task[]]@(
+        $RunningEntry.Process.StdoutTask,
+        $RunningEntry.Process.StderrTask
+    )
+    $combined = [Threading.Tasks.Task]::WhenAll($outputTasks)
+    if (-not $combined.Wait(5000)) {
+        $process.StandardOutput.BaseStream.Dispose()
+        $process.StandardError.BaseStream.Dispose()
+        throw 'Worker output streams did not close after process exit.'
+    }
+    $combined.GetAwaiter().GetResult()
     $WorkerState.exitCode = $process.ExitCode
     $WorkerState.processId = $null
 
@@ -1085,6 +1208,50 @@ function Complete-PARWorker {
     }
     $actualHead = (Invoke-PARGit $RunningEntry.Worktree @('rev-parse', 'HEAD')).Output[0]
     Assert-PARCondition ($resultData.headSha -eq $actualHead) "Worker result headSha ist nicht der aktuelle Worktree-Head: $ResultPath"
+
+    if ([bool] $Campaign.requireAutonomousPreset) {
+        $stateRelative = [string] $resultData.autonomousStatePath
+        Assert-PARCondition (-not [string]::IsNullOrWhiteSpace($stateRelative) -and
+            $stateRelative -ne 'N/A' -and -not [IO.Path]::IsPathRooted($stateRelative) -and
+            [IO.Path]::GetFileName($stateRelative) -eq 'autonomous-run-state.json') `
+            'Worker result benoetigt einen relativen autonomen State-Pfad.'
+        $statePath = [IO.Path]::GetFullPath((Join-Path $RunningEntry.Worktree $stateRelative))
+        $worktreePrefix = [IO.Path]::GetFullPath($RunningEntry.Worktree).TrimEnd(
+            [IO.Path]::DirectorySeparatorChar) + [IO.Path]::DirectorySeparatorChar
+        Assert-PARCondition ($statePath.StartsWith($worktreePrefix, [StringComparison]::Ordinal) -and
+            (Test-Path -LiteralPath $statePath -PathType Leaf)) `
+            'Autonomer Worker-State fehlt oder verlaesst den Worktree.'
+        $statePart = [IO.Path]::GetFullPath($RunningEntry.Worktree)
+        foreach ($part in ($stateRelative -split '[\\/]')) {
+            Assert-PARCondition ($part -notin @('', '.', '..')) 'Autonomer State-Pfad enthaelt ungueltige Komponenten.'
+            $statePart = Join-Path $statePart $part
+            $partItem = Get-Item -LiteralPath $statePart -Force
+            Assert-PARCondition (-not $partItem.LinkType -and
+                (($partItem.Attributes -band [IO.FileAttributes]::ReparsePoint) -eq 0)) `
+                'Autonomer Worker-State-Pfad darf keine Links enthalten.'
+        }
+        $stateItem = Get-Item -LiteralPath $statePath -Force
+        Assert-PARCondition (-not $stateItem.LinkType -and
+            (($stateItem.Attributes -band [IO.FileAttributes]::ReparsePoint) -eq 0)) `
+            'Autonomer Worker-State darf kein Link sein.'
+        Assert-PARCondition ([string] $resultData.autonomousStateSha256 -eq (Get-PARSha256 $statePath)) `
+            'Autonomer Worker-State-Hash stimmt nicht.'
+        $stateValidator = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../autonomous-run-governance/scripts/validate-autonomous-run-state.ps1'))
+        Assert-PARCondition (Test-Path -LiteralPath $stateValidator -PathType Leaf) `
+            'Vertrauenswuerdiger autonomer State-Validator fehlt.'
+        & pwsh -NoProfile -File $stateValidator -State $statePath | Out-Null
+        Assert-PARCondition ($LASTEXITCODE -eq 0) 'Autonomer Worker-State ist ungueltig.'
+        $validatedState = Read-PARJson $statePath
+        $expectedFeatureStatePath = [IO.Path]::GetFullPath((Join-Path $RunningEntry.Worktree (
+            Join-Path ([string] $validatedState.featurePath) 'autonomous-run-state.json')))
+        $expectedDeliveryMode = if ($Campaign.deliveryMode -eq 'MergeAndSync') { 'PublishPR' } else { [string] $Campaign.deliveryMode }
+        Assert-PARCondition ([string] $validatedState.runId -eq [string] $Worker.runId -and
+            [string] $validatedState.status -eq 'Completed' -and
+            [string] $validatedState.branch -eq [string] $Worker.branch -and
+            [string] $validatedState.deliveryMode -eq $expectedDeliveryMode -and
+            [string]::Equals($statePath, $expectedFeatureStatePath, [StringComparison]::Ordinal)) `
+            'Autonomer Worker-State passt nicht zu Run-ID, Feature, Branch, Delivery-Modus oder Abschlussstatus.'
+    }
 
     $validatedHandoffs = @()
     foreach ($declaredHandoff in @($Worker.handoffs)) {
@@ -1346,7 +1513,24 @@ Do not infer remote, merge, bypass, cancellation, secret, or provider authority.
             foreach ($workerId in @($running.Keys)) {
                 $entry = $running[$workerId]
                 if (-not $entry.Process.Process.HasExited) {
-                    continue
+                    if ($entry.Process.StdoutTask.IsFaulted -or $entry.Process.StderrTask.IsFaulted) {
+                        $entry.Process.TerminationReason = 'Worker output capture failed.'
+                        try { $entry.Process.Process.Kill($true) }
+                        catch [InvalidOperationException] {
+                            if (-not $entry.Process.Process.HasExited) { throw }
+                        }
+                    } elseif (([DateTime]::UtcNow - $entry.Process.StartedAt).TotalHours -ge 4) {
+                        $entry.Process.TerminationReason = 'Worker exceeded the four-hour runtime limit.'
+                        try { $entry.Process.Process.Kill($true) }
+                        catch [InvalidOperationException] {
+                            if (-not $entry.Process.Process.HasExited) { throw }
+                        }
+                    } else {
+                        continue
+                    }
+                    if (-not $entry.Process.Process.HasExited) {
+                        continue
+                    }
                 }
                 $workerState = Get-PARWorkerState $campaignState $workerId
                 try {
@@ -1354,6 +1538,10 @@ Do not infer remote, merge, bypass, cancellation, secret, or provider authority.
                 } catch {
                     $workerState.status = 'Failed'
                     $workerState.summary = $_.Exception.Message
+                }
+                if ($entry.Process.TerminationReason) {
+                    $workerState.status = 'Failed'
+                    $workerState.summary = $entry.Process.TerminationReason
                 }
                 Add-PARStateEvent $campaignState 'WorkerFinished' $workerState.summary `
                     -WorkerId $workerId -Attempt ([int] $workerState.executionAttempt)
@@ -1474,6 +1662,10 @@ function Invoke-PARProviderPreflight {
     )) {
         Assert-PARCondition $preflight.ContainsKey($requiredField) `
             "Provider-Preflight '$($Worker.workerId)' enthaelt '$requiredField' nicht."
+    }
+    foreach ($booleanField in @('isDraft', 'mergeable', 'checkPolicySatisfied')) {
+        Assert-PARCondition ($preflight[$booleanField] -is [bool]) `
+            "Provider-Preflight '$($Worker.workerId)' benoetigt boolesches $booleanField."
     }
     Assert-PARCondition ([string] $preflight.prUrl -eq [string] $WorkerState.prUrl) `
         "Provider-Preflight verweist auf eine andere PR fuer Worker '$($Worker.workerId)'."
@@ -1972,7 +2164,9 @@ $manifestPath = [IO.Path]::GetFullPath($Manifest)
 $manifestDirectory = Split-Path -Parent $manifestPath
 $campaign = Read-PARJson $manifestPath
 Assert-PARSchemaVersion $campaign 'Campaign'
-$script:CurrentIntakeReview = Test-PARIntakeReview $campaign $manifestDirectory
+if ($Action -in @('Start', 'Resume', 'Consolidate')) {
+    throw 'Produktive Parallel-Kampagnen sind bis zur isolierten Worker-Laufzeit gesperrt. / Production parallel campaigns are suspended until workers are isolated.'
+}
 
 if (-not $State) {
     $State = Join-Path $manifestDirectory 'parallel-campaign-state.json'
@@ -1985,6 +2179,7 @@ if (-not $RuntimeRoot) {
 $runtimePath = [IO.Path]::GetFullPath($RuntimeRoot)
 
 if ($Action -eq 'Status') {
+    $script:CurrentIntakeReview = Test-PARIntakeReview $campaign $manifestDirectory
     $statusData = Read-PARJson $statePath
     Assert-PARCondition ($statusData.campaignId -eq $campaign.campaignId) 'State campaignId stimmt nicht.'
     Write-PARStatus $campaign $statusData $OutputFormat
@@ -1992,6 +2187,7 @@ if ($Action -eq 'Status') {
 }
 
 if ($Action -eq 'Stop') {
+    $script:CurrentIntakeReview = Test-PARIntakeReview $campaign $manifestDirectory
     $statusData = Read-PARJson $statePath
     Assert-PARCondition ($statusData.campaignId -eq $campaign.campaignId) 'State campaignId stimmt nicht.'
     [IO.File]::WriteAllText(
@@ -2011,6 +2207,7 @@ Assert-PARCondition (-not [string]::IsNullOrWhiteSpace($RunnerConfig)) "-RunnerC
 $runnerConfigPath = [IO.Path]::GetFullPath($RunnerConfig)
 $profiles = Read-PARJson $runnerConfigPath
 Assert-PARSchemaVersion $profiles 'RunnerConfig'
+$script:CurrentIntakeReview = Test-PARIntakeReview $campaign $manifestDirectory
 
 $skipClean = $Action -in @('Resume', 'Consolidate')
 Test-PARCampaign $campaign $profiles $manifestDirectory -SkipCleanCheck:$skipClean

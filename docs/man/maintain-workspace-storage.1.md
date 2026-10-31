@@ -53,29 +53,29 @@ Benutzerzugriff.
 ## NON-MSL ADAPTERS
 
 `C64Projects/cc65` verwendet absichtlich C89 und 6502-Assembly für 8-Bit-
-Kompatibilität. Safe führt nur vorab geprüfte native `make ... clean`-Gruppen
-für Hostwerkzeuge, Laufzeitbibliotheken, generierte Dokumentation und
-Regression-Arbeitsverzeichnisse aus. Sample- und Targettest-Nachweise wie
-Disk-Images, Zielbinärdateien, Maps, Labels und Debuglisten bleiben erhalten.
-`make zap` wird nie verwendet; Root-`make clean` gehört nur zu `deep`. Weicht
-dessen Scope-Prüfung im autorisierten, sauberen und nicht beschäftigten
-Updatepfad von den deklarierten Pfaden ab, protokolliert Deep die Scope-Warnung
-und fällt auf die einzeln geprüften Safe-Gruppen zurück. Check-only und Dry-run
-leiten den Plan ausschließlich aus Policy und Dateisystemzustand ab und werten
-kein Makefile aus.
+Kompatibilität. Safe entfernt nur geprüfte, ignorierte und ungetrackte
+Build-Verzeichnisse der vier deklarierten Gruppen. Deep entfernt dieselben
+vorhandenen Kandidaten unabhängig vom Alter. Sample- und Targettest-Nachweise
+wie Disk-Images, Zielbinärdateien, Maps, Labels und Debuglisten bleiben
+erhalten. Die Speicherwartung wertet keine Makefiles aus und führt weder
+`make clean` noch `make zap` aus.
 
-*`make zap` is never used, and root `make clean` belongs to `deep` only. If its
-scope check in the authorized, clean, idle update path exceeds the declared
-paths, Deep records the scope warning and falls back to the individually
-proven Safe groups. Check-only and dry-run derive the plan from policy and
-filesystem state only and do not evaluate a Makefile.*
+*`C64Projects/cc65` intentionally uses C89 and 6502 assembly for 8-bit
+compatibility. Safe removes only verified, ignored and untracked build
+directories from the four declared groups; Deep removes the same existing
+candidates regardless of age. Sample and target-test evidence remains intact.
+Storage maintenance neither evaluates Makefiles nor runs `make clean` or
+`make zap`.*
 
 `CLionProjects/tvision` bleibt wegen Quell-/ABI-Kompatibilität C++14. Ein
 CMake-Buildverzeichnis wird nur akzeptiert, wenn sein `CMakeCache.txt` auf
 eine Repo-interne Quelle mit getrackter `CMakeLists.txt` zeigt. Verschachtelte
-`_deps`-Builds werden dedupliziert. Der echte Lauf verwendet zunächst
-`cmake --build <DIR> --target clean` und entfernt danach den verifizierten
-Buildbaum.
+`_deps`-Builds werden dedupliziert. Der echte Lauf entfernt
+den verifizierten, ignorierten Buildbaum direkt. Ungetrackte Build-Regeln
+werden nicht ausgeführt.
+
+*The update removes the verified, ignored build tree directly. It does not
+execute untracked build rules.*
 
 *The curated non-MSL adapters preserve each repository's constitutional
 justification and compensating controls. Unknown non-MSL repositories are

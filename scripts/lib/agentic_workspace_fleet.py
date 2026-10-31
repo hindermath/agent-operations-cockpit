@@ -210,6 +210,14 @@ def validate_relative_path(raw: object) -> pathlib.PurePosixPath:
     return value
 
 
+def home_target_parent_is_contained(home: pathlib.Path, target: pathlib.Path) -> bool:
+    try:
+        target.parent.resolve(strict=False).relative_to(home.resolve(strict=True))
+    except (OSError, ValueError):
+        return False
+    return True
+
+
 # CI budget governance deliberately uses a small, dependency-free validator.
 # JSON Schema remains the review contract; these checks enforce the security-
 # relevant closed-world boundaries at runtime without adding a package.
@@ -3444,6 +3452,25 @@ def execute_fleet(args: argparse.Namespace) -> int:
 
     home = args.home_dir.resolve()
     allowed_dirty_paths = {item.replace("\\", "/") for item in args.allowed_dirty_path}
+    preflight_blocked = False
+    if args.mode == "update" and not EXECUTION_CONTEXTS:
+        # Inspect every target before a non-delegated clone, directory creation,
+        # or fast-forward. A later blocker must not allow earlier mutations.
+        for target in manifest["targets"]:
+            if not target["active"]:
+                continue
+            relative = validate_relative_path(target["path"])
+            target_path = home.joinpath(*relative.parts)
+            if not home_target_parent_is_contained(home, target_path):
+                preflight_blocked = True
+                continue
+            preview = (collection_result(target, target_path, "dry-run")
+                       if target["kind"] == "collection"
+                       else classify_repository(target, target_path, "dry-run", allowed_dirty_paths))
+            if preview["result"] != "Pass" and preview["action"] not in {
+                "WOULD_CREATE", "WOULD_CLONE", "WOULD_PULL"
+            }:
+                preflight_blocked = True
     results: list[dict] = []
     if args.level0_dir is not None:
         level0 = args.level0_dir.resolve()
@@ -3458,8 +3485,12 @@ def execute_fleet(args: argparse.Namespace) -> int:
                 "remote": origin.stdout.strip(),
                 "defaultBranch": branch.stdout.strip(),
             }
+            if args.mode == "update" and not EXECUTION_CONTEXTS and not preflight_blocked:
+                level0_preview = classify_repository(level0_target, level0, "dry-run", allowed_dirty_paths)
+                if level0_preview["result"] != "Pass" and level0_preview["action"] != "WOULD_PULL":
+                    preflight_blocked = True
             level0_result = classify_repository(
-                level0_target, level0, "dry-run" if EXECUTION_CONTEXTS and args.mode == "update" else args.mode, allowed_dirty_paths
+                level0_target, level0, "dry-run" if (EXECUTION_CONTEXTS or preflight_blocked) and args.mode == "update" else args.mode, allowed_dirty_paths
             )
             results.append(level0_result)
             print(
@@ -3467,6 +3498,7 @@ def execute_fleet(args: argparse.Namespace) -> int:
                 f"{level0_result['action']}\t{level0_result['nextAction']}"
             )
         else:
+            preflight_blocked = preflight_blocked or (args.mode == "update" and not EXECUTION_CONTEXTS)
             results.append(
                 target_result(
                     {
@@ -3486,11 +3518,16 @@ def execute_fleet(args: argparse.Namespace) -> int:
             continue
         relative = validate_relative_path(target["path"])
         target_path = home.joinpath(*relative.parts)
-        evaluation_mode = "dry-run" if EXECUTION_CONTEXTS and args.mode == "update" else args.mode
+        evaluation_mode = "dry-run" if (EXECUTION_CONTEXTS or preflight_blocked) and args.mode == "update" else args.mode
         try:
-            result = (collection_result(target, target_path, evaluation_mode)
-                      if target["kind"] == "collection"
-                      else classify_repository(target, target_path, evaluation_mode, allowed_dirty_paths))
+            if not home_target_parent_is_contained(home, target_path):
+                result = target_result(target, status="PATH_CONFLICT", result="Blocked",
+                                       findingCode="PathConflict", mutationAllowed=False,
+                                       nextAction="Symlink-Elternpfad prüfen / inspect symlinked parent path.")
+            else:
+                result = (collection_result(target, target_path, evaluation_mode)
+                          if target["kind"] == "collection"
+                          else classify_repository(target, target_path, evaluation_mode, allowed_dirty_paths))
         except (ValueError, RuntimeError, OSError, subprocess.SubprocessError) as exc:
             if not EXECUTION_CONTEXTS:
                 raise

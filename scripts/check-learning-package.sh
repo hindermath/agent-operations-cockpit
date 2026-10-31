@@ -15,7 +15,14 @@ Usage: check-learning-package.sh [--checksum FILE] ZIP
 
 Prueft ein Lernreihen-ZIP auf genau einen Paket-Root, die Startanleitungen,
 Manifest, SHA-256, ausgeschlossene Git-/Build-/IDE-Artefakte und offensichtliche
-Secrets. --self-test erzeugt und prueft ein minimales Testpaket.
+Secrets. Maximal 2 GiB Archiv, 20.000 Eintraege und 32 MiB ZIP-Verzeichnis; ZIP64 wird
+abgewiesen. Die SHA-256-Datei ist auf 4 KiB begrenzt. --self-test erzeugt und
+prueft ein minimales Testpaket.
+
+Checks one package root, guides, manifest, SHA-256, excluded artefacts and
+obvious secrets. Maximum 2 GiB archive, 20,000 entries and 32 MiB ZIP directory; ZIP64 is
+rejected. The SHA-256 sidecar is limited to 4 KiB. --self-test creates and
+checks a minimal test package.
 
 Options:
   --checksum FILE  Abweichende SHA-256-Datei; Standard: ZIP.sha256
@@ -65,13 +72,15 @@ check_package() {
 
   [ -f "$package" ] || { echo "ERROR: ZIP nicht gefunden: $package" >&2; return 1; }
   [ -f "$checksum" ] || { echo "ERROR: SHA-256-Datei nicht gefunden: $checksum" >&2; return 1; }
+  python3 "${SCRIPT_DIR}/lib/check_learning_package_archive.py" --size "$package"
 
-  (
-    cd -- "$(dirname -- "$checksum")"
-    shasum -a 256 -c "$(basename -- "$checksum")"
-  )
+  local expected actual
+  expected="$(python3 "${SCRIPT_DIR}/lib/check_learning_package_archive.py" --checksum "$checksum")"
+  [[ "$expected" =~ ^[[:xdigit:]]{64}$ ]] || { echo "ERROR: ungueltige SHA-256-Datei: $checksum" >&2; return 1; }
+  actual="$(shasum -a 256 "$package" | awk '{ print $1 }')"
+  [ "${expected,,}" = "${actual,,}" ] || { echo "ERROR: SHA-256 stimmt nicht: $package" >&2; return 1; }
 
-  entries="$(unzip -Z1 "$package")"
+  entries="$(python3 "${SCRIPT_DIR}/lib/check_learning_package_archive.py" --list "$package")"
   [ -n "$entries" ] || { echo "ERROR: ZIP ist leer" >&2; return 1; }
   if grep -Eq '(^/|(^|/)\.\.(/|$))' <<< "$entries"; then
     echo "ERROR: ZIP enthaelt unsichere absolute oder aufsteigende Pfade" >&2
@@ -92,29 +101,22 @@ check_package() {
     }
   done
 
-  if grep -Eq '(^|/)(\.git|bin|obj|build|node_modules|\.vs|\.idea)(/|$)|(^|/)settings\.local\.json$|(^|/)\.vscode/(settings\.json|c_cpp_properties\.json)$' <<< "$entries"; then
+  if grep -Eiq '(^|/)(\.git|bin|obj|build|node_modules|\.vs|\.idea)(/|$)|(^|/)settings\.local\.json$|(^|/)\.vscode/(settings\.json|c_cpp_properties\.json)$' <<< "$entries"; then
     echo "ERROR: ZIP enthaelt ausgeschlossene Git-, Build-, IDE- oder lokale Einstellungsartefakte" >&2
     return 1
   fi
 
   work_dir="$(mktemp -d)"
   trap 'rm -rf "$work_dir"' RETURN
-  unzip -q "$package" -d "$work_dir"
+  python3 "${SCRIPT_DIR}/lib/check_learning_package_archive.py" "$package" "$work_dir"
+  python3 "${SCRIPT_DIR}/lib/check_learning_package_source.py" --staging "${work_dir}/${root}"
   manifest="${work_dir}/${root}/PACKAGING-MANIFEST.txt"
   grep -Eq '^Git data included: no ' "$manifest" || { echo "ERROR: Manifest bestaetigt Git-Ausschluss nicht" >&2; return 1; }
   grep -Eq '^Original remotes included: no$' "$manifest" || { echo "ERROR: Manifest bestaetigt Remote-Ausschluss nicht" >&2; return 1; }
   grep -Eq '^Start here after extracting: START-HERE-FUER-LERNENDE\.md$' "$manifest" || { echo "ERROR: Manifest nennt die primaere Startdatei nicht" >&2; return 1; }
   grep -Eq '^Institutional hosting guide: INSTITUTIONELLES-GIT-HOSTING\.md$' "$manifest" || { echo "ERROR: Manifest nennt den Hosting-Leitfaden nicht" >&2; return 1; }
 
-  if command -v gitleaks >/dev/null 2>&1; then
-    gitleaks_args=(dir "${work_dir}/${root}" --no-banner --redact)
-    if [ -f "${SCRIPT_DIR}/templates/gitleaks.toml" ]; then
-      gitleaks_args+=(--config "${SCRIPT_DIR}/templates/gitleaks.toml")
-    fi
-    gitleaks "${gitleaks_args[@]}" >/dev/null
-  else
-    echo "WARN: gitleaks nicht verfuegbar; Secret-Scan uebersprungen" >&2
-  fi
+  python3 "${SCRIPT_DIR}/lib/check_learning_package_secrets.py" "${work_dir}/${root}"
 
   rm -rf "$work_dir"
   trap - RETURN
@@ -147,7 +149,7 @@ self_test() {
 }
 
 require_tool shasum
-require_tool unzip
+require_tool python3
 
 if [ "$SELF_TEST" -eq 1 ]; then
   [ -z "$PACKAGE_PATH" ] || { echo "ERROR: --self-test akzeptiert keinen ZIP-Pfad" >&2; exit 2; }

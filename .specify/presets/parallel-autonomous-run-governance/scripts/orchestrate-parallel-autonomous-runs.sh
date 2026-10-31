@@ -9,8 +9,8 @@ case "${1:-}" in
     cat <<'EOF'
 orchestrate-parallel-autonomous-runs.sh
 
-DE: Validiert und koordiniert isolierte autonome Spec-Kit-Kampagnen.
-EN: Validates and coordinates isolated autonomous Spec Kit campaigns.
+DE: Validiert parallele autonome Spec-Kit-Kampagnen; produktive Ausfuehrung ist vorerst gesperrt.
+EN: Validates parallel autonomous Spec Kit campaigns; production execution is suspended.
 
 Usage:
   orchestrate-parallel-autonomous-runs.sh -Action ACTION -Manifest PATH [OPTIONS]

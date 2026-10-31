@@ -109,7 +109,11 @@ Checklist-Artefakten abgeglichen; Effizienzpraeferenzen loesen keine
 rueckwirkende Neugenerierung aus.
 
 `parallel-autonomous-run-governance` startet durch seine Installation keine
-Kampagne. Ausdruecklich delegierte Kampagnen verwenden getrennte Worktrees,
+Kampagne. Produktive `Start`-, `Resume`- und `Consolidate`-Aktionen sind bis zu
+einer isolierten Worker-Laufzeit gesperrt; auch Agenten duerfen sie nicht
+direkt ausfuehren. `Validate`, `Status` und `Stop` bleiben verfuegbar. Die
+folgenden Ausfuehrungsregeln gelten erst nach Aufhebung der Sperre:
+Ausdruecklich delegierte Kampagnen verwenden getrennte Worktrees,
 maximal drei gleichzeitig aktive Worker, optionale agentenneutrale
 Runner-Metadaten, kooperatives Stop/Resume und eine providergebundene,
 fortsetzbare Konsolidierung. `Completed` folgt erst nach Synchronisation,
@@ -257,8 +261,12 @@ Plan, Tasks, and checklist artifacts; efficiency preferences do not trigger
 retroactive regeneration.
 
 Installing `parallel-autonomous-run-governance` does not start a campaign.
-Explicitly delegated campaigns use separate worktrees, at most three active
-workers, optional agent-neutral runner metadata, cooperative stop/resume, and
+Production Start, Resume and Consolidate are suspended until workers have an
+isolated runtime; agents must not perform them directly. Validate, Status and
+Stop remain available. The following execution rules apply only after the
+suspension is lifted: explicitly delegated campaigns use separate worktrees,
+at most three active workers, optional agent-neutral runner metadata,
+cooperative stop/resume, and
 provider-gated resumable consolidation. `Completed` follows only after
 synchronization, manifest-declared post-merge actions, and final validation.
 Real campaigns require installed and enabled

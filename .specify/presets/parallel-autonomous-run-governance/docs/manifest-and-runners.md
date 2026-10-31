@@ -116,9 +116,23 @@ erteilt keine pauschale Netzwerk- oder Schreibberechtigung.
 
 ### Lokaler Runtime-Bereich
 
+Produktive Parallel-Kampagnen sind derzeit in allen DeliveryModes gesperrt,
+bis eine isolierte Worker-Laufzeit mit getrennten Rechten und kontrollierter
+Prozessgruppe nachgewiesen ist. `Validate`, `Status` und `Stop` bleiben
+verfuegbar. Deterministische Tests nutzen eine temporaere Skriptkopie unter einem
+Testverzeichnis; der produktive Einstiegspunkt hat keinen Bypass.
+
 `RuntimeRoot` enthaelt Worktrees, Locks, Logs und Prozessresultate. Dieser
 Bereich bleibt ausserhalb versionierter Feature-Artefakte. Der normale Checkout
 wird weder gewechselt noch zurueckgesetzt.
+Jeder Worker ist auf vier Stunden Laufzeit und je 16 MiB Standardausgabe und
+Fehlerausgabe begrenzt. Bei Ueberschreitung beendet der Koordinator den
+Prozess und markiert den Worker als fehlgeschlagen.
+Auch Profilbefehle fuer Preflight, Merge und Post-Merge sind auf je 1 MiB
+Ausgabe pro Kanal und hoechstens fuenf Minuten begrenzt. Ein lokales Profil
+kann `timeoutSeconds` auf einen Wert von 1 bis 300 setzen. Nach dem Ende eines
+Workers wartet der Koordinator hoechstens fuenf Sekunden auf das Schliessen
+der Ausgabekanaele.
 
 ## English
 
@@ -154,5 +168,18 @@ optional status metadata and never guess another agent's configuration.
 
 ### Runtime boundary
 
+Production parallel campaigns are currently suspended in every delivery mode
+until an isolated worker runtime with separate authority and process-tree
+control is verified. `Validate`, `Status`, and `Stop` remain available.
+Deterministic tests use a temporary script copy under a disposable test root;
+the production entry point has no bypass.
+
 `RuntimeRoot` contains worktrees, locks, logs, and process results outside
 tracked feature artifacts. The normal checkout is never switched or reset.
+Each worker has a four-hour runtime limit and a 16 MiB limit for each of
+standard output and standard error. If a limit is exceeded, the coordinator
+terminates the process and marks the worker failed.
+Profile commands for preflight, merge, and post-merge are limited to 1 MiB
+per output stream and five minutes. A local profile may set `timeoutSeconds`
+to a value from 1 to 300. After a worker exits, the coordinator waits at most
+five seconds for its output streams to close.

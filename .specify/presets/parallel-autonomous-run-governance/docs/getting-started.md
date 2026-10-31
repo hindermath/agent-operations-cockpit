@@ -69,27 +69,22 @@ Der Preflight prueft Identitaet, Schema, Topologie, UUIDs, Worker-DAG,
 Branches, Basen, Repository-Zustaende, Runner-Profile, Preset-7-Abhaengigkeit
 und Konsolidierungsregeln. Ein Fehler startet keinen Worker.
 
-### Start delegieren
+### Aktuelle Sperre
 
-```text
-/speckit.parallel-autonomous
+Produktive Starts, Resume und Consolidate sind bis zu einer isolierten
+Worker-Laufzeit gesperrt. Auch eine ausdrueckliche Delegation hebt diese
+technische Sperre nicht auf. Agenten duerfen keine Worker oder Merges direkt
+starten. Nach dem Preflight sind nur `Validate`, `Status` und `Stop` ueber den
+Koordinator verfuegbar.
 
-Starte die akzeptierte Kampagne aus
-specs/NNN-campaign/parallel-campaign.json.
-Delivery-Modus und Berechtigungen entsprechen dem Manifest und aktuellen
-Auftrag. Maximal drei Worker gleichzeitig. Keine zusaetzlichen Rechte
-ableiten. Bei Integritaets-, Sicherheits-, Berechtigungs- oder
-Evidence-Fehlern keine neuen Worker starten.
-```
-
-### Direkt nach dem Start
+### Bestehenden Status pruefen
 
 ```text
 /speckit.parallel-autonomous-status
 ```
 
-Pruefe Campaign-ID, Manifest-Hash, Worker-Zustaende, tatsaechlich beobachtete
-Parallelitaet, Runner-Familien, Stop-Status und naechsten exakten Schritt.
+Pruefe Campaign-ID, Manifest-Hash, vorhandene Worker-Zustaende, Stop-Status
+und naechsten exakten Schritt.
 
 ## English
 
@@ -106,13 +101,15 @@ Version campaign manifest, runbook, evidence, retrospective, and intended
 result/handoff artifacts. Keep executable runner bindings, runtime worktrees,
 locks, logs, and process results local and untracked.
 
-### Validate before start
+### Validate and inspect
 
 Use coordinator action `Validate` with `-Manifest` and `-RunnerConfig`. It
 checks identity, schema, topology, UUIDs, DAG, branches, bases, repositories,
 runner profiles, the Preset 7 dependency, and consolidation rules. A failure
 starts no worker.
 
-Explicitly delegate `/speckit.parallel-autonomous` only after validation.
-Inspect the campaign immediately with
+Production Start, Resume and Consolidate are suspended until workers have an
+isolated runtime. Explicit delegation does not lift the technical gate, and
+agents must not start workers or merges directly. Coordinator `Validate`,
+`Status` and `Stop` remain available. Inspect an existing campaign with
 `/speckit.parallel-autonomous-status`.

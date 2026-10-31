@@ -12,7 +12,7 @@ regex_files=()
 secret_content_regex='(id_token|access_token|refresh_token|api[_-]?key|client[_-]?secret|password[[:space:]]*=|authorization:[[:space:]]*bearer|bearer[[:space:]]+[A-Za-z0-9._~+/=-]*|sk-[A-Za-z0-9]{20,}|ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AIza[0-9A-Za-z_-]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN (RSA|OPENSSH|EC|DSA) PRIVATE KEY-----)'
 secret_name_regex='(auth\.json|(^|\/)\.env(\.[^.]+)?$|[^/]*(secret|credential|creds)[^/]*\.(json|yaml|yml|xml|ini|cfg|conf|toml)|[^/]*id_rsa[^/]*|[^/]*\.(pem|key|p12|pfx))$'
 allowed_secret_name_regex='(^|/)\.env\.(example|sample|template|dist)$|(^|/)specs/[0-9]+-[^/]+/phase-results/analyze(-[0-9]+)?-(secret-scan|secrets)\.json$'
-allowed_secret_content_path_regex='(^|/)\.gitleaksignore$|(^|/)scripts/(hooks/pre-push|scan-agent-secrets\.(sh|ps1)|lib/(hg-secrets|hg-forgejo)\.(sh|ps1))$|(^|/)docs/secure-development/.*\.md$'
+allowed_secret_content_path_regex='(^|/)\.gitleaksignore$|(^|/)scripts/(hooks/pre-push|scan-agent-secrets\.(sh|ps1)|lib/(hg-secrets|hg-forgejo)\.(sh|ps1))$'
 evidence_metadata_line_regex='^[[:space:]]*"(RuleID|rule)": "generic-api-key",?[[:space:]]*$|^[[:space:]]*"Fingerprint": "[^"[:space:]]+:generic-api-key:[0-9]+",?[[:space:]]*$|^[[:space:]]*"[^"[:space:]]+:generic-api-key:[0-9]+",?[[:space:]]*$'
 
 echo "pre-push: Prüfe git-getrackte Dateien auf Secrets …"
@@ -50,15 +50,9 @@ collect_regex_files_for_existing_ref() {
   done < <(git -C "$REPO_ROOT" diff --name-only "$remote_sha..$local_sha" 2>/dev/null || true)
 }
 
-collect_regex_files_for_new_ref() {
-  local local_sha="$1"
+collect_regex_files_for_commits() {
+  local commits="$1"
   local commit rel_file
-  local commits=""
-
-  commits="$(git -C "$REPO_ROOT" rev-list "$local_sha" --not --remotes 2>/dev/null || true)"
-  if [ -z "$commits" ]; then
-    commits="$(git -C "$REPO_ROOT" rev-list --max-count=1 "$local_sha" 2>/dev/null || true)"
-  fi
 
   while IFS= read -r commit; do
     [ -n "$commit" ] || continue
@@ -69,16 +63,27 @@ collect_regex_files_for_new_ref() {
 }
 
 run_gitleaks_range_scan() {
-  local gitleaks_available=1
   if ! command -v gitleaks >/dev/null 2>&1; then
-    echo "pre-push: gitleaks nicht gefunden; Regex-Fallback bleibt aktiv."
-    gitleaks_available=0
+    echo "  HIGH: gitleaks fehlt; zu pushende Commits koennen nicht geprueft werden." >&2
+    return 2
   fi
 
   local local_ref local_sha remote_ref remote_sha
   local scanned=0
   local status=0
   local log_opts=""
+  local remote_url="${1:-}"
+  local remote_refs=""
+  local remote_commit=""
+  local remote_oid=""
+  local remote_ref_name=""
+  local commits=""
+  local -a remote_commits=()
+
+  if [ -z "$remote_url" ]; then
+    echo "  HIGH: Push-Ziel fehlt; Commit-Range kann nicht sicher bestimmt werden." >&2
+    return 2
+  fi
 
   while read -r local_ref local_sha remote_ref remote_sha; do
     [ -n "${local_sha:-}" ] || continue
@@ -88,14 +93,42 @@ run_gitleaks_range_scan() {
     fi
 
     if [ "${remote_sha:-$zero_sha}" = "$zero_sha" ]; then
-      if [ -n "$(git -C "$REPO_ROOT" rev-list --max-count=1 "$local_sha" --not --remotes 2>/dev/null || true)" ]; then
-        log_opts="$local_sha --not --remotes"
-        collect_regex_files_for_new_ref "$local_sha"
+      remote_refs="$(git -C "$REPO_ROOT" ls-remote --refs "$remote_url")" || {
+        echo "  HIGH: Referenzen des Push-Ziels konnten nicht geprueft werden." >&2
+        return 2
+      }
+      remote_commits=()
+      while IFS=$'\t' read -r remote_oid remote_ref_name; do
+        [ -n "$remote_oid" ] || continue
+        if [[ ! "$remote_oid" =~ ^[0-9a-fA-F]{40,64}$ ]] || [ -z "$remote_ref_name" ]; then
+          echo "  HIGH: Push-Ziel meldet eine ungueltige Referenz." >&2
+          return 2
+        fi
+        if remote_commit="$(git -C "$REPO_ROOT" rev-parse --verify "${remote_oid}^{commit}" 2>/dev/null)"; then
+          remote_commits+=("$remote_commit")
+        fi
+      done <<< "$remote_refs"
+      if [ "${#remote_commits[@]}" -gt 0 ]; then
+        commits="$(git -C "$REPO_ROOT" rev-list "$local_sha" --not "${remote_commits[@]}")" || {
+          echo "  HIGH: Commit-Range des neuen Push-Refs konnte nicht geprueft werden." >&2
+          return 2
+        }
+        log_opts="$local_sha --not ${remote_commits[*]}"
       else
-        continue
+        commits="$(git -C "$REPO_ROOT" rev-list "$local_sha")" || {
+          echo "  HIGH: Commit-Range des neuen Push-Refs konnte nicht geprueft werden." >&2
+          return 2
+        }
+        log_opts="$local_sha"
       fi
+      [ -n "$commits" ] || continue
+      collect_regex_files_for_commits "$commits"
     else
-      if [ -z "$(git -C "$REPO_ROOT" rev-list --max-count=1 "$remote_sha..$local_sha" 2>/dev/null || true)" ]; then
+      commits="$(git -C "$REPO_ROOT" rev-list --max-count=1 "$remote_sha..$local_sha")" || {
+        echo "  HIGH: Commit-Range des bestehenden Push-Refs konnte nicht geprueft werden." >&2
+        return 2
+      }
+      if [ -z "$commits" ]; then
         continue
       fi
       log_opts="$remote_sha..$local_sha"
@@ -103,30 +136,26 @@ run_gitleaks_range_scan() {
     fi
 
     scanned=1
-    if [ "$gitleaks_available" -eq 1 ]; then
-      echo "pre-push: gitleaks prüft zu pushende Commits (${remote_ref:-$local_ref}) …"
-      set +e
-      gitleaks git --redact --no-banner --no-color --log-level warn --exit-code 2 --log-opts="$log_opts" "$REPO_ROOT"
-      status=$?
-      set -e
+    echo "pre-push: gitleaks prüft zu pushende Commits (${remote_ref:-$local_ref}) …"
+    set +e
+    gitleaks git --redact --no-banner --no-color --log-level warn --exit-code 2 --log-opts="$log_opts" "$REPO_ROOT"
+    status=$?
+    set -e
 
-      if [ "$status" -ne 0 ]; then
-        echo "  HIGH: gitleaks hat mögliche Secrets in zu pushenden Commits gefunden oder konnte den Scan nicht abschließen." >&2
-        return 2
-      fi
+    if [ "$status" -ne 0 ]; then
+      echo "  HIGH: gitleaks hat mögliche Secrets in zu pushenden Commits gefunden oder konnte den Scan nicht abschließen." >&2
+      return 2
     fi
   done
 
-  if [ "$gitleaks_available" -eq 0 ]; then
-    return 0
-  elif [ "$scanned" -eq 0 ]; then
+  if [ "$scanned" -eq 0 ]; then
     echo "pre-push: gitleaks hatte keine neuen Commit-Ranges zu prüfen."
   else
     echo "pre-push: gitleaks-Scan ohne Befund."
   fi
 }
 
-if ! run_gitleaks_range_scan; then
+if ! run_gitleaks_range_scan "${2:-}"; then
   echo "" >&2
   echo "╔══════════════════════════════════════════════════════════════╗" >&2
   echo "║  PUSH ABGEBROCHEN: gitleaks hat Secrets erkannt!            ║" >&2
@@ -177,6 +206,16 @@ if [ "${#tracked_files[@]}" -gt 0 ]; then
           grep -Ev "$evidence_metadata_line_regex" >/dev/null; then
         content_hits+=("$f")
       fi
+    elif [[ "$f" == "$REPO_ROOT/scripts/lib/check_learning_package_secrets.py" ]]; then
+      while IFS= read -r line; do
+        case "$line" in
+          '    ("docs/secure-development/mitgeltende-dokumente/Leitlinie_Sichere-Programmierung.md", "generic-api-key", 38):'|\
+          '    ("specs/004-series-eligibility/phase-results/us1-tests.json", "generic-api-key", 185):'|\
+          '    ("specs/004-series-eligibility/phase-results/us1-tests.json", "generic-api-key", 195):'|\
+          '    ("specs/004-series-eligibility/phase-results/us2-tests.json", "generic-api-key", 684):') ;;
+          *) content_hits+=("$f"); break ;;
+        esac
+      done < <(grep -Ei "$secret_content_regex" "$f" 2>/dev/null || true)
     elif grep -Eiq "$secret_content_regex" "$f" 2>/dev/null; then
       content_hits+=("$f")
     fi

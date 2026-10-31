@@ -112,6 +112,76 @@ function Assert-DanglingBackupLinkIsNotFollowed {
     }
 }
 
+function Assert-ForgejoTargetBinding {
+    $workspaceName = 'ForgejoBound'
+    $workspacePath = Join-Path $testHome $workspaceName
+    New-Item -ItemType Directory -Path $workspacePath | Out-Null
+    & git -C $workspacePath init --quiet
+    & git -C $workspacePath remote add origin 'https://forgejo.example/owner/repo.git'
+    & git -C $workspacePath config --local home-baseline.remote-platform forgejo
+    & git -C $workspacePath config --local home-baseline.remote-base-url 'https://forgejo.example'
+    & git -C $workspacePath config --local home-baseline.remote-owner owner
+    & git -C $workspacePath config --local home-baseline.remote-repository repo
+
+    foreach ($shell in @('bash', 'pwsh')) {
+        $output = if ($shell -eq 'bash') {
+            & bash $bashScript $workspaceName --dry-run 2>&1 | Out-String
+        }
+        else {
+            & pwsh -NoProfile -File $powerShellScript -WorkspaceName $workspaceName -WhatIf 2>&1 | Out-String
+        }
+        if ($LASTEXITCODE -ne 0 -or $output -notmatch 'forgejo.example/owner/repo') {
+            $failures.Add("${shell} did not show the verified Forgejo target: $output")
+        }
+    }
+
+    & git -C $workspacePath config --local home-baseline.remote-repository other
+    foreach ($shell in @('bash', 'pwsh')) {
+        $output = if ($shell -eq 'bash') {
+            & bash $bashScript $workspaceName --dry-run 2>&1 | Out-String
+        }
+        else {
+            & pwsh -NoProfile -File $powerShellScript -WorkspaceName $workspaceName -WhatIf 2>&1 | Out-String
+        }
+        if ($LASTEXITCODE -eq 0 -or $output -notmatch 'does not match origin') {
+            $failures.Add("${shell} accepted mismatched Forgejo metadata: $output")
+        }
+    }
+
+    & git -C $workspacePath remote remove origin
+    foreach ($shell in @('bash', 'pwsh')) {
+        $output = if ($shell -eq 'bash') {
+            & bash $bashScript $workspaceName --dry-run 2>&1 | Out-String
+        }
+        else {
+            & pwsh -NoProfile -File $powerShellScript -WorkspaceName $workspaceName -WhatIf 2>&1 | Out-String
+        }
+        if ($LASTEXITCODE -ne 0 -or $output -notmatch 'no remote') {
+            $failures.Add("${shell} rejected a detached Forgejo repository: $output")
+        }
+    }
+
+    $longHost = 'forgejo-' + ('a' * 34) + '.example'
+    $longOwner = 'owner' + ('b' * 18)
+    $longRepository = 'repo' + ('c' * 18)
+    $longTarget = "https://$longHost/$longOwner/$longRepository"
+    & git -C $workspacePath remote add origin "$longTarget.git"
+    & git -C $workspacePath config --local home-baseline.remote-base-url "https://$longHost"
+    & git -C $workspacePath config --local home-baseline.remote-owner $longOwner
+    & git -C $workspacePath config --local home-baseline.remote-repository $longRepository
+    foreach ($shell in @('bash', 'pwsh')) {
+        $output = if ($shell -eq 'bash') {
+            & bash $bashScript $workspaceName --dry-run 2>&1 | Out-String
+        }
+        else {
+            & pwsh -NoProfile -File $powerShellScript -WorkspaceName $workspaceName -WhatIf 2>&1 | Out-String
+        }
+        if ($LASTEXITCODE -ne 0 -or $output -notmatch [regex]::Escape($longTarget)) {
+            $failures.Add("${shell} truncated the approved Forgejo target: $output")
+        }
+    }
+}
+
 try {
     New-Item -ItemType Directory -Path $testHome, $outside | Out-Null
     New-Item -ItemType Directory -Path (Join-Path $testHome 'Valid Workspace') | Out-Null
@@ -242,6 +312,7 @@ try {
 
     Assert-DanglingBackupLinkIsNotFollowed -Shell 'bash'
     Assert-DanglingBackupLinkIsNotFollowed -Shell 'pwsh'
+    Assert-ForgejoTargetBinding
 
     if ($failures.Count -gt 0) {
         $failures | ForEach-Object { Write-Error $_ }

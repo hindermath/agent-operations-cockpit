@@ -1,6 +1,6 @@
 ---
 name: speckit-parallel-autonomous
-description: Validate and execute a permission-bounded parallel autonomous campaign.
+description: Validate a parallel campaign; production execution is suspended.
 compatibility: Requires spec-kit project structure with .specify/ directory
 metadata:
   author: github-spec-kit
@@ -14,6 +14,17 @@ metadata:
 ```text
 $ARGUMENTS
 ```
+
+*DE: Produktive Parallel-Kampagnen sind bis zu einer isolierten Worker-Laufzeit
+gesperrt. `Start`, `Resume` und `Consolidate` duerfen weder ueber den
+Koordinator noch direkt durch Agenten ausgefuehrt werden. Erlaubt bleiben
+`Validate`, `Status` und `Stop` ueber den Koordinator. Die folgenden Schritte
+sind derzeit inaktiv.*
+
+*EN: Production parallel campaigns are suspended until workers have an
+isolated runtime. Agents must not run `Start`, `Resume` or `Consolidate`,
+including by scheduling workers or merging directly. Only coordinator
+`Validate`, `Status` and `Stop` remain available. The steps below are dormant.*
 
 Require an accepted campaign manifest, local runner-profile binding, explicit
 delivery authority, and `autonomous-run-governance >= 0.2.2` in every worker

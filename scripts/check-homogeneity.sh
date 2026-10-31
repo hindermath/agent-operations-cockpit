@@ -88,48 +88,25 @@ fi
 # ─── Apply-Patch Mode ────────────────────────────────────────────────────────
 
 if [ -n "$OPT_APPLY_PATCH" ]; then
+  if $OPT_DRY_RUN; then
+    echo "FATAL: --dry-run and --apply-patch cannot be combined / duerfen nicht kombiniert werden" >&2
+    exit 2
+  fi
   patch_file="${OPT_APPLY_PATCH/#\~/$HOME}"
   if ! [ -f "$patch_file" ]; then
     echo "FATAL: patch file not found: ${patch_file}" >&2
     exit 2
   fi
-
-  echo "Patch-Datei: ${patch_file}"
-  echo ""
-  echo "Vorgeschlagene Aenderungen:"
-  grep '^##\|^- \|^\*\*' "$patch_file" | head -30
-  echo ""
-
-  if $OPT_YES; then
-    answer="j"
-  else
-    printf "Patch anwenden? [j/N] "
-    read -r answer
-  fi
-
-  if echo "$answer" | grep -qiE '^[jy]'; then
-    patch_count=0
-    target_file=""
-    while IFS= read -r pline; do
-      case "$pline" in
-        "### Target: "*)
-          target_file="${pline#### Target: }"
-          target_file="${target_file/#\~/$HOME}" ;;
-        "+++ "*)
-          content_to_append="${pline#+++ }"
-          if [ -n "$target_file" ]; then
-            printf '%s\n' "$content_to_append" >> "$target_file"
-            patch_count=$((patch_count + 1))
-          fi ;;
-      esac
-    done < "$patch_file"
-    git -C "$TARGET_DIR" add -A 2>/dev/null || true
-    git -C "$TARGET_DIR" commit -m "chore: apply memory-patch -- ${patch_count} entries updated" 2>/dev/null || true
-    echo "Patch angewendet: ${patch_count} Eintraege, git-Commit erstellt."
-  else
-    echo "Patch abgebrochen."
-  fi
-  exit 0
+  python_command="$(command -v python3 || command -v python || true)"
+  [ -n "$python_command" ] || { echo "FATAL: Python 3 not found" >&2; exit 2; }
+  "$python_command" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 8) else 2)' || {
+    echo "FATAL: Python 3.8 or newer is required for patch application" >&2
+    exit 2
+  }
+  patch_args=(--target-dir "$TARGET_DIR" --patch "$patch_file")
+  $OPT_YES && patch_args+=(--yes)
+  "$python_command" "$(dirname "${BASH_SOURCE[0]}")/lib/apply_memory_patch.py" "${patch_args[@]}"
+  exit $?
 fi
 
 # ─── Scan State (Bash 3.x-compatible, no associative arrays) ─────────────────
