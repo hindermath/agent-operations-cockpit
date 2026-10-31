@@ -73,6 +73,7 @@ def teardown_fixture(root: Path) -> tuple[Path, Path, dict[str, str]]:
 
 
 class SecurityBoundaryHelpersTests(unittest.TestCase):
+    @unittest.skipIf(os.name == "nt", "POSIX wildcard filename fixture")
     def test_memory_patch_is_contained_and_commits_only_its_target(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -445,6 +446,7 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
                 self.assertEqual(result.returncode, 0, result.stdout)
             self.assertTrue((child / ".GIT").exists(), result.stdout)
 
+    @unittest.skipIf(os.name == "nt", "POSIX Home and Bash fixture")
     def test_teardown_preserves_nonbranch_git_reference(self) -> None:
         for shell in ("bash", "pwsh"):
             if not shutil.which(shell):
@@ -601,6 +603,7 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
                     self.assertNotIn("other.txt", members, result.stdout)
                 self.assertFalse((home / "-Tlist").exists(), result.stdout)
 
+    @unittest.skipIf(os.name == "nt", "POSIX Home and Bash fixture")
     def test_teardown_preserves_local_history_without_upstream(self) -> None:
         for shell in ("bash", "pwsh"):
             if not shutil.which(shell):
@@ -626,6 +629,7 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
                 subprocess.run(override, env=environment, capture_output=True, text=True)
                 self.assertFalse(workspace.exists(), "explicit Force should allow teardown")
 
+    @unittest.skipIf(os.name == "nt", "POSIX Home and Bash fixture")
     def test_teardown_allows_empty_unborn_git_repository(self) -> None:
         for shell in ("bash", "pwsh"):
             if not shutil.which(shell):
@@ -642,6 +646,7 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
                 self.assertIn("Sicherheitsprüfung bestanden", result.stdout)
                 self.assertFalse(workspace.exists(), result.stdout)
 
+    @unittest.skipIf(os.name == "nt", "POSIX Home and Bash fixture")
     def test_teardown_checks_every_branch_and_rejects_local_upstream(self) -> None:
         for shell in ("bash", "pwsh"):
             if not shutil.which(shell):
@@ -1169,6 +1174,7 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
             changed = subprocess.run(command, capture_output=True, text=True)
             self.assertNotEqual(changed.returncode, 0, changed.stdout)
 
+    @unittest.skipIf(os.name == "nt", "Bash archive fixture requires POSIX")
     @unittest.skipUnless(shutil.which("bash") and shutil.which("shasum"), "Bash checksum check requires shasum")
     def test_bash_checker_binds_custom_sidecar_to_selected_archive(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -1215,6 +1221,7 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
             with self.assertRaisesRegex(archive.UnsafePackage, "no valid digest"):
                 archive.read_checksum_bounded(sidecar)
 
+    @unittest.skipIf(os.name == "nt", "Bash archive fixture requires POSIX")
     def test_oversized_checksum_sidecar_is_rejected_by_both_checkers(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -1260,6 +1267,7 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
             )
             self.assertEqual(result.returncode, 0, result.stderr)
 
+    @unittest.skipIf(os.name == "nt", "WSL fixture requires a configured distribution")
     @unittest.skipUnless(shutil.which("pwsh"), "PowerShell 7 is required")
     def test_wsl_wrapper_passes_metacharacters_as_one_argument(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -1349,6 +1357,7 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
             archive.extract_bounded(package, destination)
             self.assertEqual((destination / "lesson/one.txt").read_text(), "one")
 
+    @unittest.skipIf(os.name == "nt", "Bash archive fixture requires POSIX")
     def test_archive_over_entry_budget_never_reaches_listing_or_extraction(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -1384,6 +1393,7 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
                 self.assertNotEqual(result.returncode, 0)
                 self.assertIn("too many entries", result.stderr)
 
+    @unittest.skipIf(os.name == "nt", "Bash archive fixture requires POSIX")
     def test_archive_control_character_cannot_spoof_required_bash_entries(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

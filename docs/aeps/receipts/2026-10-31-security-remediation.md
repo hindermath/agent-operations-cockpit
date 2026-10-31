@@ -420,19 +420,19 @@ promotion or upstream action.*
 
 Die Maintenance-TUI-Matrix wurde fuer die bereits vorgeschriebenen
 Regressionsvoraussetzungen angepasst: Ubuntu installiert `rg`, macOS Bash 5+
-und `rg`. Auf Windows laufen die nativen Python-Maintenance-Module; das
-POSIX-Pfadfixture `test_security_boundary_helpers.py` ist dort ausgenommen,
-weil der Runner ohne WSL-Distribution `bash` als WSL-Starter aufloest. Die
-Security-Boundary-Suite laeuft weiter auf Ubuntu und macOS. Documentation
-Impact: `UpdateRequired`; Quelle: PR-68-CI-Logs, Owner: AOC Repository Owner;
-Workflow und dieses Receipt aktualisiert. Die native Windows-Laufzeitpruefung
-des POSIX-Fixtures ist keine Aussage ueber PowerShell-Produktsicherheit.
+und `rg`. Die volle Python-Suite laeuft weiterhin auf allen drei Plattformen.
+Nur einzelne POSIX-Pfad-, Bash- und WSL-Fixtures werden auf Windows
+uebersprungen, da dort keine WSL-Distribution bereitsteht und bestimmte
+POSIX-Dateinamen ungueltig sind. Die uebrigen Security-Boundary-Tests,
+einschliesslich nativer PowerShell-Faelle, bleiben im Windows-Lauf.
+Documentation Impact: `UpdateRequired`; Quelle: PR-68-CI-Logs, Owner: AOC
+Repository Owner; Workflow, Test-Fixtures und dieses Receipt aktualisiert.
 
 *The Maintenance TUI matrix now installs required regression prerequisites:
-`rg` on Ubuntu and Bash 5+ plus `rg` on macOS. Windows runs the native Python
-maintenance modules; the POSIX-path `test_security_boundary_helpers.py`
-fixture is excluded there because the runner resolves `bash` to WSL without
-a distribution. The security-boundary suite still runs on Ubuntu and macOS.
-Documentation Impact is `UpdateRequired`; source: PR 68 CI logs; owner: AOC
-Repository Owner; the workflow and this receipt were updated. This limitation
-does not establish native Windows PowerShell product security.*
+`rg` on Ubuntu and Bash 5+ plus `rg` on macOS. The full Python suite still
+runs on all three platforms. Only individual POSIX-path, Bash and WSL
+fixtures skip on Windows because no WSL distribution is available and some
+POSIX filenames are invalid there. Other security-boundary tests, including
+native PowerShell cases, remain in the Windows run. Documentation Impact is
+`UpdateRequired`; source: PR 68 CI logs; owner: AOC Repository Owner; the
+workflow, test fixtures and this receipt were updated.*

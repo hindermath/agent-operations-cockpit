@@ -85,14 +85,7 @@ jobs:
       - name: Run full maintenance regressions (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
-        run: |
-          # The security boundary fixture uses POSIX paths and WSL's bash shim
-          # on Windows. The remaining Python modules run natively here.
-          $modules = Get-ChildItem scripts/tests/test_*.py |
-            Where-Object { $_.BaseName -ne 'test_security_boundary_helpers' } |
-            ForEach-Object { "scripts.tests.$($_.BaseName)" }
-          python -m unittest @modules
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+        run: python -m unittest discover -s scripts/tests -p 'test_*.py'
 
       - name: Validate Bash syntax
         if: runner.os != 'Windows'
