@@ -55,6 +55,17 @@ in the production suspension. The following Standard scan found one medium
 remote-target binding issue under partial repository coverage. The local fix
 binds origin, provider base and repository identity and displays the complete
 target before deletion.
+Der Forgejo-Diff-Scan `867ce36d-2a6c-4b74-a265-9d58b472464e` meldete
+keinen weiteren Befund. Der Standardscan
+`2c6ebc9a-22c1-4963-a7ea-9fd995adfdb3` auf `16296d30fdbb` fand bei
+teilweiser Repository-Abdeckung eine niedrige lokale Ressourcenluecke in
+der Lernpaket-ZIP-Pruefung. Der aktuelle Patch begrenzt das ZIP-Verzeichnis
+und zaehlt Eintraege vor der vollstaendigen Parser-Materialisierung; beide
+Plattformen nutzen dieselbe Vorpruefung. / The Forgejo diff scan reported no
+further issue. The Standard scan found one low-severity local resource issue
+under partial repository coverage. The current patch bounds ZIP directory
+metadata and counts entries before full parser materialization on both
+platforms.
 Publikationsstand:
 `PendingPublication`; AEPS-Upstream:
 `NotApplicable`. Deduplizierung: Scan-ID + Datum + Remediation-Receipt.
@@ -69,7 +80,8 @@ in einem zweiten lokalen Patch bearbeitet; eine unabhängige Gegenprüfung fand
 vier Umgehungen, die vor dem nächsten Scan korrigiert wurden. Der zweite
 Diff-Scan meldete keinen Befund in 13 geänderten Dateien; der anschließende
 Standardscan meldete zwei weitere Beobachtungen bei teilweiser Abdeckung.
-Deren Korrektur und erneute Prüfung sind zum Zeitpunkt dieses Receipts offen.
+Diese Korrekturen und ihre erneute Prüfung wurden fortgesetzt; der folgende
+Standardscan meldete noch die lokale ZIP-Ressourcengrenze.
 Gezielte Tests belegen die lokale Korrektur, aber keine veröffentlichte
 Cross-Project-Validierung
 für ein wiederverwendbares Preset-Pattern. Bestehende Finding-IDs,
@@ -84,7 +96,8 @@ seven more issues with partial repository coverage. An independent review found
 four bypasses in the second local patch, which were corrected before rechecking.
 The second diff scan found no issue in 13 changed files; the next Standard scan
 reported two further observations with partial repository coverage. Their
-remediation and recheck remain open at receipt time. Focused tests support the
+remediation and recheck continued; a following Standard scan reported the
+local ZIP resource boundary. Focused tests support the
 local remediation, but do not establish cross-project evidence
 for a reusable preset pattern. Preserve existing findings, maturity, matrix,
 gap analysis and handoff. No promotion or upstream action follows.*
@@ -98,25 +111,44 @@ Dateiattribute; ein nativer NTFS-Lauf steht aus. Die zweite Korrekturrunde
 bestand bisher zwölf Python-Grenztests, beide Paket-Selbsttests, den Teardown-
 Pfadtest, Koordinator- und Konsolidierungsfixtures, PSScriptAnalyzer für die
 geänderten PowerShell-Skripte und Gitleaks auf einem sauberen Checkout. Diff-
-und Standardscan des zweiten Patches sind abgeschlossen. Ein weiterer
-Korrekturpatch sowie Veröffentlichung stehen zum Zeitpunkt dieses Receipts aus.
+und Standardscan des zweiten Patches sind abgeschlossen. Die finale
+Veröffentlichung steht noch aus.
+Der ZIP-Patch bestand 16 fokussierte Python-Grenztests sowie beide
+Paketpruefer-Selbsttests. Ein Test mit 20.001 Eintraegen bestaetigt die
+Abweisung vor Dateiliste und Extraktion. Beide Plattformen lehnen ein
+uebergrosses Sparse-Archiv vor dem Hashen ab; Steuerzeichen in Eintragsnamen
+koennen die Bash-Pflichtdateipruefung nicht mehr verfälschen. Finaler
+Standardscan und Publikation dieses letzten Patches stehen noch aus.
+Der ZIP-Diff-Scan `476d44a2-c46f-4148-8073-447b6d426afd` pruefte alle
+drei geaenderten ausfuehrbaren Dateien ohne neuen Befund. Finaler
+Standardscan und Publikation stehen noch aus.
+
+*The ZIP patch passed 16 focused Python boundary tests and both package-checker
+self-tests. A 20,001-entry test confirms rejection before listing and
+extraction. Both platforms reject an oversized sparse archive before hashing;
+control characters in entry names no longer spoof Bash required-file checks.
+The ZIP diff scan `476d44a2-c46f-4148-8073-447b6d426afd` covered all three
+changed executable files without a new finding. The final Standard scan and
+publication remain pending.*
 
 *Focused tests and static checks passed. Three broad fleet tests could not use
 `ps` in this sandbox. The parallel coordinator and model-routing suites passed.
 The Windows junction check used simulated attributes; native NTFS validation
 remains open. The second patch passed focused boundary, package, teardown,
 coordinator, static-analysis and clean-checkout Gitleaks checks. Diff and
-Standard scans of that patch completed; another remediation patch and
-publication remain pending at receipt time.*
+Standard scans of that patch completed; final scanning and publication of the
+ZIP patch remain pending at receipt time.*
 
 Documentation Impact: `UpdateRequired`. Quelle: privater Scan und lokaler
 Patch; Owner: AOC Repository Owner. Aktualisiert wurden
 `docs/man/maintain-workspace-storage.1.md`, die generierte
 `docs/scripts/reference.md`, die Parallel-Runner-Dokumentation, die
-Verteilungsmanifeste, dieses Receipt und das AEPS-Ledger. Die
+Verteilungsmanifeste, die Paketpruefer-Hilfe in Bash und PowerShell, dieses
+Receipt und das AEPS-Ledger. Die
 öffentlichen Dokumente enthalten keine Ausnutzungsdetails.
 
 *Documentation Impact is `UpdateRequired`: the storage manual, generated script
-reference, parallel runner guide, distribution manifests, this receipt and
+reference, parallel runner guide, distribution manifests, package-checker help,
+this receipt and
 the AEPS ledger describe changed behavior and verification without publishing
 exploit details.*

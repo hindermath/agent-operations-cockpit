@@ -9,7 +9,9 @@ import os
 from pathlib import Path
 import shutil
 import stat
+import struct
 import subprocess
+import sys
 import tempfile
 from types import SimpleNamespace
 import unittest
@@ -221,8 +223,124 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
             other = root / "other"
             other.mkdir()
             with mock.patch.object(archive, "MAX_ENTRIES", 1):
+                with mock.patch.object(archive.zipfile, "ZipFile", side_effect=AssertionError("parsed")):
+                    with self.assertRaisesRegex(archive.UnsafePackage, "too many entries"):
+                        archive.extract_bounded(package, other)
+
+    def test_archive_rejects_metadata_before_zipfile_parse(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            package = root / "package.zip"
+            destination = root / "out"
+            destination.mkdir()
+            with zipfile.ZipFile(package, "w") as writer:
+                writer.writestr("lesson/one.txt", "one")
+                writer.writestr("lesson/two.txt", "two")
+            with mock.patch.object(archive, "MAX_CENTRAL_DIRECTORY_BYTES", 60):
+                with mock.patch.object(archive.zipfile, "ZipFile", side_effect=AssertionError("parsed")):
+                    with self.assertRaisesRegex(archive.UnsafePackage, "central directory exceeds byte limit"):
+                        archive.extract_bounded(package, destination)
+            with mock.patch.object(archive, "MAX_ARCHIVE_BYTES", 100):
+                with package.open("rb") as source:
+                    with self.assertRaisesRegex(archive.UnsafePackage, "archive exceeds byte limit"):
+                        archive.check_archive_size(source)
+
+            forged = bytearray(package.read_bytes())
+            end_record = forged.rfind(b"PK\x05\x06")
+            struct.pack_into("<HH", forged, end_record + 8, 1, 1)
+            package.write_bytes(forged)
+            with mock.patch.object(archive.zipfile, "ZipFile", side_effect=AssertionError("parsed")):
+                with self.assertRaisesRegex(archive.UnsafePackage, "entry count is inconsistent"):
+                    archive.extract_bounded(package, destination)
+
+            regular = bytearray(forged)
+            struct.pack_into("<HH", regular, end_record + 8, 2, 2)
+            regular[end_record:end_record] = b"PK\x06\x07" + bytes(16)
+            package.write_bytes(regular)
+            with mock.patch.object(archive.zipfile, "ZipFile", side_effect=AssertionError("parsed")):
+                with self.assertRaisesRegex(archive.UnsafePackage, "ZIP64 metadata"):
+                    archive.extract_bounded(package, destination)
+
+    def test_archive_accepts_comment_and_prepended_data(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            package = root / "package.zip"
+            destination = root / "out"
+            destination.mkdir()
+            with zipfile.ZipFile(package, "w") as writer:
+                writer.writestr("lesson/one.txt", "one")
+                writer.comment = b"learning package"
+            package.write_bytes(b"launcher-prefix" + package.read_bytes())
+            listed = subprocess.run(
+                [sys.executable, str(LIBRARY / "check_learning_package_archive.py"), "--list", str(package)],
+                capture_output=True, text=True, check=False,
+            )
+            self.assertEqual(listed.returncode, 0, listed.stderr)
+            self.assertEqual(listed.stdout.splitlines(), ["lesson/one.txt"])
+            archive.extract_bounded(package, destination)
+            self.assertEqual((destination / "lesson/one.txt").read_text(), "one")
+
+    def test_archive_over_entry_budget_never_reaches_listing_or_extraction(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            package = root / "too-many.zip"
+            with zipfile.ZipFile(package, "w", allowZip64=False) as writer:
+                for index in range(archive.MAX_ENTRIES + 1):
+                    writer.writestr(f"lesson/item-{index:05d}.txt", "")
+            listed = subprocess.run(
+                [sys.executable, str(LIBRARY / "check_learning_package_archive.py"), "--list", str(package)],
+                capture_output=True, text=True, check=False,
+            )
+            self.assertNotEqual(listed.returncode, 0)
+            self.assertEqual(listed.stdout, "")
+            self.assertIn("too many entries", listed.stderr)
+            with mock.patch.object(archive.zipfile, "ZipFile", side_effect=AssertionError("parsed")):
                 with self.assertRaisesRegex(archive.UnsafePackage, "too many entries"):
-                    archive.extract_bounded(package, other)
+                    archive.extract_bounded(package, root)
+            sidecar = root / "too-many.zip.sha256"
+            sidecar.write_text(f"{hashlib.sha256(package.read_bytes()).hexdigest()}  too-many.zip\n")
+            if shutil.which("bash") and shutil.which("shasum"):
+                result = subprocess.run(
+                    ["bash", str(LIBRARY.parent / "check-learning-package.sh"), str(package)],
+                    capture_output=True, text=True, check=False,
+                )
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("too many entries", result.stderr)
+            if shutil.which("pwsh"):
+                result = subprocess.run(
+                    ["pwsh", "-NoProfile", "-File", str(LIBRARY.parent / "check-learning-package.ps1"),
+                     "-PackagePath", str(package)],
+                    capture_output=True, text=True, check=False,
+                )
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("too many entries", result.stderr)
+
+    def test_archive_control_character_cannot_spoof_required_bash_entries(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            package = root / "spoof.zip"
+            with zipfile.ZipFile(package, "w") as writer:
+                writer.writestr(
+                    "lesson/START-HERE-FUER-LERNENDE.md\n"
+                    "lesson/GIT-START-FUER-LERNENDE.md\n"
+                    "lesson/INSTITUTIONELLES-GIT-HOSTING.md", "fake guides"
+                )
+                writer.writestr("lesson/PACKAGING-MANIFEST.txt", "Git data included: no \n")
+            listed = subprocess.run(
+                [sys.executable, str(LIBRARY / "check_learning_package_archive.py"), "--list", str(package)],
+                capture_output=True, text=True, check=False,
+            )
+            self.assertNotEqual(listed.returncode, 0)
+            self.assertIn("control character", listed.stderr)
+            if shutil.which("bash") and shutil.which("shasum"):
+                sidecar = root / "spoof.zip.sha256"
+                sidecar.write_text(f"{hashlib.sha256(package.read_bytes()).hexdigest()}  spoof.zip\n")
+                result = subprocess.run(
+                    ["bash", str(LIBRARY.parent / "check-learning-package.sh"), str(package)],
+                    capture_output=True, text=True, check=False,
+                )
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("control character", result.stderr)
 
     def test_archive_rejects_byte_budget_parent_path_and_symlink(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
