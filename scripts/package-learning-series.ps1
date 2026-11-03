@@ -7,6 +7,8 @@ Erzeugt ein git-freies Lernreihen-ZIP.
 Kopiert einen Level-1-Lernreihenordner in ein temporaeres Staging-Verzeichnis,
 schliesst .git-Verzeichnisse, Remote-Konfigurationen sowie lokale Build- und
 IDE-Artefakte aus und erzeugt daraus ein ZIP mit SHA256-Datei.
+Das Staging muss vorher einen gitleaks-Secret-Scan bestehen.
+The staged package must pass a gitleaks secret scan before ZIP creation.
 
 .PARAMETER SourceDir
 Level-1-Quellordner der Lernreihe.
@@ -73,12 +75,12 @@ function Test-HBExcludedLearningPath {
     $path = $RelativePath.Replace('\', '/')
     if ($path -eq '.git' -or $path -like '*/.git' -or $path -like '*/.git/*') { return $true }
     if ($path -eq 'docs/learning-units/dist' -or $path -like 'docs/learning-units/dist/*') { return $true }
-    if ($path -like '*/bin' -or $path -like '*/bin/*') { return $true }
-    if ($path -like '*/obj' -or $path -like '*/obj/*') { return $true }
-    if ($path -like '*/build' -or $path -like '*/build/*') { return $true }
-    if ($path -like '*/node_modules' -or $path -like '*/node_modules/*') { return $true }
-    if ($path -like '*/.vs' -or $path -like '*/.vs/*') { return $true }
-    if ($path -like '*/.idea' -or $path -like '*/.idea/*') { return $true }
+    if ($path -eq 'bin' -or $path -like '*/bin' -or $path -like '*/bin/*') { return $true }
+    if ($path -eq 'obj' -or $path -like '*/obj' -or $path -like '*/obj/*') { return $true }
+    if ($path -eq 'build' -or $path -like '*/build' -or $path -like '*/build/*') { return $true }
+    if ($path -eq 'node_modules' -or $path -like '*/node_modules' -or $path -like '*/node_modules/*') { return $true }
+    if ($path -eq '.vs' -or $path -like '*/.vs' -or $path -like '*/.vs/*') { return $true }
+    if ($path -eq '.idea' -or $path -like '*/.idea' -or $path -like '*/.idea/*') { return $true }
     if ((Split-Path $path -Leaf) -eq '.DS_Store') { return $true }
     if ($path -eq '__MACOSX' -or $path -like '*/__MACOSX/*') { return $true }
     if ((Split-Path $path -Leaf) -eq 'settings.local.json') { return $true }
@@ -91,6 +93,9 @@ function Test-HBExcludedLearningPath {
 function Copy-HBLearningTree {
     param([string]$SourceRoot, [string]$DestinationRoot, [string]$CurrentPath)
     Get-ChildItem -LiteralPath $CurrentPath -Force | Sort-Object FullName | ForEach-Object {
+        if ($_.LinkType -or (($_.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0)) {
+            throw "Lernreihen-Quelle enthaelt einen Link: $($_.FullName)"
+        }
         $relative = [System.IO.Path]::GetRelativePath($SourceRoot, $_.FullName).Replace('\', '/')
         if (Test-HBExcludedLearningPath -RelativePath $relative) { return }
         $target = Join-Path $DestinationRoot $relative
@@ -138,6 +143,13 @@ if (-not (Test-Path -LiteralPath $hostingGuidePath -PathType Leaf)) {
     throw "Leitfaden fuer institutionelles Git-Hosting fehlt: $hostingGuidePath"
 }
 
+$sourceChecker = Join-Path $PSScriptRoot 'lib/check_learning_package_source.py'
+$pythonCommand = Get-Command python3 -ErrorAction SilentlyContinue
+if (-not $pythonCommand) { $pythonCommand = Get-Command python -ErrorAction SilentlyContinue }
+if (-not $pythonCommand) { throw 'Python wird fuer die Paket-Quellpruefung benoetigt.' }
+& $pythonCommand.Source $sourceChecker --source $SourceDir --guide $startGuidePath --guide $gitGuidePath --guide $hostingGuidePath
+if ($LASTEXITCODE -ne 0) { throw 'Unsichere Lernreihen-Quelle oder Anleitung.' }
+
 $shortSha = Get-HBGitValue -Repo $SourceDir -GitArgs @('rev-parse', '--short', 'HEAD')
 if (-not $shortSha) { $shortSha = 'nogit' }
 $stamp = (Get-Date).ToUniversalTime().ToString('yyyyMMddTHHmmssZ')
@@ -167,6 +179,8 @@ if ($PSCmdlet.ShouldProcess($zipPath, 'Create learning series ZIP package')) {
         Copy-Item -LiteralPath $startGuidePath -Destination (Join-Path $packageRoot (Split-Path $startGuidePath -Leaf)) -Force
         Copy-Item -LiteralPath $gitGuidePath -Destination (Join-Path $packageRoot (Split-Path $gitGuidePath -Leaf)) -Force
         Copy-Item -LiteralPath $hostingGuidePath -Destination (Join-Path $packageRoot (Split-Path $hostingGuidePath -Leaf)) -Force
+        & $pythonCommand.Source $sourceChecker --staging $packageRoot
+        if ($LASTEXITCODE -ne 0) { throw 'Unsicheres Lernreihen-Staging.' }
 
         $manifest = Join-Path $packageRoot 'PACKAGING-MANIFEST.txt'
         $lines = [System.Collections.Generic.List[string]]::new()
@@ -191,6 +205,9 @@ if ($PSCmdlet.ShouldProcess($zipPath, 'Create learning series ZIP package')) {
         $lines.Add("Git guide: $(Split-Path $gitGuidePath -Leaf)")
         $lines.Add("Institutional hosting guide: $(Split-Path $hostingGuidePath -Leaf)")
         Set-Content -Path $manifest -Value $lines -Encoding UTF8
+
+        & $pythonCommand.Source (Join-Path $PSScriptRoot 'lib/check_learning_package_secrets.py') $packageRoot
+        if ($LASTEXITCODE -ne 0) { throw 'Lernpaket-Secret-Scan fehlgeschlagen / package secret scan failed.' }
 
         if (Test-Path $zipPath) { Remove-Item -Path $zipPath -Force }
         if (Test-Path $shaPath) { Remove-Item -Path $shaPath -Force }

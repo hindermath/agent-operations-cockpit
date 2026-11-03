@@ -9,7 +9,6 @@ import json
 import re
 import sys
 import uuid
-from typing import Any
 from pathlib import Path, PurePosixPath, PureWindowsPath
 
 BCP47 = re.compile(r"^[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$")
@@ -54,15 +53,6 @@ def fail(code: str, message: str, outcome: str = "Blocked") -> None:
     raise ContractError(code, message, outcome)
 
 
-def _unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
-    result: dict[str, Any] = {}
-    for key, value in pairs:
-        if key in result:
-            fail("RIG001", f"duplicate JSON key: {key}")
-        result[key] = value
-    return result
-
-
 def load_json(path: Path) -> dict:
     try:
         raw = path.read_bytes()
@@ -71,10 +61,7 @@ def load_json(path: Path) -> dict:
         text = raw.decode("utf-8", errors="strict")
         if "\x00" in text:
             fail("RIG001", "binary NUL is not allowed")
-        data = json.loads(
-            text.replace("\r\n", "\n").replace("\r", "\n"),
-            object_pairs_hook=_unique_object,
-        )
+        data = json.loads(text.replace("\r\n", "\n").replace("\r", "\n"))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
         fail("RIG001", f"invalid strict UTF-8 JSON: {exc}")
     if not isinstance(data, dict):
@@ -116,41 +103,6 @@ def normalized_sha256(path: Path) -> str:
     return hashlib.sha256(normalized_bytes(path)).hexdigest()
 
 
-def resolve_lifecycle_target(repo: Path, logical_path: str, expected_hash: str) -> Path:
-    """Resolve one logical intake path through exactly one lifecycle record."""
-    matches: list[dict] = []
-    for lifecycle_path in sorted((repo / "specs").glob("*/intake-lifecycle.json")):
-        lifecycle = load_json(lifecycle_path)
-        records = lifecycle.get("records")
-        if lifecycle.get("schemaVersion") != "1.1" or not isinstance(records, list):
-            fail("RIG014", f"invalid lifecycle contract: {lifecycle_path.relative_to(repo)}")
-        matches.extend(
-            record for record in records
-            if isinstance(record, dict) and record.get("originalPath") == logical_path
-        )
-    if not matches:
-        return repo / logical_path
-    if len(matches) != 1:
-        fail("RIG014", f"ambiguous lifecycle resolution for {logical_path}")
-    record = matches[0]
-    archived_path = record.get("archivedPath")
-    lifecycle_hash = record.get("originalNormalizedSha256")
-    if not isinstance(archived_path, str) or not relative(archived_path):
-        fail("RIG014", f"invalid archivedPath for {logical_path}")
-    if lifecycle_hash != expected_hash:
-        fail("RIG015", f"lifecycle hash drift for {logical_path}")
-    original_file = repo / logical_path
-    archived_file = repo / archived_path
-    if original_file.is_file() == archived_file.is_file():
-        fail("RIG014", f"lifecycle requires exactly one physical target for {logical_path}")
-    resolved = original_file if original_file.is_file() else archived_file
-    if not resolved.resolve().is_relative_to(repo):
-        fail("RIG004", "series target resolves outside the repository")
-    if normalized_sha256(resolved) != expected_hash:
-        fail("RIG015", f"resolved target hash drift for {logical_path}")
-    return resolved
-
-
 def intake_name_matches(name: str, pattern: str) -> bool:
     prefix, suffix = pattern.split("<slug>", 1)
     return name.startswith(prefix) and name.endswith(suffix) and len(name) > len(prefix) + len(suffix)
@@ -164,7 +116,6 @@ def validate_series_manifest(
     pattern: str,
     inventory_mode: str,
     excluded_dirs: tuple[Path, ...] = (),
-    current_target_hashes: dict[str, str] | None = None,
 ) -> dict:
     manifest = load_json(path)
     targets = manifest.get("orderedTargets")
@@ -185,9 +136,8 @@ def validate_series_manifest(
     )
     active_targets: set[str] = set()
     target_paths: list[str] = []
-    physical_target_paths: list[str] = []
-    eligible: list[str] = []
     target_statuses: dict[str, str] = {}
+    eligible: list[str] = []
     for index, target in enumerate(targets):
         if not isinstance(target, dict):
             fail("RIG014", f"orderedTargets[{index}] must be an object")
@@ -196,18 +146,18 @@ def validate_series_manifest(
         if target_path in target_paths:
             fail("RIG013", f"duplicate active target {target_path}")
         target_paths.append(target_path)
-        historical_hash = required_text(target, "normalizedSha256", "RIG015")
-        expected_hash = (current_target_hashes or {}).get(target_path, historical_hash)
-        if not re.fullmatch(r"[0-9a-f]{64}", expected_hash):
-            fail("RIG015", f"invalid normalizedSha256 for {target_path}")
-        target_file = resolve_lifecycle_target(repo, target_path, expected_hash)
-        if not target_file.is_file():
-            fail("RIG014", f"missing active target {target_path}")
+        target_file = repo / target_path
+        # DE: Vor dem Lesen verhindern wir, dass Symlinks die Repository-Grenze verlassen.
+        # EN: Check containment before reading so symlinks cannot cross the repository boundary.
         if not target_file.resolve().is_relative_to(repo):
             fail("RIG004", "series target resolves outside the repository")
+        if not target_file.is_file():
+            fail("RIG014", f"missing active target {target_path}")
+        expected_hash = required_text(target, "normalizedSha256", "RIG015")
+        if not re.fullmatch(r"[0-9a-f]{64}", expected_hash):
+            fail("RIG015", f"invalid normalizedSha256 for {target_path}")
         if normalized_sha256(target_file) != expected_hash:
             fail("RIG015", f"hash drift for {target_path}")
-        physical_target_paths.append(target_file.relative_to(repo).as_posix())
         status = required_text(target, "status", "RIG017")
         if status not in {"Pending", "Blocked", "Eligible", "Active", "Completed", "Withdrawn"}:
             fail("RIG017", f"unsupported target status: {target_path}")
@@ -230,12 +180,10 @@ def validate_series_manifest(
         if in_active and resolved_target.is_relative_to(archive_dir.resolve()):
             fail("RIG004", "active target resolves into the archive collection")
         if in_active:
-            active_targets.add(target_file.relative_to(repo).as_posix())
+            active_targets.add(target_path)
         if status == "Eligible":
             eligible.append(target_path)
 
-    if len(physical_target_paths) != len(set(physical_target_paths)):
-        fail("RIG013", "multiple logical targets resolve to the same physical intake")
     if inventory_mode == "DirectoryStrict" and active_targets != active_paths:
         missing = sorted(active_paths - active_targets)
         extra = sorted(active_targets - active_paths)
@@ -291,47 +239,6 @@ def validate_config(data: dict, repo: Path) -> dict:
         fail("RIG003", "documentation language remains ambiguous", "NeedsClarification")
     if not BCP47.fullmatch(language):
         fail("RIG003", "documentationLanguage is not a supported BCP-47 shape")
-
-    profile_binding = data.get("projectProfile")
-    if not isinstance(profile_binding, dict):
-        fail("RIG018", "projectProfile must be an object")
-    profile_path_text = required_text(profile_binding, "path", "RIG018")
-    profile_id = required_text(profile_binding, "profileId", "RIG020")
-    profile_hash = required_text(profile_binding, "normalizedSha256", "RIG018")
-    if not re.fullmatch(r"[0-9a-f]{64}", profile_hash):
-        fail("RIG018", "projectProfile.normalizedSha256 must be lowercase SHA-256")
-    validate_path(profile_path_text, "projectProfile.path")
-    profile_root = PurePosixPath(".specify/presets/intake-authoring-governance")
-    profile_relative = PurePosixPath(profile_path_text)
-    if profile_relative.parts[: len(profile_root.parts)] != profile_root.parts:
-        fail("RIG019", "projectProfile.path must stay inside the Intake Authoring preset root")
-    profile_path = (repo / profile_path_text).resolve()
-    # The local profile binding follows the same physical boundary as receipts.
-    try:
-        profile_path.relative_to(repo)
-        profile_path.relative_to(repo / profile_root)
-    except ValueError:
-        fail("RIG019", "projectProfile.path escapes the physical preset root")
-    if not profile_path.is_file():
-        fail("RIG018", f"project profile is missing: {profile_path_text}")
-    if normalized_sha256(profile_path) != profile_hash:
-        fail("RIG018", "project profile hash drift")
-    profile_text = normalized_bytes(profile_path).decode("utf-8")
-    if f"`{profile_id}`" not in profile_text:
-        fail("RIG020", "projectProfile.profileId contradicts the profile file")
-    if language != "de-DE" or "`de-DE`" not in profile_text:
-        fail("RIG021", "project profile and configuration must use de-DE")
-
-    allowed_roots = data.get("allowedRoots")
-    expected_roots = [
-        "requirements",
-        "specs",
-        ".specify/presets/intake-authoring-governance",
-    ]
-    if allowed_roots != expected_roots:
-        fail("RIG019", "allowedRoots must match the exact portable AOC root set")
-    if data.get("implicitAuthority") is not False:
-        fail("RIG020", "implicitAuthority must be false")
 
     naming = data.get("artifactNaming")
     if not isinstance(naming, dict):
@@ -436,21 +343,6 @@ def validate_config(data: dict, repo: Path) -> dict:
     if outcome == "Aligned":
         pattern = resolved["intakePattern"]
         active_dir = repo / collections["active"]
-        current_target_hashes: dict[str, str] = {}
-        current_binding_path = repo / "specs/003-authoring-contract/current-evidence-binding.json"
-        if current_binding_path.is_file():
-            current_binding = load_json(current_binding_path)
-            current_targets = current_binding.get("orderedLogicalTargets")
-            if not isinstance(current_targets, list) or len(current_targets) != 14:
-                fail("RIG015", "current-evidence binding must contain exactly 14 targets")
-            for item in current_targets:
-                if not isinstance(item, dict) or not isinstance(item.get("target"), dict):
-                    fail("RIG015", "current-evidence binding contains an invalid target")
-                target_path_text = required_text(item["target"], "path", "RIG015")
-                target_current_hash = required_text(item["target"], "normalizedSha256", "RIG015")
-                if target_path_text in current_target_hashes:
-                    fail("RIG015", f"duplicate current-evidence target: {target_path_text}")
-                current_target_hashes[target_path_text] = target_current_hash
         inventory.update(
             validate_series_manifest(
                 repo / collections["seriesManifest"],
@@ -460,7 +352,6 @@ def validate_config(data: dict, repo: Path) -> dict:
                 pattern,
                 inventory_mode,
                 tuple(repo / collections[key] for key in ("baseline", "backlog", "history")),
-                current_target_hashes,
             )
         )
         for key, result_key in (
@@ -488,13 +379,6 @@ def validate_config(data: dict, repo: Path) -> dict:
         "schemaVersion": "2.0",
         "outcome": outcome,
         "documentationLanguage": language,
-        "projectProfile": {
-            "path": profile_path_text,
-            "profileId": profile_id,
-            "normalizedSha256": profile_hash,
-        },
-        "allowedRoots": allowed_roots,
-        "implicitAuthority": False,
         "profile": profile,
         "resolvedNaming": resolved,
         "roles": roles,

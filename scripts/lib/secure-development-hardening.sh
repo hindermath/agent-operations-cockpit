@@ -300,10 +300,13 @@ sdh_sync_baseline() {
   local dry_run="${3:-0}"
   local source_manifest="$source_dir/baseline-manifest.json"
   local target_manifest="$target_dir/baseline-manifest.json"
-  local new_paths old_paths relative source_file target_file copied=0 removed=0
+  local new_paths old_paths relative source_file target_file copied=0 removed=0 target_repo path_guard path_list
 
   command -v jq >/dev/null 2>&1 || { sdh_log "  Fehler: jq wird fuer die manifestgesteuerte Synchronisation benoetigt"; return 1; }
   [ -f "$source_manifest" ] || { sdh_log "  Fehler: Baseline-Manifest fehlt: $source_manifest"; return 1; }
+  target_repo="$(dirname "$(dirname "$target_dir")")"
+  path_guard="$(dirname "${BASH_SOURCE[0]}")/check_baseline_sync_path.py"
+  python3 "$path_guard" --root "$target_repo" --path "$target_manifest" || return 1
   new_paths="$(mktemp)"
   old_paths="$(mktemp)"
   sdh_manifest_paths "$source_manifest" > "$new_paths"
@@ -313,6 +316,23 @@ sdh_sync_baseline() {
     : > "$old_paths"
   fi
 
+  for path_list in "$old_paths" "$new_paths"; do
+    while IFS= read -r relative; do
+      [ -n "$relative" ] || continue
+      case "$relative" in ""|/*|*\\*|..|../*|*/../*|*/..)
+        sdh_log "  Fehler: unsicherer Manifestpfad: $relative"
+        rm -f "$new_paths" "$old_paths"
+        return 1
+        ;;
+      esac
+      if ! python3 "$path_guard" --root "$target_repo" --path "$target_dir/$relative"; then
+        sdh_log "  Fehler: verwalteter Zielpfad verlaesst das Repository: $relative"
+        rm -f "$new_paths" "$old_paths"
+        return 1
+      fi
+    done < "$path_list"
+  done
+
   while IFS= read -r relative; do
     [ -n "$relative" ] || continue
     case "$relative" in /*|*../*) sdh_log "  Fehler: unsicherer Manifestpfad: $relative"; rm -f "$new_paths" "$old_paths"; return 1 ;; esac
@@ -320,7 +340,10 @@ sdh_sync_baseline() {
       target_file="$target_dir/$relative"
       if [ -f "$target_file" ]; then
         removed=$((removed + 1))
-        [ "$dry_run" = "1" ] || rm -f "$target_file"
+        if [ "$dry_run" != "1" ]; then
+          python3 "$path_guard" --root "$target_repo" --path "$target_file" || return 1
+          rm -f "$target_file"
+        fi
       fi
     fi
   done < "$old_paths"
@@ -335,12 +358,14 @@ sdh_sync_baseline() {
       copied=$((copied + 1))
       if [ "$dry_run" != "1" ] && [ "$relative" != "baseline-manifest.json" ]; then
         mkdir -p "$(dirname "$target_file")"
+        python3 "$path_guard" --root "$target_repo" --path "$target_file" || return 1
         cp "$source_file" "$target_file"
       fi
     fi
   done < "$new_paths"
 
   if [ "$dry_run" != "1" ]; then
+    python3 "$path_guard" --root "$target_repo" --path "$target_manifest" || return 1
     mkdir -p "$target_dir"
     cp "$source_manifest" "$target_manifest"
     find "$target_dir" -depth -type d -empty -delete 2>/dev/null || true

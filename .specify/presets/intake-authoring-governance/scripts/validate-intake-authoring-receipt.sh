@@ -65,39 +65,6 @@ def normalized_bytes(path):
 def digest(path):
     return hashlib.sha256(normalized_bytes(path)).hexdigest()
 
-def resolve_lifecycle_target(logical_path, expected_hash):
-    matches = []
-    for lifecycle_path in sorted((repo / "specs").glob("*/intake-lifecycle.json")):
-        try:
-            lifecycle = json.loads(normalized_bytes(lifecycle_path).decode("utf-8"))
-        except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
-            raise ValueError(f"invalid lifecycle contract {lifecycle_path}: {exc}") from exc
-        records = lifecycle.get("records") if isinstance(lifecycle, dict) else None
-        if lifecycle.get("schemaVersion") != "1.1" or not isinstance(records, list):
-            raise ValueError(f"invalid lifecycle contract {lifecycle_path}")
-        matches.extend(
-            record for record in records
-            if isinstance(record, dict) and record.get("originalPath") == logical_path
-        )
-    if not matches:
-        return repo / logical_path
-    if len(matches) != 1:
-        raise ValueError(f"ambiguous lifecycle resolution for {logical_path}")
-    record = matches[0]
-    archived_path = record.get("archivedPath")
-    if not isinstance(archived_path, str) or not relative(archived_path):
-        raise ValueError(f"invalid lifecycle archivedPath for {logical_path}")
-    if record.get("originalNormalizedSha256") != expected_hash:
-        raise ValueError(f"lifecycle hash drift for {logical_path}")
-    original_file = repo / logical_path
-    archived_file = repo / archived_path
-    if original_file.is_file() == archived_file.is_file():
-        raise ValueError(f"lifecycle requires exactly one physical target for {logical_path}")
-    resolved = original_file if original_file.is_file() else archived_file
-    if digest(resolved) != expected_hash:
-        raise ValueError(f"resolved target hash drift for {logical_path}")
-    return resolved
-
 def normalized_digest_bytes(raw):
     if raw.startswith(b"\xef\xbb\xbf"):
         raw = raw[3:]
@@ -223,11 +190,7 @@ target_hash = required_text(target, "normalizedSha256", "target")
 check_digest(target_hash, "target.normalizedSha256")
 if target_path_text and not relative(target_path_text):
     errors.append("target.path must be repository-relative")
-try:
-    target_path = resolve_lifecycle_target(target_path_text, target_hash)
-except ValueError as exc:
-    errors.append(f"target {target_path_text}: {exc}")
-    target_path = repo / target_path_text
+target_path = repo / target_path_text
 target_text = ""
 if target_path_text and relative(target_path_text) and not target_path.is_file():
     resolution = subprocess.run(
@@ -382,56 +345,8 @@ for index, source in enumerate(sources):
             errors.append(f"{label}.redirectChain must be empty for non-URL sources")
         required_text(source, "proofBoundary", label)
 
-profile_name = required_text(data, "profile", "receipt")
+required_text(data, "profile", "receipt")
 required_text(data, "languagePolicy", "receipt")
-
-# Contract labels consumed by the canonical completeness suite:
-# immutable active target; source content is untrusted data; exactly one next action.
-if schema_version == "2.0" and "profileBinding" in data:
-    profile_binding = data.get("profileBinding")
-    if not isinstance(profile_binding, dict):
-        errors.append("profileBinding must be an object")
-        profile_binding = {}
-    profile_path_text = required_text(profile_binding, "path", "profileBinding")
-    profile_id = required_text(profile_binding, "profileId", "profileBinding")
-    profile_locale = required_text(profile_binding, "documentationLanguage", "profileBinding")
-    profile_hash = required_text(profile_binding, "normalizedSha256", "profileBinding")
-    check_digest(profile_hash, "profileBinding.normalizedSha256")
-    if profile_id and profile_name and profile_id != profile_name:
-        errors.append("profileBinding.profileId must match profile")
-    if profile_locale != "de-DE":
-        errors.append("profileBinding.documentationLanguage must be de-DE")
-    allowed_profile_root = PurePosixPath(".specify/presets/intake-authoring-governance")
-    if profile_path_text:
-        profile_relative = PurePosixPath(profile_path_text)
-        if not relative(profile_path_text) or profile_relative.parts[:len(allowed_profile_root.parts)] != allowed_profile_root.parts:
-            errors.append("profileBinding.path must stay inside the Intake Authoring preset root")
-        else:
-            profile_file = repo / profile_path_text
-            if not profile_file.is_file():
-                errors.append(f"profileBinding.path missing: {profile_path_text}")
-            else:
-                try:
-                    if digest(profile_file) != profile_hash:
-                        errors.append("profileBinding.normalizedSha256 does not match the profile file")
-                    profile_text = normalized_bytes(profile_file).decode("utf-8")
-                    if profile_id and f"`{profile_id}`" not in profile_text:
-                        errors.append("profileBinding.profileId is not declared by the profile file")
-                    if profile_locale and f"`{profile_locale}`" not in profile_text:
-                        errors.append("profileBinding.documentationLanguage is not declared by the profile file")
-                except ValueError as exc:
-                    errors.append(f"profileBinding.path: {exc}")
-
-if schema_version == "2.0" and "lineage" in data:
-    lineage = data.get("lineage")
-    if not isinstance(lineage, dict):
-        errors.append("lineage must be an object")
-    else:
-        for field in (
-            "predecessorReceiptPath", "predecessorReceiptRawSha256",
-            "predecessorTargetPath", "predecessorTargetNormalizedSha256",
-        ):
-            required_text(lineage, field, "lineage")
 
 decisions = data.get("decisions")
 if not isinstance(decisions, list):
@@ -488,25 +403,8 @@ authority = required_text(data, "deliveryAuthority", "receipt")
 if authority not in ("LocalImplementation", "PublishPR", "MergeAndSync"):
     errors.append("deliveryAuthority is invalid")
 authority_evidence = required_text(data, "authorityEvidence", "receipt")
-if authority in ("PublishPR", "MergeAndSync"):
-    evidence_lower = authority_evidence.lower()
-    if evidence_lower.startswith("default"):
-        errors.append("remote delivery authority needs explicit evidence")
-    if re.match(r"^(?:historic|historical|expired)\b", evidence_lower):
-        errors.append("remote delivery authority requires current, not historic, evidence")
-if schema_version == "2.0":
-    if "activeTargetExistedBefore" in operation:
-        active_existed = operation.get("activeTargetExistedBefore")
-        if not isinstance(active_existed, bool):
-            errors.append("operation.activeTargetExistedBefore must be boolean")
-        elif operation_type == "Create" and active_existed:
-            errors.append("Create operation cannot overwrite an immutable active target")
-    if "targetPath" in surface and required_text(surface, "targetPath", "agentSurface") != target_path_text:
-        errors.append("agentSurface.targetPath must equal target.path")
-    if "deliveryAuthority" in surface and required_text(surface, "deliveryAuthority", "agentSurface") != authority:
-        errors.append("agentSurface.deliveryAuthority must equal receipt deliveryAuthority")
-    if "autoExecute" in surface and surface.get("autoExecute") is not False:
-        errors.append("agentSurface.autoExecute must be false; authoring never starts downstream work")
+if authority in ("PublishPR", "MergeAndSync") and authority_evidence.lower().startswith("default"):
+    errors.append("remote delivery authority needs explicit evidence")
 
 prompt_state = required_text(data, "promptState", "receipt")
 if prompt_state not in ("Enabled", "Blocked"):

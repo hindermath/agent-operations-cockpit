@@ -1132,3 +1132,33 @@ Evidence und menschliche Abnahme bleiben getrennt.
 
 No new AEPS evidence: reuse the stable preset and existing source-order rules.
 Preserve findings and maturity; native proof does not grant human acceptance.
+
+## Security-Scan-Capture vom 2026-10-31 / Security scan capture of 2026-10-31
+
+Der [hashgebundene No-change-Nachweis](receipts/2026-10-31-standard-security-scan.md)
+erfasst die AEPS-Prüfung nach einem Standard Security Scan auf Base-HEAD
+`8e3c737e3fcba1ba8b0f338bebb135bf7339acaf`. **Keine neue
+AEPS-Evidence** für Preset-Zuordnung oder Promotion: Die neuen
+Sicherheitsbeobachtungen sind bis zur fachlichen Triage und kontrollierten
+Offenlegung im privaten Scan-Bericht gebunden. Dieses öffentliche Ledger
+enthält weder Schwachstellendetails noch einen neuen AEPS-Finding- oder
+Candidate-Claim. Matrix, Lückenanalyse und Handoff bleiben unverändert.
+
+*The hash-bound receipt records the AEPS assessment after a Standard Security
+Scan. No new AEPS evidence is accepted for preset mapping or promotion: new
+security observations remain in the private report pending owner triage and
+controlled disclosure. This public ledger contains no vulnerability details or
+new finding/candidate claim; derived artifacts stay unchanged.*
+
+## Security-Remediation vom 2026-10-31 / Security remediation of 2026-10-31
+
+Das [Remediation-Receipt](receipts/2026-10-31-security-remediation.md) erfasst
+lokale Korrektur, unabhängige Patch-Sichtung und gezielte Verifikation.
+**Keine neue AEPS-Evidence**: Eine veröffentlichte, projektübergreifende
+Preset-Validierung fehlt weiterhin. Finding-IDs, Reifegrade und abgeleitete
+Dispositionen bleiben unverändert; keine Promotion oder Upstream-Aktion.
+
+*The remediation receipt records local changes, independent patch review and
+focused verification. No new AEPS evidence is accepted without published
+cross-project preset validation. Existing findings, maturity and derived
+dispositions remain unchanged; no promotion or upstream action follows.*

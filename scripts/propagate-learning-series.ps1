@@ -80,12 +80,12 @@ if ($FilePrefix) { $argsToPass += @('--file-prefix', $FilePrefix) }
 if ($HomeDir)    { $argsToPass += @('--home-dir', $HomeDir) }
 if ($VerbosePreference -ne 'SilentlyContinue') { $argsToPass += '--verbose' }
 
-$bashCmd = "bash ~/scripts/propagate-learning-series.sh " + ($argsToPass -join ' ')
+$bashCommand = 'exec "$HOME/scripts/propagate-learning-series.sh" "$@"'
 
 if ($WhatIfPreference) {
-    Write-Host "[WhatIf] Wuerde ausfuehren / Would execute: wsl ${bashCmd}"
+    Write-Host "[WhatIf] Wuerde ausfuehren / Would execute: wsl bash -c <fixed command> -- $($argsToPass -join ' ')"
     exit 0
 }
 
-wsl bash -c $bashCmd
+wsl bash -c $bashCommand -- @argsToPass
 exit $LASTEXITCODE

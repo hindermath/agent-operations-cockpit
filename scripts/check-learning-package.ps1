@@ -8,6 +8,10 @@
     ausgeschlossene Git-/Build-/IDE-Artefakte und offensichtliche Secrets.
     Validates one package root, both start guides, manifest, SHA-256, excluded
     Git/build/IDE artefacts, and obvious secrets.
+    Maximal 2 GiB Archiv, 20.000 Eintraege und 32 MiB ZIP-Verzeichnis; ZIP64 wird abgewiesen.
+    Maximum 2 GiB archive, 20,000 entries and 32 MiB ZIP central directory; ZIP64 is rejected.
+    Die SHA-256-Datei ist auf 4 KiB begrenzt.
+    The SHA-256 sidecar is limited to 4 KiB.
 
 .PARAMETER PackagePath
     Pfad zum Lernreihen-ZIP. Path to the learning-series ZIP.
@@ -37,7 +41,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $packageScript = Join-Path $PSScriptRoot 'package-learning-series.ps1'
-$gitleaksConfig = Join-Path $PSScriptRoot 'templates/gitleaks.toml'
+$secretChecker = Join-Path $PSScriptRoot 'lib/check_learning_package_secrets.py'
 
 function Test-HBLearningPackage {
     param(
@@ -52,14 +56,22 @@ function Test-HBLearningPackage {
         throw "SHA-256-Datei nicht gefunden: $ShaPath"
     }
 
-    $expected = ((Get-Content -LiteralPath $ShaPath -Raw).Trim() -split '\s+')[0].ToLowerInvariant()
+    $python = Get-Command python3, python, py -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $python) { throw 'Python fuer begrenzte ZIP-Extraktion fehlt / Python is required for bounded ZIP extraction.' }
+    $archiveHelper = Join-Path $PSScriptRoot 'lib/check_learning_package_archive.py'
+    & $python.Source $archiveHelper --size $ZipPath
+    if ($LASTEXITCODE -ne 0) { throw 'ZIP-Groessenpruefung fehlgeschlagen / ZIP size validation failed.' }
+
+    $expected = & $python.Source $archiveHelper --checksum $ShaPath
+    if ($LASTEXITCODE -ne 0) { throw 'SHA-256-Sidecar ist ungueltig / SHA-256 sidecar is invalid.' }
     $actual = (Get-FileHash -LiteralPath $ZipPath -Algorithm SHA256).Hash.ToLowerInvariant()
     if ($expected -ne $actual) { throw "SHA-256 stimmt nicht: $ShaPath" }
 
     $tempRoot = Join-Path ([System.IO.Path]::GetTempPath()) ([System.Guid]::NewGuid().ToString())
     New-Item -ItemType Directory -Path $tempRoot -Force | Out-Null
     try {
-        Expand-Archive -LiteralPath $ZipPath -DestinationPath $tempRoot -Force
+        & $python.Source $archiveHelper $ZipPath $tempRoot
+        if ($LASTEXITCODE -ne 0) { throw 'ZIP-Extraktion oder Groessenpruefung fehlgeschlagen / ZIP extraction or size validation failed.' }
         $roots = @(Get-ChildItem -LiteralPath $tempRoot -Force)
         if ($roots.Count -ne 1 -or -not $roots[0].PSIsContainer) {
             throw 'ZIP muss genau einen Paket-Root enthalten.'
@@ -94,17 +106,8 @@ function Test-HBLearningPackage {
             throw 'Manifest nennt den Hosting-Leitfaden nicht.'
         }
 
-        $gitleaks = Get-Command gitleaks -ErrorAction SilentlyContinue
-        if ($gitleaks) {
-            $gitleaksArguments = @('dir', $root, '--no-banner', '--redact')
-            if (Test-Path -LiteralPath $gitleaksConfig -PathType Leaf) {
-                $gitleaksArguments += @('--config', $gitleaksConfig)
-            }
-            & $gitleaks.Source @gitleaksArguments *> $null
-            if ($LASTEXITCODE -ne 0) { throw 'gitleaks hat einen moeglichen Secret-Befund gemeldet.' }
-        } else {
-            Write-Warning 'gitleaks nicht verfuegbar; Secret-Scan uebersprungen.'
-        }
+        & $python.Source $secretChecker $root
+        if ($LASTEXITCODE -ne 0) { throw 'Lernpaket-Secret-Scan fehlgeschlagen / package secret scan failed.' }
 
         Write-Host "PASS: Lernpaket ist strukturell und gegen die Ausschlussregeln geprueft: $ZipPath"
     } finally {

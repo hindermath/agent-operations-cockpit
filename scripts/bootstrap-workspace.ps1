@@ -70,6 +70,12 @@ if ($Teardown) {
 if (-not $WorkspaceName) {
     throw "Fehler: -WorkspaceName ist erforderlich / Error: -WorkspaceName is required"
 }
+if ([System.IO.Path]::IsPathFullyQualified($WorkspaceName) -or
+    $WorkspaceName -in @('.', '..') -or
+    $WorkspaceName.Contains('/') -or $WorkspaceName.Contains('\') -or
+    $WorkspaceName -cnotmatch '^[A-Za-z0-9][A-Za-z0-9._ -]*$') {
+    throw 'Fehler: Workspace-Name muss ein direktes Unterverzeichnis von Home sein / Error: workspace name must be one direct child of Home'
+}
 
 if ($Platform -notin @('github', 'gitlab', 'forgejo', 'codeberg')) {
     throw "Fehler: Ungültige Plattform '$Platform'. Gültige Werte: github, gitlab, forgejo, codeberg.`nError: Invalid platform '$Platform'. Valid values: github, gitlab, forgejo, codeberg."
@@ -176,6 +182,9 @@ if ($LASTEXITCODE -ne 0) {
 
 if (-not (Test-Path $workspaceDir -PathType Container)) {
     Write-Error "Verzeichnis '$workspaceDir' existiert nicht."
+}
+if ((Get-Item -LiteralPath $workspaceDir -Force).LinkType) {
+    throw 'Fehler: Workspace-Verzeichnis muss ein unverlinktes Unterverzeichnis von Home sein / Error: workspace must be a non-symlinked child of Home'
 }
 if (Test-Path (Join-Path $workspaceDir '.git') -PathType Container) {
     Write-Error "'$workspaceDir' ist bereits ein Git-Repository."

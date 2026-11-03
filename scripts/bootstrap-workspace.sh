@@ -125,6 +125,16 @@ while [ $# -gt 0 ]; do
 done
 
 [ -z "$WORKSPACE_NAME" ] && usage
+case "$WORKSPACE_NAME" in
+  .|..|*/*|*\\*)
+    echo "Fehler: Workspace-Name muss ein direktes Unterverzeichnis von Home sein / Error: workspace name must be one direct child of Home" >&2
+    exit 2
+    ;;
+esac
+if [[ ! "$WORKSPACE_NAME" =~ ^[A-Za-z0-9][A-Za-z0-9._\ -]*$ ]]; then
+  echo "Fehler: Workspace-Name enthält nicht erlaubte Zeichen / Error: workspace name contains unsupported characters" >&2
+  exit 2
+fi
 
 case "$PLATFORM" in
   github|gitlab|forgejo|codeberg) ;;
@@ -152,7 +162,7 @@ if [ "$NO_REMOTE" -eq 0 ] && { [ "$PLATFORM" = "forgejo" ] || [ "$PLATFORM" = "c
   FORGEJO_BASE_URL="$(hb_forgejo_resolve_base_url "$PLATFORM" "$FORGEJO_URL")"
 fi
 
-HOME_DIR="$(cd ~ && pwd)"
+HOME_DIR="$(cd ~ && pwd -P)"
 WORKSPACE_DIR="$HOME_DIR/$WORKSPACE_NAME"
 SCRIPTS_SRC="$HOME_DIR/scripts"
 
@@ -182,6 +192,10 @@ fi
 if [ ! -d "$WORKSPACE_DIR" ]; then
   echo "Fehler: Verzeichnis '$WORKSPACE_DIR' existiert nicht." >&2
   exit 1
+fi
+if [ "$(cd "$WORKSPACE_DIR" && pwd -P)" != "$WORKSPACE_DIR" ]; then
+  echo "Fehler: Workspace-Verzeichnis muss ein direktes, unverlinktes Unterverzeichnis von Home sein / Error: workspace must be a direct, non-symlinked child of Home" >&2
+  exit 2
 fi
 
 if [ -d "$WORKSPACE_DIR/.git" ]; then
@@ -288,9 +302,11 @@ echo ""
 
 run() {
   if [ "$DRY_RUN" -eq 1 ]; then
-    echo "  [dry-run] $*"
+    printf '  [dry-run]'
+    printf ' %q' "$@"
+    printf '\n'
   else
-    eval "$@"
+    "$@"
   fi
 }
 
@@ -350,9 +366,9 @@ fi
 # --- Scripts kopieren ----------------------------------------------------------
 
 info "Kopiere Scripts …"
-run "mkdir -p '$WORKSPACE_DIR/scripts'"
-run "cp -R '$SCRIPTS_SRC/.' '$WORKSPACE_DIR/scripts/'"
-run "chmod +x '$WORKSPACE_DIR/scripts/'*.sh '$WORKSPACE_DIR/scripts/hooks/pre-push' 2>/dev/null || true"
+run mkdir -p "$WORKSPACE_DIR/scripts"
+run cp -R "$SCRIPTS_SRC/." "$WORKSPACE_DIR/scripts/"
+run chmod +x "$WORKSPACE_DIR"/scripts/*.sh "$WORKSPACE_DIR/scripts/hooks/pre-push" 2>/dev/null || true
 ok "Scripts kopiert"
 
 # --- README.md erzeugen --------------------------------------------------------
@@ -558,9 +574,9 @@ fi
 # --- git init + commit ---------------------------------------------------------
 
 info "Initialisiere Git-Repository …"
-run "git -C '$WORKSPACE_DIR' init"
-run "git -C '$WORKSPACE_DIR' add -A"
-run "git -C '$WORKSPACE_DIR' commit -m 'chore: initiale Baseline-Konfiguration für $WORKSPACE_NAME
+run git -C "$WORKSPACE_DIR" init
+run git -C "$WORKSPACE_DIR" add -A
+run git -C "$WORKSPACE_DIR" commit -m "chore: initiale Baseline-Konfiguration für $WORKSPACE_NAME
 
 - .gitignore        – schließt Sub-Repos und Artefakte aus
 - scripts/          – Secret-Scan, Hook-Installation (Bash + PowerShell)
@@ -570,7 +586,7 @@ Nach dem Clonen auf neuem Gerät:
   bash scripts/install-hooks.sh       (macOS/Linux)
   pwsh scripts/install-hooks.ps1      (Windows)
 
-Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>'"
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
 ok "Initialer Commit erstellt"
 
 if [ -f "$WORKSPACE_DIR/scripts/render-project-statistics.sh" ]; then
@@ -594,15 +610,15 @@ if [ "$NO_REMOTE" -eq 1 ]; then
   info "Remote-Erstellung uebersprungen (--no-remote)."
 elif [ "$PLATFORM" = "github" ]; then
   info "Erstelle privates GitHub-Repository '$REPO_NAME' …"
-  run "gh repo create '$REPO_NAME' --private --description '$REPO_DESC' --source '$WORKSPACE_DIR' --remote origin --push"
+  run gh repo create "$REPO_NAME" --private --description "$REPO_DESC" --source "$WORKSPACE_DIR" --remote origin --push
   ok "GitHub-Repo erstellt und gepusht"
 elif [ "$PLATFORM" = "gitlab" ]; then
   REMOTE_URL="https://${GITLAB_HOSTNAME}/${GITLAB_USER}/${REPO_SLUG}.git"
   info "Erstelle privates GitLab-Repository '$REPO_SLUG' …"
-  run "GITLAB_HOST='$GITLAB_HOSTNAME' glab repo create '$REPO_SLUG' --private --description '$REPO_DESC'"
+  run env GITLAB_HOST="$GITLAB_HOSTNAME" glab repo create "$REPO_SLUG" --private --description "$REPO_DESC"
   ok "GitLab-Repo erstellt"
-  run "git -C '$WORKSPACE_DIR' remote add origin '$REMOTE_URL'"
-  run "git -C '$WORKSPACE_DIR' push -u origin HEAD"
+  run git -C "$WORKSPACE_DIR" remote add origin "$REMOTE_URL"
+  run git -C "$WORKSPACE_DIR" push -u origin HEAD
   ok "Remote gesetzt und gepusht"
 else
   if [ "$DRY_RUN" -eq 1 ]; then
@@ -631,7 +647,7 @@ fi
 # --- Hooks installieren --------------------------------------------------------
 
 info "Installiere Git-Hooks …"
-run "bash '$WORKSPACE_DIR/scripts/install-hooks.sh'"
+run bash "$WORKSPACE_DIR/scripts/install-hooks.sh"
 ok "Hooks installiert"
 
 # --- ~/README.md aktualisieren ------------------------------------------------
@@ -675,14 +691,14 @@ fi
 HOME_GIT="$HOME_DIR/.git"
 if [ -d "$HOME_GIT" ]; then
   info "Committe Änderungen in home-baseline …"
-  run "git -C '$HOME_DIR' add README.md"
-  run "git -C '$HOME_DIR' commit -m 'chore: $WORKSPACE_NAME in Workspace-Übersicht eingetragen
+  run git -C "$HOME_DIR" add README.md
+  run git -C "$HOME_DIR" commit -m "chore: $WORKSPACE_NAME in Workspace-Übersicht eingetragen
 
 Automatisch durch bootstrap-workspace.sh hinzugefügt.
 
-Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>'"
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
   if git -C "$HOME_DIR" remote get-url origin >/dev/null 2>&1; then
-    run "git -C '$HOME_DIR' push"
+    run git -C "$HOME_DIR" push
     ok "home-baseline aktualisiert und gepusht"
   else
     ok "home-baseline committed (kein Remote konfiguriert — Push übersprungen / no remote configured — push skipped)"
@@ -700,7 +716,7 @@ GITCONFIG="${HOME_DIR}/.gitconfig"
 
 if [ -d "$GITCONFIG_D" ]; then
   # core.autocrlf im lokalen .git/config setzen
-  run "git -C '$WORKSPACE_DIR' config --local core.autocrlf input"
+  run git -C "$WORKSPACE_DIR" config --local core.autocrlf input
 
   # Idempotenz-Prüfung: bereits ein includeIf-Block für diesen Workspace?
   if ! grep -qF "gitdir:~/${WORKSPACE_NAME}/" "${GITCONFIG}" 2>/dev/null; then

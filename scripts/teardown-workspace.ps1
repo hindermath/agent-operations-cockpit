@@ -14,13 +14,20 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $forgejoLib = Join-Path $PSScriptRoot 'lib/hg-forgejo.ps1'
+$sourceResolver = Join-Path $PSScriptRoot 'lib/resolve-home-baseline-source.ps1'
 if (Test-Path $forgejoLib) {
     . $forgejoLib
+}
+if (Test-Path $sourceResolver) {
+    . $sourceResolver
 }
 
 $script:ExitCode = 0
 $script:Results = [System.Collections.Generic.List[object]]::new()
 $script:Level2Projects = [System.Collections.Generic.List[string]]::new()
+$script:ApprovedRemoteIdentities = @{}
+$script:ApprovedGitMarkers = @{}
+$script:BackupRefSnapshots = @{}
 $script:DryRun = [bool]$WhatIfPreference
 $script:HomeDir = ''
 $script:WorkspaceDir = ''
@@ -35,6 +42,10 @@ function Show-Usage {
     @'
 Verwendung / Usage:
   teardown-workspace.ps1 -WorkspaceName <Name> [OPTIONEN / OPTIONS]
+
+WorkspaceName:
+  Einfacher Name eines echten direkten Home-Unterverzeichnisses /
+  Simple name of a real direct Home child directory
 
 Optionen / Options:
   -Backup         Erstellt vor der Löschung ein Backup-Archiv / Create backup archive before deletion
@@ -89,9 +100,113 @@ function Resolve-HomeDirectory {
     (Resolve-Path -LiteralPath $candidate).Path
 }
 
+function Assert-ValidWorkspaceName([string]$Name) {
+    if ([System.IO.Path]::IsPathFullyQualified($Name) -or
+        $Name -in @('.', '..') -or
+        $Name.Contains('/') -or
+        $Name.Contains('\')) {
+        throw 'Fehler: Workspace-Name muss ein einzelnes direktes Unterverzeichnis von Home sein / Error: Workspace name must be one direct child directory of Home'
+    }
+}
+
+function Test-PathValueEqual([string]$Left, [string]$Right) {
+    $comparison = if ($IsWindows) {
+        [System.StringComparison]::OrdinalIgnoreCase
+    }
+    else {
+        [System.StringComparison]::Ordinal
+    }
+    [string]::Equals($Left, $Right, $comparison)
+}
+
+function Test-GitMarker([string]$Dir) {
+    $gitPath = Join-Path $Dir '.git'
+    if ($null -ne (Get-Item -LiteralPath $gitPath -Force -ErrorAction SilentlyContinue)) {
+        return $true
+    }
+    $entries = @(Get-ChildItem -LiteralPath $Dir -Force -Name -ErrorAction Stop)
+    if ($IsWindows) { return ($entries -contains '.git') }
+    return ($entries -ccontains '.git')
+}
+
+function Assert-GitMetadata([string]$Dir) {
+    $inside = ((& git -C $Dir rev-parse --is-inside-work-tree 2>$null) | Out-String).Trim()
+    if ($LASTEXITCODE -ne 0 -or $inside -cne 'true') {
+        throw "Git-Metadaten nicht pruefbar / Git metadata unavailable: $Dir"
+    }
+    & git -C $Dir config --local --list *> $null
+    if ($LASTEXITCODE -ne 0) {
+        throw "Git-Konfiguration nicht pruefbar / Git configuration unavailable: $Dir"
+    }
+}
+
+function Get-OriginForDir([string]$Dir) {
+    $remotes = @(& git -C $Dir remote 2>$null)
+    if ($LASTEXITCODE -ne 0) {
+        throw "Git-Remotes nicht pruefbar / Git remotes unavailable: $Dir"
+    }
+    if ($remotes -ccontains 'origin') {
+        $origin = ((& git -C $Dir remote get-url origin 2>$null) | Out-String).Trim()
+        if ($LASTEXITCODE -ne 0 -or -not $origin) {
+            throw "Git-Origin nicht pruefbar / Git origin unavailable: $Dir"
+        }
+        return $origin
+    }
+    return ''
+}
+
+function Get-OptionalGitConfig([string]$Dir, [string]$Key) {
+    $value = ((& git -C $Dir config --local --get $Key 2>$null) | Out-String).Trim()
+    if ($LASTEXITCODE -eq 1) { return '' }
+    if ($LASTEXITCODE -ne 0) {
+        throw "Git-Konfiguration nicht pruefbar / Git configuration unavailable: $Dir"
+    }
+    return $value
+}
+
+function Resolve-SafeDirectChildDirectory {
+    param(
+        [Parameter(Mandatory)]
+        [string] $Path,
+        [Parameter(Mandatory)]
+        [string] $ExpectedParent,
+        [Parameter(Mandatory)]
+        [string] $ExpectedName
+    )
+
+    if (-not (Test-Path -LiteralPath $Path -PathType Container)) {
+        throw "Fehler: Workspace '$Path' nicht gefunden / Error: Workspace '$Path' not found"
+    }
+
+    $item = Get-Item -LiteralPath $Path -Force
+    if ($item.LinkType -or (($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0)) {
+        throw 'Fehler: Workspace muss ein echtes direktes Unterverzeichnis sein; Links und Pfadumgehungen sind unzulässig / Error: Workspace must be a real direct child directory; links and path escapes are not allowed'
+    }
+
+    $resolved = [System.IO.Path]::GetFullPath($item.FullName)
+    $resolvedParent = [System.IO.Path]::GetDirectoryName($resolved)
+    $resolvedName = [System.IO.Path]::GetFileName($resolved)
+    if (-not (Test-PathValueEqual -Left $resolvedParent -Right $ExpectedParent) -or
+        -not (Test-PathValueEqual -Left $resolvedName -Right $ExpectedName)) {
+        throw 'Fehler: Workspace muss ein echtes direktes Unterverzeichnis sein; Links und Pfadumgehungen sind unzulässig / Error: Workspace must be a real direct child directory; links and path escapes are not allowed'
+    }
+
+    $gitDirectory = Join-Path $resolved '.git'
+    $gitItem = Get-Item -LiteralPath $gitDirectory -Force -ErrorAction SilentlyContinue
+    if ($null -ne $gitItem) {
+        if ($gitItem.LinkType -or
+            (($gitItem.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0)) {
+            throw 'Fehler: Git-Metadatenverzeichnis darf kein Link sein / Error: Git metadata directory must not be a link'
+        }
+    }
+
+    $resolved
+}
+
 function Initialize-Context {
     $script:HomeDir = Resolve-HomeDirectory
-    $script:WorkspaceDir = Join-Path $script:HomeDir $WorkspaceName
+    Assert-ValidWorkspaceName -Name $WorkspaceName
+    $candidate = Join-Path $script:HomeDir $WorkspaceName
     $script:NormalizedName = ConvertTo-NormalizedName $WorkspaceName
     $script:ReadmePath = Join-Path $script:HomeDir 'README.md'
     $script:GitignorePath = Join-Path $script:HomeDir '.gitignore'
@@ -99,48 +214,138 @@ function Initialize-Context {
     $script:GitconfigD = Join-Path $script:HomeDir '.gitconfig.d'
     $script:IncFile = Join-Path $script:GitconfigD "$($script:NormalizedName).inc"
 
-    if ($WorkspaceName -eq 'home-baseline') {
-        throw "Fehler: 'home-baseline' ist geschützt / Error: 'home-baseline' is protected"
+    if ($WorkspaceName -in @('home-baseline', 'home-baseline-source')) {
+        throw 'Fehler: Level-0-Quelle ist geschützt / Error: Level 0 source is protected'
     }
 
-    if (-not (Test-Path -LiteralPath $script:WorkspaceDir -PathType Container)) {
-        throw "Fehler: Workspace '$script:WorkspaceDir' nicht gefunden / Error: Workspace '$script:WorkspaceDir' not found"
+    $script:WorkspaceDir = Resolve-SafeDirectChildDirectory `
+        -Path $candidate `
+        -ExpectedParent $script:HomeDir `
+        -ExpectedName $WorkspaceName
+
+    $configuredPaths = [Collections.Generic.List[string]]::new()
+    if (-not [string]::IsNullOrWhiteSpace($env:HOME_BASELINE_SOURCE)) {
+        $configuredPaths.Add($env:HOME_BASELINE_SOURCE)
+    }
+    $stateFile = Join-Path $script:HomeDir '.home-baseline/source-repository.json'
+    if (Test-Path -LiteralPath $stateFile -PathType Leaf) {
+        try {
+            $state = Get-Content -LiteralPath $stateFile -Raw -Encoding UTF8 -ErrorAction Stop | ConvertFrom-Json -ErrorAction Stop
+            if (-not ($state.sourcePath -is [string]) -or [string]::IsNullOrWhiteSpace($state.sourcePath)) {
+                throw 'Missing sourcePath'
+            }
+            $configuredPaths.Add([string]$state.sourcePath)
+        }
+        catch {
+            throw "Fehler: Level-0-Quellstatus nicht pruefbar / Error: Level 0 source state unavailable: $stateFile"
+        }
+    }
+    foreach ($configuredPath in $configuredPaths) {
+        $sourceItem = Get-Item -LiteralPath $configuredPath -Force -ErrorAction Stop
+        if (-not $sourceItem.PSIsContainer) {
+            throw 'Fehler: Konfigurierte Level-0-Quelle nicht pruefbar / Error: Configured Level 0 source unavailable'
+        }
+        $sourceTarget = $sourceItem.ResolveLinkTarget($true)
+        $sourcePath = if ($null -ne $sourceTarget) { $sourceTarget.FullName } else { $sourceItem.FullName }
+        if (Test-PathValueEqual -Left $script:WorkspaceDir -Right $sourcePath) {
+            throw 'Fehler: Konfigurierte Level-0-Quelle ist geschützt / Error: Configured Level 0 source is protected'
+        }
+    }
+    if ((Test-Path -LiteralPath (Join-Path $script:WorkspaceDir 'scripts/sync-home.sh') -PathType Leaf) -and
+        (Test-Path -LiteralPath (Join-Path $script:WorkspaceDir 'scripts/sync-home.ps1') -PathType Leaf)) {
+        throw 'Fehler: Level-0-Quelle ist geschützt / Error: Level 0 source is protected'
+    }
+
+    if (-not (Get-Command Resolve-HBSourceRepository -ErrorAction SilentlyContinue)) {
+        throw 'Fehler: Level-0-Quelle nicht pruefbar / Error: Level 0 source unavailable'
+    }
+    $protectedSource = Resolve-HBSourceRepository -StartPath $script:HomeDir -AllowLegacy
+    if (Test-PathValueEqual -Left $script:WorkspaceDir -Right $protectedSource) {
+        throw 'Fehler: Konfigurierte Level-0-Quelle ist geschützt / Error: Configured Level 0 source is protected'
     }
 }
 
 function Get-Level2Projects {
     $script:Level2Projects.Clear()
-    $children = Get-ChildItem -LiteralPath $script:WorkspaceDir -Directory -ErrorAction SilentlyContinue
+    $children = Get-ChildItem -LiteralPath $script:WorkspaceDir -Directory -ErrorAction Stop
     foreach ($child in $children) {
-        if (Test-Path -LiteralPath (Join-Path $child.FullName '.git') -PathType Container) {
-            $script:Level2Projects.Add($child.FullName)
+        $gitDirectory = Join-Path $child.FullName '.git'
+        if (Test-GitMarker $child.FullName) {
+            $resolvedChild = Resolve-SafeDirectChildDirectory `
+                -Path $child.FullName `
+                -ExpectedParent $script:WorkspaceDir `
+                -ExpectedName $child.Name
+            $gitItem = Get-Item -LiteralPath $gitDirectory -Force
+            if ($gitItem.LinkType -or
+                (($gitItem.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0)) {
+                throw 'Fehler: Level-2-Git-Verzeichnis darf kein Link sein / Error: Level 2 Git directory must not be a link'
+            }
+            $script:Level2Projects.Add($resolvedChild)
         }
     }
 }
 
 function Get-RemotePlatform([string]$Dir) {
-    if (-not (Test-Path -LiteralPath (Join-Path $Dir '.git') -PathType Container)) {
+    if (-not (Test-GitMarker $Dir)) {
         return 'kein Remote / no remote'
     }
-
-    $remoteUrl = (& git -C $Dir remote get-url origin 2>$null)
-    if (-not $remoteUrl) {
-        return 'kein Remote / no remote'
+    if ($KeepRemote) {
+        return 'bewusst behalten / intentionally kept'
     }
 
-    $configuredPlatform = ((& git -C $Dir config --local --get home-baseline.remote-platform 2>$null) | Out-String).Trim()
-    if ($configuredPlatform -in @('forgejo', 'codeberg')) {
-        return $configuredPlatform
-    }
+    $approved = $script:ApprovedRemoteIdentities[$Dir]
+    if ($approved -eq 'none') { return 'kein Remote / no remote' }
+    return $approved.Replace('|', ' ')
+}
 
-    if ($remoteUrl -match 'github\.com') {
-        return 'GitHub'
-    }
-    if ($remoteUrl -match 'gitlab\.com') {
-        return 'GitLab'
-    }
+function Get-ForgejoTargetForDir([string]$Dir) {
+    $origin = ((& git -C $Dir remote get-url origin 2>$null) | Out-String).Trim()
+    $platform = ((& git -C $Dir config --local --get home-baseline.remote-platform 2>$null) | Out-String).Trim()
+    $baseUrl = ((& git -C $Dir config --local --get home-baseline.remote-base-url 2>$null) | Out-String).Trim()
+    $owner = ((& git -C $Dir config --local --get home-baseline.remote-owner 2>$null) | Out-String).Trim()
+    $repository = ((& git -C $Dir config --local --get home-baseline.remote-repository 2>$null) | Out-String).Trim()
+    return Get-ForgejoTargetFromValues $origin $baseUrl $platform $owner $repository
+}
 
-    return 'anderes Remote / other remote'
+function Get-ForgejoTargetFromValues(
+    [string]$Origin, [string]$BaseUrl, [string]$Platform,
+    [string]$Owner, [string]$Repository
+) {
+    $pythonCommand = Get-Command python3 -ErrorAction SilentlyContinue
+    if (-not $pythonCommand) { $pythonCommand = Get-Command python -ErrorAction SilentlyContinue }
+    if (-not $pythonCommand) { return $null }
+    $parser = Join-Path $PSScriptRoot 'lib/validate_forgejo_teardown_remote.py'
+    $identity = & $pythonCommand.Source $parser $Origin $BaseUrl $Platform $Owner $Repository 2>$null
+    if ($LASTEXITCODE -ne 0 -or -not $identity) { return $null }
+    return ([string] $identity).Trim()
+}
+
+function Initialize-ApprovedRemoteTargets {
+    foreach ($dir in @($script:Level2Projects.ToArray()) + @($script:WorkspaceDir)) {
+        $script:ApprovedGitMarkers[$dir] = 'none'
+        $script:ApprovedRemoteIdentities[$dir] = 'none'
+        if (-not (Test-GitMarker $dir)) { continue }
+        $script:ApprovedGitMarkers[$dir] = 'git'
+        if ($KeepRemote) { continue }
+        Assert-GitMetadata $dir
+        $origin = Get-OriginForDir $dir
+        if (-not $origin) { continue }
+        $platform = ((& git -C $dir config --local --get home-baseline.remote-platform 2>$null) | Out-String).Trim()
+        if ($platform -in @('forgejo', 'codeberg')) {
+            $identity = Get-ForgejoTargetForDir $dir
+            if (-not $identity) {
+                throw "Forgejo/Codeberg-Ziel stimmt nicht mit origin ueberein / target does not match origin: $dir"
+            }
+            $script:ApprovedRemoteIdentities[$dir] = "$platform|$identity"
+        }
+        else {
+            $parsed = Get-ParsedRemote $origin
+            if ($null -eq $parsed) {
+                throw "Remote-Ziel ist ungueltig / remote target is invalid: $dir"
+            }
+            $script:ApprovedRemoteIdentities[$dir] = "$($parsed.Platform)|$($parsed.OwnerRepo)"
+        }
+    }
 }
 
 function Get-PlannedBackupPath([string]$TargetName) {
@@ -152,7 +357,7 @@ function Get-UniqueBackupPath([string]$TargetName) {
     $archivePath = "$base.tar.gz"
     $index = 1
 
-    while (Test-Path -LiteralPath $archivePath) {
+    while ($null -ne (Get-Item -LiteralPath $archivePath -Force -ErrorAction SilentlyContinue)) {
         $archivePath = "$base-$index.tar.gz"
         $index++
     }
@@ -205,6 +410,12 @@ function Show-Preamble {
     $lines.Add("       - ~/.gitconfig.d/$($script:NormalizedName).inc")
 
     Show-Box -Title $title -Lines $lines
+    foreach ($dir in @($script:Level2Projects.ToArray()) + @($script:WorkspaceDir)) {
+        if ($script:ApprovedRemoteIdentities.ContainsKey($dir) -and
+            $script:ApprovedRemoteIdentities[$dir] -ne 'none') {
+            Write-Host "Remote-Loeschziel / Remote deletion target ($dir): $($script:ApprovedRemoteIdentities[$dir])"
+        }
+    }
 }
 
 function Confirm-OrAbort {
@@ -218,61 +429,204 @@ function Confirm-OrAbort {
     }
 }
 
-function Test-Safety([string]$Label, [string]$Dir) {
+function Test-Safety([string]$Label, [string]$Dir, [switch]$Preflight) {
     if ($Force) {
-        Add-Result 'skip' "Sicherheitsprüfung übersprungen / Safety check skipped: $Label"
+        if (-not $Preflight) {
+            Add-Result 'skip' "Sicherheitsprüfung übersprungen / Safety check skipped: $Label"
+        }
         return $true
     }
 
-    if (-not (Test-Path -LiteralPath (Join-Path $Dir '.git') -PathType Container)) {
-        Add-Result 'skip' "Kein Git-Repository für Sicherheitsprüfung / No git repository for safety check: $Label"
+    $marker = Test-GitMarker $Dir
+    if ($script:ApprovedGitMarkers[$Dir] -eq 'git' -and -not $marker) {
+        Add-Result 'fail' "Git-Metadaten seit Vorschau entfernt / Git metadata removed after preview: $Label"
+        Set-WarningExit
+        return $false
+    }
+    if ($script:ApprovedGitMarkers[$Dir] -eq 'none' -and $marker) {
+        Add-Result 'fail' "Git-Metadaten seit Vorschau hinzugefuegt / Git metadata added after preview: $Label"
+        Set-WarningExit
+        return $false
+    }
+    if (-not $marker) {
+        if (-not $Preflight) {
+            Add-Result 'skip' "Kein Git-Repository für Sicherheitsprüfung / No git repository for safety check: $Label"
+        }
         return $true
     }
 
-    $statusOutput = (& git -C $Dir status --porcelain 2>$null)
+    Assert-GitMetadata $Dir
+    $statusOutput = (& git -C $Dir status --porcelain --ignored=matching --untracked-files=all 2>$null)
+    if ($LASTEXITCODE -ne 0) {
+        Add-Result 'fail' "Git-Status nicht pruefbar / Git status unavailable: $Label"
+        Set-WarningExit
+        return $false
+    }
     if ($statusOutput) {
-        Add-Result 'fail' "Uncommittete Änderungen erkannt / Uncommitted changes detected: $Label"
+        Add-Result 'fail' "Lokale oder ignorierte Dateien erkannt / Local or ignored files detected: $Label"
         Set-WarningExit
         return $false
     }
 
-    & git -C $Dir rev-parse '@{u}' *> $null
-    if ($LASTEXITCODE -eq 0) {
-        $unpushed = (& git -C $Dir log '@{u}..HEAD' --oneline 2>$null)
-        if ($unpushed) {
+    $stash = @(& git -C $Dir for-each-ref --format='%(refname)' refs/stash 2>$null)
+    if ($LASTEXITCODE -ne 0) {
+        Add-Result 'fail' "Git-Stash nicht pruefbar / Git stash unavailable: $Label"
+        Set-WarningExit
+        return $false
+    }
+    if ($stash.Count -gt 0) {
+        Add-Result 'fail' "Git-Stash enthaelt lokale Arbeit / Git stash contains local work: $Label"
+        Set-WarningExit
+        return $false
+    }
+
+    $allRefs = @(& git -C $Dir for-each-ref --format='%(refname)' refs 2>$null)
+    if ($LASTEXITCODE -ne 0) {
+        Add-Result 'fail' "Git-Referenzen nicht pruefbar / Git refs unavailable: $Label"
+        Set-WarningExit
+        return $false
+    }
+    foreach ($reference in $allRefs) {
+        if ($reference -and
+            -not $reference.StartsWith('refs/heads/', [StringComparison]::Ordinal) -and
+            -not $reference.StartsWith('refs/remotes/', [StringComparison]::Ordinal) -and
+            -not $Backup) {
+            Add-Result 'fail' "Lokale Git-Referenzen erkannt; -Backup oder -Force verwenden / Local Git refs detected; use -Backup or -Force: $Label"
+            Set-WarningExit
+            return $false
+        }
+    }
+
+    & git -C $Dir symbolic-ref --quiet HEAD *> $null
+    if ($LASTEXITCODE -ne 0) {
+        Add-Result 'fail' "Git-HEAD ohne pruefbaren Branch / Git HEAD has no verifiable branch: $Label"
+        Set-WarningExit
+        return $false
+    }
+    $branchRows = @(& git -C $Dir for-each-ref --format='%(refname)%09%(upstream)' refs/heads 2>$null)
+    if ($LASTEXITCODE -ne 0) {
+        Add-Result 'fail' "Git-Branches nicht pruefbar / Git branches unavailable: $Label"
+        Set-WarningExit
+        return $false
+    }
+    foreach ($row in $branchRows) {
+        if (-not $row) { continue }
+        $parts = $row -split "`t", 2
+        if ($parts.Count -ne 2 -or -not $parts[0].StartsWith('refs/heads/', [StringComparison]::Ordinal)) {
+            Add-Result 'fail' "Git-Branch nicht pruefbar / Git branch unavailable: $Label"
+            Set-WarningExit
+            return $false
+        }
+        $branchRef = $parts[0]
+        $branchName = $branchRef.Substring('refs/heads/'.Length)
+        $upstream = $parts[1]
+        $remote = Get-OptionalGitConfig $Dir "branch.$branchName.remote"
+        if (-not $remote -or $remote -eq '.' -or
+            -not $upstream.StartsWith("refs/remotes/$remote/", [StringComparison]::Ordinal)) {
+            Add-Result 'fail' "Git-Branch ohne pruefbaren Remote-Upstream / Git branch has no verifiable remote upstream: $Label"
+            Set-WarningExit
+            return $false
+        }
+        $remoteUrl = ((& git -C $Dir remote get-url $remote 2>$null) | Out-String).Trim()
+        if ($LASTEXITCODE -ne 0 -or -not $remoteUrl) {
+            Add-Result 'fail' "Git-Remote nicht pruefbar / Git remote unavailable: $Label"
+            Set-WarningExit
+            return $false
+        }
+        $ahead = ((& git -C $Dir rev-list --count "$upstream..$branchRef" 2>$null) | Out-String).Trim()
+        if ($LASTEXITCODE -ne 0 -or $ahead -notmatch '^0+$') {
             Add-Result 'fail' "Ungepushte Commits erkannt / Unpushed commits detected: $Label"
             Set-WarningExit
             return $false
         }
     }
 
-    Add-Result 'done' "Sicherheitsprüfung bestanden / Safety check passed: $Label"
+    if (-not $Preflight) {
+        Add-Result 'done' "Sicherheitsprüfung bestanden / Safety check passed: $Label"
+    }
     $true
 }
 
-function Get-OwnerRepo([string]$RemoteUrl, [string]$HostPattern) {
-    $RemoteUrl -replace ".*$HostPattern[:/](.*?)(\.git)?$", '$1'
+function Get-ParsedRemote([string]$RemoteUrl) {
+    $pythonCommand = Get-Command python3 -ErrorAction SilentlyContinue
+    if (-not $pythonCommand) { $pythonCommand = Get-Command python -ErrorAction SilentlyContinue }
+    if (-not $pythonCommand) { return $null }
+    $parser = Join-Path $PSScriptRoot 'lib/parse_teardown_remote.py'
+    $parsed = & $pythonCommand.Source $parser $RemoteUrl 2>$null
+    if ($LASTEXITCODE -ne 0 -or -not $parsed) { return $null }
+    $fields = ([string] $parsed).Split("`t")
+    if ($fields.Count -ne 2) { return $null }
+    return [pscustomobject]@{ Platform = $fields[0]; OwnerRepo = $fields[1] }
 }
 
 function Invoke-Backup([string]$Label, [string]$Dir, [string]$TargetName) {
     if (-not $Backup) {
-        return
+        return $true
     }
 
     if (-not (Get-Command tar -ErrorAction SilentlyContinue)) {
         Add-Result 'fail' "Backup nicht erstellt, tar fehlt / Backup not created, tar missing: $Label"
         Set-WarningExit
-        return
+        return $false
     }
 
+    $hadGitMarker = Test-GitMarker $Dir
+    $refsBefore = if ($hadGitMarker) { Get-GitRefsSnapshot $Dir } else { '' }
+
     $archivePath = Get-UniqueBackupPath $TargetName
-    & tar czf $archivePath -C (Split-Path $Dir -Parent) (Split-Path $Dir -Leaf) *> $null
-    if ($LASTEXITCODE -eq 0) {
+    & tar czf $archivePath -C (Split-Path $Dir -Parent) "./$(Split-Path $Dir -Leaf)" *> $null
+    if ($LASTEXITCODE -eq 0 -and (Test-Path -LiteralPath $archivePath -PathType Leaf) -and
+        (Get-Item -LiteralPath $archivePath).Length -gt 0) {
+        if ((Test-GitMarker $Dir) -ne $hadGitMarker) {
+            Add-Result 'fail' "Git-Metadaten waehrend Backup geaendert / Git metadata changed during backup: $Label"
+            Set-WarningExit
+            return $false
+        }
+        if ($hadGitMarker) {
+            $refsAfter = Get-GitRefsSnapshot $Dir
+            if ($refsAfter -cne $refsBefore) {
+                Add-Result 'fail' "Git-Referenzen waehrend Backup geaendert / Git refs changed during backup: $Label"
+                Set-WarningExit
+                return $false
+            }
+            $script:BackupRefSnapshots[$Dir] = "git|$refsAfter"
+        } else {
+            $script:BackupRefSnapshots[$Dir] = 'none'
+        }
         Add-Result 'done' "Backup erstellt / Backup created: $(Split-Path $archivePath -Leaf)"
+        return $true
     } else {
         Add-Result 'fail' "Backup fehlgeschlagen / Backup failed: $Label"
         Set-WarningExit
+        return $false
     }
+}
+
+function Get-GitRefsSnapshot([string]$Dir) {
+    $refs = @(& git -C $Dir for-each-ref --format='%(refname)%09%(objectname)' refs 2>$null)
+    if ($LASTEXITCODE -ne 0) {
+        throw "Fehler: Git-Referenzen nicht pruefbar / Error: Git refs unavailable: $Dir"
+    }
+    $refs -join "`n"
+}
+
+function Test-BackupRefs([string]$Label, [string]$Dir) {
+    if (-not $Backup) { return $true }
+    if (-not $script:BackupRefSnapshots.ContainsKey($Dir)) {
+        Add-Result 'fail' "Backup-Referenzstand fehlt / Backup ref snapshot missing: $Label"
+        Set-WarningExit
+        return $false
+    }
+    $snapshot = $script:BackupRefSnapshots[$Dir]
+    if ($snapshot -eq 'none') {
+        if (-not (Test-GitMarker $Dir)) { return $true }
+    } elseif ((Test-GitMarker $Dir) -and
+              ("git|$(Get-GitRefsSnapshot $Dir)" -ceq $snapshot)) {
+        return $true
+    }
+    Add-Result 'fail' "Git-Referenzen nach Backup geaendert / Git refs changed after backup: $Label"
+    Set-WarningExit
+    return $false
 }
 
 function Remove-RemoteRepo([string]$Label, [string]$Dir) {
@@ -281,15 +635,49 @@ function Remove-RemoteRepo([string]$Label, [string]$Dir) {
         return $true
     }
 
-    if (-not (Test-Path -LiteralPath (Join-Path $Dir '.git') -PathType Container)) {
+    if (-not $script:ApprovedRemoteIdentities.ContainsKey($Dir)) {
+        Add-Result 'fail' "Remote-Vorschau fehlt / Remote preview is missing: $Label"
+        Set-WarningExit
+        return $false
+    }
+    $approved = $script:ApprovedRemoteIdentities[$Dir]
+
+    $marker = Test-GitMarker $Dir
+    if ($script:ApprovedGitMarkers[$Dir] -eq 'git' -and -not $marker) {
+        Add-Result 'fail' "Git-Metadaten seit Vorschau entfernt / Git metadata removed after preview: $Label"
+        Set-WarningExit
+        return $false
+    }
+    if ($script:ApprovedGitMarkers[$Dir] -eq 'none' -and $marker) {
+        Add-Result 'fail' "Git-Metadaten seit Vorschau hinzugefuegt / Git metadata added after preview: $Label"
+        Set-WarningExit
+        return $false
+    }
+    if (-not $marker) {
+        if ($approved -ne 'none') {
+            Add-Result 'fail' "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $Label"
+            Set-WarningExit
+            return $false
+        }
         Add-Result 'skip' "Kein Git-Repository, Remote-Schritt übersprungen / No git repository, remote step skipped: $Label"
         return $true
     }
 
-    $remoteUrl = (& git -C $Dir remote get-url origin 2>$null)
+    Assert-GitMetadata $Dir
+    $remoteUrl = Get-OriginForDir $Dir
+    if ($approved -ne 'none' -and -not $remoteUrl) {
+        Add-Result 'fail' "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $Label"
+        Set-WarningExit
+        return $false
+    }
     if (-not $remoteUrl) {
         Add-Result 'skip' "Kein Remote konfiguriert / No remote configured: $Label"
         return $true
+    }
+    if ($approved -eq 'none') {
+        Add-Result 'fail' "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $Label"
+        Set-WarningExit
+        return $false
     }
 
     $configuredPlatform = ((& git -C $Dir config --local --get home-baseline.remote-platform 2>$null) | Out-String).Trim()
@@ -307,6 +695,13 @@ function Remove-RemoteRepo([string]$Label, [string]$Dir) {
             Set-WarningExit
             return $false
         }
+        $verifiedIdentity = Get-ForgejoTargetFromValues $remoteUrl $baseUrl $configuredPlatform $owner $repository
+        if (-not $verifiedIdentity -or
+            "$configuredPlatform|$verifiedIdentity" -cne $approved) {
+            Add-Result 'fail' "Forgejo/Codeberg-Ziel ungueltig oder seit Vorschau geaendert / target invalid or changed after preview: $Label"
+            Set-WarningExit
+            return $false
+        }
         try {
             Remove-HBForgejoRepository -BaseUrl $baseUrl -Owner $owner -RepositoryName $repository
             Add-Result 'done' "$configuredPlatform-Remote gelöscht / remote deleted: $owner/$repository"
@@ -318,14 +713,25 @@ function Remove-RemoteRepo([string]$Label, [string]$Dir) {
         }
     }
 
-    if ($remoteUrl -match 'github\.com') {
+    $parsed = Get-ParsedRemote $remoteUrl
+    if ($null -eq $parsed) {
+        Add-Result 'fail' "Unbekanntes oder unsicheres Remote, bitte -KeepRemote verwenden / Unknown or unsafe remote, use -KeepRemote: $Label"
+        Set-WarningExit
+        return $false
+    }
+    $ownerRepo = $parsed.OwnerRepo
+    if ("$($parsed.Platform)|$ownerRepo" -cne $approved) {
+        Add-Result 'fail' "Remote-Ziel hat sich nach der Vorschau geaendert / Remote target changed after preview: $Label"
+        Set-WarningExit
+        return $false
+    }
+    if ($parsed.Platform -eq 'github') {
         if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
             Add-Result 'fail' "gh fehlt, Remote-Löschung abgebrochen / gh missing, remote deletion aborted: $Label"
             Set-WarningExit
             return $false
         }
 
-        $ownerRepo = Get-OwnerRepo $remoteUrl 'github\.com'
         & gh repo delete $ownerRepo --yes *> $null
         if ($LASTEXITCODE -eq 0) {
             Add-Result 'done' "Remote-Repo gelöscht / Remote repo deleted: $ownerRepo"
@@ -337,12 +743,11 @@ function Remove-RemoteRepo([string]$Label, [string]$Dir) {
         return $false
     }
 
-    if ($remoteUrl -match 'gitlab\.com') {
-        $ownerRepo = Get-OwnerRepo $remoteUrl 'gitlab\.com'
+    if ($parsed.Platform -eq 'gitlab') {
         if (-not (Get-Command glab -ErrorAction SilentlyContinue)) {
-            Add-Result 'skip' "glab fehlt, GitLab-Remote übersprungen / glab missing, GitLab remote skipped: $ownerRepo"
+            Add-Result 'fail' "glab fehlt, Remote-Löschung abgebrochen / glab missing, remote deletion aborted: $ownerRepo"
             Set-WarningExit
-            return $true
+            return $false
         }
 
         & glab repo delete $ownerRepo --yes *> $null
@@ -362,7 +767,10 @@ function Remove-RemoteRepo([string]$Label, [string]$Dir) {
 }
 
 function Remove-LocalDirectory([string]$Label, [string]$Dir) {
-    Remove-Item -LiteralPath $Dir -Recurse -Force
+    Remove-Item -LiteralPath $Dir -Recurse -Force -ErrorAction Stop
+    if (Test-Path -LiteralPath $Dir) {
+        throw "Fehler: Verzeichnis konnte nicht geloescht werden / Error: Directory could not be deleted: $Label"
+    }
     Add-Result 'done' "Verzeichnis gelöscht / Directory deleted: $Label"
 }
 
@@ -468,11 +876,24 @@ function Commit-Artifacts {
         return
     }
 
+    $artifactPaths = @()
     if (Test-Path -LiteralPath $script:ReadmePath -PathType Leaf) {
+        $artifactPaths += 'README.md'
         & git -C $script:HomeDir add --update -- README.md *> $null
+        if ($LASTEXITCODE -ne 0) {
+            Add-Result 'fail' 'README-Commit-Vorbereitung fehlgeschlagen / README commit preparation failed'
+            Set-WarningExit
+            return
+        }
     }
     if (Test-Path -LiteralPath $script:GitignorePath -PathType Leaf) {
+        $artifactPaths += '.gitignore'
         & git -C $script:HomeDir add --update -- .gitignore *> $null
+        if ($LASTEXITCODE -ne 0) {
+            Add-Result 'fail' 'Gitignore-Commit-Vorbereitung fehlgeschlagen / gitignore commit preparation failed'
+            Set-WarningExit
+            return
+        }
     }
 
     & git -C $script:HomeDir diff --cached --quiet -- README.md .gitignore *> $null
@@ -482,13 +903,37 @@ function Commit-Artifacts {
     }
 
     $subject = "chore: teardown $WorkspaceName - Artefakte bereinigt / artifacts cleaned up"
-    & git -C $script:HomeDir commit -m $subject -m 'Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>' *> $null
+    & git -C $script:HomeDir commit --only -m $subject -m 'Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>' -- @artifactPaths *> $null
     if ($LASTEXITCODE -eq 0) {
         Add-Result 'done' 'Artefakte committed / Artifacts committed'
     } else {
         Add-Result 'fail' 'Artefakt-Commit fehlgeschlagen / Artifact commit failed'
         Set-WarningExit
     }
+}
+
+function Test-HomeArtifactsClean {
+    $insideWorkTree = (& git -C $script:HomeDir rev-parse --is-inside-work-tree 2>$null | Out-String).Trim()
+    if ($LASTEXITCODE -ne 0 -or $insideWorkTree -cne 'true') {
+        if (Test-GitMarker $script:HomeDir) {
+            Add-Result 'fail' 'Home-Git-Metadaten nicht pruefbar / Home Git metadata unavailable'
+            Set-WarningExit
+            return $false
+        }
+        return $true
+    }
+    $status = & git -C $script:HomeDir status --porcelain -- README.md .gitignore 2>$null
+    if ($LASTEXITCODE -ne 0) {
+        Add-Result 'fail' 'Home-Artefaktstatus nicht pruefbar / Home artifact status unavailable'
+        Set-WarningExit
+        return $false
+    }
+    if ($status) {
+        Add-Result 'fail' 'Vorhandene Home-Artefaktaenderungen blockieren Teardown / Existing Home artifact changes block teardown'
+        Set-WarningExit
+        return $false
+    }
+    return $true
 }
 
 function Cleanup-WorkspaceArtifacts {
@@ -507,16 +952,40 @@ function Invoke-TargetTeardown {
         [switch] $IncludeArtifacts
     )
 
-    Invoke-Backup -Label $Label -Dir $Dir -TargetName $BackupName
+    $expectedParent = if ($IncludeArtifacts) { $script:HomeDir } else { $script:WorkspaceDir }
+    $Dir = Resolve-SafeDirectChildDirectory `
+        -Path $Dir `
+        -ExpectedParent $expectedParent `
+        -ExpectedName $BackupName
+
+    if (-not (Invoke-Backup -Label $Label -Dir $Dir -TargetName $BackupName)) {
+        return $false
+    }
 
     if (-not (Test-Safety -Label $Label -Dir $Dir)) {
         return $false
     }
+    if (-not (Test-BackupRefs -Label $Label -Dir $Dir)) {
+        return $false
+    }
+
+    $Dir = Resolve-SafeDirectChildDirectory `
+        -Path $Dir `
+        -ExpectedParent $expectedParent `
+        -ExpectedName $BackupName
 
     if (-not (Remove-RemoteRepo -Label $Label -Dir $Dir)) {
         return $false
     }
 
+    $Dir = Resolve-SafeDirectChildDirectory `
+        -Path $Dir `
+        -ExpectedParent $expectedParent `
+        -ExpectedName $BackupName
+
+    if (-not (Test-BackupRefs -Label $Label -Dir $Dir)) {
+        return $false
+    }
     Remove-LocalDirectory -Label $Label -Dir $Dir
 
     if ($IncludeArtifacts) {
@@ -560,6 +1029,8 @@ try {
         exit 1
     }
 
+    Initialize-ApprovedRemoteTargets
+
     Show-Preamble
 
     if ($script:DryRun) {
@@ -567,6 +1038,23 @@ try {
     }
 
     Confirm-OrAbort
+
+    if (-not (Test-HomeArtifactsClean)) {
+        Show-CompletionReport
+        exit $script:ExitCode
+    }
+
+    foreach ($project in $script:Level2Projects) {
+        $projectName = Split-Path $project -Leaf
+        if (-not (Test-Safety -Label "Level-2 $projectName" -Dir $project -Preflight)) {
+            Show-CompletionReport
+            exit $script:ExitCode
+        }
+    }
+    if (-not (Test-Safety -Label "Workspace $WorkspaceName" -Dir $script:WorkspaceDir -Preflight)) {
+        Show-CompletionReport
+        exit $script:ExitCode
+    }
 
     foreach ($project in $script:Level2Projects) {
         $projectName = Split-Path $project -Leaf
@@ -590,6 +1078,6 @@ catch {
         Write-Host $message
         exit 1
     }
-    Write-Error $message
+    [Console]::Error.WriteLine($message)
     exit 2
 }

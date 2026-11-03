@@ -24,7 +24,7 @@ jobs:
       matrix:
         # Keep the expensive cross-platform canary on the three public reference
         # repositories. Distributed/private fleet copies use Linux continuously.
-        os: ${{ fromJSON(contains(fromJSON('["hindermath/home-baseline","hindermath/agent-operations-cockpit","hindermath/TuiVision"]'), github.repository) && '["ubuntu-22.04","macos-14","windows-2022"]' || '["ubuntu-22.04"]') }}
+        os: ${{ fromJSON(contains(fromJSON('["hindermath/home-baseline","hindermath/agent-operations-cockpit","hindermath/TuiVision"]'), github.repository) && '["ubuntu-22.04","macos-15","windows-2022"]' || '["ubuntu-22.04"]') }}
 
     steps:
       - name: Check out repository
@@ -39,6 +39,19 @@ jobs:
         uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
         with:
           python-version: "3.13"
+
+      - name: Install regression prerequisites (Ubuntu)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: sudo apt-get update && sudo apt-get install -y ripgrep
+
+      - name: Install regression prerequisites (macOS)
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          brew install bash ripgrep
+          echo "$(brew --prefix bash)/bin" >> "$GITHUB_PATH"
+          echo "$(brew --prefix ripgrep)/bin" >> "$GITHUB_PATH"
 
       - name: Restore locked projects
         shell: pwsh

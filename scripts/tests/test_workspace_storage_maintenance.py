@@ -176,31 +176,188 @@ class WorkspaceStorageMaintenanceTests(unittest.TestCase):
             self.assertEqual(["build"], [item["path"] for item in candidates])
             self.assertEqual("cmake-out-of-source", candidates[0]["adapter"])
 
-    def test_cc65_make_preview_rejects_protected_or_unbounded_deletion(self) -> None:
-        storage.validate_cc65_make_preview(
-            "rm -rf ../wrk ../bin\n",
-            ["wrk", "bin"],
-            ["*.d64", "*.prg"],
+    def test_cmake_update_removes_tree_without_executing_untracked_rules(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            repository = pathlib.Path(temporary) / "repo"
+            initialize_repository(repository)
+            (repository / ".gitignore").write_text("build/\n", encoding="utf-8")
+            (repository / "CMakeLists.txt").write_text("cmake_minimum_required(VERSION 3.20)\n", encoding="utf-8")
+            run("git", "add", ".gitignore", "CMakeLists.txt", cwd=repository)
+            run("git", "commit", "-qm", "fixture", cwd=repository)
+            build = repository / "build"
+            build.mkdir()
+            (build / "CMakeCache.txt").write_text(
+                f"CMAKE_HOME_DIRECTORY:INTERNAL={repository}\n", encoding="utf-8"
+            )
+            (build / "Makefile").write_text("clean:\n\ttouch ../unexpected\n", encoding="utf-8")
+            observed: list[list[str]] = []
+            original = storage.run_command
+
+            def record(arguments: list[str], **kwargs: object) -> subprocess.CompletedProcess[str]:
+                observed.append(arguments)
+                return original(arguments, **kwargs)
+
+            with mock.patch.object(storage, "run_command", side_effect=record):
+                candidates, freed, status = storage.handle_cmake(
+                    repository, {"buildDirectoryPatterns": ["build"]},
+                    mode="update", retention_days=7, pressure_mode=True,
+                    dirty=False, busy=False,
+                )
+
+            self.assertEqual("Passed", status)
+            self.assertEqual("Removed", candidates[0]["status"])
+            self.assertEqual("RemoveCMakeBuildTree", candidates[0]["action"])
+            self.assertGreater(freed, 0)
+            self.assertFalse(build.exists())
+            self.assertFalse((repository / "unexpected").exists())
+            self.assertFalse(any(command and command[0] == "cmake" for command in observed))
+
+    @unittest.skipUnless(os.name != "nt" and shutil.which("make"), "GNU Make fixture requires a POSIX runner")
+    def test_cc65_inventory_and_blocked_update_modes_never_evaluate_makefiles(self) -> None:
+        cases = (
+            ("safe", "check-only", False, False, "RemoveCc65Candidate", "Planned"),
+            ("safe", "dry-run", False, False, "RemoveCc65Candidate", "Planned"),
+            ("deep", "check-only", False, False, "RemoveCc65Candidate", "Planned"),
+            ("deep", "dry-run", False, False, "RemoveCc65Candidate", "Planned"),
+            ("safe", "update", True, False, "RemoveCc65Candidate", "SkippedDirtyOrBusy"),
+            ("deep", "update", False, True, "RemoveCc65Candidate", "SkippedDirtyOrBusy"),
         )
-        with self.assertRaisesRegex(storage.StorageContractError, "protected deletion"):
-            storage.validate_cc65_make_preview(
-                "rm -f samples/demo.d64\n",
-                ["wrk", "bin"],
-                ["*.d64", "*.prg"],
+        for profile, mode, dirty, busy, action, expected_status in cases:
+            with self.subTest(profile=profile, mode=mode, dirty=dirty, busy=busy), \
+                    tempfile.TemporaryDirectory() as temporary:
+                repository = pathlib.Path(temporary) / "cc65"
+                initialize_repository(repository)
+                marker = pathlib.Path(temporary) / "makefile-evaluated"
+                (repository / ".gitignore").write_text("wrk/\n", encoding="utf-8")
+                (repository / "src").mkdir()
+                makefile = (
+                    'SIDE_EFFECT := $(shell touch "$(HB_STORAGE_MARKER)")\n'
+                    ".PHONY: clean\n"
+                    "clean:\n\trm -rf wrk\n"
+                )
+                (repository / "Makefile").write_text(makefile, encoding="utf-8")
+                (repository / "src/Makefile").write_text(
+                    makefile.replace("rm -rf wrk", "rm -rf ../wrk"),
+                    encoding="utf-8",
+                )
+                run("git", "add", ".gitignore", "Makefile", "src/Makefile", cwd=repository)
+                run("git", "commit", "-qm", "fixture", cwd=repository)
+                (repository / "wrk").mkdir()
+                (repository / "wrk/output.o").write_bytes(b"generated")
+                adapter = {
+                    "safeGroups": [{
+                        "id": "host-tools",
+                        "makeDirectory": "src",
+                        "target": "clean",
+                        "paths": ["wrk"],
+                    }],
+                    "protectedEvidencePatterns": [],
+                }
+
+                with mock.patch.dict(os.environ, {"HB_STORAGE_MARKER": str(marker)}):
+                    candidates, _, _, result_status, _ = storage.handle_cc65(
+                        repository,
+                        adapter,
+                        mode=mode,
+                        profile=profile,
+                        retention_days=7,
+                        pressure_mode=True,
+                        dirty=dirty,
+                        busy=busy,
+                    )
+
+                self.assertFalse(marker.exists(), f"{profile}/{mode} evaluated a Makefile")
+                self.assertEqual(action, candidates[0]["action"])
+                self.assertEqual(expected_status, candidates[0]["status"])
+                self.assertEqual("Warning" if mode == "update" else "Passed", result_status)
+                self.assertTrue((repository / "wrk").exists())
+
+    @unittest.skipUnless(os.name != "nt" and shutil.which("make"), "GNU Make fixture requires a POSIX runner")
+    def test_cc65_authorized_update_removes_only_declared_candidates(self) -> None:
+        for profile, make_directory, recipe, action in (
+            ("safe", "src", "rm -rf ../wrk", "RemoveCc65Candidate"),
+            ("deep", ".", "rm -rf wrk", "RemoveCc65Candidate"),
+        ):
+            with self.subTest(profile=profile), tempfile.TemporaryDirectory() as temporary:
+                repository = pathlib.Path(temporary) / "cc65"
+                initialize_repository(repository)
+                (repository / ".gitignore").write_text("wrk/\n", encoding="utf-8")
+                (repository / "src").mkdir()
+                (repository / make_directory / "Makefile").write_text(
+                    f".PHONY: clean\nclean:\n\t{recipe}\n",
+                    encoding="utf-8",
+                )
+                tracked_makefile = "Makefile" if make_directory == "." else "src/Makefile"
+                run("git", "add", ".gitignore", tracked_makefile, cwd=repository)
+                run("git", "commit", "-qm", "fixture", cwd=repository)
+                (repository / "wrk").mkdir()
+                (repository / "wrk/output.o").write_bytes(b"generated")
+                adapter = {
+                    "safeGroups": [{
+                        "id": "host-tools",
+                        "makeDirectory": make_directory,
+                        "target": "clean",
+                        "paths": ["wrk"],
+                    }],
+                    "protectedEvidencePatterns": [],
+                }
+
+                candidates, _, freed, status, warnings = storage.handle_cc65(
+                    repository,
+                    adapter,
+                    mode="update",
+                    profile=profile,
+                    retention_days=7,
+                    pressure_mode=True,
+                    dirty=False,
+                    busy=False,
+                )
+
+                self.assertFalse(repository.joinpath("wrk").exists())
+                self.assertGreater(freed, 0)
+                self.assertEqual("Passed", status)
+                self.assertEqual([], warnings)
+                self.assertEqual(action, candidates[0]["action"])
+                self.assertEqual("Removed", candidates[0]["status"])
+
+    def test_cc65_update_never_evaluates_makefile_or_executes_recipe(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            repository = pathlib.Path(temporary) / "cc65"
+            initialize_repository(repository)
+            (repository / ".gitignore").write_text("wrk/\n", encoding="utf-8")
+            (repository / "src").mkdir()
+            marker = pathlib.Path(temporary) / "outside-marker"
+            (repository / "Makefile").write_text(
+                f'SIDE_EFFECT := $(shell touch "{marker}")\n'
+                f'.PHONY: clean\nclean:\n\ttouch "{marker}"\n',
+                encoding="utf-8",
             )
-        with self.assertRaisesRegex(storage.StorageContractError, "outside declared group"):
-            storage.validate_cc65_make_preview(
-                "rm -rf ../samples\n",
-                ["wrk", "bin"],
-                ["*.d64", "*.prg"],
-            )
-        with self.assertRaisesRegex(storage.StorageContractError, "outside declared group"):
-            storage.validate_cc65_make_preview(
-                "rm -rf ../wrk ../unexpected\n",
-                ["wrk", "bin"],
-                ["*.d64", "*.prg"],
-            )
-        self.assertNotIn("zap", POLICY_PATH.read_text(encoding="utf-8").casefold())
+            run("git", "add", ".gitignore", "Makefile", cwd=repository)
+            run("git", "commit", "-qm", "fixture", cwd=repository)
+            (repository / "wrk").mkdir()
+            (repository / "wrk/output.o").write_bytes(b"generated")
+            adapter = {
+                "safeGroups": [{"id": "host-tools", "makeDirectory": "src", "target": "clean", "paths": ["wrk"]}],
+                "protectedEvidencePatterns": [],
+            }
+            original_run_command = storage.run_command
+
+            def allow_git_only(command: list[str], **kwargs: object) -> subprocess.CompletedProcess[str]:
+                if command and command[0] == "make":
+                    raise AssertionError("Make executed")
+                return original_run_command(command, **kwargs)
+
+            with mock.patch.object(storage, "run_command", side_effect=allow_git_only):
+                candidates, _, freed, status, warnings = storage.handle_cc65(
+                    repository, adapter, mode="update", profile="deep", retention_days=7,
+                    pressure_mode=True, dirty=False, busy=False,
+                )
+            self.assertFalse(marker.exists())
+            self.assertFalse((repository / "wrk").exists())
+            self.assertGreater(freed, 0)
+            self.assertEqual("Passed", status)
+            self.assertEqual([], warnings)
+            self.assertEqual("RemoveCc65Candidate", candidates[0]["action"])
 
     def test_container_contract_prunes_only_dangling_images(self) -> None:
         with mock.patch.object(storage.shutil, "which", side_effect=lambda name: "/usr/bin/podman" if name == "podman" else None), \

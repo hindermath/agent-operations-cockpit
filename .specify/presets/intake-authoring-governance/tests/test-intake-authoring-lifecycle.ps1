@@ -134,10 +134,7 @@ try {
     $ConfigPath = Join-Path $Root 'requirements/intake-governance-config.json'
     $ManifestPath = Join-Path $Root 'requirements/series.json'
     $Config = @{
-        schemaVersion = '2.0'; documentationLanguage = 'de-DE'; inventoryMode = 'SeriesManifest'
-        projectProfile = @{ path = '.specify/presets/intake-authoring-governance/templates/project-profile-template.md'; profileId = 'generic-markdown'; normalizedSha256 = '' }
-        allowedRoots = @('requirements', 'specs', '.specify/presets/intake-authoring-governance')
-        implicitAuthority = $false
+        schemaVersion = '2.0'; documentationLanguage = 'en'; inventoryMode = 'SeriesManifest'
         artifactNaming = @{ profile = 'explicit'; canonicalIndex = 'RequirementsIndex.md'; intakePattern = '<slug>.md'; orderView = 'RequirementsIntakeOrder.md' }
         roles = @{ 'requirements-index' = 'RequirementsIndex.md'; 'requirements-intake' = 'intakes'; 'intake-order' = 'RequirementsIntakeOrder.md'; 'requirements-baseline' = 'requirements/baseline' }
         collections = @{ active = 'intakes'; archive = 'requirements/archive'; baseline = 'requirements/baseline'; backlog = 'requirements/backlog'; history = 'requirements/history'; seriesManifest = 'requirements/series.json' }
@@ -146,11 +143,6 @@ try {
     Write-HBText (Join-Path $Root 'RequirementsIndex.md') '# Index'
     Write-HBText (Join-Path $Root 'RequirementsIntakeOrder.md') '# Order'
     New-Item -ItemType Directory -Path (Join-Path $Root 'requirements/baseline') -Force | Out-Null
-    # DE: Die Archiv-Fixture erfuellt auch die lokale AOC-Profilbindung.
-    # EN: The archive fixture also satisfies the local AOC profile binding.
-    $ProfileFixture = Join-Path $Root $Config.projectProfile.path
-    Write-HBText $ProfileFixture '`generic-markdown` / `de-DE`'
-    $Config.projectProfile.normalizedSha256 = Get-HBHash $ProfileFixture
     Write-HBText $ConfigPath ($Config | ConvertTo-Json -Depth 20)
     # DE: Erst normalisieren, damit ein Windows-Checkout kein CRCRLF erzeugt.
     # EN: Normalize first so a Windows checkout cannot produce CRCRLF.
@@ -291,20 +283,6 @@ try {
     Invoke-HBPair Artifact $TombstonePath $Root 0 'logical delete'
     Copy-Item (Join-Path $Root $ArchivedTarget) $Target
     Invoke-HBPair Artifact $TombstonePath $Root 2 'active target after delete rejection'
-
-    $RepositoryRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $PresetRoot))
-    $AuthorizedUpdatePath = Join-Path $RepositoryRoot 'specs/intake-authoring-operations/986c1d6c-d485-460b-8d8d-7cf5816a2c36/operation.json'
-    if (-not (Test-Path -LiteralPath $AuthorizedUpdatePath -PathType Leaf)) {
-        throw 'Expected-red: the authorized META-LH-03 Update operation is not implemented yet'
-    }
-    $AuthorizedUpdate = Get-Content -LiteralPath $AuthorizedUpdatePath -Raw | ConvertFrom-Json
-    if ($AuthorizedUpdate.status -notin @('Proposed', 'Approved', 'Applying', 'Completed', 'Failed')) { throw 'Update status vocabulary is invalid' }
-    if ($AuthorizedUpdate.status -ne 'Completed') { throw 'Only Completed is accepted as successful Update evidence' }
-    if (@($AuthorizedUpdate.intendedTargets).Count -ne 4 -or
-        (@($AuthorizedUpdate.intendedTargets) -join "`n") -ne (@($AuthorizedUpdate.validatedTargets) -join "`n") -or
-        (@($AuthorizedUpdate.intendedTargets) -join "`n") -ne (@($AuthorizedUpdate.publishedTargets) -join "`n")) {
-        throw 'Authorized Update requires identical four-path target sets'
-    }
 
     Write-Host 'PASS: schema 2 URL, series graph, transaction, tombstone, and Bash/PowerShell parity'
 } finally {

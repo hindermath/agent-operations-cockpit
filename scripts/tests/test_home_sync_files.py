@@ -98,6 +98,29 @@ class HomeSyncFilesTests(unittest.TestCase):
         self.assertEqual(state["manifestSchemaVersion"], 2)
         self.assertEqual(set(state["files"]), {"runtime.txt"})
 
+    def test_source_parent_symlink_outside_repository_is_rejected(self) -> None:
+        external = self.root / "external"
+        external.mkdir()
+        (external / "runtime.txt").write_text("external data\n", encoding="utf-8")
+        managed = self.repository / "managed"
+        managed.mkdir()
+        (managed / "runtime.txt").write_text("tracked\n", encoding="utf-8")
+        subprocess.run(["git", "add", "managed/runtime.txt"], cwd=self.repository, check=True)
+        subprocess.run(["git", "commit", "-q", "-m", "managed fixture"], cwd=self.repository, check=True)
+        managed.joinpath("runtime.txt").unlink()
+        managed.rmdir()
+        managed.symlink_to(external, target_is_directory=True)
+        manifest = json.loads(self.manifest.read_text(encoding="utf-8"))
+        manifest["homeRuntime"]["rootFiles"] = []
+        manifest["homeRuntime"]["trackedPrefixes"] = ["managed/"]
+        self.manifest.write_text(json.dumps(manifest), encoding="utf-8")
+
+        result = self.run_sync("--check-only")
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("Source parent escapes repository", result.stderr)
+        self.assertFalse((self.home / "managed/runtime.txt").exists())
+
     def test_v1_state_releases_retired_path_without_deleting_it(self) -> None:
         (self.home / "docs").mkdir()
         retired = self.home / "docs" / "old.md"

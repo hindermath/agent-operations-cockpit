@@ -34,8 +34,15 @@ space, pressure mode makes safe candidates eligible regardless of age.*
 Das Profil `deep` nimmt zusätzlich wiederherstellbare Dependency-Caches auf
 und erfordert in einem echten Lauf `--confirm-deep-cleanup` beziehungsweise
 `-ConfirmDeepCleanup`. `none` ist ein explizites No-op-Profil. `check-only`
-inventarisiert, Dry-run/WhatIf zeigt den Plan und nur ein bestätigter echter
-Lauf führt Providerbefehle oder Löschungen aus.
+inventarisiert, Dry-run/WhatIf zeigt den Plan und beide Modi starten keine
+projektgesteuerten Buildsysteme. Nur ein bestätigter echter Lauf führt
+Providerbefehle oder Löschungen aus.
+
+*The `deep` profile also includes recoverable dependency caches and requires
+`--confirm-deep-cleanup` or `-ConfirmDeepCleanup` for an update run. `none` is
+an explicit no-op profile. Check-only inventories state and dry-run/WhatIf
+shows the plan; neither mode starts project-controlled build systems. Only a
+confirmed update run invokes provider commands or performs deletion.*
 
 Providerwarnungen werden im privaten, atomaren JSON-Bericht festgehalten und
 haben Exitcode `0`. Aufruf-, Policy-, Pfad- und Betriebsfehler haben Exitcode
@@ -46,24 +53,29 @@ Benutzerzugriff.
 ## NON-MSL ADAPTERS
 
 `C64Projects/cc65` verwendet absichtlich C89 und 6502-Assembly für 8-Bit-
-Kompatibilität. Safe führt nur vorab geprüfte native `make ... clean`-Gruppen
-für Hostwerkzeuge, Laufzeitbibliotheken, generierte Dokumentation und
-Regression-Arbeitsverzeichnisse aus. Sample- und Targettest-Nachweise wie
-Disk-Images, Zielbinärdateien, Maps, Labels und Debuglisten bleiben erhalten.
-`make zap` wird nie verwendet; Root-`make clean` gehört nur zu `deep`. Weicht
-dessen Vorschau von den deklarierten Pfaden ab, protokolliert Deep die
-Scope-Warnung und fällt auf die einzeln geprüften Safe-Gruppen zurück.
+Kompatibilität. Safe entfernt nur geprüfte, ignorierte und ungetrackte
+Build-Verzeichnisse der vier deklarierten Gruppen. Deep entfernt dieselben
+vorhandenen Kandidaten unabhängig vom Alter. Sample- und Targettest-Nachweise
+wie Disk-Images, Zielbinärdateien, Maps, Labels und Debuglisten bleiben
+erhalten. Die Speicherwartung wertet keine Makefiles aus und führt weder
+`make clean` noch `make zap` aus.
 
-*`make zap` is never used, and root `make clean` belongs to `deep` only. If its
-preview exceeds the declared paths, Deep records the scope warning and falls
-back to the individually proven Safe groups.*
+*`C64Projects/cc65` intentionally uses C89 and 6502 assembly for 8-bit
+compatibility. Safe removes only verified, ignored and untracked build
+directories from the four declared groups; Deep removes the same existing
+candidates regardless of age. Sample and target-test evidence remains intact.
+Storage maintenance neither evaluates Makefiles nor runs `make clean` or
+`make zap`.*
 
 `CLionProjects/tvision` bleibt wegen Quell-/ABI-Kompatibilität C++14. Ein
 CMake-Buildverzeichnis wird nur akzeptiert, wenn sein `CMakeCache.txt` auf
 eine Repo-interne Quelle mit getrackter `CMakeLists.txt` zeigt. Verschachtelte
-`_deps`-Builds werden dedupliziert. Der echte Lauf verwendet zunächst
-`cmake --build <DIR> --target clean` und entfernt danach den verifizierten
-Buildbaum.
+`_deps`-Builds werden dedupliziert. Der echte Lauf entfernt
+den verifizierten, ignorierten Buildbaum direkt. Ungetrackte Build-Regeln
+werden nicht ausgeführt.
+
+*The update removes the verified, ignored build tree directly. It does not
+execute untracked build rules.*
 
 *The curated non-MSL adapters preserve each repository's constitutional
 justification and compensating controls. Unknown non-MSL repositories are

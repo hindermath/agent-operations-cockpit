@@ -86,8 +86,25 @@ if (-not (Test-Path $ForgejoLib)) {
 }
 . $ForgejoLib
 $Preview = $Preview -or $WhatIfPreference
+if ([IO.Path]::IsPathFullyQualified($ProjectName) -or
+    $ProjectName -in @('.', '..') -or
+    $ProjectName.Contains('/') -or $ProjectName.Contains('\')) {
+    throw 'Fehler: Projektname muss ein einzelnes Workspace-Unterverzeichnis sein / Error: project name must be one workspace child directory'
+}
 $TargetWorkspace = $TargetWorkspace.TrimEnd([IO.Path]::DirectorySeparatorChar)
 $TargetDir    = Join-Path $TargetWorkspace $ProjectName
+if ((Test-Path -LiteralPath $TargetDir) -and
+    (Get-Item -LiteralPath $TargetDir -Force).LinkType) {
+    throw 'Fehler: Projektziel darf kein Symlink sein / Error: project target must not be a symlink'
+}
+if (Test-Path -LiteralPath $TargetDir) {
+    $python = Get-Command python3, python, py -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $python) { throw 'Python fuer Bootstrap-Pfadpruefung fehlt / Python is required for bootstrap path validation.' }
+    & $python.Source (Join-Path $ScriptDir 'lib/check_bootstrap_target_symlinks.py') $TargetDir 2>$null | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        throw 'Fehler: Projektziel enthaelt Symlinks oder ist kein Verzeichnis / Error: project target contains symlinks or is not a directory'
+    }
+}
 
 $Step = 0
 $TotalSteps = 31
@@ -320,6 +337,42 @@ function Convert-RemoteUrlToRepoUrl([string]$RemoteUrl) {
 function Get-RepoNameFromRemoteUrl([string]$RemoteUrl) {
     $repoUrl = Convert-RemoteUrlToRepoUrl $RemoteUrl
     return [IO.Path]::GetFileName($repoUrl)
+}
+
+function Test-HBExistingOrigin([string]$RemoteUrl) {
+    $owner = ''
+    $baseUrl = ''
+    $repository = ''
+    switch ($Platform) {
+        'github' {
+            if (-not (Get-Command gh -ErrorAction SilentlyContinue)) { return $false }
+            $owner = ((& gh api user --jq '.login' 2>$null) | Out-String).Trim()
+            $baseUrl = 'https://github.com'
+            $repository = $ProjectName.ToLower() -replace '\s+', '-'
+        }
+        'gitlab' {
+            $owner = $gitlabUser
+            $baseUrl = $GitLabUrl
+            $repository = $projectSlug
+        }
+        default {
+            try {
+                $credential = Get-HBForgejoCredential -BaseUrl $forgejoBaseUrl
+                $response = Invoke-HBForgejoApi -Method GET -BaseUrl $forgejoBaseUrl -Path '/api/v1/user' -AuthenticationData $credential
+                if ($response.StatusCode -ne 200) { return $false }
+                $owner = ($response.Content | ConvertFrom-Json).login
+            } catch { return $false }
+            $baseUrl = $forgejoBaseUrl
+            $repository = $projectSlug
+        }
+    }
+    if (-not $owner) { return $false }
+    $python = Get-Command python3, python, py -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $python) { return $false }
+    $validator = Join-Path $ScriptDir 'lib/validate_bootstrap_origin.py'
+    & $python.Source $validator --origin $RemoteUrl --base-url $baseUrl --owner $owner `
+        --repository $repository --git-repository $TargetDir 2>$null | Out-Null
+    return $LASTEXITCODE -eq 0
 }
 
 if ($Platform -notin @('github', 'gitlab', 'forgejo', 'codeberg')) {
@@ -810,7 +863,7 @@ else {
 }
 
 Step-Start "ASCII-Statistikprofil 2 initialisieren"
-$statisticsRenderer = Join-Path $TargetDir 'scripts/render-project-statistics.ps1'
+$statisticsRenderer = Join-Path $ScriptDir 'render-project-statistics.ps1'
 if (-not (Test-Path $statisticsRenderer)) {
     Step-Warn "Statistikrenderer nicht gefunden"
 } else {
@@ -834,20 +887,27 @@ Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 
 # 13. Repo create
 Step-Start "Repo erstellen (privat)"
+$remoteAuthorized = $false
 $existingRemote = ''
 if (-not $NoRemote) {
     $existingRemote = (& git -C $TargetDir remote get-url origin 2>$null | Out-String).Trim()
 }
 if ($NoRemote) { Step-Skip "-NoRemote" }
 elseif ($existingRemote) {
-    $summaryRepoUrl = Convert-RemoteUrlToRepoUrl $existingRemote
-    $summaryDisplayRepo = Get-RepoNameFromRemoteUrl $existingRemote
-    Step-Skip "Remote vorhanden"
+    if (Test-HBExistingOrigin $existingRemote) {
+        $remoteAuthorized = $true
+        $summaryRepoUrl = Convert-RemoteUrlToRepoUrl $existingRemote
+        $summaryDisplayRepo = Get-RepoNameFromRemoteUrl $existingRemote
+        Step-Skip "Remote vorhanden und Ziel geprueft"
+    } else {
+        Step-Warn 'Bestehendes Origin stimmt nicht mit dem authentifizierten Ziel ueberein; Push und Rechteaenderung gesperrt'
+    }
 }
 elseif ($Platform -eq 'github' -and (Get-Command gh -ErrorAction SilentlyContinue)) {
     $repoName = $ProjectName.ToLower() -replace '\s+','-'
     & gh repo create $repoName --private --source $TargetDir --remote origin 2>$null | Out-Null
     if ($LASTEXITCODE -eq 0) {
+        $remoteAuthorized = $true
         $ghUser = ((gh api user --jq '.login' 2>$null) | Out-String).Trim()
         $summaryRepoUrl = "https://github.com/$ghUser/$repoName"
         $summaryDisplayRepo = $repoName
@@ -862,6 +922,7 @@ elseif ($Platform -eq 'gitlab') {
     if ($LASTEXITCODE -eq 0) {
         git -C $TargetDir remote add origin $remoteUrl 2>$null | Out-Null
         if ($LASTEXITCODE -eq 0) {
+            $remoteAuthorized = $true
             $summaryRepoUrl = "$($GitLabUrl.TrimEnd('/'))/$gitlabUser/$projectSlug"
             $summaryDisplayRepo = $projectSlug
             Step-Done $projectSlug
@@ -874,6 +935,7 @@ elseif ($Platform -eq 'gitlab') {
         $repository = New-HBForgejoRepository -BaseUrl $forgejoBaseUrl -RepositoryName $projectSlug -Description "Project repository for $ProjectName"
         git -C $TargetDir remote add origin $repository.CloneUrl 2>$null | Out-Null
         if ($LASTEXITCODE -ne 0) { throw 'git remote add origin failed' }
+        $remoteAuthorized = $true
         git -C $TargetDir config --local home-baseline.remote-platform $Platform
         git -C $TargetDir config --local home-baseline.remote-base-url $forgejoBaseUrl
         git -C $TargetDir config --local home-baseline.remote-owner $repository.Owner
@@ -893,7 +955,12 @@ if (-not $NoRemote) {
     $originRemote = (& git -C $TargetDir remote get-url origin 2>$null | Out-String).Trim()
 }
 if ($NoRemote) { Step-Skip "-NoRemote" }
+elseif (-not $remoteAuthorized) { Step-Skip 'Origin-Ziel nicht geprueft' }
 elseif (-not $originRemote) { Step-Skip "kein Remote konfiguriert" }
+elseif (-not (Test-HBExistingOrigin $originRemote)) {
+    $remoteAuthorized = $false
+    Step-Skip 'Wirksames Push-Ziel stimmt nicht mit dem authentifizierten Repository ueberein'
+}
 else {
     git -C $TargetDir push -u origin HEAD 2>$null | Out-Null
     if ($LASTEXITCODE -eq 0) { Step-Done } else { Step-Warn "git push fehlgeschlagen" }
@@ -901,7 +968,7 @@ else {
 
 # 14b. GitHub Actions Berechtigungen
 Step-Start "GitHub Actions Berechtigungen setzen"
-if ($NoReleasePlease -or $NoRemote -or $Platform -ne 'github') { Step-Skip "nicht anwendbar" }
+if ($NoReleasePlease -or $NoRemote -or -not $remoteAuthorized -or $Platform -ne 'github') { Step-Skip "nicht anwendbar" }
 elseif (-not $summaryRepoUrl) { Step-Skip "kein Remote konfiguriert" }
 elseif (Get-Command gh -ErrorAction SilentlyContinue) {
     $rpRepo = $summaryRepoUrl -replace '^https://github\.com/', ''
