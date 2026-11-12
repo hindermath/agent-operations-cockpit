@@ -1,45 +1,106 @@
-# Sicherheitsrichtlinie / Security Policy
+<h1 lang="de">Sicherheitsrichtlinie / <span lang="en">Security Policy</span></h1>
 
-## Sicherheitsprobleme melden
+<div lang="de">
 
-Bitte veröffentliche vermutete Schwachstellen, Zugangsdaten, personenbezogene
-Daten oder ausnutzbare Details nicht in einem öffentlichen Issue. Nutze nach
-Veröffentlichung des Repositories die private GitHub-Funktion „Report a
-vulnerability“ im Bereich **Security**. Falls diese Funktion nicht verfügbar
-ist, eröffne nur ein neutrales Issue ohne technische Details und bitte um einen
-privaten Kontaktweg.
+Bitte veröffentliche eine vermutete Schwachstelle nicht als öffentliches Issue. Nutze stattdessen die privaten [GitHub Security Advisories](https://github.com/hindermath/agent-operations-cockpit/security/advisories/new). Nenne betroffene Versionen, eine nachvollziehbare Reproduktion, die mögliche Auswirkung und bekannte Gegenmaßnahmen. Sende keine Kennwörter, Zugangsdaten oder personenbezogenen Daten.
 
-Eine Meldung sollte die betroffene Version oder Revision, nachvollziehbare
-Schritte, mögliche Auswirkungen und bereits bekannte Gegenmaßnahmen enthalten.
-Entferne echte Geheimnisse und personenbezogene Daten aus allen Nachweisen.
+## Vertraulicher Meldeweg
+
+Falls die private Meldefunktion nicht verfügbar ist, eröffne nur ein neutrales
+Issue ohne technische Details. Bitte darin um einen vertraulichen Kontaktweg.
+Veröffentliche keine Informationen, mit denen sich die vermutete Schwachstelle
+ausnutzen lässt.
 
 ## Unterstützter Stand
 
-Bis zur ersten Produktversion wird ausschließlich der aktuelle Stand des
-Default Branch `main` sicherheitsseitig gepflegt. Historische Commits und lokale
-Forks erhalten keine gesonderte Unterstützung.
+Sicherheitsmeldungen werden für den aktuellen Stand des Default Branch
+`main` geprüft. Ob eine Korrektur auch für veröffentlichte Versionen
+bereitgestellt wird, entscheidet der Maintainer im Einzelfall. Für ältere
+Versionen, historische Commits und andere Forks besteht keine allgemeine
+Supportzusage.
 
 ## Sicherheitsbaseline
 
-- Geheimnisse dürfen weder in Git noch in Issues, Logs, Evidence oder Receipts
-  gespeichert werden.
-- Eingaben über Datei-, Prozess-, Netzwerk- und Geräte-Grenzen gelten als nicht
-  vertrauenswürdig und müssen später validiert werden.
-- Neue Abhängigkeiten benötigen Herkunfts-, Lizenz-, Wartungs- und
-  Schwachstellenprüfung.
-- Architektur- und Code-Reviews betrachten mindestens Authentifizierung,
-  Autorisierung, Eingaben, Kryptografie, Fehlerausgaben sowie Datei- und
-  Netzwerkzugriffe.
-- Sicherheitsrelevante Entscheidungen und Restrisiken benötigen menschliche
-  Freigabe.
+- Geheimnisse dürfen nicht in Git, Issues, Logs oder Prüfnachweisen gespeichert werden.
+- Eingaben aus Dateien, Prozessen, Netzwerken und Geräten gelten als nicht vertrauenswürdig und müssen vor ihrer Verwendung geprüft werden.
+- Beobachtung und spätere Steuerung agentischer Abläufe müssen getrennte Berechtigungen haben. Externe Meldungen, Logs und Statusdaten dürfen keine ungeprüften Aktionen auslösen. Die Produktimplementierung bleibt an ihre eigenen Freigaben gebunden.
+- Datei- und Prozesszugriffe müssen die vorgesehenen Berechtigungs- und Verzeichnisgrenzen einhalten.
+- Neue Abhängigkeiten benötigen eine Prüfung von Herkunft, Lizenz, Wartungsstand und bekannten Schwachstellen.
+- Architektur- und Code-Reviews betrachten Eingaben, Berechtigungen, Fehlerausgaben sowie Datei- und Netzwerkzugriffe. Authentifizierung und Kryptografie werden geprüft, soweit das Projekt diese verwendet.
+- Sicherheitsrelevante Entscheidungen und die Annahme verbleibender Risiken benötigen eine menschliche Freigabe.
 
-*Do not disclose suspected vulnerabilities, credentials, personal data, or
-exploitable details in a public issue. After publication, use GitHub's private
-“Report a vulnerability” function in the Security area. If unavailable, open
-only a neutral issue without technical details and request a private channel.*
+## Prüfung und koordinierte Offenlegung
 
-*Until the first product release, only the current `main` branch is supported.
-Secrets must never enter Git, issues, logs, evidence, or receipts. Inputs across
-file, process, network, and device boundaries are untrusted. Dependencies need
-provenance, licence, maintenance, and vulnerability review. Security-relevant
-decisions and residual risks require human approval.*
+Der Maintainer prüft die Meldung auf Nachvollziehbarkeit, Erreichbarkeit und
+mögliche Auswirkungen. Bei einem bestätigten Befund werden Korrektur, Tests
+und Veröffentlichung mit der meldenden Person abgestimmt.
+
+Bitte gib angemessene Zeit für die Untersuchung und Behebung. Veröffentliche
+technische Einzelheiten möglichst erst nach dieser Abstimmung.
+
+
+
+## Grenzen dieser Richtlinie
+
+Diese Richtlinie beschreibt den Meldeweg und die Sicherheitsgrundsätze des
+Projekts. Sie ist keine Sicherheitszertifizierung und garantiert keine
+vollständige Befundfreiheit.
+
+Automatische Prüfungen erfassen nur ihren jeweiligen Prüfumfang. Ein
+erfolgreicher Lauf ersetzt keine vollständige Sicherheitsbewertung oder
+menschliche Freigabe. Diese Richtlinie ist keine Rechtsberatung und keine
+Zusage gesetzlicher Meldungen oder regulatorischer Konformität.
+
+</div>
+
+---
+
+<div lang="en">
+
+Please do not report a suspected vulnerability in a public issue. Instead, use private [GitHub Security Advisories](https://github.com/hindermath/agent-operations-cockpit/security/advisories/new). Include the affected versions, reproducible steps, the possible impact, and any known mitigations. Do not send passwords, credentials, or personal data.
+
+## Confidential reporting
+
+If private reporting is unavailable, open only a neutral issue without
+technical details. Ask for a confidential contact channel. Do not publish
+information that could be used to exploit the suspected vulnerability.
+
+## Supported version
+
+Security reports are assessed against the current default branch, `main`.
+The maintainer decides case by case whether a fix will also be provided for
+released versions. There is no general support commitment for older versions,
+historical commits, or other forks.
+
+## Security baseline
+
+- Secrets must not be stored in Git, issues, logs, or verification records.
+- Input from files, processes, networks, and devices is untrusted and must be checked before use.
+- Observing and later controlling agent workflows must have separate permissions. External messages, logs, and status data must not trigger unchecked actions. Product implementation remains subject to its own approvals.
+- File and process operations must respect the intended permission and directory boundaries.
+- New dependencies require checks of their origin, licence, maintenance status, and known vulnerabilities.
+- Architecture and code reviews cover input, permissions, error output, and file and network operations. Authentication and cryptography are reviewed where the project uses them.
+- Security decisions and acceptance of remaining risks require human approval.
+
+## Assessment and coordinated disclosure
+
+The maintainer assesses whether the reported issue can be reproduced, how it
+can be reached, and what impact it may have. For a confirmed finding, the fix,
+tests, and disclosure are coordinated with the reporter.
+
+Please allow reasonable time for investigation and remediation. Where
+possible, publish technical details only after this coordination.
+
+
+
+## Limits of this policy
+
+This policy describes the project's reporting process and security principles.
+It is not a security certification and does not guarantee the absence of
+vulnerabilities.
+
+Automated checks cover only their defined scope. A successful run does not
+replace a complete security assessment or human approval. This policy is not
+legal advice or a commitment to statutory reporting or regulatory compliance.
+
+</div>

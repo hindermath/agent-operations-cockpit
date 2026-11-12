@@ -116,6 +116,23 @@ the technical change; GeneratedUpdate for the existing statistics profiles.
 Existing references remain unchanged. Delivery volume is not a measurement
 of learning outcomes or AI time savings. Current head/platform checks are
 required before merge. Owner: repository maintainer; source-only, no Home sync.
+### 2026-11-12 — Sicherheitsrichtlinie / Security policy
+
+DE: Genehmigte Sicherheitsrichtlinie DE zuerst/EN danach auf CEFR-B2-Niveau
+harmonisiert, projektspezifische Grenzen und bestehende Reaktionsziele erhalten.
+Private Advisory-Links und Sprach-/Überschriftenstruktur geprüft.
+Documentation Impact: UpdateRequired; Nachweis unter
+`docs/documentation-impact/security-policy-2026-11-12.json`.
+Keine Produktlogik geändert; CodeQL unter Tools wird nach Lieferung separat
+eingerichtet. Keine AI-Scan-Aktivierung oder neue praktische A11Y-Abnahme.
+
+EN: Harmonised the approved German-first/English-second security policy at
+CEFR B2, preserving project boundaries and existing response targets. Checked
+private advisory links, language boundaries and heading structure.
+Documentation Impact: UpdateRequired; see the evidence path above.
+No product logic changed; CodeQL under Tools is configured separately after
+delivery. No AI Scan activation or new practical accessibility acceptance.
+
 ## Gesamtstatistik / Overall Statistics
 
 <!-- project-statistics-v2:begin -->
@@ -126,25 +143,25 @@ Profil 2 verwendet Git-getrackte Textdateien und sichtbare Git-Aktivitaet. Die W
 
 | Kennzahl / Metric | Wert / Value |
 |---|---:|
-| Textbasis / Text base | 364802 lines |
-| Textdateien / Text files | 1898 |
-| Beobachtbarer Zeitraum / Observable period | 2025-11-16..2026-11-09 |
-| Aktivtage / Active days | 27 |
-| Relevante Commits / Relevant commits | 194 |
-| Zeilen je Aktivtag / Lines per active day | 13511.2 |
+| Textbasis / Text base | 364899 lines |
+| Textdateien / Text files | 1899 |
+| Beobachtbarer Zeitraum / Observable period | 2025-11-16..2026-11-12 |
+| Aktivtage / Active days | 28 |
+| Relevante Commits / Relevant commits | 195 |
+| Zeilen je Aktivtag / Lines per active day | 13032.1 |
 | Peak-Tag im Fenster / Peak day in window | 2026-07-31 / 132656 |
 | Peak-Woche im Fenster / Peak week in window | 2026-07-26 / 135472 |
 | Laengste Serie / Longest streak | 4 days |
-| Speedup vs. 80 lines/day | 168.9x |
-| Speedup vs. 125 lines/day | 108.1x |
-| Methodik / Methodology | v2; source `ec49475cb8eb` |
+| Speedup vs. 80 lines/day | 162.9x |
+| Speedup vs. 125 lines/day | 104.3x |
+| Methodik / Methodology | v2; source `c11ef37f3d69` |
 
 ### Artefaktmix / Artifact Mix
 
 ```text
 Produktiv / Production          [#...................]   2.9% | 10650
 Tests                           [###.................]  13.9% | 50656
-Dokumentation / Documentation   [########............]  42.0% | 153226
+Dokumentation / Documentation   [########............]  42.0% | 153323
 Skripte / Scripts               [###.................]  14.8% | 54147
 Konfiguration / Configuration   [#####...............]  26.3% | 95980
 Daten und Medien / Data and media [....................]   0.0% | 0
@@ -172,9 +189,9 @@ Sa/Sa  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 Wochen / Weeks 27..52 | 2026-05-17..2026-11-14
 So/Su  0 0 0 0 0 0 0 0 0 0 0 4 4 4 0 4 4 4 4 0 0 0 0 0 4 0
 Mo/Mo  0 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 2
-Di/Tu  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 -
-Mi/We  0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 4 0 0 0 0 0 0 0 0 -
-Do/Th  0 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 2 0 -
+Di/Tu  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0
+Mi/We  0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 4 0 0 0 0 0 0 0 0 0
+Do/Th  0 0 0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 0 0 0 0 0 2 0 2
 Fr/Fr  0 0 0 0 0 0 0 0 0 0 4 0 0 0 0 0 4 0 1 0 0 0 0 3 0 -
 Sa/Sa  0 0 0 0 0 0 0 0 0 0 4 0 2 0 3 4 3 4 2 0 0 0 0 4 0 -
 ```
@@ -254,8 +271,8 @@ Die festen Slots halten den Phasenvergleich auch bei fehlenden oder spaeter erga
 
 ```text
 Scale: 0..200x
-80 lines/day       [#################...] 168.9x
-125 lines/day      [###########.........] 108.1x
+80 lines/day       [################....] 162.9x
+125 lines/day      [##########..........] 104.3x
 ```
 
 Die Faktoren vergleichen sichtbare Lieferdichte mit den dokumentierten manuellen Referenzen. Sie messen keine Arbeitszeit.
@@ -268,7 +285,7 @@ Die Faktoren vergleichen sichtbare Lieferdichte mit den dokumentierten manuellen
 Scale: 0..20000 lines/day
 Experienced manual [#...................] 80
 Thorsten solo      [#...................] 125
-Visible repository [##############......] 13511.2
+Visible repository [#############.......] 13032.1
 ```
 
 Die gemeinsame Skala vergleicht Referenzen und sichtbare Lieferdichte. Sie schreibt die Git-Aktivitaet keiner Person oder KI pauschal zu.
@@ -277,9 +294,9 @@ Die gemeinsame Skala vergleicht Referenzen und sichtbare Lieferdichte. Sie schre
 
 ### Textalternative / Text Alternative
 
-DE: Das Fenster beginnt am 2025-11-16 und endet am 2026-11-09. Es enthaelt 27 aktive und 332 inaktive vergangene Tage. Peak-Tag: 2026-07-31 / 132656. Peak-Woche: 2026-07-26 / 135472. Laengste Serie: 4 Tage (2026-10-29..2026-11-01).
+DE: Das Fenster beginnt am 2025-11-16 und endet am 2026-11-12. Es enthaelt 28 aktive und 334 inaktive vergangene Tage. Peak-Tag: 2026-07-31 / 132656. Peak-Woche: 2026-07-26 / 135472. Laengste Serie: 4 Tage (2026-10-29..2026-11-01).
 
-*EN: The window starts on 2025-11-16 and ends on 2026-11-09. It contains 27 active and 332 inactive elapsed days. Peak day: 2026-07-31 / 132656. Peak week: 2026-07-26 / 135472. Longest streak: 4 days (2026-10-29..2026-11-01).*
+*EN: The window starts on 2025-11-16 and ends on 2026-11-12. It contains 28 active and 334 inactive elapsed days. Peak day: 2026-07-31 / 132656. Peak week: 2026-07-26 / 135472. Longest streak: 4 days (2026-10-29..2026-11-01).*
 
 | Monat / Month | Geaenderte Textzeilen / Changed text lines |
 |---|---:|
@@ -294,6 +311,6 @@ DE: Das Fenster beginnt am 2025-11-16 und endet am 2026-11-09. Es enthaelt 27 ak
 | 2026-08 | 100254 |
 | 2026-09 | 145652 |
 | 2026-10 | 7659 |
-| 2026-11 | 3676 |
+| 2026-11 | 3845 |
 
 <!-- project-statistics-v2:end -->
