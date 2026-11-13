@@ -458,26 +458,6 @@ def handle_cc65(
     freed = 0
     status = "Passed"
     warnings: list[str] = []
-    if profile == "deep":
-        all_paths = [path for group in adapter["safeGroups"] for path in group["paths"]]
-        existing = [repository / path for path in all_paths if (repository / path).exists()]
-        for path in existing:
-            if not git_path_is_ignored_and_untracked(repository, path):
-                raise StorageContractError(f"cc65 deep candidate is not ignored and untracked: {path}")
-            candidates.append(candidate_record(repository, path, "cc65-root-clean", retention_days, True))
-        if not existing:
-            return candidates, protected, 0, status, warnings
-        for candidate in candidates:
-            candidate["action"] = "RemoveCc65Candidate"
-        if mode != "update":
-            return candidates, protected, 0, status, warnings
-        if dirty or busy:
-            for candidate in candidates:
-                candidate["status"] = "SkippedDirtyOrBusy"
-            return candidates, protected, 0, "Warning", warnings
-        for candidate in candidates:
-            freed += remove_candidate(repository, candidate)
-        return candidates, protected, freed, status, warnings
 
     effective_pressure = pressure_mode or profile == "deep"
     for group in adapter.get("safeGroups", []):
@@ -496,7 +476,7 @@ def handle_cc65(
             continue
         for candidate in group_candidates:
             if candidate["eligible"]:
-                candidate["action"] = "RemoveCc65Candidate"
+                candidate["action"] = "RemoveVerifiedGeneratedTree"
         if mode != "update":
             continue
         if dirty or busy:
@@ -575,13 +555,14 @@ def handle_cmake(
     for candidate in candidates:
         if not candidate["eligible"]:
             continue
-        candidate["action"] = "RemoveCMakeBuildTree"
+        candidate["action"] = "RemoveVerifiedBuildTree"
         if mode != "update":
             continue
         if dirty or busy:
             candidate["status"] = "SkippedDirtyOrBusy"
             status = "Warning"
             continue
+        build = contained_path(repository / candidate["path"], repository, "CMake build tree")
         freed += remove_candidate(repository, candidate)
     return candidates, freed, status
 
