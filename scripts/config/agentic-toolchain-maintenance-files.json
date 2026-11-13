@@ -1,8 +1,14 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-07-31",
+  "updated": "2026-11-13",
   "description": "Canonical files propagated from Level-0 to existing Level-1 and Level-2 repositories.",
   "exceptions": [
+    {
+      "repositoryPath": "RiderProjects/Show-CommandTui400",
+      "path": "scripts/invoke-psscriptanalyzer.ps1",
+      "reason": "Preserve the existing exact-rule and exact-variable treatment of two synthetic LH-01 session probes. Archived proof bytes stay unchanged; all other global-variable findings remain errors.",
+      "evidence": "https://github.com/hindermath/Show-CommandTui400/blob/418a5686cec94db635b59da6db3562d2a29e27da/scripts/invoke-psscriptanalyzer.ps1"
+    },
     {
       "repositoryPath": "RiderProjects/TuiVision",
       "path": "scripts/lib/maintenance-tui/src/HomeBaseline.MaintenanceTui/HomeBaseline.MaintenanceTui.csproj",
@@ -14,9 +20,59 @@
       "path": "scripts/lib/maintenance-tui/tests/HomeBaseline.MaintenanceTui.Tests/HomeBaseline.MaintenanceTui.Tests.csproj",
       "reason": "TuiVision enforces CS1591 for its public API; the distributed maintenance tests are operational tooling outside that API contract.",
       "evidence": "https://github.com/hindermath/TuiVision/pull/133"
+    },
+    {
+      "evidence": "https://github.com/hindermath/absdd-image-sandbox/blob/9ca5aec38f5005502ac2253b95d9485ac0383792/Dockerfile",
+      "repositoryPath": "container-images/absdd-image-sandbox",
+      "reason": "The sandbox registry retains the Swift version pinned by its Dockerfile; host latest-stable must not replace that image-bound Linux install target. Other registry fields follow the reviewed canonical update.",
+      "path": "scripts/config/required-cli-tools-registry.json"
     }
   ],
   "files": [
+    {
+      "path": "scripts/templates/ci-budget-governance/private-governance-minimal-gate.yml",
+      "executable": false
+    },
+    {
+      "path": "scripts/templates/ci-budget-governance/private-governance-ruleset.json",
+      "executable": false
+    },
+    {
+      "path": "scripts/lib/msl-toolchains.psm1",
+      "executable": false
+    },
+    {
+      "path": "scripts/lib/invoke-msl-toolchains.ps1",
+      "executable": false
+    },
+    {
+      "path": "scripts/tests/test_msl_toolchains.py",
+      "executable": false
+    },
+    {
+      "path": "scripts/lib/maintenance_execution_context.py",
+      "executable": false
+    },
+    {
+      "path": "scripts/lib/maintenance_container_worker.py",
+      "executable": false
+    },
+    {
+      "path": "scripts/lib/maintenance_git_bundle.py",
+      "executable": false
+    },
+    {
+      "path": "scripts/tests/test_maintenance_git_bundle.py",
+      "executable": false
+    },
+    {
+      "path": "scripts/config/maintenance-execution-contexts.json",
+      "executable": false
+    },
+    {
+      "path": "scripts/tests/test_maintenance_execution_context.py",
+      "executable": false
+    },
     {
       "path": "scripts/maintain-agentic-workspace.sh",
       "executable": true
@@ -26,11 +82,59 @@
       "executable": false
     },
     {
+      "path": "scripts/maintain-workspace-storage.sh",
+      "executable": true
+    },
+    {
+      "path": "scripts/maintain-workspace-storage.ps1",
+      "executable": false
+    },
+    {
+      "path": "scripts/lib/workspace_storage_maintenance.py",
+      "executable": true
+    },
+    {
+      "path": "scripts/config/workspace-storage-maintenance.json",
+      "executable": false
+    },
+    {
+      "path": "scripts/tests/test_workspace_storage_maintenance.py",
+      "executable": false
+    },
+    {
+      "path": "scripts/resolve-model-routing.sh",
+      "executable": true
+    },
+    {
+      "path": "scripts/resolve-model-routing.ps1",
+      "executable": false
+    },
+    {
       "path": "scripts/lib/agentic_workspace_fleet.py",
       "executable": false
     },
     {
+      "path": "scripts/lib/resolve-home-baseline-source.sh",
+      "executable": true
+    },
+    {
+      "path": "scripts/lib/resolve-home-baseline-source.ps1",
+      "executable": false
+    },
+    {
       "path": "scripts/tests/test_maintenance_tui_wrappers.py",
+      "executable": false
+    },
+    {
+      "path": "scripts/tests/test_feature_020_documentation_architecture.py",
+      "executable": false
+    },
+    {
+      "path": "scripts/tests/test_spec_kit_agent_surface_parity.py",
+      "executable": false
+    },
+    {
+      "path": "scripts/tests/test_linux_maintenance_hardening.py",
       "executable": false
     },
     {
@@ -222,6 +326,14 @@
       "executable": false
     },
     {
+      "path": "docs/man/maintain-workspace-storage.1.md",
+      "executable": false
+    },
+    {
+      "path": "docs/man/resolve-model-routing.1.md",
+      "executable": false
+    },
+    {
       "path": "docs/architecture/maintenance-tui.md",
       "executable": false
     },
@@ -274,6 +386,26 @@
       "executable": false
     },
     {
+      "path": "scripts/tests/documentation-impact/fixtures/legacy-valid.json",
+      "executable": false
+    },
+    {
+      "path": "scripts/tests/documentation-impact/fixtures/missing-architecture-fields.json",
+      "executable": false
+    },
+    {
+      "path": "scripts/tests/documentation-impact/fixtures/invalid-distribution-class.json",
+      "executable": false
+    },
+    {
+      "path": "scripts/tests/documentation-impact/fixtures/invalid-home-sync-type.json",
+      "executable": false
+    },
+    {
+      "path": "scripts/tests/documentation-impact/fixtures/invalid-language-partners-type.json",
+      "executable": false
+    },
+    {
       "path": "scripts/tests/documentation-impact/fixtures/missing-decision.json",
       "executable": false
     },
@@ -314,15 +446,15 @@
       "executable": false
     },
     {
+      "path": "scripts/lib/managed-file-hardening.psm1",
+      "executable": false
+    },
+    {
       "path": "scripts/check-homogeneity.sh",
       "executable": true
     },
     {
       "path": "scripts/check-homogeneity.ps1",
-      "executable": false
-    },
-    {
-      "path": "scripts/lib/apply_memory_patch.py",
       "executable": false
     },
     {
@@ -454,6 +586,22 @@
       "executable": false
     },
     {
+      "path": "scripts/config/spec-kit-model-routing-governance-presets.json",
+      "executable": false
+    },
+    {
+      "path": "scripts/config/spec-kit-secure-development-assurance-governance-presets.json",
+      "executable": false
+    },
+    {
+      "path": "scripts/config/spec-kit-project-statistics-governance-presets.json",
+      "executable": false
+    },
+    {
+      "path": "scripts/config/spec-kit-preset-profiles.json",
+      "executable": false
+    },
+    {
       "path": "scripts/config/project-statistics.schema.json",
       "executable": false
     },
@@ -531,6 +679,26 @@
     },
     {
       "path": "docs/documentation-governance.md",
+      "executable": false
+    },
+    {
+      "path": "scripts/adapters/new-harnesses.ps1",
+      "executable": false
+    },
+    {
+      "path": "scripts/adapters/discover-sdk.mjs",
+      "executable": false
+    },
+    {
+      "path": "scripts/adapters/selection-policy.json",
+      "executable": false
+    },
+    {
+      "path": "scripts/tests/test-model-routing-installation.ps1",
+      "executable": false
+    },
+    {
+      "path": "scripts/adapters/invoke-harness-with-result.ps1",
       "executable": false
     }
   ]
