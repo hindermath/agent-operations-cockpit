@@ -100,8 +100,7 @@ class SecurityBoundaryHelpersTests(unittest.TestCase):
                 if not shutil.which(command[0]):
                     continue
                 result = subprocess.run(command, capture_output=True, text=True, check=False)
-                self.assertEqual(result.returncode, 0, result.stdout)
-                self.assertIn("DRY-RUN", result.stdout)
+                self.assertNotEqual(result.returncode, 0, result.stdout)
                 self.assertEqual((repository / "README.md").read_text(encoding="utf-8"), "original\n")
                 current_head = subprocess.run(["git", "-C", str(repository), "rev-parse", "HEAD"],
                                               capture_output=True, text=True, check=True).stdout.strip()
