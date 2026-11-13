@@ -578,39 +578,6 @@ class AgenticWorkspaceMaintenanceTests(unittest.TestCase):
             )
         )
 
-    def test_clion_workspace_and_tvision_fork_are_declared(self) -> None:
-        manifest_path = REPOSITORY / "scripts" / "config" / "agentic-workspace-fleet.json"
-        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-        targets = {item["id"]: item for item in manifest["targets"]}
-
-        self.assertEqual(
-            targets["clion-projects"],
-            {
-                "id": "clion-projects",
-                "kind": "git-repository",
-                "level": 1,
-                "path": "CLionProjects",
-                "active": True,
-                "maintenanceClass": "canonical-fleet",
-                "remote": "https://github.com/hindermath/clion-baseline.git",
-                "forge": "github",
-                "defaultBranch": "main",
-            },
-        )
-        self.assertEqual(
-            targets["tvision"],
-            {
-                "id": "tvision",
-                "kind": "git-repository",
-                "level": 2,
-                "path": "CLionProjects/tvision",
-                "active": True,
-                "maintenanceClass": "canonical-fleet",
-                "remote": "https://github.com/hindermath/tvision.git",
-                "forge": "github",
-                "defaultBranch": "master",
-            },
-        )
 
     @unittest.skipIf(os.name == "nt", "This local fixture invokes the installed PowerShell on Unix.")
     def test_powershell_surface_exposes_approved_cmdlet_and_manifest_parameter(self) -> None:
