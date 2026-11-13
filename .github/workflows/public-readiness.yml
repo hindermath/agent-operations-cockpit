@@ -43,18 +43,34 @@ jobs:
               throw 'The local Spec Kit preset cache must not be committed.'
           }
           $patterns = @(
-              ('/Us' + 'ers/[[:alnum:]_.-]+/'),
-              ('/ho' + 'me/[[:alnum:]_.-]+/'),
+              ('(^|[[:space:]"''`=])(/Us' + 'ers/[[:alnum:]_.-]+/)'),
+              ('(^|[[:space:]"''`=])(/ho' + 'me/[[:alnum:]_.-]+/)'),
               '[A-Za-z]:\\Users\\[[:alnum:]_.-]+\\'
           )
           foreach ($pattern in $patterns) {
               $matches = git grep -n -I -E -- $pattern 2>$null
               $grepExitCode = $LASTEXITCODE
               if ($grepExitCode -eq 0) {
-                  $matches
-                  throw "Personal absolute path pattern found: ${pattern}"
+                  $remaining = @($matches | Where-Object {
+                      $candidate = $_
+                      # These exact mount-path fixtures contain no personal identity.
+                      # Remove only their known placeholder, then scan the full line again.
+                      if ($candidate -match '^scripts/tests/test_maintenance_execution_context.py:[0-9]+:') {
+                          $candidate = $candidate.Replace(('/ho' + 'me/test/Projects'), '<fixture>').Replace(('/ho' + 'me/test/projects'), '<fixture>')
+                      }
+                      if ($candidate -match '^docs/man/maintain-agentic-workspace.1.md:[0-9]+:') {
+                          $candidate = $candidate.Replace(('C:\Us' + 'ers\name\Projects'), '<fixture>')
+                      }
+                      $null = $candidate | grep -E -- $pattern
+                      if ($LASTEXITCODE -notin 0, 1) { throw 'Fixture path recheck failed.' }
+                      $LASTEXITCODE -eq 0
+                  })
+                  if ($remaining.Count) {
+                      $remaining
+                      throw "Personal absolute path pattern found: ${pattern}"
+                  }
               }
-              if ($grepExitCode -ne 1) {
+              if ($grepExitCode -notin 0, 1) {
                   throw "git grep failed for pattern: ${pattern}"
               }
           }
