@@ -53,29 +53,29 @@ Benutzerzugriff.
 ## NON-MSL ADAPTERS
 
 `C64Projects/cc65` verwendet absichtlich C89 und 6502-Assembly für 8-Bit-
-Kompatibilität. Safe entfernt nur geprüfte, ignorierte und ungetrackte
-Build-Verzeichnisse der vier deklarierten Gruppen. Deep entfernt dieselben
-vorhandenen Kandidaten unabhängig vom Alter. Sample- und Targettest-Nachweise
-wie Disk-Images, Zielbinärdateien, Maps, Labels und Debuglisten bleiben
-erhalten. Die Speicherwartung wertet keine Makefiles aus und führt weder
-`make clean` noch `make zap` aus.
+Kompatibilität. Safe führt nur vorab geprüfte native `make ... clean`-Gruppen
+für Hostwerkzeuge, Laufzeitbibliotheken, generierte Dokumentation und
+Regression-Arbeitsverzeichnisse aus. Sample- und Targettest-Nachweise wie
+Disk-Images, Zielbinärdateien, Maps, Labels und Debuglisten bleiben erhalten.
+`make zap` wird nie verwendet; Root-`make clean` gehört nur zu `deep`. Weicht
+dessen Scope-Prüfung im autorisierten, sauberen und nicht beschäftigten
+Updatepfad von den deklarierten Pfaden ab, protokolliert Deep die Scope-Warnung
+und fällt auf die einzeln geprüften Safe-Gruppen zurück. Check-only und Dry-run
+leiten den Plan ausschließlich aus Policy und Dateisystemzustand ab und werten
+kein Makefile aus.
 
-*`C64Projects/cc65` intentionally uses C89 and 6502 assembly for 8-bit
-compatibility. Safe removes only verified, ignored and untracked build
-directories from the four declared groups; Deep removes the same existing
-candidates regardless of age. Sample and target-test evidence remains intact.
-Storage maintenance neither evaluates Makefiles nor runs `make clean` or
-`make zap`.*
+*`make zap` is never used, and root `make clean` belongs to `deep` only. If its
+scope check in the authorized, clean, idle update path exceeds the declared
+paths, Deep records the scope warning and falls back to the individually
+proven Safe groups. Check-only and dry-run derive the plan from policy and
+filesystem state only and do not evaluate a Makefile.*
 
 `CLionProjects/tvision` bleibt wegen Quell-/ABI-Kompatibilität C++14. Ein
 CMake-Buildverzeichnis wird nur akzeptiert, wenn sein `CMakeCache.txt` auf
 eine Repo-interne Quelle mit getrackter `CMakeLists.txt` zeigt. Verschachtelte
-`_deps`-Builds werden dedupliziert. Der echte Lauf entfernt
-den verifizierten, ignorierten Buildbaum direkt. Ungetrackte Build-Regeln
-werden nicht ausgeführt.
-
-*The update removes the verified, ignored build tree directly. It does not
-execute untracked build rules.*
+`_deps`-Builds werden dedupliziert. Der echte Lauf verwendet zunächst
+`cmake --build <DIR> --target clean` und entfernt danach den verifizierten
+Buildbaum.
 
 *The curated non-MSL adapters preserve each repository's constitutional
 justification and compensating controls. Unknown non-MSL repositories are
@@ -92,6 +92,18 @@ reported but never handled by generic deletion rules.*
 - Podman auf macOS: Socket wird pro Lauf aus `podman machine inspect`
   ermittelt und als existierender Unix-Socket verifiziert. TCP-Fallbacks und
   gespeicherte Hostpfade sind unzulässig.
+
+Für npm wird das tatsächlich konfigurierte Cache-Verzeichnis einschließlich
+`.npmrc` schreibfrei ermittelt. Es muss ein eigenes Verzeichnis innerhalb des
+verifizierten Home sein und darf nicht selbst ein Symlink sein. Genau dieser
+geprüfte Pfad wird für `verify` und `clean` an npm gebunden. Ist er nicht
+prüfbar, bleibt die npm-Wartung aus und der Bericht zeigt eine Warnung.
+
+*For npm, the effective cache directory, including `.npmrc` settings, is read
+without changing it. It must be a separate directory inside the verified home
+and must not itself be a symlink. The verified path is bound to both `verify`
+and `clean`. If it cannot be verified, npm maintenance is skipped and the
+report shows a warning.*
 
 Cargo-, Maven-, Gradle- und Swift-Dependency-Stores bleiben in Version 1
 unberührt.

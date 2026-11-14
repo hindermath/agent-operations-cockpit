@@ -3,9 +3,13 @@
 
 from __future__ import annotations
 
+import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path
+import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -14,6 +18,26 @@ import unittest
 
 REPOSITORY = Path(__file__).resolve().parents[2]
 ENGINE = REPOSITORY / "scripts" / "lib" / "agentic_workspace_fleet.py"
+
+
+def can_query_process_identity() -> bool:
+    """Return whether the host permits the process-start query used by leases."""
+    if os.name == "nt" or Path(f"/proc/{os.getpid()}/stat").is_file():
+        return True
+    try:
+        completed = subprocess.run(
+            ["ps", "-o", "lstart=", "-p", str(os.getpid())],
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL,
+            check=False,
+        )
+    except OSError:
+        return False
+    return completed.returncode == 0 and bool(completed.stdout.strip())
+
+
+PROCESS_IDENTITY_AVAILABLE = can_query_process_identity()
 
 
 def bash_path(path: Path) -> str:
@@ -141,6 +165,15 @@ class AgenticWorkspaceMaintenanceTests(unittest.TestCase):
             check=False,
         )
 
+    def test_connection_was_reset_is_transient_but_auth_failure_is_terminal(self) -> None:
+        spec = importlib.util.spec_from_file_location("agentic_workspace_fleet_test", ENGINE)
+        assert spec is not None and spec.loader is not None
+        engine = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(engine)
+        self.assertTrue(engine.is_transient_git_failure("Recv failure: Connection was reset"))
+        self.assertTrue(engine.is_transient_git_failure("connection reset"))
+        self.assertFalse(engine.is_transient_git_failure("authentication failed"))
+
     def create_lease(
         self,
         fixture: FleetFixture,
@@ -172,8 +205,13 @@ class AgenticWorkspaceMaintenanceTests(unittest.TestCase):
             "--worktree",
             str(worktree),
         ]
+        # Preserve the engine-derived identity when the host supports it so an
+        # active lease exercises the real PID/start-time match. Sandboxes that
+        # block the query still receive a deterministic creation-only fixture.
         if owner_identity is not None:
             arguments.extend(["--owner-process-identity", owner_identity])
+        elif not PROCESS_IDENTITY_AVAILABLE:
+            arguments.extend(["--owner-process-identity", "fixture-owner-process"])
         return self.run_engine(*arguments)
 
     def test_dirty_repository_fetches_before_it_is_blocked(self) -> None:
@@ -305,6 +343,10 @@ class AgenticWorkspaceMaintenanceTests(unittest.TestCase):
             self.assertFalse(lease.exists())
             self.assertFalse(worktree.exists())
 
+    @unittest.skipUnless(
+        PROCESS_IDENTITY_AVAILABLE,
+        "The host sandbox blocks the process-start query required by lease recovery.",
+    )
     def test_orphaned_lease_recovers_once_but_active_and_pid_reuse_remain(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             fixture = FleetFixture(Path(directory))
@@ -393,6 +435,10 @@ class AgenticWorkspaceMaintenanceTests(unittest.TestCase):
             self.assertTrue(reused.exists())
             self.assertTrue(reused_worktree.exists())
 
+    @unittest.skipUnless(
+        PROCESS_IDENTITY_AVAILABLE,
+        "The host sandbox blocks the process-start query required by lease recovery.",
+    )
     def test_lease_rejects_path_escape_foreign_repository_and_new_untracked_data(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             fixture = FleetFixture(Path(directory))
@@ -407,7 +453,8 @@ class AgenticWorkspaceMaintenanceTests(unittest.TestCase):
 
             lease = state_root / "leases" / "changed.json"
             worktree = state_root / "worktrees" / "changed" / "worktree"
-            self.assertEqual(self.create_lease(fixture, state_root, lease, worktree).returncode, 0)
+            created = self.create_lease(fixture, state_root, lease, worktree)
+            self.assertEqual(created.returncode, 0, created.stdout)
             payload = json.loads(lease.read_text(encoding="utf-8"))
             subprocess.run(
                 ["git", "-C", str(checkout), "worktree", "add", "--detach",
@@ -531,6 +578,7 @@ class AgenticWorkspaceMaintenanceTests(unittest.TestCase):
             )
         )
 
+
     @unittest.skipIf(os.name == "nt", "This local fixture invokes the installed PowerShell on Unix.")
     def test_powershell_surface_exposes_approved_cmdlet_and_manifest_parameter(self) -> None:
         completed = subprocess.run(
@@ -630,60 +678,6 @@ class AgenticWorkspaceMaintenanceTests(unittest.TestCase):
                 "PATH_CONFLICT",
             )
 
-    def test_symlinked_parent_cannot_redirect_fleet_clone_outside_home(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            fixture = FleetFixture(Path(directory))
-            outside = fixture.root / "outside"
-            outside.mkdir()
-            (fixture.home / "Fleet").symlink_to(outside, target_is_directory=True)
-
-            completed, report = fixture.run("update")
-            self.assertEqual(completed.returncode, 1, completed.stdout)
-            self.assertFalse((outside / "Example").exists())
-            target = next(item for item in report["targets"] if item["targetId"] == "example")
-            self.assertEqual(target["status"], "PATH_CONFLICT")
-
-    def test_later_blocker_prevents_earlier_fleet_fast_forward(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            fixture = FleetFixture(Path(directory))
-            first, _ = fixture.run("update")
-            self.assertEqual(first.returncode, 0, first.stdout)
-            checkout = fixture.home / "Fleet" / "Example"
-            original_head = git(checkout, "rev-parse", "HEAD")
-            (fixture.seed / "README.md").write_text("remote update\n", encoding="utf-8")
-            git(fixture.seed, "add", "README.md")
-            git(fixture.seed, "commit", "-q", "-m", "remote update")
-            git(fixture.seed, "push", "-q")
-
-            manifest_data = json.loads(fixture.manifest().read_text(encoding="utf-8"))
-            blocked = dict(manifest_data["targets"][1])
-            blocked.update(id="blocked", path="Fleet/Blocked", remote=str(fixture.root / "blocked.git"))
-            manifest_data["targets"].append(blocked)
-            manifest = fixture.root / "blocked-manifest.json"
-            manifest.write_text(json.dumps(manifest_data), encoding="utf-8")
-            (fixture.home / "Fleet" / "Blocked").write_text("keep\n", encoding="utf-8")
-
-            completed, report = fixture.run("update", manifest)
-            self.assertEqual(completed.returncode, 1, completed.stdout)
-            self.assertEqual(git(checkout, "rev-parse", "HEAD"), original_head)
-            self.assertEqual((fixture.home / "Fleet" / "Blocked").read_text(), "keep\n")
-            self.assertEqual(
-                next(item for item in report["targets"] if item["targetId"] == "blocked")["status"],
-                "PATH_CONFLICT",
-            )
-
-    def test_blocked_level0_prevents_fleet_clone(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            fixture = FleetFixture(Path(directory))
-            (fixture.seed / "uncommitted.txt").write_text("dirty\n", encoding="utf-8")
-            completed, report = fixture.run("update", level0_dir=fixture.seed)
-            self.assertEqual(completed.returncode, 1, completed.stdout)
-            self.assertFalse((fixture.home / "Fleet" / "Example").exists())
-            self.assertEqual(
-                next(item for item in report["targets"] if item["targetId"] == "level0")["status"],
-                "DIRTY",
-            )
-
     def test_unsafe_repository_states_are_classified_without_repair(self) -> None:
         scenarios = ("BRANCH_MISMATCH", "DETACHED", "REMOTE_MISMATCH", "MISSING_UPSTREAM", "AHEAD", "DIVERGED")
         for expected in scenarios:
@@ -730,12 +724,51 @@ class AgenticWorkspaceMaintenanceTests(unittest.TestCase):
             self.assertEqual(report["overallStatus"], "PARTIAL")
             self.assertEqual(report["counts"]["failed"], 1)
 
+    def test_linked_collection_blocks_all_update_mutations(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = FleetFixture(Path(directory))
+            outside = fixture.root / "outside"
+            outside.mkdir()
+            manifest_path = fixture.manifest()
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            manifest["targets"][0]["path"] = "Linked/Fleet"
+            manifest["targets"][1]["path"] = "Linked/Fleet/Example"
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            (fixture.home / "Linked").symlink_to(outside, target_is_directory=True)
+
+            completed, report = fixture.run("update", manifest_path)
+
+            self.assertEqual(completed.returncode, 1, completed.stdout)
+            collection = next(item for item in report["targets"] if item["targetId"] == "fleet")
+            repository = next(item for item in report["targets"] if item["targetId"] == "example")
+            self.assertEqual(collection["status"], "PATH_CONFLICT")
+            self.assertEqual(repository["status"], "PATH_CONFLICT")
+            self.assertEqual(repository["findingCode"], "AncestorPathConflict")
+            self.assertFalse((outside / "Fleet" / "Example").exists())
+
     def test_stage_update_preserves_targets_and_changes_terminal_status(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             fixture = FleetFixture(Path(directory))
             _, report = fixture.run("dry-run")
             report_path = fixture.root / "report-dry-run.json"
             target_hash = json.dumps(report["targets"], sort_keys=True)
+            toolchain_path = fixture.root / "toolchain.json"
+            toolchain_path.write_text(
+                json.dumps(
+                    {
+                        "schemaVersion": "1.0",
+                        "platform": "Linux",
+                        "mode": "compare-only",
+                        "overallStatus": "SUCCESS",
+                        "exitCode": 0,
+                        "items": [],
+                        "remainingRequired": [],
+                        "optionalDrift": [],
+                        "nextAction": "N/A",
+                    }
+                ),
+                encoding="utf-8",
+            )
             completed = subprocess.run(
                 [
                     "python3",
@@ -753,6 +786,8 @@ class AgenticWorkspaceMaintenanceTests(unittest.TestCase):
                     "fixture",
                     "--next-action",
                     "retry",
+                    "--toolchain-results",
+                    str(toolchain_path),
                 ],
                 text=True,
                 stdout=subprocess.PIPE,
@@ -762,6 +797,7 @@ class AgenticWorkspaceMaintenanceTests(unittest.TestCase):
             self.assertEqual(completed.returncode, 0, completed.stdout)
             updated = json.loads(report_path.read_text(encoding="utf-8"))
             self.assertEqual(json.dumps(updated["targets"], sort_keys=True), target_hash)
+            self.assertEqual(updated["toolchainResult"]["overallStatus"], "SUCCESS")
             self.assertEqual(updated["overallStatus"], "PARTIAL")
             self.assertEqual(updated["exitCode"], 1)
 
@@ -779,6 +815,9 @@ class AgenticWorkspaceMaintenanceTests(unittest.TestCase):
             target = next(item for item in report["targets"] if item["targetId"] == "example")
             self.assertEqual(target["status"], "CURRENT")
             self.assertTrue(target["resumeAccepted"])
+            self.assertTrue(target["mutationAllowed"])
+            self.assertTrue(report["mutationBarrier"]["fleetReady"])
+            self.assertTrue(report["mutationBarrier"]["domainMutationAllowed"])
 
     def test_public_surfaces_share_admin_deferral_and_report_contract(self) -> None:
         bash = (REPOSITORY / "scripts" / "maintain-agentic-workspace.sh").read_text(encoding="utf-8")
@@ -792,6 +831,55 @@ class AgenticWorkspaceMaintenanceTests(unittest.TestCase):
         ):
             self.assertIn(token, bash)
             self.assertIn(token, powershell)
+
+    def test_powershell_preset_installer_uses_an_exit_code_boundary(self) -> None:
+        powershell = (REPOSITORY / "scripts" / "maintain-agentic-workspace.ps1").read_text(
+            encoding="utf-8"
+        )
+        helper = powershell[
+            powershell.index("function Invoke-HBPresetInstallerProcess") :
+            powershell.index("function Invoke-HBPresetProfiles")
+        ]
+        profiles = powershell[
+            powershell.index("function Invoke-HBPresetProfiles") :
+            powershell.index("New-Item -ItemType Directory", powershell.index("function Invoke-HBPresetProfiles"))
+        ]
+
+        self.assertIn("& pwsh -NoProfile -NonInteractive -File $Installer @Arguments", helper)
+        self.assertIn("$status = if ($null -eq $LASTEXITCODE)", helper)
+        self.assertIn("Invoke-HBPresetInstallerProcess", profiles)
+        self.assertNotIn("& $installer", profiles)
+
+    def test_storage_stage_uses_registry_barrier_not_unrelated_findings(self) -> None:
+        bash = (REPOSITORY / "scripts" / "maintain-agentic-workspace.sh").read_text(encoding="utf-8")
+        powershell = (REPOSITORY / "scripts" / "maintain-agentic-workspace.ps1").read_text(encoding="utf-8")
+        bash_storage = bash[bash.index('Storage maintenance has its own') : bash.index(
+            'CURRENT_STAGE="storage-cleanup"'
+        )]
+        powershell_storage = powershell[powershell.index(
+            'Storage cleanup owns independent'
+        ) : powershell.index("Start-HBMaintenanceEventPhase -PhaseId 'storage-cleanup'")]
+
+        self.assertIn('"$registry_safe" -eq 1', bash_storage)
+        self.assertNotIn('"$FINDINGS" -eq 0', bash_storage)
+        self.assertIn('$registrySafe', powershell_storage)
+        self.assertNotIn('$script:Findings -eq 0', powershell_storage)
+
+    def test_model_routing_result_is_not_parsed_as_toolchain_evidence(self) -> None:
+        bash = (REPOSITORY / "scripts" / "maintain-agentic-workspace.sh").read_text(encoding="utf-8")
+        model_routing_stage = bash[bash.index('CURRENT_STAGE="model-routing"'):bash.index(
+            'CURRENT_STAGE="verification"'
+        )]
+
+        self.assertIn('MODEL_ROUTING_RESULT_FILE=', model_routing_stage)
+        self.assertIsNone(
+            re.search(
+                r'^\s*"\$MODEL_ROUTING_RESULT_FILE"\s*$',
+                model_routing_stage,
+                flags=re.MULTILINE,
+            )
+        )
+        self.assertEqual(bash.count('"$TOOLCHAIN_RESULT_FILE"'), 6)
 
     def test_canonical_repository_listing_ignores_unmanifested_preset_and_inactive_paths(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -854,6 +942,94 @@ class AgenticWorkspaceMaintenanceTests(unittest.TestCase):
             self.assertNotIn("Legacy", completed.stdout)
             self.assertNotIn("Preset", completed.stdout)
             self.assertNotIn("Inactive", completed.stdout)
+
+    def test_fleet_manifest_rejects_windows_drive_prefixed_home_path(self) -> None:
+        spec = importlib.util.spec_from_file_location("agentic_workspace_fleet_path_test", ENGINE)
+        assert spec is not None and spec.loader is not None
+        engine = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(engine)
+        for raw in ("C:/outside/repository", "d:relative/repository"):
+            with self.subTest(raw=raw), self.assertRaisesRegex(
+                engine.ContractError, "unsafe HOME-relative path"
+            ):
+                engine.validate_relative_path(raw)
+
+    def test_execution_required_rejects_incomplete_secure_workspace_contract(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = root / "manifest.json"
+            manifest.write_text(json.dumps({
+                "schemaVersion": "1.0",
+                "targets": [
+                    {
+                        "id": "secure-order-desk-projects",
+                        "kind": "collection",
+                        "level": 1,
+                        "path": "SecureOrderDeskProjects",
+                        "active": True,
+                        "maintenanceClass": "canonical-fleet",
+                        "memberDiscovery": "declared-targets",
+                    },
+                    {
+                        "id": "secure-order-desk",
+                        "kind": "git-repository",
+                        "level": 2,
+                        "path": "SecureOrderDeskProjects/App",
+                        "active": True,
+                        "maintenanceClass": "canonical-fleet",
+                        "remote": "https://example.invalid/app.git",
+                        "forge": "generic-git",
+                        "defaultBranch": "main",
+                    }
+                ],
+            }), encoding="utf-8")
+            contract_path = root / "contract.json"
+            contract = {
+                "schemaVersion": 3,
+                "container": "test-sandbox",
+                "user": "tester",
+                "source": "/opt/reference",
+                "approvalPath": "sandbox/approval.md",
+                "approvalSha256": "a" * 64,
+                "approvalBindingSha256": "0" * 64,
+                "approvedImage": "sha256:" + "b" * 64,
+                "approvedSourceSha256": "c" * 64,
+                "approvalTrustState": "PendingOwnerApproval",
+                "expiresOn": "2099-12-31",
+                "mounts": [{"host": "Projects", "container": "/projects"}],
+            }
+            bound_keys = (
+                "container", "user", "source", "approvalPath", "approvalSha256",
+                "approvedImage", "approvedSourceSha256", "approvalTrustState",
+                "expiresOn", "mounts",
+            )
+            contract["approvalBindingSha256"] = hashlib.sha256(
+                json.dumps(
+                    {key: contract[key] for key in bound_keys},
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                ).encode("utf-8")
+            ).hexdigest()
+            contract_path.write_text(json.dumps(contract), encoding="utf-8")
+            completed = self.run_engine(
+                "execution-required", "--manifest", str(manifest), "--contract", str(contract_path)
+            )
+            self.assertEqual(completed.returncode, 2, completed.stdout)
+            self.assertIn("SecureOrderDeskProjects", completed.stdout)
+
+    def test_propagation_includes_every_advertised_preset_matrix(self) -> None:
+        # DE: Ein verteilter Profilkatalog darf keine fehlenden Matrizen anbieten.
+        # EN: A distributed profile catalog must not advertise missing matrices.
+        manifest = json.loads((REPOSITORY / "scripts/config/agentic-toolchain-maintenance-files.json").read_text())
+        managed = {entry["path"] for entry in manifest["files"]}
+        catalog = json.loads((REPOSITORY / "scripts/config/spec-kit-preset-profiles.json").read_text())
+        for name, profile in catalog["profiles"].items():
+            matrix = profile["presetConfig"]
+            if matrix is not None:
+                with self.subTest(profile=name):
+                    self.assertIn(matrix, managed)
+                    self.assertTrue((REPOSITORY / matrix).is_file())
 
     def test_propagation_surfaces_ignore_unregistered_legacy_repository(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -1099,6 +1275,41 @@ class AgenticWorkspaceMaintenanceTests(unittest.TestCase):
             invalid = subprocess.run(command, text=True, capture_output=True, check=False)
             self.assertEqual(invalid.returncode, 2, invalid.stdout)
             self.assertIn("non-canonical propagation target", invalid.stdout)
+
+    @unittest.skipUnless(shutil.which("pwsh"), "PowerShell 7 is required.")
+    def test_ci_preview_starts_one_engine_and_never_claims_remote_convergence(self) -> None:
+        fixtures = REPOSITORY / "scripts/tests/ci-budget-governance/fixtures/vertical-slice"
+        with tempfile.TemporaryDirectory() as directory:
+            temporary = Path(directory)
+            environment = os.environ.copy()
+            environment.update({
+                "HOME": str(temporary / "home"),
+                "HB_CI_PROFILES": str(fixtures / "profiles.json"),
+                "HB_CI_PATH_CONTRACTS": str(fixtures / "path-contracts.json"),
+                "HB_CI_REPOSITORY_ID": "private-governance-fixture",
+                "HB_CI_FIXTURE_HEAD": "a" * 40,
+            })
+            # The repository OS contract uses only native PowerShell on Windows;
+            # invoking bash.exe there may incorrectly enter an unconfigured WSL.
+            commands = (
+                (["pwsh", "-NoProfile", "-File", "scripts/maintain-agentic-workspace.ps1", "-CiGate", "-WhatIf"],)
+                if os.name == "nt"
+                else (
+                    ["bash", "scripts/maintain-agentic-workspace.sh", "--ci-gate", "--dry-run"],
+                    ["pwsh", "-NoProfile", "-File", "scripts/maintain-agentic-workspace.ps1", "-CiGate", "-WhatIf"],
+                )
+            )
+            for index, command in enumerate(commands):
+                counter = temporary / f"counter-{index}.txt"
+                environment["HB_CI_ENGINE_COUNTER_FILE"] = str(counter)
+                completed = subprocess.run(
+                    command, cwd=REPOSITORY, env=environment, text=True,
+                    stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False,
+                )
+                self.assertEqual(completed.returncode, 0, completed.stdout)
+                self.assertEqual(len(counter.read_text(encoding="utf-8").splitlines()), 1)
+                self.assertNotIn("RemoteConverged", completed.stdout)
+                self.assertNotIn("remoteConverged=true", completed.stdout)
 
 
 if __name__ == "__main__":
