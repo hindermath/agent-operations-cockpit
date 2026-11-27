@@ -321,11 +321,11 @@ current downstream authority.*
 <!-- spec-kit-command-id: speckit.specify -->
 ### Specify
 ```text
-$speckit-specify requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md --bind-exact-intake --no-implementation --no-remote-writes --no-preset-write --no-promotion --require-current-scope-authority --require-current-start-authority --require-current-implementation-authority --require-current-governance-write-authority --require-current-remote-write-authority --require-current-merge-authority --require-current-bypass-authority --require-current-provider-authority --require-current-preset-write-authority --require-current-promotion-authority
+$speckit-specify Verwende requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md als verbindliches Lastenheft. / Use this intake as the binding input. Preserve its scope and acceptance gates. Produce the matching specification only. No implementation or remote writes.
 ```
 <!-- spec-kit-command-id: speckit.autonomous -->
 ### Autonomous
 ```text
-$speckit-autonomous requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md --delivery-mode MergeAndSync --require-current-review --no-preset-write --no-promotion --require-current-scope-authority --require-current-start-authority --require-current-implementation-authority --require-current-governance-write-authority --require-current-remote-write-authority --require-current-merge-authority --require-current-bypass-authority --require-current-provider-authority --require-current-preset-write-authority --require-current-promotion-authority
+$speckit-autonomous Erst mit gesondertem Auftrag und bestandener Startprüfung für diesen Intake: Verwende requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md als verbindliches Lastenheft. / Use this binding intake only after a separate request and the applicable intake preflight. Default to LocalImplementation within any explicitly granted scope; remote delivery requires its own approval.
 ```
 <!-- intake-authoring:end -->

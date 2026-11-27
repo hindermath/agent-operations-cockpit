@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesOperation",
+  "operationId": "5e4d4c3a-4553-4e09-ae3c-1fa17bbb47c0",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "type": "Update",
+  "status": "Published",
+  "authorityEvidence": "Explicit local maintenance request of 2026-11-27 to align completed AOC Phase 2 manifest with its proven completion paths.",
+  "proposalNormalizedSha256": "fb062ac45641488049734b121b2d8978bddca7894602c76d22ae87718e8cebc9",
+  "preparedPaths": [
+    "requirements/intakes/series/order.md",
+    "specs/intake-series/aoc-phase-2/manifest.json",
+    "specs/intake-series-receipts/aoc-phase-2.json",
+    "specs/intake-series/aoc-phase-2/operation.json"
+  ],
+  "documentationImpact": {
+    "decision": "UpdateRequired",
+    "source": "Four byte-verified Phase 2 lifecycle relocations",
+    "owner": "AOC maintainer",
+    "documents": [
+      "requirements/intakes/series/order.md",
+      "specs/intake-series/aoc-phase-2/manifest.json",
+      "specs/intake-series-receipts/aoc-phase-2.json",
+      "specs/intake-series/aoc-phase-2/operation.json"
+    ],
+    "evidence": [
+      "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/5e4d4c3a-4553-4e09-ae3c-1fa17bbb47c0/manifest.json",
+      "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/5e4d4c3a-4553-4e09-ae3c-1fa17bbb47c0/receipt.json",
+      "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/5e4d4c3a-4553-4e09-ae3c-1fa17bbb47c0/operation.json"
+    ]
+  },
+  "reviewInvalidation": {
+    "status": "Superseded",
+    "results": [
+      "specs/intake-review-results/aoc-phase-2-series-2026-09-13-r7.json"
+    ],
+    "reason": "Historical review uses previous paths; no new series review is claimed."
+  },
+  "validation": {
+    "bash": "Manifest and series receipt passed; collection validator still reports RIG017.",
+    "powerShell": "NotRun"
+  },
+  "publication": {
+    "status": "Published",
+    "publishedPaths": [
+      "requirements/intakes/series/order.md",
+      "specs/intake-series/aoc-phase-2/manifest.json",
+      "specs/intake-series-receipts/aoc-phase-2.json",
+      "specs/intake-series/aoc-phase-2/operation.json"
+    ]
+  }
+}

@@ -36,10 +36,12 @@ target is a read-only discovery and snapshot reference contract without hidden w
   textual data format; JSON Schema defines allowed fields, types, and the schema
   version.*
 - **Target Framework Moniker (TFM):** die kurze Kennung der .NET-Zielplattform;
-  `net10.0` bezeichnet hier den plattformneutralen Vertrag. **Domain und Core**
+  `net11.0` bezeichnet hier die plattformneutrale Zielplattform .NET 11.
+  **C# 15** ist die zugehörige Sprachversion. **Domain und Core**
   sind die fachlichen, betriebssystemunabhängigen Schichten. / *A Target
   Framework Moniker is the short identifier for a .NET target platform;
-  `net10.0` identifies the platform-neutral contract. Domain and core are the
+  `net11.0` identifies the platform-neutral .NET 11 target. C# 15 is the
+  corresponding language version. Domain and core are the
   operating-system-independent business layers.*
 - **xUnit.net v3 und Microsoft Testing Platform v2:** xUnit.net ist das
   Testframework; Microsoft Testing Platform erkennt und startet die Tests.
@@ -67,7 +69,7 @@ such as authority, evidence, host, node, repository, and working tree.*
 
 Im Scope: registrierte Repositories, Branch/HEAD, Working-Tree-Klasse,
 Toolverfügbarkeit, Hostidentität und Zeitstempel. Nicht im Scope: Commands,
-Dateiinhalte, UI, Hardware, Credentials oder technische Runtimefestlegung. /
+Dateiinhalte, UI, Hardware, Credentials oder technische Runtime-Implementierung. /
 *In scope are registered repositories, branch and HEAD, working-tree class,
 tool availability, host identity, and timestamp. Commands, file contents,
 user-interface (UI) behaviour, hardware, credentials, and technical runtime
@@ -148,11 +150,13 @@ den benannten Roots. / *File-system and process output is untrusted. Read-only
 authority ends at the named roots.* Paket A beantwortet die drei technischen
 Vertragsfragen: / *Package A answers the three technical contract questions:*
 
-- **IAD101 – TFM:** Der Referenzvertrag verwendet `net10.0` als
-  plattformneutrales Target Framework. Domain- und Core-Verträge dürfen keine
+- **IAD101 – TFM:** Der Referenzvertrag verwendet `net11.0` als
+  plattformneutrales Target Framework und C# 15 als Sprachversion.
+  Domain- und Core-Verträge dürfen keine
   Windows-spezifische Abhängigkeit erhalten. Die technische Runtime-Realisierung
-  bleibt außerhalb dieses Intakes. / *The reference contract uses `net10.0` as
-  its platform-neutral target framework. Domain and core contracts must not gain
+  bleibt außerhalb dieses Intakes. / *The reference contract uses `net11.0` as
+  its platform-neutral target framework and C# 15 as its language version.
+  Domain and core contracts must not gain
   a Windows-specific dependency. Runtime implementation remains outside this intake.*
 - **IAD102 – Snapshotformat:** `WorkspaceSnapshot` ist ein versioniertes,
   kanonisches JSON-Dokument mit expliziter Schemaversion und JSON Schema. Die
@@ -189,9 +193,9 @@ fixtures. The mode is `manual-assisted`, followed by one separately authorised
   negative evidence without a write.*
 - **AC-003:** Host und Sandbox werden nicht verwechselt. / *Host and sandbox
   identities are not confused.*
-- **AC-004:** Vertragsartefakte binden `net10.0` und bleiben in Domain und Core
+- **AC-004:** Vertragsartefakte binden `net11.0` und C# 15. Domain und Core bleiben
   frei von Windows-spezifischen Abhängigkeiten. / *Contract artifacts bind
-  `net10.0`; domain and core remain free of Windows-specific dependencies.*
+  `net11.0` and C# 15. Domain and core remain free of Windows-specific dependencies.*
 - **AC-005:** JSON Schema, kanonisches JSON und Konsolenprojektion tragen
   dieselben Snapshot-Felder und dieselbe Schemaversion. / *JSON Schema,
   canonical JSON, and the console projection carry the same snapshot fields
@@ -256,12 +260,12 @@ separate current start and scope authority.*
 <!-- spec-kit-command-id: speckit.specify -->
 ### Specify
 ```text
-$speckit-specify requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md --bind-exact-intake --no-implementation --no-remote-writes
+$speckit-specify Verwende requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md als verbindliches Lastenheft. / Use this intake as the binding input. Preserve its scope and acceptance gates. Produce the matching specification only. No implementation or remote writes.
 ```
 <!-- spec-kit-command-id: speckit.autonomous -->
 ### Autonomous
 ```text
-$speckit-autonomous requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md --delivery-mode MergeAndSync --require-current-review
-VORBEDINGUNG / PRECONDITION: Nicht starten, solange keine separate aktuelle Benutzerentscheidung Scope, Implementierung, Remote Writes, Merge und Bypass ausdrücklich autorisiert. Das gespeicherte `MergeAndSync` und ein aktuelles Review allein reichen nicht aus. / Do not start unless a separate current user decision explicitly authorises downstream scope, implementation, remote writes, merge, and bypass. Stored `MergeAndSync` and a current review alone are insufficient.
+$speckit-autonomous Erst mit gesondertem Auftrag und bestandener Startprüfung für diesen Intake: Verwende requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md als verbindliches Lastenheft. / Use this binding intake only after a separate request and the applicable intake preflight. Default to LocalImplementation within any explicitly granted scope; remote delivery requires its own approval.
+VORBEDINGUNG / PRECONDITION: Vor Start den aktuellen Ready-Einzelreview, die anzuwendenden Seriengates und eine separate Freigabe für Scope, Start und gegebenenfalls Implementierung prüfen. Remote Writes, Merge, Bypass und Provideraktionen brauchen jeweils eine eigene aktuelle Freigabe, wenn sie beantragt sind. / Before starting, verify the current Ready Single review, the applicable series gates, and separate authority for scope, start, and any requested implementation. Remote writes, merge, bypass and provider actions each require separate current authority if requested.
 ```
 <!-- intake-authoring:end -->

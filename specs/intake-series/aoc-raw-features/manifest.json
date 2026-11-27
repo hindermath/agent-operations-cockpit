@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesManifest",
+  "seriesId": "88f6c448-2a4f-4217-941b-7909d85d3b74",
+  "title": "AOC RAW Feature Series",
+  "policy": "aoc-bilingual-requirements",
+  "status": "Ready",
+  "orderedTargets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "role": "Primary",
+      "normalizedSha256": "bff83798789bf565b4e0b679f467f6384dcf6820fda78fcaa4fff30d54a83820",
+      "status": "Eligible"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "6006935534209c25a8c3739f40e918c9a8b13e071e3bdb2a745f61c42ce07b22",
+      "status": "Blocked"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "925a57e5d3d40da78cbff4eb5152cca175fe5b765b6cddfe78831feb8e9262a4",
+      "status": "Blocked"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "4f7f34ccc14be92e8e796277d68da1d67f54fb4b98d17abca05cc717525accdd",
+      "status": "Blocked"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "60885a6703afda7f74af1733a40f3da57c64cf41b9d63c1ad1d5e8ffc6c5b200",
+      "status": "Pending"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "904b157e93c47235a09294be9e203bcc30b68303d5dc581a50ab3095fb73a6de",
+      "status": "Blocked"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "542f7167458afe36395e4ed49ac9a74d36cea45ff354fd77fbe0677697947409",
+      "status": "Blocked"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "c41fc15e4f97d4ff6ab3d34f418ce0769ebc25ff09be8e5b249edc8404cbf4cd",
+      "status": "Blocked"
+    },
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+      "role": "OrderedMember",
+      "normalizedSha256": "65a76480d735a8361a05412ef5b56c35958533ece351a6b387a999b3ecbc89e4",
+      "status": "Blocked"
+    }
+  ],
+  "roots": [
+    "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md"
+  ],
+  "dependencies": [
+    {
+      "from": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "kind": "PreferredSerialOrder",
+      "binding": false
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "kind": "AssessmentBaseline",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "to": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+      "kind": "FinalAuditInput",
+      "binding": true
+    }
+  ],
+  "evidencePaths": [
+    "specs/intake-series/aoc-phase-2/operation.json",
+    "requirements/intakes/history/Lastenheft_META-LH-05-Erste-Welle.md",
+    "requirements/intakes/series/order.md"
+  ]
+}

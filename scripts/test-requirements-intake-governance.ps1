@@ -213,7 +213,7 @@ function Test-RequirementsIntakeGovernance {
             }
         }
         $featureMatrix = Get-Content -LiteralPath (Join-Path $RepositoryRoot 'scripts/tests/linked-intake-evidence/feature-proof-matrix.json') -Raw -Encoding UTF8 | ConvertFrom-Json
-        if (@($featureMatrix.cases).Count -ne 7) {
+        if (@($featureMatrix.cases).Count -ne 9) {
             $failures.Add('Feature-Proof-Matrix ist unvollstaendig / feature proof matrix is incomplete')
         }
 
@@ -727,6 +727,16 @@ function Test-RequirementsIntakeGovernance {
                 } elseif ($featureId -ceq 'similarity-is-not-proof') {
                     Remove-Item -LiteralPath (Join-Path $fixture.Repo 'specs/032-linked-intake-evidence') -Recurse -Force
                     New-Item -ItemType Directory -Path (Join-Path $fixture.Repo 'specs/126-similar-name') -Force | Out-Null
+                } elseif ($featureId -cin @('aoc-missing-feature', 'aoc-open-feature')) {
+                    $value = Get-Content -LiteralPath $fixture.ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+                    $value | Add-Member -NotePropertyName policy -NotePropertyValue 'aoc-bilingual-requirements' -Force
+                    [IO.File]::WriteAllText($fixture.ManifestPath, (($value | ConvertTo-Json -Depth 12) + "`n"), [Text.UTF8Encoding]::new($false))
+                    $featureDirectory = Join-Path $fixture.Repo 'specs/032-linked-intake-evidence'
+                    if ($featureId -ceq 'aoc-missing-feature') {
+                        Remove-Item -LiteralPath $featureDirectory -Recurse -Force
+                    } else {
+                        [IO.File]::WriteAllText((Join-Path $featureDirectory 'autonomous-run-state.json'), '{"status":"Running"}')
+                    }
                 }
                 $actual = Invoke-ProjectionCase -Fixture $fixture -Mode Write -Outputs @($fixture.RootOutput)
                 if ([string]$featureCase.expectedState -in @('Ambiguous', 'Invalid')) {

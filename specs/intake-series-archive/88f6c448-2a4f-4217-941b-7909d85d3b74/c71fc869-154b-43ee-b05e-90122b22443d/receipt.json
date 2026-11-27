@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "7b3c6735-02d2-450e-a6b9-4fe58d0dd680",
+  "seriesId": "88f6c448-2a4f-4217-941b-7909d85d3b74",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.14"
+  },
+  "createdAt": "2026-11-27T17:39:13Z",
+  "operation": {
+    "operationId": "00d4f91e-7d6d-4eb6-b375-95f97f69d249",
+    "type": "Create",
+    "authorityEvidence": "Explicit local user request to prepare the nine RAW intakes, select RAW-01 next, and require nine current Single reviews before starting RAW-01."
+  },
+  "status": "Ready",
+  "manifest": {
+    "path": "specs/intake-series/aoc-raw-features/manifest.json",
+    "normalizedSha256": "b44d42c40b0ddc26ed838b88c3b2aeed5f94c3c424176cd8a0ef242b4cb82001"
+  },
+  "supersedes": {
+    "receiptPath": "N/A",
+    "receiptNormalizedSha256": "N/A",
+    "manifestArchivePath": "N/A",
+    "manifestArchiveSha256": "N/A"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-series-status"
+}

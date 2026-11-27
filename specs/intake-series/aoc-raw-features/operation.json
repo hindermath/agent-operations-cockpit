@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesOperation",
+  "operationId": "c71fc869-154b-43ee-b05e-90122b22443d",
+  "seriesId": "88f6c448-2a4f-4217-941b-7909d85d3b74",
+  "type": "Update",
+  "status": "Published",
+  "authorityEvidence": "The user explicitly approved the bounded RAW-01 intake update to .NET 11 and C# 15, rebinding the active RAW series, and a separate RAW-01 Single review before Specify.",
+  "authoringMilestone": "requirements/intakes/history/Lastenheft_META-LH-05-Erste-Welle.md",
+  "priorSeriesEvidence": "specs/intake-series/aoc-phase-2/operation.json",
+  "preservedBacklog": {
+    "requirements/intakes/backlog/Lastenheft_RAW-01-Reference-Agentic-Workspace.md": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-03-State-Truthfulness.md": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-02-Workspace-Orchestrator.md": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-04-Presentation-Fabric.md": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-05-Execution-Nodes.md": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-06-CLI-Environment-Orchestration.md": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-07-Hardware-Capability-Layer.md": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-08-Workflow-Engine.md": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-09-Preset-Evolution.md": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md"
+  },
+  "reviewGate": "specs/intake-series/aoc-raw-features/review-gate.json",
+  "documentationImpact": {
+    "decision": "UpdateRequired",
+    "source": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+    "owner": "AOC maintainer",
+    "documents": [
+      "requirements/intakes/series/order.md",
+      "docs/aeps/README.md"
+    ]
+  },
+  "scope": "Refresh the RAW-01 target hash for the approved .NET 11 and C# 15 intake update. Series order, roots, edges and lifecycle remain unchanged.",
+  "initialReviewGateValidator": "scripts/validate-aoc-raw-review-gate.py",
+  "predecessorOperation": "specs/intake-series-archive/88f6c448-2a4f-4217-941b-7909d85d3b74/c71fc869-154b-43ee-b05e-90122b22443d/operation.json",
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/88f6c448-2a4f-4217-941b-7909d85d3b74/c71fc869-154b-43ee-b05e-90122b22443d/receipt.json",
+    "receiptNormalizedSha256": "f743e2abfaac3ebcdb8bf876e241f52970e32ae481f9d3e5e04e3d7ce1767492",
+    "manifestArchivePath": "specs/intake-series-archive/88f6c448-2a4f-4217-941b-7909d85d3b74/c71fc869-154b-43ee-b05e-90122b22443d/manifest.json",
+    "manifestArchiveSha256": "b44d42c40b0ddc26ed838b88c3b2aeed5f94c3c424176cd8a0ef242b4cb82001"
+  },
+  "memberChange": {
+    "path": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+    "previousNormalizedSha256": "7477f878dae704b23ca375ce78f2fb0a7dabad26eaedad86214fea8b9bdd5e62",
+    "normalizedSha256": "bff83798789bf565b4e0b679f467f6384dcf6820fda78fcaa4fff30d54a83820"
+  }
+}

@@ -482,7 +482,8 @@ function Assert-SdhLinkedIntakeCompletionProof {
         [string]$Repo,
         [string]$LogicalPath,
         [string]$ResolvedPath,
-        [string]$StatePath
+        [string]$StatePath,
+        [string]$PriorStampedPath = ''
     )
 
     $stateText = Read-SdhStrictUtf8File -Path (Join-Path $Repo $StatePath) -Subject $StatePath
@@ -516,7 +517,8 @@ function Assert-SdhLinkedIntakeCompletionProof {
             -and 'sha256' -cin @($_.PSObject.Properties.Name) `
             -and $_.path -is [string] `
             -and $_.sha256 -is [string] `
-            -and (([string]$_.path -ceq $LogicalPath) -or ([string]$_.path -ceq $ResolvedPath)) `
+            -and (([string]$_.path -ceq $LogicalPath) -or ([string]$_.path -ceq $ResolvedPath) `
+                -or ($PriorStampedPath -and [string]$_.path -ceq $PriorStampedPath)) `
             -and [string]$_.sha256 -ceq $resolvedHash
     })
     if ($accepted.Count -ne 1) {
@@ -811,6 +813,7 @@ function Get-SdhFeatureCell {
     param([string]$Repo, [string]$ViewPath, [string]$IntakePath, [string]$Status, [object]$Manifest, [string]$ResolvedIntakePath = $IntakePath)
 
     $candidates = [System.Collections.Generic.List[string]]::new()
+    $verifiedFeature = ''
     $specsRoot = Join-Path $Repo 'specs'
     if ($Status -ceq 'Completed' -and (Test-Path -LiteralPath $specsRoot -PathType Container)) {
         $needle = ([char]0x60) + $IntakePath + ([char]0x60)
@@ -828,28 +831,61 @@ function Get-SdhFeatureCell {
                 if ($matched) { $candidates.Add("specs/$($_.Name)") }
             }
 
-        $archiveMatch = [regex]::Match([IO.Path]::GetFileName($ResolvedIntakePath), '\.([0-9]{3}-[^/]+)\.md$')
+        $explicitProofs = @()
+        if ($null -ne $Manifest -and 'featureEvidence' -cin @($Manifest.PSObject.Properties.Name)) {
+            $explicitProofs = @($Manifest.featureEvidence | Where-Object { [string]$_.intakePath -ceq $IntakePath })
+        }
+
+        $archiveMatch = [regex]::Match($ResolvedIntakePath, '\.([0-9]{3}-[^/]+)\.md$')
         if ($archiveMatch.Success) {
             $archiveFeature = "specs/$($archiveMatch.Groups[1].Value)"
             $stateFile = Join-Path $Repo "${archiveFeature}/autonomous-run-state.json"
             if (Test-Path -LiteralPath $stateFile -PathType Leaf) {
+                # A manifest can point directly at the stamped completion file.
+                $proofPath = $IntakePath
+                $priorStampedPath = ''
+                if ($IntakePath -ceq $ResolvedIntakePath) {
+                    $proofPath = $ResolvedIntakePath.Substring(0, $archiveMatch.Index) + '.md'
+                    if (([IO.Path]::GetDirectoryName($ResolvedIntakePath).Replace('\', '/')) -ceq 'requirements/intakes/archive') {
+                        $priorStampedPath = 'requirements/intakes/active/' + [IO.Path]::GetFileName($ResolvedIntakePath)
+                        $proofPath = 'requirements/intakes/active/' + [IO.Path]::GetFileName($proofPath)
+                    }
+                }
                 Assert-SdhLinkedIntakeCompletionProof `
                     -Repo $Repo `
-                    -LogicalPath $IntakePath `
+                    -LogicalPath $proofPath `
                     -ResolvedPath $ResolvedIntakePath `
-                    -StatePath "${archiveFeature}/autonomous-run-state.json"
-                $candidates.Add($archiveFeature)
+                    -StatePath "${archiveFeature}/autonomous-run-state.json" `
+                    -PriorStampedPath $priorStampedPath
+                $verifiedFeature = $archiveFeature
+                if ($archiveFeature -cnotin @($explicitProofs | ForEach-Object { [string]$_.featurePath })) {
+                    $candidates.Add($archiveFeature)
+                }
             }
         }
 
-        if ($null -ne $Manifest -and 'featureEvidence' -cin @($Manifest.PSObject.Properties.Name)) {
-            foreach ($proof in @($Manifest.featureEvidence | Where-Object { [string]$_.intakePath -ceq $IntakePath })) {
-                $featurePath = [string]$proof.featurePath
-                if (-not (Test-Path -LiteralPath (Join-Path $Repo $featurePath) -PathType Container)) {
-                    throw "LIE008: Feature-Ziel fehlt / feature target is missing: ${IntakePath}"
-                }
-                $candidates.Add($featurePath)
+        foreach ($proof in $explicitProofs) {
+            $featurePath = [string]$proof.featurePath
+            if (-not (Test-Path -LiteralPath (Join-Path $Repo $featurePath) -PathType Container)) {
+                throw "LIE008: Feature-Ziel fehlt / feature target is missing: ${IntakePath}"
             }
+            $candidates.Add($featurePath)
+        }
+    }
+
+    if ($Status -ceq 'Completed' -and $null -ne $Manifest -and
+        'policy' -cin @($Manifest.PSObject.Properties.Name) -and $Manifest.policy -ceq 'aoc-bilingual-requirements') {
+        if ($candidates.Count -ne 1) {
+            throw "LIE008: AOC Completed erfordert genau ein Feature / AOC Completed requires exactly one feature: ${IntakePath}"
+        }
+        if ($candidates[0] -cne $verifiedFeature) {
+            $statePath = "$($candidates[0])/autonomous-run-state.json"
+            try {
+                Assert-SdhSafeRepositoryPath -Repo $Repo -RelativePath $statePath -ExpectedType File
+            } catch {
+                throw "LIE008: AOC Feature-Abschlussnachweis fehlt / AOC feature completion proof missing: ${IntakePath}"
+            }
+            Assert-SdhLinkedIntakeCompletionProof -Repo $Repo -LogicalPath $IntakePath -ResolvedPath $ResolvedIntakePath -StatePath $statePath
         }
     }
 
@@ -1000,6 +1036,7 @@ function Get-SdhLinkedIntakeInputPaths {
 
     $manifestText = Read-SdhStrictUtf8File -Path (Join-Path $Repo $ManifestPath) -Subject $ManifestPath
     $manifest = $manifestText | ConvertFrom-Json
+    $terminalRequired = 'policy' -cin @($manifest.PSObject.Properties.Name) -and $manifest.policy -ceq 'aoc-bilingual-requirements'
     $paths = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
     $null = $paths.Add($ManifestPath)
     foreach ($target in @($manifest.orderedTargets)) {
@@ -1013,7 +1050,10 @@ function Get-SdhLinkedIntakeInputPaths {
             Where-Object { $_.Name -cmatch '^[0-9]{3}-.+' } |
             ForEach-Object {
                 $specFile = Join-Path $_.FullName 'spec.md'
-                if (Test-Path -LiteralPath $specFile -PathType Leaf) { $null = $paths.Add("specs/$($_.Name)/spec.md") }
+                if (Test-Path -LiteralPath $specFile -PathType Leaf) {
+                    $null = $paths.Add("specs/$($_.Name)/spec.md")
+                    if ($terminalRequired) { $null = $paths.Add("specs/$($_.Name)/autonomous-run-state.json") }
+                }
             }
     }
     foreach ($target in @($manifest.orderedTargets)) {
@@ -1025,7 +1065,10 @@ function Get-SdhLinkedIntakeInputPaths {
         }
     }
     if ('featureEvidence' -cin @($manifest.PSObject.Properties.Name)) {
-        foreach ($proof in @($manifest.featureEvidence)) { $null = $paths.Add([string]$proof.featurePath) }
+        foreach ($proof in @($manifest.featureEvidence)) {
+            $null = $paths.Add([string]$proof.featurePath)
+            if ($terminalRequired) { $null = $paths.Add("$($proof.featurePath)/autonomous-run-state.json") }
+        }
     }
     return @($paths | Sort-Object)
 }

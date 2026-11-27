@@ -724,6 +724,14 @@ else
         rm -rf "$CASE_REPO/specs/032-linked-intake-evidence"
         mkdir -p "$CASE_REPO/specs/126-similar-name"
         ;;
+      aoc-missing-feature|aoc-open-feature)
+        sdh_jq '.policy="aoc-bilingual-requirements"' "$CASE_MANIFEST" > "$CASE_MANIFEST.tmp" && mv "$CASE_MANIFEST.tmp" "$CASE_MANIFEST"
+        if [ "$feature_id" = 'aoc-missing-feature' ]; then
+          rm -rf "$CASE_REPO/specs/032-linked-intake-evidence"
+        else
+          printf '%s\n' '{"status":"Running"}' > "$CASE_REPO/specs/032-linked-intake-evidence/autonomous-run-state.json"
+        fi
+        ;;
     esac
     run_projection "$CASE_REPO" "$CASE_MANIFEST_REL" write '' '' "$CASE_ROOT_OUTPUT"
     expected_state="$(sdh_jq -r '.expectedState' <<< "$feature_case")"
@@ -743,7 +751,7 @@ else
       fi
     fi
   done < <(sdh_jq -c '.cases[]' "$FEATURE_MATRIX")
-  [ "$feature_case_count" -eq 7 ] || { printf '%s\n' 'FEHLER / FAIL: Feature-Proof-Matrix ist unvollstaendig / feature proof matrix is incomplete' >&2; failures=$((failures + 1)); }
+  [ "$feature_case_count" -eq 9 ] || { printf '%s\n' 'FEHLER / FAIL: Feature-Proof-Matrix ist unvollstaendig / feature proof matrix is incomplete' >&2; failures=$((failures + 1)); }
 fi
 
 if [ "$failures" -ne 0 ]; then

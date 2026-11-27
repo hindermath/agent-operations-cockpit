@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesOperation",
+  "operationId": "72f2cafd-1f57-451d-b9ad-ed859145a519",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "type": "Update",
+  "status": "Published",
+  "authorityEvidence": "Thorsten explicitly authorised on 2026-09-12 the bounded AOC Phase 2 Series update that changes only the META-LH-03 normalized target hash to 3a5c34b54bdb0b00f78415089cc0b926b33ddeabe44ee7a130ad603acd4a98ba according to specs/003-authoring-contract/intake-lifecycle.json, archives the predecessor manifest and receipt byte-identically, and renews manifest, receipt, operation, and order lineage. Series status Completed, all fourteen target lifecycle values, logical target paths, exact order, single root, fourteen dependencies, four evidence paths, intake content, and Delivery Authority remain unchanged. Review, Autonomous, Specify, implementation, remote write, merge, bypass, preset, promotion, and Level-0 actions are excluded.",
+  "proposalNormalizedSha256": "609ca54b3d12178675bd82dc900cb52e7617ac2026b677883f65e3047d6fab43",
+  "preparedPaths": [
+    "requirements/intakes/series/order.md",
+    "specs/intake-series/aoc-phase-2/manifest.json",
+    "specs/intake-series-receipts/aoc-phase-2.json",
+    "specs/intake-series/aoc-phase-2/operation.json"
+  ],
+  "documentationImpact": {
+    "decision": "UpdateRequired",
+    "source": "Thorsten's explicit META-LH-03 lifecycle-hash correction authority from 2026-09-12",
+    "owner": "AOC Phase 2 Intake Series",
+    "documents": [
+      "requirements/intakes/series/order.md",
+      "specs/intake-series/aoc-phase-2/manifest.json",
+      "specs/intake-series-receipts/aoc-phase-2.json",
+      "specs/intake-series/aoc-phase-2/operation.json"
+    ],
+    "evidence": [
+      "specs/003-authoring-contract/intake-lifecycle.json",
+      "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/72f2cafd-1f57-451d-b9ad-ed859145a519/manifest.json",
+      "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/72f2cafd-1f57-451d-b9ad-ed859145a519/receipt.json"
+    ]
+  },
+  "reviewInvalidation": {
+    "status": "Superseded",
+    "results": [
+      "specs/intake-review-results/aoc-phase-2-series-2026-08-30-r6.json"
+    ],
+    "reason": "The corrected META-LH-03 target hash changes the reviewed Series target binding. The prior Ready review remains historical evidence; no review is executed under this update authority."
+  },
+  "validation": {
+    "bash": "Passed",
+    "powerShell": "Passed"
+  },
+  "publication": {
+    "status": "Published",
+    "publishedPaths": [
+      "requirements/intakes/series/order.md",
+      "specs/intake-series/aoc-phase-2/manifest.json",
+      "specs/intake-series-receipts/aoc-phase-2.json",
+      "specs/intake-series/aoc-phase-2/operation.json"
+    ]
+  }
+}

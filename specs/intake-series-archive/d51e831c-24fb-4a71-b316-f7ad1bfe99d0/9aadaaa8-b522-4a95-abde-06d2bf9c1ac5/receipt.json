@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "38bb1715-89d2-49df-ae6d-8b2729adcb97",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.3"
+  },
+  "createdAt": "2026-11-27T14:01:25Z",
+  "operation": {
+    "operationId": "4f13d3e9-a775-4bb1-8b11-1eff3ca7f19a",
+    "type": "Update",
+    "authorityEvidence": "Explicit local maintenance request of 2026-11-27 to link completed META-LH-04 to Feature 004 and regenerate the series views."
+  },
+  "status": "Ready",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "6f989be76b83c5fb6e5d16f2391a2202dbf229020da315e7b04da1df136c2d93"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/4f13d3e9-a775-4bb1-8b11-1eff3ca7f19a/receipt.json",
+    "receiptNormalizedSha256": "74257a102dedce3c90c2c5514ba9371ba815237b824fb05827b3ed5088d75b52",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/4f13d3e9-a775-4bb1-8b11-1eff3ca7f19a/manifest.json",
+    "manifestArchiveSha256": "fb062ac45641488049734b121b2d8978bddca7894602c76d22ae87718e8cebc9"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-series-status specs/intake-series/aoc-phase-2/manifest.json"
+}

@@ -1,0 +1,165 @@
+{
+  "schemaVersion": "2.0",
+  "documentType": "IntakeReceipt",
+  "receiptId": "6469b69b-1558-4ba0-b733-7ad93e028a96",
+  "intakeId": "fbe82f90-1f0d-439b-bf2c-15b0dec8e605",
+  "generator": {
+    "preset": "intake-authoring-governance",
+    "version": "0.3.0"
+  },
+  "createdAt": "2026-08-29T21:56:08Z",
+  "operation": {
+    "operationId": "4a4ca269-423a-495a-aa51-c6ad7c30511c",
+    "type": "Update",
+    "authorityEvidence": "Thorsten explicitly authorized the bounded IR007 and IR008 repair on 2026-08-29, including lifecycle-aware consumer resolution, renewal of all fourteen authoring receipts, complete Single and Series re-reviews, and MergeAndSync with Admin-Bypass."
+  },
+  "status": "ReadyForReview",
+  "target": {
+    "path": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+    "normalizedSha256": "c61d9786b27ea09e0e954363a1b4335d3255ea55b0f8a5167ee52c25c583f9b6"
+  },
+  "sources": [
+    {
+      "sourceId": "SRC001",
+      "order": 1,
+      "kind": "File",
+      "label": "Superseded RAW-01 intake as first binding repair source",
+      "location": "Repository",
+      "path": "specs/intake-authoring-archive/fbe82f90-1f0d-439b-bf2c-15b0dec8e605/1c8974d9-5ad1-46b8-b57e-9574a1f813e9/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "b0d217e8c440bd2a01106e827564a5354a9bef040d28910633171cb092ff1453",
+      "gitBlob": "b68008cad854963e583f9002c28915ec7f0003be",
+      "proofBoundary": "RepositoryArchiveAtRepair"
+    },
+    {
+      "sourceId": "SRC002",
+      "order": 2,
+      "kind": "File",
+      "label": "Current Single review authorising bounded IR101 through IR103 repair",
+      "location": "Repository",
+      "path": "specs/intake-review-results/raw-01-reference-agentic-workspace-2026-08-01.json",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "dc782752df4781da1d9fd46de817ab7a8d93fba08f550730c0b154e2d797d23a",
+      "gitBlob": "7f1c721d3c057e72f14e19111282d4e0f1666bdb",
+      "proofBoundary": "RepositoryAtRepairAuthorization"
+    },
+    {
+      "sourceId": "SRC003",
+      "order": 3,
+      "kind": "File",
+      "label": "Readable RAW-01 review evidence for IR101 through IR103",
+      "location": "Repository",
+      "path": "docs/reviews/raw-01-reference-agentic-workspace-intake-review-2026-08-01.md",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "b175c4d63e8d92a2aabfc3084b288071eafe67a56a1b051f07adc8d006773129",
+      "gitBlob": "73e618e7ec96d29fe073e63482b8ba573a12493e",
+      "proofBoundary": "RepositoryAtRepairAuthorization"
+    },
+    {
+      "sourceId": "SRC004",
+      "order": 4,
+      "kind": "File",
+      "label": "Self-contained AOC programme source pack",
+      "location": "Repository",
+      "path": "requirements/baseline/source-pack.md",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "f859235e64f3cddaaecb21025581fa236a8fc38e08206a3723cde17ad8b3603f",
+      "gitBlob": "00a812f9e84ebd288443a76a3aad377e0c449e11",
+      "proofBoundary": "RepositoryAtRepair"
+    }
+  ],
+  "profile": "aoc-bilingual-requirements",
+  "languagePolicy": "GermanFirstAuthoritativeEnglishSecondCEFRB2",
+  "decisions": [
+    {
+      "id": "IAD101",
+      "status": "Answered",
+      "question": "Which target framework defines the platform-neutral RAW-01 reference contract?",
+      "answer": "Package A: use net10.0 and keep domain and core contracts free of Windows-specific dependencies; runtime implementation remains outside this intake.",
+      "evidence": "Thorsten explicitly selected Package A for IAD101 in the current update authority on 2026-08-01."
+    },
+    {
+      "id": "IAD102",
+      "status": "Answered",
+      "question": "Which canonical format and version contract applies to WorkspaceSnapshot?",
+      "answer": "Package A: use a versioned canonical JSON document with an explicit schema version and JSON Schema; console output is a projection of the same model.",
+      "evidence": "Thorsten explicitly selected Package A for IAD102 in the current update authority on 2026-08-01."
+    },
+    {
+      "id": "IAD103",
+      "status": "Answered",
+      "question": "Which portable test framework contract applies to RAW-01?",
+      "answer": "Package A: use xUnit.net v3 with Microsoft Testing Platform v2, stable packages only, and the portable dotnet test invocation.",
+      "evidence": "Thorsten explicitly selected Package A for IAD103 in the current update authority on 2026-08-01."
+    }
+  ],
+  "openDecisionIds": [],
+  "questionCount": 0,
+  "agentSurface": {
+    "specifyCanonicalId": "speckit.specify",
+    "specifyInvocation": "$speckit-specify requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md --bind-exact-intake --no-implementation --no-remote-writes",
+    "autonomousCanonicalId": "speckit.autonomous",
+    "autonomousInvocation": "$speckit-autonomous requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md --delivery-mode MergeAndSync --require-current-review"
+  },
+  "deliveryAuthority": "MergeAndSync",
+  "authorityEvidence": "MergeAndSync remains the unchanged historical delivery ceiling from 2026-07-31. The current 2026-08-01 authority covers only IR101-IR103 repair and complete re-review and grants no Specify, implementation, remote-write, merge, or bypass authority.",
+  "promptState": "Enabled",
+  "provenanceMode": "Supersession",
+  "supersedes": {
+    "receiptPath": "specs/intake-authoring-archive/fbe82f90-1f0d-439b-bf2c-15b0dec8e605/4a4ca269-423a-495a-aa51-c6ad7c30511c/RAW-01-Reference-Agentic-Workspace.json",
+    "targetNormalizedSha256": "c61d9786b27ea09e0e954363a1b4335d3255ea55b0f8a5167ee52c25c583f9b6",
+    "archiveTargetPath": "specs/intake-authoring-archive/fbe82f90-1f0d-439b-bf2c-15b0dec8e605/4a4ca269-423a-495a-aa51-c6ad7c30511c/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+    "archiveReceiptPath": "specs/intake-authoring-archive/fbe82f90-1f0d-439b-bf2c-15b0dec8e605/4a4ca269-423a-495a-aa51-c6ad7c30511c/RAW-01-Reference-Agentic-Workspace.json"
+  },
+  "legacyAdoption": {
+    "evidenceType": "N/A",
+    "priorTargetNormalizedSha256": "N/A",
+    "priorGitBlob": "N/A"
+  },
+  "updateAuthorized": true,
+  "updateAuthorityEvidence": "Thorsten explicitly authorized the bounded IR007 and IR008 repair on 2026-08-29, including lifecycle-aware consumer resolution, renewal of all fourteen authoring receipts, complete Single and Series re-reviews, and MergeAndSync with Admin-Bypass.",
+  "series": {
+    "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+    "manifestPath": "specs/intake-series/aoc-phase-2/manifest.json",
+    "order": 6,
+    "role": "OrderedMember",
+    "supersedesIntakeIds": []
+  },
+  "nextAction": "$speckit-intake-review requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md"
+}

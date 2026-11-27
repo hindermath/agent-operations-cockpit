@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "e26287c2-9432-4790-a2e5-7a26e89e2650",
+  "seriesId": "88f6c448-2a4f-4217-941b-7909d85d3b74",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.14"
+  },
+  "createdAt": "2026-11-27T18:10:59Z",
+  "operation": {
+    "operationId": "c71fc869-154b-43ee-b05e-90122b22443d",
+    "type": "Update",
+    "authorityEvidence": "The user explicitly approved the bounded RAW-01 intake update to .NET 11 and C# 15, rebinding the active RAW series, and a separate RAW-01 Single review before Specify."
+  },
+  "status": "Ready",
+  "manifest": {
+    "path": "specs/intake-series/aoc-raw-features/manifest.json",
+    "normalizedSha256": "8eb74970eb2d63a02c8157d563d375aaca662bd5da799a6f603bfae9316698fc"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/88f6c448-2a4f-4217-941b-7909d85d3b74/c71fc869-154b-43ee-b05e-90122b22443d/receipt.json",
+    "receiptNormalizedSha256": "f743e2abfaac3ebcdb8bf876e241f52970e32ae481f9d3e5e04e3d7ce1767492",
+    "manifestArchivePath": "specs/intake-series-archive/88f6c448-2a4f-4217-941b-7909d85d3b74/c71fc869-154b-43ee-b05e-90122b22443d/manifest.json",
+    "manifestArchiveSha256": "b44d42c40b0ddc26ed838b88c3b2aeed5f94c3c424176cd8a0ef242b4cb82001"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-series-status"
+}

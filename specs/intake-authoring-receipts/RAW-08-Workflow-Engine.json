@@ -1,27 +1,48 @@
 {
   "schemaVersion": "2.0",
   "documentType": "IntakeReceipt",
-  "receiptId": "20834c60-5e09-43c9-bcdd-aa682b66cc82",
+  "receiptId": "50c37588-abc6-454e-b5d5-16b4419c0956",
   "intakeId": "c57a3d30-1558-4aee-91cb-ccd83b529e3d",
   "generator": {
     "preset": "intake-authoring-governance",
-    "version": "0.3.0"
+    "version": "0.3.14"
   },
-  "createdAt": "2026-08-29T21:56:08Z",
+  "createdAt": "2026-11-27T17:39:09Z",
   "operation": {
-    "operationId": "5900ccc1-7660-46b4-99a6-7ec2b4d7ae9a",
+    "operationId": "17fe6c40-d396-4470-a493-7c660b7a11a8",
     "type": "Update",
-    "authorityEvidence": "Thorsten explicitly authorized the bounded IR007 and IR008 repair on 2026-08-29, including lifecycle-aware consumer resolution, renewal of all fourteen authoring receipts, complete Single and Series re-reviews, and MergeAndSync with Admin-Bypass."
+    "authorityEvidence": "Explicit local user request to prepare the nine RAW intakes, select RAW-01 next, and require nine current Single reviews before starting RAW-01."
   },
   "status": "ReadyForReview",
   "target": {
     "path": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
-    "normalizedSha256": "623451757149794556a9f4efef73c13c6894244476b7fd484f0eaaa9fdba7f1a"
+    "normalizedSha256": "c41fc15e4f97d4ff6ab3d34f418ce0769ebc25ff09be8e5b249edc8404cbf4cd"
   },
   "sources": [
     {
       "sourceId": "SRC001",
       "order": 1,
+      "kind": "File",
+      "label": "Previous accepted intake bytes",
+      "location": "Repository",
+      "path": "specs/intake-authoring-archive/c57a3d30-1558-4aee-91cb-ccd83b529e3d/17fe6c40-d396-4470-a493-7c660b7a11a8/target.txt",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "623451757149794556a9f4efef73c13c6894244476b7fd484f0eaaa9fdba7f1a",
+      "gitBlob": "N/A",
+      "proofBoundary": "Repository path and normalized SHA-256"
+    },
+    {
+      "sourceId": "SRC002",
+      "order": 2,
       "kind": "File",
       "label": "Superseded RAW-08-Workflow-Engine intake as first binding repair source",
       "location": "Repository",
@@ -41,8 +62,8 @@
       "proofBoundary": "RepositoryArchiveAtBoundedSeriesRepair"
     },
     {
-      "sourceId": "SRC002",
-      "order": 2,
+      "sourceId": "SRC003",
+      "order": 3,
       "kind": "File",
       "label": "Current RAW-08 Single review authorising IR802-IR806 repair",
       "location": "Repository",
@@ -62,8 +83,8 @@
       "proofBoundary": "RepositoryAtRepairAuthorization"
     },
     {
-      "sourceId": "SRC003",
-      "order": 3,
+      "sourceId": "SRC004",
+      "order": 4,
       "kind": "File",
       "label": "Reconciled open and confirmed decision map after IR005 repair",
       "location": "Repository",
@@ -83,8 +104,8 @@
       "proofBoundary": "RepositoryAtBoundedSeriesRepair"
     },
     {
-      "sourceId": "SRC004",
-      "order": 4,
+      "sourceId": "SRC005",
+      "order": 5,
       "kind": "File",
       "label": "Self-contained AOC programme source pack",
       "location": "Repository",
@@ -104,8 +125,8 @@
       "proofBoundary": "RepositoryAtRepair"
     },
     {
-      "sourceId": "SRC005",
-      "order": 5,
+      "sourceId": "SRC006",
+      "order": 6,
       "kind": "File",
       "label": "RAW-05 Execution Node input contract",
       "location": "Repository",
@@ -125,8 +146,8 @@
       "proofBoundary": "RepositoryAtRepair"
     },
     {
-      "sourceId": "SRC006",
-      "order": 6,
+      "sourceId": "SRC007",
+      "order": 7,
       "kind": "File",
       "label": "RAW-06 CLI Capability input contract",
       "location": "Repository",
@@ -146,8 +167,8 @@
       "proofBoundary": "RepositoryAtRepair"
     },
     {
-      "sourceId": "SRC007",
-      "order": 7,
+      "sourceId": "SRC008",
+      "order": 8,
       "kind": "File",
       "label": "Machine-readable RAW-08 workflow, evidence, handoff, and authority contract",
       "location": "Repository",
@@ -167,8 +188,8 @@
       "proofBoundary": "RepositoryAtRepair"
     },
     {
-      "sourceId": "SRC008",
-      "order": 8,
+      "sourceId": "SRC009",
+      "order": 9,
       "kind": "File",
       "label": "Dependency-free RAW-08 requirements validator",
       "location": "Repository",
@@ -188,8 +209,8 @@
       "proofBoundary": "RepositoryAtRepair"
     },
     {
-      "sourceId": "SRC009",
-      "order": 9,
+      "sourceId": "SRC010",
+      "order": 10,
       "kind": "File",
       "label": "Bash surface for RAW-08 offline validation",
       "location": "Repository",
@@ -209,8 +230,8 @@
       "proofBoundary": "RepositoryAtRepair"
     },
     {
-      "sourceId": "SRC010",
-      "order": 10,
+      "sourceId": "SRC011",
+      "order": 11,
       "kind": "File",
       "label": "PowerShell surface for RAW-08 offline validation",
       "location": "Repository",
@@ -230,8 +251,8 @@
       "proofBoundary": "RepositoryAtRepair"
     },
     {
-      "sourceId": "SRC011",
-      "order": 11,
+      "sourceId": "SRC012",
+      "order": 12,
       "kind": "File",
       "label": "Positive source-to-retrospective workflow fixture",
       "location": "Repository",
@@ -251,8 +272,8 @@
       "proofBoundary": "RepositoryAtRepair"
     },
     {
-      "sourceId": "SRC012",
-      "order": 12,
+      "sourceId": "SRC013",
+      "order": 13,
       "kind": "File",
       "label": "Negative invalid-transition fixture",
       "location": "Repository",
@@ -272,8 +293,8 @@
       "proofBoundary": "RepositoryAtRepair"
     },
     {
-      "sourceId": "SRC013",
-      "order": 13,
+      "sourceId": "SRC014",
+      "order": 14,
       "kind": "File",
       "label": "Negative missing-authority fixture",
       "location": "Repository",
@@ -293,8 +314,8 @@
       "proofBoundary": "RepositoryAtRepair"
     },
     {
-      "sourceId": "SRC014",
-      "order": 14,
+      "sourceId": "SRC015",
+      "order": 15,
       "kind": "File",
       "label": "Negative provider-failure fixture",
       "location": "Repository",
@@ -314,8 +335,8 @@
       "proofBoundary": "RepositoryAtRepair"
     },
     {
-      "sourceId": "SRC015",
-      "order": 15,
+      "sourceId": "SRC016",
+      "order": 16,
       "kind": "File",
       "label": "Negative invalid-attestation fixture",
       "location": "Repository",
@@ -335,8 +356,8 @@
       "proofBoundary": "RepositoryAtRepair"
     },
     {
-      "sourceId": "SRC016",
-      "order": 16,
+      "sourceId": "SRC017",
+      "order": 17,
       "kind": "File",
       "label": "Negative retention-violation fixture",
       "location": "Repository",
@@ -356,8 +377,8 @@
       "proofBoundary": "RepositoryAtRepair"
     },
     {
-      "sourceId": "SRC017",
-      "order": 17,
+      "sourceId": "SRC018",
+      "order": 18,
       "kind": "File",
       "label": "Negative incompatible-handoff fixture",
       "location": "Repository",
@@ -377,8 +398,8 @@
       "proofBoundary": "RepositoryAtRepair"
     },
     {
-      "sourceId": "SRC018",
-      "order": 18,
+      "sourceId": "SRC019",
+      "order": 19,
       "kind": "File",
       "label": "Negative cross-cutting fixture",
       "location": "Repository",
@@ -398,8 +419,8 @@
       "proofBoundary": "RepositoryAtRepair"
     },
     {
-      "sourceId": "SRC019",
-      "order": 19,
+      "sourceId": "SRC020",
+      "order": 20,
       "kind": "File",
       "label": "Series review that authorises bounded IR005 and IR006 repair",
       "location": "Repository",
@@ -417,6 +438,27 @@
       "normalizedSha256": "11a42bd28136bf82c4dc0f36ac6e4d69b5ad8bfed6422d98d9cdb9be7c603345",
       "gitBlob": "485c98741448bd61bb0d22b5bd49f396ab17f957",
       "proofBoundary": "RepositoryAtRepairAuthorization"
+    },
+    {
+      "sourceId": "SRC021",
+      "order": 21,
+      "kind": "File",
+      "label": "Historical Single review",
+      "location": "Repository",
+      "path": "specs/intake-review-results/raw-08-workflow-engine-2026-08-29-r4.json",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "29eea5999f76b63c1c80c91a9d5f3fc7aee7c2a81060f528e6bfb1fd8afa1bb6",
+      "gitBlob": "N/A",
+      "proofBoundary": "Repository path and normalized SHA-256"
     }
   ],
   "profile": "aoc-bilingual-requirements",
@@ -448,31 +490,31 @@
   "questionCount": 0,
   "agentSurface": {
     "specifyCanonicalId": "speckit.specify",
-    "specifyInvocation": "$speckit-specify requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md --bind-exact-intake --no-implementation --no-remote-writes --require-current-scope-authority --require-current-start-authority --require-current-implementation-authority --require-current-governance-write-authority --require-current-remote-write-authority --require-current-merge-authority --require-current-bypass-authority --require-current-provider-authority",
+    "specifyInvocation": "$speckit-specify",
     "autonomousCanonicalId": "speckit.autonomous",
-    "autonomousInvocation": "$speckit-autonomous requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md --delivery-mode MergeAndSync --require-current-review --require-current-scope-authority --require-current-start-authority --require-current-implementation-authority --require-current-governance-write-authority --require-current-remote-write-authority --require-current-merge-authority --require-current-bypass-authority --require-current-provider-authority"
+    "autonomousInvocation": "$speckit-autonomous"
   },
-  "deliveryAuthority": "MergeAndSync",
-  "authorityEvidence": "MergeAndSync remains the unchanged historical delivery ceiling. The current repair authority permits only IR802-IR806 requirements, contract, offline-fixture, lineage, validation, and complete re-review work. It excludes Specify, implementation, product, process, provider, remote, merge, bypass, preset, promotion, GitHub, and Level-0 actions. The 2026-08-08 provenance repair grants only receipt lineage renewal against the final Decision Register and no current downstream authority.",
+  "deliveryAuthority": "LocalImplementation",
+  "authorityEvidence": "This preparation grants no feature execution, implementation or remote delivery authority.",
   "promptState": "Enabled",
   "provenanceMode": "Supersession",
   "supersedes": {
-    "receiptPath": "specs/intake-authoring-archive/c57a3d30-1558-4aee-91cb-ccd83b529e3d/5900ccc1-7660-46b4-99a6-7ec2b4d7ae9a/RAW-08-Workflow-Engine.json",
+    "receiptPath": "specs/intake-authoring-operations/17fe6c40-d396-4470-a493-7c660b7a11a8/predecessor-receipt.json",
     "targetNormalizedSha256": "623451757149794556a9f4efef73c13c6894244476b7fd484f0eaaa9fdba7f1a",
-    "archiveTargetPath": "specs/intake-authoring-archive/c57a3d30-1558-4aee-91cb-ccd83b529e3d/5900ccc1-7660-46b4-99a6-7ec2b4d7ae9a/Lastenheft_RAW-08-Workflow-Engine.md",
-    "archiveReceiptPath": "specs/intake-authoring-archive/c57a3d30-1558-4aee-91cb-ccd83b529e3d/5900ccc1-7660-46b4-99a6-7ec2b4d7ae9a/RAW-08-Workflow-Engine.json"
+    "archiveTargetPath": "specs/intake-authoring-archive/c57a3d30-1558-4aee-91cb-ccd83b529e3d/17fe6c40-d396-4470-a493-7c660b7a11a8/target.txt",
+    "archiveReceiptPath": "specs/intake-authoring-archive/c57a3d30-1558-4aee-91cb-ccd83b529e3d/17fe6c40-d396-4470-a493-7c660b7a11a8/receipt.json"
   },
   "legacyAdoption": {
     "evidenceType": "N/A",
-    "priorTargetNormalizedSha256": "N/A",
-    "priorGitBlob": "N/A"
+    "priorGitBlob": "N/A",
+    "priorTargetNormalizedSha256": "N/A"
   },
   "updateAuthorized": true,
-  "updateAuthorityEvidence": "Thorsten explicitly authorized the bounded IR007 and IR008 repair on 2026-08-29, including lifecycle-aware consumer resolution, renewal of all fourteen authoring receipts, complete Single and Series re-reviews, and MergeAndSync with Admin-Bypass.",
+  "updateAuthorityEvidence": "Explicit local user request to prepare the nine RAW intakes, select RAW-01 next, and require nine current Single reviews before starting RAW-01.",
   "series": {
-    "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
-    "manifestPath": "specs/intake-series/aoc-phase-2/manifest.json",
-    "order": 13,
+    "seriesId": "88f6c448-2a4f-4217-941b-7909d85d3b74",
+    "manifestPath": "specs/intake-series/aoc-raw-features/manifest.json",
+    "order": 8,
     "role": "OrderedMember",
     "supersedesIntakeIds": []
   },

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesOperation",
+  "operationId": "4f13d3e9-a775-4bb1-8b11-1eff3ca7f19a",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "type": "Update",
+  "status": "Published",
+  "authorityEvidence": "Explicit local maintenance request of 2026-11-27 to link completed META-LH-04 to Feature 004 and regenerate the series views.",
+  "proposalNormalizedSha256": "6f989be76b83c5fb6e5d16f2391a2202dbf229020da315e7b04da1df136c2d93",
+  "preparedPaths": [
+    "specs/intake-series/aoc-phase-2/manifest.json",
+    "specs/intake-series-receipts/aoc-phase-2.json",
+    "specs/intake-series/aoc-phase-2/operation.json",
+    "Lastenheft_Abarbeitungsreihenfolge.md",
+    "requirements/intakes/series/order.md"
+  ],
+  "documentationImpact": {
+    "decision": "UpdateRequired",
+    "source": "Terminal META-LH-04 closeout and PR #54",
+    "owner": "AOC maintainer",
+    "documents": [
+      "Lastenheft_Abarbeitungsreihenfolge.md",
+      "requirements/intakes/series/order.md"
+    ],
+    "evidence": [
+      "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/4f13d3e9-a775-4bb1-8b11-1eff3ca7f19a/manifest.json",
+      "specs/004-series-eligibility/completion-closeout.md"
+    ]
+  },
+  "reviewInvalidation": {
+    "status": "Superseded",
+    "results": [
+      "specs/intake-review-results/aoc-phase-2-series-2026-09-13-r7.json"
+    ],
+    "reason": "Prior result binds earlier target paths and remains historical evidence. This update adds only a feature mapping."
+  },
+  "validation": {
+    "bash": "Manifest, receipt and generated views passed.",
+    "powerShell": "Manifest, receipt and generated views passed."
+  },
+  "publication": {
+    "status": "Published",
+    "publishedPaths": [
+      "specs/intake-series/aoc-phase-2/manifest.json",
+      "specs/intake-series-receipts/aoc-phase-2.json",
+      "specs/intake-series/aoc-phase-2/operation.json",
+      "Lastenheft_Abarbeitungsreihenfolge.md",
+      "requirements/intakes/series/order.md"
+    ]
+  }
+}

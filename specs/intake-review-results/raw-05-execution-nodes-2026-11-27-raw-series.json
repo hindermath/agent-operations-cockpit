@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "cc642f06-eada-4de4-9ca1-55d26e25f8e3",
+  "mode": "Single",
+  "status": "Ready",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-11-27T17:39:04Z",
+  "repository": {
+    "root": ".",
+    "head": "128a1f45a484939185bc37b3e9a4bb5073a0c265"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-05-execution-nodes-2026-11-27-raw-series.json",
+    "normalizedSha256": "3d3e857c451c0a6568812fc4bd297edd49b2fc674cdd627be15ff25682e1ea8f"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "role": "Primary",
+      "normalizedSha256": "60885a6703afda7f74af1733a40f3da57c64cf41b9d63c1ad1d5e8ffc6c5b200",
+      "gitBlob": "N/A"
+    }
+  ],
+  "findings": [],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "332a6a65-604e-4134-aeb6-2ce10523edda"
+}

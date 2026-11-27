@@ -278,7 +278,7 @@ nor implementation, remote writes, merge, or bypass.*
 ### Specify
 
 ```text
-$speckit-specify requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md --bind-exact-intake --no-implementation --no-remote-writes
+$speckit-specify Verwende requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md als verbindliches Lastenheft. / Use this intake as the binding input. Preserve its scope and acceptance gates. Produce the matching specification only. No implementation or remote writes.
 VORBEDINGUNG / PRECONDITION: Erst nach aktuellem RAW-02-Review und erfüllter bindender Reihenfolge RAW-01 -> RAW-03 verwenden; dieser Prompt erteilt keine Start- oder Implementierungsautorität. / Use only after a current RAW-02 review and the binding RAW-01 -> RAW-03 order are satisfied; this prompt grants no start or implementation authority.
 ```
 
@@ -286,7 +286,7 @@ VORBEDINGUNG / PRECONDITION: Erst nach aktuellem RAW-02-Review und erfüllter bi
 ### Autonomous
 
 ```text
-$speckit-autonomous requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md --delivery-mode LocalImplementation --require-current-review
+$speckit-autonomous Erst mit gesondertem Auftrag und bestandener Startprüfung für diesen Intake: Verwende requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md als verbindliches Lastenheft. / Use this binding intake only after a separate request and the applicable intake preflight. Default to LocalImplementation within any explicitly granted scope; remote delivery requires its own approval.
 VORBEDINGUNG / PRECONDITION: Nicht starten, solange RAW-01 und RAW-03 nicht abgeschlossen und aktuell reviewt sind und keine separate aktuelle Benutzerentscheidung Scope, Start und Implementierung ausdrücklich autorisiert. Remote Writes, Merge und Bypass sind nicht autorisiert. / Do not start until RAW-01 and RAW-03 are completed with current reviews and a separate current user decision explicitly authorises scope, start, and implementation. Remote writes, merge, and bypass are not authorised.
 ```
 <!-- intake-authoring:end -->

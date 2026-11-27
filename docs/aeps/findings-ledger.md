@@ -1162,3 +1162,15 @@ Dispositionen bleiben unverändert; keine Promotion oder Upstream-Aktion.
 focused verification. No new AEPS evidence is accepted without published
 cross-project preset validation. Existing findings, maturity and derived
 dispositions remain unchanged; no promotion or upstream action follows.*
+
+
+## 2026-11-27 · RAW-01 nach .NET-11-Update / RAW-01 after .NET 11 update
+
+Keine neue AEPS-Evidence. Das `Ready`-Einzelreview `c062d94c-272b-4beb-ad67-4fe81279b73d`
+bindet den aktiven RAW-01-Intake mit Zielhash `bff83798789bf565b4e0b679f467f6384dcf6820fda78fcaa4fff30d54a83820`.
+Die geprüfte Nachweiskette bestätigt `AEPS-FIND-AOC-011` und
+`AEPS-FIND-AOC-015` am AOC. / *No new AEPS evidence. The Ready Single review
+binds the active RAW-01 intake at the given target hash. The verified
+bindings confirm the existing findings in AOC.*
+
+[Hashgebundenes AEPS-Receipt / Hash-bound AEPS receipt](receipts/2026-11-27-raw-01-dotnet11-ready.md)

@@ -489,14 +489,14 @@ current.*
 ### Specify
 
 ```text
-$speckit-specify requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md --bind-exact-intake --no-implementation --no-remote-writes
+$speckit-specify Verwende requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md als verbindliches Lastenheft. / Use this intake as the binding input. Preserve its scope and acceptance gates. Produce the matching specification only. No implementation or remote writes.
 ```
 
 <!-- spec-kit-command-id: speckit.autonomous -->
 ### Autonomous
 
 ```text
-$speckit-autonomous requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md --delivery-mode MergeAndSync --require-current-review
+$speckit-autonomous Erst mit gesondertem Auftrag und bestandener Startprüfung für diesen Intake: Verwende requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md als verbindliches Lastenheft. / Use this binding intake only after a separate request and the applicable intake preflight. Default to LocalImplementation within any explicitly granted scope; remote delivery requires its own approval.
 ```
 
 <!-- intake-authoring:end -->
