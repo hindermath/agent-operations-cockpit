@@ -15,7 +15,7 @@ logic out of Bash, PowerShell, or the shared Python contract core.*
 | Baustein | Verantwortung | Bewusste Grenze |
 |---|---|---|
 | Bash-/PowerShell-Wrapper | Terminal erkennen, UI auswählen, Cache sicher bereitstellen | Keine zweite Engine nach Prozessstart |
-| .NET-10-TUI | Auswahl, Erklärung, Bestätigung, typisierte Argumente, Live-Anzeige | Keine Git-, Paket-, Sync- oder Providerlogik |
+| .NET-11-TUI | Auswahl, Erklärung, Bestätigung, typisierte Argumente, Live-Anzeige | Keine Git-, Paket-, Sync- oder Providerlogik |
 | Plain-Assistent | Lineare Auswahl bei fehlender TUI-Fähigkeit | Dieselben Kombinationen und Standardwerte |
 | Wartungs-Engine | Freshness, Barrieren, Registry, Propagation, Presets, Toolchain, Storage | Keine UI-Abhängigkeit |
 | JSONL-Ereignisse | Advisory Live-Status mit Run-ID und Sequenz | Kein Ersatz für Bericht oder Exitcode |
@@ -91,6 +91,9 @@ unknown values remain unknown.*
 
 ## Plattform und Fallback / Platform and Fallback
 
+Die TUI und ihr Testprojekt verwenden `net11.0` und C# 15. Der erweiterte
+Startpfad benötigt das .NET-11-SDK.
+
 Unterstützte Cache-IDs sind `macos-arm64`, `macos-x64`, `linux-arm64`,
 `linux-x64`, `windows-arm64` und `windows-x64`. Restore und Publish verwenden
 die eingecheckten Lockfiles. Bei fehlendem SDK, Buildfehler, fremdem Cache,
@@ -98,7 +101,9 @@ die eingecheckten Lockfiles. Bei fehlendem SDK, Buildfehler, fremdem Cache,
 Plain-Assistent. Nach Engine-Start gibt es keinen Fallback und keinen
 automatischen Retry.
 
-*Supported cache IDs cover macOS, Linux, and Windows on arm64 and x64. Restore
+*The TUI and its test project target `net11.0` and C# 15. The enhanced
+launcher requires the .NET 11 SDK. Supported cache IDs cover macOS, Linux,
+and Windows on arm64 and x64. Restore
 and publish use committed lock files. Missing SDK, build failure, foreign
 cache, `TERM=dumb`, or unsuitable terminal capability selects the plain
 assistant before engine start. No fallback or automatic retry exists after
