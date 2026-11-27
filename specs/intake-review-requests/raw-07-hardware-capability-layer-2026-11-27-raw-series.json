@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "d537dc61-c63a-41ac-b81e-64de165dcb52",
+  "mode": "Single",
+  "policy": "aoc-bilingual-requirements",
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "role": "Primary"
+    }
+  ],
+  "series": {
+    "orderedTargetPaths": [],
+    "roots": [],
+    "dependencies": []
+  },
+  "campaign": {
+    "manifestPath": "N/A",
+    "workers": [],
+    "operatorExceptions": []
+  }
+}

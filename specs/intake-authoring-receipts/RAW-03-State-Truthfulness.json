@@ -1,27 +1,48 @@
 {
   "schemaVersion": "2.0",
   "documentType": "IntakeReceipt",
-  "receiptId": "3cc19267-e548-4816-a539-8d652efdc529",
+  "receiptId": "f7615928-ec27-4468-a48e-c3c7978b8760",
   "intakeId": "af8d8b59-d146-44b0-8bf5-a63966865d4a",
   "generator": {
     "preset": "intake-authoring-governance",
-    "version": "0.3.1"
+    "version": "0.3.14"
   },
-  "createdAt": "2026-09-05T13:58:06.012Z",
+  "createdAt": "2026-11-27T17:38:58Z",
   "operation": {
-    "operationId": "89293949-6174-4549-a33d-6cd6eeb71df3",
+    "operationId": "1e86b716-c98e-482d-9e3c-78aa6854eb78",
     "type": "Update",
-    "authorityEvidence": "Thorsten explicitly approved the bounded binding repair recorded in specs/003-authoring-contract/binding-approval.md: version-reference alignment only, renewal of META-LH-02/META-LH-03/META-LH-05/RAW-03 receipts with preserved predecessors, full Single re-reviews and continuation of existing run 044b77ae-85fd-46ee-97f4-61ce7a2c9c66. No new feature, Level-0, promotion or Admin-Bypass authority."
+    "authorityEvidence": "Explicit local user request to prepare the nine RAW intakes, select RAW-01 next, and require nine current Single reviews before starting RAW-01."
   },
   "status": "ReadyForReview",
   "target": {
     "path": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
-    "normalizedSha256": "31d31e82ab1857182d1201192438e5c91abfc3190ba47a2f68b9543034ab0cfd"
+    "normalizedSha256": "6006935534209c25a8c3739f40e918c9a8b13e071e3bdb2a745f61c42ce07b22"
   },
   "sources": [
     {
       "sourceId": "SRC001",
       "order": 1,
+      "kind": "File",
+      "label": "Previous accepted intake bytes",
+      "location": "Repository",
+      "path": "specs/intake-authoring-archive/af8d8b59-d146-44b0-8bf5-a63966865d4a/1e86b716-c98e-482d-9e3c-78aa6854eb78/target.txt",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "31d31e82ab1857182d1201192438e5c91abfc3190ba47a2f68b9543034ab0cfd",
+      "gitBlob": "N/A",
+      "proofBoundary": "Repository path and normalized SHA-256"
+    },
+    {
+      "sourceId": "SRC002",
+      "order": 2,
       "kind": "File",
       "label": "Immediate predecessor intake, preserved byte-identically as first binding source",
       "location": "Repository",
@@ -41,8 +62,8 @@
       "proofBoundary": "RepositoryArchiveAtApprovedBindingRenewal"
     },
     {
-      "sourceId": "SRC002",
-      "order": 2,
+      "sourceId": "SRC003",
+      "order": 3,
       "kind": "File",
       "label": "Current RAW-03 Single review defining IRQ301-IRQ303 and IR302-IR306",
       "location": "Repository",
@@ -62,8 +83,8 @@
       "proofBoundary": "RepositoryAtUpdateAuthorization"
     },
     {
-      "sourceId": "SRC003",
-      "order": 3,
+      "sourceId": "SRC004",
+      "order": 4,
       "kind": "File",
       "label": "Readable RAW-03 review evidence",
       "location": "Repository",
@@ -83,8 +104,8 @@
       "proofBoundary": "RepositoryAtUpdateAuthorization"
     },
     {
-      "sourceId": "SRC004",
-      "order": 4,
+      "sourceId": "SRC005",
+      "order": 5,
       "kind": "File",
       "label": "Self-contained AOC programme source pack",
       "location": "Repository",
@@ -104,8 +125,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC005",
-      "order": 5,
+      "sourceId": "SRC006",
+      "order": 6,
       "kind": "File",
       "label": "Machine-readable RAW-03 time, freshness, confidence, envelope, and evidence contract",
       "location": "Repository",
@@ -125,8 +146,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC006",
-      "order": 6,
+      "sourceId": "SRC007",
+      "order": 7,
       "kind": "File",
       "label": "Reconciled open and confirmed decision map after IR005 repair",
       "location": "Repository",
@@ -146,8 +167,8 @@
       "proofBoundary": "RepositoryAtBoundedSeriesRepair"
     },
     {
-      "sourceId": "SRC007",
-      "order": 7,
+      "sourceId": "SRC008",
+      "order": 8,
       "kind": "File",
       "label": "Readable portfolio ownership and handoff boundary",
       "location": "Repository",
@@ -167,8 +188,8 @@
       "proofBoundary": "CurrentRepositoryAtApprovedBindingRenewal"
     },
     {
-      "sourceId": "SRC008",
-      "order": 8,
+      "sourceId": "SRC009",
+      "order": 9,
       "kind": "File",
       "label": "RAW-03 cross-platform requirements validator",
       "location": "Repository",
@@ -188,8 +209,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC009",
-      "order": 9,
+      "sourceId": "SRC010",
+      "order": 10,
       "kind": "File",
       "label": "Positive RAW-03 threshold and classification fixture",
       "location": "Repository",
@@ -209,8 +230,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC010",
-      "order": 10,
+      "sourceId": "SRC011",
+      "order": 11,
       "kind": "File",
       "label": "Negative RAW-03 time, source, availability, and authority fixture",
       "location": "Repository",
@@ -230,8 +251,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC011",
-      "order": 11,
+      "sourceId": "SRC012",
+      "order": 12,
       "kind": "File",
       "label": "Positive JSON and text projection parity fixture",
       "location": "Repository",
@@ -251,8 +272,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC012",
-      "order": 12,
+      "sourceId": "SRC013",
+      "order": 13,
       "kind": "File",
       "label": "Negative projection mismatch fixture",
       "location": "Repository",
@@ -272,8 +293,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC013",
-      "order": 13,
+      "sourceId": "SRC014",
+      "order": 14,
       "kind": "File",
       "label": "Machine-readable portfolio ownership and handoff boundary",
       "location": "Repository",
@@ -293,8 +314,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC014",
-      "order": 14,
+      "sourceId": "SRC015",
+      "order": 15,
       "kind": "File",
       "label": "Series review that authorises bounded IR005 and IR006 repair",
       "location": "Repository",
@@ -314,8 +335,8 @@
       "proofBoundary": "RepositoryAtRepairAuthorization"
     },
     {
-      "sourceId": "SRC015",
-      "order": 15,
+      "sourceId": "SRC016",
+      "order": 16,
       "kind": "File",
       "label": "Explicit current bounded repair approval",
       "location": "Repository",
@@ -333,6 +354,27 @@
       "normalizedSha256": "59179023d1b9d11f1ce18874ee8a2db8150127e305f718679fed9e564b16a463",
       "gitBlob": "N/A",
       "proofBoundary": "CurrentThreadApprovalRecordedInRepository"
+    },
+    {
+      "sourceId": "SRC017",
+      "order": 17,
+      "kind": "File",
+      "label": "Historical Single review",
+      "location": "Repository",
+      "path": "specs/intake-review-results/raw-03-state-truthfulness-2026-09-05-r1.json",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "fc799790cc3622f78b579f1a743805095a64c884d1125fc4c23dafb55e747f83",
+      "gitBlob": "N/A",
+      "proofBoundary": "Repository path and normalized SHA-256"
     }
   ],
   "profile": "aoc-bilingual-requirements",
@@ -364,31 +406,31 @@
   "questionCount": 0,
   "agentSurface": {
     "specifyCanonicalId": "speckit.specify",
-    "specifyInvocation": "$speckit-specify requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md --bind-exact-intake --no-implementation --no-remote-writes",
+    "specifyInvocation": "$speckit-specify",
     "autonomousCanonicalId": "speckit.autonomous",
-    "autonomousInvocation": "$speckit-autonomous requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md --delivery-mode MergeAndSync --require-current-review"
+    "autonomousInvocation": "$speckit-autonomous"
   },
-  "deliveryAuthority": "MergeAndSync",
-  "authorityEvidence": "MergeAndSync remains the unchanged delivery ceiling; stored historical bypass grants confer no current authority. Current bounded repair authority: Thorsten explicitly approved the bounded binding repair recorded in specs/003-authoring-contract/binding-approval.md: version-reference alignment only, renewal of META-LH-02/META-LH-03/META-LH-05/RAW-03 receipts with preserved predecessors, full Single re-reviews and continuation of existing run 044b77ae-85fd-46ee-97f4-61ce7a2c9c66. No new feature, Level-0, promotion or Admin-Bypass authority.",
+  "deliveryAuthority": "LocalImplementation",
+  "authorityEvidence": "This preparation grants no feature execution, implementation or remote delivery authority.",
   "promptState": "Enabled",
   "provenanceMode": "Supersession",
   "supersedes": {
-    "receiptPath": "specs/intake-authoring-archive/af8d8b59-d146-44b0-8bf5-a63966865d4a/89293949-6174-4549-a33d-6cd6eeb71df3/RAW-03-State-Truthfulness.json",
+    "receiptPath": "specs/intake-authoring-operations/1e86b716-c98e-482d-9e3c-78aa6854eb78/predecessor-receipt.json",
     "targetNormalizedSha256": "31d31e82ab1857182d1201192438e5c91abfc3190ba47a2f68b9543034ab0cfd",
-    "archiveTargetPath": "specs/intake-authoring-archive/af8d8b59-d146-44b0-8bf5-a63966865d4a/89293949-6174-4549-a33d-6cd6eeb71df3/Lastenheft_RAW-03-State-Truthfulness.md",
-    "archiveReceiptPath": "specs/intake-authoring-archive/af8d8b59-d146-44b0-8bf5-a63966865d4a/89293949-6174-4549-a33d-6cd6eeb71df3/RAW-03-State-Truthfulness.json"
+    "archiveTargetPath": "specs/intake-authoring-archive/af8d8b59-d146-44b0-8bf5-a63966865d4a/1e86b716-c98e-482d-9e3c-78aa6854eb78/target.txt",
+    "archiveReceiptPath": "specs/intake-authoring-archive/af8d8b59-d146-44b0-8bf5-a63966865d4a/1e86b716-c98e-482d-9e3c-78aa6854eb78/receipt.json"
   },
   "legacyAdoption": {
     "evidenceType": "N/A",
-    "priorTargetNormalizedSha256": "N/A",
-    "priorGitBlob": "N/A"
+    "priorGitBlob": "N/A",
+    "priorTargetNormalizedSha256": "N/A"
   },
   "updateAuthorized": true,
-  "updateAuthorityEvidence": "Thorsten explicitly approved the bounded binding repair recorded in specs/003-authoring-contract/binding-approval.md: version-reference alignment only, renewal of META-LH-02/META-LH-03/META-LH-05/RAW-03 receipts with preserved predecessors, full Single re-reviews and continuation of existing run 044b77ae-85fd-46ee-97f4-61ce7a2c9c66. No new feature, Level-0, promotion or Admin-Bypass authority.",
+  "updateAuthorityEvidence": "Explicit local user request to prepare the nine RAW intakes, select RAW-01 next, and require nine current Single reviews before starting RAW-01.",
   "series": {
-    "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
-    "manifestPath": "specs/intake-series/aoc-phase-2/manifest.json",
-    "order": 7,
+    "seriesId": "88f6c448-2a4f-4217-941b-7909d85d3b74",
+    "manifestPath": "specs/intake-series/aoc-raw-features/manifest.json",
+    "order": 2,
     "role": "OrderedMember",
     "supersedesIntakeIds": []
   },

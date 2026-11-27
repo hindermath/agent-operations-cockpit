@@ -22,49 +22,47 @@ AOC requirements programme. It does not yet contain a product specification.*
 
 ## Meta-Reihe / Meta series
 
-1. [META-LH-01 Programmquellen](requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md)
-2. [META-LH-02 Portfolio und Ownership](requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md)
-3. [META-LH-03 Authoring Contract](requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md)
-4. [META-LH-04 Series und Eligibility](requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md)
-5. [META-LH-05 Erste Welle](requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md)
+1. [META-LH-01 Programmquellen](requirements/intakes/archive/Lastenheft_META-LH-01-Programmquellen.001-programmquellen-baseline.md)
+2. [META-LH-02 Portfolio und Ownership](requirements/intakes/archive/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md)
+3. [META-LH-03 Authoring Contract](requirements/intakes/archive/Lastenheft_META-LH-03-Authoring-Contract.003-authoring-contract.md)
+4. [META-LH-04 Series und Eligibility](requirements/intakes/archive/Lastenheft_META-LH-04-Series-Eligibility.004-series-eligibility.md)
 
-## Fachliche erste Welle / First domain wave
+## Authoring-Meilenstein / Authoring milestone
 
-| ID | Reihe / Series | Status | Modus vor Review / Mode before review |
-|---|---|---|---|
-| RAW-01 | [Reference Agentic Workspace](requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md) | ReadyForReview | manual-assisted |
-| RAW-02 | [Workspace Orchestrator](requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md) | NeedsClarification | blocked |
-| RAW-03 | [State Truthfulness](requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md) | ReadyForReview | serial-autonomous after decisions |
-| RAW-04 | [Presentation Fabric](requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md) | ReadyForReview | serial-autonomous |
-| RAW-05 | [Execution Nodes](requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md) | ReadyForReview | research-only |
-| RAW-06 | [CLI and Environment](requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md) | NeedsClarification | blocked |
-| RAW-07 | [Hardware Capability Layer](requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md) | NeedsClarification | blocked |
-| RAW-08 | [Workflow Engine](requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md) | ReadyForReview | serial-autonomous after dependencies |
-| RAW-09 | [Preset Evolution](requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md) | NeedsClarification | blocked / research-only |
+[META-LH-05 Erste Welle](requirements/intakes/history/Lastenheft_META-LH-05-Erste-Welle.md) · Erste Lastenheft-Welle erstellt / First requirements wave authored
+
+## Vorbereitete RAW-Serie / Prepared RAW series
+
+| ID | Reihe / Series | Status |
+|---|---|---|
+| RAW-01 | [Reference Agentic Workspace](requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md) | Eligible |
+| RAW-02 | [Workspace Orchestrator](requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md) | Blocked |
+| RAW-03 | [State Truthfulness](requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md) | Blocked |
+| RAW-04 | [Presentation Fabric](requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md) | Blocked |
+| RAW-05 | [Execution Nodes](requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md) | Pending |
+| RAW-06 | [CLI and Environment](requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md) | Blocked |
+| RAW-07 | [Hardware Capability Layer](requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md) | Blocked |
+| RAW-08 | [Workflow Engine](requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md) | Blocked |
+| RAW-09 | [Preset Evolution](requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md) | Blocked |
 
 ## Series und nächste Aktion / Series and next action
 
 - [Menschenlesbare Reihenfolge](requirements/intakes/series/order.md)
-- Maschinenlesbares Manifest: `specs/intake-series/aoc-phase-2/manifest.json`
-- Series-ID: `d51e831c-24fb-4a71-b316-f7ad1bfe99d0`
+- [Aktives Manifest der RAW-Serie / Active RAW series manifest](specs/intake-series/aoc-raw-features/manifest.json)
+- [Abgeschlossene Phase‑2‑Serie / Completed Phase 2 series](specs/intake-series/aoc-phase-2/manifest.json)
 
-Vor dem ersten nachgelagerten Spec-Kit-Lauf müssen alle 14 AOC-Lastenhefte ein
-aktuelles, formal validiertes `Ready`-Single-Review besitzen. Bis dahin sind nur
-die noch erforderlichen Intake-Reviews, ausdrücklich autorisierte Reparaturen,
-Series-Statusprüfungen und die vorgeschriebene AEPS-Evidence-Rückführung
-zulässig. `Eligible`, `Completed` oder ein einzelnes `Ready` heben diese globale
-Sperre nicht auf.
+Die abgeschlossene Phase‑2‑Feature-Serie enthält vier Features.
+META‑LH‑05 dokumentiert die Erstellung der ersten Lastenheft-Welle. Die
+neun RAW-Intakes sind für die neue Serie vorbereitet. RAW-01 ist der nächste
+ausgewählte Kandidat. / *The nine RAW intakes are prepared for the new series.
+RAW-01 is the selected next candidate.*
 
-Nach vollständiger Review-Coverage ist `META-LH-01` das erste erlaubte Ziel;
-auch dann beginnt kein `speckit specify`-, Autonomous-,
-Parallel-Autonomous- oder Implementierungslauf ohne einen neuen ausdrücklichen
-Startauftrag. Drift schließt die Sperre erneut. Dieser Index startet selbst
-keinen Review- oder Spec-Kit-Lauf.
+Vor RAW-01 müssen die neun Einzelreviews und Authoring-Receipts der
+RAW-Serie an ihren aktuellen Pfaden bestehen. Weitere Läufe benötigen
+ihre bindenden Vorgänger, aktuelle Nachweise und einen eigenen Auftrag.
+Ein `Eligible`-Eintrag bezeichnet nur den ausgewählten Kandidaten.
 
-*All 14 AOC intakes require current, formally validated `Ready` Single reviews
-before the first downstream Spec Kit run. Until then, work is limited to the
-remaining reviews, explicitly authorised repairs, read-only series status, and
-required AEPS evidence capture. Lifecycle status or one Ready result does not
-open the global gate. Once full coverage is current, `META-LH-01` is the first
-allowed target and still needs a new explicit start instruction. Drift closes
-the gate again. This index starts no workflow.*
+*Before RAW-01, all nine single reviews and authoring receipts must pass
+at their current paths. Later runs also require completed binding
+predecessors, current evidence and a separate request. Eligible identifies
+the selected candidate.*

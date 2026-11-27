@@ -198,31 +198,24 @@ receipt. Ready, lifecycle, and execution authority remain separate. Level 2
 discovers and hardens; level 0 consolidates and promotes. Upstream work requires
 stable published evidence and current write authority.*
 
-## AOC-weite globale Review-Sperre / AOC-Wide Global Review Gate
+## AOC-Feature-Serie und Folgearbeit / AOC feature series and follow-up
 
-Für die kanonische AOC-Programmreihe sind alle nachgelagerten Spec-Kit-Läufe
-global und fail-closed gesperrt, bis alle 14 aktiven Lastenhefte `META-LH-01`
-bis `META-LH-05` und `RAW-01` bis `RAW-09` jeweils ein aktuelles, formal
-validiertes `Ready`-Single-Review besitzen. Zielpfad, normalisierter Zielhash,
-Authoring Receipt sowie Bash- und PowerShell-Validierung müssen aktuell sein;
-`ReadyWithAcceptedRisks`, supersedierte Ergebnisse und Series-Lifecycle-Werte
-genügen nicht. Bis dahin dürfen weder `speckit specify` noch Autonomous,
-Parallel Autonomous oder Implementierung gestartet werden.
+Die abgeschlossene Phase-2-Serie und der Authoring-Meilenstein bleiben
+historisch belegt. RAW-01 ist der ausgewählte nächste Intake. Die
+`requirements/intakes/series/order.md` beschreibt die neun Mitglieder,
+Abhängigkeiten und Nachweise der RAW-Feature-Serie.
 
-Nach vollständiger Review-Coverage ist `META-LH-01` zwingend das erste Ziel und
-benötigt weiterhin einen neuen ausdrücklichen Startauftrag. Jede Ziel- oder
-Evidence-Drift schließt die Sperre erneut. Die zwei älteren Root-Lastenhefte
-gehören nicht zu dieser 14er-Programmmenge. Die kanonischen Details stehen in
-`requirements/baseline/authority-and-stop-gates.md`.
+Vor RAW-01 müssen die neun Einzelreviews und Authoring-Receipts der
+RAW-Serie an ihren aktuellen Pfaden bestehen. Die lesende Prüfung lautet
+`python3 scripts/validate-aoc-raw-review-gate.py`. Weitere Läufe benötigen
+ihre bindenden Vorgänger, aktuelle Nachweise und einen eigenen Auftrag.
+Ein `Eligible`-Eintrag bezeichnet nur den ausgewählten Kandidaten.
 
-*All downstream Spec Kit work for the canonical AOC programme is globally and
-fail-closed blocked until all 14 active META and RAW intakes have current,
-formally validated `Ready` Single reviews with matching target, hash, Authoring
-Receipt, and Bash and PowerShell validation. Accepted-risk or superseded
-results and lifecycle values do not pass. Once full coverage is current,
-`META-LH-01` is the mandatory first target and still requires a new explicit
-start instruction. Any drift closes the gate again. The two legacy root
-intakes are outside this programme set.*
+*Before RAW-01, all nine single reviews and authoring receipts must pass
+at their current paths. Run the read-only check with
+`python3 scripts/validate-aoc-raw-review-gate.py`. Later runs also require completed binding
+predecessors, current evidence and a separate request. Eligible identifies
+the selected candidate.*
 
 ## Lernreihen-Governance / Learning Series Governance
 

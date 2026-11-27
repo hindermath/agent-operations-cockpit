@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "cc642f06-eada-4de4-9ca1-55d26e25f8e3",
+  "mode": "Single",
+  "policy": "aoc-bilingual-requirements",
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "role": "Primary"
+    }
+  ],
+  "series": {
+    "orderedTargetPaths": [],
+    "roots": [],
+    "dependencies": []
+  },
+  "campaign": {
+    "manifestPath": "N/A",
+    "workers": [],
+    "operatorExceptions": []
+  }
+}

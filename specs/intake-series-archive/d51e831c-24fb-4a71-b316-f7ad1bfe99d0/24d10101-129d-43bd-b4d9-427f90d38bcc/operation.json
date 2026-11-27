@@ -1,0 +1,347 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesOperation",
+  "operationId": "9aadaaa8-b522-4a95-abde-06d2bf9c1ac5",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "type": "Update",
+  "status": "Published",
+  "authorityEvidence": "Explicit local maintenance request to archive the completed Phase 2 intakes and verify their references and evidence.",
+  "proposalNormalizedSha256": "9b9419832755b09468eb93e498577456d936b767697637aa862a12bca7bfc5a1",
+  "preparedPaths": [
+    "specs/intake-series/aoc-phase-2/manifest.json",
+    "specs/intake-series-receipts/aoc-phase-2.json",
+    "specs/intake-series/aoc-phase-2/operation.json",
+    "Pflichtenheft.md",
+    "Lastenheft_Abarbeitungsreihenfolge.md",
+    "requirements/intakes/series/order.md",
+    "requirements/intakes/active/README.md",
+    "requirements/intakes/archive/Lastenheft_META-LH-01-Programmquellen.001-programmquellen-baseline.md",
+    "requirements/intakes/archive/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md",
+    "requirements/intakes/archive/Lastenheft_META-LH-03-Authoring-Contract.003-authoring-contract.md",
+    "requirements/intakes/archive/Lastenheft_META-LH-04-Series-Eligibility.004-series-eligibility.md",
+    "requirements/intakes/archive/Lastenheft_META-LH-05-Erste-Welle.md",
+    "requirements/intakes/archive/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+    "requirements/intakes/archive/Lastenheft_RAW-03-State-Truthfulness.md",
+    "requirements/intakes/archive/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+    "requirements/intakes/archive/Lastenheft_RAW-04-Presentation-Fabric.md",
+    "requirements/intakes/archive/Lastenheft_RAW-05-Execution-Nodes.md",
+    "requirements/intakes/archive/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+    "requirements/intakes/archive/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+    "requirements/intakes/archive/Lastenheft_RAW-08-Workflow-Engine.md",
+    "requirements/intakes/archive/Lastenheft_RAW-09-Preset-Evolution.md"
+  ],
+  "documentationImpact": {
+    "decision": "UpdateRequired",
+    "source": "Phase 2 completed intake archive relocation",
+    "owner": "AOC maintainer",
+    "documents": [
+      "Pflichtenheft.md",
+      "Lastenheft_Abarbeitungsreihenfolge.md",
+      "requirements/intakes/series/order.md",
+      "requirements/intakes/active/README.md"
+    ],
+    "evidence": [
+      "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/9aadaaa8-b522-4a95-abde-06d2bf9c1ac5/manifest.json",
+      "specs/intake-series/aoc-phase-2/operation.json"
+    ]
+  },
+  "reviewInvalidation": {
+    "status": "Superseded",
+    "results": [
+      "specs/intake-review-results/aoc-phase-2-series-2026-09-13-r7.json"
+    ],
+    "reason": "Retain original paths and hashes as historical evidence; relocation does not issue a new review or execution grant."
+  },
+  "validation": {
+    "bash": "Schema 2.0, manifest, receipt and order views passed.",
+    "powerShell": "Schema 2.0, manifest, receipt and order views passed.",
+    "historicalEvidence": "All fourteen archive hashes match the receipt and Ready review target hashes. Four lifecycle records match their original raw hashes. All fourteen historical single reviews passed in Bash and PowerShell with their recorded target paths in a temporary checkout. Full replay of the historical authoring receipts reported predecessor binding errors for all fourteen and source hash drift for META-LH-03 and META-LH-04.",
+    "references": "Canonical index and both current order views resolve all local Markdown links. All 74 inline local links in the relocated intake files resolve."
+  },
+  "publication": {
+    "status": "Published",
+    "publishedPaths": [
+      "specs/intake-series/aoc-phase-2/manifest.json",
+      "specs/intake-series-receipts/aoc-phase-2.json",
+      "specs/intake-series/aoc-phase-2/operation.json",
+      "Pflichtenheft.md",
+      "Lastenheft_Abarbeitungsreihenfolge.md",
+      "requirements/intakes/series/order.md",
+      "requirements/intakes/active/README.md",
+      "requirements/intakes/archive/Lastenheft_META-LH-01-Programmquellen.001-programmquellen-baseline.md",
+      "requirements/intakes/archive/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md",
+      "requirements/intakes/archive/Lastenheft_META-LH-03-Authoring-Contract.003-authoring-contract.md",
+      "requirements/intakes/archive/Lastenheft_META-LH-04-Series-Eligibility.004-series-eligibility.md",
+      "requirements/intakes/archive/Lastenheft_META-LH-05-Erste-Welle.md",
+      "requirements/intakes/archive/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "requirements/intakes/archive/Lastenheft_RAW-03-State-Truthfulness.md",
+      "requirements/intakes/archive/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "requirements/intakes/archive/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "requirements/intakes/archive/Lastenheft_RAW-05-Execution-Nodes.md",
+      "requirements/intakes/archive/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "requirements/intakes/archive/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "requirements/intakes/archive/Lastenheft_RAW-08-Workflow-Engine.md",
+      "requirements/intakes/archive/Lastenheft_RAW-09-Preset-Evolution.md"
+    ]
+  },
+  "archiveMoves": [
+    {
+      "previousPath": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.001-programmquellen-baseline.md",
+      "archivePath": "requirements/intakes/archive/Lastenheft_META-LH-01-Programmquellen.001-programmquellen-baseline.md",
+      "rawSha256": "99eab2565a73b3f1fe836feb89b543392360d3a5d56063c13fd28cf2f0a16704",
+      "normalizedSha256": "99eab2565a73b3f1fe836feb89b543392360d3a5d56063c13fd28cf2f0a16704",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/META-LH-01-Programmquellen.json",
+        "sha256": "94c05a279bf0e7cd360d2d99085af1aefe506d320d105163d5822b264f767401",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/meta-lh-01-programmquellen-2026-08-29-r3.json",
+        "sha256": "524ef4cfbd6b07c8eb2c279e0070cd20c45970b7985cec33d0f3f4d8728d5810",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.md",
+        "reviewId": "bfa9352a-f6d6-43e3-a9d5-edb80b9fcb14"
+      },
+      "historicalLifecycle": {
+        "path": "specs/001-programmquellen-baseline/intake-lifecycle.json",
+        "sha256": "452e97b55f3e6bdd1620dba0502e1672796144a7067682e20790321356d7a84a",
+        "recordedArchivePath": "requirements/intakes/active/Lastenheft_META-LH-01-Programmquellen.001-programmquellen-baseline.md"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md",
+      "archivePath": "requirements/intakes/archive/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md",
+      "rawSha256": "9fc31a833421915b68b85c7dd499dc5b97a81152a8cf668599bb243ef3e17503",
+      "normalizedSha256": "9fc31a833421915b68b85c7dd499dc5b97a81152a8cf668599bb243ef3e17503",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/META-LH-02-Portfolio-Ownership.json",
+        "sha256": "72053e00c79def3dd506e84ce1c0a1a6ba3f80cb914e7051c94224b8ca4b31a9",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/meta-lh-02-portfolio-ownership-2026-09-05-r1.json",
+        "sha256": "8659641f0675100aecad5ce8ea4c27bc9bd6810db8d34fa9fe6a546fdf188817",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.md",
+        "reviewId": "7a923c0b-bb1a-45ed-bf10-8fb69e850c06"
+      },
+      "historicalLifecycle": {
+        "path": "specs/002-portfolio-ownership/intake-lifecycle.json",
+        "sha256": "40e66d527b6e9b8d952eda1d960302bc9e5250c0eae2284b8cad87b48867a554",
+        "recordedArchivePath": "requirements/intakes/active/Lastenheft_META-LH-02-Portfolio-Ownership.002-portfolio-ownership.md"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.003-authoring-contract.md",
+      "archivePath": "requirements/intakes/archive/Lastenheft_META-LH-03-Authoring-Contract.003-authoring-contract.md",
+      "rawSha256": "3a5c34b54bdb0b00f78415089cc0b926b33ddeabe44ee7a130ad603acd4a98ba",
+      "normalizedSha256": "3a5c34b54bdb0b00f78415089cc0b926b33ddeabe44ee7a130ad603acd4a98ba",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/META-LH-03-Authoring-Contract.json",
+        "sha256": "bc9c60792b2cb3f2a9cab4941169f7bb2a57d5df15faf0d09528ce5167b037db",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/meta-lh-03-authoring-contract-2026-09-05-r2.json",
+        "sha256": "9a4da48ab43ed4a5e8167d75d14099ae248bb6eeb088ab6d6ccba43bf33af70f",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.md",
+        "reviewId": "b8d49ed7-d05f-40b0-9e18-1aa1b689f1cf"
+      },
+      "historicalLifecycle": {
+        "path": "specs/003-authoring-contract/intake-lifecycle.json",
+        "sha256": "9df9ce7e074324546f600927a9dc273aab3d1e2443cc972493240808bc7cb6b8",
+        "recordedArchivePath": "requirements/intakes/active/Lastenheft_META-LH-03-Authoring-Contract.003-authoring-contract.md"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.004-series-eligibility.md",
+      "archivePath": "requirements/intakes/archive/Lastenheft_META-LH-04-Series-Eligibility.004-series-eligibility.md",
+      "rawSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+      "normalizedSha256": "eff68253a12129859ae75696cb4a8b8b009f7436d7b7c9df89238255aa5bf6ce",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/META-LH-04-Series-Eligibility.json",
+        "sha256": "e2108788559cb9e62e47bf9f46f2e46aa564cc809e050ef7e1ea5c2ab2aeb97b",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/meta-lh-04-series-eligibility-2026-08-29-r8.json",
+        "sha256": "6ed2784fdb9872b7e688c6ce2290350da452d6c7aa693bf3255ff1f872f7ac07",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.md",
+        "reviewId": "4c0ffc79-22fd-422e-a691-624e24ae444f"
+      },
+      "historicalLifecycle": {
+        "path": "specs/004-series-eligibility/intake-lifecycle.json",
+        "sha256": "950814166d6057271a3cadc9b7a40b3ac8c02a5ebfb32ff49aeeeb1184681c9f",
+        "recordedArchivePath": "requirements/intakes/active/Lastenheft_META-LH-04-Series-Eligibility.004-series-eligibility.md"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+      "archivePath": "requirements/intakes/archive/Lastenheft_META-LH-05-Erste-Welle.md",
+      "rawSha256": "cb255e60b49237f8cc655486b6529536b831b5b942f89f838678386bc31f930f",
+      "normalizedSha256": "cb255e60b49237f8cc655486b6529536b831b5b942f89f838678386bc31f930f",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/META-LH-05-Erste-Welle.json",
+        "sha256": "db8506157dd5b8116deaed5a4f8855aaeff29a2a47bddb14324c5250e24741ee",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/meta-lh-05-erste-welle-2026-09-05-r1.json",
+        "sha256": "c6250b2a208713d2fd821806175b11d4fc8d0a719fe91c700d0235e8943f4c8d",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+        "reviewId": "ed780e97-fd2b-4a83-a151-b29796529026"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "archivePath": "requirements/intakes/archive/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "rawSha256": "c61d9786b27ea09e0e954363a1b4335d3255ea55b0f8a5167ee52c25c583f9b6",
+      "normalizedSha256": "c61d9786b27ea09e0e954363a1b4335d3255ea55b0f8a5167ee52c25c583f9b6",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/RAW-01-Reference-Agentic-Workspace.json",
+        "sha256": "0c716e620dd4462b790272e2dc79d369ff932c3d05bafe2cdb7d2933520e0825",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/raw-01-reference-agentic-workspace-2026-08-29-r3.json",
+        "sha256": "66636f6d84f520b4c025977634f5cbf68674b8758adcff170076568ba8b4fb04",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+        "reviewId": "a60f9d2c-8458-4b64-929f-5cbc0ce7cf49"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "archivePath": "requirements/intakes/archive/Lastenheft_RAW-03-State-Truthfulness.md",
+      "rawSha256": "31d31e82ab1857182d1201192438e5c91abfc3190ba47a2f68b9543034ab0cfd",
+      "normalizedSha256": "31d31e82ab1857182d1201192438e5c91abfc3190ba47a2f68b9543034ab0cfd",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/RAW-03-State-Truthfulness.json",
+        "sha256": "b20f963fc7b60f78a5f7f7e0accfc047d2310a0832e73b3f19935bc699803144",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/raw-03-state-truthfulness-2026-09-05-r1.json",
+        "sha256": "fc799790cc3622f78b579f1a743805095a64c884d1125fc4c23dafb55e747f83",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+        "reviewId": "9193d5a6-f9f1-4734-a3ed-f5b56f5b862d"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "archivePath": "requirements/intakes/archive/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "rawSha256": "6a41e6ae6447ff0192a03af7940362e05e48bff48a5fd21f39e9b6e670eade20",
+      "normalizedSha256": "6a41e6ae6447ff0192a03af7940362e05e48bff48a5fd21f39e9b6e670eade20",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/RAW-02-Workspace-Orchestrator.json",
+        "sha256": "802993e16875494c0f1116e6459e5463c557fbc8adac5966e60e4dfed2062a81",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/raw-02-workspace-orchestrator-2026-08-29-r6.json",
+        "sha256": "ada4f87362ec6edd19f1a99228d354daec6d8a1ebd42844ced0efecf54f10e4c",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+        "reviewId": "ca68b7b1-2b32-45ff-b3c5-82f2ff750430"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "archivePath": "requirements/intakes/archive/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "rawSha256": "ce89a73e9e1d0bdeadcc166a0f4a7b3b94052037cabb8225ceb4ef2ebd345ec4",
+      "normalizedSha256": "ce89a73e9e1d0bdeadcc166a0f4a7b3b94052037cabb8225ceb4ef2ebd345ec4",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/RAW-04-Presentation-Fabric.json",
+        "sha256": "457d28d4f76e149e56c9112e1a312697bf54115eacce031bf58fea11bfec2719",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/raw-04-presentation-fabric-2026-08-29-r4.json",
+        "sha256": "2626a8b01ea26dc3f060d0de4774d789a9a712467782b5a0ddff650dfbf1dea3",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+        "reviewId": "60d1f2c8-7658-4ab4-ac9e-907e3e8629ff"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "archivePath": "requirements/intakes/archive/Lastenheft_RAW-05-Execution-Nodes.md",
+      "rawSha256": "3fd7c5fbf4f419ed6131c4984a948f26d0b6b8c6ab3a5b068cdadce501c3fbad",
+      "normalizedSha256": "3fd7c5fbf4f419ed6131c4984a948f26d0b6b8c6ab3a5b068cdadce501c3fbad",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/RAW-05-Execution-Nodes.json",
+        "sha256": "5b1c879233e455bf932eececc3cd7fa88008db0c6b4ded468f702f924ef4784b",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/raw-05-execution-nodes-2026-08-29-r4.json",
+        "sha256": "969a1e1fb0d350e3e5acf5411080ef178e58e184557ac30aef69569f585fdcac",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+        "reviewId": "332a6a65-604e-4134-aeb6-2ce10523edda"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "archivePath": "requirements/intakes/archive/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "rawSha256": "dde4a283ac2c761373085beea976dcd927d813e17aa2b1ad76ceab800c1d604a",
+      "normalizedSha256": "dde4a283ac2c761373085beea976dcd927d813e17aa2b1ad76ceab800c1d604a",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/RAW-06-CLI-Environment-Orchestration.json",
+        "sha256": "54f77169d693b4ed60070ef76435a414004d1173bb24eff0d8cbd381e948e4a3",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/raw-06-cli-environment-orchestration-2026-08-29-r3.json",
+        "sha256": "cfcfee663dc9086328fd71c9db31686fbfd71fc8c55de1078b9c8cf73a879832",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+        "reviewId": "d0e391bf-49c1-446d-ab51-e3df111d1216"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "archivePath": "requirements/intakes/archive/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "rawSha256": "ade666e411ed9a81b9736e628adb8613be0d9d732295c7e5470d90f0c64f513a",
+      "normalizedSha256": "ade666e411ed9a81b9736e628adb8613be0d9d732295c7e5470d90f0c64f513a",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/RAW-07-Hardware-Capability-Layer.json",
+        "sha256": "785212a1f484ba8f4e3de1caccb1c70f01c627e73cc4b161e766540340a90ae0",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/raw-07-hardware-capability-layer-2026-08-29-r3.json",
+        "sha256": "6912054b10f2926b85ae9ec29b533d9d9d40693ce8d0f09dd1c471b0442d6e35",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+        "reviewId": "9f8042fd-f29e-4a25-a2f7-c67f91b4650f"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "archivePath": "requirements/intakes/archive/Lastenheft_RAW-08-Workflow-Engine.md",
+      "rawSha256": "623451757149794556a9f4efef73c13c6894244476b7fd484f0eaaa9fdba7f1a",
+      "normalizedSha256": "623451757149794556a9f4efef73c13c6894244476b7fd484f0eaaa9fdba7f1a",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/RAW-08-Workflow-Engine.json",
+        "sha256": "89776ffcea4342ab55c45551447526144b85679327774ed80146a06e03305aa5",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/raw-08-workflow-engine-2026-08-29-r4.json",
+        "sha256": "29eea5999f76b63c1c80c91a9d5f3fc7aee7c2a81060f528e6bfb1fd8afa1bb6",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+        "reviewId": "c839534d-a174-4b6b-b598-9d4963e79b00"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+      "archivePath": "requirements/intakes/archive/Lastenheft_RAW-09-Preset-Evolution.md",
+      "rawSha256": "c3da0eec782279678b1599e0e2365e409fbfe9e0e6f40e5f2e1b768e385f3b83",
+      "normalizedSha256": "c3da0eec782279678b1599e0e2365e409fbfe9e0e6f40e5f2e1b768e385f3b83",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/RAW-09-Preset-Evolution.json",
+        "sha256": "97961fdc15f41aff5e74dd4100d23294aa6a2453eb7dd3668a212dacb1260f12",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/raw-09-preset-evolution-2026-08-29-r4.json",
+        "sha256": "7e59a67e4d830f5d600f386c8543356035f031744d7143a42c547f533e6529fe",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+        "reviewId": "82a996ad-cef2-4165-a192-4db17d2e5ebc"
+      }
+    }
+  ]
+}

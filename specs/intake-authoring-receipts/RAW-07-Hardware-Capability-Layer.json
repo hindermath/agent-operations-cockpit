@@ -1,27 +1,48 @@
 {
   "schemaVersion": "2.0",
   "documentType": "IntakeReceipt",
-  "receiptId": "957f3d77-0d7f-44db-93e5-c5dbe78713a6",
+  "receiptId": "e4b08089-9b45-4334-b671-95b6129bfae0",
   "intakeId": "8c0ddc2e-a816-467c-a2c2-ec86680850b0",
   "generator": {
     "preset": "intake-authoring-governance",
-    "version": "0.3.0"
+    "version": "0.3.14"
   },
-  "createdAt": "2026-08-29T21:56:08Z",
+  "createdAt": "2026-11-27T17:39:07Z",
   "operation": {
-    "operationId": "039eb15c-1fcd-4654-990a-639f62f5e547",
+    "operationId": "474ece48-b9d0-43f4-ab7b-7667faaa2778",
     "type": "Update",
-    "authorityEvidence": "Thorsten explicitly authorized the bounded IR007 and IR008 repair on 2026-08-29, including lifecycle-aware consumer resolution, renewal of all fourteen authoring receipts, complete Single and Series re-reviews, and MergeAndSync with Admin-Bypass."
+    "authorityEvidence": "Explicit local user request to prepare the nine RAW intakes, select RAW-01 next, and require nine current Single reviews before starting RAW-01."
   },
   "status": "ReadyForReview",
   "target": {
     "path": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
-    "normalizedSha256": "ade666e411ed9a81b9736e628adb8613be0d9d732295c7e5470d90f0c64f513a"
+    "normalizedSha256": "542f7167458afe36395e4ed49ac9a74d36cea45ff354fd77fbe0677697947409"
   },
   "sources": [
     {
       "sourceId": "SRC001",
       "order": 1,
+      "kind": "File",
+      "label": "Previous accepted intake bytes",
+      "location": "Repository",
+      "path": "specs/intake-authoring-archive/8c0ddc2e-a816-467c-a2c2-ec86680850b0/474ece48-b9d0-43f4-ab7b-7667faaa2778/target.txt",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "ade666e411ed9a81b9736e628adb8613be0d9d732295c7e5470d90f0c64f513a",
+      "gitBlob": "N/A",
+      "proofBoundary": "Repository path and normalized SHA-256"
+    },
+    {
+      "sourceId": "SRC002",
+      "order": 2,
       "kind": "File",
       "label": "Superseded RAW-07-Hardware-Capability-Layer intake as first binding repair source",
       "location": "Repository",
@@ -41,8 +62,8 @@
       "proofBoundary": "RepositoryArchiveAtBoundedSeriesRepair"
     },
     {
-      "sourceId": "SRC002",
-      "order": 2,
+      "sourceId": "SRC003",
+      "order": 3,
       "kind": "File",
       "label": "Phase-2 Series review defining IAD701-IAD704 and IR003",
       "location": "Repository",
@@ -62,8 +83,8 @@
       "proofBoundary": "RepositoryAtUpdateAuthorization"
     },
     {
-      "sourceId": "SRC003",
-      "order": 3,
+      "sourceId": "SRC004",
+      "order": 4,
       "kind": "File",
       "label": "Readable Phase-2 Series review evidence",
       "location": "Repository",
@@ -83,8 +104,8 @@
       "proofBoundary": "RepositoryAtUpdateAuthorization"
     },
     {
-      "sourceId": "SRC004",
-      "order": 4,
+      "sourceId": "SRC005",
+      "order": 5,
       "kind": "File",
       "label": "Self-contained AOC programme source pack",
       "location": "Repository",
@@ -104,8 +125,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC005",
-      "order": 5,
+      "sourceId": "SRC006",
+      "order": 6,
       "kind": "File",
       "label": "RAW-04 Presentation Contract consumed by RAW-07",
       "location": "Repository",
@@ -125,8 +146,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC006",
-      "order": 6,
+      "sourceId": "SRC007",
+      "order": 7,
       "kind": "File",
       "label": "Reconciled open and confirmed decision map after IR005 repair",
       "location": "Repository",
@@ -146,8 +167,8 @@
       "proofBoundary": "RepositoryAtBoundedSeriesRepair"
     },
     {
-      "sourceId": "SRC007",
-      "order": 7,
+      "sourceId": "SRC008",
+      "order": 8,
       "kind": "File",
       "label": "Machine-readable RAW-07 capability, adapter, device-wave, and lab contract",
       "location": "Repository",
@@ -167,8 +188,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC008",
-      "order": 8,
+      "sourceId": "SRC009",
+      "order": 9,
       "kind": "File",
       "label": "Hardware-free RAW-07 requirements validator",
       "location": "Repository",
@@ -188,8 +209,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC009",
-      "order": 9,
+      "sourceId": "SRC010",
+      "order": 10,
       "kind": "File",
       "label": "Bash surface for RAW-07 offline validation",
       "location": "Repository",
@@ -209,8 +230,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC010",
-      "order": 10,
+      "sourceId": "SRC011",
+      "order": 11,
       "kind": "File",
       "label": "PowerShell surface for RAW-07 offline validation",
       "location": "Repository",
@@ -230,8 +251,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC011",
-      "order": 11,
+      "sourceId": "SRC012",
+      "order": 12,
       "kind": "File",
       "label": "Positive two-class RAW-07 contract and failure fixture",
       "location": "Repository",
@@ -251,8 +272,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC012",
-      "order": 12,
+      "sourceId": "SRC013",
+      "order": 13,
       "kind": "File",
       "label": "Negative raw-protocol leakage fixture",
       "location": "Repository",
@@ -272,8 +293,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC013",
-      "order": 13,
+      "sourceId": "SRC014",
+      "order": 14,
       "kind": "File",
       "label": "Negative adapter domain-command fixture",
       "location": "Repository",
@@ -293,8 +314,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC014",
-      "order": 14,
+      "sourceId": "SRC015",
+      "order": 15,
       "kind": "File",
       "label": "Negative unapproved-device fixture",
       "location": "Repository",
@@ -314,8 +335,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC015",
-      "order": 15,
+      "sourceId": "SRC016",
+      "order": 16,
       "kind": "File",
       "label": "Negative missing lab-approval fixture",
       "location": "Repository",
@@ -335,8 +356,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC016",
-      "order": 16,
+      "sourceId": "SRC017",
+      "order": 17,
       "kind": "File",
       "label": "Negative missing kill-switch fixture",
       "location": "Repository",
@@ -356,8 +377,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC017",
-      "order": 17,
+      "sourceId": "SRC018",
+      "order": 18,
       "kind": "File",
       "label": "Series review that authorises bounded IR005 and IR006 repair",
       "location": "Repository",
@@ -375,6 +396,27 @@
       "normalizedSha256": "11a42bd28136bf82c4dc0f36ac6e4d69b5ad8bfed6422d98d9cdb9be7c603345",
       "gitBlob": "485c98741448bd61bb0d22b5bd49f396ab17f957",
       "proofBoundary": "RepositoryAtRepairAuthorization"
+    },
+    {
+      "sourceId": "SRC019",
+      "order": 19,
+      "kind": "File",
+      "label": "Historical Single review",
+      "location": "Repository",
+      "path": "specs/intake-review-results/raw-07-hardware-capability-layer-2026-08-29-r3.json",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "6912054b10f2926b85ae9ec29b533d9d9d40693ce8d0f09dd1c471b0442d6e35",
+      "gitBlob": "N/A",
+      "proofBoundary": "Repository path and normalized SHA-256"
     }
   ],
   "profile": "aoc-bilingual-requirements",
@@ -413,31 +455,31 @@
   "questionCount": 0,
   "agentSurface": {
     "specifyCanonicalId": "speckit.specify",
-    "specifyInvocation": "$speckit-specify requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md --bind-exact-intake --no-implementation --no-hardware-io --no-remote-writes",
+    "specifyInvocation": "$speckit-specify",
     "autonomousCanonicalId": "speckit.autonomous",
-    "autonomousInvocation": "$speckit-autonomous requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md --delivery-mode MergeAndSync --require-current-review"
+    "autonomousInvocation": "$speckit-autonomous"
   },
-  "deliveryAuthority": "MergeAndSync",
-  "authorityEvidence": "MergeAndSync remains the unchanged historical delivery ceiling. The current update authority excludes Specify, implementation, hardware I/O, remote, preset, Level-0, GitHub, merge, bypass, provider, and downstream start actions. The 2026-08-08 provenance repair grants only receipt lineage renewal against the final Decision Register and no current downstream authority.",
+  "deliveryAuthority": "LocalImplementation",
+  "authorityEvidence": "This preparation grants no feature execution, implementation or remote delivery authority.",
   "promptState": "Enabled",
   "provenanceMode": "Supersession",
   "supersedes": {
-    "receiptPath": "specs/intake-authoring-archive/8c0ddc2e-a816-467c-a2c2-ec86680850b0/039eb15c-1fcd-4654-990a-639f62f5e547/RAW-07-Hardware-Capability-Layer.json",
+    "receiptPath": "specs/intake-authoring-operations/474ece48-b9d0-43f4-ab7b-7667faaa2778/predecessor-receipt.json",
     "targetNormalizedSha256": "ade666e411ed9a81b9736e628adb8613be0d9d732295c7e5470d90f0c64f513a",
-    "archiveTargetPath": "specs/intake-authoring-archive/8c0ddc2e-a816-467c-a2c2-ec86680850b0/039eb15c-1fcd-4654-990a-639f62f5e547/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
-    "archiveReceiptPath": "specs/intake-authoring-archive/8c0ddc2e-a816-467c-a2c2-ec86680850b0/039eb15c-1fcd-4654-990a-639f62f5e547/RAW-07-Hardware-Capability-Layer.json"
+    "archiveTargetPath": "specs/intake-authoring-archive/8c0ddc2e-a816-467c-a2c2-ec86680850b0/474ece48-b9d0-43f4-ab7b-7667faaa2778/target.txt",
+    "archiveReceiptPath": "specs/intake-authoring-archive/8c0ddc2e-a816-467c-a2c2-ec86680850b0/474ece48-b9d0-43f4-ab7b-7667faaa2778/receipt.json"
   },
   "legacyAdoption": {
     "evidenceType": "N/A",
-    "priorTargetNormalizedSha256": "N/A",
-    "priorGitBlob": "N/A"
+    "priorGitBlob": "N/A",
+    "priorTargetNormalizedSha256": "N/A"
   },
   "updateAuthorized": true,
-  "updateAuthorityEvidence": "Thorsten explicitly authorized the bounded IR007 and IR008 repair on 2026-08-29, including lifecycle-aware consumer resolution, renewal of all fourteen authoring receipts, complete Single and Series re-reviews, and MergeAndSync with Admin-Bypass.",
+  "updateAuthorityEvidence": "Explicit local user request to prepare the nine RAW intakes, select RAW-01 next, and require nine current Single reviews before starting RAW-01.",
   "series": {
-    "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
-    "manifestPath": "specs/intake-series/aoc-phase-2/manifest.json",
-    "order": 12,
+    "seriesId": "88f6c448-2a4f-4217-941b-7909d85d3b74",
+    "manifestPath": "specs/intake-series/aoc-raw-features/manifest.json",
+    "order": 7,
     "role": "OrderedMember",
     "supersedesIntakeIds": []
   },

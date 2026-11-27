@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "d3321523-9e66-4f13-bba9-600e36ee912d",
+  "mode": "Single",
+  "status": "Ready",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-11-27T17:39:10Z",
+  "repository": {
+    "root": ".",
+    "head": "128a1f45a484939185bc37b3e9a4bb5073a0c265"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-08-workflow-engine-2026-11-27-raw-series.json",
+    "normalizedSha256": "5975e79aa842f16be782155dce1ef8b10873736727bb4be6a8662a72328c8207"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "role": "Primary",
+      "normalizedSha256": "c41fc15e4f97d4ff6ab3d34f418ce0769ebc25ff09be8e5b249edc8404cbf4cd",
+      "gitBlob": "N/A"
+    }
+  ],
+  "findings": [],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "c839534d-a174-4b6b-b598-9d4963e79b00"
+}

@@ -674,6 +674,11 @@ sdh_linked_intake_input_paths() {
   local manifest_relative="$2"
   local intake_path resolved_path archive_stamp proof_path
   local spec_file state_path
+  local terminal_required=false
+
+  if sdh_jq -e '.policy == "aoc-bilingual-requirements"' "$repo/$manifest_relative" >/dev/null; then
+    terminal_required=true
+  fi
 
   printf '%s\n' "$manifest_relative"
   while IFS= read -r intake_path; do
@@ -684,6 +689,10 @@ sdh_linked_intake_input_paths() {
   for spec_file in "$repo"/specs/[0-9][0-9][0-9]-*/spec.md; do
     [ -f "$spec_file" ] || continue
     printf '%s\n' "${spec_file#"$repo/"}"
+    if $terminal_required; then
+      state_path="${spec_file#"$repo/"}"
+      printf '%s\n' "${state_path%/spec.md}/autonomous-run-state.json"
+    fi
   done
   while IFS= read -r intake_path; do
     resolved_path="$(sdh_resolve_linked_intake_path "$repo" "$intake_path")" || return 1
@@ -693,7 +702,11 @@ sdh_linked_intake_input_paths() {
     [ ! -f "$repo/$state_path" ] || printf '%s\n' "$state_path"
   done < <(sdh_jq -r '.orderedTargets[].path' "$repo/$manifest_relative")
   while IFS= read -r proof_path; do
-    [ -z "$proof_path" ] || printf '%s\n' "$proof_path"
+    [ -n "$proof_path" ] || continue
+    printf '%s\n' "$proof_path"
+    if $terminal_required; then
+      printf '%s\n' "$proof_path/autonomous-run-state.json"
+    fi
   done < <(sdh_jq -r '(.featureEvidence // [])[].featurePath' "$repo/$manifest_relative")
 }
 
@@ -753,12 +766,14 @@ sdh_assert_linked_intake_completion_proof() {
   local logical_path="$2"
   local resolved_path="$3"
   local state_path="$4"
+  local prior_stamped_path="${5:-}"
   local resolved_hash
 
   resolved_hash="$(sdh_sha256_file "$repo/$resolved_path")" || return 1
   sdh_jq -e \
     --arg logical "$logical_path" \
     --arg resolved "$resolved_path" \
+    --arg prior "$prior_stamped_path" \
     --arg resolved_hash "$resolved_hash" '
       .status == "Completed"
       and (.closeout | type == "object")
@@ -768,7 +783,7 @@ sdh_assert_linked_intake_completion_proof() {
       and (.acceptedArtifacts | type == "array")
       and ([.acceptedArtifacts[] |
         select(
-          (.path == $logical or .path == $resolved)
+          (.path == $logical or .path == $resolved or ($prior != "" and .path == $prior))
           and (.sha256 | type == "string")
           and .sha256 == $resolved_hash
         )] | length) == 1
@@ -1018,7 +1033,8 @@ sdh_feature_cell() {
   local status="$4"
   local manifest="${5:-}"
   local resolved_intake_path="${6:-$intake_path}"
-  local spec_file feature_dir state_file archive_stamp mapped_path
+  local spec_file feature_dir state_file archive_stamp mapped_path proof_path prior_stamped_path
+  local verified_feature=""
   local -a candidates=()
 
   if [ "$status" = "Completed" ] && [ -d "$repo/specs" ]; then
@@ -1039,9 +1055,23 @@ sdh_feature_cell() {
       state_file="$repo/specs/$archive_stamp/autonomous-run-state.json"
       if [ -f "$state_file" ]; then
         sdh_assert_strict_utf8_file "$state_file" "specs/$archive_stamp/autonomous-run-state.json" || return 1
+        # A manifest can point directly at the stamped completion file.
+        proof_path="$intake_path"
+        prior_stamped_path=""
+        if [ "$intake_path" = "$resolved_intake_path" ]; then
+          proof_path="${resolved_intake_path%."$archive_stamp".md}.md"
+          if [ "${resolved_intake_path%/*}" = "requirements/intakes/archive" ]; then
+            prior_stamped_path="requirements/intakes/active/${resolved_intake_path##*/}"
+            proof_path="${prior_stamped_path%."$archive_stamp".md}.md"
+          fi
+        fi
         sdh_assert_linked_intake_completion_proof \
-          "$repo" "$intake_path" "$resolved_intake_path" "specs/$archive_stamp/autonomous-run-state.json" || return 1
-        candidates+=("specs/$archive_stamp")
+          "$repo" "$proof_path" "$resolved_intake_path" "specs/$archive_stamp/autonomous-run-state.json" "$prior_stamped_path" || return 1
+        verified_feature="specs/$archive_stamp"
+        if [ -z "$manifest" ] || ! sdh_jq -e --arg intake "$intake_path" --arg feature "specs/$archive_stamp" \
+          'any((.featureEvidence // [])[]; .intakePath == $intake and .featurePath == $feature)' "$manifest" >/dev/null; then
+          candidates+=("specs/$archive_stamp")
+        fi
       fi
     fi
 
@@ -1050,6 +1080,23 @@ sdh_feature_cell() {
         [ -d "$repo/$mapped_path" ] || { sdh_log "LIE008: Feature-Ziel fehlt / feature target is missing: $intake_path" >&2; return 1; }
         candidates+=("$mapped_path")
       done < <(sdh_jq -r --arg intake "$intake_path" '(.featureEvidence // [])[] | select(.intakePath == $intake) | .featurePath' "$manifest")
+    fi
+  fi
+
+  if [ "$status" = "Completed" ] && [ -n "$manifest" ] &&
+    sdh_jq -e '.policy == "aoc-bilingual-requirements"' "$manifest" >/dev/null; then
+    if [ "${#candidates[@]}" -ne 1 ]; then
+      sdh_log "LIE008: AOC Completed requires exactly one feature / AOC Completed erfordert genau ein Feature: $intake_path" >&2
+      return 1
+    fi
+    if [ "${candidates[0]}" != "$verified_feature" ]; then
+      state_file="${candidates[0]}/autonomous-run-state.json"
+      sdh_assert_safe_repository_path "$repo" "$state_file" file >/dev/null 2>&1 || {
+        sdh_log "LIE008: AOC feature completion proof missing / AOC Feature-Abschlussnachweis fehlt: $intake_path" >&2
+        return 1
+      }
+      sdh_assert_strict_utf8_file "$repo/$state_file" "$state_file" || return 1
+      sdh_assert_linked_intake_completion_proof "$repo" "$intake_path" "$resolved_intake_path" "$state_file" || return 1
     fi
   fi
 

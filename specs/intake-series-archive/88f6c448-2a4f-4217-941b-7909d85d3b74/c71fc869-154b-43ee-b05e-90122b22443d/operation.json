@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesOperation",
+  "operationId": "00d4f91e-7d6d-4eb6-b375-95f97f69d249",
+  "seriesId": "88f6c448-2a4f-4217-941b-7909d85d3b74",
+  "type": "Create",
+  "status": "Published",
+  "authorityEvidence": "Explicit local user request to prepare the nine RAW intakes, select RAW-01 next, and require nine current Single reviews before starting RAW-01.",
+  "authoringMilestone": "requirements/intakes/history/Lastenheft_META-LH-05-Erste-Welle.md",
+  "priorSeriesEvidence": "specs/intake-series/aoc-phase-2/operation.json",
+  "preservedBacklog": {
+    "requirements/intakes/backlog/Lastenheft_RAW-01-Reference-Agentic-Workspace.md": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-03-State-Truthfulness.md": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-02-Workspace-Orchestrator.md": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-04-Presentation-Fabric.md": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-05-Execution-Nodes.md": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-06-CLI-Environment-Orchestration.md": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-07-Hardware-Capability-Layer.md": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-08-Workflow-Engine.md": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-09-Preset-Evolution.md": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md"
+  },
+  "reviewGate": "specs/intake-series/aoc-raw-features/review-gate.json",
+  "documentationImpact": {
+    "decision": "UpdateRequired",
+    "source": "User-approved RAW series and all-nine initial Single-review gate",
+    "owner": "AOC maintainer",
+    "documents": [
+      "Pflichtenheft.md",
+      "Lastenheft_Abarbeitungsreihenfolge.md",
+      "requirements/intakes/series/order.md",
+      "AGENTS.md",
+      "CLAUDE.md",
+      "GEMINI.md",
+      ".github/copilot-instructions.md",
+      ".github/agents/copilot-instructions.md",
+      "README.md",
+      "scripts/config/script-catalog.json"
+    ]
+  },
+  "scope": "Intake preparation and review only. No feature execution or remote authority.",
+  "initialReviewGateValidator": "scripts/validate-aoc-raw-review-gate.py"
+}

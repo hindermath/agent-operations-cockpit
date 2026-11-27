@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "d3321523-9e66-4f13-bba9-600e36ee912d",
+  "mode": "Single",
+  "policy": "aoc-bilingual-requirements",
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "role": "Primary"
+    }
+  ],
+  "series": {
+    "orderedTargetPaths": [],
+    "roots": [],
+    "dependencies": []
+  },
+  "campaign": {
+    "manifestPath": "N/A",
+    "workers": [],
+    "operatorExceptions": []
+  }
+}

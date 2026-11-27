@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "6ee58f8e-a010-4658-a6fb-c593f2c5d0a0",
+  "mode": "Single",
+  "status": "Ready",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-11-27T17:39:00Z",
+  "repository": {
+    "root": ".",
+    "head": "128a1f45a484939185bc37b3e9a4bb5073a0c265"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-02-workspace-orchestrator-2026-11-27-raw-series.json",
+    "normalizedSha256": "994d76f0532563b5fe8b719d412bb954ec1c7a5368e8e713b246c2618afe0aef"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "role": "Primary",
+      "normalizedSha256": "925a57e5d3d40da78cbff4eb5152cca175fe5b765b6cddfe78831feb8e9262a4",
+      "gitBlob": "N/A"
+    }
+  ],
+  "findings": [],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "ca68b7b1-2b32-45ff-b3c5-82f2ff750430"
+}

@@ -30,8 +30,10 @@
     "archive": "requirements/intakes/archive",
     "backlog": "requirements/intakes/backlog",
     "history": "requirements/intakes/history",
-    "seriesManifest": "specs/intake-series/aoc-phase-2/manifest.json"
+    "seriesManifest": "specs/intake-series/aoc-raw-features/manifest.json"
   },
-  "legacyArtifactNames": ["Lastenheft_Abarbeitungsreihenfolge.md"],
+  "legacyArtifactNames": [
+    "Lastenheft_Abarbeitungsreihenfolge.md"
+  ],
   "inventoryMode": "DirectoryStrict"
 }

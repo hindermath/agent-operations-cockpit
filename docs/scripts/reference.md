@@ -5,7 +5,7 @@
 > Generated from `scripts/config/script-catalog.json` and the Git index. Do not edit manually.
 
 Stand / Updated: 2026-07-28
-Kanonische Skriptdateien / Canonical script files: 157
+Kanonische Skriptdateien / Canonical script files: 158
 
 ## Workspace-Lebenszyklus / Workspace lifecycle
 
@@ -431,6 +431,17 @@ pwsh -NoProfile -File scripts/update-spec-kit.ps1 -WhatIf  # falls SupportsShoul
 ```text
 bash scripts/update-spec-kit.sh --help
 bash scripts/update-spec-kit.sh --dry-run  # falls angeboten / when supported
+```
+
+### `scripts/validate-aoc-raw-review-gate.py`
+
+- **Rolle / Role:** oeffentliches Kommando / public command
+- **Kurzbeschreibung / Summary:** Siehe Quelltext und Hilfe. / See source and help.
+- **Voraussetzungen / Prerequisites:** passende Shell; weitere Anforderungen stehen in `--help` oder `Get-Help`.
+- **Nebenwirkungen / Side effects:** zuerst Check-, Dry-Run- oder WhatIf-Modus verwenden, sofern angeboten.
+
+```text
+python3 scripts/validate-aoc-raw-review-gate.py --help
 ```
 
 ## Sicherheit und Audit / Security and audit

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "c062d94c-272b-4beb-ad67-4fe81279b73d",
+  "mode": "Single",
+  "status": "Ready",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-11-27T18:11:50Z",
+  "repository": {
+    "root": ".",
+    "head": "128a1f45a484939185bc37b3e9a4bb5073a0c265"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-01-reference-agentic-workspace-2026-11-27-dotnet11.json",
+    "normalizedSha256": "19c64c65996de29b1ad06d13f946f8e96b2373bc04caf8e26e8a4480bedaf879"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "role": "Primary",
+      "normalizedSha256": "bff83798789bf565b4e0b679f467f6384dcf6820fda78fcaa4fff30d54a83820",
+      "gitBlob": "N/A"
+    }
+  ],
+  "findings": [],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "5d84ad91-dd80-4c72-adc9-f54df5f089a7"
+}

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "1.0",
+  "seriesManifest": "specs/intake-series/aoc-raw-features/manifest.json",
+  "initialCandidate": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+  "prerequisite": {
+    "intake": "requirements/intakes/history/Lastenheft_META-LH-05-Erste-Welle.md",
+    "normalizedSha256": "cb255e60b49237f8cc655486b6529536b831b5b942f89f838678386bc31f930f",
+    "evidence": "specs/intake-series/aoc-phase-2/operation.json"
+  },
+  "requiredReviews": [
+    {
+      "intakePath": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "authoringReceipt": "specs/intake-authoring-receipts/RAW-01-Reference-Agentic-Workspace.json",
+      "singleReview": "specs/intake-review-results/raw-01-reference-agentic-workspace-2026-11-27-dotnet11.json",
+      "report": "docs/reviews/raw-01-reference-agentic-workspace-2026-11-27-dotnet11.md"
+    },
+    {
+      "intakePath": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "authoringReceipt": "specs/intake-authoring-receipts/RAW-03-State-Truthfulness.json",
+      "singleReview": "specs/intake-review-results/raw-03-state-truthfulness-2026-11-27-raw-series.json",
+      "report": "docs/reviews/raw-03-state-truthfulness-2026-11-27-raw-series.md"
+    },
+    {
+      "intakePath": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "authoringReceipt": "specs/intake-authoring-receipts/RAW-02-Workspace-Orchestrator.json",
+      "singleReview": "specs/intake-review-results/raw-02-workspace-orchestrator-2026-11-27-raw-series.json",
+      "report": "docs/reviews/raw-02-workspace-orchestrator-2026-11-27-raw-series.md"
+    },
+    {
+      "intakePath": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "authoringReceipt": "specs/intake-authoring-receipts/RAW-04-Presentation-Fabric.json",
+      "singleReview": "specs/intake-review-results/raw-04-presentation-fabric-2026-11-27-raw-series.json",
+      "report": "docs/reviews/raw-04-presentation-fabric-2026-11-27-raw-series.md"
+    },
+    {
+      "intakePath": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+      "authoringReceipt": "specs/intake-authoring-receipts/RAW-05-Execution-Nodes.json",
+      "singleReview": "specs/intake-review-results/raw-05-execution-nodes-2026-11-27-raw-series.json",
+      "report": "docs/reviews/raw-05-execution-nodes-2026-11-27-raw-series.md"
+    },
+    {
+      "intakePath": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "authoringReceipt": "specs/intake-authoring-receipts/RAW-06-CLI-Environment-Orchestration.json",
+      "singleReview": "specs/intake-review-results/raw-06-cli-environment-orchestration-2026-11-27-raw-series.json",
+      "report": "docs/reviews/raw-06-cli-environment-orchestration-2026-11-27-raw-series.md"
+    },
+    {
+      "intakePath": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "authoringReceipt": "specs/intake-authoring-receipts/RAW-07-Hardware-Capability-Layer.json",
+      "singleReview": "specs/intake-review-results/raw-07-hardware-capability-layer-2026-11-27-raw-series.json",
+      "report": "docs/reviews/raw-07-hardware-capability-layer-2026-11-27-raw-series.md"
+    },
+    {
+      "intakePath": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+      "authoringReceipt": "specs/intake-authoring-receipts/RAW-08-Workflow-Engine.json",
+      "singleReview": "specs/intake-review-results/raw-08-workflow-engine-2026-11-27-raw-series.json",
+      "report": "docs/reviews/raw-08-workflow-engine-2026-11-27-raw-series.md"
+    },
+    {
+      "intakePath": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+      "authoringReceipt": "specs/intake-authoring-receipts/RAW-09-Preset-Evolution.json",
+      "singleReview": "specs/intake-review-results/raw-09-preset-evolution-2026-11-27-raw-series.json",
+      "report": "docs/reviews/raw-09-preset-evolution-2026-11-27-raw-series.md"
+    }
+  ]
+}

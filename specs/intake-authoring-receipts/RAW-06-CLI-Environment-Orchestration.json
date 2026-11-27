@@ -1,27 +1,48 @@
 {
   "schemaVersion": "2.0",
   "documentType": "IntakeReceipt",
-  "receiptId": "bd287e7f-3943-4cb2-99b1-e22f604231e2",
+  "receiptId": "46b6c51c-b82b-4949-99d1-e67ffc9fa18e",
   "intakeId": "2a1c7826-312d-47d5-9026-4610480e1e1f",
   "generator": {
     "preset": "intake-authoring-governance",
-    "version": "0.3.0"
+    "version": "0.3.14"
   },
-  "createdAt": "2026-08-29T21:56:08Z",
+  "createdAt": "2026-11-27T17:39:05Z",
   "operation": {
-    "operationId": "04279863-94df-4a38-a3e4-ab2ef1ec2c2c",
+    "operationId": "0ae64715-25c6-405f-ab29-ea9a06b62298",
     "type": "Update",
-    "authorityEvidence": "Thorsten explicitly authorized the bounded IR007 and IR008 repair on 2026-08-29, including lifecycle-aware consumer resolution, renewal of all fourteen authoring receipts, complete Single and Series re-reviews, and MergeAndSync with Admin-Bypass."
+    "authorityEvidence": "Explicit local user request to prepare the nine RAW intakes, select RAW-01 next, and require nine current Single reviews before starting RAW-01."
   },
   "status": "ReadyForReview",
   "target": {
     "path": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
-    "normalizedSha256": "dde4a283ac2c761373085beea976dcd927d813e17aa2b1ad76ceab800c1d604a"
+    "normalizedSha256": "904b157e93c47235a09294be9e203bcc30b68303d5dc581a50ab3095fb73a6de"
   },
   "sources": [
     {
       "sourceId": "SRC001",
       "order": 1,
+      "kind": "File",
+      "label": "Previous accepted intake bytes",
+      "location": "Repository",
+      "path": "specs/intake-authoring-archive/2a1c7826-312d-47d5-9026-4610480e1e1f/0ae64715-25c6-405f-ab29-ea9a06b62298/target.txt",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "dde4a283ac2c761373085beea976dcd927d813e17aa2b1ad76ceab800c1d604a",
+      "gitBlob": "N/A",
+      "proofBoundary": "Repository path and normalized SHA-256"
+    },
+    {
+      "sourceId": "SRC002",
+      "order": 2,
       "kind": "File",
       "label": "Superseded RAW-06-CLI-Environment-Orchestration intake as first binding repair source",
       "location": "Repository",
@@ -41,8 +62,8 @@
       "proofBoundary": "RepositoryArchiveAtBoundedSeriesRepair"
     },
     {
-      "sourceId": "SRC002",
-      "order": 2,
+      "sourceId": "SRC003",
+      "order": 3,
       "kind": "File",
       "label": "Current Phase-2 Series review defining IAD601-IAD604 and IR002",
       "location": "Repository",
@@ -62,8 +83,8 @@
       "proofBoundary": "RepositoryAtUpdateAuthorization"
     },
     {
-      "sourceId": "SRC003",
-      "order": 3,
+      "sourceId": "SRC004",
+      "order": 4,
       "kind": "File",
       "label": "Readable Phase-2 Series review evidence",
       "location": "Repository",
@@ -83,8 +104,8 @@
       "proofBoundary": "RepositoryAtUpdateAuthorization"
     },
     {
-      "sourceId": "SRC004",
-      "order": 4,
+      "sourceId": "SRC005",
+      "order": 5,
       "kind": "File",
       "label": "Self-contained AOC programme source pack",
       "location": "Repository",
@@ -104,12 +125,12 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC005",
-      "order": 5,
+      "sourceId": "SRC006",
+      "order": 6,
       "kind": "File",
       "label": "RAW-02 logical process and orchestration boundary",
       "location": "Repository",
-      "path": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "path": "specs/intake-series-archive/88f6c448-2a4f-4217-941b-7909d85d3b74/00d4f91e-7d6d-4eb6-b375-95f97f69d249/backlog/Lastenheft_RAW-02-Workspace-Orchestrator.md",
       "requestedUrl": "N/A",
       "finalUrl": "N/A",
       "retrievedAt": "N/A",
@@ -121,12 +142,12 @@
       "redirectChain": [],
       "rawSha256": "N/A",
       "normalizedSha256": "6a41e6ae6447ff0192a03af7940362e05e48bff48a5fd21f39e9b6e670eade20",
-      "gitBlob": "415be8856342c38744c3bce3252ff5bb266f1fbe",
-      "proofBoundary": "RepositoryAtUpdate"
+      "gitBlob": "N/A",
+      "proofBoundary": "Repository path and normalized SHA-256"
     },
     {
-      "sourceId": "SRC006",
-      "order": 6,
+      "sourceId": "SRC007",
+      "order": 7,
       "kind": "File",
       "label": "RAW-05 execution-node and transport boundary contract",
       "location": "Repository",
@@ -146,8 +167,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC007",
-      "order": 7,
+      "sourceId": "SRC008",
+      "order": 8,
       "kind": "File",
       "label": "Machine-readable RAW-06 process, outcome, environment, and remote contract",
       "location": "Repository",
@@ -167,8 +188,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC008",
-      "order": 8,
+      "sourceId": "SRC009",
+      "order": 9,
       "kind": "File",
       "label": "Cross-platform RAW-06 requirements validator",
       "location": "Repository",
@@ -188,8 +209,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC009",
-      "order": 9,
+      "sourceId": "SRC010",
+      "order": 10,
       "kind": "File",
       "label": "Bash surface for RAW-06 requirements validation",
       "location": "Repository",
@@ -209,8 +230,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC010",
-      "order": 10,
+      "sourceId": "SRC011",
+      "order": 11,
       "kind": "File",
       "label": "PowerShell surface for RAW-06 requirements validation",
       "location": "Repository",
@@ -230,8 +251,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC011",
-      "order": 11,
+      "sourceId": "SRC012",
+      "order": 12,
       "kind": "File",
       "label": "Positive RAW-06 request, result, allowlist, and disabled-remote fixture",
       "location": "Repository",
@@ -251,8 +272,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC012",
-      "order": 12,
+      "sourceId": "SRC013",
+      "order": 13,
       "kind": "File",
       "label": "Negative shell-evaluation fixture",
       "location": "Repository",
@@ -272,8 +293,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC013",
-      "order": 13,
+      "sourceId": "SRC014",
+      "order": 14,
       "kind": "File",
       "label": "Negative environment-injection fixture",
       "location": "Repository",
@@ -293,8 +314,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC014",
-      "order": 14,
+      "sourceId": "SRC015",
+      "order": 15,
       "kind": "File",
       "label": "Negative enabled-remote fixture",
       "location": "Repository",
@@ -314,8 +335,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC015",
-      "order": 15,
+      "sourceId": "SRC016",
+      "order": 16,
       "kind": "File",
       "label": "Negative inline-secret fixture",
       "location": "Repository",
@@ -335,8 +356,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC016",
-      "order": 16,
+      "sourceId": "SRC017",
+      "order": 17,
       "kind": "File",
       "label": "Negative non-idempotent retry fixture",
       "location": "Repository",
@@ -356,8 +377,8 @@
       "proofBoundary": "RepositoryAtUpdate"
     },
     {
-      "sourceId": "SRC017",
-      "order": 17,
+      "sourceId": "SRC018",
+      "order": 18,
       "kind": "File",
       "label": "Series review that authorises bounded IR005 and IR006 repair",
       "location": "Repository",
@@ -375,6 +396,27 @@
       "normalizedSha256": "11a42bd28136bf82c4dc0f36ac6e4d69b5ad8bfed6422d98d9cdb9be7c603345",
       "gitBlob": "485c98741448bd61bb0d22b5bd49f396ab17f957",
       "proofBoundary": "RepositoryAtRepairAuthorization"
+    },
+    {
+      "sourceId": "SRC019",
+      "order": 19,
+      "kind": "File",
+      "label": "Historical Single review",
+      "location": "Repository",
+      "path": "specs/intake-review-results/raw-06-cli-environment-orchestration-2026-08-29-r3.json",
+      "requestedUrl": "N/A",
+      "finalUrl": "N/A",
+      "retrievedAt": "N/A",
+      "httpStatus": "N/A",
+      "contentType": "N/A",
+      "contentLength": "N/A",
+      "etag": "N/A",
+      "lastModified": "N/A",
+      "redirectChain": [],
+      "rawSha256": "N/A",
+      "normalizedSha256": "cfcfee663dc9086328fd71c9db31686fbfd71fc8c55de1078b9c8cf73a879832",
+      "gitBlob": "N/A",
+      "proofBoundary": "Repository path and normalized SHA-256"
     }
   ],
   "profile": "aoc-bilingual-requirements",
@@ -413,31 +455,31 @@
   "questionCount": 0,
   "agentSurface": {
     "specifyCanonicalId": "speckit.specify",
-    "specifyInvocation": "$speckit-specify requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md --bind-exact-intake --no-implementation --no-remote-writes",
+    "specifyInvocation": "$speckit-specify",
     "autonomousCanonicalId": "speckit.autonomous",
-    "autonomousInvocation": "$speckit-autonomous requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md --delivery-mode MergeAndSync --require-current-review"
+    "autonomousInvocation": "$speckit-autonomous"
   },
-  "deliveryAuthority": "MergeAndSync",
-  "authorityEvidence": "MergeAndSync remains the unchanged historical delivery ceiling. The current update authority excludes Specify, implementation, hardware I/O, remote, Level-0, preset, GitHub, merge, bypass, provider, and downstream start actions.",
+  "deliveryAuthority": "LocalImplementation",
+  "authorityEvidence": "This preparation grants no feature execution, implementation or remote delivery authority.",
   "promptState": "Enabled",
   "provenanceMode": "Supersession",
   "supersedes": {
-    "receiptPath": "specs/intake-authoring-archive/2a1c7826-312d-47d5-9026-4610480e1e1f/04279863-94df-4a38-a3e4-ab2ef1ec2c2c/RAW-06-CLI-Environment-Orchestration.json",
+    "receiptPath": "specs/intake-authoring-operations/0ae64715-25c6-405f-ab29-ea9a06b62298/predecessor-receipt.json",
     "targetNormalizedSha256": "dde4a283ac2c761373085beea976dcd927d813e17aa2b1ad76ceab800c1d604a",
-    "archiveTargetPath": "specs/intake-authoring-archive/2a1c7826-312d-47d5-9026-4610480e1e1f/04279863-94df-4a38-a3e4-ab2ef1ec2c2c/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
-    "archiveReceiptPath": "specs/intake-authoring-archive/2a1c7826-312d-47d5-9026-4610480e1e1f/04279863-94df-4a38-a3e4-ab2ef1ec2c2c/RAW-06-CLI-Environment-Orchestration.json"
+    "archiveTargetPath": "specs/intake-authoring-archive/2a1c7826-312d-47d5-9026-4610480e1e1f/0ae64715-25c6-405f-ab29-ea9a06b62298/target.txt",
+    "archiveReceiptPath": "specs/intake-authoring-archive/2a1c7826-312d-47d5-9026-4610480e1e1f/0ae64715-25c6-405f-ab29-ea9a06b62298/receipt.json"
   },
   "legacyAdoption": {
     "evidenceType": "N/A",
-    "priorTargetNormalizedSha256": "N/A",
-    "priorGitBlob": "N/A"
+    "priorGitBlob": "N/A",
+    "priorTargetNormalizedSha256": "N/A"
   },
   "updateAuthorized": true,
-  "updateAuthorityEvidence": "Thorsten explicitly authorized the bounded IR007 and IR008 repair on 2026-08-29, including lifecycle-aware consumer resolution, renewal of all fourteen authoring receipts, complete Single and Series re-reviews, and MergeAndSync with Admin-Bypass.",
+  "updateAuthorityEvidence": "Explicit local user request to prepare the nine RAW intakes, select RAW-01 next, and require nine current Single reviews before starting RAW-01.",
   "series": {
-    "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
-    "manifestPath": "specs/intake-series/aoc-phase-2/manifest.json",
-    "order": 11,
+    "seriesId": "88f6c448-2a4f-4217-941b-7909d85d3b74",
+    "manifestPath": "specs/intake-series/aoc-raw-features/manifest.json",
+    "order": 6,
     "role": "OrderedMember",
     "supersedesIntakeIds": []
   },

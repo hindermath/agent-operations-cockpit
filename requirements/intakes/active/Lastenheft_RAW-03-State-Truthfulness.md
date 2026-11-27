@@ -347,7 +347,7 @@ work.*
 ### Specify
 
 ```text
-$speckit-specify requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md --bind-exact-intake --no-implementation --no-remote-writes
+$speckit-specify Verwende requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md als verbindliches Lastenheft. / Use this intake as the binding input. Preserve its scope and acceptance gates. Produce the matching specification only. No implementation or remote writes.
 VORBEDINGUNG / PRECONDITION: Nur nach aktuellem Ready-Single-Review und separater aktueller Scope- und Startfreigabe verwenden. Dieser Prompt erteilt keine Specify-, Implementierungs- oder Delivery Authority. / Use only after a current Ready Single review and separate current scope and start authority. This prompt grants no Specify, implementation, or delivery authority.
 ```
 
@@ -355,7 +355,7 @@ VORBEDINGUNG / PRECONDITION: Nur nach aktuellem Ready-Single-Review und separate
 ### Autonomous
 
 ```text
-$speckit-autonomous requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md --delivery-mode MergeAndSync --require-current-review
-VORBEDINGUNG / PRECONDITION: Nur nach aktuellem Ready-Single-Review, erfülltem Series-Gate und separaten aktuellen Entscheidungen für Scope, Start, Implementierung, Remote Write, Merge, Bypass und Provider verwenden. Historische Delivery-Daten, Eligibility und Ready allein genügen nicht. / Use only after a current Ready Single review, satisfied Series gate, and separate current decisions for scope, start, implementation, remote write, merge, bypass, and provider use. Historic delivery data, Eligibility, and Ready alone are insufficient.
+$speckit-autonomous Erst mit gesondertem Auftrag und bestandener Startprüfung für diesen Intake: Verwende requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md als verbindliches Lastenheft. / Use this binding intake only after a separate request and the applicable intake preflight. Default to LocalImplementation within any explicitly granted scope; remote delivery requires its own approval.
+VORBEDINGUNG / PRECONDITION: Vor Start den aktuellen Ready-Einzelreview, die anzuwendenden Seriengates und eine separate Freigabe für Scope, Start und gegebenenfalls Implementierung prüfen. Remote Writes, Merge, Bypass und Provideraktionen brauchen jeweils eine eigene aktuelle Freigabe, wenn sie beantragt sind. / Before starting, verify the current Ready Single review, the applicable series gates, and separate authority for scope, start, and any requested implementation. Remote writes, merge, bypass and provider actions each require separate current authority if requested.
 ```
 <!-- intake-authoring:end -->

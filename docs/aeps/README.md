@@ -76,18 +76,17 @@ Implementierungs-, Remote-, Merge-, Bypass- noch Promotion-Authority. / *The
 review status is separate from the Series lifecycle. Ready grants no start,
 delivery, or promotion authority.*
 
-Zusätzlich gilt für das AOC eine projektlokale globale Review-Sperre: Erst wenn
-alle 14 aktiven Lastenhefte der kanonischen Programmreihe gleichzeitig die oben
-definierte aktuelle `Ready`-Grenze erfüllen, darf ein nachgelagerter Spec-Kit-
-Lauf überhaupt separat autorisiert werden. `META-LH-01` ist danach zwingend das
-erste Ziel; Drift schließt die Sperre erneut. Diese konservative
-Portfolioentscheidung ist AOC-spezifische Evidence und darf ohne
-Cross-Project-Validierung nicht als allgemeine AEPS- oder Preset-Regel
-promotet werden. / *A project-local global review gate additionally requires
-all 14 active AOC programme intakes to meet the current Ready boundary before
-any downstream run can be authorised separately. `META-LH-01` is then the
-mandatory first target, and drift closes the gate again. This conservative
-portfolio decision is AOC-specific evidence, not a general AEPS or preset rule.*
+Die globale 14er-Review-Sperre gehörte zur Vorbereitung der inzwischen
+abgeschlossenen Phase 2. Für RAW-01 gilt die aktive RAW-Serienregel mit
+META-LH-05 als Authoring-Voraussetzung und neun aktuellen
+Authoring-Receipts und `Ready`-Einzelreviews. Die Serienreihenfolge
+beschreibt die Nachweise und die Bedingungen für spätere Starts. /
+*The global fourteen-intake gate governed preparation for the completed
+Phase 2. RAW-01 uses the active RAW series rule, with META-LH-05 as its
+authoring prerequisite and nine current authoring receipts and Ready
+Single reviews. The series order records evidence and later start conditions.*
+
+[Aktive RAW-Reihenfolge und Gate / Active RAW order and gate](../../requirements/intakes/series/order.md)
 
 ## Identität und Deduplizierung / Identity and deduplication
 

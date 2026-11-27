@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "aab8b471-4ba2-4986-a1a4-a51f6a551393",
+  "mode": "Single",
+  "policy": "aoc-bilingual-requirements",
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+      "role": "Primary"
+    }
+  ],
+  "series": {
+    "orderedTargetPaths": [],
+    "roots": [],
+    "dependencies": []
+  },
+  "campaign": {
+    "manifestPath": "N/A",
+    "workers": [],
+    "operatorExceptions": []
+  }
+}

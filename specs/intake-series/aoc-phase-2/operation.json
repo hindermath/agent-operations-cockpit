@@ -1,52 +1,363 @@
 {
   "schemaVersion": "1.0",
   "documentType": "IntakeSeriesOperation",
-  "operationId": "72f2cafd-1f57-451d-b9ad-ed859145a519",
+  "operationId": "24d10101-129d-43bd-b4d9-427f90d38bcc",
   "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
   "type": "Update",
   "status": "Published",
-  "authorityEvidence": "Thorsten explicitly authorised on 2026-09-12 the bounded AOC Phase 2 Series update that changes only the META-LH-03 normalized target hash to 3a5c34b54bdb0b00f78415089cc0b926b33ddeabe44ee7a130ad603acd4a98ba according to specs/003-authoring-contract/intake-lifecycle.json, archives the predecessor manifest and receipt byte-identically, and renews manifest, receipt, operation, and order lineage. Series status Completed, all fourteen target lifecycle values, logical target paths, exact order, single root, fourteen dependencies, four evidence paths, intake content, and Delivery Authority remain unchanged. Review, Autonomous, Specify, implementation, remote write, merge, bypass, preset, promotion, and Level-0 actions are excluded.",
-  "proposalNormalizedSha256": "609ca54b3d12178675bd82dc900cb52e7617ac2026b677883f65e3047d6fab43",
+  "authorityEvidence": "An explicit local maintenance request separates AOC feature completion, authoring and deferred backlog without starting work.",
+  "proposalNormalizedSha256": "18b2d279a22b5d2242603a293a5238928310905ee2f9c6115dce605eb309e116",
   "preparedPaths": [
-    "requirements/intakes/series/order.md",
     "specs/intake-series/aoc-phase-2/manifest.json",
     "specs/intake-series-receipts/aoc-phase-2.json",
-    "specs/intake-series/aoc-phase-2/operation.json"
+    "specs/intake-series/aoc-phase-2/operation.json",
+    "Pflichtenheft.md",
+    "Lastenheft_Abarbeitungsreihenfolge.md",
+    "requirements/intakes/series/order.md",
+    "requirements/intakes/active/README.md",
+    "requirements/intakes/history/Lastenheft_META-LH-05-Erste-Welle.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-03-State-Truthfulness.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-04-Presentation-Fabric.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-05-Execution-Nodes.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-08-Workflow-Engine.md",
+    "requirements/intakes/backlog/Lastenheft_RAW-09-Preset-Evolution.md",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "GEMINI.md",
+    ".github/copilot-instructions.md",
+    ".github/agents/copilot-instructions.md",
+    "README.md"
   ],
   "documentationImpact": {
     "decision": "UpdateRequired",
-    "source": "Thorsten's explicit META-LH-03 lifecycle-hash correction authority from 2026-09-12",
-    "owner": "AOC Phase 2 Intake Series",
+    "source": "AOC decision separating proven feature completion from authoring and open feature work",
+    "owner": "AOC maintainer",
     "documents": [
+      "Pflichtenheft.md",
+      "Lastenheft_Abarbeitungsreihenfolge.md",
       "requirements/intakes/series/order.md",
-      "specs/intake-series/aoc-phase-2/manifest.json",
-      "specs/intake-series-receipts/aoc-phase-2.json",
-      "specs/intake-series/aoc-phase-2/operation.json"
+      "requirements/intakes/active/README.md",
+      "AGENTS.md",
+      "CLAUDE.md",
+      "GEMINI.md",
+      ".github/copilot-instructions.md",
+      ".github/agents/copilot-instructions.md",
+      "README.md"
     ],
     "evidence": [
-      "specs/003-authoring-contract/intake-lifecycle.json",
-      "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/72f2cafd-1f57-451d-b9ad-ed859145a519/manifest.json",
-      "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/72f2cafd-1f57-451d-b9ad-ed859145a519/receipt.json"
+      "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/24d10101-129d-43bd-b4d9-427f90d38bcc/manifest.json"
     ]
   },
   "reviewInvalidation": {
     "status": "Superseded",
     "results": [
-      "specs/intake-review-results/aoc-phase-2-series-2026-08-30-r6.json"
+      "specs/intake-review-results/aoc-phase-2-series-2026-09-13-r7.json"
     ],
-    "reason": "The corrected META-LH-03 target hash changes the reviewed Series target binding. The prior Ready review remains historical evidence; no review is executed under this update authority."
+    "reason": "The prior review records the former intake set; historical evidence retains its original paths and hashes."
   },
   "validation": {
-    "bash": "Passed",
-    "powerShell": "Passed"
+    "bash": "Schema 2.0, manifest, receipt and both current order views passed.",
+    "powerShell": "Schema 2.0, manifest, receipt and both current order views passed.",
+    "references": "Canonical index, current order views, and all fourteen moved/retained intake files have resolvable inline local links.",
+    "historicalEvidence": "All fourteen archive hashes match the receipt and Ready review target hashes. Four lifecycle records match their original raw hashes. All fourteen historical single reviews passed in Bash and PowerShell with their recorded target paths in a temporary checkout. Full replay of the historical authoring receipts reported predecessor binding errors for all fourteen and source hash drift for META-LH-03 and META-LH-04."
   },
   "publication": {
     "status": "Published",
     "publishedPaths": [
-      "requirements/intakes/series/order.md",
       "specs/intake-series/aoc-phase-2/manifest.json",
       "specs/intake-series-receipts/aoc-phase-2.json",
-      "specs/intake-series/aoc-phase-2/operation.json"
+      "specs/intake-series/aoc-phase-2/operation.json",
+      "Pflichtenheft.md",
+      "Lastenheft_Abarbeitungsreihenfolge.md",
+      "requirements/intakes/series/order.md",
+      "requirements/intakes/active/README.md",
+      "requirements/intakes/history/Lastenheft_META-LH-05-Erste-Welle.md",
+      "requirements/intakes/backlog/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "requirements/intakes/backlog/Lastenheft_RAW-03-State-Truthfulness.md",
+      "requirements/intakes/backlog/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "requirements/intakes/backlog/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "requirements/intakes/backlog/Lastenheft_RAW-05-Execution-Nodes.md",
+      "requirements/intakes/backlog/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "requirements/intakes/backlog/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "requirements/intakes/backlog/Lastenheft_RAW-08-Workflow-Engine.md",
+      "requirements/intakes/backlog/Lastenheft_RAW-09-Preset-Evolution.md",
+      "AGENTS.md",
+      "CLAUDE.md",
+      "GEMINI.md",
+      ".github/copilot-instructions.md",
+      ".github/agents/copilot-instructions.md",
+      "README.md"
     ]
+  },
+  "relocations": [
+    {
+      "previousPath": "requirements/intakes/archive/Lastenheft_META-LH-05-Erste-Welle.md",
+      "destinationPath": "requirements/intakes/history/Lastenheft_META-LH-05-Erste-Welle.md",
+      "classification": "AuthoringMilestone",
+      "rawSha256": "cb255e60b49237f8cc655486b6529536b831b5b942f89f838678386bc31f930f",
+      "normalizedSha256": "cb255e60b49237f8cc655486b6529536b831b5b942f89f838678386bc31f930f",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/META-LH-05-Erste-Welle.json",
+        "sha256": "db8506157dd5b8116deaed5a4f8855aaeff29a2a47bddb14324c5250e24741ee",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/meta-lh-05-erste-welle-2026-09-05-r1.json",
+        "sha256": "c6250b2a208713d2fd821806175b11d4fc8d0a719fe91c700d0235e8943f4c8d",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_META-LH-05-Erste-Welle.md",
+        "reviewId": "ed780e97-fd2b-4a83-a151-b29796529026"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/archive/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "destinationPath": "requirements/intakes/backlog/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "classification": "OpenFeatureBacklog",
+      "rawSha256": "c61d9786b27ea09e0e954363a1b4335d3255ea55b0f8a5167ee52c25c583f9b6",
+      "normalizedSha256": "c61d9786b27ea09e0e954363a1b4335d3255ea55b0f8a5167ee52c25c583f9b6",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/RAW-01-Reference-Agentic-Workspace.json",
+        "sha256": "0c716e620dd4462b790272e2dc79d369ff932c3d05bafe2cdb7d2933520e0825",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/raw-01-reference-agentic-workspace-2026-08-29-r3.json",
+        "sha256": "66636f6d84f520b4c025977634f5cbf68674b8758adcff170076568ba8b4fb04",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+        "reviewId": "a60f9d2c-8458-4b64-929f-5cbc0ce7cf49"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/archive/Lastenheft_RAW-03-State-Truthfulness.md",
+      "destinationPath": "requirements/intakes/backlog/Lastenheft_RAW-03-State-Truthfulness.md",
+      "classification": "OpenFeatureBacklog",
+      "rawSha256": "31d31e82ab1857182d1201192438e5c91abfc3190ba47a2f68b9543034ab0cfd",
+      "normalizedSha256": "31d31e82ab1857182d1201192438e5c91abfc3190ba47a2f68b9543034ab0cfd",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/RAW-03-State-Truthfulness.json",
+        "sha256": "b20f963fc7b60f78a5f7f7e0accfc047d2310a0832e73b3f19935bc699803144",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/raw-03-state-truthfulness-2026-09-05-r1.json",
+        "sha256": "fc799790cc3622f78b579f1a743805095a64c884d1125fc4c23dafb55e747f83",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-03-State-Truthfulness.md",
+        "reviewId": "9193d5a6-f9f1-4734-a3ed-f5b56f5b862d"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/archive/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "destinationPath": "requirements/intakes/backlog/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "classification": "OpenFeatureBacklog",
+      "rawSha256": "6a41e6ae6447ff0192a03af7940362e05e48bff48a5fd21f39e9b6e670eade20",
+      "normalizedSha256": "6a41e6ae6447ff0192a03af7940362e05e48bff48a5fd21f39e9b6e670eade20",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/RAW-02-Workspace-Orchestrator.json",
+        "sha256": "802993e16875494c0f1116e6459e5463c557fbc8adac5966e60e4dfed2062a81",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/raw-02-workspace-orchestrator-2026-08-29-r6.json",
+        "sha256": "ada4f87362ec6edd19f1a99228d354daec6d8a1ebd42844ced0efecf54f10e4c",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+        "reviewId": "ca68b7b1-2b32-45ff-b3c5-82f2ff750430"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/archive/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "destinationPath": "requirements/intakes/backlog/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "classification": "OpenFeatureBacklog",
+      "rawSha256": "ce89a73e9e1d0bdeadcc166a0f4a7b3b94052037cabb8225ceb4ef2ebd345ec4",
+      "normalizedSha256": "ce89a73e9e1d0bdeadcc166a0f4a7b3b94052037cabb8225ceb4ef2ebd345ec4",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/RAW-04-Presentation-Fabric.json",
+        "sha256": "457d28d4f76e149e56c9112e1a312697bf54115eacce031bf58fea11bfec2719",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/raw-04-presentation-fabric-2026-08-29-r4.json",
+        "sha256": "2626a8b01ea26dc3f060d0de4774d789a9a712467782b5a0ddff650dfbf1dea3",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-04-Presentation-Fabric.md",
+        "reviewId": "60d1f2c8-7658-4ab4-ac9e-907e3e8629ff"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/archive/Lastenheft_RAW-05-Execution-Nodes.md",
+      "destinationPath": "requirements/intakes/backlog/Lastenheft_RAW-05-Execution-Nodes.md",
+      "classification": "OpenFeatureBacklog",
+      "rawSha256": "3fd7c5fbf4f419ed6131c4984a948f26d0b6b8c6ab3a5b068cdadce501c3fbad",
+      "normalizedSha256": "3fd7c5fbf4f419ed6131c4984a948f26d0b6b8c6ab3a5b068cdadce501c3fbad",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/RAW-05-Execution-Nodes.json",
+        "sha256": "5b1c879233e455bf932eececc3cd7fa88008db0c6b4ded468f702f924ef4784b",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/raw-05-execution-nodes-2026-08-29-r4.json",
+        "sha256": "969a1e1fb0d350e3e5acf5411080ef178e58e184557ac30aef69569f585fdcac",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-05-Execution-Nodes.md",
+        "reviewId": "332a6a65-604e-4134-aeb6-2ce10523edda"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/archive/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "destinationPath": "requirements/intakes/backlog/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "classification": "OpenFeatureBacklog",
+      "rawSha256": "dde4a283ac2c761373085beea976dcd927d813e17aa2b1ad76ceab800c1d604a",
+      "normalizedSha256": "dde4a283ac2c761373085beea976dcd927d813e17aa2b1ad76ceab800c1d604a",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/RAW-06-CLI-Environment-Orchestration.json",
+        "sha256": "54f77169d693b4ed60070ef76435a414004d1173bb24eff0d8cbd381e948e4a3",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/raw-06-cli-environment-orchestration-2026-08-29-r3.json",
+        "sha256": "cfcfee663dc9086328fd71c9db31686fbfd71fc8c55de1078b9c8cf73a879832",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+        "reviewId": "d0e391bf-49c1-446d-ab51-e3df111d1216"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/archive/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "destinationPath": "requirements/intakes/backlog/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "classification": "OpenFeatureBacklog",
+      "rawSha256": "ade666e411ed9a81b9736e628adb8613be0d9d732295c7e5470d90f0c64f513a",
+      "normalizedSha256": "ade666e411ed9a81b9736e628adb8613be0d9d732295c7e5470d90f0c64f513a",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/RAW-07-Hardware-Capability-Layer.json",
+        "sha256": "785212a1f484ba8f4e3de1caccb1c70f01c627e73cc4b161e766540340a90ae0",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/raw-07-hardware-capability-layer-2026-08-29-r3.json",
+        "sha256": "6912054b10f2926b85ae9ec29b533d9d9d40693ce8d0f09dd1c471b0442d6e35",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+        "reviewId": "9f8042fd-f29e-4a25-a2f7-c67f91b4650f"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/archive/Lastenheft_RAW-08-Workflow-Engine.md",
+      "destinationPath": "requirements/intakes/backlog/Lastenheft_RAW-08-Workflow-Engine.md",
+      "classification": "OpenFeatureBacklog",
+      "rawSha256": "623451757149794556a9f4efef73c13c6894244476b7fd484f0eaaa9fdba7f1a",
+      "normalizedSha256": "623451757149794556a9f4efef73c13c6894244476b7fd484f0eaaa9fdba7f1a",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/RAW-08-Workflow-Engine.json",
+        "sha256": "89776ffcea4342ab55c45551447526144b85679327774ed80146a06e03305aa5",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/raw-08-workflow-engine-2026-08-29-r4.json",
+        "sha256": "29eea5999f76b63c1c80c91a9d5f3fc7aee7c2a81060f528e6bfb1fd8afa1bb6",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-08-Workflow-Engine.md",
+        "reviewId": "c839534d-a174-4b6b-b598-9d4963e79b00"
+      }
+    },
+    {
+      "previousPath": "requirements/intakes/archive/Lastenheft_RAW-09-Preset-Evolution.md",
+      "destinationPath": "requirements/intakes/backlog/Lastenheft_RAW-09-Preset-Evolution.md",
+      "classification": "OpenFeatureBacklog",
+      "rawSha256": "c3da0eec782279678b1599e0e2365e409fbfe9e0e6f40e5f2e1b768e385f3b83",
+      "normalizedSha256": "c3da0eec782279678b1599e0e2365e409fbfe9e0e6f40e5f2e1b768e385f3b83",
+      "authoringReceipt": {
+        "path": "specs/intake-authoring-receipts/RAW-09-Preset-Evolution.json",
+        "sha256": "97961fdc15f41aff5e74dd4100d23294aa6a2453eb7dd3668a212dacb1260f12",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md"
+      },
+      "historicalSingleReview": {
+        "path": "specs/intake-review-results/raw-09-preset-evolution-2026-08-29-r4.json",
+        "sha256": "7e59a67e4d830f5d600f386c8543356035f031744d7143a42c547f533e6529fe",
+        "recordedTargetPath": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+        "reviewId": "82a996ad-cef2-4165-a192-4db17d2e5ebc"
+      }
+    }
+  ],
+  "backlogDependencies": [
+    {
+      "from": "requirements/intakes/archive/Lastenheft_META-LH-04-Series-Eligibility.004-series-eligibility.md",
+      "to": "requirements/intakes/history/Lastenheft_META-LH-05-Erste-Welle.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/history/Lastenheft_META-LH-05-Erste-Welle.md",
+      "to": "requirements/intakes/backlog/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "kind": "RequirementsGovernanceGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/backlog/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "to": "requirements/intakes/backlog/Lastenheft_RAW-03-State-Truthfulness.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/backlog/Lastenheft_RAW-03-State-Truthfulness.md",
+      "to": "requirements/intakes/backlog/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/backlog/Lastenheft_RAW-03-State-Truthfulness.md",
+      "to": "requirements/intakes/backlog/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/backlog/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "to": "requirements/intakes/backlog/Lastenheft_RAW-05-Execution-Nodes.md",
+      "kind": "PreferredSerialOrder",
+      "binding": false
+    },
+    {
+      "from": "requirements/intakes/backlog/Lastenheft_RAW-05-Execution-Nodes.md",
+      "to": "requirements/intakes/backlog/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/backlog/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "to": "requirements/intakes/backlog/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/backlog/Lastenheft_RAW-05-Execution-Nodes.md",
+      "to": "requirements/intakes/backlog/Lastenheft_RAW-08-Workflow-Engine.md",
+      "kind": "AssessmentBaseline",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/backlog/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "to": "requirements/intakes/backlog/Lastenheft_RAW-08-Workflow-Engine.md",
+      "kind": "HardCompletionGate",
+      "binding": true
+    },
+    {
+      "from": "requirements/intakes/backlog/Lastenheft_RAW-08-Workflow-Engine.md",
+      "to": "requirements/intakes/backlog/Lastenheft_RAW-09-Preset-Evolution.md",
+      "kind": "FinalAuditInput",
+      "binding": true
+    }
+  ],
+  "authoringMilestone": {
+    "intake": "requirements/intakes/history/Lastenheft_META-LH-05-Erste-Welle.md",
+    "outputs": [
+      "requirements/intakes/backlog/Lastenheft_RAW-01-Reference-Agentic-Workspace.md",
+      "requirements/intakes/backlog/Lastenheft_RAW-03-State-Truthfulness.md",
+      "requirements/intakes/backlog/Lastenheft_RAW-02-Workspace-Orchestrator.md",
+      "requirements/intakes/backlog/Lastenheft_RAW-04-Presentation-Fabric.md",
+      "requirements/intakes/backlog/Lastenheft_RAW-05-Execution-Nodes.md",
+      "requirements/intakes/backlog/Lastenheft_RAW-06-CLI-Environment-Orchestration.md",
+      "requirements/intakes/backlog/Lastenheft_RAW-07-Hardware-Capability-Layer.md",
+      "requirements/intakes/backlog/Lastenheft_RAW-08-Workflow-Engine.md",
+      "requirements/intakes/backlog/Lastenheft_RAW-09-Preset-Evolution.md"
+    ],
+    "contract": "requirements/baseline/first-wave-authoring-contract.json",
+    "review": "docs/reviews/meta-lh-05-erste-welle-intake-review-2026-09-05-r1.md",
+    "validation": "docs/aeps/receipts/2026-08-01-meta-lh-05-ready.md"
   }
 }

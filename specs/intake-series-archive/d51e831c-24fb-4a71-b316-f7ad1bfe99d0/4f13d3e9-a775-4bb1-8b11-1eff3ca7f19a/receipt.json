@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "documentType": "IntakeSeriesReceipt",
+  "receiptId": "a5114ec7-30dc-4991-b2cc-c3a5f3b27112",
+  "seriesId": "d51e831c-24fb-4a71-b316-f7ad1bfe99d0",
+  "generator": {
+    "preset": "intake-sequencing-governance",
+    "version": "0.2.3"
+  },
+  "createdAt": "2026-11-27T10:43:10Z",
+  "operation": {
+    "operationId": "5e4d4c3a-4553-4e09-ae3c-1fa17bbb47c0",
+    "type": "Update",
+    "authorityEvidence": "Explicit local maintenance request of 2026-11-27 to align completed AOC Phase 2 manifest with its proven completion paths."
+  },
+  "status": "Ready",
+  "manifest": {
+    "path": "specs/intake-series/aoc-phase-2/manifest.json",
+    "normalizedSha256": "fb062ac45641488049734b121b2d8978bddca7894602c76d22ae87718e8cebc9"
+  },
+  "supersedes": {
+    "receiptPath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/5e4d4c3a-4553-4e09-ae3c-1fa17bbb47c0/receipt.json",
+    "receiptNormalizedSha256": "bac201d00886f3649ba4f49847ed9648291c9434ffb00cb201344d101ec39f33",
+    "manifestArchivePath": "specs/intake-series-archive/d51e831c-24fb-4a71-b316-f7ad1bfe99d0/5e4d4c3a-4553-4e09-ae3c-1fa17bbb47c0/manifest.json",
+    "manifestArchiveSha256": "609ca54b3d12178675bd82dc900cb52e7617ac2026b677883f65e3047d6fab43"
+  },
+  "tombstone": {
+    "path": "N/A",
+    "normalizedSha256": "N/A"
+  },
+  "nextAction": "$speckit-intake-series-status specs/intake-series/aoc-phase-2/manifest.json"
+}

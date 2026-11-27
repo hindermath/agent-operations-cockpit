@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.1",
+  "reviewId": "086e50f5-ffbf-43c2-94b7-285508a073b7",
+  "mode": "Single",
+  "status": "Ready",
+  "policy": "aoc-bilingual-requirements",
+  "reviewedAt": "2026-11-27T17:39:13Z",
+  "repository": {
+    "root": ".",
+    "head": "128a1f45a484939185bc37b3e9a4bb5073a0c265"
+  },
+  "requestEvidence": {
+    "path": "specs/intake-review-requests/raw-09-preset-evolution-2026-11-27-raw-series.json",
+    "normalizedSha256": "c037540761f3d9ddb2426ff9884fc41c333127125e1d64250f073524ce9521d1"
+  },
+  "targets": [
+    {
+      "path": "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md",
+      "role": "Primary",
+      "normalizedSha256": "65a76480d735a8361a05412ef5b56c35958533ece351a6b387a999b3ecbc89e4",
+      "gitBlob": "N/A"
+    }
+  ],
+  "findings": [],
+  "questions": [],
+  "acceptedRisks": [],
+  "operatorExceptions": [],
+  "coverage": {
+    "individual": [
+      "requirements/intakes/active/Lastenheft_RAW-09-Preset-Evolution.md"
+    ],
+    "series": [],
+    "workers": []
+  },
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "supersedes": "82a996ad-cef2-4165-a192-4db17d2e5ebc"
+}
